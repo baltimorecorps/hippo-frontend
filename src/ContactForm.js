@@ -1,8 +1,8 @@
 import React from 'react';
 /*import PropTypes from '../lib/PropTypes';*/
 import PropTypes from "prop-types";
-import classNames from "classnames";
-import MenuItem from "@material-ui/core/MenuItem";
+//import classNames from "classnames";
+//import MenuItem from "@material-ui/core/MenuItem";
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -51,7 +51,7 @@ class TextFields extends React.Component {
   handleChange = varName => event => {
     this.setState({ varName: event.target.value });
   };
-  
+
 
   render() {
     const { classes } = this.props;
@@ -100,7 +100,7 @@ class TextFields extends React.Component {
                         margin="normal"
                         />
 
-                        
+
                         <TextField
                         id="standard-select-currency-native"
                         select
@@ -114,7 +114,7 @@ class TextFields extends React.Component {
                             className: classes.menu
                             }
                         }}
-                        
+
                         margin="normal"
                         >
                         {genders.map(option => (
@@ -123,7 +123,7 @@ class TextFields extends React.Component {
                             </option>
                         ))}
                         </TextField>
-                        
+
                         <TextField
                         id="standard-select-currency-native"
                         select
@@ -157,21 +157,21 @@ class TextFields extends React.Component {
                         InputLabelProps={{
                             shrink: true
                         }}
-                        /> 
-                        
+                        />
+
                         <Button
                             className={classes.submitButton}
                             type='submit'
                             fullWidth={true}
                             variant='contained'
                             color='primary'
-                            
+
                         >
                             Next
-                        </Button>  
+                        </Button>
                     </form>
                 </Paper>
-            </main> 
+            </main>
     );
   }
 }
@@ -180,7 +180,7 @@ TextFields.propTypes = {
   classes: PropTypes.object.isRequired
 };
 const styles = ({breakpoints, palette, spacing, theme}) => ({
-    
+
     container: {
       display: "flex",
       flexWrap: "wrap",

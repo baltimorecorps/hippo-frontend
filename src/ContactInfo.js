@@ -3,25 +3,25 @@ import React from 'react';
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+//import Navbar from "react-bootstrap/Navbar";
+//import Nav from "react-bootstrap/Nav";
+//import Form from "react-bootstrap/Form";
+//import FormControl from "react-bootstrap/FormControl";
+//import Button from "react-bootstrap/Button";
+//import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 import './index.css';
 
 import PropTypes from "prop-types";
-import classNames from "classnames";
-import MenuItem from "@material-ui/core/MenuItem";
+//import classNames from "classnames";
+//import MenuItem from "@material-ui/core/MenuItem";
 //import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+//import Paper from '@material-ui/core/Paper';
+//import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 /*import { withStyles } from "@material-ui/core/styles";*/
-import TextField from '@material-ui/core/TextField';
+//import TextField from '@material-ui/core/TextField';
 import { blue } from '@material-ui/core/colors';
 
 
@@ -35,17 +35,17 @@ class ContactInfo extends React.Component {
       race_all: "",
       birthday: ""
     };
-  
+
     handleChange = varName => event => {
       this.setState({ varName: event.target.value });
     };
     
-  
+
     render() {
-      const { classes } = this.props;
+      //const { classes } = this.props;
       return (
           <div>
-              
+
 
             <Container>
                     <Row className="profileHeader">
@@ -55,18 +55,18 @@ class ContactInfo extends React.Component {
                         </div>
                         <img className="icon" src='/logos/long.png' alt='Baltimore Corps Logo' height="200px"/>
                         <div className="contact" style={{paddingTop: "30px"}}>
-                            
+
                             <p>billy@baltimorecorps.org</p>
                             <p>908-578-4622</p>
                             <p>Baltimore, MD 21201</p>
                         </div>
-                        
+
                     </Row>
                     <Row style={{height: "480px"}}>
                         <Col className="column" xs={12} md={8} style={{backgroundColor:"#eaf9f9"}}>
-                            <Row> 
+                            <Row>
                                 <div className="infoBlock">
-                                    <h5> Work Experience </h5> 
+                                    <h5> Work Experience </h5>
                                     <p ><strong>September 2015 - Present</strong></p>
                                     <p style={{color: "grey"}}><strong>Baltimore Corps, Systems Design Manager</strong></p>
                                     <div> Redesigned the Salesforce architecture to facilitate easier reporting.
@@ -84,20 +84,20 @@ class ContactInfo extends React.Component {
                                         Modeled potential investment opportunities for the funds held on reserve for BNotes.
                                     </div>
                                     <br></br>
-                                </div> 
+                                </div>
                             </Row>
 
-                            <Row><div className="infoBlock"> 
-                                <h5> Service and Leadership </h5> 
+                            <Row><div className="infoBlock">
+                                <h5> Service and Leadership </h5>
                                         <p ><strong>September 2015 - Present</strong></p>
                                         <p style={{color: "grey"}}><strong>Baltimore Corps, Systems Design Manager</strong></p>
                                         <div> Contributed to the DGS GitHub repository for analyzing city-wide data.
                                             Presented on Baltimore Corps' use of python for data science.</div>
                                     <br></br>
-                            
+
                             </div></Row>
                             <Row><div className="infoBlock">
-                                <h5> Education </h5> 
+                                <h5> Education </h5>
                                         <p ><strong>September 2015 - Present</strong></p>
                                         <p style={{color: "grey"}}><strong>University of Michigan, Applied Data Science with Python</strong></p>
                                         <div>
@@ -105,35 +105,35 @@ class ContactInfo extends React.Component {
                                             <p>Applied Social Network Analysis in Python </p>
 
                                         </div>
-                                        
-                                    
+
+
                                     <br></br>
                             </div></Row>
                         </Col>
                         <Col  className="accomColumn" xs={6} md={4} style={{backgroundColor:"#e6f9e3"}} >
-                            <Row> 
-                                <div className="infoBlock"> 
-                                    <h5> Accomplishments </h5> 
+                            <Row>
+                                <div className="infoBlock">
+                                    <h5> Accomplishments </h5>
                                     <div className="rightCol">
                                         <div style={{marginRight:"5px"}}> Nov 2017 </div>
-                                        <div style={{color:"grey"}}> 
+                                        <div style={{color:"grey"}}>
                                             <div > <strong>Dreamforce Conference</strong></div>
                                             <div> Salesforce Communities Presentation</div>
                                         </div>
                                     </div>
                                     <div className="rightCol">
                                         <div style={{marginRight:"5px"}}> Nov 2017 </div>
-                                        <div style={{color:"grey"}}> 
+                                        <div style={{color:"grey"}}>
                                             <div > <strong>FormAssembly Blog</strong></div>
                                             <div> Salesforce Communities Presentation</div>
                                         </div>
                                     </div>
                                     <br></br>
-                                </div> 
+                                </div>
                             </Row>
                             <Row>
-                                <div className="infoBlock"> 
-                                    <h5>Skills and Abilities </h5> 
+                                <div className="infoBlock">
+                                    <h5>Skills and Abilities </h5>
                                     <div className="allSkills">
                                         <div className="skillCategory">
                                             <p style={{color: "grey"}}><strong>Data Science</strong></p>
@@ -150,7 +150,7 @@ class ContactInfo extends React.Component {
                                                     <div className="float_left">R</div>
                                                     <div className="float_right">3 years</div>
                                                 </div>
-                                            </div>   
+                                            </div>
                                         </div>
                                         <br></br>
                                         <div className="skillCategory">
@@ -168,10 +168,10 @@ class ContactInfo extends React.Component {
                                                     <div className="float_left">SQL</div>
                                                     <div className="float_right">3 years        </div>
                                                 </div>
-                                            </div>   
+                                            </div>
                                         </div>
                                         <br></br>
-                                        
+
                                     </div>
                                 </div>
                             </Row>
@@ -179,17 +179,17 @@ class ContactInfo extends React.Component {
                     </Row>
             </Container>
           </div>
-        
-         
-             
+
+
+
       );
     }
   }
-  
+
   ContactInfo.propTypes = {
     classes: PropTypes.object.isRequired
   };
-  
+
   const styles = ({breakpoints, palette, spacing, theme}) => ({
       container: {
         display: "flex",
@@ -239,6 +239,5 @@ class ContactInfo extends React.Component {
           marginBottom: spacing.unit * 3,
         },
     });
-  
+
   export default withStyles(styles)(ContactInfo);
-  
