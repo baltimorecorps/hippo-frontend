@@ -12,6 +12,7 @@ import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
+import GoogleAuth from './GoogleAuth';
 
 const App = () => (
   <ErrorBoundary fileName="src/App.js">
@@ -37,6 +38,7 @@ const App = () => (
           </div>
           <Switch>
             {/*<Route path="/" component={AuthPage} />*/}
+              {/*<Route exact path='/' component={AuthPage} />*/}
               <Route exact path='/' component={AuthPage} />
               <Route exact path='/ContactInfo' component={ContactInfo} />
               <Route exact path='/ContactForm' component={ContactForm} />

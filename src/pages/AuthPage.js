@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import GoogleAuth from '../GoogleAuth.js';
 
 import TextField from '@material-ui/core/TextField';
 
@@ -18,6 +19,7 @@ const AuthPage = ({classes}) => {
         <Typography component='h1' variant='h5'>
           Sign In
         </Typography>
+
         <form className={classes.form}>
           <TextField
             id='email'
@@ -53,7 +55,17 @@ const AuthPage = ({classes}) => {
           >
             No password? Click here
           </Button>
+           
         </form>
+       
+       <br></br>
+        <Typography component='h1' variant='h5'>
+            Or
+          </Typography>
+          <GoogleAuth/>
+          <br></br>
+          
+
       </Paper>
     </main>
   );
