@@ -8,12 +8,12 @@ import ContactForm from './ContactForm.js';
 
 class GoogleAuth extends React.Component {
     state = {
-        isSignedIn: null
+        isSignedIn: false
     }
     componentDidMount(){
         window.gapi.load('client: auth2', ()=>{
             window.gapi.client.init({
-                clientId: 
+                clientId:
                 '603681871778-8rigkcemr16r90hgmfjmapse6fj7bf77.apps.googleusercontent.com',
                 scope: 'email'
 
@@ -44,16 +44,15 @@ class GoogleAuth extends React.Component {
             var styleHome = {
                 fontSize: 18,
                 padding: "5px 0px",
-                
+
               }
             return (
                 <BrowserRouter>
                     <div>
-                        <br></br>
                         <Navbar   >
                         <Nav className="mr-auto">
-                            <Nav.Link href="/ContactForm" style={styleHome}> 
-                                <Button onClick={this.onSignIn} 
+                            <Nav.Link href="/ContactForm" style={styleHome}>
+                                <Button onClick={this.onSignIn}
                                     type='submit'
                                     fullWidth={true}
                                     variant='contained'
@@ -62,23 +61,23 @@ class GoogleAuth extends React.Component {
                                     Sign in with Google
                                 </Button>
                             </Nav.Link>
-                                
+
                         </Nav>
                         </Navbar>
 
                         <Switch>
-                        
+
                         <Route exact path='/:ContactForm' component={ContactForm} />
-                        
+
                         </Switch>
                     </div>
                     </BrowserRouter>
-                
-            
+
+
             );
         }
     }
-    
+
     render(){
         return <div>{this.renderAuthButton()}</div>
     }

@@ -55,16 +55,16 @@ const AuthPage = ({classes}) => {
           >
             No password? Click here
           </Button>
-           
+
         </form>
-       
+
        <br></br>
-        <Typography component='h1' variant='h5'>
+          <Typography component='h1' variant='h5'>
             Or
           </Typography>
           <GoogleAuth/>
           <br></br>
-          
+
 
       </Paper>
     </main>
