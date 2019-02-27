@@ -12,7 +12,7 @@ import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
-import GoogleAuth from './GoogleAuth';
+
 
 const App = () => (
   <ErrorBoundary fileName="src/App.js">
@@ -22,13 +22,13 @@ const App = () => (
           <div>
             <Navbar bg="dark" variant="dark">
                     {/*<Navbar.Brand href="/ContactInfo">Profile</Navbar.Brand>*/}
-                    
+
                     <Nav className="mr-auto">
                     <Nav.Link href="/">SignIn</Nav.Link>
                     {/*<Nav.Link to={{pathname: '/ContactForm'}}> Contact-Form</Nav.Link>*/}
                     <Nav.Link href="/ContactForm">ContactForm</Nav.Link>
                     <Nav.Link href="/ContactInfo">Profile</Nav.Link>
-        
+
                     </Nav>
                     <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
@@ -42,11 +42,11 @@ const App = () => (
               <Route exact path='/' component={AuthPage} />
               <Route exact path='/ContactInfo' component={ContactInfo} />
               <Route exact path='/ContactForm' component={ContactForm} />
-              
-              
+
+
           </Switch>
         </div>
-        
+
       </Router>
     </MuiThemeProvider>
   </ErrorBoundary>
