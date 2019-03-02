@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row";
 //import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
-import './index.css';
+import '../index.css';
 
 import PropTypes from "prop-types";
 //import classNames from "classnames";
