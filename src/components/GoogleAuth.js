@@ -3,8 +3,9 @@ import Button from '@material-ui/core/Button';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav";
-
 import ContactForm from './ContactForm.js';
+
+
 
 class GoogleAuth extends React.Component {
     state = {
@@ -25,6 +26,7 @@ class GoogleAuth extends React.Component {
             });
         });
     }
+    
     onAuthChange = () =>{
         this.setState({isSignedIn: this.auth.isSignedIn.get()});
     }
@@ -55,9 +57,11 @@ class GoogleAuth extends React.Component {
                                 <Button onClick={this.onSignIn}
                                     type='submit'
                                     fullWidth={true}
-                                    variant='contained'
-                                    color='primary'
+                                    variant="contained"
+                                    color="primary"
+                                    
                                 >
+                            
                                     Sign in with Google
                                 </Button>
                             </Nav.Link>
@@ -65,13 +69,9 @@ class GoogleAuth extends React.Component {
                         </Nav>
                         </Navbar>
 
-                        <Switch>
-
-                        <Route exact path='/:ContactForm' component={ContactForm} />
-
-                        </Switch>
+                        
                     </div>
-                    </BrowserRouter>
+                </BrowserRouter>
 
 
             );

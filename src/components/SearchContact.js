@@ -3,6 +3,7 @@ import React from 'react';
 import unsplash from '../api/unsplash';
 import SearchBar from './SearchBar';
 import ContactList from './ContactList';
+import ContactListFromApi from './ContactListFromApi';
 
 class SearchContact extends React.Component{
     state = {images: []}
@@ -18,9 +19,12 @@ class SearchContact extends React.Component{
     render (){
         return (
             <div className="ui container" style={{marginTop: '10px'}}>
-             <SearchBar onSubmit={this.onSearchSubmit}/>
-             Found: {this.state.images.length} images
-             <ContactList images={this.state.images} />
+                <SearchBar onSubmit={this.onSearchSubmit}/>
+                <ContactListFromApi images={this.state.images} />
+                <div style={{margin: "10px"}}>
+                    All Contacts:
+                </div>
+                <ContactList images={this.state.images} />
              </div>
         );
     }    

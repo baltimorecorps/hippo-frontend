@@ -7,3 +7,8 @@
 .contact-list img{
     width: 250px;
 }
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}

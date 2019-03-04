@@ -5,10 +5,16 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import GoogleAuth from './GoogleAuth.js';
+import { Divider, Segment } from 'semantic-ui-react';
+
 
 import TextField from '@material-ui/core/TextField';
 
+import {Container } from 'semantic-ui-react'
+import { Grid } from '@material-ui/core';
+
 const AuthPage = ({classes}) => {
+  
   return (
     <main className={classes.main}>
       <Paper className={classes.paper}>
@@ -58,13 +64,16 @@ const AuthPage = ({classes}) => {
 
         </form>
 
-       <br></br>
-          <Typography component='h1' variant='h5'>
-            Or
-          </Typography>
-          <GoogleAuth/>
-          <br></br>
-
+        <br></br>
+        <Segment basic textAlign='center'>
+          <Divider horizontal> OR </Divider>
+            
+          <div className="col-centered">
+            <GoogleAuth />
+          </div>
+        
+        </Segment>
+             
 
       </Paper>
     </main>

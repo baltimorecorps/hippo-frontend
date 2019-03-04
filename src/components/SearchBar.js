@@ -6,7 +6,7 @@ class SearchBar extends React.Component {
     onFormSubmit = (event) => {
         event.preventDefault();
         
-        this.props.onSubmit(this.state.term);
+        this.props.onSubmit(this.state.term);//transmit the data "term" back to SearchContact component
     }
     render () {
         return (

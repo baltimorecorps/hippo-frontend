@@ -62,8 +62,8 @@ class ContactInfo extends React.Component {
                         </div>
 
                     </Row>
-                    <Row style={{height: "480px"}}>
-                        <Col className="column" xs={12} md={8} style={{backgroundColor:"#eaf9f9"}}>
+                    <Row style={{minHeight: "780px", minWidth: "800px", overflow: "scroll"}}>
+                        <Col className="column" xs={12} md={8} style={{backgroundColor:"#eaf9f9", overflow: "hidden"}}>
                             <Row>
                                 <div className="infoBlock">
                                     <h5> Work Experience </h5>
@@ -110,7 +110,7 @@ class ContactInfo extends React.Component {
                                     <br></br>
                             </div></Row>
                         </Col>
-                        <Col  className="accomColumn" xs={6} md={4} style={{backgroundColor:"#e6f9e3"}} >
+                        <Col  className="accomColumn" xs={6} md={4} style={{backgroundColor:"#e6f9e3", overflow:"hidden"}} >
                             <Row>
                                 <div className="infoBlock">
                                     <h5> Accomplishments </h5>
