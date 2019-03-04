@@ -4,10 +4,10 @@ import { Segment, Container, Icon, Card, Image, Button, Header } from 'semantic-
 
 const src2 = require('../images/organization.jpeg');
 const CardExampleCard = () => (
-    <div className="block ">
+    
     <Segment basic >
 
-        <Card.Group  >
+        <Card.Group >
             <Card href='/LogInSignUp'>
 
                 <Image style={{'height':200}} size='medium' src={require('../images/talent.jpeg')}  size ='medium' circular  />
@@ -17,10 +17,10 @@ const CardExampleCard = () => (
                         
                     <Card.Description>Join as a talent, you can find numerous positions/opportunities in NGO here. </Card.Description>
                 </Card.Content>
-                <Card.Content extra>
+                    <Card.Content extra>
                     <Button basic color='green'>
-                        LogIn / SignUp
-                    </Button>
+                                    LogIn / SignUp
+                                </Button>
                 </Card.Content>
             </Card>
 
@@ -55,7 +55,7 @@ const CardExampleCard = () => (
             </Card>
         </Card.Group>
     </Segment>
-    </div>
+   
     
   )
 
@@ -77,7 +77,7 @@ class Home extends React.Component {
                 </div>
                 
                 <br></br>
-                <div >
+                <div style={{width:"980px", margin:"0 auto"}} >
                         <CardExampleCard />
                 </div>    
             </Container>
