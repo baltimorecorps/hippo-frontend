@@ -23,7 +23,7 @@ const AuthPage = ({classes}) => {
           src='/logos/long.png' alt='Baltimore Corps Logo'
         />
         <Typography component='h1' variant='h5'>
-          Sign In
+          Log In
         </Typography>
 
         <form className={classes.form}>
@@ -51,15 +51,26 @@ const AuthPage = ({classes}) => {
             variant='contained'
             color='primary'
           >
-            Sign in
+            Log in
           </Button>
+
           <Button
             type=''
             fullWidth={true}
             variant='outlined'
             color='secondary'
           >
-            No password? Click here
+            Forgot password? Click here
+          </Button>
+          <br></br>
+          <br></br>
+          <Button
+            type=''
+            fullWidth={true}
+            variant='outlined'
+            color='secondary'
+          >
+            Sign Up
           </Button>
 
         </form>

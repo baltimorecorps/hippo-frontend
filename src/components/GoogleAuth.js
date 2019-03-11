@@ -62,7 +62,7 @@ class GoogleAuth extends React.Component {
                                     
                                 >
                             
-                                    Sign in with Google
+                                    Log in with Google
                                 </Button>
                             </Nav.Link>
 

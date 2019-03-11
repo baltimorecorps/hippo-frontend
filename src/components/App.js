@@ -9,7 +9,10 @@ import Home from "./Home.js";
 import LogInSignUp from "./LogInSignUp.js";
 import ContactForm from './ContactForm.js';
 import ContactInfo from './ContactInfo.js';
+import TalentHome from './TalentHome/TalentHome.js';
+import TalentProfile from './TalentProfile.js';
 import SearchContact from './SearchContact.js';
+import SearchContact2 from './SearchContact2.js';
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
@@ -29,16 +32,19 @@ const App = () => (
                     {/*<Navbar.Brand href="/ContactInfo">Profile</Navbar.Brand>*/}
 
                     <Nav className="mr-auto">
-                    
+
                     {/*<Nav.Link to={{pathname: '/ContactForm'}}> Contact-Form</Nav.Link>*/}
                     <Nav.Link href="/"> <Icon name='home' /></Nav.Link>
-                    <Nav.Link href="/LogInSignUp">LogIn/SignUp</Nav.Link>
+                    
                     <Nav.Link href="/SignUp"> Sign Up</Nav.Link>
                     <Nav.Link href="/ContactForm">Contact Form</Nav.Link>
+                    <Nav.Link href="/Talent"> Talent</Nav.Link>
                     <Nav.Link href="/ContactInfo"> Profile</Nav.Link>
+                    <Nav.Link href="/TalentProfile"> TalentProfile</Nav.Link>
                     <Nav.Link href="/SearchContact">Search Contact</Nav.Link>
-                    
-                    
+                    <Nav.Link href="/SearchContact2">Search Contact2</Nav.Link>
+
+
 
                     </Nav>
                     <Form inline>
@@ -51,13 +57,16 @@ const App = () => (
             {/*<Route path="/" component={AuthPage} />*/}
               {/*<Route exact path='/' component={AuthPage} />*/}
               <Route exact path='/' component={Home} />
-              <Route exact path='/LogInSignUp' component={LogInSignUp} />
+              
               <Route exact path='/SignUp' component={AuthPage} />
-              <Route exact path='/ContactInfo' component={ContactInfo} /> 
+              <Route exact path='/ContactInfo' component={ContactInfo} />
+              <Route exact path='/Talent' component={TalentHome} />
+              <Route exact path='/TalentProfile' component={TalentProfile} />
               <Route exact path='/ContactForm' component={ContactForm} />
               <Route exact path='/SearchContact' component={SearchContact} />
-              
-              
+              <Route exact path='/SearchContact2' component={SearchContact2} />
+
+
 
 
           </Switch>

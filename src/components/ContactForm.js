@@ -1,9 +1,11 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 /*import PropTypes from '../lib/PropTypes';*/
 import PropTypes from "prop-types";
 //import classNames from "classnames";
 //import MenuItem from "@material-ui/core/MenuItem";
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
+import { Button } from 'semantic-ui-react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -63,7 +65,7 @@ class TextFields extends React.Component {
                 src='/logos/long.png' alt='Baltimore Corps Logo'
                 />
                 <Typography component='h1' variant='h5'>
-                Contact Form 1
+                Contact Form 
                 </Typography>
                 <form className={classes.container} noValidate autoComplete="off">
                     <TextField
@@ -158,17 +160,14 @@ class TextFields extends React.Component {
                             shrink: true
                         }}
                         />
-
-                        <Button
-                            className={classes.submitButton}
-                            type='submit'
-                            fullWidth={true}
-                            variant='contained'
-                            color='primary'
-
-                        >
-                            Next
-                        </Button>
+                        <div >
+                          <Link to="/Talent"> <Button fluid 
+                              type='submit'                           
+                              color='primary'
+                          >
+                              Submit
+                          </Button ></Link>
+                        </div>                     
                     </form>
                 </Paper>
             </main>

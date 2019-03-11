@@ -8,7 +8,7 @@ const CardExampleCard = () => (
     <Segment basic >
 
         <Card.Group >
-            <Card href='/LogInSignUp'>
+            <Card href='/SignUp'>
 
                 <Image style={{'height':200}} size='medium' src={require('../images/talent.jpeg')}  size ='medium' circular  />
                     
@@ -24,7 +24,7 @@ const CardExampleCard = () => (
                 </Card.Content>
             </Card>
 
-            <Card href='/LogInSignUp'>
+            <Card href='/SearchContact'>
                 <Image style={{'height':200}} size='medium' src={src2}   circular/>
                 
                 <Card.Content>
@@ -38,7 +38,7 @@ const CardExampleCard = () => (
                 </Card.Content>
             </Card>
 
-            <Card href='/LogInSignUp'>
+            <Card href='/SearchContact2'>
                 <Image style={{'height':200}} size='large' src={require('../images/bc.jpeg')}  />
                 
                 <Card.Content>
