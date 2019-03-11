@@ -75,7 +75,7 @@ const AuthPage = ({classes}) => {
 
         </form>
 
-        <br></br>
+        
         <Segment basic textAlign='center'>
           <Divider horizontal> OR </Divider>
             
