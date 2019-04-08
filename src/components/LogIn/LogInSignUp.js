@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Button, Divider, Form, Grid, Segment } from 'semantic-ui-react'
-import './Home.css'
+import '../Other/Home.css'
 
 const LogInSignUp = () => (
   <div>

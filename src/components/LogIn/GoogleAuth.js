@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav";
-import ContactForm from './ContactForm.js';
+import ContactForm from './ContactForm';
 
 
 

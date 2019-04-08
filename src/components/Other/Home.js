@@ -2,7 +2,7 @@ import React from 'react';
 import './Home.css';
 import { Segment, Container, Icon, Card, Image, Button, Header } from 'semantic-ui-react'
 
-const src2 = require('../images/organization.jpeg');
+const src2 = require('../../images/organization.jpeg');
 const CardExampleCard = () => (
     
     <Segment basic >
@@ -10,7 +10,7 @@ const CardExampleCard = () => (
         <Card.Group >
             <Card href='/SignUp'>
 
-                <Image style={{'height':200}} size='medium' src={require('../images/talent.jpeg')}  size ='medium' circular  />
+                <Image style={{'height':200}} size='medium' src={require('../../images/talent.jpeg')}  size ='medium' circular  />
                     
                 <Card.Content>
                     <Card.Header>Talent</Card.Header>
@@ -39,7 +39,7 @@ const CardExampleCard = () => (
             </Card>
 
             <Card href='/SearchContact2'>
-                <Image style={{'height':200}} size='large' src={require('../images/bc.jpeg')}  />
+                <Image style={{'height':200}} size='large' src={require('../../images/bc.jpeg')}  />
                 
                 <Card.Content>
                     <Card.Header>Baltimore Corps Staff</Card.Header>

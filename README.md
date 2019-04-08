@@ -1,5 +1,46 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Structures:
+All important components are put inside the src/components folder,
+which consists the following subfolders:
+1 Login 2 Profile 3SearchContact 4TalentHome 5 Other
+For current milestone "ResumeBuilder", the relavant subfolder is the second one: Profile.
+
+The src/components/Profile subfolder consists 13 js files /components, which can be organized into 
+four groups, each group is focused on a certain function.
+Group1: 
+Experience.js
+ExperienceForm.js
+ExperienceItem.js
+ExperienceUpdateForm.js
+
+These four components are built around the aim of implementing functions for users to check/add/revise/delete
+any of their exprience items.This group is the only relevant group for our current SPRINT.
+
+
+Group2:
+Education.js
+EducationForm.js
+EducationItem.js
+
+Group3:
+Skill.js
+SkillForm.js
+SkillItem.js
+
+Group4:
+TalentProfile.js
+TalentBasicInfo.js
+
+Note: PastExperience.js is a component used for previous sprints but not useful for current or future sprints.
+
+
+
+
+
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from '../lib/PropTypes';
+import PropTypes from '../../lib/PropTypes';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import GoogleAuth from './GoogleAuth.js';
 import { Divider, Segment } from 'semantic-ui-react';
+import { BrowserRouter, Link} from 'react-router-dom';  
+import Nav from "react-bootstrap/Nav";
 
 
 import TextField from '@material-ui/core/TextField';
@@ -44,15 +46,19 @@ const AuthPage = ({classes}) => {
             fullWidth={true}
             autoComplete='current-password'
           />
-          <Button
-            className={classes.submitButton}
-            type='submit'
-            fullWidth={true}
-            variant='contained'
-            color='primary'
-          >
-            Log in
-          </Button>
+         
+            <Link to="/ContactForm" >
+              <Button
+                  className={classes.submitButton}
+                  type='submit'
+                  fullWidth={true}
+                  variant='contained'
+                  color='primary'
+                >
+                  Log in
+              </Button>                      
+            </Link>
+          
 
           <Button
             type=''

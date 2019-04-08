@@ -3,16 +3,16 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 
 import ErrorBoundary from '../atoms/ErrorBoundary';
-import AuthPage from './AuthPage';
+import AuthPage from './LogIn/AuthPage';
 
-import Home from "./Home.js";
-import LogInSignUp from "./LogInSignUp.js";
-import ContactForm from './ContactForm.js';
-import ContactInfo from './ContactInfo.js';
+import Home from "./Other/Home.js";
+import LogInSignUp from "./LogIn/LogInSignUp.js";
+import ContactForm from './LogIn/ContactForm.js';
+import ContactInfo from './Other/ContactInfo.js';
 import TalentHome from './TalentHome/TalentHome.js';
-import TalentProfile from './TalentProfile.js';
-import SearchContact from './SearchContact.js';
-import SearchContact2 from './SearchContact2.js';
+import TalentProfile from './Profile/TalentProfile.js';
+import SearchContact from './SearchContact/SearchContact.js';
+import SearchContact2 from './SearchContact/SearchContact2.js';
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";

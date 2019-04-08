@@ -24,7 +24,7 @@ class TalentHome extends React.Component {
             <Row style={{backgroundColor:"lightblue", height:"150px"}}>
               <Col style={{padding: "20px"}}>
                   <h1>Billy Daly</h1>
-                  <p><Link to="/ContactInfo"> <Button >View Your Profile-></Button> </Link></p>
+                  <p><Link to="/TalentProfile"> <Button >View Your Profile-></Button> </Link></p>
               </Col>
               <Col>
 

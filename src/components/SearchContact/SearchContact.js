@@ -1,6 +1,6 @@
 import React from 'react';
 
-import unsplash from '../api/unsplash';
+import unsplash from '../../api/unsplash';
 import SearchBar from './SearchBar';
 import ContactList from './ContactList';
 import ContactListFromApi from './ContactListFromApi';
