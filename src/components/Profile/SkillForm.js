@@ -4,7 +4,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from 'react-awesome-modal';
 import Autosuggest from 'react-autosuggest';
-import './autoSuggest.css'
+import './autoSuggest.css';
+import {Dropdown, Button, ButtonGroup} from 'react-bootstrap';
 
 
 const getSuggestionValue = suggestion => suggestion.name;
@@ -23,21 +24,17 @@ class SkillForm extends React.Component {
       this.state = {
         isUser: true,
         skill: "Java",
-        years: 5,
-        expNum: 4,
-        //date_start: new Date(),
-        //date_end: new Date(),
-        //description: '',
-        //type: 'Skill',
+        rank: 'Rank',
+        
         suggestions:[],
         value:'',
       };
       this.createItem = this.createItem.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
-      //this.handleSubmit = this.handleSubmit.bind(this);
-      this.handleChangeCompany = this.handleChangeCompany.bind(this);
-      this.handleChangePosition = this.handleChangePosition.bind(this);
-      console.log("start date: "+this.state.date_start);
+    }
+
+    selectRank = (eventKey, event)=>{
+      this.setState({rank: eventKey}); 
     }
 
     getSuggestions = /*async*/ value =>{
@@ -64,15 +61,14 @@ class SkillForm extends React.Component {
           return array;
       });
       */
-      console.log("all data");
-      console.log(all_data);
-      console.log("inputValue="+ inputValue);
       return all_data.filter(data=>data.name.toLowerCase().slice(0, inputLength)===inputValue);
     };
 
     onChange = (event, {newValue})=>{
+      //alert("onChange, newValue="+newValue);
       this.setState({
-          value: newValue
+          value: newValue,
+          skill: newValue,
       });
   };
   // Autosuggest will call this function every time you need to update suggestions.
@@ -89,66 +85,21 @@ class SkillForm extends React.Component {
       });
   };
 
-
-
-
+//todo CHANGE
     handleSubmit(event){
       event.preventDefault();
       //this.setState({shouldDisappear: true});
-      console.log("in handleSubmit");
       //this.props.func(this.state.company, this.state.position, true);
-      this.props.func(this.state.company, this.state.position, this.state.date_start, this.state.date_end, this.state.description,
-        this.state.type);
+      alert("SkillForm: HandleSubmit: skill="+ this.state.skill + ", rank="+this.state.rank);
+      this.props.func(this.state.skill, this.state.rank);
     }
     handleCancel=(event)=>{
       this.props.handleCancel();
     }
-    handleChangeCompany(event){
+    handleChange=(event)=>{
       event.preventDefault();
-      this.setState({company: event.target.value});
+      this.setState({[event.target.name]: event.target.value});
     }
-    handleChangePosition(event){
-      event.preventDefault();
-      this.setState({position: event.target.value});
-    }
-    //TODO
-    handleChangeDateStart =(date)=>{
-      if (date > this.state.date_end)
-        {
-            this.setState({
-                date_end: date
-              });
-        }
-
-        this.setState({
-          date_start: date
-        });
-    }
-
-
-    handleChangeDateEnd =(date)=>{
-      if (date < this.state.date_start)
-        {
-            this.setState({
-                date_start: date
-              });
-        }
-
-        this.setState({
-            date_end: date
-        });
-    }
-
-    handleChangeDescription = (event)=>{
-      event.preventDefault();
-      this.setState({description: event.target.value});
-    }
-    handleChangeType = (event)=>{
-      event.preventDefault();
-      this.setState({type: event.target.value});
-    }
-
-
     createItem = ()=>{
         const {value, suggestions} = this.state;
         // Autosuggest will pass through all these props to the input.
@@ -157,9 +108,6 @@ class SkillForm extends React.Component {
             value,
             onChange: this.onChange
         };
-
-
-
       if (this.props.displayForm === true){
         return (
           <div  >
@@ -181,18 +129,24 @@ class SkillForm extends React.Component {
                   </Form.Field>
 
                   <Form.Field>
-                    <label>
-                      Length:
-                      <input placeholder='e.g., 1 year' value={this.state.position} onChange={this.handleChangePosition} />
-                    </label>
-                  </Form.Field>
+                   
+                      <br></br>
+                      <Dropdown as={ButtonGroup} >
+                        <Button  size="lg" variant="success"> {this.state.rank}</Button>
+                        <Dropdown.Toggle split variant="warning" id="dropdown-custom-2" />
+                        <Dropdown.Menu className="super-colors">
+                            <Dropdown.Item eventKey="Started learning" onSelect={this.selectRank} active> Started learning </Dropdown.Item>
+                            <Dropdown.Item eventKey="understands" onSelect={this.selectRank}> Understands </Dropdown.Item>
+                            <Dropdown.Item eventKey="can teach with help" onSelect={this.selectRank}> Can teach with help </Dropdown.Item>
+                            <Dropdown.Item eventKey="can teach" onSelect={this.selectRank}> Can teach </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
 
                     
-                 
+                  </Form.Field>
+                  <br></br>
 
-                  
-
-                  <p> <input type="submit" value="Save" /> <input type="button" onClick={this.handleCancel} value="Cancel" /></p>
+                  <p> <Button type="submit" onClick={this.handleSubmit} value="Save"> Save</Button> <Button type="button" onClick={this.handleCancel} value="Cancel">Cancel</Button></p>
                 </Form>
 
               </div>

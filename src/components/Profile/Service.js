@@ -10,7 +10,7 @@ import './profile.css'
 //todo: check how to write clickable icon
 
 
-class Experience extends React.Component {
+class Service extends React.Component {
 
     state = {
       isUser: true,
@@ -26,26 +26,16 @@ class Experience extends React.Component {
       date_end: "1999-09-09",
       date_start: "1990-01-01",
       description: "working as a sde",
-      achievements: [{id: 0, description: "My achievement is....", achievement_order: 0}, {id: 1, description: "My achievement is ...", achievement_order: 1}],
+      achievements: [{id: 0, description: "achievement1", achievement_order: 0}, {id: 1, description: "achievement2", achievement_order: 1}],
       type: "Work",
-      //id: 0,
+      
     }
+
     
-    /*postDataToBackEnd(userInput, url){
-      const res = addData(userInput, url);
-      if (res === true){
-        alert("Data has been saved");
-        this.fetchData();
-      }
-      this.setState({
-        displayForm: false,
-      })
-    }*/
 
-
-    //Below 4 functions are for communicating with backend    ==============================================================//
-
+    //==================================================================//
     addData = (organization, title, date_start, date_end, achievements, type) => {
+
       const url = 'http://127.0.0.1:5000/api/contacts/1/experiences/';
       fetch(url, {
         method: 'POST',
@@ -68,7 +58,7 @@ class Experience extends React.Component {
       })
       .then(response => response.json())
       .then((json) => {
-        alert("response from POST data method:", json);
+        console.log("response from POST data method:", json);
         this.setState({
           displayForm: false,
         })
@@ -77,7 +67,7 @@ class Experience extends React.Component {
       })
     }
 
-    //GET
+
     fetchData = () =>{
       fetch('http://127.0.0.1:5000/api/contacts/1/experiences/')
       .then(res=>res.json())
@@ -99,8 +89,8 @@ class Experience extends React.Component {
         body: JSON.stringify({
           host: organization,
           title: title,
-          date_start: date_start,
-          date_end: date_end,
+          date_start: "1999-01-01",
+          date_end: "2000-01-01",
           achievements: achievements,
           id: exp_id,
           type: type,
@@ -132,12 +122,16 @@ class Experience extends React.Component {
         })
     }
 
-    
-    //=====================================================//
-    
+    //=============================================================//
+
+    componentDidMount(){
+      this.fetchData();
+    }
+
     handleClick(e){
       e.preventDefault();
       this.setState({
+        //add: true,
         displayForm: true,
       });
     }
@@ -145,11 +139,6 @@ class Experience extends React.Component {
       this.setState({
         displayForm: false,
       });
-    }
-
-    
-    componentDidMount(){
-      this.fetchData();
     }
 
     displayPastExperience = ()=>{
@@ -167,18 +156,25 @@ class Experience extends React.Component {
       return res;
     }
     displayOneExperience = ()=>{
-        return (        
+      
+        return (
+          
             <ExperienceItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
             deleteData={this.deleteData} organization={this.state.organization} title={this.state.title} type={this.state.type} achievements={this.state.achievements}
-            date_start={this.state.date_start} date_end={this.state.date_end} />         
+            date_start={this.state.date_start} date_end={this.state.date_end} />
+          
         );
       };
 
-    /*
+      
+    
+
+
+    
+
     onHover=()=>{
       this.setState({showHint: true});
-    }*/
-
+    }
 
     render(){
       var textStyle={
@@ -188,14 +184,16 @@ class Experience extends React.Component {
         color: "#5f6163",
       }
       return (
-        <div style={{marginTop: "10px", backgroundColor:"white", padding:"15px"}}>
+        <div style={{backgroundColor:"white", padding:"15px"}}>
           <Row>
               <Col xs md lg="4">
-                <div style={textStyle}>Experience </div>
+                <div style={textStyle}>Service and Leadership </div>
                 {/*<Button onClick={this.fetchData}> Click to see details </Button> */}
               </Col>
               <Col  xs md lg="8">
+
                   <button style={{display:'inline-block', float:"right" ,border: "none", backgroundColor:"transparent"}}onClick ={this.handleClick.bind(this)} >
+
                     <Icon style={{display:'inline-block'}} name='plus'/>
                     {this.state.showHint? <p> Click plus sign to add new experience </p>: null}
                   </button>
@@ -204,6 +202,7 @@ class Experience extends React.Component {
           <Divider/>
           <Row>
               <Col xs md lg="8">
+
                   {this.displayPastExperience()}
                   {this.displayOneExperience()}
               </Col>
@@ -213,8 +212,9 @@ class Experience extends React.Component {
                 </div>
               </Col>
           </Row>
+
         </div>
       );
     }
   };
-  export default Experience;
+  export default Service;

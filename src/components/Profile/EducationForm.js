@@ -3,50 +3,67 @@ import {Form} from 'semantic-ui-react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from 'react-awesome-modal';
+import {Icon, Button, Divider,Dropdown } from 'semantic-ui-react';
+
+
+
 
 
 class EducationForm extends React.Component {
     constructor(props){
       super(props);
-      //TODO
       this.state = {
         isUser: true,
-        institution: '',
+
+        organization: '',
         degree: '',
-        fieldOfStudy: '',
+        title: '',   //field of study
+        degreeOptions: [
+          { key: 'high_school',
+           text: 'high_school',
+          value: 'high_school'}, 
+          { key: 'associates',
+           text: 'associates',
+          value: 'associates'}, 
+          { key: 'undergraduate',
+           text: 'undergraduate',
+          value: 'undergraduate'}, 
+          { key: 'masters',
+           text: 'masters',
+          value: 'masters'}, 
+          { key: 'doctoral',
+           text: 'doctoral',
+          value: 'doctoral'}, 
+        ],
         date_start: new Date(),
         date_end: new Date(),
-        description: '',
-        type: 'Work',
+        achievements: [{description: ''}],
+        //description: '',
+        type: this.props.type,
       };
-      this.createItem = this.createItem.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
-      //this.handleSubmit = this.handleSubmit.bind(this);
-      this.handleChangeInstitution = this.handleChangeInstitution.bind(this);
-      this.handleChangeDegree = this.handleChangeDegree.bind(this);
-      console.log("start date: "+this.state.date_start);
     }
-    //TODO
-    handleSubmit(event){
+    handleClick=(evt)=>{
+      console.log("handel click dropdown button:"+ evt.target.name+ evt.target.value);
+      this.setState({
+        [evt.target.name]: evt.target.value,
+      })
+    }
+
+    handleSubmit =(event)=>{
       event.preventDefault();
-      //TODO may need to add fieldOfStudy
-      this.props.func(this.state.institution, this.state.degree, this.state.date_start, this.state.date_end, this.state.description,
+      console.log("in handleSubmit");
+      this.props.func(this.state.organization, this.state.degree, this.state.title, this.state.date_start, this.state.date_end, this.state.achievements,
         this.state.type);
-      console.log("EducationForm, institution, degree: ", this.state.institution, this.state.degree);
+      alert(`handleSubmit`);
     }
     handleCancel=(event)=>{
-      //this.setState({shouldDisappear: true});
       this.props.handleCancel();
-      console.log("in handleCancel");
     }
-    handleChangeInstitution(event){
+    handleChange=(event)=>{
       event.preventDefault();
-      this.setState({institution: event.target.value});
+      this.setState({[event.target.name]: event.target.value});
     }
-    handleChangeDegree(event){
-      event.preventDefault();
-      this.setState({degree: event.target.value});
-    }
+    
     //TODO
     handleChangeDateStart =(date)=>{
       if (date > this.state.date_end)
@@ -61,7 +78,6 @@ class EducationForm extends React.Component {
         });
     }
 
-
     handleChangeDateEnd =(date)=>{
       if (date < this.state.date_start)
         {
@@ -74,38 +90,64 @@ class EducationForm extends React.Component {
             date_end: date
         });
     }
+    handleChangeDescription = (idx)=> (evt)=>{
+        const newAchievements = this.state.achievements.map((achievement, sidx)=>{
+          if (idx!== sidx) return achievement;
+          return { ...achievement, description: evt.target.value};
+        });
+        this.setState({achievements: newAchievements});
+    };
 
-    handleChangeDescription = (event)=>{
-      event.preventDefault();
-      this.setState({description: event.target.value});
-    }
-    handleChangeType = (event)=>{
-      event.preventDefault();
-      this.setState({type: event.target.value});
-    }
 
+    handleRemove = (idx)=> (evt)=>{
+          this.setState({
+            achievements: this.state.achievements.filter((s,sidx)=> idx!==sidx)
+          });
+          console.log("achievements:");
+          console.log(this.state.achievements);
+    };
+
+    handleAdd = ()=>{
+      this.setState({
+        achievements: this.state.achievements.concat([{ description: "" }])
+      });
+    }
+    
 
     createItem = ()=>{
       if (this.props.displayForm === true){
         return (
-          <div  >
-            <Modal visible="true" width="400" height="550" effect="fadeInUp" >
+          <div>
+            <Modal visible="true" width="400" minHeight="750" effect="fadeInUp" >
               <div style={{ margin:"20px"}}>
                 <Form onSubmit={this.handleSubmit}>
                   <Form.Field>
-                     <label> Institution: </label>
-                     <input placeholder='Institution Name'value={this.state.institution} onChange={this.handleChangeInstitution} />
+                     <label> <h3> Institution:</h3> </label>
+                     <input placeholder='Institution Name' value={this.state.organization} name="organization" onChange={this.handleChange} />
                   </Form.Field>
 
                   <Form.Field>
                     <label>
-                      Degree:
-                      <input placeholder='Degree level' value={this.state.degree} onChange={this.handleChangeDegree} />
+                      <h3>Degree: </h3>
+                      {/*<input placeholder='Degree Name' value={this.state.degree} name="degree" onChange={this.handleChange} />*/}
+                      <Dropdown name='degree' onClick={this.handleClick}
+                        placeholder='Select Degree'
+                        fluid
+                        selection
+                        options={this.state.degreeOptions}
+                      />
+                    </label>
+                  </Form.Field>
+
+                  <Form.Field>
+                    <label>
+                      <h3>Field of Study </h3>
+                      <input placeholder='Field of Study' value={this.state.title} name="title" onChange={this.handleChange} />
                     </label>
                   </Form.Field>
 
                     <div className="comp_ezw">
-                      <div>Start Date </div>
+                      <h3>Start Date </h3>
                       <DatePicker
                       selected={this.state.date_start}
                       selectsStart
@@ -115,7 +157,8 @@ class EducationForm extends React.Component {
                       dateFormat="dd-MM-YYYY"
                       className="ezw_datepicker"
                       />
-                      <div className="ezw_to">End Date </div>
+                      
+                      <h3>End Date </h3>
                       <DatePicker
                       selected={this.state.date_end}
                       selectsEnd
@@ -126,15 +169,36 @@ class EducationForm extends React.Component {
                       className="ezw_datepicker"
                       />
                   </div>
-
+                  <br></br>
                   <Form.Field>
                     <label>
-                      Achievement:
-                      <textarea value={this.state.achivement} onChange={this.handleChangeAchievement} />
+                      <h3> Achievements:</h3>
+                      
+                      {this.state.achievements.map((achievement, idx) => 
+                            <div style={{display: "flex", direction: "row", alignItems: "center"}}>
+                              <input width="50%"
+                                  type="text"
+                                  placeholder={`Achievement #${idx + 1}`}
+                                  value={achievement.description}
+                                  onChange={this.handleChangeDescription(idx)}
+                                />
+                              <Button type="button" className="small" onClick={this.handleRemove(idx)}> <Icon name="delete"/> </Button> 
+                              </div>
+                      )}
+                          
+                      <br></br>
+                      <Button
+                          type="button"
+                          onClick={this.handleAdd}
+                          className="small"
+                        >
+                          Add Achievement
+                      </Button>
                     </label>
                   </Form.Field>
+                  <Divider/>
 
-                  <p> <input type="submit" value="Save" /> <input type="button" onClick={this.handleCancel} value="Cancel" /></p>
+                  <p> <Button size="large" type="submit" value="Save" onClick={this.handleSubmit}> Save</Button> <Button type="button" onClick={this.handleCancel} value="Cancel">Cancel</Button> </p>
                 </Form>
 
               </div>
@@ -152,71 +216,3 @@ class EducationForm extends React.Component {
     }
   }
   export default EducationForm;
-
-
-/*import React from 'react';
-
-
-class EducationForm extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      isUser: true,
-      //add: false,
-      school: '',
-      degree: '',
-      shouldDisappear : false,
-    };
-    this.createItem = this.createItem.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    //this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChangeSchool = this.handleChangeSchool.bind(this);
-    this.handleChangeDegree = this.handleChangeDegree.bind(this);
-  }
-  handleSubmit(event){
-    event.preventDefault();
-    this.setState({shouldDisappear: true});
-    console.log("in handleSubmit");
-    this.props.func(this.state.school, this.state.degree, true);
-  }
-  handleCancel=(event)=>{
-    this.setState({shouldDisappear: true});
-    console.log("in handleCancel");
-  }
-  handleChangeSchool(event){
-    event.preventDefault();
-    this.setState({school: event.target.value});
-  }
-  handleChangeDegree(event){
-    event.preventDefault();
-    this.setState({degree: event.target.value});
-  }
-
-  createItem = ()=>{
-    if (this.props.add == true && this.state.shouldDisappear==false){
-      return (
-        <div >
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              School:
-              <input value={this.state.school} onChange={this.handleChangeSchool} />
-            </label>
-            <label>
-              Degree:
-              <input value={this.state.degree} onChange={this.handleChangeDegree} />
-            </label>
-            <p> <input type="submit" value="Submit" /> <input type="button" onClick={this.handleCancel} value="Cancel" /></p>
-        </form>
-      </div>);
-    } else {
-      return null;
-    }
-  }
-
-  render(){
-    return <div>
-      {this.createItem()}
-    </div>;
-  }
-}
-  export default EducationForm;*/

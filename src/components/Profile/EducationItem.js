@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Icon, Grid} from 'semantic-ui-react'
+import {Button, Icon, Grid, Item} from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
 import EducationUpdateForm from './EducationUpdateForm'
 import './profile.css';
@@ -10,13 +10,14 @@ class EducationItem extends React.Component {
     state = {
       isUser: true,
       displayUpdateForm: false,
-      institution: this.props.institution,
-      degree: this.props.title,
-      fieldOfStudy: this.props.fieldOfStudy,
+      organization: this.props.organization,
+      degree: this.props.degree,
+      description: this.props.description,
       date_start: this.props.date_start,
       date_end: this.props.date_end,
-      description: this.props.description,
-      type: 'Education',
+      
+      achievements: this.props.achievements,
+      type: this.props.type,
     };
     onEdit = (e) => {
       e.preventDefault();
@@ -26,10 +27,8 @@ class EducationItem extends React.Component {
       console.log("OnEDit");
     }
     //TODO field is not enough
-    onSubmitEdit = (exp_id, institution, title, date_start, date_end, description, type)=>{
-
-
-      this.props.putData(exp_id, institution, title, date_start, date_end, description, type);
+    onSubmitEdit = (exp_id, organization, degree, description, date_start, date_end,achievements,  type)=>{
+      this.props.putData(exp_id, organization, degree, description, date_start, date_end, achievements, type);
 
       this.setState({
         displayUpdateForm: false,
@@ -59,14 +58,21 @@ class EducationItem extends React.Component {
           <div style={textStyleSmall}>
             <Grid style={{marginLeft: "20px"}}>
               <Grid.Column floated='left' width={2}>
-                <button type="button" className="btn btn-primary btn-circle btn-xl"><i className="fa fa-check"> {this.props.institution.charAt(0)} </i></button>
+                <button type="button" className="btn btn-primary btn-circle btn-xl"><i className="fa fa-check"> {this.props.organization.charAt(0)} </i></button>
 
               </Grid.Column>
 
               <Grid.Column floated='left' width={11} style={{marginTop: "5px"}}>
-                <h3> <strong>{this.props.institution}, {this.props.degree} </strong> </h3>
-                <p> {this.props.date_start} - {this.props.date_end} </p>
-                <p> {this.props.description} </p>
+                <h2> <strong>{this.props.organization}, {this.props.degree} </strong> </h2>
+                <p>{ this.props.description} </p>
+                <p>{this.props.date_start} -- {this.props.date_end}</p>
+                <div>
+                  <p>Achievements:</p>
+                  {this.props.achievements.map(item=>
+                      <p key={item.achievement_order} > {item.achievement_order+1}: {item.description} </p>
+                  )}
+                  
+                </div>
               </Grid.Column>
             </Grid>
           </div>
@@ -88,7 +94,7 @@ class EducationItem extends React.Component {
 
 
         {this.state.displayUpdateForm?
-        <EducationUpdateForm handleCancel={this.handleCancel} func={this.onSubmitEdit} exp_id={this.props.exp_id} /> : null}
+        <EducationUpdateForm displayUpdateForm={this.state.displayUpdateForm} type={this.state.type} handleCancel={this.handleCancel} func={this.onSubmitEdit} exp_id={this.props.exp_id} /> : null}
 
 
         </div>

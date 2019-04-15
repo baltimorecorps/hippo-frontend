@@ -10,32 +10,22 @@ class SkillItem extends React.Component {
     state = {
       isUser: true,
       displayUpdateForm: false,
-      //TODO
-      //organization: this.props.organization,
+
       skill: this.props.skill,
-      length: this.props.length,
-      expNum: this.props.expNum,
-      //date_start: this.props.date_start,
-      //date_end: this.props.date_end,
-      //description: this.props.description,
+      rank: this.props.rank,
       type: 'Skill',
     };
-
-
 
     onEdit = (e) => {
       e.preventDefault();
       this.setState({
         displayUpdateForm: true,
       })
-      console.log("OnEDit");
+      
     }
 
-    onSubmitEdit = (exp_id, skill, length)=>{
-
-
-      this.props.putData(exp_id, skill, length);
-
+    onSubmitEdit = (id, skill, rank)=>{
+      this.props.putData(id, skill, rank);  //TODO: check for endpoint in backend 
       this.setState({
         displayUpdateForm: false,
       })
@@ -47,9 +37,8 @@ class SkillItem extends React.Component {
     }
 
     onDelete = (e) => {
-      const exp_id = this.props.exp_id;
-      this.props.deleteData(exp_id);
-
+      const id = this.props.id;
+      this.props.deleteData(id);
     }
 
 
@@ -65,13 +54,11 @@ class SkillItem extends React.Component {
           <Grid style={{marginLeft: "20px"}}>
             <Grid.Column floated='left' width={2}>
               <button type="button" className="btn btn-warning btn-circle btn-xl"><i className="fa fa-check"> {this.props.skill.charAt(0)} </i></button>
-
             </Grid.Column>
 
             <Grid.Column floated='left' width={11} style={{marginTop: "5px"}}>
               <h3> <strong>{this.props.skill} </strong> </h3>
-              <p> {this.props.length} - {this.props.expNum} </p>
-
+              <p>Rank: {this.props.rank}</p>
             </Grid.Column>
           </Grid>
         </div>
@@ -86,7 +73,6 @@ class SkillItem extends React.Component {
       //console.log("render SkillItem")
       return <div>
           <Grid style={{marginTop: "20px"}}>
-
             <Grid.Column floated='left' width={13}>
               {this.displayOneSkill()}
             </Grid.Column>
@@ -98,7 +84,7 @@ class SkillItem extends React.Component {
 
 
           {this.state.displayUpdateForm?
-          <SkillUpdateForm handleCancel={this.handleCancel} func={this.onSubmitEdit} exp_id={this.props.exp_id} /> : null}
+          <SkillUpdateForm displayUpdateForm={this.state.displayUpdateForm} handleCancel={this.handleCancel} func={this.onSubmitEdit} id={this.props.id} /> : null}
 
 
         </div>

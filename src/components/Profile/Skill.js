@@ -17,9 +17,7 @@ class Skill extends React.Component {
           add: false,
           display: false,
           displayForm: false,
-          showHint: false,
           experiences: [],
-
           skill: '',
           length: '',
           expNum: 1,
@@ -27,38 +25,21 @@ class Skill extends React.Component {
           date_start: "1990-01-01",
           description: "this is description.....",
           type: "Skill",
-          id: 16,
+          //id: 16,
         }
-
-        handleClick(e){
-          e.preventDefault();
-          this.setState({
-            //add: true,
-            displayForm: true,
-          });
-        }
-        
-        handleCancel = ()=>{
+//The following four functions are for communicating with the backend
+        addData = (skill, rank) => {
           this.setState({
             displayForm: false,
           });
-        }
-
-        addData = (institution, degree, date_start, date_end, description) => {
 
           const url = 'http://127.0.0.1:5000/api/contacts/1/experiences/';
           fetch(url, {
             method: 'POST',
             mode :'cors',
             body: JSON.stringify({
-
-              host: institution,
-              title: degree,
-              date_start: date_start,
-              date_end: date_end,
-              description: description,
-              id: this.state.id+1,
-              type: this.state.type,
+              tag: skill,
+              score: rank,
             }),
             headers: {
               'Content-Type': 'application/json',
@@ -70,24 +51,10 @@ class Skill extends React.Component {
           })
           .then(response => response.json())
           .then((json) => {
-            // handle success
-            //this.setState({
-              //experiences: json.data,
-            //})
             console.log("response from POST data method:", json);
-
-            //change add state, so that the form would disappear
-            const new_id = this.state.id;
-            this.setState({
-              displayForm: false,
-              id: new_id + 1,
-            })
             //fetch data again so that the added data can be displayed
             this.fetchData();
           })
-
-
-
         }
 
 
@@ -101,70 +68,6 @@ class Skill extends React.Component {
             }) }
           )
         }
-
-        componentDidMount(){
-          this.fetchData();
-        }
-
-
-
-        displayPastSkill = ()=>{
-          const res = this.state.experiences.map(item=>{
-            return (
-              <div key={item.id} style={{marginLeft:"20px"}} className={item}>
-                <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={item.id} institution={item.host} degree={item.degree} descrition={item.descrition}
-                date_start={item.date_start} date_end={item.date_end} />
-              </div>
-            );
-          });
-
-          return res;
-        }
-/*
-        displayNewSkill =() =>{
-          return <div style={{marginLeft:"20px"}}>
-            <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={this.state.id} institution={this.state.institution} degree={this.state.degree} descrition={this.state.descrition}
-                date_start="Sept 2015" date_end="Sept 2018" />
-          </div>
-        }*/
-        /*
-        displayNewEducation =() =>{
-          return <div style={{marginLeft:"20px"}}>
-            <EducationItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={this.state.id} institution={this.state.institution} degree={this.state.degree} descrition={this.state.descrition}
-                date_start="Sept 2015" date_end="Sept 2018" />
-          </div>
-        }*/
-        displayFunctions= ()=>{
-
-          return <div style={{marginLeft:"20px"}}>
-            <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={this.state.id} skill="Data Architecture" length="4 years" expNum="3 experiences"
-                 />
-          </div>
-        }
-
-        displayTopics = ()=>{
-
-          return <div style={{marginLeft:"20px"}}>
-            <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={this.state.id} skill="Public Health" length="4 years" expNum="3 experiences"
-                 />
-          </div>
-
-        }
-        displaySkills = ()=>{
-
-          return <div style={{marginLeft:"20px"}}>
-            <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={this.state.id} skill="C++" length="4 years" expNum="3 experiences"
-                 />
-          </div>
-
-        }
-
 
         async putData (exp_id, institution, degree) {
           console.log("!!PUT data ");
@@ -209,12 +112,69 @@ class Skill extends React.Component {
             })
         }
 
+        handleClick(e){
+          e.preventDefault();
+          this.setState({
+            //add: true,
+            displayForm: true,
+          });
+        }
+
+        handleCancel = ()=>{
+          this.setState({
+            displayForm: false,
+          });
+        }
+
+        
+
+        componentDidMount(){
+          this.fetchData();
+        }
 
 
+//TODO: fields need to change
+        displayPastSkill = ()=>{
+          const res = this.state.experiences.map(item=>{
+            return (
+              <div key={item.id} style={{marginLeft:"20px"}} className={item}>
+                <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
+                deleteData={this.deleteData} exp_id={item.id} institution={item.host} degree={item.degree} descrition={item.descrition}
+                date_start={item.date_start} date_end={item.date_end} />
+              </div>
+            );
+          });
 
+          return res;
+        }
 
-        onHover=()=>{
-          this.setState({showHint: true});
+        displayFunctions= ()=>{
+          //TODO
+
+          return <div style={{marginLeft:"20px"}}>
+            <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
+                deleteData={this.deleteData} exp_id={this.state.id} skill="Data Architecture" rank="Understands"
+                 />
+          </div>
+        }
+
+        displayTopics = ()=>{
+
+          return <div style={{marginLeft:"20px"}}>
+            <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
+                deleteData={this.deleteData} exp_id={this.state.id} skill="Public Health" rank="Can teach"
+                 />
+          </div>
+
+        }
+        displaySkills = ()=>{
+
+          return <div style={{marginLeft:"20px"}}>
+            <SkillItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
+                deleteData={this.deleteData} exp_id={this.state.id} skill="C++" rank="Understands"
+                 />
+          </div>
+
         }
 
         render(){

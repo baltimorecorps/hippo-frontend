@@ -1,12 +1,12 @@
 import React from 'react';
 import {Button, Icon, Grid} from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
-import ExperienceUpdateForm from './ExperienceUpdateForm'
+import AccomplishmentUpdateForm from './AccomplishmentUpdateForm'
 import './profile.css';
 
 
 
-class ExperienceItem extends React.Component {
+class AccomplishmentItem extends React.Component {
     state = {
       isUser: true,
       displayUpdateForm: false,
@@ -14,7 +14,8 @@ class ExperienceItem extends React.Component {
       title: this.props.title,
       date_start: this.props.date_start,
       date_end: this.props.date_end,
-      achievements: this.props.achievements,
+      //achievements: this.props.achievements,
+      description: this.props.description,
       type: this.props.type,
     };
 
@@ -28,8 +29,8 @@ class ExperienceItem extends React.Component {
       console.log("OnEDit");
     }
 
-    onSubmitEdit = (exp_id, organization, title, date_start, date_end,achievements, type)=>{
-      this.props.putData(exp_id, organization, title, date_start, date_end,achievements, type);
+    onSubmitEdit = (exp_id, organization, title, date_start, date_end,description, type)=>{
+      this.props.putData(exp_id, organization, title, date_start, date_end,description, type);
       
 
       this.setState({
@@ -62,20 +63,16 @@ class ExperienceItem extends React.Component {
           <div style={textStyleSmall}>
             <Grid style={{marginLeft: "20px"}}>
               <Grid.Column floated='left' width={2}>
-                <button type="button" className="btn btn-success btn-circle btn-xl"><i className="fa fa-check"> {this.props.organization.charAt(0)} </i></button>
+                <button type="button" className="btn btn-primary btn-circle btn-xl"><i className="fa fa-check"> {this.props.organization.charAt(0)} </i></button>
               </Grid.Column>
 
               <Grid.Column floated='left' width={11} style={{marginTop: "5px"}}>
                 <h2> <strong>{this.props.organization}, {this.props.title} </strong> </h2>
-                <p>  {this.props.date_start} -- {this.props.date_end} </p>
+                <p>  Date Issued: {this.props.date_start} </p>
+                <p>  {this.props.description} </p>
 
             
-                <div>
-                  <p>Achievements:</p>
-                  {this.state.achievements.map(item=>{
-                      return <p key={item.achievement_order}>{item.achievement_order+1}: {item.description}</p>
-                  })}
-                </div>
+                
 
               </Grid.Column>
             </Grid>
@@ -83,8 +80,7 @@ class ExperienceItem extends React.Component {
         );
     }
     render(){
-      console.log("render experienceItem")
-      console.log("this.state.displayUpdateForm="+this.state.displayUpdateForm)
+      //console.log("render experienceItem")
       return <div>
         <Grid style={{marginTop: "20px"}}>
 
@@ -99,10 +95,10 @@ class ExperienceItem extends React.Component {
 
 
         {this.state.displayUpdateForm?
-        <ExperienceUpdateForm displayUpdateForm={this.state.displayUpdateForm}  handleCancel={this.handleCancel} func={this.onSubmitEdit} exp_id={this.props.exp_id} /> : null}
+        <AccomplishmentUpdateForm displayUpdateForm={this.state.displayUpdateForm}  handleCancel={this.handleCancel} func={this.onSubmitEdit} exp_id={this.props.exp_id} /> : null}
 
 
         </div>
     }
   }
-  export default ExperienceItem;
+  export default AccomplishmentItem;

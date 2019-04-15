@@ -18,16 +18,18 @@ class Education extends React.Component {
           display: false,
           displayForm: false,
           showHint: false,
+
           experiences: [],
-          institution: 'Syracuse University',
+          organization: 'Syracuse University',
           degree: 'Master',
-          fieldOfStudy: 'Computer Science',
+
+          description: 'Computer Science',
           date_end: "1999-09-09",
           date_start: "1990-01-01",
-          description: "this is description.....",
-          achievements: [],
+          
+          achievements: [{id: 0, description: "My achievement is....", achievement_order: 0}, {id: 1, description: "My achievement is ...", achievement_order: 1}],
           type: "Education",
-          id: 20,
+          //id: 0,
         }
 
         handleClick(e){
@@ -43,21 +45,23 @@ class Education extends React.Component {
           });
         }
 
-        addData = (institution, degree, date_start, date_end, achivements) => {
-
+//below 4 functions are for communicating with backend
+    //POST 
+        addData = (organization, degree, description,date_start, date_end, achievements, type) => {
           const url = 'http://127.0.0.1:5000/api/contacts/1/experiences/';
           fetch(url, {
             method: 'POST',
             mode :'cors',
             body: JSON.stringify({
 
-              host: institution,
+              host: organization,
               degree: degree,
+              description: description,
               date_start: date_start,
               date_end: date_end,
+              //description: descrition;
+              achievements:achievements,
               
-              achivements:[],
-              id: this.state.id+1,
               type: this.state.type,
             }),
             headers: {
@@ -70,27 +74,18 @@ class Education extends React.Component {
           })
           .then(response => response.json())
           .then((json) => {
-            // handle success
-            //this.setState({
-              //experiences: json.data,
-            //})
+            
             console.log("response from POST data method:", json);
-
-            //change add state, so that the form would disappear
-            const new_id = this.state.id;
             this.setState({
               displayForm: false,
-              id: new_id + 1,
+              //id: new_id + 1,
             })
             //fetch data again so that the added data can be displayed
             this.fetchData();
           })
-
-
-
         }
 
-
+   //GET
         fetchData = () =>{
           fetch('http://127.0.0.1:5000/api/contacts/1/experiences/')
           .then(res=>res.json())
@@ -102,36 +97,8 @@ class Education extends React.Component {
           )
         }
 
-        componentDidMount(){
-          this.fetchData();
-        }
-
-
-
-        displayPastEducation = ()=>{
-          const res = this.state.experiences.map(item=>{
-            return (
-              <div key={item.id} style={{marginLeft:"20px"}} className={item}>
-                <EducationItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={item.id} institution={item.host} degree={item.degree} achivements={item.achivements}
-                date_start={item.date_start} date_end={item.date_end} />
-              </div>
-            );
-          });
-
-          return res;
-        }
-
-        displayNewEducation =() =>{
-          return <div style={{marginLeft:"20px"}}>
-            <EducationItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={this.state.id} institution={this.state.institution} degree={this.state.degree} descrition={this.state.descrition}
-                date_start="Sept 2015" date_end="Sept 2018" />
-          </div>
-        }
-
-
-        async putData (exp_id, institution, degree, date_start, date_end, achivements, type) {
+        //PUT
+        async putData (exp_id, organization, degree, description, date_start, date_end, achievements, type) {
           console.log("!!PUT data ");
           const url = 'http://127.0.0.1:5000/api/contacts/1/experiences/' + exp_id;
 
@@ -139,11 +106,12 @@ class Education extends React.Component {
             method: 'PUT',
             mode :'cors',
             body: JSON.stringify({
-              host: institution,
+              host: organization,
               degree: degree,
+              description: description,
               date_start: date_start,
               date_end: date_end,   //"2000-01-01",
-              achivements: achivements,
+              achievements: achievements,
               id: exp_id,
               type: type,
             }),
@@ -158,9 +126,9 @@ class Education extends React.Component {
           console.log("response from PUT Education:", json);
 
           this.fetchData();
-
-
         }
+
+        //DELETE
         deleteData = (exp_id) =>{
           fetch('http://127.0.0.1:5000/api/contacts/1/experiences/'+ exp_id, {
             method: 'DELETE',
@@ -173,14 +141,46 @@ class Education extends React.Component {
             this.fetchData();
             })
         }
+//====================================================================//
+
+        componentDidMount(){
+          this.fetchData();
+        }
 
 
 
+        displayPastEducation = ()=>{
+          const res = this.state.experiences.map(item=>{
+            return (
+              <div key={item.id} style={{marginLeft:"20px"}} className={item}>
+                <EducationItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
+                deleteData={this.deleteData} exp_id={item.id} organization={item.organization} degree={item.degree} 
+                description={item.description} achievements={item.achievements}
+                date_start={item.date_start} date_end={item.date_end} type={item.type} />
+              </div>
+            );
+          });
+
+          return res;
+        }
+
+        displayNewEducation =() =>{
+          return <div style={{marginLeft:"20px"}}>
+            <EducationItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
+                deleteData={this.deleteData} exp_id={this.state.id} organization={this.state.organization} degree={this.state.degree} 
+                description={this.state.description} achievements={this.state.achievements}
+                date_start={this.state.date_start} date_end={this.state.date_end} type={this.state.type}  />
+          </div>
+        }
+
+        
 
 
+
+/*
         onHover=()=>{
           this.setState({showHint: true});
-        }
+        }*/
 
         render(){
           var textStyle={
@@ -214,7 +214,7 @@ class Education extends React.Component {
                   </Col>
                   <Col xs md lg="2">
                     <div stype={{marginTop: "20px"}}>
-                      <EducationForm displayForm = {this.state.displayForm}  func={this.addData} handleCancel ={this.handleCancel} />
+                      <EducationForm type={this.state.type} displayForm = {this.state.displayForm}  func={this.addData} handleCancel ={this.handleCancel} />
                     </div>
                   </Col>
               </Row>
@@ -232,14 +232,14 @@ class Education extends React.Component {
       console.log("handle click");
     }
     addEducation = (s, d, b)=> {
-      this.setState({institution:s, degree: d, display: true});
+      this.setState({organization:s, degree: d, display: true});
     }
 
     displayPastEducation = ()=>{
       return (
         <div style={{marginLeft:"20px"}}>
           <Row>
-            <EducationItem institution="Boston College" degree="Master"/>
+            <EducationItem organization="Boston College" degree="Master"/>
           </Row>
 
 
@@ -252,7 +252,7 @@ class Education extends React.Component {
         return (
           <div style={{marginLeft:"20px"}}>
             <Row>
-              <EducationItem institution={this.state.institution} degree={this.state.degree}, fieldOfStudy={this.state.fieldOfStudy} date_start={this.state.date_start} />
+              <EducationItem organization={this.state.organization} degree={this.state.degree}, fieldOfStudy={this.state.fieldOfStudy} date_start={this.state.date_start} />
             </Row>
           </div>
         );

@@ -3,6 +3,8 @@ import {Container, Grid, Row, Col} from "react-bootstrap";
 import TalentBasicInfo from "./TalentBasicInfo";
 import Experience from "./Experience";
 import Education from "./Education";
+import Service from "./Service";
+import Accomplishment from "./Accomplishment";
 import Skill from "./Skill";
 import html2canvas from 'html2canvas';
 //import * as jsPDF from 'jspdf'
@@ -76,9 +78,10 @@ class TalentProfile extends React.Component {
                 </Row>
                 <Row >
                   <Col >
-
                     <Experience />
                     <Education/>
+                    <Service/>
+                    <Accomplishment/>
                     <Skill/>
                     {/*}
                     <div style={{display:"flex", justifyContent: 'center'}}>
