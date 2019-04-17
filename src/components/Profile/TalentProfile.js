@@ -6,6 +6,7 @@ import Education from "./Education";
 import Service from "./Service";
 import Accomplishment from "./Accomplishment";
 import Skill from "./Skill";
+import Resume from "./Resume";
 import html2canvas from 'html2canvas';
 //import * as jsPDF from 'jspdf'
 import jsPDF from 'jspdf';
@@ -83,6 +84,7 @@ class TalentProfile extends React.Component {
                     <Service/>
                     <Accomplishment/>
                     <Skill/>
+                    <Resume />
                     {/*}
                     <div style={{display:"flex", justifyContent: 'center'}}>
                       <Button onClick={this.printDocument}>Download Resume</Button>

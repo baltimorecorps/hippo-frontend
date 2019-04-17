@@ -1,0 +1,392 @@
+.pdfBorder {
+    position: relative;
+    width: 612px;
+    height: 792px;
+    margin: auto;
+
+
+    border-style: none;
+    border-color: lightgrey;
+    border-width: thin;
+
+}
+
+.pdfHeader {
+    position: relative;
+    width: inherit;
+    height: 108px;
+    background-color: #F4F0DE;
+}
+
+.headerItems {
+    position: relative;
+    width: inherit;
+    height: 75px;
+    /*
+    border-color: red;
+    border-style: solid;
+    border-width: thin;
+    */
+}
+
+.headerCircle {
+    position: relative;
+    float: left;
+    width: 72px;
+    height: 72px;
+    margin: 18px 18px 0px 36px;
+    background-color: white;
+
+    border-color: #4F81BD;
+    border-style: solid;
+    border-width: 2.25px;
+    border-radius: 100%;
+
+    font-size: 36px;
+    font-family: 'Bitter',serif;
+    text-align: center;
+    color: #4F81BD;
+    line-height: 72px;
+
+}
+
+.headerName {
+    position: relative;
+    float: left;
+    width: 288px;
+    height: 72px;
+
+    border-color: black;
+    border-style: none;
+    border-width: thin;
+    margin-right: 9px;
+    margin-top: 18px;
+}
+
+.Name {
+    position: relative;
+    font-family: 'Bitter', serif;
+    font-size: 24px;
+    color: #9BBB59;
+    font-weight: bold;
+}
+
+.Roles {
+    position: relative;
+    font-family: 'Zilla Slab', serif;
+    font-size: 14px;
+    color: #666666;
+}
+
+.headerContact {
+    position: relative;
+    float: left;
+    width: 180px;
+    height: 72px;
+    margin-top: 18px;
+
+    border-color: orange;
+    border-style: none;
+    border-width: thin;
+
+}
+
+.contactItem {
+    position: relative;
+    margin-bottom: 3px;
+}
+
+.itemSymbol {
+    overflow: hidden;
+    position:relative;
+    display: inline-block;
+
+    width: 18px;
+    height: 18px;
+    border-color: #4F81BD;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 100%;
+}
+
+.itemText {
+    overflow: hidden;
+    position:relative;
+    display: inline-block;
+    height: 18px;
+
+    font-size: 9px;
+    line-height: 18px;
+    font-family: 'Bitter', serif;
+    color: #666666;
+
+}
+
+.borderItems {
+    clear: left;
+    position: relative;
+    margin: auto;
+    top: -18px;
+
+}
+
+.Source {
+    position: relative;
+    margin: auto;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Zilla Slab', serif;
+    color: #666666;
+}
+
+.profileBox {
+    position: relative;
+    height: 30px;
+    width: 198px;
+    background-color: #9BBB59;
+    margin: auto;
+
+    text-align: center;
+    line-height: 30px;
+    font-family: 'Zilla Slab', serif;
+    font-size: 12px;
+    color: white;
+}
+
+.pdfBody {
+    position: relative;
+    width: inherit;
+    height: 684px;
+}
+
+.mainCol {
+    position: relative;
+    width: 369px;
+    top: 18px;
+    left: 18px;
+    float: left;
+
+    border-color: lightgrey;
+    border-width: thin;
+    border-style: none;
+
+}
+.sideCol {
+    position: relative;
+    width: 180px;
+    top: 18px;
+    right: 18px;
+    float: right;
+
+    border-color: lightblue;
+    border-width: thin;
+    border-style: none;
+}
+
+.expSection {
+    position: relative;
+    width: inherit;
+    margin-bottom: 9px;
+
+    border-color: green;
+    border-width: thin;
+    border-style: none;
+}
+
+.sectionTitle {
+    font-size: 14px;
+    font-family: 'Zilla Slab', serif;
+    color: #4F81BD;
+    padding-bottom: 2px;
+    margin-bottom: 9px;
+
+    border-bottom-color: #4F81BD;
+    border-bottom-style: solid;
+    border-bottom-width: 1.5px;
+}
+
+.expRecord {
+    position: relative;
+    width: inherit;
+    min-height: 36px;
+    padding-left: 3px;
+    margin-bottom: 12px;
+
+    border-left-color: #9BBB59;
+    border-left-style: solid;
+    border-left-width: 1.5px;
+
+}
+
+.expDates {
+    font-size: 11px;
+    font-family: 'Bitter', serif;
+    color: #0a0a0a;
+}
+
+.expName {
+    font-size: 11px;
+    font-family: 'Bitter', serif;
+    color: #666666;
+}
+.objList {
+    width: 97%;
+    font-size: 9px;
+    font-family: 'Quicksand', sans-serif;
+    color: #0a0a0a;
+    margin-top: 3px;
+}
+
+.objList ul {
+    padding-top: 0px;
+    padding-left: 0px;
+    list-style-type: none;
+    margin-top: 0;
+}
+
+.objList ul li {
+    margin-bottom: 6px;
+}
+
+.roleItem {
+    position: relative;
+    margin-bottom: 12px;
+
+    border-color: blue;
+    border-width: thin;
+    border-style: none;
+}
+
+.roleSymbol {
+    overflow: hidden;
+    position:relative;
+    display: inline-block;
+
+    width: 12px;
+    height: 12px;
+    border-color: #666666;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 100%;
+}
+
+.roleText {
+    overflow: hidden;
+    position:relative;
+    display: inline-block;
+    height: 12px;
+
+    font-size: 11px;
+    line-height: 12px;
+    font-family: 'Bitter', serif;
+    color: #666666;
+
+}
+
+.roleTag {
+    position: relative;
+    padding-left: 18px;
+
+    font-size: 9px;
+    font-family: 'Quicksand', sans-serif;
+    color: #0a0a0a;
+    margin-bottom: 6px;
+
+
+}
+
+.tagName {
+    position:relative;
+    display: inline-block;
+    width: 108px;
+
+    font-size: 9px;
+    font-family: 'Quicksand', sans-serif;
+    color: #0a0a0a;
+
+    border-color: green;
+    border-width: thin;
+    border-style: none;
+
+}
+
+.tagName span {
+    display: inline-block;
+    vertical-align: top;
+    line-height: normal;
+}
+
+.tagScore {
+    position:relative;
+    display: inline-block;
+    height: 12px;
+    width: 45px;
+    text-align: right;
+
+    font-size: 9px;
+    font-family: 'Quicksand', sans-serif;
+    color: #0a0a0a;
+
+    border-color: green;
+    border-width: thin;
+    border-style: none;
+}
+
+.accompRecord {
+    position: relative;
+    width: inherit;
+    margin-bottom: 6px;
+}
+
+.accompDate {
+    position:relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 54px;
+
+    font-size: 11px;
+    font-family: 'Bitter', sans-serif;
+    color: #0a0a0a;
+
+    border-color: green;
+    border-width: thin;
+    border-style: none;
+}
+
+.accompText {
+    position:relative;
+    display: inline-block;
+    width: 117px;
+
+    border-color: blue;
+    border-width: thin;
+    border-style: none;
+}
+
+.accompName {
+    position:relative;
+    width: inherit;
+    margin-bottom: 3px;
+
+    font-size: 11px;
+    font-family: 'Bitter', sans-serif;
+    color: #666666;
+
+    border-color: pink;
+    border-width: thin;
+    border-style: none;
+}
+
+
+.accompSub {
+    position:relative;
+    width: inherit;
+
+    font-size: 9px;
+    font-family: 'Quicksand', sans-serif;
+    color: #0a0a0a;
+
+    border-color: lightgreen;
+    border-width: thin;
+    border-style: none;
+}

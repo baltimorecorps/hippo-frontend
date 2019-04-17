@@ -19,6 +19,7 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Button from "react-bootstrap/Button";
 import theme from '../styles/theme';
+import ResumeOne from './Profile/ResumeOne.js';
 import { Icon } from 'semantic-ui-react';
 
 
@@ -65,6 +66,7 @@ const App = () => (
               <Route exact path='/ContactForm' component={ContactForm} />
               <Route exact path='/SearchContact' component={SearchContact} />
               <Route exact path='/SearchContact2' component={SearchContact2} />
+              <Route exact path='/Resume' component={ResumeOne} />
 
 
 
