@@ -22,6 +22,8 @@ import theme from '../styles/theme';
 import ResumeOne from './Profile/ResumeOne.js';
 import { Icon } from 'semantic-ui-react';
 
+import GeneratedResumePage from '../pages/GeneratedResumePage';
+
 
 const App = () => (
   <ErrorBoundary fileName="src/App.js">
@@ -36,7 +38,9 @@ const App = () => (
 
                     {/*<Nav.Link to={{pathname: '/ContactForm'}}> Contact-Form</Nav.Link>*/}
                     <Nav.Link href="/"> <Icon name='home' /></Nav.Link>
-                    
+
+                    <Nav.Link href="/generated-resume">Generated Resume</Nav.Link>
+
                     <Nav.Link href="/SignUp"> Sign Up</Nav.Link>
                     <Nav.Link href="/ContactForm">Contact Form</Nav.Link>
                     <Nav.Link href="/Talent"> Talent</Nav.Link>
@@ -58,7 +62,9 @@ const App = () => (
             {/*<Route path="/" component={AuthPage} />*/}
               {/*<Route exact path='/' component={AuthPage} />*/}
               <Route exact path='/' component={Home} />
-              
+
+              <Route exact path='/generated-resume' component={GeneratedResumePage} />
+
               <Route exact path='/SignUp' component={AuthPage} />
               <Route exact path='/ContactInfo' component={ContactInfo} />
               <Route exact path='/Talent' component={TalentHome} />
