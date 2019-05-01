@@ -39,15 +39,9 @@ const App = () => (
                     {/*<Nav.Link to={{pathname: '/ContactForm'}}> Contact-Form</Nav.Link>*/}
                     <Nav.Link href="/"> <Icon name='home' /></Nav.Link>
 
-                    <Nav.Link href="/generated-resume">Generated Resume</Nav.Link>
+                    <Nav.Link href="/Resume">Generated Resume</Nav.Link>
 
-                    <Nav.Link href="/SignUp"> Sign Up</Nav.Link>
-                    <Nav.Link href="/ContactForm">Contact Form</Nav.Link>
-                    <Nav.Link href="/Talent"> Talent</Nav.Link>
-                    <Nav.Link href="/ContactInfo"> Profile</Nav.Link>
                     <Nav.Link href="/TalentProfile"> TalentProfile</Nav.Link>
-                    <Nav.Link href="/SearchContact">Search Contact</Nav.Link>
-                    <Nav.Link href="/SearchContact2">Search Contact2</Nav.Link>
 
 
 
@@ -63,17 +57,9 @@ const App = () => (
               {/*<Route exact path='/' component={AuthPage} />*/}
               <Route exact path='/' component={Home} />
 
-              <Route exact path='/generated-resume' component={GeneratedResumePage} />
+              <Route exact path='/Resume' component={GeneratedResumePage} />
 
-              <Route exact path='/SignUp' component={AuthPage} />
-              <Route exact path='/ContactInfo' component={ContactInfo} />
-              <Route exact path='/Talent' component={TalentHome} />
               <Route exact path='/TalentProfile' component={TalentProfile} />
-              <Route exact path='/ContactForm' component={ContactForm} />
-              <Route exact path='/SearchContact' component={SearchContact} />
-              <Route exact path='/SearchContact2' component={SearchContact2} />
-              <Route exact path='/Resume' component={ResumeOne} />
-
 
 
 

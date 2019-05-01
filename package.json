@@ -13,6 +13,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "fetch-action-creator": "^2.0.3",
+    "fetch-mock": "^7.3.3",
     "html2canvas": "^1.0.0-alpha.12",
     "jspdf": "^1.5.3",
     "pdfmake": "^0.1.53",
