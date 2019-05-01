@@ -1,29 +1,31 @@
 import fetchMock from 'fetch-mock'
-import API_URL from '../../../constants'
-import addExperience from '../ProfileState'
+import { API_URL } from '../../../constants'
+import { ADD_EXPERIENCE, addExperience } from '../ProfileState'
 
 describe('Actions', () => {
   afterEach(() => { 
     fetchMock.restore() 
   });
 
-  test('Create new experience action - success', () => {
+  test('Create new experience action - success', async function() {
     const dispatch = jest.fn()
     const contactId = 1234;
     const experience = { data: 'test' }
     const response = { response: 'win' }
 
-    addExperience(contactId, experience)(dispatch)
-
     fetchMock.post(
-      `${API_URL}/api/${contactId}/experiences/`,
+      `${API_URL}/api/contacts/${contactId}/experiences/`,
       response);
 
-    expect(dispatch.mock.calls[0].type).toBe('ADD_EXPERIENCE');
-    expect(dispatch.mock.calls[0].data).toEqual(experience);
-    expect(dispatch.mock.calls[1].type).toBe('REQUEST_ADD_EXPERIENCE');
-    expect(dispatch.mock.calls[2].type).toBe('RESOLVE_ADD_EXPERIENCE');
-    expect(dispatch.mock.calls[2].data).toEqual(response);
+    await addExperience(contactId, experience)(dispatch)
+
+    console.log(dispatch.mock.calls);
+    expect(dispatch.mock.calls.length).toBe(3);
+    expect(dispatch.mock.calls[0][0].type).toBe(ADD_EXPERIENCE);
+    expect(dispatch.mock.calls[0][0].experience).toEqual(experience);
+    expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${ADD_EXPERIENCE}`);
+    expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${ADD_EXPERIENCE}`);
+    expect(dispatch.mock.calls[2][0].body).toEqual(response);
 
   });
 
