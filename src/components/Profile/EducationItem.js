@@ -46,6 +46,15 @@ class EducationItem extends React.Component {
 
     }
 
+    getInitial = () => {
+      if (this.props.organization !== null 
+          && this.props.organization !== undefined) {
+        return this.props.organization.charAt(0);
+      } else {
+        return ' ';
+      }
+    }
+
 
     displayOneEducation = ()=>{
       var textStyleSmall={
@@ -58,7 +67,9 @@ class EducationItem extends React.Component {
           <div style={textStyleSmall}>
             <Grid style={{marginLeft: "20px"}}>
               <Grid.Column floated='left' width={2}>
-                <button type="button" className="btn btn-primary btn-circle btn-xl"><i className="fa fa-check"> {this.props.organization.charAt(0)} </i></button>
+                <button type="button" className="btn btn-primary btn-circle btn-xl">
+                  <i className="fa fa-check"> {this.getInitial()} </i>
+                </button>
 
               </Grid.Column>
 
