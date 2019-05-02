@@ -1,28 +1,29 @@
-import { API_URL } from '../../constants'
-import { createReducer } from 'redux-starter-kit'
+import {API_URL} from '../../constants';
+import {createReducer} from 'redux-starter-kit';
 import fetchActionCreator from '../../modules/fetch-action-creator';
 
 // ## EXPERIENCES ##
 
 const ADD_EXPERIENCE = 'ADD_EXPERIENCE';
-const addExperience = (contactId, experience) => async function(dispatch) {
-  dispatch(addExperienceLocal(experience));
+const addExperience = (contactId, experience) =>
+  async function(dispatch) {
+    dispatch(addExperienceLocal(experience));
 
-  await apiAddExperience(contactId, experience)(dispatch);
-};
+    await apiAddExperience(contactId, experience)(dispatch);
+  };
 
 const addExperienceLocal = experience => ({
-  type: ADD_EXPERIENCE, 
-  experience
+  type: ADD_EXPERIENCE,
+  experience,
 });
 
 const experiencesReducer = createReducer(
   {
     unsavedChanges: false,
     inRequest: false,
-    order: [], 
+    order: [],
     experiences: {},
-  }, 
+  },
   {
     ADD_EXPERIENCE: (state, action) => {
       const id = action.experience.id;
@@ -57,57 +58,43 @@ const experiencesReducer = createReducer(
       state.inRequest = false;
       state.unsavedChanges = false;
     },
-});
+  },
+);
 
-export { 
-  ADD_EXPERIENCE, 
-  addExperience,
-  addExperienceLocal,
-  experiencesReducer,
-};
+export {ADD_EXPERIENCE, addExperience, addExperienceLocal, experiencesReducer};
 
 // ## API ACTION CREATORS ##
-// Note on naming convention here: 
+// Note on naming convention here:
 // All fetch API methods creators are prefixed with 'api' for clarity in use
 
 const apiGetAllContacts = () =>
-  fetchActionCreator(
-    'ALL_CONTACTS',
-    `${API_URL}/api/contacts/`
-  );
+  fetchActionCreator('ALL_CONTACTS', `${API_URL}/api/contacts/`);
 
-const apiGetContact = (contactId) =>
-  fetchActionCreator(
-    'CONTACT',
-    `${API_URL}/api/contacts/${contactId}/`
-  );
+const apiGetContact = contactId =>
+  fetchActionCreator('CONTACT', `${API_URL}/api/contacts/${contactId}/`);
 
-const apiAddContact = (contact) =>
-  fetchActionCreator(
-    'ADD_CONTACT',
-    `${API_URL}/api/contacts/`,
-    {
-      body: contact,
-      method: 'POST',
-    }    
-  );
+const apiAddContact = contact =>
+  fetchActionCreator('ADD_CONTACT', `${API_URL}/api/contacts/`, {
+    body: contact,
+    method: 'POST',
+  });
 
-const apiGetProfile = (contactId) =>
+const apiGetProfile = contactId =>
   fetchActionCreator(
     'PROFILE',
-    `${API_URL}/api/contacts/${contactId}/profile/`
+    `${API_URL}/api/contacts/${contactId}/profile/`,
   );
 
-const apiGetExperiences = (contactId) =>
+const apiGetExperiences = contactId =>
   fetchActionCreator(
     'EXPERIENCES',
-    `${API_URL}/api/contacts/${contactId}/experiences/`
+    `${API_URL}/api/contacts/${contactId}/experiences/`,
   );
 
 const apiGetExperience = (contactId, expId) =>
   fetchActionCreator(
     'EXPERIENCE',
-    `${API_URL}/api/contacts/${contactId}/experiences/${expId}/`
+    `${API_URL}/api/contacts/${contactId}/experiences/${expId}/`,
   );
 
 const apiAddExperience = (contactId, experience) =>
@@ -124,18 +111,18 @@ const apiAddExperience = (contactId, experience) =>
           ...rejectAction,
           contactId,
           experience,
-        }
+        };
       },
     },
   );
 
-const apiDeleteExperience = (expId) =>
+const apiDeleteExperience = expId =>
   fetchActionCreator(
     'DELETE_EXPERIENCE',
     `${API_URL}/api/experiences/${expId}/`,
     {
       method: 'DELETE',
-    }    
+    },
   );
 
 const apiUpdateExperience = (expId, update) =>
@@ -145,7 +132,7 @@ const apiUpdateExperience = (expId, update) =>
     {
       body: update,
       method: 'PUT',
-    }    
+    },
   );
 
 const apiGetExperiencesByType = (contactId, type) =>
@@ -155,16 +142,10 @@ const apiGetExperiencesByType = (contactId, type) =>
   );
 
 const apiGetAllTags = () =>
-  fetchActionCreator(
-    'ALL_TAGS',
-    `${API_URL}/api/tags/`,
-  );
+  fetchActionCreator('ALL_TAGS', `${API_URL}/api/tags/`);
 
-const apiGetTag = (tagId) =>
-  fetchActionCreator(
-    'TAG',
-    `${API_URL}/api/tags/${tagId}`,
-  );
+const apiGetTag = tagId =>
+  fetchActionCreator('TAG', `${API_URL}/api/tags/${tagId}`);
 
 const apiGetContactTags = (contactId, tagType) => {
   if (tagType !== null && tagType !== undefined) {
@@ -180,33 +161,31 @@ const apiGetContactTags = (contactId, tagType) => {
   }
 };
 
-const apiAddAchievement = (expId, achievement) => 
+const apiAddAchievement = (expId, achievement) =>
   fetchActionCreator(
     'ADD_ACHIEVEMENT',
     `${API_URL}/api/experiences/${expId}/achievements/`,
     {
       body: achievement,
       method: 'POST',
-    }    
+    },
   );
 
-const apiUpdateAchievement = (achievementId, achievement) => 
+const apiUpdateAchievement = (achievementId, achievement) =>
   fetchActionCreator(
     'UPDATE_ACHIEVEMENT',
     `${API_URL}/api/achievements/${achievementId}/`,
     {
       body: achievement,
       method: 'PUT',
-    }    
+    },
   );
 
-const apiDeleteAchievement = (achievementId) => 
+const apiDeleteAchievement = achievementId =>
   fetchActionCreator(
     'DELETE_ACHIEVEMENT',
     `${API_URL}/api/achievements/${achievementId}/`,
     {
       method: 'DELETE',
-    }    
+    },
   );
-
-

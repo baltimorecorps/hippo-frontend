@@ -1,27 +1,25 @@
-import fetchMock from 'fetch-mock'
-import { 
-  ADD_EXPERIENCE, 
+import fetchMock from 'fetch-mock';
+import {
+  ADD_EXPERIENCE,
   addExperience,
   addExperienceLocal,
   experiencesReducer,
-} from '../ProfileState'
+} from '../ProfileState';
 
 describe('Actions', () => {
-  afterEach(() => { 
-    fetchMock.restore() 
+  afterEach(() => {
+    fetchMock.restore();
   });
 
   test('Create new experience action - success', async function() {
-    const dispatch = jest.fn()
+    const dispatch = jest.fn();
     const contactId = 1234;
-    const experience = { data: 'test' }
-    const response = { response: 'win' }
+    const experience = {data: 'test'};
+    const response = {response: 'win'};
 
-    fetchMock.post(
-      `path:/api/contacts/${contactId}/experiences/`,
-      response);
+    fetchMock.post(`path:/api/contacts/${contactId}/experiences/`, response);
 
-    await addExperience(contactId, experience)(dispatch)
+    await addExperience(contactId, experience)(dispatch);
 
     expect(dispatch.mock.calls.length).toBe(3);
     expect(dispatch.mock.calls[0][0].type).toBe(ADD_EXPERIENCE);
@@ -32,22 +30,19 @@ describe('Actions', () => {
   });
 
   test('Create new experience action - failure', async function() {
-    const dispatch = jest.fn()
+    const dispatch = jest.fn();
     const contactId = 1234;
-    const experience = { data: 'test' }
+    const experience = {data: 'test'};
 
-    fetchMock.post(
-      `path:/api/contacts/${contactId}/experiences/`,
-      500);
+    fetchMock.post(`path:/api/contacts/${contactId}/experiences/`, 500);
 
-    await addExperience(contactId, experience)(dispatch)
+    await addExperience(contactId, experience)(dispatch);
 
     expect(dispatch.mock.calls.length).toBe(3);
     expect(dispatch.mock.calls[2][0].type).toBe(`REJECT_${ADD_EXPERIENCE}`);
     expect(dispatch.mock.calls[2][0].contactId).toBe(contactId);
     expect(dispatch.mock.calls[2][0].experience).toBe(experience);
     expect(dispatch.mock.calls[2][0].statusCode).toBe(500);
-
   });
 });
 
@@ -56,7 +51,7 @@ describe('State changes', () => {
     const initialState = {
       unsavedChanges: false,
       inRequest: false,
-      order: [], 
+      order: [],
       experiences: {},
     };
     test('inital state', () => {
@@ -65,8 +60,10 @@ describe('State changes', () => {
     });
     test('Add new experience - local state only', () => {
       const experience = {id: 1234, other_stuff: 'data'};
-      const newState = experiencesReducer(undefined, 
-        addExperienceLocal(experience));
+      const newState = experiencesReducer(
+        undefined,
+        addExperienceLocal(experience),
+      );
       expect(newState.experiences).toHaveProperty('1234');
       expect(newState.experiences[1234]).toEqual(experience);
       expect(newState.order).toContain(1234);
@@ -74,7 +71,7 @@ describe('State changes', () => {
     });
     test('Add new experience - request dispatched', () => {
       const newState = experiencesReducer(initialState, {
-        type: `REQUEST_${ADD_EXPERIENCE}`
+        type: `REQUEST_${ADD_EXPERIENCE}`,
       });
       expect(newState.inRequest).toBe(true);
     });
@@ -83,8 +80,7 @@ describe('State changes', () => {
       const startState = initialState;
       startState.inRequest = true;
       startState.unsavedChanges = true;
-      const newState = experiencesReducer(startState, 
-      {
+      const newState = experiencesReducer(startState, {
         type: `RESOLVE_${ADD_EXPERIENCE}`,
         body: experience,
       });
@@ -102,8 +98,7 @@ describe('State changes', () => {
       startState.unsavedChanges = true;
       startState.inRequest = true;
 
-      const newState = experiencesReducer(startState,
-      {
+      const newState = experiencesReducer(startState, {
         type: `REJECT_${ADD_EXPERIENCE}`,
         experience: experience,
       });
@@ -112,7 +107,5 @@ describe('State changes', () => {
       expect(newState.inRequest).toBe(false);
       expect(newState.unsavedChanges).toBe(false);
     });
-
   });
 });
-
