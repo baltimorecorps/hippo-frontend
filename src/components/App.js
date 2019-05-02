@@ -11,6 +11,7 @@ import ContactForm from './LogIn/ContactForm.js';
 import ContactInfo from './Other/ContactInfo.js';
 import TalentHome from './TalentHome/TalentHome.js';
 import TalentProfile from './Profile/TalentProfile.js';
+import Contacts from './Contacts/Contacts';
 import SearchContact from './SearchContact/SearchContact.js';
 import SearchContact2 from './SearchContact/SearchContact2.js';
 import Navbar from "react-bootstrap/Navbar";
@@ -40,6 +41,7 @@ const App = () => (
                     <Nav.Link href="/"> <Icon name='home' /></Nav.Link>
 
                     <Nav.Link href="/Resume">Generated Resume</Nav.Link>
+                    <Nav.Link href="/Contacts">Contacts</Nav.Link>
 
                     <Nav.Link href="/TalentProfile"> TalentProfile</Nav.Link>
 
@@ -58,6 +60,7 @@ const App = () => (
               <Route exact path='/' component={Home} />
 
               <Route exact path='/Resume' component={GeneratedResumePage} />
+              <Route exact path='/Contacts' component={Contacts} />
 
               <Route exact path='/TalentProfile' component={TalentProfile} />
 

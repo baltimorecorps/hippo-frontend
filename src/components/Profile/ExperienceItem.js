@@ -117,7 +117,7 @@ ExperienceItem.propTypes = {
   date_end: PropTypes.string,
   //date_start: PropTypes.instanceOf(Date).isRequired,
   //date_end: PropTypes.instanceOf(Date),
-  type: PropTypes.oneof(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
+  type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
   contact_id: PropTypes.number,
   achievements: PropTypes.array,
 }
