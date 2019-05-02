@@ -10,92 +10,73 @@ import { Link } from 'react-router-dom';
 
 import TextField from '@material-ui/core/TextField';
 
-const AuthPage = ({classes}) => {
+const AuthPage = ({ classes }) => {
   return (
     <main className={classes.main}>
       <Paper className={classes.paper}>
-        <img
-          className={classes.avatar}
-          src='/logos/long.png' alt='Baltimore Corps Logo'
-        />
-        <Typography component='h1' variant='h5'>
+        <img className={classes.avatar} src="/logos/long.png" alt="Baltimore Corps Logo" />
+        <Typography component="h1" variant="h5">
           Log In
         </Typography>
 
         <form className={classes.form}>
           <TextField
-            id='email'
-            name='email'
-            label='Email Address'
+            id="email"
+            name="email"
+            label="Email Address"
             required={true}
             fullWidth={true}
             autoFocus={true}
-            autoComplete='email'
+            autoComplete="email"
           />
           <TextField
             className={classes.password}
-            id='password'
-            name='password'
-            label='Password'
+            id="password"
+            name="password"
+            label="Password"
             fullWidth={true}
-            autoComplete='current-password'
+            autoComplete="current-password"
           />
 
-            <Link to="/ContactForm" >
-              <Button
-                  className={classes.submitButton}
-                  type='submit'
-                  fullWidth={true}
-                  variant='contained'
-                  color='primary'
-                >
-                  Log in
-              </Button>
-            </Link>
+          <Link to="/ContactForm">
+            <Button
+              className={classes.submitButton}
+              type="submit"
+              fullWidth={true}
+              variant="contained"
+              color="primary"
+            >
+              Log in
+            </Button>
+          </Link>
 
-
-          <Button
-            type=''
-            fullWidth={true}
-            variant='outlined'
-            color='secondary'
-          >
+          <Button type="" fullWidth={true} variant="outlined" color="secondary">
             Forgot password? Click here
           </Button>
-          <br></br>
-          <br></br>
-          <Button
-            type=''
-            fullWidth={true}
-            variant='outlined'
-            color='secondary'
-          >
+          <br />
+          <br />
+          <Button type="" fullWidth={true} variant="outlined" color="secondary">
             Sign Up
           </Button>
-
         </form>
 
-
-        <Segment basic textAlign='center'>
+        <Segment basic textAlign="center">
           <Divider horizontal> OR </Divider>
 
           <div className="col-centered">
             <GoogleAuth />
           </div>
-
         </Segment>
-
-
       </Paper>
     </main>
   );
-}
+};
 
 AuthPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const styles = ({breakpoints, palette, spacing}) => ({
+const styles = ({ breakpoints, palette, spacing }) => ({
   main: {
     width: 'auto',
     marginLeft: spacing.unit * 3,

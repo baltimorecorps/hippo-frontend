@@ -7,17 +7,10 @@ import ExperiencesList from './ExperiencesList';
 import ResumeHeader from './ResumeHeader';
 import SkillGroups from './SkillGroups';
 
-const GeneratedResumePage = ({
-  achievements,
-  contactInfo,
-  experiences,
-  skillGroups,
-  classes,
-}) => {
+const GeneratedResumePage = ({ achievements, contactInfo, experiences, skillGroups, classes }) => {
   return (
-    <Grid container justify='center'>
+    <Grid container justify="center">
       <Grid item xs={10}>
-
         <Paper className={classes.paper}>
           <Grid container spacing={24}>
             <Grid item xs={12}>
@@ -25,18 +18,9 @@ const GeneratedResumePage = ({
             </Grid>
 
             <Grid item xs={8}>
-              <ExperiencesList
-                name='Work Experience'
-                experiences={experiences.work}
-              />
-              <ExperiencesList
-                name='Service and Leadership'
-                experiences={experiences.service}
-              />
-              <ExperiencesList
-                name='Education'
-                experiences={experiences.education}
-              />
+              <ExperiencesList name="Work Experience" experiences={experiences.work} />
+              <ExperiencesList name="Service and Leadership" experiences={experiences.service} />
+              <ExperiencesList name="Education" experiences={experiences.education} />
             </Grid>
 
             <Grid item xs={4}>
@@ -45,13 +29,12 @@ const GeneratedResumePage = ({
             </Grid>
           </Grid>
         </Paper>
-
       </Grid>
     </Grid>
   );
 };
 
-const styles = ({breakpoints, palette, spacing}) => ({
+const styles = ({ breakpoints, palette, spacing }) => ({
   paper: {
     marginTop: spacing.unit * 8,
     display: 'flex',
