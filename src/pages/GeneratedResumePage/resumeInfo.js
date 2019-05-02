@@ -23,6 +23,7 @@ const resumeInfo = {
   experiences: {
     work: [
       {
+        id: 1,
         startDate: new Date(2015, 8, 1),
         endDate: null,
         orgName: 'Baltimore Corps',
@@ -32,6 +33,7 @@ const resumeInfo = {
     ],
     service: [
       {
+        id: 2,
         startDate: new Date(2016, 4, 1),
         endDate: null,
         orgName: 'Blue Water Baltimore',
@@ -41,6 +43,7 @@ const resumeInfo = {
     ],
     education: [
       {
+        id: 3,
         startDate: new Date(2012, 8, 1),
         endDate: new Date(2016, 5, 1),
         orgName: 'Goucher',
