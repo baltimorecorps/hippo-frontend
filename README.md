@@ -57,6 +57,8 @@ https://github.com/immerjs/immer
 https://github.com/reduxjs/reselect
 
 
+NOTE: I found a bug in this package so I just manually copied the file in.
+Also submitted a fix to the package itself so hopefully that gets pulled in
 `fetch-action-creator` is used to link Redux actions to our API. We were already
 using the Fetch API so this is a clean extension of that
 

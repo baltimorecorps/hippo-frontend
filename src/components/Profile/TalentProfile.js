@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Container, Grid, Row, Col} from "react-bootstrap";
 import TalentBasicInfo from "./TalentBasicInfo";
 import Experience from "./Experience";
@@ -104,4 +105,12 @@ class TalentProfile extends React.Component {
       );
     }
   }
+TalentProfile.propTypes = {
+  contact: PropTypes.object,
+  work_experiences: PropTypes.array,
+  education_experiences: PropTypes.array,
+  service_experiences: PropTypes.array,
+  accomplishments: PropTypes.array,
+}
+
   export default TalentProfile;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Button, Icon, Grid} from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
 import ExperienceUpdateForm from './ExperienceUpdateForm'
@@ -105,4 +106,20 @@ class ExperienceItem extends React.Component {
         </div>
     }
   }
+
+ExperienceItem.propTypes = {
+  //id: PropTypes.number.isRequired,
+  description: PropTypes.string,
+  organization: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
+  date_start: PropTypes.string.isRequired,
+  date_end: PropTypes.string,
+  //date_start: PropTypes.instanceOf(Date).isRequired,
+  //date_end: PropTypes.instanceOf(Date),
+  type: PropTypes.oneof(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
+  contact_id: PropTypes.number,
+  achievements: PropTypes.array,
+}
+
   export default ExperienceItem;

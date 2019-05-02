@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button, Divider, Icon, AccordionTitle} from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
 import ExperienceForm from './ExperienceForm'
@@ -217,4 +218,9 @@ class Experience extends React.Component {
       );
     }
   };
-  export default Experience;
+
+Experience.propTypes = {
+  experiences: PropTypes.array,
+}
+
+export default Experience;
