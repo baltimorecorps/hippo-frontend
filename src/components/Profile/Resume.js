@@ -1,19 +1,19 @@
 import React from 'react'
-import { Button, Divider, Icon, AccordionTitle} from 'semantic-ui-react'
-import {Col, Row} from 'react-bootstrap'
-import ExperienceForm from './ExperienceForm'
-import ExperienceItem from './ExperienceItem'
-import './profile.css'
-import {Image} from 'react-bootstrap';
-import { Card,  List  } from 'semantic-ui-react';
+import { Divider, Icon } from 'semantic-ui-react'
+import {Col, Row} from 'react-bootstrap';
+import './profile.css';
+import { Card } from 'semantic-ui-react';
 
 
 class Resume extends React.Component {
 
-    state = {      
-      resumeCards: [{id: 1, name: "resume1", description:"this resume is for Baltimore corps"},
-    {id: 2, name: 'resume2', description: "this resume is for ....."},{id: 3, name: "resume3", description:"this resume is for Baltimore corps"},
-    {id:4,name: 'resume4', description: "this resume is for ....."} ],
+    state = {
+      resumeCards: [
+        {id: 1, name: "resume1", description: "this resume is for Baltimore corps"},
+        {id: 2, name: 'resume2', description: "this resume is for ....."},
+        {id: 3, name: "resume3", description: "this resume is for Baltimore corps"},
+        {id: 4, name: 'resume4', description: "this resume is for ....."},
+      ],
     }
 
     displayResumeCards =(resumeCards)=>{
@@ -23,10 +23,10 @@ class Resume extends React.Component {
         return <Card.Group itemsPerRow={3}> {cards} </Card.Group>;
     }
     displayResumeCard=(resume)=>{
-        return (<Card key = {resume.id} style = {{height: "200px"}}>           
+        return (<Card key = {resume.id} style = {{height: "200px"}}>
             <Card.Content>
-                    <a href = {`/resume`}>    
-                        {resume.name}                      
+                    <a href = {`/resume`}>
+                        {resume.name}
                     </a>
                     <p></p>
                     {resume.description}
@@ -48,7 +48,7 @@ class Resume extends React.Component {
         <div style={{minHeight:"550px", marginTop: "20px", backgroundColor:"white", padding:"15px"}}>
           <Row>
               <Col xs md lg="4">
-                <div style={textStyle}>Resume </div>            
+                <div style={textStyle}>Resume </div>
               </Col>
               <Col  xs md lg="8">
                   <button style={{display:'inline-block', float:"right" ,border: "none", backgroundColor:"transparent"}}onClick ={this.handleAddResume} >
@@ -58,7 +58,7 @@ class Resume extends React.Component {
           </Row>
           <Divider/>
           <Row>
-              <Col xs md lg="8">           
+              <Col xs md lg="8">
                   {this.displayResumeCards(this.state.resumeCards)}
               </Col>
           </Row>

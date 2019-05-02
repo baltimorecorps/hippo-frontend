@@ -1,10 +1,7 @@
 import React from 'react';
-import {Button, Icon, Grid, Item} from 'semantic-ui-react'
-import {Col, Row} from 'react-bootstrap'
+import {Icon, Grid} from 'semantic-ui-react';
 import EducationUpdateForm from './EducationUpdateForm'
 import './profile.css';
-
-
 
 class EducationItem extends React.Component {
     state = {
@@ -15,7 +12,7 @@ class EducationItem extends React.Component {
       description: this.props.description,
       date_start: this.props.date_start,
       date_end: this.props.date_end,
-      
+
       achievements: this.props.achievements,
       type: this.props.type,
     };
@@ -71,7 +68,7 @@ class EducationItem extends React.Component {
                   {this.props.achievements.map(item=>
                       <p key={item.achievement_order} > {item.achievement_order+1}: {item.description} </p>
                   )}
-                  
+
                 </div>
               </Grid.Column>
             </Grid>

@@ -6,7 +6,6 @@ import ErrorBoundary from '../atoms/ErrorBoundary';
 import AuthPage from './LogIn/AuthPage';
 
 import Home from "./Other/Home.js";
-import LogInSignUp from "./LogIn/LogInSignUp.js";
 import ContactForm from './LogIn/ContactForm.js';
 import ContactInfo from './Other/ContactInfo.js';
 import TalentHome from './TalentHome/TalentHome.js';
@@ -23,6 +22,7 @@ import ResumeOne from './Profile/ResumeOne.js';
 import { Icon } from 'semantic-ui-react';
 
 import GeneratedResumePage from '../pages/GeneratedResumePage';
+import CreateResumePage from '../pages/CreateResumePage';
 
 
 const App = () => (
@@ -40,6 +40,7 @@ const App = () => (
                     <Nav.Link href="/"> <Icon name='home' /></Nav.Link>
 
                     <Nav.Link href="/generated-resume">Generated Resume</Nav.Link>
+                    <Nav.Link href="/create-resume">Create Resume</Nav.Link>
 
                     <Nav.Link href="/SignUp"> Sign Up</Nav.Link>
                     <Nav.Link href="/ContactForm">Contact Form</Nav.Link>
@@ -64,6 +65,7 @@ const App = () => (
               <Route exact path='/' component={Home} />
 
               <Route exact path='/generated-resume' component={GeneratedResumePage} />
+              <Route exact path='/create-resume' component={CreateResumePage} />
 
               <Route exact path='/SignUp' component={AuthPage} />
               <Route exact path='/ContactInfo' component={ContactInfo} />

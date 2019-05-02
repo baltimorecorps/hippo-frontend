@@ -1,9 +1,6 @@
 import React from 'react';
 
-import unsplash from '../../api/unsplash';
 import SearchBar from './SearchBar';
-import ContactList from './ContactList';
-import ContactListFromApi from './ContactListFromApi';
 import ContactListFromApi2 from './ContactListFromApi2';
 import {Container} from 'semantic-ui-react'
 
@@ -14,17 +11,17 @@ class SearchContact2 extends React.Component{
             items: []
         }
     }
-    
-    
+
+
     /*onSearchSubmit = async (term) => {
         const response = await unsplash.get('/search/photos', {
             params: { query: term }
-            
+
         });
         this.setState({images: response.data.results});
     }*/
     onSearchSubmit = () =>{
-        
+
             fetch("https://randomuser.me/api/?results=15",{responseType:'json',})
               .then(res => res.json())
               .then(
@@ -32,7 +29,7 @@ class SearchContact2 extends React.Component{
                     this.setState({items: json.results});
                     console.log(json);
                     console.log(json.results);
-  
+
                 },
                 // Note: it's important to handle errors here
                 // instead of a catch() block so that we don't swallow
@@ -40,7 +37,7 @@ class SearchContact2 extends React.Component{
                 (error) => {
                   console.log(error.message);
                 }
-              )          
+              )
     }
     componentDidMount(){
         this.onSearchSubmit();
@@ -55,11 +52,11 @@ class SearchContact2 extends React.Component{
                     <SearchBar onSubmit={this.onSearchSubmit}/>
                     <ContactListFromApi2 items={this.state.items} />
                 </Container>
-                
-                
+
+
                 {/*<ContactList images={this.state.items} />*/}
              </div>
         );
-    }    
+    }
 }
 export default SearchContact2;

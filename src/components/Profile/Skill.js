@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Divider, Icon} from 'semantic-ui-react'
+import { Divider, Icon} from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
 import SkillForm from './SkillForm'
 import SkillItem from './SkillItem'
@@ -126,7 +126,7 @@ class Skill extends React.Component {
           });
         }
 
-        
+
 
         componentDidMount(){
           this.fetchData();

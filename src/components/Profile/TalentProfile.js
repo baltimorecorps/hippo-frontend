@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Grid, Row, Col} from "react-bootstrap";
+import {Container, Row, Col} from "react-bootstrap";
 import TalentBasicInfo from "./TalentBasicInfo";
 import Experience from "./Experience";
 import Education from "./Education";
@@ -8,13 +8,8 @@ import Accomplishment from "./Accomplishment";
 import Skill from "./Skill";
 import Resume from "./Resume";
 import html2canvas from 'html2canvas';
-//import * as jsPDF from 'jspdf'
 import jsPDF from 'jspdf';
-import {Divider, Icon, Button } from 'semantic-ui-react';
-//import ReactDOMServer from "react-dom/server";
-
-
-
+import { Icon, Button } from 'semantic-ui-react';
 
 class TalentProfile extends React.Component {
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import {Form} from 'semantic-ui-react'
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from 'react-awesome-modal';
 import Autosuggest from 'react-autosuggest';
@@ -9,13 +8,13 @@ import {Dropdown, Button, ButtonGroup} from 'react-bootstrap';
 
 
 const getSuggestionValue = suggestion => suggestion.name;
-const all_data =[{name: "C", id: 1}, {name:"C++", id:2}, {name:"C#", id:3}];
+const skillSuggestions =[{name: "C", id: 1}, {name:"C++", id:2}, {name:"C#", id:3}];
 
 // Use your imagination to render suggestions.
-const renderSuggestion = suggestion => (  
-        <div>             
-            {suggestion.name}   
-        </div> 
+const renderSuggestion = suggestion => (
+        <div>
+            {suggestion.name}
+        </div>
 );
 
 class SkillUpdateForm extends React.Component {
@@ -25,7 +24,7 @@ class SkillUpdateForm extends React.Component {
         isUser: true,
         skill: "Java",
         rank: 'Rank',
-        
+
         suggestions:[],
         value:'',
       };
@@ -34,7 +33,7 @@ class SkillUpdateForm extends React.Component {
     }
 
     selectRank = (eventKey, event)=>{
-      this.setState({rank: eventKey}); 
+      this.setState({rank: eventKey});
     }
 
     getSuggestions = /*async*/ value =>{
@@ -51,7 +50,7 @@ class SkillUpdateForm extends React.Component {
           console.log(data);
           let array = [];
           array = data.map(item=>{
-              
+
               return {name:item.workshop_name, id: item.workshop_id};
           })
           console.log(array);
@@ -61,11 +60,13 @@ class SkillUpdateForm extends React.Component {
           return array;
       });
       */
-      return all_data.filter(data=>data.name.toLowerCase().slice(0, inputLength)===inputValue);
+      return skillSuggestions.filter(data =>
+        data.name.toLowerCase().slice(0, inputLength) === inputValue
+      );
     };
 
     onChange = (event, {newValue})=>{
-      
+
       this.setState({
           value: newValue,
           skill: newValue,
@@ -129,7 +130,7 @@ class SkillUpdateForm extends React.Component {
                   </Form.Field>
 
                   <Form.Field>
-                   
+
                       <br></br>
                       <Dropdown as={ButtonGroup} >
                         <Button  size="lg" variant="success"> {this.state.rank}</Button>
@@ -142,7 +143,7 @@ class SkillUpdateForm extends React.Component {
                         </Dropdown.Menu>
                     </Dropdown>
 
-                    
+
                   </Form.Field>
                   <br></br>
 

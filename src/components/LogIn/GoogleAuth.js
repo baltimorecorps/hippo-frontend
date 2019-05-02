@@ -1,15 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav";
-import ContactForm from './ContactForm';
-
-
 
 class GoogleAuth extends React.Component {
     state = {
-        isSignedIn: false
+      isSignedIn: false
     }
     componentDidMount(){
         window.gapi.load('client: auth2', ()=>{
@@ -26,7 +23,7 @@ class GoogleAuth extends React.Component {
             });
         });
     }
-    
+
     onAuthChange = () =>{
         this.setState({isSignedIn: this.auth.isSignedIn.get()});
     }
@@ -59,9 +56,9 @@ class GoogleAuth extends React.Component {
                                     fullWidth={true}
                                     variant="contained"
                                     color="primary"
-                                    
+
                                 >
-                            
+
                                     Log in with Google
                                 </Button>
                             </Nav.Link>
@@ -69,7 +66,7 @@ class GoogleAuth extends React.Component {
                         </Nav>
                         </Navbar>
 
-                        
+
                     </div>
                 </BrowserRouter>
 

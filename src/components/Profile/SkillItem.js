@@ -1,10 +1,7 @@
 import React from 'react';
-import {Button, Icon, Grid} from 'semantic-ui-react'
-import {Col, Row} from 'react-bootstrap'
-import SkillUpdateForm from './SkillUpdateForm'
+import {Icon, Grid} from 'semantic-ui-react';
+import SkillUpdateForm from './SkillUpdateForm';
 import './profile.css';
-
-
 
 class SkillItem extends React.Component {
     state = {
@@ -21,11 +18,11 @@ class SkillItem extends React.Component {
       this.setState({
         displayUpdateForm: true,
       })
-      
+
     }
 
     onSubmitEdit = (id, skill, rank)=>{
-      this.props.putData(id, skill, rank);  //TODO: check for endpoint in backend 
+      this.props.putData(id, skill, rank);  //TODO: check for endpoint in backend
       this.setState({
         displayUpdateForm: false,
       })

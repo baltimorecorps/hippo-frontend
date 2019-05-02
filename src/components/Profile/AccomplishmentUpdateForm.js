@@ -3,8 +3,7 @@ import {Form, TextArea} from 'semantic-ui-react'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Modal from 'react-awesome-modal';
-import {Icon, Button, Divider } from 'semantic-ui-react';
-
+import {Button, Divider } from 'semantic-ui-react';
 
 class AccomplishmentUpdateForm extends React.Component {
     constructor(props){
@@ -36,18 +35,18 @@ class AccomplishmentUpdateForm extends React.Component {
       event.preventDefault();
       this.setState({[event.target.name]: event.target.value});
     }
-    
+
     //TODO
     handleChangeDateStart =(date)=>{
-      
+
         this.setState({
             date_end: date,
             date_start: date,
         });
     }
 
-    
-    
+
+
 
     createItem = ()=>{
       if (this.props.displayUpdateForm === true){
@@ -74,13 +73,13 @@ class AccomplishmentUpdateForm extends React.Component {
                       selected={this.state.date_start}
                       selectsStart
                       date_start={this.state.date_start}
-                      
+
                       onChange={this.handleChangeDateStart}
                       dateFormat="dd-MM-YYYY"
                       className="ezw_datepicker"
                       />
-                      
-                     
+
+
                   </div>
                   <br></br>
                   <Form.Field>

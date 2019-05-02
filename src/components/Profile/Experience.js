@@ -1,14 +1,12 @@
 import React from 'react'
-import { Button, Divider, Icon, AccordionTitle} from 'semantic-ui-react'
+import { Divider, Icon } from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
 import ExperienceForm from './ExperienceForm'
 import ExperienceItem from './ExperienceItem'
 import './profile.css'
 
-
 //todo: check how to write if/else in render/function
 //todo: check how to write clickable icon
-
 
 class Experience extends React.Component {
 
@@ -30,7 +28,7 @@ class Experience extends React.Component {
       type: "Work",
       //id: 0,
     }
-    
+
     /*postDataToBackEnd(userInput, url){
       const res = addData(userInput, url);
       if (res === true){
@@ -132,9 +130,9 @@ class Experience extends React.Component {
         })
     }
 
-    
+
     //=====================================================//
-    
+
     handleClick(e){
       e.preventDefault();
       this.setState({
@@ -147,7 +145,7 @@ class Experience extends React.Component {
       });
     }
 
-    
+
     componentDidMount(){
       this.fetchData();
     }
@@ -167,10 +165,10 @@ class Experience extends React.Component {
       return res;
     }
     displayOneExperience = ()=>{
-        return (        
+        return (
             <ExperienceItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
             deleteData={this.deleteData} organization={this.state.organization} title={this.state.title} type={this.state.type} achievements={this.state.achievements}
-            date_start={this.state.date_start} date_end={this.state.date_end} />         
+            date_start={this.state.date_start} date_end={this.state.date_end} />
         );
       };
 

@@ -6,17 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import GoogleAuth from './GoogleAuth.js';
 import { Divider, Segment } from 'semantic-ui-react';
-import { BrowserRouter, Link} from 'react-router-dom';  
-import Nav from "react-bootstrap/Nav";
-
+import { Link } from 'react-router-dom';
 
 import TextField from '@material-ui/core/TextField';
 
-import {Container } from 'semantic-ui-react'
-import { Grid } from '@material-ui/core';
-
 const AuthPage = ({classes}) => {
-  
   return (
     <main className={classes.main}>
       <Paper className={classes.paper}>
@@ -46,7 +40,7 @@ const AuthPage = ({classes}) => {
             fullWidth={true}
             autoComplete='current-password'
           />
-         
+
             <Link to="/ContactForm" >
               <Button
                   className={classes.submitButton}
@@ -56,9 +50,9 @@ const AuthPage = ({classes}) => {
                   color='primary'
                 >
                   Log in
-              </Button>                      
+              </Button>
             </Link>
-          
+
 
           <Button
             type=''
@@ -81,16 +75,16 @@ const AuthPage = ({classes}) => {
 
         </form>
 
-        
+
         <Segment basic textAlign='center'>
           <Divider horizontal> OR </Divider>
-            
+
           <div className="col-centered">
             <GoogleAuth />
           </div>
-        
+
         </Segment>
-             
+
 
       </Paper>
     </main>

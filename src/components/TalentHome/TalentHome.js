@@ -4,20 +4,13 @@ import {Container, Row, Col,  } from "react-bootstrap";
 import { Divider, Button } from 'semantic-ui-react'
 import OpportunityCardProps from "./OpportunityCardProps"
 import ApplicationCardProps from "./ApplicationCardProps"
-import TalentCardProps from "./TalentCardProps"
-import { FormHelperText } from '@material-ui/core';
+import TalentCardProps from "./TalentCardProps";
 
 class TalentHome extends React.Component {
     state = {
       isUser: true,
     };
     render(){
-        const divStyle = {
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-
-        }
       return(
         <div style={{marginTop: "25px"}}>
           <Container  >
@@ -29,12 +22,12 @@ class TalentHome extends React.Component {
               <Col>
 
               </Col>
-              
+
               <Col style={{marginTop:"20px"}}>
                 <Link to="/TalentProfile"><Button >+Update Education</Button></Link>
                   <Divider />
                   <Link to="/TalentProfile"><Button>+Update Work Experience</Button></Link>
-                  
+
               </Col>
             </Row>
             <Row style={{backgroundColor:"white", height:"200px", marginTop:"20px"}}>
@@ -42,17 +35,17 @@ class TalentHome extends React.Component {
                 <h2>Opportunities Recommended for You</h2>
                 <div style={{marginLeft:"100px"}}>
                 <OpportunityCardProps/>
-                </div>              
+                </div>
               </div>
-              
+
             </Row>
             <Row style={{backgroundColor:"white", height:"200px"}}>
                 <div>
                     <h2>Your Applications</h2>
                     <div style={{marginLeft:"100px"}}>
                         <ApplicationCardProps/>
-                    </div>                   
-                </div>  
+                    </div>
+                </div>
             </Row>
             <Row style={{ height:"200px"}}>
                 <div>

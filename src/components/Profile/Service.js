@@ -1,14 +1,12 @@
 import React from 'react'
-import { Button, Divider, Icon, AccordionTitle} from 'semantic-ui-react'
+import { Divider, Icon } from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
 import ExperienceForm from './ExperienceForm'
 import ExperienceItem from './ExperienceItem'
 import './profile.css'
 
-
 //todo: check how to write if/else in render/function
 //todo: check how to write clickable icon
-
 
 class Service extends React.Component {
 
@@ -28,10 +26,10 @@ class Service extends React.Component {
       description: "working as a sde",
       achievements: [{id: 0, description: "achievement1", achievement_order: 0}, {id: 1, description: "achievement2", achievement_order: 1}],
       type: "Work",
-      
+
     }
 
-    
+
 
     //==================================================================//
     addData = (organization, title, date_start, date_end, achievements, type) => {
@@ -156,21 +154,21 @@ class Service extends React.Component {
       return res;
     }
     displayOneExperience = ()=>{
-      
+
         return (
-          
+
             <ExperienceItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
             deleteData={this.deleteData} organization={this.state.organization} title={this.state.title} type={this.state.type} achievements={this.state.achievements}
             date_start={this.state.date_start} date_end={this.state.date_end} />
-          
+
         );
       };
 
-      
-    
 
 
-    
+
+
+
 
     onHover=()=>{
       this.setState({showHint: true});

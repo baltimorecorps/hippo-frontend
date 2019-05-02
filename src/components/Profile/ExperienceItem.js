@@ -1,10 +1,7 @@
 import React from 'react';
-import {Button, Icon, Grid} from 'semantic-ui-react'
-import {Col, Row} from 'react-bootstrap'
+import {Icon, Grid} from 'semantic-ui-react';
 import ExperienceUpdateForm from './ExperienceUpdateForm'
 import './profile.css';
-
-
 
 class ExperienceItem extends React.Component {
     state = {
@@ -30,7 +27,7 @@ class ExperienceItem extends React.Component {
 
     onSubmitEdit = (exp_id, organization, title, date_start, date_end,achievements, type)=>{
       this.props.putData(exp_id, organization, title, date_start, date_end,achievements, type);
-      
+
 
       this.setState({
         displayUpdateForm: false,
@@ -48,7 +45,7 @@ class ExperienceItem extends React.Component {
 
     }
 
-    
+
     displayOneExperience = ()=>{
       var textStyleSmall={
         fontSize: "20px",
@@ -69,7 +66,7 @@ class ExperienceItem extends React.Component {
                 <h2> <strong>{this.props.organization}, {this.props.title} </strong> </h2>
                 <p>  {this.props.date_start} -- {this.props.date_end} </p>
 
-            
+
                 <div>
                   <p>Achievements:</p>
                   {this.state.achievements.map(item=>{

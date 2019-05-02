@@ -1,10 +1,7 @@
 import React from 'react';
-import {Button, Icon, Grid} from 'semantic-ui-react'
-import {Col, Row} from 'react-bootstrap'
+import {Icon, Grid} from 'semantic-ui-react';
 import AccomplishmentUpdateForm from './AccomplishmentUpdateForm'
 import './profile.css';
-
-
 
 class AccomplishmentItem extends React.Component {
     state = {
@@ -31,7 +28,7 @@ class AccomplishmentItem extends React.Component {
 
     onSubmitEdit = (exp_id, organization, title, date_start, date_end,description, type)=>{
       this.props.putData(exp_id, organization, title, date_start, date_end,description, type);
-      
+
 
       this.setState({
         displayUpdateForm: false,
@@ -49,7 +46,7 @@ class AccomplishmentItem extends React.Component {
 
     }
 
-    
+
     displayOneExperience = ()=>{
       var textStyleSmall={
         fontSize: "20px",
@@ -71,8 +68,8 @@ class AccomplishmentItem extends React.Component {
                 <p>  Date Issued: {this.props.date_start} </p>
                 <p>  {this.props.description} </p>
 
-            
-                
+
+
 
               </Grid.Column>
             </Grid>

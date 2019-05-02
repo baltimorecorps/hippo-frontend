@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Divider, Icon} from 'semantic-ui-react'
+import { Divider, Icon} from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
 import EducationForm from './EducationForm'
 import EducationItem from './EducationItem'
@@ -26,7 +26,7 @@ class Education extends React.Component {
           description: 'Computer Science',
           date_end: "1999-09-09",
           date_start: "1990-01-01",
-          
+
           achievements: [{id: 0, description: "My achievement is....", achievement_order: 0}, {id: 1, description: "My achievement is ...", achievement_order: 1}],
           type: "Education",
           //id: 0,
@@ -46,7 +46,7 @@ class Education extends React.Component {
         }
 
 //below 4 functions are for communicating with backend
-    //POST 
+    //POST
         addData = (organization, degree, description,date_start, date_end, achievements, type) => {
           const url = 'http://127.0.0.1:5000/api/contacts/1/experiences/';
           fetch(url, {
@@ -61,7 +61,7 @@ class Education extends React.Component {
               date_end: date_end,
               //description: descrition;
               achievements:achievements,
-              
+
               type: this.state.type,
             }),
             headers: {
@@ -74,7 +74,7 @@ class Education extends React.Component {
           })
           .then(response => response.json())
           .then((json) => {
-            
+
             console.log("response from POST data method:", json);
             this.setState({
               displayForm: false,
@@ -154,7 +154,7 @@ class Education extends React.Component {
             return (
               <div key={item.id} style={{marginLeft:"20px"}} className={item}>
                 <EducationItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={item.id} organization={item.organization} degree={item.degree} 
+                deleteData={this.deleteData} exp_id={item.id} organization={item.organization} degree={item.degree}
                 description={item.description} achievements={item.achievements}
                 date_start={item.date_start} date_end={item.date_end} type={item.type} />
               </div>
@@ -167,13 +167,13 @@ class Education extends React.Component {
         displayNewEducation =() =>{
           return <div style={{marginLeft:"20px"}}>
             <EducationItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
-                deleteData={this.deleteData} exp_id={this.state.id} organization={this.state.organization} degree={this.state.degree} 
+                deleteData={this.deleteData} exp_id={this.state.id} organization={this.state.organization} degree={this.state.degree}
                 description={this.state.description} achievements={this.state.achievements}
                 date_start={this.state.date_start} date_end={this.state.date_end} type={this.state.type}  />
           </div>
         }
 
-        
+
 
 
 

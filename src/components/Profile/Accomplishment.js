@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Divider, Icon, } from 'semantic-ui-react'
+import { Divider, Icon, } from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
 import AccomplishmentForm from './AccomplishmentForm'
 import AccomplishmentItem from './AccomplishmentItem'
@@ -17,10 +17,10 @@ class Accomplishment extends React.Component {
 
       experiences: [],
       organization: "Baltimore Corps", //host
-      title: "Volunteer",  
+      title: "Volunteer",
       date_end: "1999-09-09",
       date_start: "1990-01-01",
-      description: "This accomplishment is ...........",     
+      description: "This accomplishment is ...........",
       type: "Accomplishment",
       //id: 0,
     }
@@ -45,20 +45,20 @@ class Accomplishment extends React.Component {
             //'Access-Control-Allow-Credentials':true,
             'Access-Control-Allow-Origin':true
           },
-  
+
         })
         .then(response => response.json())
         .then((json) => {
           console.log("response from POST data method:", json);
           this.setState({
             displayForm: false,
-           
+
           })
           //fetch data again so that the added data can be displayed
           this.fetchData();
         })
       }
-  
+
       //GET
       fetchData = () =>{
         fetch('http://127.0.0.1:5000/api/contacts/1/experiences/')
@@ -70,7 +70,7 @@ class Accomplishment extends React.Component {
           }) }
         )
       }
-    //PUT 
+    //PUT
     putData = async (exp_id, organization, title, date_start, date_end,description, type) =>{
       console.log("!!PUT data ");
       const url = 'http://127.0.0.1:5000/api/contacts/1/experiences/' + exp_id;
@@ -127,7 +127,7 @@ class Accomplishment extends React.Component {
       });
     }
 
-    
+
 
     componentDidMount(){
       this.fetchData();
@@ -148,18 +148,18 @@ class Accomplishment extends React.Component {
       return res;
     }
     displayOneExperience = ()=>{
-      
+
         return (
-          
+
             <AccomplishmentItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
             deleteData={this.deleteData} organization={this.state.organization} title={this.state.title} type={this.state.type} description={this.state.description}
             date_start={this.state.date_start} date_end={this.state.date_end} />
-          
+
         );
       };
 
-      
-    
+
+
     /*
 
     onHover=()=>{
