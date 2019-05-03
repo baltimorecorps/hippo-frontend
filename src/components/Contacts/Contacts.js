@@ -4,6 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ContactList from './ContactList.container';
+import AddContact from './AddContact';
 
 const styles = theme => ({
   appBar: {
@@ -29,16 +30,21 @@ const styles = theme => ({
       padding: theme.spacing.unit * 3,
     },
   },
+  button: {
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit,
+  },
 });
 
-const Contacts = ({classes}) => (
+const Contacts = ({classes, addContact}) => (
   <main className={classes.layout}>
     <Paper className={classes.paper}>
       <Typography component="h1" variant="h4" align="center">
-        Contacts
+        Profiles
       </Typography>
       <React.Fragment>
         <ContactList />
+        <AddContact addContact={addContact} />
       </React.Fragment>
     </Paper>
   </main>
@@ -46,6 +52,7 @@ const Contacts = ({classes}) => (
 
 Contacts.propTypes = {
   classes: PropTypes.object.isRequired,
+  addContact: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Contacts);
