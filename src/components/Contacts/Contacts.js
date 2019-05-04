@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ContactList from './ContactList.container';
+import ContactList from './ContactList';
 import AddContact from './AddContact';
 
 const styles = theme => ({
@@ -36,23 +36,31 @@ const styles = theme => ({
   },
 });
 
-const Contacts = ({classes, addContact}) => (
-  <main className={classes.layout}>
-    <Paper className={classes.paper}>
-      <Typography component="h1" variant="h4" align="center">
-        Profiles
-      </Typography>
-      <React.Fragment>
-        <ContactList />
-        <AddContact addContact={addContact} />
-      </React.Fragment>
-    </Paper>
-  </main>
-);
+const Contacts = props => {
+  const classes = props.classes;
+  return (
+    <main className={classes.layout}>
+      <Paper className={classes.paper}>
+        <Typography component="h1" variant="h4" align="center">
+          Profiles
+        </Typography>
+        <React.Fragment>
+          <ContactList
+            contacts={props.contacts}
+            refreshContacts={props.refreshContacts}
+          />
+          <AddContact addNewContact={props.addNewContact} />
+        </React.Fragment>
+      </Paper>
+    </main>
+  );
+};
 
 Contacts.propTypes = {
   classes: PropTypes.object.isRequired,
-  addContact: PropTypes.func.isRequired,
+  contacts: PropTypes.array.isRequired,
+  refreshContacts: PropTypes.func.isRequired,
+  addNewContact: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Contacts);

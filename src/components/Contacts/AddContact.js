@@ -36,20 +36,25 @@ const GENDERS = [
   },
 ];
 
-const useForm = () => {
+const useForm = (addNewContact) => {
   const [values, setValues] = useState({});
+
+  const handleSubmit = () => {
+    addNewContact(values);
+  };
 
   const handleChange = event => {
     event.persist();
     setValues(values => ({...values, [event.target.name]: event.target.value}));
   };
 
-  return [values, handleChange];
+  return [values, handleChange, handleSubmit];
 };
 
-const AddContact = ({classes}) => {
+const AddContact = ({classes, addNewContact}) => {
   const [open, setOpen] = useState(false);
-  const [values, handleChange] = useForm();
+  const [values, handleChange, handleSubmit] = useForm(addNewContact);
+  const submit = () => { handleSubmit(); setOpen(false); }
   return (
     <React.Fragment>
       <Button
@@ -76,8 +81,8 @@ const AddContact = ({classes}) => {
                 id="standard-name"
                 label="First Name"
                 className={classes.textField}
-                name="firstName"
-                value={values.firstName}
+                name="first_name"
+                value={values.first_name}
                 onChange={handleChange}
                 margin="normal"
               />
@@ -86,8 +91,8 @@ const AddContact = ({classes}) => {
                 id="standard-name"
                 label="Last Name"
                 className={classes.textField}
-                name="lastName"
-                value={values.lastName}
+                name="last_name"
+                value={values.last_name}
                 onChange={handleChange}
                 margin="normal"
               />
@@ -117,7 +122,7 @@ const AddContact = ({classes}) => {
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={() => setOpen(false)}
+            onClick={submit}
             variant="contained"
             color="primary">
             Create Profile
@@ -133,7 +138,7 @@ const AddContact = ({classes}) => {
 
 AddContact.propTypes = {
   classes: PropTypes.object.isRequired,
-  addContact: PropTypes.func.isRequired,
+  addNewContact: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing, theme}) => ({

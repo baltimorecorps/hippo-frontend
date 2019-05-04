@@ -11,7 +11,7 @@ import ContactForm from './LogIn/ContactForm.js';
 import ContactInfo from './Other/ContactInfo.js';
 import TalentHome from './TalentHome/TalentHome.js';
 import TalentProfile from './Profile/TalentProfile.js';
-import Contacts from './Contacts/Contacts';
+import Contacts from './Contacts/Contacts.container';
 import SearchContact from './SearchContact/SearchContact.js';
 import SearchContact2 from './SearchContact/SearchContact2.js';
 import Navbar from "react-bootstrap/Navbar";

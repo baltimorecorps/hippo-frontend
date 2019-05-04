@@ -1,6 +1,5 @@
-import {API_URL} from '../../constants';
-import {createReducer} from 'redux-starter-kit';
-import fetchActionCreator from '../../modules/fetch-action-creator';
+import {API_URL} from '../constants';
+import fetchActionCreator from '../modules/fetch-action-creator';
 
 // ## EXPERIENCES ##
 
@@ -17,67 +16,13 @@ const addExperienceLocal = experience => ({
   experience,
 });
 
-const experiencesReducer = createReducer(
-  {
-    unsavedChanges: false,
-    inRequest: false,
-    order: [],
-    experiences: {},
-  },
-  {
-    ADD_EXPERIENCE: (state, action) => {
-      const id = action.experience.id;
-      console.assert(!(id in state.experiences));
-      console.assert(!state.order.includes(id));
-      state.experiences[id] = action.experience;
 
-      if (!state.order.includes(id)) {
-        state.order.push(id);
-      }
-
-      state.unsavedChanges = true;
-    },
-    [`REQUEST_${ADD_EXPERIENCE}`]: (state, action) => {
-      state.inRequest = true;
-    },
-    [`RESOLVE_${ADD_EXPERIENCE}`]: (state, action) => {
-      const experience = action.body;
-      const id = experience.id;
-      state.experiences[id] = experience;
-      if (!state.order.includes(id)) {
-        state.order.push(id);
-      }
-      state.inRequest = false;
-      state.unsavedChanges = false;
-    },
-    [`REJECT_${ADD_EXPERIENCE}`]: (state, action) => {
-      const experience = action.experience;
-      const id = experience.id;
-      delete state.experiences[id];
-      state.order = state.order.filter(elem => elem !== id);
-      state.inRequest = false;
-      state.unsavedChanges = false;
-    },
-  },
-);
-
-export {ADD_EXPERIENCE, addExperience, addExperienceLocal, experiencesReducer};
+export {ADD_EXPERIENCE, addExperience, addExperienceLocal};
 
 // ## API ACTION CREATORS ##
 // Note on naming convention here:
 // All fetch API methods creators are prefixed with 'api' for clarity in use
 
-const apiGetAllContacts = () =>
-  fetchActionCreator('ALL_CONTACTS', `${API_URL}/api/contacts/`);
-
-const apiGetContact = contactId =>
-  fetchActionCreator('CONTACT', `${API_URL}/api/contacts/${contactId}/`);
-
-const apiAddContact = contact =>
-  fetchActionCreator('ADD_CONTACT', `${API_URL}/api/contacts/`, {
-    body: contact,
-    method: 'POST',
-  });
 
 const apiGetProfile = contactId =>
   fetchActionCreator(
