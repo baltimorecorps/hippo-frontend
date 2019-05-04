@@ -43,7 +43,7 @@ const App = () => (
                     <Nav.Link href="/Resume">Generated Resume</Nav.Link>
                     <Nav.Link href="/Contacts">Contacts</Nav.Link>
 
-                    <Nav.Link href="/TalentProfile"> TalentProfile</Nav.Link>
+                    {/*<Nav.Link href="/TalentProfile"> TalentProfile</Nav.Link>*/}
 
 
 
@@ -61,8 +61,8 @@ const App = () => (
 
               <Route exact path='/Resume' component={GeneratedResumePage} />
               <Route exact path='/Contacts' component={Contacts} />
-
-              <Route exact path='/TalentProfile' component={TalentProfile} />
+              {/*<Route exact path='/TalentProfile' component={TalentProfile} />*/}
+              <Route path='/Profile/:contactId' component={TalentProfile} />
 
 
 

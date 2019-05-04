@@ -106,11 +106,7 @@ class TalentProfile extends React.Component {
     }
   }
 TalentProfile.propTypes = {
-  contact: PropTypes.object,
-  work_experiences: PropTypes.array,
-  education_experiences: PropTypes.array,
-  service_experiences: PropTypes.array,
-  accomplishments: PropTypes.array,
+  match: PropTypes.object,
 }
 
   export default TalentProfile;
