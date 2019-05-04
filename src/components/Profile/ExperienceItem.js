@@ -1,65 +1,23 @@
 import React from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Icon, Grid} from 'semantic-ui-react';
 import {Col, Row} from 'react-bootstrap';
 import ExperienceUpdateForm from './ExperienceUpdateForm';
 import './profile.css';
 
-class ExperienceItem extends React.Component {
-  state = {
-    isUser: true,
-    displayUpdateForm: false,
-    organization: this.props.organization,
-    title: this.props.title,
-    date_start: this.props.date_start,
-    date_end: this.props.date_end,
-    achievements: this.props.achievements,
-    type: this.props.type,
+const ExperienceItem = ({experience, onDelete}) => {
+  const [editing, setEditing] = useState(false);
+
+  const getInitial = () => {
+    if (experience.organization && experience.organization.length > 0) {
+      return experience.organization.charAt(0)
+    } else {
+      return ' ';
+    }
   };
 
-  onEdit = e => {
-    e.preventDefault();
-    this.setState({
-      displayUpdateForm: true,
-    });
-    console.log('OnEDit');
-  };
-
-  onSubmitEdit = (
-    exp_id,
-    organization,
-    title,
-    date_start,
-    date_end,
-    achievements,
-    type,
-  ) => {
-    this.props.putData(
-      exp_id,
-      organization,
-      title,
-      date_start,
-      date_end,
-      achievements,
-      type,
-    );
-
-    this.setState({
-      displayUpdateForm: false,
-    });
-  };
-  handleCancel = () => {
-    this.setState({
-      displayUpdateForm: false,
-    });
-  };
-
-  onDelete = e => {
-    const exp_id = this.props.exp_id;
-    this.props.deleteData(exp_id);
-  };
-
-  displayOneExperience = () => {
+  const displayOneExperience = () => {
     var textStyleSmall = {
       fontSize: '20px',
       fontWeight: '300',
@@ -67,9 +25,6 @@ class ExperienceItem extends React.Component {
       color: '#5f6163',
     };
 
-    console.log(
-      'EXPERIENCE ITEM: this.props.organization:' + this.props.organization,
-    );
     return (
       <div style={textStyleSmall}>
         <Grid style={{marginLeft: '20px'}}>
@@ -77,7 +32,7 @@ class ExperienceItem extends React.Component {
             <button type="button" className="btn btn-success btn-circle btn-xl">
               <i className="fa fa-check">
                 {' '}
-                {this.props.organization.charAt(0)}{' '}
+                {getInitial()}{' '}
               </i>
             </button>
           </Grid.Column>
@@ -86,17 +41,17 @@ class ExperienceItem extends React.Component {
             <h2>
               {' '}
               <strong>
-                {this.props.organization}, {this.props.title}{' '}
+                {experience.organization}, {experience.title}{' '}
               </strong>{' '}
             </h2>
             <p>
               {' '}
-              {this.props.date_start} -- {this.props.date_end}{' '}
+              {experience.date_start} -- {experience.date_end}{' '}
             </p>
 
             <div>
               <p>Achievements:</p>
-              {this.state.achievements.map(item => {
+              {experience.achievements.map(item => {
                 return (
                   <p key={item.achievement_order}>
                     {item.achievement_order + 1}: {item.description}
@@ -109,38 +64,35 @@ class ExperienceItem extends React.Component {
       </div>
     );
   };
-  render() {
-    console.log('render experienceItem');
-    console.log('this.state.displayUpdateForm=' + this.state.displayUpdateForm);
-    return (
-      <div>
-        <Grid style={{marginTop: '20px'}}>
-          <Grid.Column floated="left" width={13}>
-            {this.displayOneExperience()}
-          </Grid.Column>
-          <Grid.Column textAlign="right" floated="right" width={3}>
-            <Icon name="edit" onClick={this.onEdit} />
-            <Icon name="delete" onClick={this.onDelete} />
-          </Grid.Column>
-        </Grid>
 
-        {this.state.displayUpdateForm ? (
-          <ExperienceUpdateForm
-            handleCancel={this.handleCancel}
-            func={v => {
-              console.log(v);
-            }}
-            experience={this.props}
-          />
-        ) : null}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Grid style={{marginTop: '20px'}}>
+        <Grid.Column floated="left" width={13}>
+          {displayOneExperience()}
+        </Grid.Column>
+        <Grid.Column textAlign="right" floated="right" width={3}>
+          <Icon name="edit" onClick={() => setEditing(true)} />
+          <Icon name="delete" onClick={() => onDelete(experience.id)} />
+        </Grid.Column>
+      </Grid>
+
+      {editing ? (
+        <ExperienceUpdateForm
+          handleCancel={() => setEditing(false)}
+          func={v => {
+            console.log(v);
+          }}
+          experience={experience}
+        />
+      ) : null}
+    </div>
+  );
+};
 
 ExperienceItem.propTypes = {
-  //id: PropTypes.number.isRequired,
   experience: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     organization: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
@@ -157,7 +109,7 @@ ExperienceItem.propTypes = {
     contact_id: PropTypes.number,
     achievements: PropTypes.array,
     description: PropTypes.string,
-  })
+  }).isRequired,
 };
 
 export default ExperienceItem;
