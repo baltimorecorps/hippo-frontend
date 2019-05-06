@@ -1,70 +1,91 @@
-import { 
-  experiencesReducer 
-} from './profile';
+import {experiencesReducer} from './profile';
 
 import {
-  ADD_EXPERIENCE,
-  addExperienceLocal,
-} from '../actions/profile';
+  ADD_EXPERIENCE, 
+  EXPERIENCE,
+  EXPERIENCES,
+  addExperienceLocal} from '../actions/profile';
 
 describe('Experience state', () => {
-  const initialState = {
-    unsavedChanges: false,
-    inRequest: false,
-    order: [],
-    experiences: {},
-  };
+  let initialState = {};
+  beforeEach(() => {
+    initialState = {};
+  });
   test('inital state', () => {
     const newState = experiencesReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
-  test('Add new experience - local state only', () => {
-    const experience = {id: 1234, other_stuff: 'data'};
-    const newState = experiencesReducer(
-      undefined,
-      addExperienceLocal(experience),
-    );
-    expect(newState.experiences).toHaveProperty('1234');
-    expect(newState.experiences[1234]).toEqual(experience);
-    expect(newState.order).toContain(1234);
-    expect(newState.unsavedChanges).toBe(true);
-  });
-  test('Add new experience - request dispatched', () => {
-    const newState = experiencesReducer(initialState, {
-      type: `REQUEST_${ADD_EXPERIENCE}`,
-    });
-    expect(newState.inRequest).toBe(true);
-  });
   test('Add new experience - request resolved', () => {
     const experience = {id: 1234, other_stuff: 'data'};
-    const startState = initialState;
-    startState.inRequest = true;
-    startState.unsavedChanges = true;
-    const newState = experiencesReducer(startState, {
+    const newState = experiencesReducer(initialState, {
       type: `RESOLVE_${ADD_EXPERIENCE}`,
-      body: experience,
+      body: {data: experience},
     });
-    expect(newState.experiences).toHaveProperty('1234');
-    expect(newState.experiences[1234]).toEqual(experience);
-    expect(newState.order).toContain(1234);
-    expect(newState.inRequest).toBe(false);
-    expect(newState.unsavedChanges).toBe(false);
+    expect(newState).toHaveProperty('1234');
+    expect(newState[1234]).toEqual(experience);
   });
-  test('Add new experience - request rejected', () => {
-    const experience = {id: 1234, other_stuff: 'data'};
-    const startState = initialState;
-    startState.order.push(1234);
-    startState.experiences[1234] = experience;
-    startState.unsavedChanges = true;
-    startState.inRequest = true;
 
+  test('Add new experience - request resolved', () => {
+    const oldExperience = {id: 1234, other_stuff: 'data'};
+    const experience = {id: 1234, other_stuff: 'new data'};
+    initialState[1234] = oldExperience;
+
+    const newState = experiencesReducer(initialState, {
+      type: `RESOLVE_${ADD_EXPERIENCE}`,
+      body: {data: experience},
+    });
+    expect(newState).toHaveProperty('1234');
+    expect(newState[1234]).toEqual(experience);
+  });
+
+  test('Add new experience - request rejected', () => {
+    const oldExperience = {id: 1234, other_stuff: 'data'};
+    const experience = {id: 1234, other_stuff: 'new data'};
+    const startState = initialState;
+    startState[1234] = oldExperience;
     const newState = experiencesReducer(startState, {
       type: `REJECT_${ADD_EXPERIENCE}`,
       experience: experience,
     });
-    expect(newState.experiences).not.toHaveProperty('1234');
-    expect(newState.order).not.toContain(1234);
-    expect(newState.inRequest).toBe(false);
-    expect(newState.unsavedChanges).toBe(false);
+    expect(newState).toEqual(startState);
   });
+
+  test('Refresh all experiences', () => {
+    const experiences = [
+      {id: 11, title: 'exp 1'},
+      {id: 12, title: 'exp 2'},
+      {id: 16, title: 'exp 6'},
+      {id: 15, title: 'exp 5'},
+    ];
+    const newState = experiencesReducer(initialState, {
+      type: `RESOLVE_${EXPERIENCES}`,
+      body: {status: 'success', data: experiences},
+    });
+    expect(newState).toEqual({
+      [11]: {id: 11, title: 'exp 1'},
+      [12]: {id: 12, title: 'exp 2'},
+      [16]: {id: 16, title: 'exp 6'},
+      [15]: {id: 15, title: 'exp 5'},
+    });
+  });
+
+  test('Refresh one experience', () => {
+    const experience = {id: 11, data: 'exp data'};
+
+    const oldExperience = { id: 11, data: 'old exp data' }
+    const bystander = { id: 12, data: 'bystander' }
+    initialState = {
+      [11]: oldExperience,
+      [12]: bystander,
+    }
+    const newState = experiencesReducer(initialState, {
+      type: `RESOLVE_${EXPERIENCE}`,
+      body: {status: 'success', data: experience},
+    });
+    expect(newState).toEqual({
+      [11]: experience,
+      [12]: bystander,
+    });
+  });
+
 });

@@ -1,28 +1,14 @@
 import {API_URL} from '../constants';
 import fetchActionCreator from '../modules/fetch-action-creator';
 
-// ## EXPERIENCES ##
-
-const ADD_EXPERIENCE = 'ADD_EXPERIENCE';
-const addExperience = (contactId, experience) =>
-  async function(dispatch) {
-    dispatch(addExperienceLocal(experience));
-
-    await apiAddExperience(contactId, experience)(dispatch);
-  };
-
-const addExperienceLocal = experience => ({
-  type: ADD_EXPERIENCE,
-  experience,
-});
-
-
-export {ADD_EXPERIENCE, addExperience, addExperienceLocal};
+export const EXPERIENCE = 'EXPERIENCE';
+export const EXPERIENCES = 'EXPERIENCES';
+export const ADD_EXPERIENCE = 'ADD_EXPERIENCE';
+export const UPDATE_EXPERIENCE = 'UPDATE_EXPERIENCE';
 
 // ## API ACTION CREATORS ##
 // Note on naming convention here:
 // All fetch API methods creators are prefixed with 'api' for clarity in use
-
 
 const apiGetProfile = contactId =>
   fetchActionCreator(
@@ -32,22 +18,28 @@ const apiGetProfile = contactId =>
 
 const apiGetExperiences = contactId =>
   fetchActionCreator(
-    'EXPERIENCES',
+    EXPERIENCES,
     `${API_URL}/api/contacts/${contactId}/experiences/`,
   );
 
-const apiGetExperience = (contactId, expId) =>
+const apiGetExperiencesByType = (contactId, type) =>
   fetchActionCreator(
-    'EXPERIENCE',
-    `${API_URL}/api/contacts/${contactId}/experiences/${expId}/`,
+    'EXPERIENCES_BY_TYPE',
+    `${API_URL}/api/contacts/${contactId}/experiences/${type}/`,
+  );
+
+const apiGetExperience = (expId) =>
+  fetchActionCreator(
+    EXPERIENCE,
+    `${API_URL}/api/experiences/${expId}/`,
   );
 
 const apiAddExperience = (contactId, experience) =>
   fetchActionCreator(
-    'ADD_EXPERIENCE',
+    ADD_EXPERIENCE,
     `${API_URL}/api/contacts/${contactId}/experiences/`,
     {
-      body: experience,
+      body: JSON.stringify(experience),
       method: 'POST',
     },
     {
@@ -72,18 +64,12 @@ const apiDeleteExperience = expId =>
 
 const apiUpdateExperience = (expId, update) =>
   fetchActionCreator(
-    'UPDATE_EXPERIENCE',
+    UPDATE_EXPERIENCE,
     `${API_URL}/api/experiences/${expId}/`,
     {
-      body: update,
+      body: JSON.stringify(update),
       method: 'PUT',
     },
-  );
-
-const apiGetExperiencesByType = (contactId, type) =>
-  fetchActionCreator(
-    'EXPERIENCES_BY_TYPE',
-    `${API_URL}/api/contacts/${contactId}/experiences/${type}/`,
   );
 
 const apiGetAllTags = () =>
@@ -111,7 +97,7 @@ const apiAddAchievement = (expId, achievement) =>
     'ADD_ACHIEVEMENT',
     `${API_URL}/api/experiences/${expId}/achievements/`,
     {
-      body: achievement,
+      body: JSON.stringify(achievement),
       method: 'POST',
     },
   );
@@ -121,7 +107,7 @@ const apiUpdateAchievement = (achievementId, achievement) =>
     'UPDATE_ACHIEVEMENT',
     `${API_URL}/api/achievements/${achievementId}/`,
     {
-      body: achievement,
+      body: JSON.stringify(achievement),
       method: 'PUT',
     },
   );
@@ -134,3 +120,36 @@ const apiDeleteAchievement = achievementId =>
       method: 'DELETE',
     },
   );
+
+// ## EXPERIENCES ##
+
+
+export const addExperience = (contactId, experience) =>
+  async function(dispatch) {
+    dispatch(addExperienceLocal(experience));
+
+    await apiAddExperience(contactId, experience)(dispatch);
+  };
+
+export const addExperienceLocal = experience => ({
+  type: ADD_EXPERIENCE,
+  experience,
+});
+
+export const updateExperience = experience => 
+  async function(dispatch) {
+    dispatch(updateExperienceLocal(experience));
+
+    await apiUpdateExperience(experience.id, experience)(dispatch);
+    await apiGetExperience(experience.id)(dispatch);
+  };
+
+export const updateExperienceLocal = experience => ({
+  type: UPDATE_EXPERIENCE,
+  experience,
+});
+
+
+export const refreshExperiences = apiGetExperiences;
+
+

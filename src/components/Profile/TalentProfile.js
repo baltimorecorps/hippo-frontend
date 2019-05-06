@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Container, Grid, Row, Col} from "react-bootstrap";
 import TalentBasicInfo from "./TalentBasicInfo";
-import Experience from "./Experience";
+import Experience from "./Experience.container";
 import Education from "./Education";
 import Service from "./Service";
 import Accomplishment from "./Accomplishment";
@@ -80,7 +80,10 @@ class TalentProfile extends React.Component {
                 </Row>
                 <Row >
                   <Col >
-                    <Experience />
+                    <Experience 
+                      contactId={this.props.match.params.contactId}
+                      experienceType='Work'
+                    />
                     <Education/>
                     <Service/>
                     <Accomplishment/>

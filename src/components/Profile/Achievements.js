@@ -10,8 +10,7 @@ const Achievements = ({achievements, onChange}) => {
   };
 
   const handleAdd = () => {
-    achievements.push({description: ''});
-    onChange(achievements);
+    onChange([...achievements, {description: ''}]);
   };
 
   const handleChangeDescription = idx => evt => {

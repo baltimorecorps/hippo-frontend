@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import contacts from './contacts'
-import profile from './profile'
+import experiences from './profile'
 
 const rootReducer = combineReducers({
   contacts,
-  profile,
+  experiences,
 })
 
 export default rootReducer;

@@ -6,16 +6,21 @@ import {Col, Row} from 'react-bootstrap';
 import ExperienceUpdateForm from './ExperienceUpdateForm';
 import './profile.css';
 
-const ExperienceItem = ({experience, onDelete}) => {
+const ExperienceItem = ({experience, onUpdate, onDelete}) => {
   const [editing, setEditing] = useState(false);
 
   const getInitial = () => {
-    if (experience.organization && experience.organization.length > 0) {
-      return experience.organization.charAt(0)
+    if (experience.host && experience.host.length > 0) {
+      return experience.host.charAt(0)
     } else {
       return ' ';
     }
   };
+
+  const submitUpdate = async function(values) {
+    await onUpdate(values);
+    setEditing(false);
+  }
 
   const displayOneExperience = () => {
     var textStyleSmall = {
@@ -41,7 +46,7 @@ const ExperienceItem = ({experience, onDelete}) => {
             <h2>
               {' '}
               <strong>
-                {experience.organization}, {experience.title}{' '}
+                {experience.host}, {experience.title}{' '}
               </strong>{' '}
             </h2>
             <p>
@@ -80,9 +85,7 @@ const ExperienceItem = ({experience, onDelete}) => {
       {editing ? (
         <ExperienceUpdateForm
           handleCancel={() => setEditing(false)}
-          func={v => {
-            console.log(v);
-          }}
+          onSubmit={submitUpdate}
           experience={experience}
         />
       ) : null}
@@ -91,9 +94,11 @@ const ExperienceItem = ({experience, onDelete}) => {
 };
 
 ExperienceItem.propTypes = {
+  onUpdate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   experience: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    organization: PropTypes.string.isRequired,
+    host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
       'High School',
@@ -109,7 +114,7 @@ ExperienceItem.propTypes = {
     contact_id: PropTypes.number,
     achievements: PropTypes.array,
     description: PropTypes.string,
-  }).isRequired,
+  }),
 };
 
 export default ExperienceItem;

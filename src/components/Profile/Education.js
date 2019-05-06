@@ -153,7 +153,8 @@ class Education extends React.Component {
           const res = this.state.experiences.map(item=>{
             return (
               <div key={item.id} style={{marginLeft:"20px"}} className={item}>
-                <EducationItem putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
+                <EducationItem 
+                  putData={this.putData.bind(this)} displayUpdateForm={this.state.displayUpdateForm}
                 deleteData={this.deleteData} exp_id={item.id} organization={item.organization} degree={item.degree} 
                 description={item.description} achievements={item.achievements}
                 date_start={item.date_start} date_end={item.date_end} type={item.type} />

@@ -155,6 +155,7 @@ class Service extends React.Component {
       return (
         <div key={item.id} style={{marginLeft: '20px'}} className={item}>
           <ExperienceItem
+            key={item.id}
             putData={this.putData.bind(this)}
             displayUpdateForm={this.state.displayUpdateForm}
             deleteData={this.deleteData}
@@ -177,6 +178,7 @@ class Service extends React.Component {
     };
     return (
       <ExperienceItem
+        key={999}
         putData={this.putData.bind(this)}
         displayUpdateForm={this.state.displayUpdateForm}
         deleteData={this.deleteData}

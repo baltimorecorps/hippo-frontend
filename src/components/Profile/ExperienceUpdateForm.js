@@ -9,8 +9,8 @@ import {Icon, Button, Divider} from 'semantic-ui-react';
 
 import Achievements from './Achievements';
 
-const useForm = (initialValues, updateExperience) => {
-  const [values, setValues] = useState(initialValues);
+const useForm = (initialValues, onSubmit) => {
+  const [values, setValues] = useState(initialValues || {});
 
   const update = name => value => {
     setValues(values => ({
@@ -39,7 +39,7 @@ const useForm = (initialValues, updateExperience) => {
     },
 
     handleSubmit: () => {
-      updateExperience(values);
+      onSubmit(values);
     },
     handleAchievements: update('achievements'),
   };
@@ -47,7 +47,7 @@ const useForm = (initialValues, updateExperience) => {
   return [values, handlers];
 };
 
-const ExperienceUpdateForm = ({experience, func, handleCancel}) => {
+const ExperienceUpdateForm = ({experience, onSubmit, handleCancel}) => {
   const [
     values,
     {
@@ -57,7 +57,7 @@ const ExperienceUpdateForm = ({experience, func, handleCancel}) => {
       handleSubmit,
       handleAchievements,
     },
-  ] = useForm(experience, func);
+  ] = useForm(experience, onSubmit);
 
   const handleChangeDescription = idx => evt => {
     const newAchievements = this.state.achievements.map((achievement, sidx) => {
@@ -71,7 +71,7 @@ const ExperienceUpdateForm = ({experience, func, handleCancel}) => {
     <div>
       <Modal visible="true" width="400" minHeight="750" effect="fadeInUp">
         <div style={{margin: '20px'}}>
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <Form.Field>
               <label>
                 {' '}
@@ -79,8 +79,8 @@ const ExperienceUpdateForm = ({experience, func, handleCancel}) => {
               </label>
               <input
                 placeholder="Organization Name"
-                value={values.organization}
-                name="organization"
+                value={values.host}
+                name="host"
                 onChange={handleChange}
               />
             </Form.Field>
@@ -149,8 +149,9 @@ const ExperienceUpdateForm = ({experience, func, handleCancel}) => {
 };
 
 ExperienceUpdateForm.propTypes = {
-  func: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   experience: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     description: PropTypes.string,
     organization: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
@@ -167,6 +168,6 @@ ExperienceUpdateForm.propTypes = {
       .isRequired,
     contact_id: PropTypes.number,
     achievements: PropTypes.array,
-  }),
+  }).isRequired,
 };
 export default ExperienceUpdateForm;
