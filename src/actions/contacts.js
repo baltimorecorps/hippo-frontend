@@ -1,5 +1,5 @@
 import {API_URL} from '../constants';
-import fetchActionCreator from '../modules/fetch-action-creator';
+import fetchActionCreator from 'fetch-action-creator';
 
 export const ALL_CONTACTS = 'ALL_CONTACTS';
 export const CONTACT = 'CONTACT';
