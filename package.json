@@ -1,5 +1,6 @@
 {
   "name": "webapp",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -11,7 +12,10 @@
     "@material-ui/core": "^3.6.2",
     "airbnb-prop-types": "^2.11.0",
     "axios": "^0.18.0",
+    "babel-plugin-rewire": "^1.2.0",
     "bootstrap": "^4.3.1",
+    "fetch-action-creator": "^2.0.4",
+    "fetch-mock": "^7.3.3",
     "html2canvas": "^1.0.0-alpha.12",
     "jspdf": "^1.5.3",
     "pdfmake": "^0.1.53",
@@ -24,8 +28,11 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^3.0.0",
     "react-select": "^2.4.3",
+    "react-redux": "^7.0.3",
+    "redux": "^4.0.1",
+    "redux-starter-kit": "^0.5.1",
     "semantic-ui": "^2.4.2",
-    "semantic-ui-react": "^0.85.0"
+    "semantic-ui-react": "^0.86.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -57,6 +64,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "prettier": "^1.17.0"
+    "prettier": "^1.17.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-react": "^7.12.4"
   }
 }
