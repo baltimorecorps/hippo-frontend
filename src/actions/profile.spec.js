@@ -101,7 +101,7 @@ test('Delete experience action', async function() {
     id: 4321,
     new_data: 'update',
     contact_id: 1234,
-    type: 'test',
+    type: 'Test',
   };
 
   fetchMock.delete(`path:/api/experiences/${experience.id}/`, {

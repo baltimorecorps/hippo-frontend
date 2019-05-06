@@ -56,8 +56,9 @@ export const refreshExperiences = contactId =>
   );
 
 export const REFRESH_EXPERIENCE_TYPE = 'REFRESH_EXPERIENCE_TYPE';
-export const refreshExperienceType = (contactId, expType) =>
-  fetchActionCreator(
+export const refreshExperienceType = (contactId, expType) => {
+  expType = expType.toLowerCase();
+  return fetchActionCreator(
     REFRESH_EXPERIENCE_TYPE,
     `${API_URL}/api/contacts/${contactId}/experiences/?type=${expType}`,
     null,
@@ -68,6 +69,7 @@ export const refreshExperienceType = (contactId, expType) =>
       }),
     },
   );
+}
 
 export const DELETE_EXPERIENCE = 'DELETE_EXPERIENCE';
 export const deleteExperience = experience =>
@@ -77,15 +79,11 @@ export const deleteExperience = experience =>
       experience: experience,
     });
 
-    console.log(experience);
-
     await fetchActionCreator(
       DELETE_EXPERIENCE,
       `${API_URL}/api/experiences/${experience.id}/`,
       {method: 'DELETE'},
     )(dispatch);
-
-    console.log(experience);
 
     await refreshExperienceType(experience.contact_id, experience.type)(
       dispatch,

@@ -26,7 +26,7 @@ export const experiencesReducer = createReducer(
       const newState = {};
       // clear out all old entries with the rfreshed type
       Object.entries(state).forEach(([key, value]) => {
-        if (value.type !== action.filter) {
+        if (value.type.toLowerCase() !== action.filter.toLowerCase()) {
           newState[key] = value;
         }
       });

@@ -76,13 +76,13 @@ describe('Experience state', () => {
 
   test('Refresh experiences by type', () => {
     const experiences = [
-      {id: 11, title: 'exp 1', type: 'test'},
-      {id: 15, title: 'exp 5', type: 'test'},
+      {id: 11, title: 'exp 1', type: 'Test'},
+      {id: 15, title: 'exp 5', type: 'Test'},
     ];
 
     initialState = {
-      [10]: {id: 10, title: 'exp 0', type: 'stay'},
-      [12]: {id: 12, title: 'exp 2', type: 'test'},
+      [10]: {id: 10, title: 'exp 0', type: 'Stay'},
+      [12]: {id: 12, title: 'exp 2', type: 'Test'},
     };
     const newState = experiencesReducer(initialState, {
       type: `RESOLVE_${REFRESH_EXPERIENCE_TYPE}`,
@@ -90,9 +90,9 @@ describe('Experience state', () => {
       filter: 'test',
     });
     expect(newState).toEqual({
-      [10]: {id: 10, title: 'exp 0', type: 'stay'},
-      [11]: {id: 11, title: 'exp 1', type: 'test'},
-      [15]: {id: 15, title: 'exp 5', type: 'test'},
+      [10]: {id: 10, title: 'exp 0', type: 'Stay'},
+      [11]: {id: 11, title: 'exp 1', type: 'Test'},
+      [15]: {id: 15, title: 'exp 5', type: 'Test'},
     });
   });
 
