@@ -35,11 +35,47 @@ TalentBasicInfo.js
 Note: PastExperience.js is a component used for previous sprints but not useful for current or future sprints.
 
 
+## Packages used (with justification)
+
+TODO: Go back over dependencies from Brown team and list key ones here with justifications
+
+We'll use Redux to manage application state, since it provides a clean
+framework for doing so (and it's basically an industry standard at this point)
+
+https://redux.js.org/introduction/motivation
+See also: https://react-redux.js.org/
+
+`redux-starter-kit` is used to manage state with Redux. We're not doing anything
+too fancy so we'll make use of the opinionated defaults provided by this package
+
+https://redux-starter-kit.js.org/introduction/quick-start
+
+Note: There are a bunch of patterns/libraries included in this package. Here's
+some supplementary reading to understand where they come from and why
+https://github.com/erikras/ducks-modular-redux
+https://github.com/immerjs/immer
+https://github.com/reduxjs/reselect
+
+`fetch-action-creator` is used to link Redux actions to our API. We were already
+using the Fetch API so this is a clean extension of that
+
+https://medium.com/@Charles_Stover/the-fetch-api-and-asynchronous-redux-state-203270a540d4
+See also: https://github.com/reduxjs/redux-thunk
+
+`jest` is used for unit testing. Since we're a bit less familiar with React
+testing frameworks, we'll go with what Facebook suggests. Also as a test runner
+the interface seems pretty simple, and it includes Expect
+
+https://jestjs.io/
+
+`fetch-mock` is used to do unit testing of the Redux action creators which
+need to call out to the API to do their thing. 
+
+http://www.wheresrhys.co.uk/fetch-mock/
 
 
-
-
-
+Maybe:
+https://github.com/paularmstrong/normalizr
 
 ## Available Scripts
 

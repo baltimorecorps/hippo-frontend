@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Divider, Icon, AccordionTitle} from 'semantic-ui-react'
 import {Col, Row} from 'react-bootstrap'
-import ExperienceForm from './ExperienceForm'
 import ExperienceItem from './ExperienceItem'
 import './profile.css'
 import {Image} from 'react-bootstrap';
