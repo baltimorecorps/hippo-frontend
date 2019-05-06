@@ -33,7 +33,17 @@ ResumeContext.addExperience = ({type, experience, context}) => {
   });
 };
 
+ResumeContext.setName = ({name, context}) => {
+  const {setResumeInfo, ...info} = context;
+
+  setResumeInfo({
+    ...info,
+    name,
+  });
+};
+
 ResumeContext.defaultValues = {
+  name: '',
   achievements: [],
   contactInfo: {
     name: '',

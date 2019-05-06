@@ -57,14 +57,17 @@ const resumeInfo = {
       name: 'Data Architecture',
       skills: [
         {
+          id: 1,
           name: 'Python',
           years: 1.5,
         },
         {
+          id: 2,
           name: 'SQL',
           years: 3,
         },
         {
+          id: 3,
           name: 'Mongo',
           years: 2,
         },
@@ -74,14 +77,17 @@ const resumeInfo = {
       name: 'Wizardry',
       skills: [
         {
+          id: 4,
           name: 'Charms',
           years: 6,
         },
         {
+          id: 5,
           name: 'Transfiguration',
           years: 4,
         },
         {
+          id: 6,
           name: 'Potions',
           years: 2,
         },
