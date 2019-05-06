@@ -22,7 +22,9 @@ const Experience = ({
   const [showForm, setShowForm] = useState(false);
   const [showHint, setShowHint] = useState(false);
 
-  useEffect(() => { experiences.length === 0 && refreshExperiences(); }, []);
+  useEffect(() => {
+    experiences.length === 0 && refreshExperiences();
+  }, []);
 
   const blankExperience = {
     description: '',
@@ -62,6 +64,18 @@ const Experience = ({
       );
     });
 
+  const getHeader = () => {
+    if (experienceType === 'Work') {
+      return 'Work Experience';
+    } else if (experienceType === 'Education') {
+      return 'Education';
+    } else if (experienceType === 'Service') {
+      return 'Service and Leadership';
+    } else if (experienceType === 'Accomplishment') {
+      return 'Accomplishments';
+    }
+  };
+
   const textStyle = {
     fontSize: '26px',
     fontWeight: '300',
@@ -73,7 +87,7 @@ const Experience = ({
     <div style={{marginTop: '10px', backgroundColor: 'white', padding: '15px'}}>
       <Row>
         <Col xs md lg="4">
-          <div style={textStyle}>Experience </div>
+          <div style={textStyle}>{getHeader()}</div>
           {/*<Button onClick={this.fetchData}> Click to see details </Button> */}
         </Col>
         <Col xs md lg="8">
@@ -96,22 +110,30 @@ const Experience = ({
           {displayPastExperiences()}
           {/*this.displayOneExperience()*/}
         </Col>
-        {showForm ? 
-        <Col xs md lg="2">
-          <div stype={{marginTop: '20px'}}>
-            <ExperienceUpdateForm
-              experience={blankExperience}
-              onSubmit={submitNewExperience}
-              handleCancel={() => setShowForm(false)}
-            />
-          </div>
-        </Col> : null}
+        {showForm ? (
+          <Col xs md lg="2">
+            <div stype={{marginTop: '20px'}}>
+              <ExperienceUpdateForm
+                experience={blankExperience}
+                onSubmit={submitNewExperience}
+                handleCancel={() => setShowForm(false)}
+              />
+            </div>
+          </Col>
+        ) : null}
       </Row>
     </div>
   );
 };
 
 Experience.propTypes = {
+  contactId: PropTypes.number.isRequired,
+  experienceType: PropTypes.oneOf([
+    'Work',
+    'Service',
+    'Accomplishment',
+    'Education',
+  ]).isRequired,
   experiences: PropTypes.array.isRequired,
   addNewExperience: PropTypes.func.isRequired,
   updateExperience: PropTypes.func.isRequired,

@@ -1,155 +1,89 @@
 import {API_URL} from '../constants';
-import fetchActionCreator from '../modules/fetch-action-creator';
+import fetchActionCreator from 'fetch-action-creator';
 
-export const EXPERIENCE = 'EXPERIENCE';
-export const EXPERIENCES = 'EXPERIENCES';
+// Rules for action creators:
+//
+// Each action creator should make sure to include any actions necessary to
+// ensure that the Redux state doesn't get out of date (e.g. any state that
+// we had that was updated should be updated)
+
 export const ADD_EXPERIENCE = 'ADD_EXPERIENCE';
-export const UPDATE_EXPERIENCE = 'UPDATE_EXPERIENCE';
+export const addExperience = experience =>
+  async function(dispatch) {
+    dispatch({
+      type: ADD_EXPERIENCE,
+      experience,
+    });
 
-// ## API ACTION CREATORS ##
-// Note on naming convention here:
-// All fetch API methods creators are prefixed with 'api' for clarity in use
-
-const apiGetProfile = contactId =>
-  fetchActionCreator(
-    'PROFILE',
-    `${API_URL}/api/contacts/${contactId}/profile/`,
-  );
-
-const apiGetExperiences = contactId =>
-  fetchActionCreator(
-    EXPERIENCES,
-    `${API_URL}/api/contacts/${contactId}/experiences/`,
-  );
-
-const apiGetExperiencesByType = (contactId, type) =>
-  fetchActionCreator(
-    'EXPERIENCES_BY_TYPE',
-    `${API_URL}/api/contacts/${contactId}/experiences/${type}/`,
-  );
-
-const apiGetExperience = (expId) =>
-  fetchActionCreator(
-    EXPERIENCE,
-    `${API_URL}/api/experiences/${expId}/`,
-  );
-
-const apiAddExperience = (contactId, experience) =>
-  fetchActionCreator(
-    ADD_EXPERIENCE,
-    `${API_URL}/api/contacts/${contactId}/experiences/`,
-    {
-      body: JSON.stringify(experience),
-      method: 'POST',
-    },
-    {
-      onReject: rejectAction => {
-        return {
-          ...rejectAction,
-          contactId,
-          experience,
-        };
+    await fetchActionCreator(
+      ADD_EXPERIENCE,
+      `${API_URL}/api/contacts/${experience.contact_id}/experiences/`,
+      {
+        body: JSON.stringify(experience),
+        method: 'POST',
       },
-    },
-  );
-
-const apiDeleteExperience = expId =>
-  fetchActionCreator(
-    'DELETE_EXPERIENCE',
-    `${API_URL}/api/experiences/${expId}/`,
-    {
-      method: 'DELETE',
-    },
-  );
-
-const apiUpdateExperience = (expId, update) =>
-  fetchActionCreator(
-    UPDATE_EXPERIENCE,
-    `${API_URL}/api/experiences/${expId}/`,
-    {
-      body: JSON.stringify(update),
-      method: 'PUT',
-    },
-  );
-
-const apiGetAllTags = () =>
-  fetchActionCreator('ALL_TAGS', `${API_URL}/api/tags/`);
-
-const apiGetTag = tagId =>
-  fetchActionCreator('TAG', `${API_URL}/api/tags/${tagId}`);
-
-const apiGetContactTags = (contactId, tagType) => {
-  if (tagType !== null && tagType !== undefined) {
-    return fetchActionCreator(
-      'CONTACT_TAGS',
-      `${API_URL}/api/contacts/${contactId}/tags/?type=${tagType}`,
-    );
-  } else {
-    return fetchActionCreator(
-      'CONTACT_TAGS',
-      `${API_URL}/api/contacts/${contactId}/tags/`,
-    );
-  }
-};
-
-const apiAddAchievement = (expId, achievement) =>
-  fetchActionCreator(
-    'ADD_ACHIEVEMENT',
-    `${API_URL}/api/experiences/${expId}/achievements/`,
-    {
-      body: JSON.stringify(achievement),
-      method: 'POST',
-    },
-  );
-
-const apiUpdateAchievement = (achievementId, achievement) =>
-  fetchActionCreator(
-    'UPDATE_ACHIEVEMENT',
-    `${API_URL}/api/achievements/${achievementId}/`,
-    {
-      body: JSON.stringify(achievement),
-      method: 'PUT',
-    },
-  );
-
-const apiDeleteAchievement = achievementId =>
-  fetchActionCreator(
-    'DELETE_ACHIEVEMENT',
-    `${API_URL}/api/achievements/${achievementId}/`,
-    {
-      method: 'DELETE',
-    },
-  );
-
-// ## EXPERIENCES ##
-
-
-export const addExperience = (contactId, experience) =>
-  async function(dispatch) {
-    dispatch(addExperienceLocal(experience));
-
-    await apiAddExperience(contactId, experience)(dispatch);
+    )(dispatch);
   };
 
-export const addExperienceLocal = experience => ({
-  type: ADD_EXPERIENCE,
-  experience,
-});
+export const GET_EXPERIENCE = 'GET_EXPERIENCE';
+export const getExperience = expId =>
+  fetchActionCreator(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
 
-export const updateExperience = experience => 
+export const UPDATE_EXPERIENCE = 'UPDATE_EXPERIENCE';
+export const updateExperience = experience =>
   async function(dispatch) {
-    dispatch(updateExperienceLocal(experience));
+    dispatch({
+      type: UPDATE_EXPERIENCE,
+      experience,
+    });
 
-    await apiUpdateExperience(experience.id, experience)(dispatch);
-    await apiGetExperience(experience.id)(dispatch);
+    await fetchActionCreator(
+      UPDATE_EXPERIENCE,
+      `${API_URL}/api/experiences/${experience.id}/`,
+      {
+        body: JSON.stringify(experience),
+        method: 'PUT',
+      },
+    )(dispatch);
+    await getExperience(experience.id)(dispatch);
   };
 
-export const updateExperienceLocal = experience => ({
-  type: UPDATE_EXPERIENCE,
-  experience,
-});
+export const REFRESH_EXPERIENCES = 'REFRESH_EXPERIENCES';
+export const refreshExperiences = contactId =>
+  fetchActionCreator(
+    REFRESH_EXPERIENCES,
+    `${API_URL}/api/contacts/${contactId}/experiences/`,
+  );
 
+export const REFRESH_EXPERIENCE_TYPE = 'REFRESH_EXPERIENCE_TYPE';
+export const refreshExperienceType = (contactId, expType) =>
+  fetchActionCreator(
+    REFRESH_EXPERIENCE_TYPE,
+    `${API_URL}/api/contacts/${contactId}/experiences/?type=${expType}`,
+    null,
+    {
+      onResolve: resolveAction => ({
+        ...resolveAction,
+        filter: expType,
+      }),
+    },
+  );
 
-export const refreshExperiences = apiGetExperiences;
+export const DELETE_EXPERIENCE = 'DELETE_EXPERIENCE';
+export const deleteExperience = experience =>
+  async function(dispatch) {
+    dispatch({
+      type: DELETE_EXPERIENCE,
+      experience: experience,
+    });
 
+    await fetchActionCreator(
+      DELETE_EXPERIENCE,
+      `${API_URL}/api/experiences/${experience.id}/`,
+      {method: 'DELETE'},
+    )(dispatch);
 
+    await refreshExperienceType(experience.contact_id, experience.type)(
+      dispatch,
+    );
+  };

@@ -9,11 +9,6 @@ import {
   updateExperience,
 } from '../../actions/profile';
 
-const addNewExperience = (dispatch, contactId) => experience =>
-  async function(experience) {
-    await addExperience(contactId, experience)(dispatch);
-  };
-
 const getExperiences = createSelector(
   ['experiences'],
   experiences => Object.keys(experiences).map(id => experiences[id]),

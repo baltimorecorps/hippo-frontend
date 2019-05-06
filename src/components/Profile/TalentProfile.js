@@ -85,8 +85,14 @@ class TalentProfile extends React.Component {
                       experienceType='Work'
                     />
                     <Education/>
-                    <Service/>
-                    <Accomplishment/>
+                    <Experience 
+                      contactId={this.props.match.params.contactId}
+                      experienceType='Service'
+                    />
+                    <Experience 
+                      contactId={this.props.match.params.contactId}
+                      experienceType='Accomplishment'
+                    />
                     <Skill/>
                     <Resume />
                     {/*}

@@ -2,9 +2,10 @@ import {experiencesReducer} from './profile';
 
 import {
   ADD_EXPERIENCE, 
-  EXPERIENCE,
-  EXPERIENCES,
-  addExperienceLocal} from '../actions/profile';
+  GET_EXPERIENCE,
+  REFRESH_EXPERIENCES,
+  REFRESH_EXPERIENCE_TYPE,
+} from '../actions/profile';
 
 describe('Experience state', () => {
   let initialState = {};
@@ -57,8 +58,12 @@ describe('Experience state', () => {
       {id: 16, title: 'exp 6'},
       {id: 15, title: 'exp 5'},
     ];
+
+    initialState = {
+      [10]: {id: 10, title: 'exp 0'},
+    };
     const newState = experiencesReducer(initialState, {
-      type: `RESOLVE_${EXPERIENCES}`,
+      type: `RESOLVE_${REFRESH_EXPERIENCES}`,
       body: {status: 'success', data: experiences},
     });
     expect(newState).toEqual({
@@ -66,6 +71,28 @@ describe('Experience state', () => {
       [12]: {id: 12, title: 'exp 2'},
       [16]: {id: 16, title: 'exp 6'},
       [15]: {id: 15, title: 'exp 5'},
+    });
+  });
+
+  test('Refresh experiences by type', () => {
+    const experiences = [
+      {id: 11, title: 'exp 1', type: 'test'},
+      {id: 15, title: 'exp 5', type: 'test'},
+    ];
+
+    initialState = {
+      [10]: {id: 10, title: 'exp 0', type: 'stay'},
+      [12]: {id: 12, title: 'exp 2', type: 'test'},
+    };
+    const newState = experiencesReducer(initialState, {
+      type: `RESOLVE_${REFRESH_EXPERIENCE_TYPE}`,
+      body: {status: 'success', data: experiences},
+      filter: 'test',
+    });
+    expect(newState).toEqual({
+      [10]: {id: 10, title: 'exp 0', type: 'stay'},
+      [11]: {id: 11, title: 'exp 1', type: 'test'},
+      [15]: {id: 15, title: 'exp 5', type: 'test'},
     });
   });
 
@@ -79,7 +106,7 @@ describe('Experience state', () => {
       [12]: bystander,
     }
     const newState = experiencesReducer(initialState, {
-      type: `RESOLVE_${EXPERIENCE}`,
+      type: `RESOLVE_${GET_EXPERIENCE}`,
       body: {status: 'success', data: experience},
     });
     expect(newState).toEqual({
@@ -87,5 +114,6 @@ describe('Experience state', () => {
       [12]: bystander,
     });
   });
+
 
 });
