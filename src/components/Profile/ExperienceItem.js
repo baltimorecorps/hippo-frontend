@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Button, Icon, Grid} from 'semantic-ui-react';
+import {Button, Icon, Grid, List} from 'semantic-ui-react';
 import {Col, Row} from 'react-bootstrap';
 import ExperienceUpdateForm from './ExperienceUpdateForm';
 import EducationUpdateForm from './EducationUpdateForm';
@@ -60,13 +60,15 @@ const ExperienceItem = ({experience, onUpdate, onDelete}) => {
 
             <div>
               <p>Achievements:</p>
-              {experience.achievements.map(item => {
-                return (
-                  <p key={item.achievement_order}>
-                    {item.achievement_order + 1}: {item.description}
-                  </p>
-                );
-              })}
+              <List bulleted>
+                {experience.achievements.map(item => {
+                  return (
+                    <List.Item key={item.achievement_order}>
+                      {item.description}
+                    </List.Item>
+                  );
+                })}
+              </List>
             </div>
           </Grid.Column>
         </Grid>
