@@ -7,6 +7,7 @@ import {
   addExperience,
   refreshExperiences,
   updateExperience,
+  deleteExperience,
 } from '../../actions/profile';
 
 const getExperiences = createSelector(
@@ -38,9 +39,9 @@ export const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addNewExperience: experience =>
-      addExperience(ownProps.contactId, experience)(dispatch),
+    addNewExperience: experience => addExperience(experience)(dispatch),
     updateExperience: experience => updateExperience(experience)(dispatch),
+    deleteExperience: experience => deleteExperience(experience)(dispatch),
     refreshExperiences: () => refreshExperiences(ownProps.contactId)(dispatch),
   };
 };

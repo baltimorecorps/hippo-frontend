@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import {Container, Grid, Row, Col} from "react-bootstrap";
 import TalentBasicInfo from "./TalentBasicInfo";
 import Experience from "./Experience.container";
-import Education from "./Education";
-import Service from "./Service";
-import Accomplishment from "./Accomplishment";
 import Skill from "./Skill";
 import Resume from "./Resume";
 import html2canvas from 'html2canvas';
@@ -84,7 +81,10 @@ class TalentProfile extends React.Component {
                       contactId={this.props.match.params.contactId}
                       experienceType='Work'
                     />
-                    <Education/>
+                    <Experience 
+                      contactId={this.props.match.params.contactId}
+                      experienceType='Education'
+                    />
                     <Experience 
                       contactId={this.props.match.params.contactId}
                       experienceType='Service'

@@ -77,11 +77,15 @@ export const deleteExperience = experience =>
       experience: experience,
     });
 
+    console.log(experience);
+
     await fetchActionCreator(
       DELETE_EXPERIENCE,
       `${API_URL}/api/experiences/${experience.id}/`,
       {method: 'DELETE'},
     )(dispatch);
+
+    console.log(experience);
 
     await refreshExperienceType(experience.contact_id, experience.type)(
       dispatch,

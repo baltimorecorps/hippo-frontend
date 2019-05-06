@@ -17,6 +17,7 @@ const useForm = (initialValues, onSubmit) => {
       ...values,
       [name]: value,
     }));
+    console.log(values);
   };
 
   const handlers = {

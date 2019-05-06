@@ -5,6 +5,7 @@ import {Button, Divider, Icon, AccordionTitle} from 'semantic-ui-react';
 import {Col, Row} from 'react-bootstrap';
 import ExperienceItem from './ExperienceItem';
 import ExperienceUpdateForm from './ExperienceUpdateForm';
+import EducationUpdateForm from './EducationUpdateForm';
 import './profile.css';
 
 //todo: check how to write if/else in render/function
@@ -43,18 +44,9 @@ const Experience = ({
   };
 
   const displayPastExperiences = () =>
-    experiences.map(item => {
-      const experience = {
-        id: item.id,
-        host: item.host,
-        title: item.title,
-        type: item.type,
-        achievements: item.achievements,
-        date_start: item.date_start,
-        date_end: item.date_end,
-      };
+    experiences.map(experience => {
       return (
-        <div key={item.id} style={{marginLeft: '20px'}} className={item}>
+        <div key={experience.id} style={{marginLeft: '20px'}} className="">
           <ExperienceItem
             onUpdate={updateExperience}
             onDelete={deleteExperience}
@@ -112,12 +104,20 @@ const Experience = ({
         </Col>
         {showForm ? (
           <Col xs md lg="2">
-            <div stype={{marginTop: '20px'}}>
-              <ExperienceUpdateForm
-                experience={blankExperience}
-                onSubmit={submitNewExperience}
-                handleCancel={() => setShowForm(false)}
-              />
+            <div style={{marginTop: '20px'}}>
+              {experienceType === 'Education' ? (
+                <EducationUpdateForm
+                  experience={blankExperience}
+                  onSubmit={submitNewExperience}
+                  handleCancel={() => setShowForm(false)}
+                />
+              ) : (
+                <ExperienceUpdateForm
+                  experience={blankExperience}
+                  onSubmit={submitNewExperience}
+                  handleCancel={() => setShowForm(false)}
+                />
+              )}
             </div>
           </Col>
         ) : null}
@@ -127,7 +127,7 @@ const Experience = ({
 };
 
 Experience.propTypes = {
-  contactId: PropTypes.number.isRequired,
+  contactId: PropTypes.string.isRequired,
   experienceType: PropTypes.oneOf([
     'Work',
     'Service',

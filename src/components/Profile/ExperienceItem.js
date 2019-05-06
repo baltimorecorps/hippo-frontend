@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {Button, Icon, Grid} from 'semantic-ui-react';
 import {Col, Row} from 'react-bootstrap';
 import ExperienceUpdateForm from './ExperienceUpdateForm';
+import EducationUpdateForm from './EducationUpdateForm';
 import './profile.css';
 
 const ExperienceItem = ({experience, onUpdate, onDelete}) => {
@@ -11,16 +12,24 @@ const ExperienceItem = ({experience, onUpdate, onDelete}) => {
 
   const getInitial = () => {
     if (experience.host && experience.host.length > 0) {
-      return experience.host.charAt(0)
+      return experience.host.charAt(0);
     } else {
       return ' ';
+    }
+  };
+
+  const getTitle = () => {
+    if (experience.type === 'Education') {
+      return `${experience.host}, ${experience.degree} in ${experience.title}`;
+    } else {
+      return `${experience.host}, ${experience.title}`;
     }
   };
 
   const submitUpdate = async function(values) {
     await onUpdate(values);
     setEditing(false);
-  }
+  };
 
   const displayOneExperience = () => {
     var textStyleSmall = {
@@ -35,23 +44,18 @@ const ExperienceItem = ({experience, onUpdate, onDelete}) => {
         <Grid style={{marginLeft: '20px'}}>
           <Grid.Column floated="left" width={2}>
             <button type="button" className="btn btn-success btn-circle btn-xl">
-              <i className="fa fa-check">
-                {' '}
-                {getInitial()}{' '}
-              </i>
+              <i className="fa fa-check"> {getInitial()} </i>
             </button>
           </Grid.Column>
 
           <Grid.Column floated="left" width={11} style={{marginTop: '5px'}}>
             <h2>
               {' '}
-              <strong>
-                {experience.host}, {experience.title}{' '}
-              </strong>{' '}
+              <strong>{getTitle()}</strong>{' '}
             </h2>
             <p>
               {' '}
-              {experience.date_start} -- {experience.date_end}{' '}
+              {experience.date_start} &ndash; {experience.date_end}{' '}
             </p>
 
             <div>
@@ -78,16 +82,24 @@ const ExperienceItem = ({experience, onUpdate, onDelete}) => {
         </Grid.Column>
         <Grid.Column textAlign="right" floated="right" width={3}>
           <Icon name="edit" onClick={() => setEditing(true)} />
-          <Icon name="delete" onClick={() => onDelete(experience.id)} />
+          <Icon name="delete" onClick={() => onDelete(experience)} />
         </Grid.Column>
       </Grid>
 
       {editing ? (
-        <ExperienceUpdateForm
-          handleCancel={() => setEditing(false)}
-          onSubmit={submitUpdate}
-          experience={experience}
-        />
+        experience.type === 'Education' ? (
+          <EducationUpdateForm
+            handleCancel={() => setEditing(false)}
+            onSubmit={submitUpdate}
+            experience={experience}
+          />
+        ) : (
+          <ExperienceUpdateForm
+            handleCancel={() => setEditing(false)}
+            onSubmit={submitUpdate}
+            experience={experience}
+          />
+        )
       ) : null}
     </div>
   );
@@ -111,7 +123,7 @@ ExperienceItem.propTypes = {
     date_end: PropTypes.instanceOf(Date),
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
       .isRequired,
-    contact_id: PropTypes.number,
+    contact_id: PropTypes.number.isRequired,
     achievements: PropTypes.array,
     description: PropTypes.string,
   }),
