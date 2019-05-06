@@ -17,7 +17,6 @@ const useForm = (initialValues, onSubmit) => {
       ...values,
       [name]: value,
     }));
-    console.log(values);
   };
 
   const handlers = {
@@ -123,6 +122,7 @@ const ExperienceUpdateForm = ({experience, onSubmit, handleCancel}) => {
             </div>
             <br />
             <Achievements
+              contactId={experience.contact_id}
               achievements={values.achievements}
               onChange={handleAchievements}
             />

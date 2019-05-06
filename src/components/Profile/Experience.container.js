@@ -5,7 +5,7 @@ import Experience from './Experience';
 
 import {
   addExperience,
-  refreshExperiences,
+  refreshExperienceType,
   updateExperience,
   deleteExperience,
 } from '../../actions/profile';
@@ -37,12 +37,12 @@ export const makeMapStateToProps = () => {
   return mapStateToProps;
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     addNewExperience: experience => addExperience(experience)(dispatch),
     updateExperience: experience => updateExperience(experience)(dispatch),
     deleteExperience: experience => deleteExperience(experience)(dispatch),
-    refreshExperiences: () => refreshExperiences(ownProps.contactId)(dispatch),
+    refreshExperiences: () => refreshExperienceType(props.contactId, props.experienceType)(dispatch),
   };
 };
 
