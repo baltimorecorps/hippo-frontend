@@ -1,5 +1,5 @@
-import {API_URL} from '../constants';
-import fetchActionCreator from 'fetch-action-creator';
+import { API_URL } from "../constants";
+import fetchActionCreator from "fetch-action-creator";
 
 // Rules for action creators:
 //
@@ -7,12 +7,12 @@ import fetchActionCreator from 'fetch-action-creator';
 // ensure that the Redux state doesn't get out of date (e.g. any state that
 // we had that was updated should be updated)
 
-export const ADD_EXPERIENCE = 'ADD_EXPERIENCE';
+export const ADD_EXPERIENCE = "ADD_EXPERIENCE";
 export const addExperience = experience =>
   async function(dispatch) {
     dispatch({
       type: ADD_EXPERIENCE,
-      experience,
+      experience
     });
 
     await fetchActionCreator(
@@ -20,21 +20,21 @@ export const addExperience = experience =>
       `${API_URL}/api/contacts/${experience.contact_id}/experiences/`,
       {
         body: JSON.stringify(experience),
-        method: 'POST',
-      },
+        method: "POST"
+      }
     )(dispatch);
   };
 
-export const GET_EXPERIENCE = 'GET_EXPERIENCE';
+export const GET_EXPERIENCE = "GET_EXPERIENCE";
 export const getExperience = expId =>
   fetchActionCreator(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
 
-export const UPDATE_EXPERIENCE = 'UPDATE_EXPERIENCE';
+export const UPDATE_EXPERIENCE = "UPDATE_EXPERIENCE";
 export const updateExperience = experience =>
   async function(dispatch) {
     dispatch({
       type: UPDATE_EXPERIENCE,
-      experience,
+      experience
     });
 
     await fetchActionCreator(
@@ -42,20 +42,20 @@ export const updateExperience = experience =>
       `${API_URL}/api/experiences/${experience.id}/`,
       {
         body: JSON.stringify(experience),
-        method: 'PUT',
-      },
+        method: "PUT"
+      }
     )(dispatch);
     await getExperience(experience.id)(dispatch);
   };
 
-export const REFRESH_EXPERIENCES = 'REFRESH_EXPERIENCES';
+export const REFRESH_EXPERIENCES = "REFRESH_EXPERIENCES";
 export const refreshExperiences = contactId =>
   fetchActionCreator(
     REFRESH_EXPERIENCES,
-    `${API_URL}/api/contacts/${contactId}/experiences/`,
+    `${API_URL}/api/contacts/${contactId}/experiences/`
   );
 
-export const REFRESH_EXPERIENCE_TYPE = 'REFRESH_EXPERIENCE_TYPE';
+export const REFRESH_EXPERIENCE_TYPE = "REFRESH_EXPERIENCE_TYPE";
 export const refreshExperienceType = (contactId, expType) => {
   expType = expType.toLowerCase();
   return fetchActionCreator(
@@ -65,32 +65,32 @@ export const refreshExperienceType = (contactId, expType) => {
     {
       onResolve: resolveAction => ({
         ...resolveAction,
-        filter: expType,
-      }),
-    },
+        filter: expType
+      })
+    }
   );
 };
 
-export const DELETE_EXPERIENCE = 'DELETE_EXPERIENCE';
+export const DELETE_EXPERIENCE = "DELETE_EXPERIENCE";
 export const deleteExperience = experience =>
   async function(dispatch) {
     dispatch({
       type: DELETE_EXPERIENCE,
-      experience: experience,
+      experience: experience
     });
 
     await fetchActionCreator(
       DELETE_EXPERIENCE,
       `${API_URL}/api/experiences/${experience.id}/`,
-      {method: 'DELETE'},
+      { method: "DELETE" }
     )(dispatch);
 
     await refreshExperienceType(experience.contact_id, experience.type)(
-      dispatch,
+      dispatch
     );
   };
 
-export const ADD_TAG = 'ADD_TAG';
+export const ADD_TAG = "ADD_TAG";
 // TODO: Ugh this is such a hack, need the output of this but it doesn't
 // return anything so we wrap it in a promise and inject the resolve/reject
 // methods into the dispatcher
@@ -100,8 +100,8 @@ export const addTag = tag => dispatch =>
       ADD_TAG,
       `${API_URL}/api/tags/`,
       {
-        method: 'POST',
-        body: JSON.stringify(tag),
+        method: "POST",
+        body: JSON.stringify(tag)
       },
       {
         onResolve: resolveAction => {
@@ -111,27 +111,27 @@ export const addTag = tag => dispatch =>
         onReject: rejectAction => {
           reject(rejectAction);
           return rejectAction;
-        },
-      },
-    )(dispatch),
+        }
+      }
+    )(dispatch)
   );
 
-export const REFRESH_TAGS = 'REFRESH_TAGS';
+export const REFRESH_TAGS = "REFRESH_TAGS";
 export const refreshTags = () =>
   fetchActionCreator(REFRESH_TAGS, `${API_URL}/api/tags/`);
 
-export const ADD_TAG_ITEM = 'ADD_TAG_ITEM';
+export const ADD_TAG_ITEM = "ADD_TAG_ITEM";
 export const addTagItem = tagItem =>
   async function(dispatch) {
     dispatch({
       type: ADD_TAG_ITEM,
-      tag: tagItem,
+      tag: tagItem
     });
 
-    if (!tagItem.hasOwnProperty('tag_id')) {
+    if (!tagItem.hasOwnProperty("tag_id")) {
       const tag = {
         name: tagItem.name,
-        type: tagItem.type,
+        type: tagItem.type
       };
 
       const newTagAction = await addTag(tag)(dispatch);
@@ -142,50 +142,50 @@ export const addTagItem = tagItem =>
       ADD_TAG_ITEM,
       `${API_URL}/api/contacts/${tagItem.contact_id}/tags/`,
       {
-        method: 'POST',
-        body: JSON.stringify(tagItem),
-      },
+        method: "POST",
+        body: JSON.stringify(tagItem)
+      }
     )(dispatch);
   };
 
-export const UPDATE_TAG_ITEM = 'UPDATE_TAG_ITEM';
+export const UPDATE_TAG_ITEM = "UPDATE_TAG_ITEM";
 export const updateTagItem = tagItem =>
   async function(dispatch) {
     dispatch({
       type: UPDATE_TAG_ITEM,
-      tag: tagItem,
+      tag: tagItem
     });
 
     await fetchActionCreator(
       UPDATE_TAG_ITEM,
       `${API_URL}/api/contacts/${tagItem.contact_id}/tags/${tagItem.tag_id}/`,
       {
-        method: 'PUT',
-        body: JSON.stringify(tagItem),
-      },
+        method: "PUT",
+        body: JSON.stringify(tagItem)
+      }
     )(dispatch);
   };
 
-export const DELETE_TAG_ITEM = 'DELETE_TAG_ITEM';
+export const DELETE_TAG_ITEM = "DELETE_TAG_ITEM";
 export const deleteTagItem = tagItem =>
   async function(dispatch) {
     dispatch({
       type: DELETE_TAG_ITEM,
-      tag: tagItem,
+      tag: tagItem
     });
 
     await fetchActionCreator(
       DELETE_TAG_ITEM,
       `${API_URL}/api/contacts/${tagItem.contact_id}/tags/${tagItem.tag_id}/`,
       {
-        method: 'DELETE',
-      },
+        method: "DELETE"
+      }
     )(dispatch);
 
     await refreshTagItems(tagItem.contact_id, tagItem.type)(dispatch);
   };
 
-export const REFRESH_TAG_ITEMS = 'REFRESH_TAG_ITEMS';
+export const REFRESH_TAG_ITEMS = "REFRESH_TAG_ITEMS";
 export const refreshTagItems = (contactId, tagType) =>
   async function(dispatch) {
     tagType = tagType.toLowerCase();
@@ -197,8 +197,8 @@ export const refreshTagItems = (contactId, tagType) =>
         onResolve: resolveAction => ({
           ...resolveAction,
           filter: tagType,
-          contactId: contactId,
-        }),
-      },
+          contactId: contactId
+        })
+      }
     )(dispatch);
   };

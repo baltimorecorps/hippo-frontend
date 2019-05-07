@@ -1,5 +1,4 @@
-import {createReducer} from 'redux-starter-kit';
-import {combineReducers} from 'redux';
+import { createReducer } from "redux-starter-kit";
 import {
   ADD_EXPERIENCE,
   REFRESH_EXPERIENCES,
@@ -9,8 +8,8 @@ import {
   REFRESH_TAGS,
   ADD_TAG_ITEM,
   UPDATE_TAG_ITEM,
-  REFRESH_TAG_ITEMS,
-} from '../actions/profile';
+  REFRESH_TAG_ITEMS
+} from "../actions/profile";
 
 export const experiencesReducer = createReducer(
   {},
@@ -44,8 +43,8 @@ export const experiencesReducer = createReducer(
     [`RESOLVE_${GET_EXPERIENCE}`]: (state, action) => {
       const experience = action.body.data;
       state[experience.id] = experience;
-    },
-  },
+    }
+  }
 );
 
 export const tagReducer = createReducer(
@@ -62,8 +61,8 @@ export const tagReducer = createReducer(
         newState[tag.id] = tag;
       });
       return newState;
-    },
-  },
+    }
+  }
 );
 
 export const tagItemReducer = createReducer(
@@ -96,6 +95,6 @@ export const tagItemReducer = createReducer(
     [`RESOLVE_${UPDATE_TAG_ITEM}`]: (state, action) => {
       const tagItem = action.body.data[0];
       state[tagItem.contact_id][tagItem.tag_id] = tagItem;
-    },
-  },
+    }
+  }
 );

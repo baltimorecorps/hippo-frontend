@@ -1,11 +1,11 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {Button, Divider, Icon} from 'semantic-ui-react';
-import {Col, Row} from 'react-bootstrap';
-import SkillUpdateForm from './SkillUpdateForm.container';
-import SkillItem from './SkillItem';
-import './profile.css';
+import React from "react";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Icon } from "semantic-ui-react";
+import { Col, Row } from "react-bootstrap";
+import SkillUpdateForm from "./SkillUpdateForm.container";
+import SkillItem from "./SkillItem";
+import "./profile.css";
 
 const Skill = ({
   tags,
@@ -16,23 +16,22 @@ const Skill = ({
   addTagItem,
   deleteTagItem,
   updateTagItem,
-  refreshTagItems,
+  refreshTagItems
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [showHint, setShowHint] = useState(false);
 
-
   useEffect(() => {
     tags.length === 0 && refreshTags();
-  }, []);
+  }, [refreshTags, tags.length]);
 
   useEffect(() => {
     tagItems.length === 0 && refreshTagItems();
-  }, []);
+  }, [refreshTagItems, tagItems.length]);
 
   const displaySkills = () => {
     return tagItems.map(tag => (
-      <div style={{marginLeft: '20px'}}>
+      <div style={{ marginLeft: "20px" }}>
         <SkillItem
           key={tag.tag_id}
           tag={tag}
@@ -44,43 +43,44 @@ const Skill = ({
   };
 
   const textStyleSmall = {
-    fontSize: '20px',
-    fontWeight: '300',
-    lineHeight: '0.8',
-    color: '#5f6163',
+    fontSize: "20px",
+    fontWeight: "300",
+    lineHeight: "0.8",
+    color: "#5f6163"
   };
 
   const getTitle = () => {
-    if (tagType === 'Function') {
+    if (tagType === "Function") {
       return "Functions I've performed";
-    } else if (tagType === 'Skill') {
+    } else if (tagType === "Skill") {
       return "Skills I've developed";
-    } else if (tagType === 'Topic') {
+    } else if (tagType === "Topic") {
       return "Topics I've addressed";
     }
   };
 
   const blankTag = {
-    name: '',
+    name: "",
     contact_id: contactId,
-    type: tagType,
+    type: tagType
   };
   return (
     <React.Fragment>
-      <Row style={{marginTop: '20px', marginLeft: '5px'}}>
+      <Row style={{ marginTop: "20px", marginLeft: "5px" }}>
         <Col xs md lg="10">
           <span style={textStyleSmall}>{getTitle()}</span>
         </Col>
         <Col xs md lg="2">
           <button
             style={{
-              display: 'inline-block',
-              float: 'right',
-              border: 'none',
-              backgroundColor: 'transparent',
+              display: "inline-block",
+              float: "right",
+              border: "none",
+              backgroundColor: "transparent"
             }}
-            onClick={() => setShowForm(true)}>
-            <Icon style={{display: 'inline-block'}} name="plus" />
+            onClick={() => setShowForm(true)}
+          >
+            <Icon style={{ display: "inline-block" }} name="plus" />
             {showHint ? <p> Click plus sign to add new Skill </p> : null}
           </button>
         </Col>
@@ -108,12 +108,12 @@ const Skill = ({
 
 Skill.propTypes = {
   contactId: PropTypes.number.isRequired,
-  tagType: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
+  tagType: PropTypes.oneOf(["Function", "Skill", "Topic"]).isRequired,
   tags: PropTypes.array.isRequired,
   addTagItem: PropTypes.func.isRequired,
   deleteTagItem: PropTypes.func.isRequired,
   updateTagItem: PropTypes.func.isRequired,
-  refreshTagItems: PropTypes.func.isRequired,
+  refreshTagItems: PropTypes.func.isRequired
 };
 
 export default Skill;

@@ -1,16 +1,16 @@
-import { combineReducers } from 'redux'
-import contacts from './contacts'
+import { combineReducers } from "redux";
+import contacts from "./contacts";
 import {
-  experiencesReducer as experiences, 
+  experiencesReducer as experiences,
   tagReducer as tags,
-  tagItemReducer as tagItems,
-} from './profile'
+  tagItemReducer as tagItems
+} from "./profile";
 
 const rootReducer = combineReducers({
   contacts,
   experiences,
   tags,
-  tagItems,
-})
+  tagItems
+});
 
 export default rootReducer;
