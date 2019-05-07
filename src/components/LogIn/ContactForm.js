@@ -1,16 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 /*import PropTypes from '../lib/PropTypes';*/
 import PropTypes from 'prop-types';
 //import classNames from "classnames";
 //import MenuItem from "@material-ui/core/MenuItem";
 //import Button from '@material-ui/core/Button';
-import { Button } from "semantic-ui-react";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
+import { Button } from 'semantic-ui-react';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
 /*import { withStyles } from "@material-ui/core/styles";*/
-import TextField from "@material-ui/core/TextField";
+import TextField from '@material-ui/core/TextField';
 
 const races = [
   {
@@ -57,11 +57,7 @@ class TextFields extends React.Component {
     return (
       <main className={classes.main}>
         <Paper className={classes.paper}>
-          <img
-            className={classes.avatar}
-            src="/logos/long.png"
-            alt="Baltimore Corps Logo"
-          />
+          <img className={classes.avatar} src="/logos/long.png" alt="Baltimore Corps Logo" />
           <Typography component="h1" variant="h5">
             Contact Form
           </Typography>
@@ -72,7 +68,7 @@ class TextFields extends React.Component {
               label="First Name"
               className={classes.textField}
               value={this.state.firstName}
-              onChange={this.handleChange("first_name")}
+              onChange={this.handleChange('first_name')}
               margin="normal"
             />
             <TextField
@@ -81,7 +77,7 @@ class TextFields extends React.Component {
               label="Last Name"
               className={classes.textField}
               value={this.state.lastName}
-              onChange={this.handleChange("last_name")}
+              onChange={this.handleChange('last_name')}
               margin="normal"
             />
             <TextField
@@ -106,16 +102,16 @@ class TextFields extends React.Component {
               label="Gender select"
               className={classes.textField}
               value={this.state.currency}
-              onChange={this.handleChange("gender")}
+              onChange={this.handleChange('gender')}
               SelectProps={{
                 native: true,
                 MenuProps: {
-                  className: classes.menu
-                }
+                  className: classes.menu,
+                },
               }}
               margin="normal"
             >
-              {genders.map(option => (
+              {genders.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -128,17 +124,17 @@ class TextFields extends React.Component {
               label="Race select"
               className={classes.textField}
               value={this.state.currency}
-              onChange={this.handleChange("race")}
+              onChange={this.handleChange('race')}
               SelectProps={{
                 native: true,
                 MenuProps: {
-                  className: classes.menu
-                }
+                  className: classes.menu,
+                },
               }}
               /*helperText="Please select your race"*/
               margin="normal"
             >
-              {races.map(option => (
+              {races.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -153,12 +149,12 @@ class TextFields extends React.Component {
               fullWidth
               margin="normal"
               InputLabelProps={{
-                shrink: true
+                shrink: true,
               }}
             />
             <div>
               <Link to="/Talent">
-                {" "}
+                {' '}
                 <Button fluid type="submit" color="primary">
                   Submit
                 </Button>
@@ -176,48 +172,48 @@ TextFields.propTypes = {
 };
 const styles = ({ breakpoints, palette, spacing, theme }) => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap",
-    padding: "50px"
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: '50px',
   },
   textField: {
     marginLeft: spacing.unit,
     marginRight: spacing.unit,
-    width: 200
+    width: 200,
   },
   dense: {
-    marginTop: 19
+    marginTop: 19,
   },
   menu: {
-    width: 200
+    width: 200,
   },
   main: {
-    width: "auto",
+    width: 'auto',
     marginLeft: spacing.unit * 3,
     marginRight: spacing.unit * 3,
     [breakpoints.up(400 + spacing.unit * 3 * 2)]: {
       width: 400,
-      marginLeft: "auto",
-      marginRight: "auto"
-    }
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
   },
   paper: {
     marginTop: spacing.unit * 8,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
   },
   avatar: {
-    width: "100%",
-    marginBottom: spacing.unit
+    width: '100%',
+    marginBottom: spacing.unit,
   },
   password: {
-    marginBottom: spacing.unit * 3
+    marginBottom: spacing.unit * 3,
   },
   submitButton: {
-    marginBottom: spacing.unit * 3
-  }
+    marginBottom: spacing.unit * 3,
+  },
 });
 
 export default withStyles(styles)(TextFields);

@@ -1,7 +1,7 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Achievement from "./Achievement";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Achievement from './Achievement';
 
 const Achievements = ({ achievements, classes }) => {
   return (
@@ -10,7 +10,7 @@ const Achievements = ({ achievements, classes }) => {
         Accomplishments
       </Typography>
       <hr />
-      {achievements.map(achievement => (
+      {achievements.map((achievement) => (
         <Achievement {...achievement} />
       ))}
     </section>
@@ -19,8 +19,8 @@ const Achievements = ({ achievements, classes }) => {
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   section: {
-    marginBottom: spacing.unit * 2
-  }
+    marginBottom: spacing.unit * 2,
+  },
 });
 
 export default withStyles(styles)(Achievements);

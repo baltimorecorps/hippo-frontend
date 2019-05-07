@@ -21,8 +21,8 @@ const useInfo = () => {
 
 ResumeContext.useInfo = useInfo;
 
-ResumeContext.addExperience = ({type, experience, context}) => {
-  const {setResumeInfo, experiences, ...info} = context;
+ResumeContext.addExperience = ({ type, experience, context }) => {
+  const { setResumeInfo, experiences, ...info } = context;
 
   setResumeInfo({
     ...info,
@@ -33,8 +33,8 @@ ResumeContext.addExperience = ({type, experience, context}) => {
   });
 };
 
-ResumeContext.setName = ({name, context}) => {
-  const {setResumeInfo, ...info} = context;
+ResumeContext.setName = ({ name, context }) => {
+  const { setResumeInfo, ...info } = context;
 
   setResumeInfo({
     ...info,

@@ -1,39 +1,39 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Container, Row, Col } from "react-bootstrap";
-import TalentBasicInfo from "./TalentBasicInfo";
-import Experience from "./Experience.container";
-import Skill from "./Skill.container";
-import Resume from "./Resume";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import { Icon, Button } from "semantic-ui-react";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Container, Row, Col } from 'react-bootstrap';
+import TalentBasicInfo from './TalentBasicInfo';
+import Experience from './Experience.container';
+import Skill from './Skill.container';
+import Resume from './Resume';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { Icon, Button } from 'semantic-ui-react';
 
 class TalentProfile extends React.Component {
   printDocument = () => {
-    const input = document.getElementById("divToPrint");
-    html2canvas(input).then(canvas => {
-      const imgData = canvas.toDataURL("image/png");
+    const input = document.getElementById('divToPrint');
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "JPEG", 0, 0);
+      pdf.addImage(imgData, 'JPEG', 0, 0);
       //pdf.fromHTML(ReactDOMServer.renderToStaticMarkup(this.render()));
-      pdf.save("resume.pdf");
+      pdf.save('resume.pdf');
     });
   };
 
   pdfToHTML = () => {
-    var pdf = new jsPDF("p", "pt", "letter");
-    var source = document.getElementById("divToPrint");
+    var pdf = new jsPDF('p', 'pt', 'letter');
+    var source = document.getElementById('divToPrint');
     var specialElementHandlers = {
-      "#bypassme": function(element, renderer) {
+      '#bypassme': function(element, renderer) {
         return true;
-      }
+      },
     };
 
     var margins = {
       top: 50,
       left: 60,
-      width: 545
+      width: 545,
     };
 
     pdf.fromHTML(
@@ -42,32 +42,32 @@ class TalentProfile extends React.Component {
       margins.top, // y coord
       {
         width: margins.width, // max width of content on PDF
-        elementHandlers: specialElementHandlers
+        elementHandlers: specialElementHandlers,
       },
       function(dispose) {
         // dispose: object with X, Y of the last line add to the PDF
         // this allow the insertion of new lines after html
-        pdf.save("html2pdf.pdf");
-      }
+        pdf.save('html2pdf.pdf');
+      },
     );
   };
 
   render() {
     const textStyle = {
-      fontSize: "26px",
-      fontWeight: "300",
-      lineHeight: "0.8",
-      color: "#5f6163"
+      fontSize: '26px',
+      fontWeight: '300',
+      lineHeight: '0.8',
+      color: '#5f6163',
     };
     return (
-      <div style={{ backgroundColor: "#dee2e8" }}>
+      <div style={{ backgroundColor: '#dee2e8' }}>
         <Container>
           <div id="divToPrint">
             <Row
               style={{
-                backgroundColor: "lightblue",
-                padding: "30px",
-                height: "180px"
+                backgroundColor: 'lightblue',
+                padding: '30px',
+                height: '180px',
               }}
             >
               <TalentBasicInfo />
@@ -77,10 +77,7 @@ class TalentProfile extends React.Component {
             </Row>
             <Row>
               <Col>
-                <Experience
-                  contactId={this.props.match.params.contactId}
-                  experienceType="Work"
-                />
+                <Experience contactId={this.props.match.params.contactId} experienceType="Work" />
                 <Experience
                   contactId={this.props.match.params.contactId}
                   experienceType="Education"
@@ -95,9 +92,9 @@ class TalentProfile extends React.Component {
                 />
                 <div
                   style={{
-                    marginTop: "10px",
-                    backgroundColor: "white",
-                    padding: "15px"
+                    marginTop: '10px',
+                    backgroundColor: 'white',
+                    padding: '15px',
                   }}
                 >
                   <Row>
@@ -106,30 +103,21 @@ class TalentProfile extends React.Component {
                     </Col>
                   </Row>
 
-                  <Skill
-                    contactId={this.props.match.params.contactId}
-                    tagType="Function"
-                  />
-                  <Skill
-                    contactId={this.props.match.params.contactId}
-                    tagType="Skill"
-                  />
-                  <Skill
-                    contactId={this.props.match.params.contactId}
-                    tagType="Topic"
-                  />
+                  <Skill contactId={this.props.match.params.contactId} tagType="Function" />
+                  <Skill contactId={this.props.match.params.contactId} tagType="Skill" />
+                  <Skill contactId={this.props.match.params.contactId} tagType="Topic" />
                 </div>
                 <Resume />
                 <div
                   style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "30px",
-                    marginBottom: "80px"
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '30px',
+                    marginBottom: '80px',
                   }}
                 >
                   <Button color="green" onClick={this.pdfToHTML}>
-                    {" "}
+                    {' '}
                     <Icon name="download" /> Download Resume
                   </Button>
                 </div>
@@ -142,7 +130,7 @@ class TalentProfile extends React.Component {
   }
 }
 TalentProfile.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 
 export default TalentProfile;

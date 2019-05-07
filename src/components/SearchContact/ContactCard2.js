@@ -1,5 +1,5 @@
-import React from "react";
-import { Card } from "semantic-ui-react";
+import React from 'react';
+import { Card } from 'semantic-ui-react';
 //import { Card} from 'react-bootstrap'
 
 class ContactCard2 extends React.Component {
@@ -11,15 +11,11 @@ class ContactCard2 extends React.Component {
   render() {
     const { name, email, phone, id, picture } = this.props.item;
     return (
-      <Card style={{ width: "180px", height: "330px" }}>
-        <img
-          src={picture.medium}
-          style={{ borderRadius: "50%" }}
-          alt="profile"
-        />
+      <Card style={{ width: '180px', height: '330px' }}>
+        <img src={picture.medium} style={{ borderRadius: '50%' }} alt="profile" />
         <Card.Content>
           <Card.Header>
-            {name.last}, {name.first}{" "}
+            {name.last}, {name.first}{' '}
           </Card.Header>
           <Card.Meta>
             <span className="date">id: {id.value}</span>

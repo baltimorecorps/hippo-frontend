@@ -1,17 +1,17 @@
-import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import React from 'react';
+import { Redirect, Route } from 'react-router-dom';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       props.authenticated ? (
         <Component {...props} />
       ) : (
         <Redirect
           to={{
-            pathname: "/login",
-            state: { from: props.location }
+            pathname: '/login',
+            state: { from: props.location },
           }}
         />
       )

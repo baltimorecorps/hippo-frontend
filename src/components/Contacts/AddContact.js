@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 
 // const RACES = [
 //   {
@@ -35,18 +35,18 @@ import TextField from "@material-ui/core/TextField";
 //   },
 // ];
 
-const useForm = addNewContact => {
+const useForm = (addNewContact) => {
   const [values, setValues] = useState({});
 
   const handleSubmit = () => {
     addNewContact(values);
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     event.persist();
-    setValues(values => ({
+    setValues((values) => ({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     }));
   };
 
@@ -70,20 +70,11 @@ const AddContact = ({ classes, addNewContact }) => {
       >
         New Profile
       </Button>
-      <Dialog
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="form-dialog-title"
-      >
+      <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add New Profile</DialogTitle>
         <DialogContent>
           <form className={classes.container} noValidate autoComplete="off">
-            <Grid
-              container
-              direction="column"
-              justify="flex-start"
-              alignItems="flex-start"
-            >
+            <Grid container direction="column" justify="flex-start" alignItems="flex-start">
               <TextField
                 required
                 id="standard-name"
@@ -143,26 +134,26 @@ const AddContact = ({ classes, addNewContact }) => {
 
 AddContact.propTypes = {
   classes: PropTypes.object.isRequired,
-  addNewContact: PropTypes.func.isRequired
+  addNewContact: PropTypes.func.isRequired,
 };
 
 const styles = ({ breakpoints, palette, spacing, theme }) => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap",
-    padding: "50px"
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: '50px',
   },
   textField: {
     marginLeft: spacing.unit,
     marginRight: spacing.unit,
-    width: 200
+    width: 200,
   },
   dense: {
-    marginTop: 19
+    marginTop: 19,
   },
   menu: {
-    width: 200
-  }
+    width: 200,
+  },
 });
 
 export default withStyles(styles)(AddContact);

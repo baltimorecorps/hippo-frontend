@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import StorageContext from './StorageContext';
 
 const ProgressContext = React.createContext();
@@ -7,7 +7,7 @@ ProgressContext.StorageWrapper = ({ children }) => (
   <StorageContext
     context={ProgressContext}
     storageKey="resumeProgress"
-    value={{progress: 0}}
+    value={{ progress: 0 }}
     setterName="setProgress"
   >
     {children}
@@ -15,7 +15,7 @@ ProgressContext.StorageWrapper = ({ children }) => (
 );
 
 const useProgress = () => {
-  const {progress} = useContext(ProgressContext);
+  const { progress } = useContext(ProgressContext);
   return progress;
 };
 

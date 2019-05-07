@@ -1,19 +1,19 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import MenuItem from "@material-ui/core/MenuItem";
-import Toolbar from "@material-ui/core/Toolbar";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import MenuItem from '@material-ui/core/MenuItem';
+import Toolbar from '@material-ui/core/Toolbar';
 
-import ErrorBoundary from "../atoms/ErrorBoundary";
+import ErrorBoundary from '../atoms/ErrorBoundary';
 
-import Home from "./Other/Home.js";
-import TalentProfile from "./Profile/TalentProfile.js";
-import Contacts from "./Contacts/Contacts.container";
-import theme from "../styles/theme";
-import { Icon } from "semantic-ui-react";
+import Home from './Other/Home.js';
+import TalentProfile from './Profile/TalentProfile.js';
+import Contacts from './Contacts/Contacts.container';
+import theme from '../styles/theme';
+import { Icon } from 'semantic-ui-react';
 
-import GeneratedResumePage from "../pages/GeneratedResumePage";
+import GeneratedResumePage from '../pages/GeneratedResumePage';
 
 const App = () => (
   <ErrorBoundary fileName="src/App.js">

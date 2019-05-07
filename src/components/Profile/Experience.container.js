@@ -1,17 +1,17 @@
-import { connect } from "react-redux";
-import { createSelector } from "redux-starter-kit";
-import Experience from "./Experience";
+import { connect } from 'react-redux';
+import { createSelector } from 'redux-starter-kit';
+import Experience from './Experience';
 
 import {
   addExperience,
   refreshExperienceType,
   updateExperience,
-  deleteExperience
-} from "../../actions/profile";
+  deleteExperience,
+} from '../../actions/profile';
 
 const getExperiences = createSelector(
-  ["experiences"],
-  experiences => Object.keys(experiences).map(id => experiences[id])
+  ['experiences'],
+  (experiences) => Object.keys(experiences).map((id) => experiences[id]),
 );
 
 const getContact = (state, props) => props.contactId;
@@ -22,8 +22,8 @@ const makeGetRelevantExperiences = () => {
     [getExperiences, getContact, getTypeFilter],
     (exps, contactId, type) =>
       exps
-        .filter(exp => exp.contact_id.toString() === contactId.toString())
-        .filter(exp => exp.type === type)
+        .filter((exp) => exp.contact_id.toString() === contactId.toString())
+        .filter((exp) => exp.type === type),
   );
   return getRelevantExperiences;
 };
@@ -31,24 +31,24 @@ const makeGetRelevantExperiences = () => {
 export const makeMapStateToProps = () => {
   const getRelevantExperiences = makeGetRelevantExperiences();
   const mapStateToProps = (state, ownProps) => ({
-    experiences: getRelevantExperiences(state, ownProps)
+    experiences: getRelevantExperiences(state, ownProps),
   });
   return mapStateToProps;
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    addNewExperience: experience => addExperience(experience)(dispatch),
-    updateExperience: experience => updateExperience(experience)(dispatch),
-    deleteExperience: experience => deleteExperience(experience)(dispatch),
+    addNewExperience: (experience) => addExperience(experience)(dispatch),
+    updateExperience: (experience) => updateExperience(experience)(dispatch),
+    deleteExperience: (experience) => deleteExperience(experience)(dispatch),
     refreshExperiences: () =>
-      refreshExperienceType(props.contactId, props.experienceType)(dispatch)
+      refreshExperienceType(props.contactId, props.experienceType)(dispatch),
   };
 };
 
 const Container = connect(
   makeMapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Experience);
 
 export default Container;

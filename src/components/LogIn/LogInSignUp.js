@@ -1,13 +1,6 @@
-import React from "react";
-import {
-  Container,
-  Button,
-  Divider,
-  Form,
-  Grid,
-  Segment
-} from "semantic-ui-react";
-import "../Other/Home.css";
+import React from 'react';
+import { Container, Button, Divider, Form, Grid, Segment } from 'semantic-ui-react';
+import '../Other/Home.css';
 
 const LogInSignUp = () => (
   <div>
@@ -20,18 +13,8 @@ const LogInSignUp = () => (
         <Grid columns={2} relaxed="very" stackable>
           <Grid.Column>
             <Form>
-              <Form.Input
-                icon="user"
-                iconPosition="left"
-                label="Username"
-                placeholder="Username"
-              />
-              <Form.Input
-                icon="lock"
-                iconPosition="left"
-                label="Password"
-                type="password"
-              />
+              <Form.Input icon="user" iconPosition="left" label="Username" placeholder="Username" />
+              <Form.Input icon="lock" iconPosition="left" label="Password" type="password" />
 
               <Button content="Login" primary />
             </Form>

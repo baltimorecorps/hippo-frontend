@@ -1,3 +1,3 @@
-import GeneratedResumePage from "./GeneratedResumePage.container";
+import GeneratedResumePage from './GeneratedResumePage.container';
 
 export default GeneratedResumePage;
