@@ -9,8 +9,10 @@ import './profile.css';
 
 const Skill = ({
   tags,
+  tagItems,
   tagType,
   contactId,
+  refreshTags,
   addTagItem,
   deleteTagItem,
   updateTagItem,
@@ -20,20 +22,15 @@ const Skill = ({
   const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
-    tags.length === 0 && refreshTagItems();
+    tags.length === 0 && refreshTags();
+  }, []);
+
+  useEffect(() => {
+    tagItems.length === 0 && refreshTagItems();
   }, []);
 
   const displaySkills = () => {
-    const sampleTag = {
-      name: 'C++',
-      tag_id: 2,
-      contact_id: 1,
-      type: 'Function',
-      score: 2,
-    };
-    const sampleTags = [sampleTag];
-
-    return sampleTags.map(tag => (
+    return tagItems.map(tag => (
       <div style={{marginLeft: '20px'}}>
         <SkillItem
           key={tag.tag_id}

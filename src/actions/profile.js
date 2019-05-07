@@ -116,6 +116,10 @@ export const addTag = tag => dispatch =>
     )(dispatch),
   );
 
+export const REFRESH_TAGS = 'REFRESH_TAGS';
+export const refreshTags = () =>
+  fetchActionCreator(REFRESH_TAGS, `${API_URL}/api/tags/`);
+
 export const ADD_TAG_ITEM = 'ADD_TAG_ITEM';
 export const addTagItem = tagItem =>
   async function(dispatch) {
@@ -192,6 +196,7 @@ export const refreshTagItems = (contactId, tagType) =>
         onResolve: resolveAction => ({
           ...resolveAction,
           filter: tagType,
+          contactId: contactId,
         }),
       },
     )(dispatch);

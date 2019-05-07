@@ -10,10 +10,12 @@ import {
   deleteExperience,
   refreshExperienceType,
   ADD_TAG,
+  REFRESH_TAGS,
   ADD_TAG_ITEM,
   UPDATE_TAG_ITEM,
   DELETE_TAG_ITEM,
   REFRESH_TAG_ITEMS,
+  refreshTags,
   addTagItem,
   updateTagItem,
   deleteTagItem,
@@ -139,7 +141,23 @@ describe('Experiences', () => {
   });
 });
 
-describe('Tags', () => {
+describe('Tags and Tag Items', () => {
+  test('Refresh tags', async function() {
+    const dispatch = jest.fn();
+    const tagId = 9876;
+    const tag = {data: 'test', id: tagId};
+    const response = {data: [tag]};
+
+    fetchMock.get(`path:/api/tags/`, {body: response});
+
+    await refreshTags(tag)(dispatch);
+
+    expect(dispatch.mock.calls.length).toBe(2);
+    expect(dispatch.mock.calls[0][0].type).toBe(`REQUEST_${REFRESH_TAGS}`);
+    expect(dispatch.mock.calls[1][0].type).toBe(`RESOLVE_${REFRESH_TAGS}`);
+    expect(dispatch.mock.calls[1][0].body).toEqual(response);
+  });
+
   test('Add new tag item with tag id', async function() {
     const dispatch = jest.fn();
     const contactId = 1234;
@@ -147,8 +165,7 @@ describe('Tags', () => {
     const tag = {data: 'test', contact_id: contactId, tag_id: tagId};
     const response = {data: tag};
 
-    fetchMock.post(`path:/api/contacts/${contactId}/tags/`, 
-      {body: response});
+    fetchMock.post(`path:/api/contacts/${contactId}/tags/`, {body: response});
 
     await addTagItem(tag)(dispatch);
 
@@ -177,16 +194,17 @@ describe('Tags', () => {
     };
     const tagResponse = {data: tag};
     const tagItemResponse = {
-        data: {
-          ...tagItem,
-          tag_id: tagId,
-        },
+      data: {
+        ...tagItem,
+        tag_id: tagId,
+      },
     };
 
     fetchMock.post(`path:/api/tags/`, {body: tagResponse});
 
-    fetchMock.post(`path:/api/contacts/${contactId}/tags/`, 
-      {body: tagItemResponse});
+    fetchMock.post(`path:/api/contacts/${contactId}/tags/`, {
+      body: tagItemResponse,
+    });
 
     await addTagItem(tagItem)(dispatch);
 
@@ -220,8 +238,9 @@ describe('Tags', () => {
 
     const response = {data: tagItem};
 
-    fetchMock.put(`path:/api/contacts/${contactId}/tags/${tagId}/`, 
-      {body: response});
+    fetchMock.put(`path:/api/contacts/${contactId}/tags/${tagId}/`, {
+      body: response,
+    });
 
     await updateTagItem(tagItem)(dispatch);
 
@@ -247,13 +266,17 @@ describe('Tags', () => {
 
     const response = {stuff: 'win'};
 
-    fetchMock.delete(`path:/api/contacts/${contactId}/tags/${tagId}/`, 
-      {body: response});
-
-    fetchMock.get(`path:/api/contacts/${contactId}/tags/`, 
-      {body: response}, {
-      query: {type: 'function'},
+    fetchMock.delete(`path:/api/contacts/${contactId}/tags/${tagId}/`, {
+      body: response,
     });
+
+    fetchMock.get(
+      `path:/api/contacts/${contactId}/tags/`,
+      {body: response},
+      {
+        query: {type: 'function'},
+      },
+    );
 
     await deleteTagItem(tagItem)(dispatch);
 
@@ -286,6 +309,7 @@ describe('Tags', () => {
     expect(dispatch.mock.calls[0][0].type).toBe(`REQUEST_${REFRESH_TAG_ITEMS}`);
     expect(dispatch.mock.calls[1][0].type).toBe(`RESOLVE_${REFRESH_TAG_ITEMS}`);
     expect(dispatch.mock.calls[1][0].filter).toBe('test');
+    expect(dispatch.mock.calls[1][0].contactId).toBe(1234);
     fetchMock.called(`path:/api/contacts/${contactId}/tags/`, {
       query: {type: 'test'},
     });
