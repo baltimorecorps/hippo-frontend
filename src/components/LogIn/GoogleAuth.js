@@ -1,20 +1,19 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import { BrowserRouter } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import { BrowserRouter } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
 class GoogleAuth extends React.Component {
   state = {
-    isSignedIn: false
+    isSignedIn: false,
   };
   componentDidMount() {
-    window.gapi.load("client: auth2", () => {
+    window.gapi.load('client: auth2', () => {
       window.gapi.client
         .init({
-          clientId:
-            "603681871778-8rigkcemr16r90hgmfjmapse6fj7bf77.apps.googleusercontent.com",
-          scope: "email"
+          clientId: '603681871778-8rigkcemr16r90hgmfjmapse6fj7bf77.apps.googleusercontent.com',
+          scope: 'email',
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();
@@ -41,7 +40,7 @@ class GoogleAuth extends React.Component {
     } else {
       var styleHome = {
         fontSize: 18,
-        padding: "5px 0px"
+        padding: '5px 0px',
       };
       return (
         <BrowserRouter>

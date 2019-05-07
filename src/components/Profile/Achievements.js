@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Form } from "semantic-ui-react";
-import { Icon, Button } from "semantic-ui-react";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Form } from 'semantic-ui-react';
+import { Icon, Button } from 'semantic-ui-react';
 
 const Achievements = ({ achievements, contactId, onChange }) => {
-  const handleRemove = idx => evt => {
+  const handleRemove = (idx) => (evt) => {
     // This specifically stops a bug where if you tried to remove the last
     // achievement, it would trigger an event on the 'add' button, thus
     // effectively preventing you from ever going back to zero achievements
@@ -13,15 +13,15 @@ const Achievements = ({ achievements, contactId, onChange }) => {
   };
 
   const handleAdd = () => {
-    onChange([...achievements, { contact_id: contactId, description: "" }]);
+    onChange([...achievements, { contact_id: contactId, description: '' }]);
   };
 
-  const handleChangeDescription = idx => evt => {
+  const handleChangeDescription = (idx) => (evt) => {
     onChange(
       achievements.map((achievement, i) => {
         if (idx !== i) return achievement;
         return { ...achievement, description: evt.target.value };
-      })
+      }),
     );
   };
 
@@ -34,9 +34,9 @@ const Achievements = ({ achievements, contactId, onChange }) => {
             <div
               key={idx}
               style={{
-                display: "flex",
-                direction: "row",
-                alignItems: "center"
+                display: 'flex',
+                direction: 'row',
+                alignItems: 'center',
               }}
             >
               <input
@@ -46,13 +46,9 @@ const Achievements = ({ achievements, contactId, onChange }) => {
                 value={achievement.description}
                 onChange={handleChangeDescription(idx)}
               />
-              <Button
-                type="button"
-                className="small"
-                onClick={handleRemove(idx)}
-              >
-                {" "}
-                <Icon name="delete" />{" "}
+              <Button type="button" className="small" onClick={handleRemove(idx)}>
+                {' '}
+                <Icon name="delete" />{' '}
               </Button>
             </div>
           ))}
@@ -68,16 +64,15 @@ const Achievements = ({ achievements, contactId, onChange }) => {
 };
 
 Achievements.propTypes = {
-  contactId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-    .isRequired,
+  contactId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   achievements: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       exp_id: PropTypes.number,
       contact_id: PropTypes.number,
-      description: PropTypes.string.isRequired
-    })
+      description: PropTypes.string.isRequired,
+    }),
   ),
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 export default Achievements;

@@ -1,13 +1,13 @@
-import React from "react";
-import { useState } from "react";
-import PropTypes from "prop-types";
-import { Form } from "semantic-ui-react";
-import "react-datepicker/dist/react-datepicker.css";
-import Modal from "react-awesome-modal";
-import Autosuggest from "react-autosuggest";
-import "./autoSuggest.css";
-import { Dropdown, Button, ButtonGroup } from "react-bootstrap";
-import { scoreToString } from "./skillUtil";
+import React from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Form } from 'semantic-ui-react';
+import 'react-datepicker/dist/react-datepicker.css';
+import Modal from 'react-awesome-modal';
+import Autosuggest from 'react-autosuggest';
+import './autoSuggest.css';
+import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
+import { scoreToString } from './skillUtil';
 
 // const ALL_DATA = [
 //   {name: 'C', id: 1},
@@ -20,36 +20,36 @@ import { scoreToString } from "./skillUtil";
 const useForm = (initialValues, onSubmit) => {
   const [values, setValues] = useState(initialValues || {});
 
-  const update = name => value => {
-    setValues(values => ({
+  const update = (name) => (value) => {
+    setValues((values) => ({
       ...values,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handlers = {
     handleChange: (event, { newValue, method }) => {
-      if (method === "type") {
-        update("name")(newValue);
+      if (method === 'type') {
+        update('name')(newValue);
       } else {
-        update("name")(newValue.name);
-        update("tag_id")(newValue.id);
+        update('name')(newValue.name);
+        update('tag_id')(newValue.id);
       }
     },
-    handleScore: value => update("score")(parseInt(value)),
+    handleScore: (value) => update('score')(parseInt(value)),
     handleSubmit: () => {
       onSubmit(values);
-    }
+    },
   };
 
   return [values, handlers];
 };
 
 const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
-  const [
-    values,
-    { handleChange, handleSuggestion, handleSubmit, handleScore }
-  ] = useForm(tag, onSubmit);
+  const [values, { handleChange, handleSuggestion, handleSubmit, handleScore }] = useForm(
+    tag,
+    onSubmit,
+  );
 
   //
   // AUTOSUGGEST setup
@@ -57,13 +57,11 @@ const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [currSuggestion, setCurrSuggestion] = useState(values.name);
 
-  const getSuggestions = value => {
+  const getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     if (inputLength === 0) return [];
-    return allTags.filter(
-      data => data.name.toLowerCase().slice(0, inputLength) === inputValue
-    );
+    return allTags.filter((data) => data.name.toLowerCase().slice(0, inputLength) === inputValue);
   };
 
   const onSuggestionsFetchRequested = ({ value }) => {
@@ -72,19 +70,19 @@ const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
   const onSuggestionsClearRequested = () => {
     setSuggestions([]);
   };
-  const getSuggestionValue = suggestion => suggestion;
-  const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
+  const getSuggestionValue = (suggestion) => suggestion;
+  const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
   const inputProps = {
-    placeholder: "Type to Find A Skill",
-    name: "name",
+    placeholder: 'Type to Find A Skill',
+    name: 'name',
     value: values.name,
-    onChange: handleChange
+    onChange: handleChange,
   };
 
   return (
     <div>
       <Modal visible="true" width="400" height="300" effect="fadeInUp">
-        <div style={{ margin: "20px" }}>
+        <div style={{ margin: '20px' }}>
           <h3>Add Skill</h3>
           <Form>
             <Form.Field>
@@ -106,13 +104,9 @@ const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
                 <Button size="lg" variant="success">
                   {scoreToString(values.score)}
                 </Button>
-                <Dropdown.Toggle
-                  split
-                  variant="warning"
-                  id="dropdown-custom-2"
-                />
+                <Dropdown.Toggle split variant="warning" id="dropdown-custom-2" />
                 <Dropdown.Menu className="super-colors">
-                  {[1, 2, 3, 4].map(item => (
+                  {[1, 2, 3, 4].map((item) => (
                     <Dropdown.Item eventKey={item} onSelect={handleScore}>
                       {scoreToString(item)}
                     </Dropdown.Item>
@@ -123,11 +117,11 @@ const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
             <br />
 
             <p>
-              {" "}
+              {' '}
               <Button type="submit" onClick={handleSubmit} value="Save">
-                {" "}
+                {' '}
                 Save
-              </Button>{" "}
+              </Button>{' '}
               <Button type="button" onClick={onCancel} value="Cancel">
                 Cancel
               </Button>
@@ -143,14 +137,14 @@ SkillUpdateForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   allTags: PropTypes.array.isRequired,
-  tagType: PropTypes.oneOf(["Function", "Skill", "Topic"]).isRequired,
+  tagType: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
   tag: PropTypes.shape({
     tag_id: PropTypes.number.isRequired,
     contact_id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(["Function", "Skill", "Topic"]).isRequired,
-    score: PropTypes.number.isRequired
-  }).isRequired
+    type: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
+    score: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default SkillUpdateForm;

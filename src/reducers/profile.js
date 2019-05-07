@@ -1,4 +1,4 @@
-import { createReducer } from "redux-starter-kit";
+import { createReducer } from 'redux-starter-kit';
 import {
   ADD_EXPERIENCE,
   REFRESH_EXPERIENCES,
@@ -8,8 +8,8 @@ import {
   REFRESH_TAGS,
   ADD_TAG_ITEM,
   UPDATE_TAG_ITEM,
-  REFRESH_TAG_ITEMS
-} from "../actions/profile";
+  REFRESH_TAG_ITEMS,
+} from '../actions/profile';
 
 export const experiencesReducer = createReducer(
   {},
@@ -21,7 +21,7 @@ export const experiencesReducer = createReducer(
     [`RESOLVE_${REFRESH_EXPERIENCES}`]: (state, action) => {
       const newState = {};
       // clear out all old entries
-      action.body.data.forEach(experience => {
+      action.body.data.forEach((experience) => {
         newState[experience.id] = experience;
       });
       return newState;
@@ -35,7 +35,7 @@ export const experiencesReducer = createReducer(
         }
       });
 
-      action.body.data.forEach(experience => {
+      action.body.data.forEach((experience) => {
         newState[experience.id] = experience;
       });
       return newState;
@@ -43,8 +43,8 @@ export const experiencesReducer = createReducer(
     [`RESOLVE_${GET_EXPERIENCE}`]: (state, action) => {
       const experience = action.body.data;
       state[experience.id] = experience;
-    }
-  }
+    },
+  },
 );
 
 export const tagReducer = createReducer(
@@ -57,12 +57,12 @@ export const tagReducer = createReducer(
     [`RESOLVE_${REFRESH_TAGS}`]: (state, action) => {
       const newState = {};
       // clear out all old entries
-      action.body.data.forEach(tag => {
+      action.body.data.forEach((tag) => {
         newState[tag.id] = tag;
       });
       return newState;
-    }
-  }
+    },
+  },
 );
 
 export const tagItemReducer = createReducer(
@@ -87,7 +87,7 @@ export const tagItemReducer = createReducer(
           }
         });
       }
-      action.body.data.forEach(tagItem => {
+      action.body.data.forEach((tagItem) => {
         newContactState[tagItem.tag_id] = tagItem;
       });
       state[action.contactId] = newContactState;
@@ -95,6 +95,6 @@ export const tagItemReducer = createReducer(
     [`RESOLVE_${UPDATE_TAG_ITEM}`]: (state, action) => {
       const tagItem = action.body.data[0];
       state[tagItem.contact_id][tagItem.tag_id] = tagItem;
-    }
-  }
+    },
+  },
 );
