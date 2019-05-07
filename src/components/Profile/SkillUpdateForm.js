@@ -46,11 +46,11 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const SkillUpdateForm = ({tag, onSubmit, onCancel}) => {
-  const [values, {handleChange, handleSuggestion, handleSubmit, handleScore}] = useForm(
-    tag,
-    onSubmit,
-  );
+const SkillUpdateForm = ({allTags, tag, onSubmit, onCancel}) => {
+  const [
+    values,
+    {handleChange, handleSuggestion, handleSubmit, handleScore},
+  ] = useForm(tag, onSubmit);
 
   //
   // AUTOSUGGEST setup
@@ -59,11 +59,10 @@ const SkillUpdateForm = ({tag, onSubmit, onCancel}) => {
   const [currSuggestion, setCurrSuggestion] = useState(values.name);
 
   const getSuggestions = value => {
-    // TODO: read from API
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     if (inputLength === 0) return [];
-    return ALL_DATA.filter(
+    return allTags.filter(
       data => data.name.toLowerCase().slice(0, inputLength) === inputValue,
     );
   };
@@ -115,9 +114,7 @@ const SkillUpdateForm = ({tag, onSubmit, onCancel}) => {
                 />
                 <Dropdown.Menu className="super-colors">
                   {[1, 2, 3, 4].map(item => (
-                    <Dropdown.Item
-                      eventKey={item}
-                      onSelect={handleScore}>
+                    <Dropdown.Item eventKey={item} onSelect={handleScore}>
                       {scoreToString(item)}
                     </Dropdown.Item>
                   ))}
@@ -146,6 +143,8 @@ const SkillUpdateForm = ({tag, onSubmit, onCancel}) => {
 SkillUpdateForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  allTags: PropTypes.array.isRequired,
+  tagType: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
   tag: PropTypes.shape({
     tag_id: PropTypes.number.isRequired,
     contact_id: PropTypes.number.isRequired,

@@ -29,10 +29,10 @@ beforeEach(() => {
         [10]: {contact_id: 1111, tag_id: 10, data: 'tag 1', type: 'Function'},
         [13]: {contact_id: 1111, tag_id: 13, data: 'tag 4', type: 'Skill'},
         [14]: {contact_id: 1111, tag_id: 14, data: 'tag 5', type: 'Function'},
-      }
+      },
     },
   };
-}
+});
 
 test('test tag conversion', () => {
   const ownProps = {
@@ -44,7 +44,7 @@ test('test tag conversion', () => {
   const props = mapStateToProps(state, ownProps);
   expect(props).toHaveProperty('tags');
   expect(props.tags).toHaveLength(5);
-}
+});
 
 test('test tag item state mapping', () => {
   const ownProps = {
@@ -77,4 +77,3 @@ test('test blank state mapping', () => {
   expect(props).toHaveProperty('tagItems');
   expect(props.tagItems).toEqual([]);
 });
-

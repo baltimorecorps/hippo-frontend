@@ -79,20 +79,22 @@ export const tagItemReducer = createReducer(
     [`RESOLVE_${REFRESH_TAG_ITEMS}`]: (state, action) => {
       const contactState = state[action.contactId];
       let newContactState = {};
-      // clear out all old entries with the refreshed type
-      Object.entries(contactState).forEach(([key, value]) => {
-        if (value.type.toLowerCase() !== action.filter.toLowerCase()) {
-          newContactState[key] = value;
-        }
-      });
 
+      if (contactState) {
+        // clear out all old entries with the refreshed type
+        Object.entries(contactState).forEach(([key, value]) => {
+          if (value.type.toLowerCase() !== action.filter.toLowerCase()) {
+            newContactState[key] = value;
+          }
+        });
+      }
       action.body.data.forEach(tagItem => {
         newContactState[tagItem.tag_id] = tagItem;
       });
       state[action.contactId] = newContactState;
     },
     [`RESOLVE_${UPDATE_TAG_ITEM}`]: (state, action) => {
-      const tagItem = action.body.data;
+      const tagItem = action.body.data[0];
       state[tagItem.contact_id][tagItem.tag_id] = tagItem;
     },
   },

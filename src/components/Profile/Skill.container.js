@@ -24,7 +24,9 @@ const makeGetRelevantTagItems = () => {
     ['tagItems', getContact, getTypeFilter],
     (tagItems, contactId, type) => {
       const tagItemMap = tagItems[contactId];
-      if (!tagItemMap) { return []; }
+      if (!tagItemMap) {
+        return [];
+      }
 
       return Object.keys(tagItemMap)
         .map(id => tagItemMap[id])
@@ -47,11 +49,12 @@ export const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    refreshTags: () => refreshTags(dispatch),
+    refreshTags: () => refreshTags()(dispatch),
     addTagItem: tagItem => addTagItem(tagItem)(dispatch),
     deleteTagItem: tagItem => deleteTagItem(tagItem)(dispatch),
     updateTagItem: tagItem => updateTagItem(tagItem)(dispatch),
-    refreshTagItems: () => refreshTagItems(dispatch),
+    refreshTagItems: () =>
+      refreshTagItems(props.contactId, props.tagType)(dispatch),
   };
 };
 

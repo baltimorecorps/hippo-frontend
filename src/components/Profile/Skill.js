@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Divider, Icon} from 'semantic-ui-react';
 import {Col, Row} from 'react-bootstrap';
-import SkillUpdateForm from './SkillUpdateForm';
+import SkillUpdateForm from './SkillUpdateForm.container';
 import SkillItem from './SkillItem';
 import './profile.css';
 
@@ -20,6 +20,7 @@ const Skill = ({
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [showHint, setShowHint] = useState(false);
+
 
   useEffect(() => {
     tags.length === 0 && refreshTags();
@@ -91,13 +92,15 @@ const Skill = ({
         {showForm ? (
           <Col xs md lg="2">
             <SkillUpdateForm
-              tag={blankTag}
-              onSubmit={addTagItem}
+              tag={() => Object.assign({}, blankTag)}
+              tagType={tagType}
+              onSubmit={tagItem => {
+                addTagItem(tagItem).then(setShowForm(false));
+              }}
               onCancel={() => setShowForm(false)}
             />
           </Col>
         ) : null}
-
       </Row>
     </React.Fragment>
   );

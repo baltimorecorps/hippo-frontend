@@ -133,8 +133,9 @@ export const addTagItem = tagItem =>
         name: tagItem.name,
         type: tagItem.type,
       };
+
       const newTagAction = await addTag(tag)(dispatch);
-      tagItem.tag_id = newTagAction.body.data.tag_id;
+      tagItem.tag_id = newTagAction.body.data.id;
     }
 
     await fetchActionCreator(

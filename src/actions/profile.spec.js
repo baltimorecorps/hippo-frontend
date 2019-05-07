@@ -184,7 +184,7 @@ describe('Tags and Tag Items', () => {
     const tag = {
       name: 'test',
       type: 'Function',
-      tag_id: tagId,
+      id: tagId,
     };
     const tagItem = {
       name: 'test',

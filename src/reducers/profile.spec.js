@@ -224,6 +224,26 @@ describe('TagItem state', () => {
     });
   });
 
+  test('Refresh tagItem by type empty state', () => {
+    const tagItems = [
+      {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
+      {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
+    ];
+
+    const newState = tagItemReducer(initialState, {
+      type: `RESOLVE_${REFRESH_TAG_ITEMS}`,
+      body: {status: 'success', data: tagItems},
+      contactId: 1,
+      filter: 'test',
+    });
+    expect(newState).toEqual({
+      [1]: {
+        [11]: {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
+        [15]: {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
+      },
+    });
+  });
+
   test('Update one tagItem', () => {
     const tagItem = {contact_id: 1, tag_id: 11, data: 'exp data'};
 
@@ -241,7 +261,7 @@ describe('TagItem state', () => {
     };
     const newState = tagItemReducer(initialState, {
       type: `RESOLVE_${UPDATE_TAG_ITEM}`,
-      body: {status: 'success', data: tagItem},
+      body: {status: 'success', data: [tagItem, {}]},
     });
     expect(newState).toEqual({
       [1]: {

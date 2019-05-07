@@ -3,7 +3,7 @@ import {useState} from 'react';
 import PropTypes from 'prop-types';
 import {Button, Icon, Grid} from 'semantic-ui-react';
 import {Col, Row} from 'react-bootstrap';
-import SkillUpdateForm from './SkillUpdateForm';
+import SkillUpdateForm from './SkillUpdateForm.container';
 import {scoreToString} from './skillUtil';
 import './profile.css';
 
@@ -60,6 +60,7 @@ const SkillItem = ({tag, onSubmit, onDelete}) => {
       {editing ? (
         <SkillUpdateForm
           tag={tag}
+          tagType={tag.type}
           onSubmit={(tag) => {onSubmit(tag); setEditing(false)}}
           onCancel={() => setEditing(false)}
         />
