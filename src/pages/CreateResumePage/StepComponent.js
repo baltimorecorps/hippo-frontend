@@ -1,12 +1,13 @@
 import React, {useContext} from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 import ProgressContext from 'lib/context/ProgressContext';
 import ResumeContext from 'lib/context/ResumeContext';
 import ResumePreview from './ResumePreview';
 import ResumeBuilder from './ResumeBuilder';
 
-const StepComponent = () => {
+const StepComponent = ({classes}) => {
   const stepType = ProgressContext.useStepType();
   const context = useContext(ResumeContext);
   const setName = (event) => {
@@ -38,7 +39,7 @@ const StepComponent = () => {
 
   return (
     <Grid container justify="space-between">
-      <Grid item xs={6}>
+      <Grid item xs={6} className={classes.preview}>
         <ResumePreview />
       </Grid>
       <Grid item xs={6}>
@@ -48,4 +49,11 @@ const StepComponent = () => {
   );
 };
 
-export default StepComponent;
+const styles = ({ breakpoints, palette, spacing }) => ({
+  preview: {
+    transform: 'scale(0.7)',
+    transformOrigin: 'top',
+  },
+});
+
+export default withStyles(styles)(StepComponent);

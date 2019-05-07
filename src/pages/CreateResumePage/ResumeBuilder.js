@@ -39,14 +39,14 @@ const ResumeBuilder = ({ achievements, contactInfo, experiences, skillGroups, cl
             </Grid>
             <ul>
               {type !== 'skills' && selectedExperiences[type].map(({positionName, orgName}) =>
-                <li>
+                <li key={`${positionName}.${orgName}`}>
                   {orgName} | {positionName}
                 </li>
               )}
               {type === 'skills' && selectedSkillGroups.map(({name: groupName, skills}) =>
-                <React.Fragment>
+                <React.Fragment key={groupName}>
                   {skills.map(({name: skillName}) =>
-                    <li>
+                    <li key={`${groupName}.${skillName}`}>
                       {groupName} | {skillName}
                     </li>
                   )}
