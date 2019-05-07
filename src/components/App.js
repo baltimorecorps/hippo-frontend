@@ -10,10 +10,11 @@ import ErrorBoundary from '../atoms/ErrorBoundary';
 import Home from './Other/Home.js';
 import TalentProfile from './Profile/TalentProfile.js';
 import Contacts from './Contacts/Contacts.container';
-import theme from '../styles/theme';
+import theme from 'styles/theme';
 import { Icon } from 'semantic-ui-react';
 
-import GeneratedResumePage from '../pages/GeneratedResumePage';
+import GeneratedResumePage from 'pages/GeneratedResumePage';
+import CreateResumePage from 'pages/CreateResumePage';
 
 const App = () => (
   <ErrorBoundary fileName="src/App.js">
@@ -27,8 +28,12 @@ const App = () => (
                   <Icon name="home" />
                 </MenuItem>
               </Link>
+              {/* TODO change all urls to lowercase */}
               <Link to="/Resume">
                 <MenuItem>Generated Resume</MenuItem>
+              </Link>
+              <Link to="/create-resume">
+                <MenuItem>Create Resume</MenuItem>
               </Link>
               <Link to="/Contacts">
                 <MenuItem>Contacts</MenuItem>
@@ -44,6 +49,7 @@ const App = () => (
             <Route exact path="/Contacts" component={Contacts} />
             {/*<Route exact path='/TalentProfile' component={TalentProfile} />*/}
             <Route path="/Profile/:contactId" component={TalentProfile} />
+            <Route exact path="/create-resume" component={CreateResumePage} />
           </Switch>
         </React.Fragment>
       </Router>
