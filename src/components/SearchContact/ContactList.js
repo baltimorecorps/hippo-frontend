@@ -1,16 +1,10 @@
-import React from 'react';
-import './ContactList.css';
-import ContactCard from './ContactCard';
-import CardGroupProps from './CardGroupProps';
+import React from "react";
+import "./ContactList.css";
+import ContactCard from "./ContactCard";
+import CardGroupProps from "./CardGroupProps";
 
-
-const ContactList = (props) =>{
-   const images = props.images.map((image)=>{
-       return <ContactCard key={image.id} image={image}/>
-          
-    });
-    return <CardGroupProps />;
-    //return <div className="contact-list"> {images} </div>;
+const ContactList = props => {
+  return <CardGroupProps />;
 };
 
 export default ContactList;

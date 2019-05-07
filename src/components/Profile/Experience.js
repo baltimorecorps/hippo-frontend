@@ -1,12 +1,12 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {Button, Divider, Icon, AccordionTitle} from 'semantic-ui-react';
-import {Col, Row} from 'react-bootstrap';
-import ExperienceItem from './ExperienceItem';
-import ExperienceUpdateForm from './ExperienceUpdateForm';
-import EducationUpdateForm from './EducationUpdateForm';
-import './profile.css';
+import React from "react";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Divider, Icon } from "semantic-ui-react";
+import { Col, Row } from "react-bootstrap";
+import ExperienceItem from "./ExperienceItem";
+import ExperienceUpdateForm from "./ExperienceUpdateForm";
+import EducationUpdateForm from "./EducationUpdateForm";
+import "./profile.css";
 
 //todo: check how to write if/else in render/function
 //todo: check how to write clickable icon
@@ -18,24 +18,24 @@ const Experience = ({
   addNewExperience,
   refreshExperiences,
   updateExperience,
-  deleteExperience,
+  deleteExperience
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
     experiences.length === 0 && refreshExperiences();
-  }, []);
+  }, [experiences.length, refreshExperiences]);
 
   const blankExperience = {
-    description: '',
-    host: '',
-    title: '',
-    date_start: '',
-    date_end: '',
+    description: "",
+    host: "",
+    title: "",
+    date_start: "",
+    date_end: "",
     type: experienceType,
     contact_id: contactId,
-    achievements: [],
+    achievements: []
   };
 
   const submitNewExperience = async function(experience) {
@@ -46,7 +46,7 @@ const Experience = ({
   const displayPastExperiences = () =>
     experiences.map(experience => {
       return (
-        <div key={experience.id} style={{marginLeft: '20px'}} className="">
+        <div key={experience.id} style={{ marginLeft: "20px" }} className="">
           <ExperienceItem
             onUpdate={updateExperience}
             onDelete={deleteExperience}
@@ -57,26 +57,28 @@ const Experience = ({
     });
 
   const getHeader = () => {
-    if (experienceType === 'Work') {
-      return 'Work Experience';
-    } else if (experienceType === 'Education') {
-      return 'Education';
-    } else if (experienceType === 'Service') {
-      return 'Service and Leadership';
-    } else if (experienceType === 'Accomplishment') {
-      return 'Accomplishments';
+    if (experienceType === "Work") {
+      return "Work Experience";
+    } else if (experienceType === "Education") {
+      return "Education";
+    } else if (experienceType === "Service") {
+      return "Service and Leadership";
+    } else if (experienceType === "Accomplishment") {
+      return "Accomplishments";
     }
   };
 
   const textStyle = {
-    fontSize: '26px',
-    fontWeight: '300',
-    lineHeight: '0.8',
-    color: '#5f6163',
+    fontSize: "26px",
+    fontWeight: "300",
+    lineHeight: "0.8",
+    color: "#5f6163"
   };
 
   return (
-    <div style={{marginTop: '10px', backgroundColor: 'white', padding: '15px'}}>
+    <div
+      style={{ marginTop: "10px", backgroundColor: "white", padding: "15px" }}
+    >
       <Row>
         <Col xs md lg="4">
           <div style={textStyle}>{getHeader()}</div>
@@ -85,13 +87,14 @@ const Experience = ({
         <Col xs md lg="8">
           <button
             style={{
-              display: 'inline-block',
-              float: 'right',
-              border: 'none',
-              backgroundColor: 'transparent',
+              display: "inline-block",
+              float: "right",
+              border: "none",
+              backgroundColor: "transparent"
             }}
-            onClick={() => setShowForm(true)}>
-            <Icon style={{display: 'inline-block'}} name="plus" />
+            onClick={() => setShowForm(true)}
+          >
+            <Icon style={{ display: "inline-block" }} name="plus" />
             {showHint ? <p> Click plus sign to add new experience </p> : null}
           </button>
         </Col>
@@ -104,8 +107,8 @@ const Experience = ({
         </Col>
         {showForm ? (
           <Col xs md lg="2">
-            <div style={{marginTop: '20px'}}>
-              {experienceType === 'Education' ? (
+            <div style={{ marginTop: "20px" }}>
+              {experienceType === "Education" ? (
                 <EducationUpdateForm
                   experience={blankExperience}
                   onSubmit={submitNewExperience}
@@ -129,16 +132,16 @@ const Experience = ({
 Experience.propTypes = {
   contactId: PropTypes.string.isRequired,
   experienceType: PropTypes.oneOf([
-    'Work',
-    'Service',
-    'Accomplishment',
-    'Education',
+    "Work",
+    "Service",
+    "Accomplishment",
+    "Education"
   ]).isRequired,
   experiences: PropTypes.array.isRequired,
   addNewExperience: PropTypes.func.isRequired,
   updateExperience: PropTypes.func.isRequired,
   deleteExperience: PropTypes.func.isRequired,
-  refreshExperiences: PropTypes.func.isRequired,
+  refreshExperiences: PropTypes.func.isRequired
 };
 
 export default Experience;

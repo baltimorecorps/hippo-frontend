@@ -1,16 +1,11 @@
-import React from 'react';
-
+import React from "react";
 
 class ApplicationPortal extends React.Component {
-    state = {
-      isUser: true,
-    };
-    render(){
-      return(
-        <div>
-          Application Portal
-        </div>
-      );
-    }
+  state = {
+    isUser: true
+  };
+  render() {
+    return <div>Application Portal</div>;
   }
-  export default ApplicationPortal;
+}
+export default ApplicationPortal;
