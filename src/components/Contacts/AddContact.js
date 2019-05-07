@@ -39,6 +39,10 @@ const useForm = (addNewContact) => {
   const [values, setValues] = useState({});
 
   const handleSubmit = () => {
+    values.email_primary = {
+      is_primary: true,
+      email: values.email,
+    };
     addNewContact(values);
   };
 
@@ -110,8 +114,8 @@ const AddContact = ({ classes, addNewContact }) => {
                 required
                 id="phone"
                 label="Primary Phone"
-                name="phone"
-                value={values.phone}
+                name="phone_primary"
+                value={values.phone_primary}
                 onChange={handleChange}
                 className={classes.textField}
                 margin="normal"
