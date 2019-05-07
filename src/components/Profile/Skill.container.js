@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch, props) => {
     addTagItem: v => console.log('add', v),
     deleteTagItem: v => console.log('delete', v),
     updateTagItem: v => console.log('update', v),
-    refreshTags: () => console.log('refresh'),
+    refreshTagItems: () => console.log('refresh'),
   };
 };
 

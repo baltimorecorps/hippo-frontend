@@ -69,7 +69,7 @@ export const refreshExperienceType = (contactId, expType) => {
       }),
     },
   );
-}
+};
 
 export const DELETE_EXPERIENCE = 'DELETE_EXPERIENCE';
 export const deleteExperience = experience =>
@@ -88,4 +88,111 @@ export const deleteExperience = experience =>
     await refreshExperienceType(experience.contact_id, experience.type)(
       dispatch,
     );
+  };
+
+export const ADD_TAG = 'ADD_TAG';
+// TODO: Ugh this is such a hack, need the output of this but it doesn't
+// return anything so we wrap it in a promise and inject the resolve/reject
+// methods into the dispatcher
+export const addTag = tag => dispatch =>
+  new Promise((resolve, reject) =>
+    fetchActionCreator(
+      ADD_TAG,
+      `${API_URL}/api/tags/`,
+      {
+        method: 'POST',
+        body: JSON.stringify(tag),
+      },
+      {
+        onResolve: resolveAction => {
+          resolve(resolveAction);
+          return resolveAction;
+        },
+        onReject: rejectAction => {
+          reject(rejectAction);
+          return rejectAction;
+        },
+      },
+    )(dispatch),
+  );
+
+export const ADD_TAG_ITEM = 'ADD_TAG_ITEM';
+export const addTagItem = tagItem =>
+  async function(dispatch) {
+    dispatch({
+      type: ADD_TAG_ITEM,
+      tag: tagItem,
+    });
+
+    if (!tagItem.hasOwnProperty('tag_id')) {
+      const tag = {
+        name: tagItem.name,
+        type: tagItem.type,
+      };
+      const newTagAction = await addTag(tag)(dispatch);
+      tagItem.tag_id = newTagAction.body.data.tag_id;
+    }
+
+    await fetchActionCreator(
+      ADD_TAG_ITEM,
+      `${API_URL}/api/contacts/${tagItem.contact_id}/tags/`,
+      {
+        method: 'POST',
+        body: JSON.stringify(tagItem),
+      },
+    )(dispatch);
+  };
+
+export const UPDATE_TAG_ITEM = 'UPDATE_TAG_ITEM';
+export const updateTagItem = tagItem =>
+  async function(dispatch) {
+    dispatch({
+      type: UPDATE_TAG_ITEM,
+      tag: tagItem,
+    });
+
+    await fetchActionCreator(
+      UPDATE_TAG_ITEM,
+      `${API_URL}/api/contacts/${tagItem.contact_id}/tags/${tagItem.tag_id}/`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(tagItem),
+      },
+    )(dispatch);
+  };
+
+export const DELETE_TAG_ITEM = 'DELETE_TAG_ITEM';
+export const deleteTagItem = tagItem =>
+  async function(dispatch) {
+    dispatch({
+      type: DELETE_TAG_ITEM,
+      tag: tagItem,
+    });
+
+    await fetchActionCreator(
+      DELETE_TAG_ITEM,
+      `${API_URL}/api/contacts/${tagItem.contact_id}/tags/${tagItem.tag_id}/`,
+      {
+        method: 'DELETE',
+      },
+    )(dispatch);
+
+    await refreshTagItems(tagItem.contact_id, tagItem.type)(dispatch);
+  };
+
+export const REFRESH_TAG_ITEMS = 'REFRESH_TAG_ITEMS';
+export const refreshTagItems = (contactId, tagType) =>
+  async function(dispatch) {
+    tagType = tagType.toLowerCase();
+    await fetchActionCreator(
+      REFRESH_TAG_ITEMS,
+      `${API_URL}/api/contacts/${contactId}/tags/?type=${tagType}`,
+      null,
+      {
+        onResolve: resolveAction => ({
+          ...resolveAction,
+          filter: tagType,
+        }),
+      },
+    )(dispatch);
   };

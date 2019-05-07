@@ -14,13 +14,13 @@ const Skill = ({
   addTagItem,
   deleteTagItem,
   updateTagItem,
-  refreshTags,
+  refreshTagItems,
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
-    tags.length === 0 && refreshTags();
+    tags.length === 0 && refreshTagItems();
   }, []);
 
   const displaySkills = () => {
@@ -113,7 +113,7 @@ Skill.propTypes = {
   addTagItem: PropTypes.func.isRequired,
   deleteTagItem: PropTypes.func.isRequired,
   updateTagItem: PropTypes.func.isRequired,
-  refreshTags: PropTypes.func.isRequired,
+  refreshTagItems: PropTypes.func.isRequired,
 };
 
 export default Skill;
