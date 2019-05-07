@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 class PastExperience extends React.Component {
   state = { experiences: [] };
 
   render() {
     return (
-      <div className="ui container" style={{ marginTop: '10px' }}>
+      <div className="ui container" style={{ marginTop: "10px" }}>
         Past Experiences
       </div>
     );

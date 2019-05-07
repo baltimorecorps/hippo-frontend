@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 class ApplicationPortal extends React.Component {
   state = {
-    isUser: true,
+    isUser: true
   };
   render() {
     return <div>Application Portal</div>;

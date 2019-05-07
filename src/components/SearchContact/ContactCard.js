@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
 class ContactCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      spans: 0,
+      spans: 0
     };
     this.imageRef = React.createRef();
   }
   componentDidMount() {
-    this.imageRef.current.addEventListener('load', this.setSpans);
+    this.imageRef.current.addEventListener("load", this.setSpans);
   }
   setSpans = () => {
     const height = this.imageRef.current.clientHeight;

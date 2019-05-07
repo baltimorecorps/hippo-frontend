@@ -6,7 +6,7 @@ const logger = {
       console.group(`logger.error in ${fileName}`);
       console.error(name, message);
 
-      console.group('stack');
+      console.group("stack");
       console.error(stack);
       console.groupEnd();
 
@@ -17,7 +17,7 @@ const logger = {
       console.groupEnd();
       /* eslint-enable no-console */
     }
-  },
+  }
 };
 
 export default logger;

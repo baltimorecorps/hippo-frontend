@@ -1,6 +1,6 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import SkillGroup from './SkillGroup';
+import React from "react";
+import Typography from "@material-ui/core/Typography";
+import SkillGroup from "./SkillGroup";
 
 const SkillGroups = ({ skillGroups }) => {
   return (
@@ -9,7 +9,7 @@ const SkillGroups = ({ skillGroups }) => {
         Skills and Abilities
       </Typography>
       <hr />
-      {skillGroups.map((group) => (
+      {skillGroups.map(group => (
         <SkillGroup {...group} />
       ))}
     </section>

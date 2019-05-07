@@ -1,6 +1,6 @@
-import React from 'react';
-import GeneratedResumePage from './GeneratedResumePage';
-import resumeInfo from './resumeInfo';
+import React from "react";
+import GeneratedResumePage from "./GeneratedResumePage";
+import resumeInfo from "./resumeInfo";
 
 const Container = () => {
   return (

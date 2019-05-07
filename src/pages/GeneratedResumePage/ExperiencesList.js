@@ -1,7 +1,7 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Experience from './Experience';
+import React from "react";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Experience from "./Experience";
 
 const ExperiencesList = ({ name, experiences, classes }) => {
   return (
@@ -10,8 +10,8 @@ const ExperiencesList = ({ name, experiences, classes }) => {
         {name}
       </Typography>
       <hr />
-      {experiences.map((experience) => (
-        <Experience key={experience.id} {...experience} />
+      {experiences.map(experience => (
+        <Experience {...experience} />
       ))}
     </section>
   );
@@ -19,8 +19,8 @@ const ExperiencesList = ({ name, experiences, classes }) => {
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   section: {
-    marginBottom: spacing.unit * 2,
-  },
+    marginBottom: spacing.unit * 2
+  }
 });
 
 export default withStyles(styles)(ExperiencesList);

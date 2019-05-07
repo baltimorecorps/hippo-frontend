@@ -1,21 +1,20 @@
-import React from 'react';
+import React from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { Form } from "semantic-ui-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Modal from "react-awesome-modal";
+import { Button, Divider, Dropdown } from "semantic-ui-react";
 
-import {useState} from 'react';
-import PropTypes from 'prop-types';
-import {Form} from 'semantic-ui-react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import Modal from 'react-awesome-modal';
-import {Icon, Button, Divider, Dropdown} from 'semantic-ui-react';
-
-import Achievements from './Achievements';
+import Achievements from "./Achievements";
 
 const DEGREE_OPTIONS = [
-  {key: 'high_school', text: 'High School', value: 'High School'},
-  {key: 'associates', text: 'Associates', value: 'Associates'},
-  {key: 'undergraduate', text: 'Undergraduate', value: 'Undergraduate'},
-  {key: 'masters', text: 'Masters', value: 'Masters'},
-  {key: 'doctoral', text: 'Doctoral', value: 'Doctoral'},
+  { key: "high_school", text: "High School", value: "High School" },
+  { key: "associates", text: "Associates", value: "Associates" },
+  { key: "undergraduate", text: "Undergraduate", value: "Undergraduate" },
+  { key: "masters", text: "Masters", value: "Masters" },
+  { key: "doctoral", text: "Doctoral", value: "Doctoral" }
 ];
 
 const useForm = (initialValues, onSubmit) => {
@@ -24,7 +23,7 @@ const useForm = (initialValues, onSubmit) => {
   const update = name => value => {
     setValues(values => ({
       ...values,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -35,31 +34,31 @@ const useForm = (initialValues, onSubmit) => {
     },
     handleChangeDateStart: date => {
       if (date > values.date_end) {
-        update('date_end')(date);
+        update("date_end")(date);
       }
-      update('date_start')(date);
+      update("date_start")(date);
     },
 
     handleChangeDateEnd: date => {
       if (date < values.date_start) {
-        update('date_start')(date);
+        update("date_start")(date);
       }
-      update('date_end')(date);
+      update("date_end")(date);
     },
 
     handleSubmit: () => {
       onSubmit(values);
     },
-    handleDegree: (event, { value } ) => {
-      update('degree')(value);
+    handleDegree: (event, { value }) => {
+      update("degree")(value);
     },
-    handleAchievements: update('achievements'),
+    handleAchievements: update("achievements")
   };
 
   return [values, handlers];
 };
 
-const ExperienceUpdateForm = ({experience, onSubmit, handleCancel}) => {
+const ExperienceUpdateForm = ({ experience, onSubmit, handleCancel }) => {
   const [
     values,
     {
@@ -68,27 +67,27 @@ const ExperienceUpdateForm = ({experience, onSubmit, handleCancel}) => {
       handleChangeDateEnd,
       handleSubmit,
       handleDegree,
-      handleAchievements,
-    },
+      handleAchievements
+    }
   ] = useForm(experience, onSubmit);
 
   const handleChangeDescription = idx => evt => {
     const newAchievements = this.state.achievements.map((achievement, sidx) => {
       if (idx !== sidx) return achievement;
-      return {...achievement, description: evt.target.value};
+      return { ...achievement, description: evt.target.value };
     });
-    this.setState({achievements: newAchievements});
+    this.setState({ achievements: newAchievements });
   };
 
   return (
     <div>
       <Modal visible="true" width="400" minHeight="750" effect="fadeInUp">
-        <div style={{margin: '20px'}}>
+        <div style={{ margin: "20px" }}>
           <Form>
             <Form.Field>
               <label>
-                {' '}
-                <h3>Institution:</h3>{' '}
+                {" "}
+                <h3>Institution:</h3>{" "}
               </label>
               <input
                 placeholder="Institution Name"
@@ -156,18 +155,19 @@ const ExperienceUpdateForm = ({experience, onSubmit, handleCancel}) => {
             <Divider />
 
             <p>
-              {' '}
+              {" "}
               <Button
                 size="large"
                 type="submit"
                 value="Save"
-                onClick={handleSubmit}>
-                {' '}
+                onClick={handleSubmit}
+              >
+                {" "}
                 Save
-              </Button>{' '}
+              </Button>{" "}
               <Button type="button" onClick={handleCancel} value="Cancel">
                 Cancel
-              </Button>{' '}
+              </Button>{" "}
             </p>
           </Form>
         </div>
@@ -184,20 +184,18 @@ ExperienceUpdateForm.propTypes = {
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
-      'High School',
-      'Associates',
-      'Undergraduate',
-      'Masters',
-      'Doctoral',
+      "High School",
+      "Associates",
+      "Undergraduate",
+      "Masters",
+      "Doctoral"
     ]).isRequired,
     date_start: PropTypes.string.isRequired,
     date_end: PropTypes.string,
-    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
+    type: PropTypes.oneOf(["Work", "Service", "Accomplishment", "Education"])
       .isRequired,
     contact_id: PropTypes.number,
-    achievements: PropTypes.array,
-  }).isRequired,
+    achievements: PropTypes.array
+  }).isRequired
 };
 export default ExperienceUpdateForm;
-
-

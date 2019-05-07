@@ -1,7 +1,8 @@
-import { makeMapStateToProps } from "./Experience.container";
+import { makeMapStateToProps } from "./Skill.container";
 
-test("test state mapping", () => {
-  const state = {
+let state = {};
+beforeEach(() => {
+  state = {
     contacts: [1, 2, 3, 4],
     experiences: {
       10: { id: 10, data: "exp 1", contact_id: 1, type: "Work" },
@@ -31,17 +32,48 @@ test("test state mapping", () => {
       }
     }
   };
+});
+
+test("test tag conversion", () => {
   const ownProps = {
-    contactId: 2,
-    experienceType: "Work"
+    contactId: 1234,
+    experienceType: "Function"
   };
 
   const mapStateToProps = makeMapStateToProps();
   const props = mapStateToProps(state, ownProps);
-  expect(props).toHaveProperty("experiences");
-  expect(props.experiences).toBeInstanceOf(Array);
-  props.experiences.forEach(experience => {
-    expect(experience.contact_id).toBe(2);
-    expect(experience.type).toBe("Work");
+  expect(props).toHaveProperty("tags");
+  expect(props.tags).toHaveLength(5);
+});
+
+test("test tag item state mapping", () => {
+  const ownProps = {
+    contactId: 1234,
+    experienceType: "Function"
+  };
+
+  const mapStateToProps = makeMapStateToProps();
+  const props = mapStateToProps(state, ownProps);
+
+  expect(props).toHaveProperty("tagItems");
+  props.tagItems.forEach(tagItem => {
+    expect(tagItem.contact_id).toBe(1234);
+    expect(tagItem.type).toBe("Function");
   });
+});
+
+test("test blank state mapping", () => {
+  const ownProps = {
+    contactId: 1234,
+    experienceType: "Function"
+  };
+
+  const mapStateToProps = makeMapStateToProps();
+  const props = mapStateToProps({ tags: {}, tagItems: {} }, ownProps);
+
+  expect(props).toHaveProperty("tags");
+  expect(props.tags).toEqual([]);
+
+  expect(props).toHaveProperty("tagItems");
+  expect(props.tagItems).toEqual([]);
 });

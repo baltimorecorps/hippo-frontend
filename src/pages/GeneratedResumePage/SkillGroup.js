@@ -1,5 +1,5 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import React from "react";
+import Typography from "@material-ui/core/Typography";
 
 const SkillGroup = ({ name, skills }) => {
   return (
@@ -7,7 +7,7 @@ const SkillGroup = ({ name, skills }) => {
       <Typography component="h4" variant="h6">
         {name}
       </Typography>
-      {skills.map((skill) => (
+      {skills.map(skill => (
         <Typography component="p" variant="p">
           {skill.name} - {skill.years} years
         </Typography>

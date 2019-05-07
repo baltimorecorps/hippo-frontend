@@ -43,6 +43,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "eslintIgnore": ["build/"],
   "prettier": {
     "printWidth": 100,
     "tabWidth": 2,

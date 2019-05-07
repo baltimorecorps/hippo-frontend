@@ -1,13 +1,19 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Achievements from './Achievements';
-import ExperiencesList from './ExperiencesList';
-import ResumeHeader from './ResumeHeader';
-import SkillGroups from './SkillGroups';
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Achievements from "./Achievements";
+import ExperiencesList from "./ExperiencesList";
+import ResumeHeader from "./ResumeHeader";
+import SkillGroups from "./SkillGroups";
 
-const GeneratedResumePage = ({ achievements, contactInfo, experiences, skillGroups, classes }) => {
+const GeneratedResumePage = ({
+  achievements,
+  contactInfo,
+  experiences,
+  skillGroups,
+  classes
+}) => {
   return (
     <Grid container justify="center">
       <Grid item xs={10}>
@@ -18,9 +24,18 @@ const GeneratedResumePage = ({ achievements, contactInfo, experiences, skillGrou
             </Grid>
 
             <Grid item xs={8}>
-              <ExperiencesList name="Work Experience" experiences={experiences.work} />
-              <ExperiencesList name="Service and Leadership" experiences={experiences.service} />
-              <ExperiencesList name="Education" experiences={experiences.education} />
+              <ExperiencesList
+                name="Work Experience"
+                experiences={experiences.work}
+              />
+              <ExperiencesList
+                name="Service and Leadership"
+                experiences={experiences.service}
+              />
+              <ExperiencesList
+                name="Education"
+                experiences={experiences.education}
+              />
             </Grid>
 
             <Grid item xs={4}>
@@ -37,11 +52,11 @@ const GeneratedResumePage = ({ achievements, contactInfo, experiences, skillGrou
 const styles = ({ breakpoints, palette, spacing }) => ({
   paper: {
     marginTop: spacing.unit * 8,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
-  },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`
+  }
 });
 
 export default withStyles(styles)(GeneratedResumePage);
