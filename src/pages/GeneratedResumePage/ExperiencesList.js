@@ -11,7 +11,7 @@ const ExperiencesList = ({ name, experiences, classes }) => {
       </Typography>
       <hr />
       {experiences.map((experience) => (
-        <Experience {...experience} />
+        <Experience key={`${experience.positionName}.${experience.orgName}`} {...experience} />
       ))}
     </section>
   );

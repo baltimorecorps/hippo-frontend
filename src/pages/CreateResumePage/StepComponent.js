@@ -28,7 +28,7 @@ const StepComponent = ({ classes }) => {
               required={true}
               fullWidth={true}
               autoFocus={true}
-              autoComplete={false}
+              autoComplete="false"
               onChange={setName}
             />
           </form>

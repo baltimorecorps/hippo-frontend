@@ -17,6 +17,7 @@
     "fetch-action-creator": "^2.0.4",
     "fetch-mock": "^7.3.3",
     "html2canvas": "^1.0.0-alpha.12",
+    "immutability-helper": "^3.0.0",
     "jspdf": "^1.5.3",
     "pdfmake": "^0.1.53",
     "react": "^16.8.6",
@@ -24,11 +25,13 @@
     "react-awesome-modal": "^2.0.5",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-datepicker": "^2.3.0",
+    "react-dnd": "^7.4.5",
+    "react-dnd-html5-backend": "^7.4.4",
     "react-dom": "^16.8.6",
+    "react-redux": "^7.0.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^3.0.0",
     "react-select": "^2.4.3",
-    "react-redux": "^7.0.3",
     "redux": "^4.0.1",
     "redux-starter-kit": "^0.5.1",
     "semantic-ui": "^2.4.2",
@@ -43,7 +46,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "eslintIgnore": ["build/"],
+  "eslintIgnore": [
+    "build/"
+  ],
   "browserslist": [
     ">0.2%",
     "not dead",
