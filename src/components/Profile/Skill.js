@@ -31,9 +31,7 @@ const Skill = ({
 
   const displaySkills = () => {
     return tagItems.map((tag) => (
-      <div style={{ marginLeft: '20px' }}>
-        <SkillItem key={tag.tag_id} tag={tag} onSubmit={updateTagItem} onDelete={deleteTagItem} />
-      </div>
+      <SkillItem key={tag.tag_id} tag={tag} onSubmit={updateTagItem} onDelete={deleteTagItem} />
     ));
   };
 

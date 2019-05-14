@@ -9,10 +9,10 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Icon, Button } from 'semantic-ui-react';
 
-const TalentProfile = ({contactId, contactInfo, refreshContacts}) => {
+const TalentProfile = ({ contactId, contactInfo, refreshContacts }) => {
   if (typeof contactInfo === 'undefined') {
     refreshContacts();
-    return (<div></div>);
+    return <div />;
   }
 
   const printDocument = () => {
@@ -64,6 +64,8 @@ const TalentProfile = ({contactId, contactInfo, refreshContacts}) => {
     color: '#5f6163',
   };
 
+  const email = contactInfo.email_primary ? contactInfo.email_primary.email : '';
+
   return (
     <div style={{ backgroundColor: '#dee2e8' }}>
       <Container>
@@ -75,12 +77,12 @@ const TalentProfile = ({contactId, contactInfo, refreshContacts}) => {
               height: '180px',
             }}
           >
-              <TalentBasicInfo 
-                firstName={contactInfo.first_name}
-                lastName={contactInfo.last_name}
-                email={contactInfo.email_primary.email}
-                phone={contactInfo.phone_primary}
-              />
+            <TalentBasicInfo
+              firstName={contactInfo.first_name}
+              lastName={contactInfo.last_name}
+              email={email}
+              phone={contactInfo.phone_primary}
+            />
           </Row>
           <Row>
             <br />
@@ -88,18 +90,9 @@ const TalentProfile = ({contactId, contactInfo, refreshContacts}) => {
           <Row>
             <Col>
               <Experience contactId={contactId} experienceType="Work" />
-              <Experience
-                contactId={contactId}
-                experienceType="Education"
-              />
-              <Experience
-                contactId={contactId}
-                experienceType="Service"
-              />
-              <Experience
-                contactId={contactId}
-                experienceType="Accomplishment"
-              />
+              <Experience contactId={contactId} experienceType="Education" />
+              <Experience contactId={contactId} experienceType="Service" />
+              <Experience contactId={contactId} experienceType="Accomplishment" />
               <div
                 style={{
                   marginTop: '10px',
@@ -137,15 +130,15 @@ const TalentProfile = ({contactId, contactInfo, refreshContacts}) => {
       </Container>
     </div>
   );
-}
+};
 TalentProfile.propTypes = {
   contactId: PropTypes.any.isRequired,
   contactInfo: PropTypes.shape({
-    firstName: PropTypes.string.isRequired,
-    lastName: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    phone: PropTypes.string.isRequired,
-  }).isRequired,
+    first_name: PropTypes.string.isRequired,
+    last_name: PropTypes.string.isRequired,
+    email_primary: PropTypes.object.isRequired,
+    phone_primary: PropTypes.string.isRequired,
+  }),
   refreshContacts: PropTypes.func.isRequired,
 };
 

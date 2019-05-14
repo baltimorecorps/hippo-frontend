@@ -2,8 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, Grid, List } from 'semantic-ui-react';
-import ExperienceUpdateForm from './ExperienceUpdateForm';
-import EducationUpdateForm from './EducationUpdateForm';
+import ExperienceForm from './ExperienceForm';
 import './profile.css';
 
 const ExperienceItem = ({ experience, onUpdate, onDelete }) => {
@@ -30,6 +29,9 @@ const ExperienceItem = ({ experience, onUpdate, onDelete }) => {
     setEditing(false);
   };
 
+  const showEndDate = experience.type !== 'Accomplishment';
+  const showAchievements = experience.type !== 'Accomplishment';
+
   const displayOneExperience = () => {
     var textStyleSmall = {
       fontSize: '20px',
@@ -52,19 +54,30 @@ const ExperienceItem = ({ experience, onUpdate, onDelete }) => {
               {' '}
               <strong>{getTitle()}</strong>{' '}
             </h2>
-            <p>
-              {' '}
-              {experience.date_start} &ndash; {experience.date_end}{' '}
-            </p>
+            {showEndDate ? (
+              <p>
+                {' '}
+                {experience.date_start} &ndash; {experience.date_end}{' '}
+              </p>
+            ) : (
+              <p>{experience.date_start}</p>
+            )}
 
-            <div>
-              <p>Achievements:</p>
-              <List bulleted>
-                {experience.achievements.map((item) => {
-                  return <List.Item key={item.achievement_order}>{item.description}</List.Item>;
-                })}
-              </List>
-            </div>
+            {experience.description ? (
+              <div>
+                <p>{experience.description}</p>
+              </div>
+            ) : null}
+            {showAchievements ? (
+              <div>
+                <p>Achievements:</p>
+                <List bulleted>
+                  {experience.achievements.map((item) => {
+                    return <List.Item key={item.id}>{item.description}</List.Item>;
+                  })}
+                </List>
+              </div>
+            ) : null}
           </Grid.Column>
         </Grid>
       </div>
@@ -84,19 +97,12 @@ const ExperienceItem = ({ experience, onUpdate, onDelete }) => {
       </Grid>
 
       {editing ? (
-        experience.type === 'Education' ? (
-          <EducationUpdateForm
-            handleCancel={() => setEditing(false)}
-            onSubmit={submitUpdate}
-            experience={experience}
-          />
-        ) : (
-          <ExperienceUpdateForm
-            handleCancel={() => setEditing(false)}
-            onSubmit={submitUpdate}
-            experience={experience}
-          />
-        )
+        <ExperienceForm
+          handleCancel={() => setEditing(false)}
+          labels={{}}
+          onSubmit={submitUpdate}
+          experience={experience}
+        />
       ) : null}
     </div>
   );

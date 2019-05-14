@@ -6,6 +6,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'react-awesome-modal';
 import { Button, Divider, Dropdown } from 'semantic-ui-react';
+import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import Achievements from './Achievements';
 
@@ -58,7 +60,49 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const ExperienceUpdateForm = ({ experience, onSubmit, handleCancel }) => {
+const configureForm = (expType) => {
+  if (expType === 'Work') {
+    return {
+      labels: {
+        host: 'Organization',
+        title: 'Title',
+      },
+      showEndDate: true,
+      showAchievements: true,
+    };
+  } else if (expType === 'Service') {
+    return {
+      labels: {
+        host: 'Organization',
+        title: 'Role',
+      },
+      showEndDate: true,
+      showAchievements: true,
+    };
+  } else if (expType === 'Accomplishment') {
+    return {
+      labels: {
+        host: 'Institution / Publisher',
+        title: 'Title',
+        startDate: 'Date Issued',
+      },
+      showDescription: true,
+    };
+  } else if (expType === 'Education') {
+    return {
+      labels: {
+        host: 'Institution',
+        title: 'Field of Study',
+        endDate: 'End Date (or expected)',
+      },
+      showEndDate: true,
+      showDegree: true,
+      showAchievements: true,
+    };
+  }
+};
+
+const ExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
   const [
     values,
     {
@@ -70,6 +114,17 @@ const ExperienceUpdateForm = ({ experience, onSubmit, handleCancel }) => {
       handleAchievements,
     },
   ] = useForm(experience, onSubmit);
+
+  const config = Object.assign(
+    {
+      labels: {},
+      showEndDate: false,
+      showDegree: false,
+      showDescription: false,
+      showAchievements: false,
+    },
+    configureForm(experience.type),
+  );
 
   const handleChangeDescription = (idx) => (evt) => {
     const newAchievements = this.state.achievements.map((achievement, sidx) => {
@@ -87,34 +142,35 @@ const ExperienceUpdateForm = ({ experience, onSubmit, handleCancel }) => {
             <Form.Field>
               <label>
                 {' '}
-                <h3>Institution:</h3>{' '}
+                <h3>{config.labels.host || 'Organization'}:</h3>{' '}
               </label>
               <input
-                placeholder="Institution Name"
-                name="host"
+                placeholder="Organization Name"
                 value={values.host}
+                name="host"
                 onChange={handleChange}
               />
             </Form.Field>
+            {config.showDegree ? (
+              <Form.Field>
+                <label>
+                  <h3>{config.labels.degree || 'Degree'}: </h3>
+                  <Dropdown
+                    placeholder="Select Degree"
+                    fluid
+                    selection
+                    options={DEGREE_OPTIONS}
+                    name="degree"
+                    value={values.degree}
+                    onChange={handleDegree}
+                  />
+                </label>
+              </Form.Field>
+            ) : null}
 
             <Form.Field>
               <label>
-                <h3>Degree: </h3>
-                <Dropdown
-                  placeholder="Select Degree"
-                  fluid
-                  selection
-                  options={DEGREE_OPTIONS}
-                  name="degree"
-                  value={values.degree}
-                  onChange={handleDegree}
-                />
-              </label>
-            </Form.Field>
-
-            <Form.Field>
-              <label>
-                <h3>Field of Study: </h3>
+                <h3>{config.labels.title || 'Title'}: </h3>
                 <input
                   placeholder="Title Name"
                   value={values.title}
@@ -125,7 +181,7 @@ const ExperienceUpdateForm = ({ experience, onSubmit, handleCancel }) => {
             </Form.Field>
 
             <div className="comp_ezw">
-              <h3>Start Date </h3>
+              <h3>{config.labels.startDate || 'Start Date'} </h3>
               <DatePicker
                 selected={values.date_start}
                 selectsStart
@@ -136,19 +192,43 @@ const ExperienceUpdateForm = ({ experience, onSubmit, handleCancel }) => {
                 className="ezw_datepicker"
               />
 
-              <h3>End Date </h3>
-              <DatePicker
-                selected={values.date_end}
-                selectsEnd
-                date_start={values.date_start}
-                date_end={values.date_end}
-                onChange={handleChangeDateEnd}
-                dateFormat="dd-MM-YYYY"
-                className="ezw_datepicker"
-              />
+              {config.showEndDate ? (
+                <React.Fragment>
+                  <h3>{config.labels.endDate || 'End Date'} </h3>
+                  <DatePicker
+                    selected={values.date_end}
+                    selectsEnd
+                    date_start={values.date_start}
+                    date_end={values.date_end}
+                    onChange={handleChangeDateEnd}
+                    dateFormat="dd-MM-YYYY"
+                    className="ezw_datepicker"
+                  />
+                </React.Fragment>
+              ) : null}
             </div>
+            {config.showDescription ? (
+              <TextField
+                id="description"
+                name="description"
+                value={values.description}
+                label={config.labels.description || 'Description'}
+                multiline
+                onChange={handleChange}
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                fullWidth
+              />
+            ) : null}
             <br />
-            <Achievements achievements={values.achievements} onChange={handleAchievements} />
+            {config.showAchievements ? (
+              <Achievements
+                contactId={experience.contact_id}
+                achievements={values.achievements}
+                onChange={handleAchievements}
+              />
+            ) : null}
             <Divider />
 
             <p>
@@ -168,15 +248,18 @@ const ExperienceUpdateForm = ({ experience, onSubmit, handleCancel }) => {
   );
 };
 
-ExperienceUpdateForm.propTypes = {
+const styles = ({ breakpoints, palette, spacing }) => ({
+});
+
+
+ExperienceForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   experience: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     description: PropTypes.string,
-    host: PropTypes.string.isRequired,
+    organization: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral'])
-      .isRequired,
+    degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
     date_start: PropTypes.string.isRequired,
     date_end: PropTypes.string,
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
@@ -184,4 +267,4 @@ ExperienceUpdateForm.propTypes = {
     achievements: PropTypes.array,
   }).isRequired,
 };
-export default ExperienceUpdateForm;
+export default withStyles(styles)(ExperienceForm);

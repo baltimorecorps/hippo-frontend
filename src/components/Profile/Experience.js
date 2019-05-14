@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { Divider, Icon } from 'semantic-ui-react';
 import { Col, Row } from 'react-bootstrap';
 import ExperienceItem from './ExperienceItem';
-import ExperienceUpdateForm from './ExperienceUpdateForm';
-import EducationUpdateForm from './EducationUpdateForm';
+import ExperienceForm from './ExperienceForm';
 import './profile.css';
 
 //todo: check how to write if/else in render/function
@@ -46,13 +45,12 @@ const Experience = ({
   const displayPastExperiences = () =>
     experiences.map((experience) => {
       return (
-        <div key={experience.id} style={{ marginLeft: '20px' }} className="">
-          <ExperienceItem
-            onUpdate={updateExperience}
-            onDelete={deleteExperience}
-            experience={experience}
-          />
-        </div>
+        <ExperienceItem
+          key={experience.id} 
+          onUpdate={updateExperience}
+          onDelete={deleteExperience}
+          experience={experience}
+        />
       );
     });
 
@@ -106,19 +104,11 @@ const Experience = ({
         {showForm ? (
           <Col xs md lg="2">
             <div style={{ marginTop: '20px' }}>
-              {experienceType === 'Education' ? (
-                <EducationUpdateForm
-                  experience={blankExperience}
-                  onSubmit={submitNewExperience}
-                  handleCancel={() => setShowForm(false)}
-                />
-              ) : (
-                <ExperienceUpdateForm
-                  experience={blankExperience}
-                  onSubmit={submitNewExperience}
-                  handleCancel={() => setShowForm(false)}
-                />
-              )}
+              <ExperienceForm
+                experience={blankExperience}
+                onSubmit={submitNewExperience}
+                handleCancel={() => setShowForm(false)}
+              />
             </div>
           </Col>
         ) : null}
