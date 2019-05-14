@@ -93,7 +93,7 @@ export const tagItemReducer = createReducer(
       state[action.contactId] = newContactState;
     },
     [`RESOLVE_${UPDATE_TAG_ITEM}`]: (state, action) => {
-      const tagItem = action.body.data[0];
+      const tagItem = action.body.data;
       state[tagItem.contact_id][tagItem.tag_id] = tagItem;
     },
   },

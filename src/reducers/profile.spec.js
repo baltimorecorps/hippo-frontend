@@ -257,7 +257,7 @@ describe('TagItem state', () => {
     };
     const newState = tagItemReducer(initialState, {
       type: `RESOLVE_${UPDATE_TAG_ITEM}`,
-      body: { status: 'success', data: [tagItem, {}] },
+      body: { status: 'success', data: tagItem },
     });
     expect(newState).toEqual({
       1: {
