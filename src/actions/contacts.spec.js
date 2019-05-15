@@ -1,5 +1,5 @@
 import fetchMock from 'fetch-mock';
-import { ADD_CONTACT, addContact } from './contacts';
+import { ADD_CONTACT, ADD_CONTACT_API, addContact } from './contacts';
 
 afterEach(() => {
   fetchMock.restore();
@@ -20,8 +20,8 @@ test('Create new contact action - success', async function() {
   expect(dispatch.mock.calls.length).toBe(3);
   expect(dispatch.mock.calls[0][0].type).toBe(ADD_CONTACT);
   expect(dispatch.mock.calls[0][0].contact).toEqual(contact);
-  expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${ADD_CONTACT}`);
-  expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${ADD_CONTACT}`);
+  expect(dispatch.mock.calls[1][0].type).toBe(ADD_CONTACT_API.REQUEST);
+  expect(dispatch.mock.calls[2][0].type).toBe(ADD_CONTACT_API.RESOLVE);
   expect(dispatch.mock.calls[2][0].body).toEqual(response);
 });
 
@@ -30,11 +30,14 @@ test('Create new contact action - failure', async function() {
   const contactId = 1234;
   const contact = { data: 'test' };
 
-  fetchMock.post(`path:/api/contacts/`, 500);
+  fetchMock.post(`path:/api/contacts/`, {
+    status: 500,
+    body: '',
+  });
 
   await addContact(contact)(dispatch);
 
   expect(dispatch.mock.calls.length).toBe(3);
-  expect(dispatch.mock.calls[2][0].type).toBe(`REJECT_${ADD_CONTACT}`);
+  expect(dispatch.mock.calls[2][0].type).toBe(ADD_CONTACT_API.REJECT);
   expect(dispatch.mock.calls[2][0].statusCode).toBe(500);
 });

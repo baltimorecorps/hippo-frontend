@@ -1,9 +1,9 @@
 import { createReducer } from 'redux-starter-kit';
 
-import { ALL_CONTACTS } from '../actions/contacts';
+import { ALL_CONTACTS, ALL_CONTACTS_API } from '../actions/contacts';
 
 export const contactsReducer = createReducer([], {
-  [`RESOLVE_${ALL_CONTACTS}`]: (state, action) => {
+  [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
     if (!action.body) {
       return [];
     } else {

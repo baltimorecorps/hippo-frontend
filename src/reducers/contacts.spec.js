@@ -1,6 +1,6 @@
 import { contactsReducer } from './contacts';
 
-import { ALL_CONTACTS } from '../actions/contacts';
+import { ALL_CONTACTS, ALL_CONTACTS_API } from '../actions/contacts';
 
 describe('Contacts state', () => {
   const initialState = [];
@@ -11,7 +11,7 @@ describe('Contacts state', () => {
   test('Fetch all contacts', () => {
     const contacts = [1, 2, 3, 4];
     const newState = contactsReducer(undefined, {
-      type: `RESOLVE_${ALL_CONTACTS}`,
+      type: ALL_CONTACTS_API.RESOLVE,
       body: { status: 'success', data: contacts },
     });
     expect(newState).toEqual(contacts);
@@ -19,7 +19,7 @@ describe('Contacts state', () => {
   test('Replace existing contacts', () => {
     const contacts = [1, 2, 3, 4];
     const newState = contactsReducer([5, 6, 7, 8], {
-      type: `RESOLVE_${ALL_CONTACTS}`,
+      type: ALL_CONTACTS_API.RESOLVE,
       body: { status: 'success', data: contacts },
     });
     expect(newState).toEqual(contacts);
