@@ -3,7 +3,7 @@ import { useState } from 'react';
 const useFormUpdate = (initialValues) => {
   const filteredValues = Object.entries(initialValues).reduce((object, [key, value]) => ({
     ...object,
-    ...(value ? {[key]: value} : null)
+    ...(value === null || value === undefined ? null : {[key]: value})
   }), {});
 
   const [values, setValues] = useState(filteredValues || {});
