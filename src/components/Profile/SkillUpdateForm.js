@@ -9,6 +9,8 @@ import './autoSuggest.css';
 import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
 import { scoreToString } from './skillUtil';
 
+import useFormUpdate from './useFormUpdate';
+
 // const ALL_DATA = [
 //   {name: 'C', id: 1},
 //   {name: 'C++', id: 2},
@@ -18,14 +20,7 @@ import { scoreToString } from './skillUtil';
 // Use your imagination to render suggestions.
 
 const useForm = (initialValues, onSubmit) => {
-  const [values, setValues] = useState(initialValues || {});
-
-  const update = (name) => (value) => {
-    setValues((values) => ({
-      ...values,
-      [name]: value,
-    }));
-  };
+  const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
     handleChange: (event, { newValue, method }) => {

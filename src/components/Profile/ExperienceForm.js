@@ -11,6 +11,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import Achievements from './Achievements';
 
+import useFormUpdate from './useFormUpdate';
+
 const DEGREE_OPTIONS = [
   { key: 'high_school', text: 'High School', value: 'High School' },
   { key: 'associates', text: 'Associates', value: 'Associates' },
@@ -20,21 +22,7 @@ const DEGREE_OPTIONS = [
 ];
 
 const useForm = (initialValues, onSubmit) => {
-  const filteredValues = Object.entries(initialValues).reduce((object, [key, value]) => ({
-    ...object,
-    ...(value ? {[key]: value} : null)
-  }), {});
-
-  const [values, setValues] = useState(filteredValues || {});
-
-  const update = (name) => (value) => {
-    if (value) {
-      setValues((values) => ({
-        ...values,
-        [name]: value,
-      }));
-    }
-  };
+  const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
     handleChange: (event) => {
