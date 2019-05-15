@@ -107,7 +107,7 @@ const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
                 <Dropdown.Toggle split variant="warning" id="dropdown-custom-2" />
                 <Dropdown.Menu className="super-colors">
                   {[1, 2, 3, 4].map((item) => (
-                    <Dropdown.Item eventKey={item} onSelect={handleScore}>
+                    <Dropdown.Item key={item} eventKey={item} onSelect={handleScore}>
                       {scoreToString(item)}
                     </Dropdown.Item>
                   ))}

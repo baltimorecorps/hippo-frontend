@@ -20,13 +20,20 @@ const DEGREE_OPTIONS = [
 ];
 
 const useForm = (initialValues, onSubmit) => {
-  const [values, setValues] = useState(initialValues || {});
+  const filteredValues = Object.entries(initialValues).reduce((object, [key, value]) => ({
+    ...object,
+    ...(value ? {[key]: value} : null)
+  }), {});
+
+  const [values, setValues] = useState(filteredValues || {});
 
   const update = (name) => (value) => {
-    setValues((values) => ({
-      ...values,
-      [name]: value,
-    }));
+    if (value) {
+      setValues((values) => ({
+        ...values,
+        [name]: value,
+      }));
+    }
   };
 
   const handlers = {
@@ -136,7 +143,7 @@ const ExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
 
   return (
     <div>
-      <Modal visible="true" width="400" minHeight="750" effect="fadeInUp">
+      <Modal visible="true" width="400" minHeight={750} effect="fadeInUp">
         <div style={{ margin: '20px' }}>
           <Form>
             <Form.Field>
