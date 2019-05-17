@@ -27,3 +27,51 @@ export const createResume = (contactId, name) =>
   };
 
 
+export const REFRESH_RESUMES = 'REFRESH_RESUMES';
+export const REFRESH_RESUMES_API = fetchActionTypes(REFRESH_RESUMES);
+export const refreshResumes = (contactId) => makeFetchActions(
+  REFRESH_RESUMES,
+  `${API_URL}/api/contacts/${contactId}/resumes/`,
+);
+
+export const UPDATE_RESUME = 'UPDATE_RESUME';
+export const UPDATE_RESUME_API = fetchActionTypes(UPDATE_RESUME);
+export const updateResume = (resumeId, name) =>
+  async function(dispatch) {
+    const update = {
+      name,
+    };
+    dispatch({
+      type: UPDATE_RESUME,
+      update,
+    });
+
+    await makeFetchActions(
+      UPDATE_RESUME,
+      `${API_URL}/api/resumes/${resumeId}/`,
+      {
+        body: JSON.stringify(update),
+        method: 'PUT',
+      },
+    )(dispatch);
+  };
+
+export const DELETE_RESUME = 'DELETE_RESUME';
+export const DELETE_RESUME_API = fetchActionTypes(DELETE_RESUME);
+export const deleteResume = (resumeId, contactId) =>
+  async function(dispatch) {
+    dispatch({
+      type: DELETE_RESUME,
+      resumeId,
+    });
+
+    await makeFetchActions(
+      DELETE_RESUME,
+      `${API_URL}/api/resumes/${resumeId}/`,
+      {
+        method: 'DELETE',
+      },
+    )(dispatch);
+
+    await refreshResumes(contactId)(dispatch);
+  };
