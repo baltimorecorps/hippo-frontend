@@ -37,7 +37,7 @@ const SkillItem = ({ tag, onSubmit, onDelete }) => {
               {' '}
               <strong>{tag.name} </strong>{' '}
             </h3>
-            <p>Level: {scoreToString(tag.score)}</p>
+            <p>{scoreToString(tag.score)}</p>
           </Grid.Column>
         </Grid>
       </div>

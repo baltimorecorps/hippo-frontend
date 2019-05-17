@@ -14,7 +14,6 @@
     "axios": "^0.18.0",
     "babel-plugin-rewire": "^1.2.0",
     "bootstrap": "^4.3.1",
-    "fetch-action-creator": "^2.0.4",
     "fetch-mock": "^7.3.3",
     "html2canvas": "^1.0.0-alpha.12",
     "immutability-helper": "^3.0.0",
@@ -33,6 +32,7 @@
     "react-scripts": "^3.0.0",
     "react-select": "^2.4.3",
     "redux": "^4.0.1",
+    "redux-fetch-wrapper": "^1.0.0",
     "redux-starter-kit": "^0.5.1",
     "semantic-ui": "^2.4.2",
     "semantic-ui-react": "^0.86.0"

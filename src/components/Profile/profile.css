@@ -70,3 +70,11 @@
     font-size: 12px;
     line-height: 1.42857;
 }
+
+/* Stupid hacks to make SemanticUI play nice with MaterialUI for the moment */
+.ui.form textarea {
+    border: none;
+    padding: 0;
+    box-sizing: border-box;
+    resize: none;
+}

@@ -1,11 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import profile from './profile.jpeg';
 import { Icon } from 'semantic-ui-react';
-class TalentBasicInfo extends React.Component {
-  state = {
-    isUser: true,
-  };
-  render() {
+const TalentBasicInfo = ({firstName, lastName, email, phone}) => {
     var textStyle = {
       fontSize: '35px',
       fontWeight: '300',
@@ -22,26 +19,23 @@ class TalentBasicInfo extends React.Component {
     };
     return (
       <div style={{ padding: '10px', width: '100%' }}>
-        <img
-          style={{ float: 'left', borderRadius: '50%' }}
-          width="120px"
-          height="120px"
-          src={profile}
-          alt="profile"
-        />
         <div style={{ float: 'left', marginLeft: '30px' }}>
-          <div style={textStyle}>Cathy Lee</div>
+          <div style={textStyle}>{firstName} {lastName}</div>
           <div style={textStyleSmall}>
-            {' '}
-            <Icon name="envelope outline" /> cathy@baltimorecorps.com
+            <Icon name="envelope outline" />{email}
           </div>
           <p style={textStyleSmall}>
-            {' '}
-            <Icon name="phone" /> (123)888-1234
+            <Icon name="phone" />{phone}
           </p>
         </div>
       </div>
     );
-  }
+  };
+
+TalentBasicInfo.propTypes = {
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
 }
 export default TalentBasicInfo;

@@ -1,5 +1,5 @@
 import { API_URL } from '../constants';
-import fetchActionCreator from 'fetch-action-creator';
+import { makeFetchActions, fetchActionTypes } from 'redux-fetch-wrapper';
 
 // Rules for action creators:
 //
@@ -8,6 +8,7 @@ import fetchActionCreator from 'fetch-action-creator';
 // we had that was updated should be updated)
 
 export const ADD_EXPERIENCE = 'ADD_EXPERIENCE';
+export const ADD_EXPERIENCE_API = fetchActionTypes(ADD_EXPERIENCE);
 export const addExperience = (experience) =>
   async function(dispatch) {
     dispatch({
@@ -15,7 +16,7 @@ export const addExperience = (experience) =>
       experience,
     });
 
-    await fetchActionCreator(
+    await makeFetchActions(
       ADD_EXPERIENCE,
       `${API_URL}/api/contacts/${experience.contact_id}/experiences/`,
       {
@@ -26,10 +27,12 @@ export const addExperience = (experience) =>
   };
 
 export const GET_EXPERIENCE = 'GET_EXPERIENCE';
+export const GET_EXPERIENCE_API = fetchActionTypes(GET_EXPERIENCE);
 export const getExperience = (expId) =>
-  fetchActionCreator(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
+  makeFetchActions(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
 
 export const UPDATE_EXPERIENCE = 'UPDATE_EXPERIENCE';
+export const UPDATE_EXPERIENCE_API = fetchActionTypes(UPDATE_EXPERIENCE);
 export const updateExperience = (experience) =>
   async function(dispatch) {
     dispatch({
@@ -37,7 +40,7 @@ export const updateExperience = (experience) =>
       experience,
     });
 
-    await fetchActionCreator(UPDATE_EXPERIENCE, `${API_URL}/api/experiences/${experience.id}/`, {
+    await makeFetchActions(UPDATE_EXPERIENCE, `${API_URL}/api/experiences/${experience.id}/`, {
       body: JSON.stringify(experience),
       method: 'PUT',
     })(dispatch);
@@ -45,13 +48,15 @@ export const updateExperience = (experience) =>
   };
 
 export const REFRESH_EXPERIENCES = 'REFRESH_EXPERIENCES';
+export const REFRESH_EXPERIENCES_API = fetchActionTypes(REFRESH_EXPERIENCES);
 export const refreshExperiences = (contactId) =>
-  fetchActionCreator(REFRESH_EXPERIENCES, `${API_URL}/api/contacts/${contactId}/experiences/`);
+  makeFetchActions(REFRESH_EXPERIENCES, `${API_URL}/api/contacts/${contactId}/experiences/`);
 
 export const REFRESH_EXPERIENCE_TYPE = 'REFRESH_EXPERIENCE_TYPE';
+export const REFRESH_EXPERIENCE_TYPE_API = fetchActionTypes(REFRESH_EXPERIENCE_TYPE);
 export const refreshExperienceType = (contactId, expType) => {
   expType = expType.toLowerCase();
-  return fetchActionCreator(
+  return makeFetchActions(
     REFRESH_EXPERIENCE_TYPE,
     `${API_URL}/api/contacts/${contactId}/experiences/?type=${expType}`,
     null,
@@ -65,6 +70,7 @@ export const refreshExperienceType = (contactId, expType) => {
 };
 
 export const DELETE_EXPERIENCE = 'DELETE_EXPERIENCE';
+export const DELETE_EXPERIENCE_API = fetchActionTypes(DELETE_EXPERIENCE);
 export const deleteExperience = (experience) =>
   async function(dispatch) {
     dispatch({
@@ -72,7 +78,7 @@ export const deleteExperience = (experience) =>
       experience: experience,
     });
 
-    await fetchActionCreator(DELETE_EXPERIENCE, `${API_URL}/api/experiences/${experience.id}/`, {
+    await makeFetchActions(DELETE_EXPERIENCE, `${API_URL}/api/experiences/${experience.id}/`, {
       method: 'DELETE',
     })(dispatch);
 
@@ -80,35 +86,23 @@ export const deleteExperience = (experience) =>
   };
 
 export const ADD_TAG = 'ADD_TAG';
-// TODO: Ugh this is such a hack, need the output of this but it doesn't
-// return anything so we wrap it in a promise and inject the resolve/reject
-// methods into the dispatcher
-export const addTag = (tag) => (dispatch) =>
-  new Promise((resolve, reject) =>
-    fetchActionCreator(
-      ADD_TAG,
-      `${API_URL}/api/tags/`,
-      {
-        method: 'POST',
-        body: JSON.stringify(tag),
-      },
-      {
-        onResolve: (resolveAction) => {
-          resolve(resolveAction);
-          return resolveAction;
-        },
-        onReject: (rejectAction) => {
-          reject(rejectAction);
-          return rejectAction;
-        },
-      },
-    )(dispatch),
+export const ADD_TAG_API = fetchActionTypes(ADD_TAG);
+export const addTag = (tag) =>
+  makeFetchActions(
+    ADD_TAG,
+    `${API_URL}/api/tags/`,
+    {
+      method: 'POST',
+      body: JSON.stringify(tag),
+    },
   );
 
 export const REFRESH_TAGS = 'REFRESH_TAGS';
-export const refreshTags = () => fetchActionCreator(REFRESH_TAGS, `${API_URL}/api/tags/`);
+export const REFRESH_TAGS_API = fetchActionTypes(REFRESH_TAGS);
+export const refreshTags = () => makeFetchActions(REFRESH_TAGS, `${API_URL}/api/tags/`);
 
 export const ADD_TAG_ITEM = 'ADD_TAG_ITEM';
+export const ADD_TAG_ITEM_API = fetchActionTypes(ADD_TAG_ITEM);
 export const addTagItem = (tagItem) =>
   async function(dispatch) {
     dispatch({
@@ -126,13 +120,14 @@ export const addTagItem = (tagItem) =>
       tagItem.tag_id = newTagAction.body.data.id;
     }
 
-    await fetchActionCreator(ADD_TAG_ITEM, `${API_URL}/api/contacts/${tagItem.contact_id}/tags/`, {
+    await makeFetchActions(ADD_TAG_ITEM, `${API_URL}/api/contacts/${tagItem.contact_id}/tags/`, {
       method: 'POST',
       body: JSON.stringify(tagItem),
     })(dispatch);
   };
 
 export const UPDATE_TAG_ITEM = 'UPDATE_TAG_ITEM';
+export const UPDATE_TAG_ITEM_API = fetchActionTypes(UPDATE_TAG_ITEM);
 export const updateTagItem = (tagItem) =>
   async function(dispatch) {
     dispatch({
@@ -140,7 +135,7 @@ export const updateTagItem = (tagItem) =>
       tag: tagItem,
     });
 
-    await fetchActionCreator(
+    await makeFetchActions(
       UPDATE_TAG_ITEM,
       `${API_URL}/api/contacts/${tagItem.contact_id}/tags/${tagItem.tag_id}/`,
       {
@@ -151,6 +146,7 @@ export const updateTagItem = (tagItem) =>
   };
 
 export const DELETE_TAG_ITEM = 'DELETE_TAG_ITEM';
+export const DELETE_TAG_ITEM_API = fetchActionTypes(DELETE_TAG_ITEM);
 export const deleteTagItem = (tagItem) =>
   async function(dispatch) {
     dispatch({
@@ -158,7 +154,7 @@ export const deleteTagItem = (tagItem) =>
       tag: tagItem,
     });
 
-    await fetchActionCreator(
+    await makeFetchActions(
       DELETE_TAG_ITEM,
       `${API_URL}/api/contacts/${tagItem.contact_id}/tags/${tagItem.tag_id}/`,
       {
@@ -170,10 +166,11 @@ export const deleteTagItem = (tagItem) =>
   };
 
 export const REFRESH_TAG_ITEMS = 'REFRESH_TAG_ITEMS';
+export const REFRESH_TAG_ITEMS_API = fetchActionTypes(REFRESH_TAG_ITEMS);
 export const refreshTagItems = (contactId, tagType) =>
   async function(dispatch) {
     tagType = tagType.toLowerCase();
-    await fetchActionCreator(
+    await makeFetchActions(
       REFRESH_TAG_ITEMS,
       `${API_URL}/api/contacts/${contactId}/tags/?type=${tagType}`,
       null,
