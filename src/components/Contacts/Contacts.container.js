@@ -8,9 +8,12 @@ const addNewContact = (dispatch) =>
     await refreshContacts(dispatch);
   };
 
-const mapStateToProps = (state) => ({
-  contacts: state.contacts,
-});
+const mapStateToProps = (state) => {
+  const keys = Object.keys(state.contacts);
+  return {
+    contacts: keys.map((id) => state.contacts[id]),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   addNewContact: addNewContact(dispatch),

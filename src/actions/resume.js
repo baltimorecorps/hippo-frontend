@@ -30,7 +30,17 @@ export const refreshResume = (resumeId) =>
 export const REFRESH_RESUMES = 'REFRESH_RESUMES';
 export const REFRESH_RESUMES_API = fetchActionTypes(REFRESH_RESUMES);
 export const refreshResumes = (contactId) =>
-  makeFetchActions(REFRESH_RESUMES, `${API_URL}/api/contacts/${contactId}/resumes/`);
+  makeFetchActions(
+    REFRESH_RESUMES, `${API_URL}/api/contacts/${contactId}/resumes/`,
+    null,
+    {
+      onResolve: (resolveAction) => ({
+        ...resolveAction,
+        contact_id: contactId,
+      }),
+    },
+
+  );
 
 export const UPDATE_RESUME = 'UPDATE_RESUME';
 export const UPDATE_RESUME_API = fetchActionTypes(UPDATE_RESUME);

@@ -60,7 +60,8 @@ describe('Top level resume actions', () => {
 
     expect(dispatch.mock.calls.length).toBe(2);
     expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_RESUMES_API.RESOLVE);
-    expect(dispatch.mock.calls[1][0].body).toEqual(response);
+    expect(dispatch.mock.calls[1][0].contact_id).toEqual(contactId);
+    expect(dispatch.mock.calls[1][0].body.response).toEqual('win');
   });
 
   test('Get single resume', async function() {

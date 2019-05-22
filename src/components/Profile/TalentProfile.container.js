@@ -10,8 +10,7 @@ const addNewContact = (dispatch) =>
 
 const mapStateToProps = (state, props) => {
   const contactId = props.match.params.contactId;
-  const contactInfo = state.contacts.find(c => 
-    c.id.toString() === contactId.toString());
+  const contactInfo = state.contacts[contactId];
   return {
     contactId,
     contactInfo,
