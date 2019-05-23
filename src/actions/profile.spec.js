@@ -1,20 +1,31 @@
 import fetchMock from 'fetch-mock';
 import {
   GET_EXPERIENCE,
+  GET_EXPERIENCE_API,
   ADD_EXPERIENCE,
+  ADD_EXPERIENCE_API,
   UPDATE_EXPERIENCE,
+  UPDATE_EXPERIENCE_API,
   DELETE_EXPERIENCE,
+  DELETE_EXPERIENCE_API,
   REFRESH_EXPERIENCE_TYPE,
+  REFRESH_EXPERIENCE_TYPE_API,
   addExperience,
   updateExperience,
   deleteExperience,
   refreshExperienceType,
   ADD_TAG,
+  ADD_TAG_API,
   REFRESH_TAGS,
+  REFRESH_TAGS_API,
   ADD_TAG_ITEM,
+  ADD_TAG_ITEM_API,
   UPDATE_TAG_ITEM,
+  UPDATE_TAG_ITEM_API,
   DELETE_TAG_ITEM,
+  DELETE_TAG_ITEM_API,
   REFRESH_TAG_ITEMS,
+  REFRESH_TAG_ITEMS_API,
   refreshTags,
   addTagItem,
   updateTagItem,
@@ -40,8 +51,8 @@ describe('Experiences', () => {
     expect(dispatch.mock.calls.length).toBe(3);
     expect(dispatch.mock.calls[0][0].type).toBe(ADD_EXPERIENCE);
     expect(dispatch.mock.calls[0][0].experience).toEqual(experience);
-    expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${ADD_EXPERIENCE}`);
-    expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${ADD_EXPERIENCE}`);
+    expect(dispatch.mock.calls[1][0].type).toBe(ADD_EXPERIENCE_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(ADD_EXPERIENCE_API.RESOLVE);
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 
@@ -50,12 +61,15 @@ describe('Experiences', () => {
     const contactId = 1234;
     const experience = { data: 'test', contact_id: contactId };
 
-    fetchMock.post(`path:/api/contacts/${contactId}/experiences/`, 500);
+    fetchMock.post(`path:/api/contacts/${contactId}/experiences/`, {
+      status: 500,
+      body: '',
+    });
 
     await addExperience(experience)(dispatch);
 
     expect(dispatch.mock.calls.length).toBe(3);
-    expect(dispatch.mock.calls[2][0].type).toBe(`REJECT_${ADD_EXPERIENCE}`);
+    expect(dispatch.mock.calls[2][0].type).toBe(ADD_EXPERIENCE_API.REJECT);
     expect(dispatch.mock.calls[2][0].statusCode).toBe(500);
   });
 
@@ -74,10 +88,10 @@ describe('Experiences', () => {
 
     expect(dispatch.mock.calls.length).toBe(5);
     expect(dispatch.mock.calls[0][0].type).toBe(UPDATE_EXPERIENCE);
-    expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${UPDATE_EXPERIENCE}`);
-    expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${UPDATE_EXPERIENCE}`);
-    expect(dispatch.mock.calls[3][0].type).toBe(`REQUEST_${GET_EXPERIENCE}`);
-    expect(dispatch.mock.calls[4][0].type).toBe(`RESOLVE_${GET_EXPERIENCE}`);
+    expect(dispatch.mock.calls[1][0].type).toBe(UPDATE_EXPERIENCE_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(UPDATE_EXPERIENCE_API.RESOLVE);
+    expect(dispatch.mock.calls[3][0].type).toBe(GET_EXPERIENCE_API.REQUEST);
+    expect(dispatch.mock.calls[4][0].type).toBe(GET_EXPERIENCE_API.RESOLVE);
     expect(dispatch.mock.calls[0][0].experience).toBe(experience);
   });
 
@@ -95,8 +109,8 @@ describe('Experiences', () => {
     await refreshExperienceType(contactId, expType)(dispatch);
 
     expect(dispatch.mock.calls.length).toBe(2);
-    expect(dispatch.mock.calls[0][0].type).toBe(`REQUEST_${REFRESH_EXPERIENCE_TYPE}`);
-    expect(dispatch.mock.calls[1][0].type).toBe(`RESOLVE_${REFRESH_EXPERIENCE_TYPE}`);
+    expect(dispatch.mock.calls[0][0].type).toBe(REFRESH_EXPERIENCE_TYPE_API.REQUEST);
+    expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_EXPERIENCE_TYPE_API.RESOLVE);
     expect(dispatch.mock.calls[1][0].filter).toBe(expType);
     expect(
       fetchMock.called(`path:/api/contacts/${contactId}/experiences/`, {
@@ -126,10 +140,10 @@ describe('Experiences', () => {
     await deleteExperience(experience)(dispatch);
     expect(dispatch.mock.calls.length).toBe(5);
     expect(dispatch.mock.calls[0][0].type).toBe(DELETE_EXPERIENCE);
-    expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${DELETE_EXPERIENCE}`);
-    expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${DELETE_EXPERIENCE}`);
-    expect(dispatch.mock.calls[3][0].type).toBe(`REQUEST_${REFRESH_EXPERIENCE_TYPE}`);
-    expect(dispatch.mock.calls[4][0].type).toBe(`RESOLVE_${REFRESH_EXPERIENCE_TYPE}`);
+    expect(dispatch.mock.calls[1][0].type).toBe(DELETE_EXPERIENCE_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(DELETE_EXPERIENCE_API.RESOLVE);
+    expect(dispatch.mock.calls[3][0].type).toBe(REFRESH_EXPERIENCE_TYPE_API.REQUEST);
+    expect(dispatch.mock.calls[4][0].type).toBe(REFRESH_EXPERIENCE_TYPE_API.RESOLVE);
   });
 });
 
@@ -145,8 +159,8 @@ describe('Tags and Tag Items', () => {
     await refreshTags(tag)(dispatch);
 
     expect(dispatch.mock.calls.length).toBe(2);
-    expect(dispatch.mock.calls[0][0].type).toBe(`REQUEST_${REFRESH_TAGS}`);
-    expect(dispatch.mock.calls[1][0].type).toBe(`RESOLVE_${REFRESH_TAGS}`);
+    expect(dispatch.mock.calls[0][0].type).toBe(REFRESH_TAGS_API.REQUEST);
+    expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_TAGS_API.RESOLVE);
     expect(dispatch.mock.calls[1][0].body).toEqual(response);
   });
 
@@ -164,8 +178,8 @@ describe('Tags and Tag Items', () => {
     expect(dispatch.mock.calls.length).toBe(3);
     expect(dispatch.mock.calls[0][0].type).toBe(ADD_TAG_ITEM);
     expect(dispatch.mock.calls[0][0].tag).toEqual(tag);
-    expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${ADD_TAG_ITEM}`);
-    expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${ADD_TAG_ITEM}`);
+    expect(dispatch.mock.calls[1][0].type).toBe(ADD_TAG_ITEM_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(ADD_TAG_ITEM_API.RESOLVE);
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 
@@ -203,11 +217,11 @@ describe('Tags and Tag Items', () => {
     expect(dispatch.mock.calls.length).toBe(5);
     expect(dispatch.mock.calls[0][0].type).toBe(ADD_TAG_ITEM);
     expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
-    expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${ADD_TAG}`);
-    expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${ADD_TAG}`);
+    expect(dispatch.mock.calls[1][0].type).toBe(ADD_TAG_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(ADD_TAG_API.RESOLVE);
     expect(dispatch.mock.calls[2][0].body).toEqual(tagResponse);
-    expect(dispatch.mock.calls[3][0].type).toBe(`REQUEST_${ADD_TAG_ITEM}`);
-    expect(dispatch.mock.calls[4][0].type).toBe(`RESOLVE_${ADD_TAG_ITEM}`);
+    expect(dispatch.mock.calls[3][0].type).toBe(ADD_TAG_ITEM_API.REQUEST);
+    expect(dispatch.mock.calls[4][0].type).toBe(ADD_TAG_ITEM_API.RESOLVE);
     expect(dispatch.mock.calls[4][0].body).toEqual(tagItemResponse);
 
     const request = fetchMock.lastCall(`path:/api/contacts/${contactId}/tags/`);
@@ -239,8 +253,8 @@ describe('Tags and Tag Items', () => {
     expect(dispatch.mock.calls.length).toBe(3);
     expect(dispatch.mock.calls[0][0].type).toBe(UPDATE_TAG_ITEM);
     expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
-    expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${UPDATE_TAG_ITEM}`);
-    expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${UPDATE_TAG_ITEM}`);
+    expect(dispatch.mock.calls[1][0].type).toBe(UPDATE_TAG_ITEM_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(UPDATE_TAG_ITEM_API.RESOLVE);
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 
@@ -275,11 +289,11 @@ describe('Tags and Tag Items', () => {
     expect(dispatch.mock.calls.length).toBe(5);
     expect(dispatch.mock.calls[0][0].type).toBe(DELETE_TAG_ITEM);
     expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
-    expect(dispatch.mock.calls[1][0].type).toBe(`REQUEST_${DELETE_TAG_ITEM}`);
-    expect(dispatch.mock.calls[2][0].type).toBe(`RESOLVE_${DELETE_TAG_ITEM}`);
+    expect(dispatch.mock.calls[1][0].type).toBe(DELETE_TAG_ITEM_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(DELETE_TAG_ITEM_API.RESOLVE);
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
-    expect(dispatch.mock.calls[3][0].type).toBe(`REQUEST_${REFRESH_TAG_ITEMS}`);
-    expect(dispatch.mock.calls[4][0].type).toBe(`RESOLVE_${REFRESH_TAG_ITEMS}`);
+    expect(dispatch.mock.calls[3][0].type).toBe(REFRESH_TAG_ITEMS_API.REQUEST);
+    expect(dispatch.mock.calls[4][0].type).toBe(REFRESH_TAG_ITEMS_API.RESOLVE);
     fetchMock.called(`path:/api/contacts/${contactId}/tags/`, {
       query: { type: 'function' },
     });
@@ -298,8 +312,8 @@ describe('Tags and Tag Items', () => {
     await refreshTagItems(contactId, tagType)(dispatch);
 
     expect(dispatch.mock.calls.length).toBe(2);
-    expect(dispatch.mock.calls[0][0].type).toBe(`REQUEST_${REFRESH_TAG_ITEMS}`);
-    expect(dispatch.mock.calls[1][0].type).toBe(`RESOLVE_${REFRESH_TAG_ITEMS}`);
+    expect(dispatch.mock.calls[0][0].type).toBe(REFRESH_TAG_ITEMS_API.REQUEST);
+    expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_TAG_ITEMS_API.RESOLVE);
     expect(dispatch.mock.calls[1][0].filter).toBe('test');
     expect(dispatch.mock.calls[1][0].contactId).toBe(1234);
     fetchMock.called(`path:/api/contacts/${contactId}/tags/`, {

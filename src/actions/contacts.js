@@ -1,21 +1,20 @@
 import { API_URL } from '../constants';
-import fetchActionCreator from 'fetch-action-creator';
+import { makeFetchActions, fetchActionTypes } from 'redux-fetch-wrapper';
 
-export const ALL_CONTACTS = 'ALL_CONTACTS';
-export const CONTACT = 'CONTACT';
-export const ADD_CONTACT = 'ADD_CONTACT';
 
 // ## API ACTION CREATORS ##
 // Note on naming convention here:
 // All fetch API methods creators are prefixed with 'api' for clarity in use
 
-const apiGetAllContacts = () => fetchActionCreator(ALL_CONTACTS, `${API_URL}/api/contacts/`);
+export const ALL_CONTACTS = 'ALL_CONTACTS';
+export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
+const apiGetAllContacts = () => makeFetchActions(ALL_CONTACTS, `${API_URL}/api/contacts/`);
 
 // const apiGetContact = contactId =>
-//   fetchActionCreator(CONTACT, `${API_URL}/api/contacts/${contactId}/`);
+//   makeFetchActions(CONTACT, `${API_URL}/api/contacts/${contactId}/`);
 
 const apiAddContact = (contact) =>
-  fetchActionCreator(ADD_CONTACT, `${API_URL}/api/contacts/`, {
+  makeFetchActions(ADD_CONTACT, `${API_URL}/api/contacts/`, {
     body: JSON.stringify(contact),
     method: 'POST',
   });
@@ -24,6 +23,8 @@ const apiAddContact = (contact) =>
 
 export const refreshContacts = apiGetAllContacts();
 
+export const ADD_CONTACT = 'ADD_CONTACT';
+export const ADD_CONTACT_API = fetchActionTypes(ADD_CONTACT);
 export const addContact = (contact) =>
   async function(dispatch) {
     dispatch(addContactLocal(contact));

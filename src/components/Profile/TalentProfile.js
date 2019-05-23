@@ -9,8 +9,13 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { Icon, Button } from 'semantic-ui-react';
 
-class TalentProfile extends React.Component {
-  printDocument = () => {
+const TalentProfile = ({ contactId, contactInfo, refreshContacts }) => {
+  if (typeof contactInfo === 'undefined') {
+    refreshContacts();
+    return <div />;
+  }
+
+  const printDocument = () => {
     const input = document.getElementById('divToPrint');
     html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
@@ -21,16 +26,16 @@ class TalentProfile extends React.Component {
     });
   };
 
-  pdfToHTML = () => {
-    var pdf = new jsPDF('p', 'pt', 'letter');
-    var source = document.getElementById('divToPrint');
-    var specialElementHandlers = {
+  const pdfToHTML = () => {
+    const pdf = new jsPDF('p', 'pt', 'letter');
+    const source = document.getElementById('divToPrint');
+    const specialElementHandlers = {
       '#bypassme': function(element, renderer) {
         return true;
       },
     };
 
-    var margins = {
+    const margins = {
       top: 50,
       left: 60,
       width: 545,
@@ -52,85 +57,89 @@ class TalentProfile extends React.Component {
     );
   };
 
-  render() {
-    const textStyle = {
-      fontSize: '26px',
-      fontWeight: '300',
-      lineHeight: '0.8',
-      color: '#5f6163',
-    };
-    return (
-      <div style={{ backgroundColor: '#dee2e8' }}>
-        <Container>
-          <div id="divToPrint">
-            <Row
-              style={{
-                backgroundColor: 'lightblue',
-                padding: '30px',
-                height: '180px',
-              }}
-            >
-              <TalentBasicInfo />
-            </Row>
-            <Row>
-              <br />
-            </Row>
-            <Row>
-              <Col>
-                <Experience contactId={this.props.match.params.contactId} experienceType="Work" />
-                <Experience
-                  contactId={this.props.match.params.contactId}
-                  experienceType="Education"
-                />
-                <Experience
-                  contactId={this.props.match.params.contactId}
-                  experienceType="Service"
-                />
-                <Experience
-                  contactId={this.props.match.params.contactId}
-                  experienceType="Accomplishment"
-                />
-                <div
-                  style={{
-                    marginTop: '10px',
-                    backgroundColor: 'white',
-                    padding: '15px',
-                  }}
-                >
-                  <Row>
-                    <Col xs md lg="4">
-                      <div style={textStyle}>Skills and Abilities</div>
-                    </Col>
-                  </Row>
+  const textStyle = {
+    fontSize: '26px',
+    fontWeight: '300',
+    lineHeight: '0.8',
+    color: '#5f6163',
+  };
 
-                  <Skill contactId={this.props.match.params.contactId} tagType="Function" />
-                  <Skill contactId={this.props.match.params.contactId} tagType="Skill" />
-                  <Skill contactId={this.props.match.params.contactId} tagType="Topic" />
-                </div>
-                <Resume />
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    marginTop: '30px',
-                    marginBottom: '80px',
-                  }}
-                >
-                  <Button color="green" onClick={this.pdfToHTML}>
-                    {' '}
-                    <Icon name="download" /> Download Resume
-                  </Button>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      </div>
-    );
-  }
-}
+  const email = contactInfo.email_primary ? contactInfo.email_primary.email : '';
+
+  return (
+    <div style={{ backgroundColor: '#dee2e8' }}>
+      <Container>
+        <div id="divToPrint">
+          <Row
+            style={{
+              backgroundColor: 'lightblue',
+              padding: '30px',
+              height: '180px',
+            }}
+          >
+            <TalentBasicInfo
+              firstName={contactInfo.first_name}
+              lastName={contactInfo.last_name}
+              email={email}
+              phone={contactInfo.phone_primary}
+            />
+          </Row>
+          <Row>
+            <br />
+          </Row>
+          <Row>
+            <Col>
+              <Experience contactId={contactId} experienceType="Work" />
+              <Experience contactId={contactId} experienceType="Education" />
+              <Experience contactId={contactId} experienceType="Service" />
+              <Experience contactId={contactId} experienceType="Accomplishment" />
+              <div
+                style={{
+                  marginTop: '10px',
+                  backgroundColor: 'white',
+                  padding: '15px',
+                }}
+              >
+                <Row>
+                  <Col xs md lg="4">
+                    <div style={textStyle}>Skills and Abilities</div>
+                  </Col>
+                </Row>
+
+                <Skill contactId={contactId} tagType="Function" />
+                <Skill contactId={contactId} tagType="Skill" />
+                <Skill contactId={contactId} tagType="Topic" />
+              </div>
+              <Resume />
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '30px',
+                  marginBottom: '80px',
+                }}
+              >
+                <Button color="green" onClick={pdfToHTML}>
+                  {' '}
+                  <Icon name="download" /> Download Resume
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </Container>
+    </div>
+  );
+};
 TalentProfile.propTypes = {
-  match: PropTypes.object,
+  contactId: PropTypes.any.isRequired,
+  contactInfo: PropTypes.shape({
+    first_name: PropTypes.string.isRequired,
+    last_name: PropTypes.string.isRequired,
+    email_primary: PropTypes.object.isRequired,
+    phone_primary: PropTypes.string.isRequired,
+  }),
+  refreshContacts: PropTypes.func.isRequired,
 };
 
 export default TalentProfile;

@@ -1,24 +1,33 @@
 import { createReducer } from 'redux-starter-kit';
 import {
   ADD_EXPERIENCE,
+  ADD_EXPERIENCE_API,
   REFRESH_EXPERIENCES,
+  REFRESH_EXPERIENCES_API,
   REFRESH_EXPERIENCE_TYPE,
+  REFRESH_EXPERIENCE_TYPE_API,
   GET_EXPERIENCE,
+  GET_EXPERIENCE_API,
   ADD_TAG,
+  ADD_TAG_API,
   REFRESH_TAGS,
+  REFRESH_TAGS_API,
   ADD_TAG_ITEM,
+  ADD_TAG_ITEM_API,
   UPDATE_TAG_ITEM,
+  UPDATE_TAG_ITEM_API,
   REFRESH_TAG_ITEMS,
+  REFRESH_TAG_ITEMS_API,
 } from '../actions/profile';
 
 export const experiencesReducer = createReducer(
   {},
   {
-    [`RESOLVE_${ADD_EXPERIENCE}`]: (state, action) => {
+    [ADD_EXPERIENCE_API.RESOLVE]: (state, action) => {
       const experience = action.body.data;
       state[experience.id] = experience;
     },
-    [`RESOLVE_${REFRESH_EXPERIENCES}`]: (state, action) => {
+    [REFRESH_EXPERIENCES_API.RESOLVE]: (state, action) => {
       const newState = {};
       // clear out all old entries
       action.body.data.forEach((experience) => {
@@ -26,7 +35,7 @@ export const experiencesReducer = createReducer(
       });
       return newState;
     },
-    [`RESOLVE_${REFRESH_EXPERIENCE_TYPE}`]: (state, action) => {
+    [REFRESH_EXPERIENCE_TYPE_API.RESOLVE]: (state, action) => {
       const newState = {};
       // clear out all old entries with the rfreshed type
       Object.entries(state).forEach(([key, value]) => {
@@ -40,7 +49,7 @@ export const experiencesReducer = createReducer(
       });
       return newState;
     },
-    [`RESOLVE_${GET_EXPERIENCE}`]: (state, action) => {
+    [GET_EXPERIENCE_API.RESOLVE]: (state, action) => {
       const experience = action.body.data;
       state[experience.id] = experience;
     },
@@ -50,11 +59,11 @@ export const experiencesReducer = createReducer(
 export const tagReducer = createReducer(
   {},
   {
-    [`RESOLVE_${ADD_TAG}`]: (state, action) => {
+    [ADD_TAG_API.RESOLVE]: (state, action) => {
       const tag = action.body.data;
       state[tag.id] = tag;
     },
-    [`RESOLVE_${REFRESH_TAGS}`]: (state, action) => {
+    [REFRESH_TAGS_API.RESOLVE]: (state, action) => {
       const newState = {};
       // clear out all old entries
       action.body.data.forEach((tag) => {
@@ -68,14 +77,14 @@ export const tagReducer = createReducer(
 export const tagItemReducer = createReducer(
   {},
   {
-    [`RESOLVE_${ADD_TAG_ITEM}`]: (state, action) => {
+    [ADD_TAG_ITEM_API.RESOLVE]: (state, action) => {
       const tagItem = action.body.data;
       if (!state.hasOwnProperty(tagItem.contact_id)) {
         state[tagItem.contact_id] = {};
       }
       state[tagItem.contact_id][tagItem.tag_id] = tagItem;
     },
-    [`RESOLVE_${REFRESH_TAG_ITEMS}`]: (state, action) => {
+    [REFRESH_TAG_ITEMS_API.RESOLVE]: (state, action) => {
       const contactState = state[action.contactId];
       let newContactState = {};
 
@@ -92,8 +101,8 @@ export const tagItemReducer = createReducer(
       });
       state[action.contactId] = newContactState;
     },
-    [`RESOLVE_${UPDATE_TAG_ITEM}`]: (state, action) => {
-      const tagItem = action.body.data[0];
+    [UPDATE_TAG_ITEM_API.RESOLVE]: (state, action) => {
+      const tagItem = action.body.data;
       state[tagItem.contact_id][tagItem.tag_id] = tagItem;
     },
   },

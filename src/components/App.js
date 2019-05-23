@@ -8,7 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import ErrorBoundary from '../atoms/ErrorBoundary';
 
 import Home from './Other/Home.js';
-import TalentProfile from './Profile/TalentProfile.js';
+import TalentProfile from './Profile/TalentProfile.container';
 import Contacts from './Contacts/Contacts.container';
 import theme from 'styles/theme';
 import { Icon } from 'semantic-ui-react';

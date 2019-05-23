@@ -31,9 +31,7 @@ const Skill = ({
 
   const displaySkills = () => {
     return tagItems.map((tag) => (
-      <div style={{ marginLeft: '20px' }}>
-        <SkillItem key={tag.tag_id} tag={tag} onSubmit={updateTagItem} onDelete={deleteTagItem} />
-      </div>
+      <SkillItem key={tag.tag_id} tag={tag} onSubmit={updateTagItem} onDelete={deleteTagItem} />
     ));
   };
 
@@ -87,7 +85,7 @@ const Skill = ({
         {showForm ? (
           <Col xs md lg="2">
             <SkillUpdateForm
-              tag={() => Object.assign({}, blankTag)}
+              tag={Object.assign({}, blankTag)}
               tagType={tagType}
               onSubmit={(tagItem) => {
                 addTagItem(tagItem).then(setShowForm(false));

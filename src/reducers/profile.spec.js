@@ -2,14 +2,23 @@ import { experiencesReducer, tagReducer, tagItemReducer } from './profile';
 
 import {
   ADD_EXPERIENCE,
+  ADD_EXPERIENCE_API,
   GET_EXPERIENCE,
+  GET_EXPERIENCE_API,
   REFRESH_EXPERIENCES,
+  REFRESH_EXPERIENCES_API,
   REFRESH_EXPERIENCE_TYPE,
+  REFRESH_EXPERIENCE_TYPE_API,
   ADD_TAG,
+  ADD_TAG_API,
   REFRESH_TAGS,
+  REFRESH_TAGS_API,
   ADD_TAG_ITEM,
+  ADD_TAG_ITEM_API,
   UPDATE_TAG_ITEM,
+  UPDATE_TAG_ITEM_API,
   REFRESH_TAG_ITEMS,
+  REFRESH_TAG_ITEMS_API,
 } from '../actions/profile';
 
 describe('Experience state', () => {
@@ -24,7 +33,7 @@ describe('Experience state', () => {
   test('Add new experience - request resolved', () => {
     const experience = { id: 1234, other_stuff: 'data' };
     const newState = experiencesReducer(initialState, {
-      type: `RESOLVE_${ADD_EXPERIENCE}`,
+      type: ADD_EXPERIENCE_API.RESOLVE,
       body: { data: experience },
     });
     expect(newState).toHaveProperty('1234');
@@ -37,7 +46,7 @@ describe('Experience state', () => {
     initialState[1234] = oldExperience;
 
     const newState = experiencesReducer(initialState, {
-      type: `RESOLVE_${ADD_EXPERIENCE}`,
+      type: ADD_EXPERIENCE_API.RESOLVE,
       body: { data: experience },
     });
     expect(newState).toHaveProperty('1234');
@@ -50,7 +59,7 @@ describe('Experience state', () => {
     const startState = initialState;
     startState[1234] = oldExperience;
     const newState = experiencesReducer(startState, {
-      type: `REJECT_${ADD_EXPERIENCE}`,
+      type: ADD_EXPERIENCE_API.REJECT,
       experience: experience,
     });
     expect(newState).toEqual(startState);
@@ -68,7 +77,7 @@ describe('Experience state', () => {
       10: { id: 10, title: 'exp 0' },
     };
     const newState = experiencesReducer(initialState, {
-      type: `RESOLVE_${REFRESH_EXPERIENCES}`,
+      type: REFRESH_EXPERIENCES_API.RESOLVE,
       body: { status: 'success', data: experiences },
     });
     expect(newState).toEqual({
@@ -90,7 +99,7 @@ describe('Experience state', () => {
       12: { id: 12, title: 'exp 2', type: 'Test' },
     };
     const newState = experiencesReducer(initialState, {
-      type: `RESOLVE_${REFRESH_EXPERIENCE_TYPE}`,
+      type: REFRESH_EXPERIENCE_TYPE_API.RESOLVE,
       body: { status: 'success', data: experiences },
       filter: 'test',
     });
@@ -111,7 +120,7 @@ describe('Experience state', () => {
       12: bystander,
     };
     const newState = experiencesReducer(initialState, {
-      type: `RESOLVE_${GET_EXPERIENCE}`,
+      type: GET_EXPERIENCE_API.RESOLVE,
       body: { status: 'success', data: experience },
     });
     expect(newState).toEqual({
@@ -133,7 +142,7 @@ describe('Tag state', () => {
   test('Add new tag - request resolved', () => {
     const tag = { id: 4321, other_stuff: 'data' };
     const newState = tagReducer(initialState, {
-      type: `RESOLVE_${ADD_TAG}`,
+      type: ADD_TAG_API.RESOLVE,
       body: { data: tag },
     });
     expect(newState).toHaveProperty('4321');
@@ -147,7 +156,7 @@ describe('Tag state', () => {
       10: { id: 10, title: 'tag 0' },
     };
     const newState = tagReducer(initialState, {
-      type: `RESOLVE_${REFRESH_TAGS}`,
+      type: REFRESH_TAGS_API.RESOLVE,
       body: { status: 'success', data: tags },
     });
     expect(newState).toEqual({
@@ -169,7 +178,7 @@ describe('TagItem state', () => {
   test('Add new tagItem blank contact', () => {
     const tagItem = { contact_id: 4321, tag_id: 1234, other_stuff: 'data' };
     const newState = tagItemReducer(initialState, {
-      type: `RESOLVE_${ADD_TAG_ITEM}`,
+      type: ADD_TAG_ITEM_API.RESOLVE,
       body: { data: tagItem },
     });
     expect(newState).toHaveProperty('4321');
@@ -179,7 +188,7 @@ describe('TagItem state', () => {
     const tagItem = { contact_id: 4321, tag_id: 1234, other_stuff: 'data' };
     initialState[4321] = [{ contact_id: 4321, tag_id: 1111 }];
     const newState = tagItemReducer(initialState, {
-      type: `RESOLVE_${ADD_TAG_ITEM}`,
+      type: ADD_TAG_ITEM_API.RESOLVE,
       body: { data: tagItem },
     });
     expect(newState).toHaveProperty('4321');
@@ -203,7 +212,7 @@ describe('TagItem state', () => {
       },
     };
     const newState = tagItemReducer(initialState, {
-      type: `RESOLVE_${REFRESH_TAG_ITEMS}`,
+      type: REFRESH_TAG_ITEMS_API.RESOLVE,
       body: { status: 'success', data: tagItems },
       contactId: 1,
       filter: 'test',
@@ -227,7 +236,7 @@ describe('TagItem state', () => {
     ];
 
     const newState = tagItemReducer(initialState, {
-      type: `RESOLVE_${REFRESH_TAG_ITEMS}`,
+      type: REFRESH_TAG_ITEMS_API.RESOLVE,
       body: { status: 'success', data: tagItems },
       contactId: 1,
       filter: 'test',
@@ -256,8 +265,8 @@ describe('TagItem state', () => {
       },
     };
     const newState = tagItemReducer(initialState, {
-      type: `RESOLVE_${UPDATE_TAG_ITEM}`,
-      body: { status: 'success', data: [tagItem, {}] },
+      type: UPDATE_TAG_ITEM_API.RESOLVE,
+      body: { status: 'success', data: tagItem },
     });
     expect(newState).toEqual({
       1: {
