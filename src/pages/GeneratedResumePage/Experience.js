@@ -6,7 +6,7 @@ const Experience = ({ startDate, endDate, orgName, positionName, feats }) => {
   return (
     <div>
       <Typography component="h4" variant="h5">
-        {formatDate(startDate, 'MMM yyyy')} to {endDate ? formatDate(endDate, 'MMM yyyy') : 'Present'}
+        {formatDate(startDate, 'MMM YYYY')} to {endDate ? formatDate(endDate, 'MMM YYYY') : 'Present'}
       </Typography>
       <Typography component="h4" variant="h6">
         {positionName}, {orgName}

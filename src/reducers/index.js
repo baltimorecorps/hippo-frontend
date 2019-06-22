@@ -5,10 +5,12 @@ import {
   tagReducer as tags,
   tagItemReducer as tagItems,
 } from './profile';
+import resume from './resume';
 
 const rootReducer = combineReducers({
   contacts,
   experiences,
+  resume,
   tags,
   tagItems,
 });

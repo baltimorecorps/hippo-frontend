@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { format } from 'date-fns';
 import { API_URL } from '../constants';
 import { makeFetchActions, fetchActionTypes } from 'redux-fetch-wrapper';
 
@@ -9,7 +9,7 @@ export const createResume = (contactId, name) =>
     const resume = {
       contact_id: contactId,
       name,
-      date_created: moment().format('YYYY-MM-DD'),
+      date_created: format(new Date(), 'YYYY-MM-DD'),
     };
     dispatch({
       type: CREATE_RESUME,
@@ -118,6 +118,7 @@ export const updateResumeSection = (section) =>
   );
 
 export const UPDATE_RESUME_ITEMS = 'UPDATE_RESUME_ITEMS';
+export const UPDATE_RESUME_ITEMS_API = fetchActionTypes(UPDATE_RESUME_ITEMS);
 export const updateResumeItems = (resumeId, sectionId, items) =>
   async function(dispatch) {
     const update = {

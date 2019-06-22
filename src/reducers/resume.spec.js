@@ -82,6 +82,9 @@ describe('Resumes state', () => {
       contact: {
         name: 'Test Person',
         id: 333,
+        email_primary: {
+          email: 'testperson@testperson.test',
+        },
       },
       sections: [
         {

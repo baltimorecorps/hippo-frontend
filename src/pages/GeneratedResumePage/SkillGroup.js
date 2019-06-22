@@ -8,7 +8,7 @@ const SkillGroup = ({ name, skills }) => {
         {name}
       </Typography>
       {skills.map((skill) => (
-        <Typography component="p" variant="p">
+        <Typography key={skill.name} component="p" variant="body1">
           {skill.name} - {skill.years} years
         </Typography>
       ))}

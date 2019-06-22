@@ -10,7 +10,7 @@ const SkillGroups = ({ skillGroups }) => {
       </Typography>
       <hr />
       {skillGroups.map((group) => (
-        <SkillGroup {...group} />
+        <SkillGroup key={group.name} {...group} />
       ))}
     </section>
   );
