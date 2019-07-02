@@ -15,6 +15,7 @@ const TalentProfile = ({ contactId, contactInfo, refreshContacts }) => {
     return <div />;
   }
 
+  // eslint-disable-next-line no-unused-vars
   const printDocument = () => {
     const input = document.getElementById('divToPrint');
     html2canvas(input).then((canvas) => {

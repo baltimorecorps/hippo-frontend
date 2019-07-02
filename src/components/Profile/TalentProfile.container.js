@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { createSelector } from 'redux-starter-kit';
 import TalentProfile from './TalentProfile';
 import { refreshContacts } from '../../actions/contacts';
 
+// eslint-disable-next-line no-unused-vars
 const addNewContact = (dispatch) =>
   async function(contact) {
     await refreshContacts(dispatch);

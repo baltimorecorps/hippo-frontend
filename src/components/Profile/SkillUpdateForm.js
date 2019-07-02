@@ -11,14 +11,6 @@ import { scoreToString } from './skillUtil';
 
 import useFormUpdate from './useFormUpdate';
 
-// const ALL_DATA = [
-//   {name: 'C', id: 1},
-//   {name: 'C++', id: 2},
-//   {name: 'C#', id: 3},
-// ];
-
-// Use your imagination to render suggestions.
-
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
@@ -46,10 +38,9 @@ const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
     onSubmit,
   );
 
-  //
   // AUTOSUGGEST setup
-  //
   const [suggestions, setSuggestions] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [currSuggestion, setCurrSuggestion] = useState(values.name);
 
   const getSuggestions = (value) => {

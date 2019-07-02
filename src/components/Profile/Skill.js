@@ -19,6 +19,7 @@ const Skill = ({
   refreshTagItems,
 }) => {
   const [showForm, setShowForm] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
