@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
@@ -121,6 +120,7 @@ const ExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
     configureForm(experience.type),
   );
 
+  // eslint-disable-next-line no-unused-vars
   const handleChangeDescription = (idx) => (evt) => {
     const newAchievements = this.state.achievements.map((achievement, sidx) => {
       if (idx !== sidx) return achievement;

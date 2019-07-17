@@ -22,23 +22,6 @@ class Resume extends React.Component {
     ],
   };
 
-  displayResumeCards = (resumeCards) => {
-    const cards = resumeCards.map((resume) => {
-      return this.displayResumeCard(resume);
-    });
-    return <Card.Group itemsPerRow={3}> {cards} </Card.Group>;
-  };
-  displayResumeCard = (resume) => {
-    return (
-      <Card key={resume.id} style={{ height: '200px' }}>
-        <Card.Content>
-          <a href={`/resume`}>{resume.name}</a>
-          <p />
-          {resume.description}
-        </Card.Content>
-      </Card>
-    );
-  };
   handleAddResume = () => {
     return <p>hello</p>;
   };
@@ -79,8 +62,19 @@ class Resume extends React.Component {
         </Row>
         <Divider />
         <Row>
-          <Col xs md lg="8">
-            {this.displayResumeCards(this.state.resumeCards)}
+          <Col xs md lg={12}>
+            <Card.Group itemsPerRow={4}>
+              {this.state.resumeCards.map((resume) => (
+                <Card key={resume.id} style={{ height: '200px' }}>
+                  <Card.Content>
+                    <a href={`/resume`}>{resume.name}</a>
+                    <p>
+                      {resume.description}
+                    </p>
+                  </Card.Content>
+                </Card>
+              ))}
+            </Card.Group>
           </Col>
         </Row>
       </div>

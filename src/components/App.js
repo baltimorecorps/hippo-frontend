@@ -13,7 +13,7 @@ import Contacts from './Contacts/Contacts.container';
 import theme from 'styles/theme';
 import { Icon } from 'semantic-ui-react';
 
-import GeneratedResumePage from 'pages/GeneratedResumePage';
+import GeneratedResumePage from 'pages/GeneratedResumePage/GeneratedResumePage.container';
 import CreateResumePage from 'pages/CreateResumePage';
 
 const App = () => (
@@ -45,11 +45,12 @@ const App = () => (
             {/*<Route exact path='/' component={AuthPage} />*/}
             <Route exact path="/" component={Home} />
 
-            <Route exact path="/Resume" component={GeneratedResumePage} />
+            <Route exact path="/Contacts/:contactId/Resume/:resumeId" component={GeneratedResumePage} />
             <Route exact path="/Contacts" component={Contacts} />
             {/*<Route exact path='/TalentProfile' component={TalentProfile} />*/}
             <Route path="/Profile/:contactId" component={TalentProfile} />
-            <Route exact path="/create-resume" component={CreateResumePage} />
+            <Route exact path="/Contacts/:contactId/create-resume" component={CreateResumePage} />
+            <Route exact path="/Contacts/:contactId/create-resume/:resumeId" component={CreateResumePage} />
           </Switch>
         </React.Fragment>
       </Router>

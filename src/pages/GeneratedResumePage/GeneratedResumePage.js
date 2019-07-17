@@ -8,17 +8,19 @@ import ResumeHeader from './ResumeHeader';
 import SkillGroups from './SkillGroups';
 
 const GeneratedResumePage = ({
+  resumeId,
   achievements,
   contactInfo,
   experiences,
   skillGroups,
   refreshResume,
+  refreshContacts,
   classes,
 }) => {
-  const resumeId = 1;
   useEffect(() => {
     refreshResume(resumeId);
-  }, [refreshResume]);
+    refreshContacts();
+  }, [resumeId, refreshResume, refreshContacts]);
 
   return (
     <Grid container justify="center">

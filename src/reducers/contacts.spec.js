@@ -41,7 +41,7 @@ describe('Contacts state', () => {
     });
   });
 
-  test('Create new resume - request resolved', () => {
+  test('Contacts - Create new resume - request resolved', () => {
     const newState = contactsReducer(
       { 5: { id: 5 } },
       {

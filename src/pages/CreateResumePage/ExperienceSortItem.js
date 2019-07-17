@@ -6,6 +6,7 @@ const ExperienceSortItem = React.forwardRef(
     const elementRef = useRef(null);
     connectDragSource(elementRef);
     connectDropTarget(elementRef);
+    // eslint-disable-next-line no-unused-vars
     const opacity = isDragging ? 0 : 1;
     useImperativeHandle(ref, () => ({
       getNode: () => elementRef.current,

@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import TalentBasicInfo from './TalentBasicInfo';
 import Experience from './Experience.container';
 import Skill from './Skill.container';
+import Resumes from './Resumes.container';
 import Resume from './Resume';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -15,6 +16,7 @@ const TalentProfile = ({ contactId, contactInfo, refreshContacts }) => {
     return <div />;
   }
 
+  // eslint-disable-next-line no-unused-vars
   const printDocument = () => {
     const input = document.getElementById('divToPrint');
     html2canvas(input).then((canvas) => {
@@ -110,7 +112,9 @@ const TalentProfile = ({ contactId, contactInfo, refreshContacts }) => {
                 <Skill contactId={contactId} tagType="Skill" />
                 <Skill contactId={contactId} tagType="Topic" />
               </div>
-              <Resume />
+              <div style={{marginTop: 40}}>
+                <Resumes />
+              </div>
               <div
                 style={{
                   display: 'flex',

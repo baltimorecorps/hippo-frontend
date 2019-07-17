@@ -11,7 +11,7 @@ const Experience = ({ startDate, endDate, orgName, positionName, feats }) => {
       <Typography component="h4" variant="h6">
         {positionName}, {orgName}
       </Typography>
-      {feats.map((feat) => (
+      {feats && feats.map((feat) => (
         <Typography key={feat.text} component="p" variant="body1">
           {feat.text}
         </Typography>

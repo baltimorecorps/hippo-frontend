@@ -20,6 +20,7 @@ const Experience = ({
   deleteExperience,
 }) => {
   const [showForm, setShowForm] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [showHint, setShowHint] = useState(false);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const Experience = ({
     experiences.map((experience) => {
       return (
         <ExperienceItem
-          key={experience.id} 
+          key={experience.id}
           onUpdate={updateExperience}
           onDelete={deleteExperience}
           experience={experience}
@@ -118,7 +119,7 @@ const Experience = ({
 };
 
 Experience.propTypes = {
-  contactId: PropTypes.string.isRequired,
+  contactId: PropTypes.number.isRequired,
   experienceType: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
   experiences: PropTypes.array.isRequired,
   addNewExperience: PropTypes.func.isRequired,
