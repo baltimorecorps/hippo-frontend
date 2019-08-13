@@ -9,7 +9,7 @@ const useFormUpdate = (initialValues) => {
   const [values, setValues] = useState(filteredValues || {});
 
   const update = (name) => (value) => {
-    if (value) {
+    if (value || value === '') {
       setValues((values) => ({
         ...values,
         [name]: value,

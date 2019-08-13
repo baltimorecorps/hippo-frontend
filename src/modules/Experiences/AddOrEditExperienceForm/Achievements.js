@@ -5,9 +5,8 @@ import { Icon, Button } from 'semantic-ui-react';
 
 const Achievements = ({ achievements, contactId, onChange }) => {
   const handleRemove = (idx) => (evt) => {
-    // This specifically stops a bug where if you tried to remove the last
-    // achievement, it would trigger an event on the 'add' button, thus
-    // effectively preventing you from ever going back to zero achievements
+    // Stops bug where removing the last achievement triggers an event on the 'add' button,
+    // thus preventing you from going back to zero achievements
     evt.preventDefault();
     onChange(achievements.filter((elem, i) => idx !== i));
   };

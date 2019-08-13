@@ -71,7 +71,6 @@ export const resumeReducer = createReducer(
       }
       // TODO
       const {data} = action.body;
-      console.log('HERE', {data});
       return {
         ...state,
         ...data.reduce((object, resume) => ({

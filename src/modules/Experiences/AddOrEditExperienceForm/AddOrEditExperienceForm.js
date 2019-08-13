@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'semantic-ui-react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import Modal from 'react-awesome-modal';
-import { Button, Divider, Dropdown } from 'semantic-ui-react';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Modal from 'react-awesome-modal';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import { Form } from 'semantic-ui-react';
+import { Button, Divider, Dropdown } from 'semantic-ui-react';
 
 import Achievements from './Achievements';
-
-import useFormUpdate from './useFormUpdate';
+import useFormUpdate from 'components/Profile/useFormUpdate';
 
 const DEGREE_OPTIONS = [
   { key: 'high_school', text: 'High School', value: 'High School' },
@@ -64,7 +65,8 @@ const configureForm = (expType) => {
       showEndDate: true,
       showAchievements: true,
     };
-  } else if (expType === 'Service') {
+  }
+  else if (expType === 'Service') {
     return {
       labels: {
         host: 'Organization',
@@ -73,7 +75,8 @@ const configureForm = (expType) => {
       showEndDate: true,
       showAchievements: true,
     };
-  } else if (expType === 'Accomplishment') {
+  }
+  else if (expType === 'Accomplishment') {
     return {
       labels: {
         host: 'Institution / Publisher',
@@ -82,7 +85,8 @@ const configureForm = (expType) => {
       },
       showDescription: true,
     };
-  } else if (expType === 'Education') {
+  }
+  else if (expType === 'Education') {
     return {
       labels: {
         host: 'Institution',
@@ -96,7 +100,7 @@ const configureForm = (expType) => {
   }
 };
 
-const ExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
+const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
   const [
     values,
     {
@@ -247,7 +251,7 @@ const styles = ({ breakpoints, palette, spacing }) => ({
 });
 
 
-ExperienceForm.propTypes = {
+AddOrEditExperienceForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   experience: PropTypes.shape({
     id: PropTypes.number,
@@ -262,4 +266,4 @@ ExperienceForm.propTypes = {
     achievements: PropTypes.array,
   }).isRequired,
 };
-export default withStyles(styles)(ExperienceForm);
+export default withStyles(styles)(AddOrEditExperienceForm);
