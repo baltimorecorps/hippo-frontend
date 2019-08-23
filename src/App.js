@@ -8,9 +8,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import ErrorBoundary from 'atoms/ErrorBoundary';
 
-import Home from './Other/Home.js';
-import TalentProfile from './Profile/TalentProfile.container';
-import Contacts from './Contacts/Contacts.container';
+import Home from 'components/Other/Home.js';
+import TalentProfile from 'components/Profile/TalentProfile.container';
+import Contacts from 'components/Contacts/Contacts.container';
 import theme from 'styles/theme';
 
 import GeneratedResumePage from 'pages/GeneratedResumePage/GeneratedResumePage.container';

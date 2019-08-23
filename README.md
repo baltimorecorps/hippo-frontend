@@ -1,81 +1,79 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Baltimore Corps Hippo Web App
 
-Structures:
-All important components are put inside the src/components folder,
-which consists the following subfolders:
-1 Login 2 Profile 3SearchContact 4TalentHome 5 Other
-For current milestone "ResumeBuilder", the relavant subfolder is the second one: Profile.
+## Structure
 
-The src/components/Profile subfolder consists 13 js files /components, which can be organized into 
-four groups, each group is focused on a certain function.
-Group1: 
-Experience.js
-ExperienceForm.js
-ExperienceItem.js
-ExperienceUpdateForm.js
+- actions
+- reducers
+- lib
+- atoms
+- modules
+  - Achievements
+  - Experiences
+  - Resumes
+  - Tags
+  - Users
+- pages
+- styles
 
-These four components are built around the aim of implementing functions for users to check/add/revise/delete
-any of their exprience items.This group is the only relevant group for our current SPRINT.
+### actions and reducers
 
+Redux related actions and reducers to manage application state belong here.
 
-Group2:
-Education.js
-EducationForm.js
-EducationItem.js
+Future considerations: placing these actions / reducers within their relevant modules.
 
-Group3:
-Skill.js
-SkillForm.js
-SkillItem.js
+### lib
 
-Group4:
-TalentProfile.js
-TalentBasicInfo.js
+Various utilities and globally (or semi-globally) used functions.
 
-Note: PastExperience.js is a component used for previous sprints but not useful for current or future sprints.
+### atoms
+
+Small custom components that are used in a variety of places with no specific module relation.
+
+### modules
+
+Large components that correspond to entities represented in the database.
+
+These are built with `atoms` and existing Material UI components.
+
+### pages
+
+Page components built primarily with modules, some parts with `atoms`, and some with existing Material UI components.
+
+### styles
+
+Currently contains the theme for Material UI.
+
+### Other
+
+Both `components/` and `api/` are remnants of a previous structure. Code within these folders should be checked and moved to the appropriate place in the new structure.
 
 
 ## Packages used (with justification)
 
-TODO: Go back over dependencies from Brown team and list key ones here with justifications
+### Redux
+- Manage application state
+- https://redux.js.org/introduction/motivation
+- https://react-redux.js.org/
 
-We'll use Redux to manage application state, since it provides a clean
-framework for doing so (and it's basically an industry standard at this point)
+### Redux Starter Kit
+- https://redux-starter-kit.js.org/introduction/quick-start
+- Includes various patterns/libraries so here is some supplementary reading to understand them
+  - https://github.com/erikras/ducks-modular-redux
+  - https://github.com/immerjs/immer
+  - https://github.com/reduxjs/reselect
 
-https://redux.js.org/introduction/motivation
-See also: https://react-redux.js.org/
+### Fetch Action Creator
+- Links Redux actions to our API.
+- https://medium.com/@Charles_Stover/the-fetch-api-and-asynchronous-redux-state-203270a540d4
 
-`redux-starter-kit` is used to manage state with Redux. We're not doing anything
-too fancy so we'll make use of the opinionated defaults provided by this package
+### Jest
+- Unit testing
+- https://jestjs.io/
 
-https://redux-starter-kit.js.org/introduction/quick-start
+### Fetch mock
+- Unit testing of the Redux action creators which call the API
+- http://www.wheresrhys.co.uk/fetch-mock/
 
-Note: There are a bunch of patterns/libraries included in this package. Here's
-some supplementary reading to understand where they come from and why
-https://github.com/erikras/ducks-modular-redux
-https://github.com/immerjs/immer
-https://github.com/reduxjs/reselect
-
-`fetch-action-creator` is used to link Redux actions to our API. We were already
-using the Fetch API so this is a clean extension of that
-
-https://medium.com/@Charles_Stover/the-fetch-api-and-asynchronous-redux-state-203270a540d4
-See also: https://github.com/reduxjs/redux-thunk
-
-`jest` is used for unit testing. Since we're a bit less familiar with React
-testing frameworks, we'll go with what Facebook suggests. Also as a test runner
-the interface seems pretty simple, and it includes Expect
-
-https://jestjs.io/
-
-`fetch-mock` is used to do unit testing of the Redux action creators which
-need to call out to the API to do their thing. 
-
-http://www.wheresrhys.co.uk/fetch-mock/
-
-
-Maybe:
-https://github.com/paularmstrong/normalizr
 
 ## Available Scripts
 
@@ -113,6 +111,7 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
 
 ## Learn More
 
