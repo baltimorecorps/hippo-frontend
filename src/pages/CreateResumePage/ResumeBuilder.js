@@ -3,6 +3,7 @@ import ReactSelect from 'react-select';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
+import ExperienceSorter from './ExperienceSorter';
 
 import ResumeContext from 'lib/context/ResumeContext';
 import ProgressContext from 'lib/context/ProgressContext';
@@ -40,24 +41,22 @@ const ResumeBuilder = ({ achievements, contactInfo, experiences, skillGroups, cl
                 onChange={onChange}
               />
             </Grid>
-            <ul>
-              {type !== 'skills' &&
-                selectedExperiences[type].map(({ positionName, orgName }) => (
-                  <li key={`${positionName}.${orgName}`}>
-                    {orgName} | {positionName}
-                  </li>
-                ))}
-              {type === 'skills' &&
-                selectedSkillGroups.map(({ name: groupName, skills }) => (
+            {type !== 'skills' &&
+              <ExperienceSorter experiences={selectedExperiences[type]} />
+            }
+            {type === 'skills' &&
+              <ul>
+                {selectedSkillGroups.map(({ name: groupName, skills }) =>
                   <React.Fragment key={groupName}>
-                    {skills.map(({ name: skillName }) => (
+                    {skills.map(({ name: skillName }) =>
                       <li key={`${groupName}.${skillName}`}>
                         {groupName} | {skillName}
                       </li>
-                    ))}
+                    )}
                   </React.Fragment>
-                ))}
-            </ul>
+                )}
+              </ul>
+            }
           </Grid>
         </Paper>
       </Grid>

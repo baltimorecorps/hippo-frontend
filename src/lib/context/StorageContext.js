@@ -10,7 +10,7 @@ class StorageContext extends React.Component {
 
   loadStateFromStorage = () => {
     const value = JSON.parse(window.localStorage.getItem(this.storageKey));
-    // this.setState(value);
+    this.setState(value);
   };
 
   saveStateToStorage = (state) => {

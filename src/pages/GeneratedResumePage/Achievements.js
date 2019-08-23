@@ -10,8 +10,8 @@ const Achievements = ({ achievements, classes }) => {
         Accomplishments
       </Typography>
       <hr />
-      {achievements.map((achievement) => (
-        <Achievement {...achievement} />
+      {achievements.map((achievement, index) => (
+        <Achievement key={`${achievement.name}.${index}`} {...achievement} />
       ))}
     </section>
   );

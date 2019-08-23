@@ -3,9 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 const ResumeHeader = ({ contactInfo }) => {
-  const { name, roles, title, email, phoneNumber, city, state } = contactInfo;
+  const { name, roles = [], title, email, phoneNumber, city, state } = contactInfo;
 
-  const phoneString = phoneNumber.toString();
+  const phoneString = (phoneNumber || '').toString();
   const formattedPhoneNumber = `${phoneString.slice(0, 3)}-${phoneString.slice(
     3,
     6,
@@ -18,9 +18,11 @@ const ResumeHeader = ({ contactInfo }) => {
         <Typography component="h1" variant="h2">
           {name}
         </Typography>
-        <Typography component="h2" variant="h5">
-          {roles[0]} & {roles[1]}
-        </Typography>
+        {!! roles.length &&
+          <Typography component="h2" variant="h5">
+            {roles[0]} & {roles[1]}
+          </Typography>
+        }
         <Typography component="h3" variant="h6">
           {title}
         </Typography>

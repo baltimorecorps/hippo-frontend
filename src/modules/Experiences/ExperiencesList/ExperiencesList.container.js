@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'redux-starter-kit';
-import Experience from './Experience';
+import ExperiencesList from './ExperiencesList';
 
 import {
   addExperience,
   refreshExperienceType,
   updateExperience,
   deleteExperience,
-} from '../../actions/profile';
+} from 'actions/profile';
 
 const getExperiences = createSelector(
   ['experiences'],
@@ -49,6 +49,6 @@ const mapDispatchToProps = (dispatch, props) => {
 const Container = connect(
   makeMapStateToProps,
   mapDispatchToProps,
-)(Experience);
+)(ExperiencesList);
 
 export default Container;

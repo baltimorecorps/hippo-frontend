@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -7,7 +7,21 @@ import ExperiencesList from './ExperiencesList';
 import ResumeHeader from './ResumeHeader';
 import SkillGroups from './SkillGroups';
 
-const GeneratedResumePage = ({ achievements, contactInfo, experiences, skillGroups, classes }) => {
+const GeneratedResumePage = ({
+  resumeId,
+  achievements,
+  contactInfo,
+  experiences,
+  skillGroups,
+  refreshResume,
+  refreshContacts,
+  classes,
+}) => {
+  useEffect(() => {
+    refreshResume(resumeId);
+    refreshContacts();
+  }, [resumeId, refreshResume, refreshContacts]);
+
   return (
     <Grid container justify="center">
       <Grid item xs={10}>

@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'react-bootstrap';
-import TalentBasicInfo from './TalentBasicInfo';
-import Experience from './Experience.container';
-import Skill from './Skill.container';
-import Resume from './Resume';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import Icon from '@material-ui/core/Icon';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+
+import BasicInfoDisplay from 'modules/Users/BasicInfoDisplay';
+import ExperiencesList from 'modules/Experiences/ExperiencesList';
+import SkillsList from 'modules/Tags/SkillsList';
+import ResumesList from 'modules/Resumes/ResumesList';
+
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { Icon, Button } from 'semantic-ui-react';
 
-const TalentProfile = ({ contactId, contactInfo, refreshContacts }) => {
+const TalentProfile = ({ contactId, contactInfo, refreshContacts, classes }) => {
   if (typeof contactInfo === 'undefined') {
     refreshContacts();
     return <div />;
@@ -58,77 +65,43 @@ const TalentProfile = ({ contactId, contactInfo, refreshContacts }) => {
     );
   };
 
-  const textStyle = {
-    fontSize: '26px',
-    fontWeight: '300',
-    lineHeight: '0.8',
-    color: '#5f6163',
-  };
-
   const email = contactInfo.email_primary ? contactInfo.email_primary.email : '';
 
   return (
-    <div style={{ backgroundColor: '#dee2e8' }}>
-      <Container>
-        <div id="divToPrint">
-          <Row
-            style={{
-              backgroundColor: 'lightblue',
-              padding: '30px',
-              height: '180px',
-            }}
-          >
-            <TalentBasicInfo
-              firstName={contactInfo.first_name}
-              lastName={contactInfo.last_name}
-              email={email}
-              phone={contactInfo.phone_primary}
-            />
-          </Row>
-          <Row>
-            <br />
-          </Row>
-          <Row>
-            <Col>
-              <Experience contactId={contactId} experienceType="Work" />
-              <Experience contactId={contactId} experienceType="Education" />
-              <Experience contactId={contactId} experienceType="Service" />
-              <Experience contactId={contactId} experienceType="Accomplishment" />
-              <div
-                style={{
-                  marginTop: '10px',
-                  backgroundColor: 'white',
-                  padding: '15px',
-                }}
-              >
-                <Row>
-                  <Col xs md lg="4">
-                    <div style={textStyle}>Skills and Abilities</div>
-                  </Col>
-                </Row>
+    <div className={classes.page}>
+      <Grid id="divToPrint" container justify="center" className={classes.wrapper}>
+        <Grid item xs={8}>
+          <BasicInfoDisplay
+            firstName={contactInfo.first_name}
+            lastName={contactInfo.last_name}
+            email={email}
+            phone={contactInfo.phone_primary}
+          />
 
-                <Skill contactId={contactId} tagType="Function" />
-                <Skill contactId={contactId} tagType="Skill" />
-                <Skill contactId={contactId} tagType="Topic" />
-              </div>
-              <Resume />
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '30px',
-                  marginBottom: '80px',
-                }}
-              >
-                <Button color="green" onClick={pdfToHTML}>
-                  {' '}
-                  <Icon name="download" /> Download Resume
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </Container>
+          <ExperiencesList contactId={contactId} experienceType="Work" />
+          <ExperiencesList contactId={contactId} experienceType="Education" />
+          <ExperiencesList contactId={contactId} experienceType="Service" />
+          <ExperiencesList contactId={contactId} experienceType="Accomplishment" />
+
+          <Paper className={classes.paper}>
+            <Typography gutterBottom variant="h3" component="h1">
+              Skills and Abilities
+            </Typography>
+            <Divider className={classes.divider} />
+            <SkillsList contactId={contactId} tagType="Function" />
+            <SkillsList contactId={contactId} tagType="Skill" />
+            <SkillsList contactId={contactId} tagType="Topic" />
+          </Paper>
+
+          <ResumesList />
+        </Grid>
+      </Grid>
+
+      <Grid container justify="center" className={classes.wrapper}>
+        <Button variant="contained" color="primary" onClick={pdfToHTML}>
+          <Icon className={classes.leftIcon}>cloud_download</Icon> Download Resume
+        </Button>
+      </Grid>
     </div>
   );
 };
@@ -143,4 +116,23 @@ TalentProfile.propTypes = {
   refreshContacts: PropTypes.func.isRequired,
 };
 
-export default TalentProfile;
+const styles = ({ breakpoints, palette, spacing }) => ({
+  page: {
+    backgroundColor: 'hsl(216, 18%, 89%)',
+  },
+  wrapper: {
+    marginBottom: `${spacing.unit * 5}px`,
+  },
+  paper: {
+    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
+    marginBottom: `${spacing.unit * 5}px`,
+  },
+  divider: {
+    margin: `${spacing.unit * 1}px 0`,
+  },
+  leftIcon: {
+    marginRight: spacing.unit,
+  },
+});
+
+export default withStyles(styles)(TalentProfile);

@@ -28,67 +28,111 @@ import {
 export const resumeReducer = createReducer(
   {},
   {
-    // [CREATE_RESUME_API.RESOLVE]: (state, action) => {
-    // },
-    // [REFRESH_RESUME_API.RESOLVE]: (state, action) => {
-    // },
-    // [REFRESH_RESUMES_API.RESOLVE]: (state, action) => {
-    // },
-    // [UPDATE_RESUME_API.RESOLVE]: (state, action) => {
-    // },
-    // [DELETE_RESUME_API.RESOLVE]: (state, action) => {
-    // },
-    // [CREATE_SECTION_API.RESOLVE]: (state, action) => {
-    // },
-    // [REFRESH_SECTION_API.RESOLVE]: (state, action) => {
-    // },
-    // [UPDATE_SECTION_API.RESOLVE]: (state, action) => {
-    // },
-    // [UPDATE_RESUME_ITEMS_API.RESOLVE]: (state, action) => {
-    // },
-    // [DELETE_SECTION_API.RESOLVE]: (state, action) => {
-    // },
     [CREATE_RESUME_API.RESOLVE]: (state, action) => {
-      console.log('CREATE_RESUME_API', {state, action});
-    },
-    [REFRESH_RESUME_API.RESOLVE]: (state, action) => {
-      console.log('REFRESH_RESUME_API', {state, action});
       if (!action.body) {
         return {};
-      } else {
-        const {data} = action.body;
-        return {
-          ...data,
-          contactInfo: {
-            name: `${data.contact.first_name} ${data.contact.last_name}`,
-            email: data.contact.email_primary.email,
-          },
-        };
       }
+      const {data} = action.body;
+      return {
+        [data.id]: {
+          ...data,
+          contact_id: data.contact.id,
+          sections: {},
+        },
+      };
+    },
+    [CREATE_RESUME_API.REJECT]: (state, action) => {
+      return state;
+    },
+    [REFRESH_RESUME_API.RESOLVE]: (state, action) => {
+      if (!action.body) {
+        return {};
+      }
+      const {data} = action.body;
+      return {
+        ...state,
+        [data.id]: {
+          id: data.id,
+          name: data.name,
+          contact_id: data.contact.id,
+          sections: data.sections.reduce((object, section) => ({
+            ...object,
+            [section.id]: section,
+          }), {}),
+        },
+      };
+    },
+    [REFRESH_RESUME_API.REJECT]: (state, action) => {
+      return state;
     },
     [REFRESH_RESUMES_API.RESOLVE]: (state, action) => {
-      console.log('REFRESH_RESUMES_API', {state, action});
+      if (!action.body) {
+        return {};
+      }
+      // TODO
+      const {data} = action.body;
+      return {
+        ...state,
+        ...data.reduce((object, resume) => ({
+          ...object,
+          [resume.id]: resume,
+        }), {}),
+      };
     },
     [UPDATE_RESUME_API.RESOLVE]: (state, action) => {
-      console.log('UPDATE_RESUME_API', {state, action});
+      // console.log('UPDATE_RESUME_API', {state, action});
     },
     [DELETE_RESUME_API.RESOLVE]: (state, action) => {
-      console.log('DELETE_RESUME_API', {state, action});
+      // console.log('DELETE_RESUME_API', {state, action});
     },
     [CREATE_SECTION_API.RESOLVE]: (state, action) => {
-      console.log('CREATE_SECTION_API', {state, action});
+      if (!action.body) {
+        return {};
+      }
+      const {data} = action.body;
+      const resume = state[data.resume_id];
+      const updatedResume = {
+        ...resume,
+        sections: {
+          ...resume.sections,
+          [data.id]: data,
+        },
+      };
+      return {
+        ...state,
+        [data.resume_id]: updatedResume,
+      };
     },
     [REFRESH_SECTION_API.RESOLVE]: (state, action) => {
-      console.log('REFRESH_SECTION_API', {state, action});
+      // console.log('REFRESH_SECTION_API', {state, action});
     },
     [UPDATE_SECTION_API.RESOLVE]: (state, action) => {
-      console.log('UPDATE_SECTION_API', {state, action});
+      if (!action.body) {
+        return {};
+      }
+      const {data} = action.body;
+      const resume = state[data.resume_id];
+      const updatedResume = {
+        ...resume,
+        sections: {
+          ...resume.sections,
+          [data.id]: {
+            ...resume.sections[data.id],
+            ...data,
+          },
+        },
+      };
+      return {
+        ...state,
+        [data.resume_id]: updatedResume,
+
+      };
     },
     [UPDATE_RESUME_ITEMS_API.RESOLVE]: (state, action) => {
-      console.log('UPDATE_RESUME_ITEMS_API', {state, action});
+      // console.log('UPDATE_RESUME_ITEMS_API', {state, action});
     },
     [DELETE_SECTION_API.RESOLVE]: (state, action) => {
-      console.log('DELETE_SECTION_API', {state, action});
+      // console.log('DELETE_SECTION_API', {state, action});
     },
   }
 );

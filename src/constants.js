@@ -1,11 +1,11 @@
 const getApiUrl = (environment) => {
   switch (environment) {
     case 'production':
-      return 'https://api.baltimorecorps.org/';
+      return 'http://api.baltimorecorps.org';
     case 'staging':
-      return 'https://dev-api.baltimorecorps.org/';
+      return 'http://dev-api.baltimorecorps.org';
     default:
-      return 'http://127.0.0.1:5000/';
+      return 'http://localhost:5000';
   }
 };
 

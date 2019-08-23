@@ -1,15 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { Form } from 'semantic-ui-react';
 import 'react-datepicker/dist/react-datepicker.css';
 import Modal from 'react-awesome-modal';
+
 import Autosuggest from 'react-autosuggest';
 import './autoSuggest.css';
 import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
-import { scoreToString } from './skillUtil';
+import getTextScore from 'modules/Tags/utilities/getTextScore';
 
-import useFormUpdate from './useFormUpdate';
+import useFormUpdate from 'components/Profile/useFormUpdate';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -32,7 +34,7 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
+const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onCancel }) => {
   const [values, { handleChange, handleSuggestion, handleSubmit, handleScore }] = useForm(
     tag,
     onSubmit,
@@ -88,13 +90,13 @@ const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
               <br />
               <Dropdown as={ButtonGroup}>
                 <Button size="lg" variant="success">
-                  {scoreToString(values.score)}
+                  {getTextScore(values.score)}
                 </Button>
                 <Dropdown.Toggle split variant="warning" id="dropdown-custom-2" />
                 <Dropdown.Menu className="super-colors">
                   {[1, 2, 3, 4].map((item) => (
                     <Dropdown.Item key={item} eventKey={item} onSelect={handleScore}>
-                      {scoreToString(item)}
+                      {getTextScore(item)}
                     </Dropdown.Item>
                   ))}
                 </Dropdown.Menu>
@@ -119,7 +121,7 @@ const SkillUpdateForm = ({ allTags, tag, onSubmit, onCancel }) => {
   );
 };
 
-SkillUpdateForm.propTypes = {
+AddOrEditSkillForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   allTags: PropTypes.array.isRequired,
@@ -133,4 +135,4 @@ SkillUpdateForm.propTypes = {
   }).isRequired,
 };
 
-export default SkillUpdateForm;
+export default AddOrEditSkillForm;

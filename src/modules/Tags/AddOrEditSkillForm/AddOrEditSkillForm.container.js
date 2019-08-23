@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'redux-starter-kit';
-import SkillUpdateForm from './SkillUpdateForm';
+import AddOrEditSkillForm from './AddOrEditSkillForm';
 
 const getTags = createSelector(
   ['tags'],
@@ -26,5 +26,5 @@ export const makeMapStateToProps = () => {
   return mapStateToProps;
 };
 
-const SkillUpdateFormContainer = connect(makeMapStateToProps)(SkillUpdateForm);
-export default SkillUpdateFormContainer;
+const AddOrEditSkillFormContainer = connect(makeMapStateToProps)(AddOrEditSkillForm);
+export default AddOrEditSkillFormContainer;
