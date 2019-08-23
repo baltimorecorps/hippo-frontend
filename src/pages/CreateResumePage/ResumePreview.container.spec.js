@@ -1,4 +1,4 @@
-import { makeMapStateToProps } from './ResumePreview.container';
+import { mapStateToProps } from './ResumePreview.container';
 
 const SECTIONS = {
   1: {
@@ -161,7 +161,6 @@ describe('State mapping', () => {
       resumeId: 3,
     };
 
-    const mapStateToProps = makeMapStateToProps();
     const props = mapStateToProps(state, ownProps);
     expect(props).toHaveProperty('experiences');
     expect(props.experiences).toHaveProperty('work');
@@ -188,7 +187,6 @@ describe('State mapping', () => {
       resumeId: 3,
     };
 
-    const mapStateToProps = makeMapStateToProps();
     const props = mapStateToProps(state, ownProps);
     expect(props).toHaveProperty('experiences');
     expect(props.experiences).toHaveProperty('service');
@@ -224,7 +222,6 @@ describe('State mapping', () => {
       resumeId: 3,
     };
 
-    const mapStateToProps = makeMapStateToProps();
     const props = mapStateToProps(state, ownProps);
     expect(props).toHaveProperty('experiences');
     expect(props.experiences).toHaveProperty('education');
@@ -259,7 +256,6 @@ describe('State mapping', () => {
       resumeId: 3,
     };
 
-    const mapStateToProps = makeMapStateToProps();
     const props = mapStateToProps(state, ownProps);
     expect(props).toHaveProperty('skillGroups');
     expect(props.skillGroups).toHaveProperty("Functions I've Performed");

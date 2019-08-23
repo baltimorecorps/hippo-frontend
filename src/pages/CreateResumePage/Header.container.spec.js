@@ -1,4 +1,4 @@
-import { makeMapStateToProps } from './Header.container';
+import { mapStateToProps } from './Header.container';
 
 test('test state mapping', () => {
   const state = {
@@ -18,7 +18,6 @@ test('test state mapping', () => {
     resumeId: 3,
   };
 
-  const mapStateToProps = makeMapStateToProps();
   const props = mapStateToProps(state, ownProps);
   expect(props).toHaveProperty('name');
   expect(props.name).toEqual('Test Resume 3');
