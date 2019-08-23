@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Icon from '@material-ui/core/Icon';
 import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 import ErrorBoundary from 'atoms/ErrorBoundary';
 
@@ -16,13 +17,13 @@ import theme from 'styles/theme';
 import GeneratedResumePage from 'pages/GeneratedResumePage/GeneratedResumePage.container';
 import CreateResumePage from 'pages/CreateResumePage';
 
-const App = () => (
+const App = ({classes}) => (
   <ErrorBoundary fileName="src/App.js">
     <MuiThemeProvider theme={theme}>
       <Router>
-        <React.Fragment>
+        <div className={classes.page}>
 
-          <AppBar position="static">
+          <AppBar position="fixed">
             <Toolbar>
               <Link to="/">
                 <MenuItem>
@@ -41,6 +42,7 @@ const App = () => (
               </Link>
             </Toolbar>
           </AppBar>
+          <Toolbar />
 
           <Switch>
             {/*<Route path="/" component={AuthPage} />*/}
@@ -55,10 +57,17 @@ const App = () => (
             <Route exact path="/Contacts/:contactId/create-resume/:resumeId" component={CreateResumePage} />
           </Switch>
 
-        </React.Fragment>
+        </div>
       </Router>
     </MuiThemeProvider>
   </ErrorBoundary>
 );
 
-export default App;
+const styles = ({ breakpoints, palette, spacing }) => ({
+  page: {
+    backgroundColor: 'hsl(216, 18%, 89%)',
+    paddingBottom: `${spacing.unit * 5}px`,
+  },
+});
+
+export default withStyles(styles)(App);

@@ -68,7 +68,7 @@ const TalentProfile = ({ contactId, contactInfo, refreshContacts, classes }) => 
   const email = contactInfo.email_primary ? contactInfo.email_primary.email : '';
 
   return (
-    <div className={classes.page}>
+    <React.Fragment>
       <Grid id="divToPrint" container justify="center" className={classes.wrapper}>
         <Grid item xs={8}>
           <BasicInfoDisplay
@@ -97,12 +97,12 @@ const TalentProfile = ({ contactId, contactInfo, refreshContacts, classes }) => 
         </Grid>
       </Grid>
 
-      <Grid container justify="center" className={classes.wrapper}>
+      <Grid container justify="center">
         <Button variant="contained" color="primary" onClick={pdfToHTML}>
           <Icon className={classes.leftIcon}>cloud_download</Icon> Download Resume
         </Button>
       </Grid>
-    </div>
+    </React.Fragment>
   );
 };
 TalentProfile.propTypes = {

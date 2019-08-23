@@ -99,7 +99,7 @@ const ExperiencesList = ({
 
 ExperiencesList.propTypes = {
   contactId: PropTypes.number.isRequired,
-  experienceType: PropTypes.oneOf(['work', 'service', 'accomplishment', 'education']).isRequired,
+  experienceType: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
   experiences: PropTypes.array.isRequired,
   addNewExperience: PropTypes.func.isRequired,
   updateExperience: PropTypes.func.isRequired,
