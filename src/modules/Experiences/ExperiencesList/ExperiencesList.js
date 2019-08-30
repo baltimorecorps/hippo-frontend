@@ -10,9 +10,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import ExperiencesListItem from './ExperiencesListItem';
 
-//todo: check how to write if/else in render/function
-//todo: check how to write clickable icon
-
 const ExperiencesList = ({
   contactId,
   experienceType,

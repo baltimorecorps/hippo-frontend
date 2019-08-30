@@ -77,12 +77,11 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
             email={email}
             phone={contactInfo.phone_primary}
           />
-        {false && <React.Fragment>
+
           <ExperiencesList contactId={contactId} experienceType="Work" />
           <ExperiencesList contactId={contactId} experienceType="Education" />
           <ExperiencesList contactId={contactId} experienceType="Service" />
           <ExperiencesList contactId={contactId} experienceType="Accomplishment" />
-</React.Fragment>}
 
           <Paper className={classes.paper}>
             <Typography gutterBottom variant="h3" component="h1">

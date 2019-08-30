@@ -58,6 +58,7 @@ const configureForm = (expType) => {
         host: 'Organization',
         title: 'Title',
       },
+      showDescription: true,
       showEndDate: true,
       showAchievements: true,
     };
@@ -91,6 +92,7 @@ const configureForm = (expType) => {
       },
       showEndDate: true,
       showDegree: true,
+      showDescription: true,
       showAchievements: true,
     };
   }
