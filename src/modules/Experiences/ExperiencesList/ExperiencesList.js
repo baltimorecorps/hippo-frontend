@@ -58,18 +58,9 @@ const ExperiencesList = ({
               </Typography>
             </Grid>
             <Grid item>
-              <button
-                style={{
-                  border: 'none',
-                  backgroundColor: 'transparent',
-                  cursor: 'pointer',
-                }}
-                onClick={() => setShowForm(true)}
-              >
-                <Icon>
-                  add
-                </Icon>
-              </button>
+              <Icon onClick={() => setShowForm(true)}>
+                add
+              </Icon>
             </Grid>
           </Grid>
 
@@ -116,11 +107,11 @@ const headers = {
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   paper: {
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
-    marginBottom: `${spacing.unit * 5}px`,
+    padding: spacing(2, 3, 3),
+    marginBottom: spacing(5),
   },
   divider: {
-    margin: `${spacing.unit * 1}px 0`,
+    margin: spacing(1, 0),
   },
 });
 

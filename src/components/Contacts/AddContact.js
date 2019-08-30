@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -9,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 // const RACES = [
 //   {
@@ -64,6 +64,7 @@ const AddContact = ({ classes, addNewContact }) => {
     handleSubmit();
     setOpen(false);
   };
+
   return (
     <React.Fragment>
       <Button
@@ -75,29 +76,30 @@ const AddContact = ({ classes, addNewContact }) => {
         New Profile
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add New Profile</DialogTitle>
-        <DialogContent>
-          <form className={classes.container} noValidate autoComplete="off">
-            <Grid container direction="column" justify="flex-start" alignItems="flex-start">
+        <DialogTitle id="form-dialog-title" className={classes.header}>
+          Add New Profile
+        </DialogTitle>
+
+        <DialogContent className={classes.container}>
+          <form noValidate autoComplete="off">
+            <Grid container direction="column">
               <TextField
                 required
-                id="standard-name"
+                id="first-name"
                 label="First Name"
                 className={classes.textField}
                 name="first_name"
                 value={values.first_name}
                 onChange={handleChange}
-                margin="normal"
               />
               <TextField
                 required
-                id="standard-name"
+                id="last-name"
                 label="Last Name"
                 className={classes.textField}
                 name="last_name"
                 value={values.last_name}
                 onChange={handleChange}
-                margin="normal"
               />
               <TextField
                 required
@@ -107,7 +109,6 @@ const AddContact = ({ classes, addNewContact }) => {
                 value={values.email}
                 onChange={handleChange}
                 className={classes.textField}
-                margin="normal"
               />
 
               <TextField
@@ -118,12 +119,12 @@ const AddContact = ({ classes, addNewContact }) => {
                 value={values.phone_primary}
                 onChange={handleChange}
                 className={classes.textField}
-                margin="normal"
               />
             </Grid>
           </form>
         </DialogContent>
-        <DialogActions>
+
+        <DialogActions className={classes.actions}>
           <Button onClick={submit} variant="contained" color="primary">
             Create Profile
           </Button>
@@ -141,22 +142,19 @@ AddContact.propTypes = {
   addNewContact: PropTypes.func.isRequired,
 };
 
-const styles = ({ breakpoints, palette, spacing, theme }) => ({
+const styles = ({ breakpoints, palette, spacing }) => ({
+  header: {
+    padding: spacing(2, 3, 0),
+  },
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: '50px',
+    marginBottom: spacing(3),
   },
   textField: {
-    marginLeft: spacing.unit,
-    marginRight: spacing.unit,
-    width: 200,
+    marginBottom: spacing(1),
   },
-  dense: {
-    marginTop: 19,
-  },
-  menu: {
-    width: 200,
+  actions: {
+    padding: spacing(0, 3),
+    marginBottom: spacing(3),
   },
 });
 

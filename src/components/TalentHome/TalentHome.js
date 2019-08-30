@@ -1,74 +1,64 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
-import { Divider, Button } from 'semantic-ui-react';
-import OpportunityCardProps from './OpportunityCardProps';
-import ApplicationCardProps from './ApplicationCardProps';
-import TalentCardProps from './TalentCardProps';
+import CardGroup from 'components/CardGroup';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 
-class TalentHome extends React.Component {
-  state = {
-    isUser: true,
-  };
-  render() {
-    return (
-      <div style={{ marginTop: '25px' }}>
-        <Container>
-          <Row style={{ backgroundColor: 'lightblue', height: '150px' }}>
-            <Col style={{ padding: '20px' }}>
-              <h1>Billy Daly</h1>
-              <p>
-                <Link to="/TalentProfile">
-                  {' '}
-                  <Button>View Your Profile-></Button>{' '}
-                </Link>
-              </p>
-            </Col>
-            <Col />
+import applicationCardItems from './applicationCardItems';
+import opportunityCardItems from './opportunityCardItems';
+import talentCardItems from './talentCardItems';
 
-            <Col style={{ marginTop: '20px' }}>
-              <Link to="/TalentProfile">
-                <Button>+Update Education</Button>
+const TalentHome = () => {
+  return (
+    <Grid container justify="center">
+      <Grid item xs={11}>
+        <Grid container style={{ backgroundColor: 'lightblue', padding: 20, marginBottom: 20 }}>
+          <Grid item xs={12} sm={6}>
+            <h1>Billy Daly</h1>
+            <p>
+              <Link to="/profile">
+                <Button variant="contained">View Your Profile-></Button>
               </Link>
-              <Divider />
-              <Link to="/TalentProfile">
-                <Button>+Update Work Experience</Button>
-              </Link>
-            </Col>
-          </Row>
-          <Row
-            style={{
-              backgroundColor: 'white',
-              height: '200px',
-              marginTop: '20px',
-            }}
-          >
-            <div>
-              <h2>Opportunities Recommended for You</h2>
-              <div style={{ marginLeft: '100px' }}>
-                <OpportunityCardProps />
-              </div>
-            </div>
-          </Row>
-          <Row style={{ backgroundColor: 'white', height: '200px' }}>
-            <div>
-              <h2>Your Applications</h2>
-              <div style={{ marginLeft: '100px' }}>
-                <ApplicationCardProps />
-              </div>
-            </div>
-          </Row>
-          <Row style={{ height: '200px' }}>
-            <div>
-              <h2>You may want to connect with</h2>
-              <div style={{ marginLeft: '100px' }}>
-                <TalentCardProps />
-              </div>
-            </div>
-          </Row>
-        </Container>
-      </div>
-    );
-  }
-}
+            </p>
+          </Grid>
+
+          <Grid item>
+            <Link to="/profile">
+              <Button variant="contained">Update Education</Button>
+            </Link>
+            <Divider style={{ margin: '20px 0' }}/>
+            <Link to="/profile">
+              <Button variant="contained">Update Work Experience</Button>
+            </Link>
+          </Grid>
+        </Grid>
+
+        <Grid container direction="column" style={styles.section}>
+          <h2>Opportunities Recommended for You</h2>
+          <CardGroup items={opportunityCardItems} />
+        </Grid>
+
+        <Grid container direction="column" style={styles.section}>
+          <h2>Your Applications</h2>
+          <CardGroup items={applicationCardItems} />
+        </Grid>
+
+        <Grid container direction="column" style={styles.section}>
+          <h2>You may want to connect with</h2>
+          <CardGroup items={talentCardItems} />
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
+const styles = {
+  section: {
+    backgroundColor: 'white',
+    padding: 20,
+    marginBottom: 20,
+  },
+};
+
 export default TalentHome;

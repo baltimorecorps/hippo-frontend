@@ -16,7 +16,7 @@ import ResumesList from 'modules/Resumes/ResumesList';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-const TalentProfile = ({ contactId, contactInfo, refreshContacts, classes }) => {
+const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
   if (typeof contactInfo === 'undefined') {
     refreshContacts();
     return <div />;
@@ -77,11 +77,12 @@ const TalentProfile = ({ contactId, contactInfo, refreshContacts, classes }) => 
             email={email}
             phone={contactInfo.phone_primary}
           />
-
+        {false && <React.Fragment>
           <ExperiencesList contactId={contactId} experienceType="Work" />
           <ExperiencesList contactId={contactId} experienceType="Education" />
           <ExperiencesList contactId={contactId} experienceType="Service" />
           <ExperiencesList contactId={contactId} experienceType="Accomplishment" />
+</React.Fragment>}
 
           <Paper className={classes.paper}>
             <Typography gutterBottom variant="h3" component="h1">
@@ -105,7 +106,7 @@ const TalentProfile = ({ contactId, contactInfo, refreshContacts, classes }) => 
     </React.Fragment>
   );
 };
-TalentProfile.propTypes = {
+ProfilePage.propTypes = {
   contactId: PropTypes.any.isRequired,
   contactInfo: PropTypes.shape({
     first_name: PropTypes.string.isRequired,
@@ -121,18 +122,18 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     backgroundColor: 'hsl(216, 18%, 89%)',
   },
   wrapper: {
-    marginBottom: `${spacing.unit * 5}px`,
+    marginBottom: spacing(5),
   },
   paper: {
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
-    marginBottom: `${spacing.unit * 5}px`,
+    padding: spacing(2, 3, 3),
+    marginBottom: spacing(5),
   },
   divider: {
-    margin: `${spacing.unit * 1}px 0`,
+    margin: spacing(1, 0),
   },
   leftIcon: {
-    marginRight: spacing.unit,
+    marginRight: spacing(1),
   },
 });
 
-export default withStyles(styles)(TalentProfile);
+export default withStyles(styles)(ProfilePage);

@@ -22,7 +22,7 @@ const ResumesList = ({
           <Typography gutterBottom variant="h3" component="h1">
             Resumes
           </Typography>
-          <Grid container spacing={24}>
+          <Grid container spacing={3}>
             {resumes.map(({id, name}) =>
               <ResumesListItem key={id} contactId={contactId} resumeId={id} name={name} />
             )}
@@ -35,7 +35,7 @@ const ResumesList = ({
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   paper: {
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
+    padding: spacing(2, 3, 3),
   },
 });
 

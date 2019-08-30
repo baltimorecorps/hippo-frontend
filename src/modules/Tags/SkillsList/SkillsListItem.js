@@ -66,7 +66,7 @@ SkillsListItem.propTypes = {
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   wrapper: {
-    marginBottom: `${spacing.unit * 1}px`,
+    marginBottom: spacing(1),
   },
 });
 

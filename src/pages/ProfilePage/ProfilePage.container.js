@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import TalentProfile from './TalentProfile';
-import { refreshContacts } from '../../actions/contacts';
+import { refreshContacts } from 'actions/contacts';
+import ProfilePage from './ProfilePage';
 
 // eslint-disable-next-line no-unused-vars
 const addNewContact = (dispatch) =>
@@ -24,6 +24,6 @@ const mapDispatchToProps = (dispatch) => ({
 const ProfileContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(TalentProfile);
+)(ProfilePage);
 
 export default ProfileContainer;

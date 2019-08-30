@@ -36,8 +36,8 @@ BasicInfoDisplay.propTypes = {
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   paper: {
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
-    margin: `${spacing.unit * 5}px 0`,
+    padding: spacing(2, 3, 3),
+    margin: spacing(5, 0),
   },
 });
 

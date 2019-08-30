@@ -1,15 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-/*import PropTypes from '../lib/PropTypes';*/
 import PropTypes from 'prop-types';
-//import classNames from "classnames";
-//import MenuItem from "@material-ui/core/MenuItem";
-//import Button from '@material-ui/core/Button';
-import { Button } from 'semantic-ui-react';
+import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-/*import { withStyles } from "@material-ui/core/styles";*/
 import TextField from '@material-ui/core/TextField';
 
 const races = [
@@ -154,8 +149,7 @@ class TextFields extends React.Component {
             />
             <div>
               <Link to="/Talent">
-                {' '}
-                <Button fluid type="submit" color="primary">
+                <Button type="submit" color="primary">
                   Submit
                 </Button>
               </Link>
@@ -177,8 +171,8 @@ const styles = ({ breakpoints, palette, spacing, theme }) => ({
     padding: '50px',
   },
   textField: {
-    marginLeft: spacing.unit,
-    marginRight: spacing.unit,
+    marginLeft: spacing(1),
+    marginRight: spacing(1),
     width: 200,
   },
   dense: {
@@ -189,30 +183,30 @@ const styles = ({ breakpoints, palette, spacing, theme }) => ({
   },
   main: {
     width: 'auto',
-    marginLeft: spacing.unit * 3,
-    marginRight: spacing.unit * 3,
-    [breakpoints.up(400 + spacing.unit * 3 * 2)]: {
+    marginLeft: spacing(3),
+    marginRight: spacing(3),
+    [breakpoints.up(400 + spacing(3 * 2))]: {
       width: 400,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
   },
   paper: {
-    marginTop: spacing.unit * 8,
+    marginTop: spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
+    padding: spacing(2, 3, 3),
   },
   avatar: {
     width: '100%',
-    marginBottom: spacing.unit,
+    marginBottom: spacing(1),
   },
   password: {
-    marginBottom: spacing.unit * 3,
+    marginBottom: spacing(3),
   },
   submitButton: {
-    marginBottom: spacing.unit * 3,
+    marginBottom: spacing(3),
   },
 });
 

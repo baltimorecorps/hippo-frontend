@@ -14,7 +14,7 @@ const ContactList = ({ contacts, refreshContacts }) => {
   return (
     <List>
       {contacts.map((c) => (
-        <ListItem key={c.id} component={Link} to={`/Profile/${c.id}`} divider>
+        <ListItem key={c.id} component={Link} to={`/profile/${c.id}`} divider>
           <ListItemText primary={`${c.first_name} ${c.last_name}`} />
         </ListItem>
       ))}

@@ -1,26 +1,8 @@
 import React from 'react';
-/*import PropTypes from '../lib/PropTypes';*/
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-//import Navbar from "react-bootstrap/Navbar";
-//import Nav from "react-bootstrap/Nav";
-//import Form from "react-bootstrap/Form";
-//import FormControl from "react-bootstrap/FormControl";
-//import Button from "react-bootstrap/Button";
-//import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-import '../../index.css';
-
 import PropTypes from 'prop-types';
-//import classNames from "classnames";
-//import MenuItem from "@material-ui/core/MenuItem";
-//import Button from '@material-ui/core/Button';
-//import Paper from '@material-ui/core/Paper';
-//import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-/*import { withStyles } from "@material-ui/core/styles";*/
-//import TextField from '@material-ui/core/TextField';
+
 import { blue } from '@material-ui/core/colors';
 
 class ContactInfo extends React.Component {
@@ -41,9 +23,9 @@ class ContactInfo extends React.Component {
   render() {
     //const { classes } = this.props;
     return (
-      <div>
-        <Container>
-          <Row className="profileHeader">
+      <Grid container justify="center">
+        <Grid item xs={11}>
+          <Grid container className="profileHeader">
             <div style={{ paddingTop: '30px', margin: '20px' }}>
               <h1>Billy Daly</h1>
               <p>Data Science & Data Architecture</p>
@@ -54,21 +36,22 @@ class ContactInfo extends React.Component {
               <p>908-578-4622</p>
               <p>Baltimore, MD 21201</p>
             </div>
-          </Row>
-          <Row
+          </Grid>
+
+          <Grid container
             style={{
               minHeight: '780px',
               minWidth: '800px',
               overflow: 'scroll',
             }}
           >
-            <Col
+            <Grid item
               className="column"
               xs={12}
               md={8}
               style={{ backgroundColor: '#eaf9f9', overflow: 'hidden' }}
             >
-              <Row>
+              <Grid container>
                 <div className="infoBlock">
                   <h5> Work Experience </h5>
                   <p>
@@ -102,9 +85,9 @@ class ContactInfo extends React.Component {
                   </div>
                   <br />
                 </div>
-              </Row>
+              </Grid>
 
-              <Row>
+              <Grid container>
                 <div className="infoBlock">
                   <h5> Service and Leadership </h5>
                   <p>
@@ -116,12 +99,12 @@ class ContactInfo extends React.Component {
                   <div>
                     {' '}
                     Contributed to the DGS GitHub repository for analyzing city-wide data. Presented
-                    on Baltimore Corps' use of python for data science.
+                    on Baltimore Corps use of python for data science.
                   </div>
                   <br />
                 </div>
-              </Row>
-              <Row>
+              </Grid>
+              <Grid container>
                 <div className="infoBlock">
                   <h5> Education </h5>
                   <p>
@@ -137,15 +120,15 @@ class ContactInfo extends React.Component {
 
                   <br />
                 </div>
-              </Row>
-            </Col>
-            <Col
+              </Grid>
+            </Grid>
+            <Grid item
               className="accomColumn"
               xs={6}
               md={4}
               style={{ backgroundColor: '#e6f9e3', overflow: 'hidden' }}
             >
-              <Row>
+              <Grid container>
                 <div className="infoBlock">
                   <h5> Accomplishments </h5>
                   <div className="rightCol">
@@ -170,8 +153,8 @@ class ContactInfo extends React.Component {
                   </div>
                   <br />
                 </div>
-              </Row>
-              <Row>
+              </Grid>
+              <Grid container>
                 <div className="infoBlock">
                   <h5>Skills and Abilities </h5>
                   <div className="allSkills">
@@ -217,11 +200,11 @@ class ContactInfo extends React.Component {
                     <br />
                   </div>
                 </div>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -231,7 +214,7 @@ ContactInfo.propTypes = {
 };
 
 const styles = ({ breakpoints, palette, spacing, theme }) => ({
-  container: {
+  Grid: {
     display: 'flex',
     flexWrap: 'wrap',
     padding: '50px',
@@ -240,8 +223,8 @@ const styles = ({ breakpoints, palette, spacing, theme }) => ({
     backgroundColor: blue,
   },
   textField: {
-    marginLeft: spacing.unit,
-    marginRight: spacing.unit,
+    marginLeft: spacing(1),
+    marginRight: spacing(1),
     width: 200,
   },
   dense: {
@@ -252,30 +235,30 @@ const styles = ({ breakpoints, palette, spacing, theme }) => ({
   },
   main: {
     width: 'auto',
-    marginLeft: spacing.unit * 3,
-    marginRight: spacing.unit * 3,
-    [breakpoints.up(400 + spacing.unit * 3 * 2)]: {
+    marginLeft: spacing(3),
+    marginRight: spacing(3),
+    [breakpoints.up(400 + spacing(3 * 2))]: {
       width: 400,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
   },
   paper: {
-    marginTop: spacing.unit * 8,
+    marginTop: spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
+    padding: spacing(2, 3, 3),
   },
   avatar: {
     width: '100%',
-    marginBottom: spacing.unit,
+    marginBottom: spacing(1),
   },
   password: {
-    marginBottom: spacing.unit * 3,
+    marginBottom: spacing(3),
   },
   submitButton: {
-    marginBottom: spacing.unit * 3,
+    marginBottom: spacing(3),
   },
 });
 

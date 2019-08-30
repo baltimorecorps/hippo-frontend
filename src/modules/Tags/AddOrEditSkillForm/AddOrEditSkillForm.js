@@ -1,123 +1,83 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Form } from 'semantic-ui-react';
-import 'react-datepicker/dist/react-datepicker.css';
-import Modal from 'react-awesome-modal';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import Autosuggest from 'react-autosuggest';
-import './autoSuggest.css';
-import { Dropdown, Button, ButtonGroup } from 'react-bootstrap';
-import getTextScore from 'modules/Tags/utilities/getTextScore';
+import ReactSelect from 'react-select';
 
-import useFormUpdate from 'components/Profile/useFormUpdate';
+import useFormUpdate from 'lib/useFormUpdate';
+import SkillLevelDropdown from './SkillLevelDropdown';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
-    handleChange: (event, { newValue, method }) => {
-      if (method === 'type') {
-        update('name')(newValue);
-      } else {
-        update('name')(newValue.name);
-        update('tag_id')(newValue.id);
-      }
+    handleSelect: (value) => {
+      update('name')(value.name);
+      update('tag_id')(value.id);
     },
-    handleScore: (value) => update('score')(parseInt(value)),
-    handleSubmit: () => {
-      onSubmit(values);
-    },
+    handleScore: (event) => update('score')(parseInt(event.target.value)),
+    handleSubmit: () => onSubmit(values),
   };
 
   return [values, handlers];
 };
 
-const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onCancel }) => {
-  const [values, { handleChange, handleSuggestion, handleSubmit, handleScore }] = useForm(
+const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onCancel, classes }) => {
+  const [values, { handleSelect, handleSubmit, handleScore }] = useForm(
     tag,
     onSubmit,
   );
 
-  // AUTOSUGGEST setup
-  const [suggestions, setSuggestions] = useState([]);
-  // eslint-disable-next-line no-unused-vars
-  const [currSuggestion, setCurrSuggestion] = useState(values.name);
-
-  const getSuggestions = (value) => {
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-    if (inputLength === 0) return [];
-    return allTags.filter((data) => data.name.toLowerCase().slice(0, inputLength) === inputValue);
-  };
-
-  const onSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value));
-  };
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-  const getSuggestionValue = (suggestion) => suggestion;
-  const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
-  const inputProps = {
-    placeholder: 'Type to Find A Skill',
-    name: 'name',
-    value: values.name,
-    onChange: handleChange,
+  const getOptionLabel = ({type, name}) => name;
+  const isOptionSelected = ({ id }, options) => !!options.find((o) => o.id === id);
+  const selectedTag = {
+    id: values.tag_id,
+    name: values.name,
   };
 
   return (
-    <div>
-      <Modal visible="true" width="400" height="300" effect="fadeInUp">
-        <div style={{ margin: '20px' }}>
-          <h3>Add Skill</h3>
-          <Form>
-            <Form.Field>
-              <label> </label>
-              <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps}
-                onClick={handleSuggestion}
-              />
-            </Form.Field>
+    <Dialog open={true}>
+      <DialogTitle id="form-dialog-title" className={classes.header}>
+        Add Skill
+      </DialogTitle>
 
-            <Form.Field>
-              <br />
-              <Dropdown as={ButtonGroup}>
-                <Button size="lg" variant="success">
-                  {getTextScore(values.score)}
-                </Button>
-                <Dropdown.Toggle split variant="warning" id="dropdown-custom-2" />
-                <Dropdown.Menu className="super-colors">
-                  {[1, 2, 3, 4].map((item) => (
-                    <Dropdown.Item key={item} eventKey={item} onSelect={handleScore}>
-                      {getTextScore(item)}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-            </Form.Field>
-            <br />
+      <form noValidate autoComplete="off">
+        <DialogContent className={classes.container}>
+          <ReactSelect
+            placeholder='Type to find a Skill'
+            options={allTags}
+            value={selectedTag}
+            getOptionLabel={getOptionLabel}
+            isOptionSelected={isOptionSelected}
+            onChange={handleSelect}
+          />
 
-            <p>
-              {' '}
-              <Button type="submit" onClick={handleSubmit} value="Save">
-                {' '}
-                Save
-              </Button>{' '}
-              <Button type="button" onClick={onCancel} value="Cancel">
-                Cancel
-              </Button>
-            </p>
-          </Form>
-        </div>
-      </Modal>
-    </div>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="skillLevel">
+              Skill Level
+            </InputLabel>
+            <SkillLevelDropdown value={values.score} onChange={handleScore} />
+          </FormControl>
+        </DialogContent>
+
+        <DialogActions className={classes.actions}>
+          <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
+            Save
+          </Button>
+          <Button type="button" onClick={onCancel}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 };
 
@@ -135,4 +95,22 @@ AddOrEditSkillForm.propTypes = {
   }).isRequired,
 };
 
-export default AddOrEditSkillForm;
+const styles = ({ breakpoints, palette, spacing }) => ({
+  header: {
+    padding: spacing(2, 3, 0),
+  },
+  container: {
+    height: 300,
+    width: 300,
+    marginBottom: spacing(3),
+  },
+  textField: {
+    marginBottom: spacing(1),
+  },
+  actions: {
+    padding: spacing(0, 3),
+    marginBottom: spacing(3),
+  },
+});
+
+export default withStyles(styles)(AddOrEditSkillForm);

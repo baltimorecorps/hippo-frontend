@@ -1,25 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
+import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Modal from 'react-awesome-modal';
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import useFormUpdate from 'lib/useFormUpdate';
 
-import { Form } from 'semantic-ui-react';
-import { Button, Divider, Dropdown } from 'semantic-ui-react';
-
-import Achievements from './Achievements';
-import useFormUpdate from 'components/Profile/useFormUpdate';
-
-const DEGREE_OPTIONS = [
-  { key: 'high_school', text: 'High School', value: 'High School' },
-  { key: 'associates', text: 'Associates', value: 'Associates' },
-  { key: 'undergraduate', text: 'Undergraduate', value: 'Undergraduate' },
-  { key: 'masters', text: 'Masters', value: 'Masters' },
-  { key: 'doctoral', text: 'Doctoral', value: 'Doctoral' },
-];
+import AchievementInputsList from './AchievementInputsList';
+import DatePicker from './DatePicker';
+import DegreeDropdown from './DegreeDropdown';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -46,8 +42,8 @@ const useForm = (initialValues, onSubmit) => {
     handleSubmit: () => {
       onSubmit(values);
     },
-    handleDegree: (event, { value }) => {
-      update('degree')(value);
+    handleDegree: (event) => {
+      update('degree')(event.target.value);
     },
     handleAchievements: update('achievements'),
   };
@@ -134,120 +130,97 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
   };
 
   return (
-    <div>
-      <Modal visible="true" width="400" minHeight={750} effect="fadeInUp">
-        <div style={{ margin: '20px' }}>
-          <Form>
-            <Form.Field>
-              <label>
-                {' '}
-                <h3>{config.labels.host || 'Organization'}:</h3>{' '}
-              </label>
-              <input
-                placeholder="Organization Name"
-                value={values.host}
-                name="host"
-                onChange={handleChange}
-              />
-            </Form.Field>
-            {config.showDegree ? (
-              <Form.Field>
-                <label>
-                  <h3>{config.labels.degree || 'Degree'}: </h3>
-                  <Dropdown
-                    placeholder="Select Degree"
-                    fluid
-                    selection
-                    options={DEGREE_OPTIONS}
-                    name="degree"
-                    value={values.degree}
-                    onChange={handleDegree}
-                  />
-                </label>
-              </Form.Field>
-            ) : null}
+    <Modal className={classes.modal} open={true} width="400">
+      <Card>
+        <form autoComplete="off">
+          <CardContent>
+            <TextField
+              className={classes.formControl}
+              label={config.labels.host || 'Organization'}
+              value={values.host}
+              name="host"
+              onChange={handleChange}
+            />
 
-            <Form.Field>
-              <label>
-                <h3>{config.labels.title || 'Title'}: </h3>
-                <input
-                  placeholder="Title Name"
-                  value={values.title}
-                  name="title"
-                  onChange={handleChange}
-                />
-              </label>
-            </Form.Field>
+            {config.showDegree &&
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="degree">
+                  Degree
+                </InputLabel>
+                <DegreeDropdown value={values.degree} onChange={handleDegree} />
+              </FormControl>
+            }
 
-            <div className="comp_ezw">
-              <h3>{config.labels.startDate || 'Start Date'} </h3>
+            <TextField
+              className={classes.formControl}
+              label={config.labels.title || 'Title'}
+              value={values.title}
+              name="title"
+              onChange={handleChange}
+            />
+
+            <DatePicker
+              start={true}
+              label={config.labels.startDate}
+              value={values.date_start}
+              onChange={handleChangeDateStart}
+            />
+
+            {config.showEndDate &&
               <DatePicker
-                selected={values.date_start}
-                selectsStart
-                date_start={values.date_start}
-                date_end={values.date_end}
-                onChange={handleChangeDateStart}
-                dateFormat="dd-MM-YYYY"
-                className="ezw_datepicker"
+                start={false}
+                label={config.labels.endDate}
+                value={values.date_end}
+                onChange={handleChangeDateEnd}
               />
+            }
 
-              {config.showEndDate ? (
-                <React.Fragment>
-                  <h3>{config.labels.endDate || 'End Date'} </h3>
-                  <DatePicker
-                    selected={values.date_end}
-                    selectsEnd
-                    date_start={values.date_start}
-                    date_end={values.date_end}
-                    onChange={handleChangeDateEnd}
-                    dateFormat="dd-MM-YYYY"
-                    className="ezw_datepicker"
-                  />
-                </React.Fragment>
-              ) : null}
-            </div>
-            {config.showDescription ? (
+            {config.showDescription &&
               <TextField
-                id="description"
-                name="description"
-                value={values.description}
+                className={classes.formControl}
                 label={config.labels.description || 'Description'}
+                value={values.description}
+                name="description"
                 multiline
                 onChange={handleChange}
-                className={classes.textField}
-                margin="normal"
-                variant="outlined"
-                fullWidth
               />
-            ) : null}
-            <br />
-            {config.showAchievements ? (
-              <Achievements
+            }
+
+            <Divider />
+            {config.showAchievements &&
+              <AchievementInputsList
                 contactId={experience.contact_id}
                 achievements={values.achievements}
                 onChange={handleAchievements}
               />
-            ) : null}
-            <Divider />
+            }
+          </CardContent>
 
-            <p>
-              {' '}
-              <Button size="large" type="submit" value="Save" onClick={handleSubmit}>
-                {' '}
-                Save
-              </Button>{' '}
-              <Button type="button" onClick={handleCancel} value="Cancel">
-                Cancel
-              </Button>{' '}
-            </p>
-          </Form>
-        </div>
-      </Modal>
-    </div>
+          <Divider />
+
+          <CardActions>
+            <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>
+              Save
+            </Button>
+            <Button onClick={handleCancel}>
+              Cancel
+            </Button>
+          </CardActions>
+        </form>
+      </Card>
+    </Modal>
   );
 };
 
 const styles = ({ breakpoints, palette, spacing }) => ({
+  modal: {
+    width: 400,
+    margin: 'auto',
+  },
+  formControl: {
+    width: '100%',
+    marginBottom: spacing(2),
+  },
 });
 
 
@@ -266,4 +239,5 @@ AddOrEditExperienceForm.propTypes = {
     achievements: PropTypes.array,
   }).isRequired,
 };
+
 export default withStyles(styles)(AddOrEditExperienceForm);

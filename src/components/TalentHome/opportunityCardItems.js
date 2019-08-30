@@ -1,27 +1,22 @@
-import React from 'react';
-import { Card } from 'semantic-ui-react';
-
-const items = [
+const opportunityCardItems = [
   {
-    href: '/ContactInfo',
+    href: '/resume-template',
     header: 'PartTime Organizer',
     meta: 'Goodwill',
     description: 'Baltimore |  Apply before 6/3  | Required Skills: Organization',
   },
   {
-    href: '/ContactInfo',
+    href: '/resume-template',
     header: 'PartTime Organizer',
     meta: 'Goodwill',
     description: 'Baltimore |  Apply before 6/3  | Required Skills: Organization',
   },
   {
-    href: '/ContactInfo',
+    href: '/resume-template',
     header: 'PartTime Organizer',
     meta: 'Goodwill',
     description: 'Baltimore |  Apply before 6/3  | Required Skills: Organization',
   },
 ];
 
-const OpportunityCardProps = () => <Card.Group items={items} />;
-
-export default OpportunityCardProps;
+export default opportunityCardItems;

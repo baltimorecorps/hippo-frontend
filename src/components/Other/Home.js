@@ -1,87 +1,72 @@
 import React from 'react';
-import './Home.css';
-import { Segment, Container, Card, Image, Button, Header } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-const src2 = require('../../images/organization.jpeg');
-const CardExampleCard = () => (
-  <Segment basic>
-    <Card.Group>
-      <Card href="/SignUp">
-        <Image
-          style={{ height: 200 }}
-          src={require('../../images/talent.jpeg')}
-          size="medium"
-          circular
-        />
+const Home = () => {
+  return (
+    <Grid container justify="center">
+      <Grid item xs={10}>
+        <Typography gutterBottom variant="h3" component="h1">
+          Baltimore Corps Talent Matching
+        </Typography>
+        <Grid container justify="space-between" spacing={3}>
+          {Home.cardDetails.map(({header, description, imageName, url}) =>
+            <Grid item key={header} xs={3}>
+              <Link to={url}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={`/images/${imageName}.jpeg`}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {header}
+                    </Typography>
+                    <Typography gutterBottom variant="body1" component="p">
+                      {description}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button variant="contained" color="primary">
+                      Log in / Sign up
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Link>
+            </Grid>
+          )}
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
 
-        <Card.Content>
-          <Card.Header>Talent</Card.Header>
+Home.cardDetails = [
+  {
+    header: 'Talent',
+    description: 'Join as a talent, you can find numerous positions/opportunities in NGO here.',
+    imageName: 'talent',
+    url: '/contacts',
+  },
+  {
+    header: 'Organization',
+    description: 'Join as an organization, you can find numerous talents for your organization.',
+    imageName: 'organization',
+    url: '/contacts',
+  },
+  {
+    header: 'Baltimore Corps Staff',
+    description: 'As a Baltimore Staff, you can access data stored in database.',
+    imageName: 'baltimoreCorpsStaff',
+    url: '/contacts',
+  },
+];
 
-          <Card.Description>
-            Join as a talent, you can find numerous positions/opportunities in NGO here.{' '}
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <Button basic color="green">
-            LogIn / SignUp
-          </Button>
-        </Card.Content>
-      </Card>
-
-      <Card href="/SearchContact">
-        <Image style={{ height: 200 }} size="medium" src={src2} circular />
-
-        <Card.Content>
-          <Card.Header>Organization</Card.Header>
-          <Card.Description>
-            Join as an organization, you can find numerous talents for your organization.{' '}
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <Button basic color="green">
-            LogIn / SignUp
-          </Button>
-        </Card.Content>
-      </Card>
-
-      <Card href="/SearchContact2">
-        <Image style={{ height: 200 }} size="large" src={require('../../images/bc.jpeg')} />
-
-        <Card.Content>
-          <Card.Header>Baltimore Corps Staff</Card.Header>
-          <Card.Description>
-            As a Baltimore Staff, you can access data stored in database.
-          </Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <Button basic color="green">
-            LogIn / SignUp
-          </Button>
-        </Card.Content>
-      </Card>
-    </Card.Group>
-  </Segment>
-);
-
-class Home extends React.Component {
-  render() {
-    return (
-      <Container>
-        <br />
-        <div>
-          <Segment basic textAlign="center">
-            <Header style={{ textAlign: 'center', whiteSpace: 'pre-wrap' }} as="h3">
-              BALTIMORE CORPS Talent Matching
-            </Header>
-          </Segment>
-        </div>
-
-        <br />
-        <div style={{ width: '980px', margin: '0 auto' }}>
-          <CardExampleCard />
-        </div>
-      </Container>
-    );
-  }
-}
 export default Home;

@@ -20,7 +20,7 @@ const ResumesListItem = ({resumeId, contactId, name}) => {
           <Button
             size="small"
             color="secondary"
-            to={`/Contacts/${contactId}/Resume/${resumeId}`}
+            to={`/contacts/${contactId}/resume/${resumeId}`}
             component={AdapterLink}
           >
             View
@@ -28,7 +28,7 @@ const ResumesListItem = ({resumeId, contactId, name}) => {
           <Button
             size="small"
             color="secondary"
-            to={`/Contacts/${contactId}/create-resume/${resumeId}`}
+            to={`/contacts/${contactId}/create-resume/${resumeId}`}
             component={AdapterLink}
           >
             Edit

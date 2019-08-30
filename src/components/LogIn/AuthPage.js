@@ -1,12 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from '../../lib/PropTypes';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import GoogleAuth from './GoogleAuth.js';
-import { Divider, Segment } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 
 const AuthPage = ({ classes }) => {
@@ -58,14 +56,6 @@ const AuthPage = ({ classes }) => {
             Sign Up
           </Button>
         </form>
-
-        <Segment basic textAlign="center">
-          <Divider horizontal> OR </Divider>
-
-          <div className="col-centered">
-            <GoogleAuth />
-          </div>
-        </Segment>
       </Paper>
     </main>
   );
@@ -78,30 +68,30 @@ AuthPage.propTypes = {
 const styles = ({ breakpoints, palette, spacing }) => ({
   main: {
     width: 'auto',
-    marginLeft: spacing.unit * 3,
-    marginRight: spacing.unit * 3,
-    [breakpoints.up(400 + spacing.unit * 3 * 2)]: {
+    marginLeft: spacing(3),
+    marginRight: spacing(3),
+    [breakpoints.up(400 + spacing(3 * 2))]: {
       width: 400,
       marginLeft: 'auto',
       marginRight: 'auto',
     },
   },
   paper: {
-    marginTop: spacing.unit * 8,
+    marginTop: spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
+    padding: spacing(2, 3, 3),
   },
   avatar: {
     width: '100%',
-    marginBottom: spacing.unit,
+    marginBottom: spacing(1),
   },
   password: {
-    marginBottom: spacing.unit * 3,
+    marginBottom: spacing(3),
   },
   submitButton: {
-    marginBottom: spacing.unit * 3,
+    marginBottom: spacing(3),
   },
 });
 

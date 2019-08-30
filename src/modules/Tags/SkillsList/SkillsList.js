@@ -85,14 +85,14 @@ const titles = {
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   wrapper: {
-    marginBottom: `${spacing.unit * 4}px`,
+    marginBottom: spacing(4),
   },
   paper: {
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
-    marginBottom: `${spacing.unit * 5}px`,
+    padding: spacing(2, 3, 3),
+    marginBottom: spacing(5),
   },
   divider: {
-    margin: `${spacing.unit * 1}px 0`,
+    margin: spacing(1, 0),
   },
 });
 

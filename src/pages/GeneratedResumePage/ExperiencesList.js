@@ -19,7 +19,7 @@ const ExperiencesList = ({ name, experiences, classes }) => {
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   section: {
-    marginBottom: spacing.unit * 2,
+    marginBottom: spacing(2),
   },
 });
 

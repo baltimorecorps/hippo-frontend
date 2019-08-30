@@ -66,11 +66,11 @@ const ResumeBuilder = ({ achievements, contactInfo, experiences, skillGroups, cl
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   paper: {
-    marginTop: spacing.unit * 8,
+    marginTop: spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    padding: `${spacing.unit * 2}px ${spacing.unit * 3}px ${spacing.unit * 3}px`,
+    padding: spacing(2, 3, 3),
   },
 });
 
