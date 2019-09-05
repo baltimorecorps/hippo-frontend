@@ -15,7 +15,8 @@ import ReactSelect from 'react-select';
 import useFormUpdate from 'lib/useFormUpdate';
 import SkillLevelDropdown from './SkillLevelDropdown';
 
-const useForm = (initialValues, onSubmit) => {
+const useForm = (initialValues, onSubmit, onReplace) => {
+  const oldTag = initialValues;
   const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
@@ -24,16 +25,23 @@ const useForm = (initialValues, onSubmit) => {
       update('tag_id')(value.id);
     },
     handleScore: (event) => update('score')(parseInt(event.target.value)),
-    handleSubmit: () => onSubmit(values),
+    handleSubmit: () => {
+      if (oldTag.tag_id !== values.tag_id) {
+        onReplace(oldTag, values);
+      } else {
+        onSubmit(values);
+      }
+    },
   };
 
   return [values, handlers];
 };
 
-const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onCancel, classes }) => {
+const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onReplace, onCancel, classes }) => {
   const [values, { handleSelect, handleSubmit, handleScore }] = useForm(
     tag,
     onSubmit,
+    onReplace,
   );
 
   const getOptionLabel = ({type, name}) => name;

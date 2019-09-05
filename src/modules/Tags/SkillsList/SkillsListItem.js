@@ -8,7 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import AddOrEditSkillForm from 'modules/Tags/AddOrEditSkillForm';
 import getTextScore from 'modules/Tags/utilities/getTextScore';
 
-const SkillsListItem = ({tag, onSubmit, onDelete, classes}) => {
+const SkillsListItem = ({tag, onSubmit, onReplace, onDelete, classes}) => {
   const initial = tag.name ? tag.name[0] : '';
 
   const [editing, setEditing] = useState(false);
@@ -43,6 +43,10 @@ const SkillsListItem = ({tag, onSubmit, onDelete, classes}) => {
           tagType={tag.type}
           onSubmit={(tag) => {
             onSubmit(tag);
+            setEditing(false);
+          }}
+          onReplace={(oldTag, newTag) => {
+            onReplace(oldTag, newTag);
             setEditing(false);
           }}
           onCancel={() => setEditing(false)}

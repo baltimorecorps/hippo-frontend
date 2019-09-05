@@ -50,7 +50,16 @@ const SkillsList = ({
         </Grid>
       </Grid>
       {tagItems.map(tag =>
-        <SkillsListItem key={tag.tag_id} tag={tag} onSubmit={updateTagItem} onDelete={deleteTagItem} />
+        <SkillsListItem 
+          key={tag.tag_id} 
+          tag={tag} 
+          onSubmit={updateTagItem} 
+          onReplace={(oldTag, newTag) => { 
+            deleteTagItem(oldTag); 
+            addTagItem(newTag);
+          }}
+          onDelete={deleteTagItem} 
+        />
       )}
 
       {showForm &&
