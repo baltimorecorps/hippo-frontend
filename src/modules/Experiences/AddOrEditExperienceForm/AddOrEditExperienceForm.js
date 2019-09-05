@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import useFormUpdate from 'lib/useFormUpdate';
@@ -132,7 +132,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
   };
 
   return (
-    <Modal className={classes.modal} open={true} width="400">
+    <Dialog className={classes.modal} open={true}>
       <Card>
         <form autoComplete="off">
           <CardContent>
@@ -201,7 +201,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
           <Divider />
 
           <CardActions>
-            <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
               Save
             </Button>
             <Button onClick={handleCancel}>
@@ -210,14 +210,14 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
           </CardActions>
         </form>
       </Card>
-    </Modal>
+    </Dialog>
   );
 };
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   modal: {
-    width: 400,
-    margin: 'auto',
+    //width: 600,
+    //margin: 'auto',
   },
   formControl: {
     width: '100%',
@@ -233,7 +233,7 @@ AddOrEditExperienceForm.propTypes = {
     description: PropTypes.string,
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
+    degree: PropTypes.oneOf(['', 'High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
     date_start: PropTypes.string.isRequired,
     date_end: PropTypes.string,
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,

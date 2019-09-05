@@ -35,7 +35,7 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
           label={`Achievement #${index + 1}`}
           value={description}
           onTextChange={handleChangeDescription(index)}
-          //onClick={handleRemove(index)}
+          onIconClick={handleRemove(index)}
         />
       )}
       <Button type="button" onClick={handleAdd}>
