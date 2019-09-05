@@ -8,7 +8,7 @@ import StepComponent from './StepComponent';
 import ProgressBar from './ProgressBar';
 
 const CreateResumePage = ({match}) => {
-  const {contactId} = match.params;
+  //const {contactId} = match.params;
   return (
     <DragDropContextProvider backend={HTML5Backend}>
       <ResumeContext.StorageWrapper>

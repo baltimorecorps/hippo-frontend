@@ -231,7 +231,7 @@ AddOrEditExperienceForm.propTypes = {
   experience: PropTypes.shape({
     id: PropTypes.number,
     description: PropTypes.string,
-    organization: PropTypes.string.isRequired,
+    host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
     date_start: PropTypes.string.isRequired,
