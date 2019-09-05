@@ -69,7 +69,7 @@ const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onCancel, classes }) => {
         </DialogContent>
 
         <DialogActions className={classes.actions}>
-          <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
             Save
           </Button>
           <Button type="button" onClick={onCancel}>
@@ -87,11 +87,11 @@ AddOrEditSkillForm.propTypes = {
   allTags: PropTypes.array.isRequired,
   tagType: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
   tag: PropTypes.shape({
-    tag_id: PropTypes.number.isRequired,
+    tag_id: PropTypes.number,
     contact_id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
-    score: PropTypes.number.isRequired,
+    score: PropTypes.number,
   }).isRequired,
 };
 

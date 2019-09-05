@@ -33,7 +33,7 @@ const SkillsListItem = ({tag, onSubmit, onDelete, classes}) => {
 
         <Grid item>
           <Icon onClick={() => setEditing(true)}>edit</Icon>
-          <Icon onClick={onDelete}>delete</Icon>
+          <Icon onClick={() => onDelete(tag)}>delete</Icon>
         </Grid>
       </Grid>
 
