@@ -17,11 +17,18 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
+  // If the state for this contact hasn't been loaded yet, we try and reload
+  // that state from the API. If this load goes well, this page should be
+  // rerendered due to the Redux state update
   if (typeof contactInfo === 'undefined') {
     refreshContacts();
+    // TODO: Ideally we have a better empty/error state here
     return <div />;
   }
 
+  // printDocument is not in use at the moment, but it was an alternate first
+  // pass attempt at a way to generate a pdf version of a resume
+  //
   // eslint-disable-next-line no-unused-vars
   const printDocument = () => {
     const input = document.getElementById('divToPrint');
@@ -34,6 +41,8 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
     });
   };
 
+  // pdfToHTML is another first pass attempt at turning the information on a
+  // profile into a PDF resume
   const pdfToHTML = () => {
     const pdf = new jsPDF('p', 'pt', 'letter');
     const source = document.getElementById('divToPrint');
@@ -65,8 +74,14 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
     );
   };
 
+
   const email = contactInfo.email_primary ? contactInfo.email_primary.email : '';
 
+  // This page primarily serves as the top level container for the profile of
+  // this person's employment-relevant experiences and skills.
+  //
+  // The three main components it makes use of are BasicInfoDisplay,
+  // ExperiencesList, and SkillsList
   return (
     <React.Fragment>
       <Grid id="divToPrint" container justify="center" className={classes.wrapper}>
