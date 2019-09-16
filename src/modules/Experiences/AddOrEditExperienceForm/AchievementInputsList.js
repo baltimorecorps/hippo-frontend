@@ -31,11 +31,11 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
       </h3>
       {achievements.map(({description}, index) =>
         <AchievementInput
-          key={description + index}
+          key={index}
           label={`Achievement #${index + 1}`}
           value={description}
           onTextChange={handleChangeDescription(index)}
-          onClick={handleRemove(index)}
+          onIconClick={handleRemove(index)}
         />
       )}
       <Button type="button" onClick={handleAdd}>
@@ -49,7 +49,7 @@ AchievementInputsList.propTypes = {
   contactId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   achievements: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.number,
       exp_id: PropTypes.number,
       contact_id: PropTypes.number,
       description: PropTypes.string.isRequired,

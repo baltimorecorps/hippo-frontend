@@ -9,7 +9,7 @@ export const createResume = (contactId, name) =>
     const resume = {
       contact_id: contactId,
       name,
-      date_created: format(new Date(), 'YYYY-MM-DD'),
+      date_created: format(new Date(), 'yyyy-MM-dd'),
     };
     dispatch({
       type: CREATE_RESUME,

@@ -4,11 +4,10 @@ import {refreshResume} from 'actions/resume';
 import ResumePreview from './ResumePreview';
 
 export const mapStateToProps = (state, props) => {
-  const {contactId, resumeId} = props.match ? props.match.params : props;
-  const contactInfo = state.contacts[contactId];
+  const {resumeId} = props.match ? props.match.params : props;
   const resume = state.resumes[resumeId];
 
-  if (! resume || ! contactInfo) {
+  if (! resume ) {
     return {
       resumeId,
       achievements: [],
@@ -30,6 +29,9 @@ export const mapStateToProps = (state, props) => {
     };
   }
 
+  const contactId = state.resumes[resumeId].contact_id;
+  const contactInfo = state.contacts[contactId];
+
   const sections = Object.values(resume.sections);
   const getExperiences = (name) => (
     (
@@ -48,17 +50,13 @@ export const mapStateToProps = (state, props) => {
     achievements: [],
     contactInfo: {
       name: `${contactInfo.first_name} ${contactInfo.last_name}`,
-      roles: [],
-      title: '',
       email: contactInfo.email_primary.email,
       phoneNumber: contactInfo.phone_primary.replace(/-/g, ''),
-      city: '',
-      state: '',
     },
     experiences: {
       service: getExperiences('Relevant Experience'),
       education: getExperiences('Education'),
-      work: getExperiences('Experience'),
+      work: getExperiences('Work Experience'),
     },
     skillGroups: [],
   });

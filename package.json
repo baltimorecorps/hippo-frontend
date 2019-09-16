@@ -21,12 +21,12 @@
     "immutability-helper": "^3.0.0",
     "jspdf": "^1.5.3",
     "pdfmake": "^0.1.53",
-    "react": "^16.8.6",
+    "react": "^16.9",
     "react-dnd": "^7.4.5",
     "react-dnd-html5-backend": "^7.4.4",
-    "react-dom": "^16.8.6",
+    "react-dom": "^16.9",
     "react-redux": "^7.0.3",
-    "react-router-dom": "^4.3.1",
+    "react-router-dom": "^5.0",
     "react-scripts": "^3.0.0",
     "react-select": "^2.4.3",
     "redux": "^4.0.1",
@@ -52,8 +52,11 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "prettier": "^1.17.0",
+    "@testing-library/jest-dom": "^4.1.0",
+    "@testing-library/react": "^9.1.4",
     "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "node-fetch": "^2.6.0",
+    "prettier": "^1.17.0"
   }
 }

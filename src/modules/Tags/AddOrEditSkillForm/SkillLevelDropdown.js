@@ -6,7 +6,7 @@ import getTextScore from 'modules/Tags/utilities/getTextScore';
 const SkillLevelDropdown = ({onChange, value}) => {
   return (
     <Select
-      value={value}
+      value={value || 0}
       onChange={onChange}
       inputProps={{
         name: 'skillLevel',

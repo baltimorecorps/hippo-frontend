@@ -26,7 +26,7 @@ const ExperiencesList = ({
     experiences.length === 0 && refreshExperiences();
   }, [experiences.length, refreshExperiences]);
 
-  const blankExperience = {
+  let blankExperience = {
     description: '',
     host: '',
     title: '',
@@ -36,6 +36,10 @@ const ExperiencesList = ({
     contact_id: contactId,
     achievements: [],
   };
+
+  if (experienceType === 'Education') {
+    blankExperience.degree = '';
+  }
 
   const submitNewExperience = async function(experience) {
     await addNewExperience(experience);

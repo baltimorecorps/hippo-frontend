@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import Modal from '@material-ui/core/Modal';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import useFormUpdate from 'lib/useFormUpdate';
@@ -62,8 +61,7 @@ const configureForm = (expType) => {
       showEndDate: true,
       showAchievements: true,
     };
-  }
-  else if (expType === 'Service') {
+  } else if (expType === 'Service') {
     return {
       labels: {
         host: 'Organization',
@@ -72,8 +70,7 @@ const configureForm = (expType) => {
       showEndDate: true,
       showAchievements: true,
     };
-  }
-  else if (expType === 'Accomplishment') {
+  } else if (expType === 'Accomplishment') {
     return {
       labels: {
         host: 'Institution / Publisher',
@@ -82,8 +79,7 @@ const configureForm = (expType) => {
       },
       showDescription: true,
     };
-  }
-  else if (expType === 'Education') {
+  } else if (expType === 'Education') {
     return {
       labels: {
         host: 'Institution',
@@ -132,92 +128,84 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
   };
 
   return (
-    <Modal className={classes.modal} open={true} width="400">
-      <Card>
-        <form autoComplete="off">
-          <CardContent>
-            <TextField
-              className={classes.formControl}
-              label={config.labels.host || 'Organization'}
-              value={values.host}
-              name="host"
-              onChange={handleChange}
-            />
+    <Dialog className={classes.modal} open={true}>
+      <form autoComplete="off">
+        <DialogContent>
+          <TextField
+            className={classes.formControl}
+            label={config.labels.host || 'Organization'}
+            value={values.host}
+            name="host"
+            onChange={handleChange}
+          />
 
-            {config.showDegree &&
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="degree">
-                  Degree
-                </InputLabel>
-                <DegreeDropdown value={values.degree} onChange={handleDegree} />
-              </FormControl>
-            }
+          {config.showDegree && (
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="degree">Degree</InputLabel>
+              <DegreeDropdown value={values.degree} onChange={handleDegree} />
+            </FormControl>
+          )}
 
-            <TextField
-              className={classes.formControl}
-              label={config.labels.title || 'Title'}
-              value={values.title}
-              name="title"
-              onChange={handleChange}
-            />
+          <TextField
+            className={classes.formControl}
+            label={config.labels.title || 'Title'}
+            value={values.title}
+            name="title"
+            onChange={handleChange}
+          />
 
+          <DatePicker
+            start={true}
+            label={config.labels.startDate}
+            value={values.date_start}
+            onChange={handleChangeDateStart}
+          />
+
+          {config.showEndDate && (
             <DatePicker
-              start={true}
-              label={config.labels.startDate}
-              value={values.date_start}
-              onChange={handleChangeDateStart}
+              start={false}
+              label={config.labels.endDate}
+              value={values.date_end}
+              onChange={handleChangeDateEnd}
             />
+          )}
 
-            {config.showEndDate &&
-              <DatePicker
-                start={false}
-                label={config.labels.endDate}
-                value={values.date_end}
-                onChange={handleChangeDateEnd}
-              />
-            }
-
-            {config.showDescription &&
-              <TextField
-                className={classes.formControl}
-                label={config.labels.description || 'Description'}
-                value={values.description}
-                name="description"
-                multiline
-                onChange={handleChange}
-              />
-            }
-
-            <Divider />
-            {config.showAchievements &&
-              <AchievementInputsList
-                contactId={experience.contact_id}
-                achievements={values.achievements}
-                onChange={handleAchievements}
-              />
-            }
-          </CardContent>
+          {config.showDescription && (
+            <TextField
+              className={classes.formControl}
+              label={config.labels.description || 'Description'}
+              value={values.description}
+              name="description"
+              multiline
+              onChange={handleChange}
+            />
+          )}
 
           <Divider />
+          {config.showAchievements && (
+            <AchievementInputsList
+              contactId={experience.contact_id}
+              achievements={values.achievements}
+              onChange={handleAchievements}
+            />
+          )}
+        </DialogContent>
 
-          <CardActions>
-            <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>
-              Save
-            </Button>
-            <Button onClick={handleCancel}>
-              Cancel
-            </Button>
-          </CardActions>
-        </form>
-      </Card>
-    </Modal>
+        <DialogActions>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Save
+          </Button>
+          <Button onClick={handleCancel}>Cancel</Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 };
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   modal: {
-    width: 400,
-    margin: 'auto',
+    //width: 600,
+    //margin: 'auto',
   },
   formControl: {
     width: '100%',
@@ -225,15 +213,21 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   },
 });
 
-
 AddOrEditExperienceForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   experience: PropTypes.shape({
     id: PropTypes.number,
     description: PropTypes.string,
-    organization: PropTypes.string.isRequired,
+    host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
+    degree: PropTypes.oneOf([
+      '',
+      'High School',
+      'Associates',
+      'Undergraduate',
+      'Masters',
+      'Doctoral',
+    ]),
     date_start: PropTypes.string.isRequired,
     date_end: PropTypes.string,
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,

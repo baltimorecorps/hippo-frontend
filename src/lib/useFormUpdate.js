@@ -20,7 +20,6 @@ const useFormUpdate = (initialValues) => {
   const [values, setValues] = useState(filteredValues || {});
 
   const update = (name) => (value) => {
-    console.log({name, value});
     if (value || value === '') {
       setValues((values) => ({
         ...values,

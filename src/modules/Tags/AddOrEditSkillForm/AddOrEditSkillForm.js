@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
@@ -15,7 +15,8 @@ import ReactSelect from 'react-select';
 import useFormUpdate from 'lib/useFormUpdate';
 import SkillLevelDropdown from './SkillLevelDropdown';
 
-const useForm = (initialValues, onSubmit) => {
+const useForm = (initialValues, onSubmit, onReplace) => {
+  const oldTag = initialValues;
   const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
@@ -24,16 +25,23 @@ const useForm = (initialValues, onSubmit) => {
       update('tag_id')(value.id);
     },
     handleScore: (event) => update('score')(parseInt(event.target.value)),
-    handleSubmit: () => onSubmit(values),
+    handleSubmit: () => {
+      if (oldTag.tag_id !== values.tag_id) {
+        onReplace(oldTag, values);
+      } else {
+        onSubmit(values);
+      }
+    },
   };
 
   return [values, handlers];
 };
 
-const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onCancel, classes }) => {
+const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onReplace, onCancel, classes }) => {
   const [values, { handleSelect, handleSubmit, handleScore }] = useForm(
     tag,
     onSubmit,
+    onReplace,
   );
 
   const getOptionLabel = ({type, name}) => name;
@@ -69,7 +77,7 @@ const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onCancel, classes }) => {
         </DialogContent>
 
         <DialogActions className={classes.actions}>
-          <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
             Save
           </Button>
           <Button type="button" onClick={onCancel}>
@@ -87,11 +95,11 @@ AddOrEditSkillForm.propTypes = {
   allTags: PropTypes.array.isRequired,
   tagType: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
   tag: PropTypes.shape({
-    tag_id: PropTypes.number.isRequired,
+    tag_id: PropTypes.number,
     contact_id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
-    score: PropTypes.number.isRequired,
+    score: PropTypes.number,
   }).isRequired,
 };
 
