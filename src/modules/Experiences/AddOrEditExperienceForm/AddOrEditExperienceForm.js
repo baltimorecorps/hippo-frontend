@@ -13,7 +13,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import useFormUpdate from 'lib/useFormUpdate';
 
 import AchievementInputsList from './AchievementInputsList';
-import DatePicker from './DatePicker';
+import DatePickerForm from './DatePickerForm';
 import DegreeDropdown from './DegreeDropdown';
 
 const useForm = (initialValues, onSubmit) => {
@@ -154,7 +154,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
             onChange={handleChange}
           />
 
-          <DatePicker
+          <DatePickerForm
             start={true}
             label={config.labels.startDate}
             value={values.date_start}
@@ -162,7 +162,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
           />
 
           {config.showEndDate && (
-            <DatePicker
+            <DatePickerForm
               start={false}
               label={config.labels.endDate}
               value={values.date_end}

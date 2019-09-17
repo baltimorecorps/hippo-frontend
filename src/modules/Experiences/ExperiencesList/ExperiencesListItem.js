@@ -9,11 +9,11 @@ import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm
 
 const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
   const initial = experience.host ? experience.host[0] : '';
-  const title = `${experience.host}, ` + (
-    experience.type === 'Education'
+  const title =
+    `${experience.host}, ` +
+    (experience.type === 'Education'
       ? `${experience.degree} in ${experience.title}`
-      : `${experience.title}`
-  );
+      : `${experience.title}`);
   const showEndDate = experience.type !== 'Accomplishment';
   const showAchievements = experience.type !== 'Accomplishment';
 
@@ -23,13 +23,35 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
     setEditing(false);
   };
 
+  const monthNames = [
+    'Month',
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+
+  const endYear = experience.date_end.slice(0, 4);
+  const endMonth = monthNames[parseInt(experience.date_end.slice(6, 7))];
+  const startYear = experience.date_start.slice(0, 4);
+  const startMonth = monthNames[parseInt(experience.date_start.slice(6, 7))];
+
+  const startDate = `${startMonth} ${startYear}`;
+  const endDate = `${endMonth} ${endYear}`;
+
   return (
     <React.Fragment>
       <Grid container justify="space-between">
         <Grid item>
-          <Avatar>
-            {initial}
-          </Avatar>
+          <Avatar>{initial}</Avatar>
         </Grid>
 
         <Grid item xs={10}>
@@ -37,23 +59,17 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
             {title}
           </Typography>
           <Typography gutterBottom variant="h6" component="p">
-            {experience.date_start}
-            {showEndDate &&
-              <React.Fragment>
-                {' '}&ndash; {experience.date_end}
-              </React.Fragment>
-            }
+            {startDate}
+            {showEndDate && <React.Fragment> &ndash; {endDate}</React.Fragment>}
           </Typography>
 
-          {experience.description &&
+          {experience.description && (
             <Typography gutterBottom variant="body1" component="p">
               {experience.description}
             </Typography>
-          }
+          )}
 
-          {showAchievements &&
-            <AchievementsList achievements={experience.achievements} />
-          }
+          {showAchievements && <AchievementsList achievements={experience.achievements} />}
         </Grid>
 
         <Grid item>
@@ -62,14 +78,14 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
         </Grid>
       </Grid>
 
-      {editing &&
+      {editing && (
         <AddOrEditExperienceForm
           handleCancel={() => setEditing(false)}
           labels={{}}
           onSubmit={submitUpdate}
           experience={experience}
         />
-      }
+      )}
     </React.Fragment>
   );
 };
