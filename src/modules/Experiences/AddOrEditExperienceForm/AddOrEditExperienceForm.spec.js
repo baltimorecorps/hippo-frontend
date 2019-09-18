@@ -66,4 +66,23 @@ describe('AddOrEditExperienceForm', () => {
     expect(submit.mock.calls[0][0]).toEqual(experience);
   })
 
+  test('organization text box', () => {
+    const cancel = jest.fn();
+    const submit = jest.fn();
+    const {queryByText, getByLabelText, getByText} = render(
+      <AddOrEditExperienceForm
+        handleCancel={cancel}
+        labels={{}}
+        onSubmit={submit}
+        experience={experience}
+      />
+    );
+    fireEvent.change(getByLabelText(/organization/i), {target: {value: 'new org'}})
+
+    fireEvent.click(getByText(/save/i))
+
+    expect(submit.mock.calls.length).toBe(1);
+    expect(submit.mock.calls[0][0]).toHaveProperty('host');
+    expect(submit.mock.calls[0][0].host).toBe('new org');
+  })
 });

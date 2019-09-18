@@ -132,6 +132,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
       <form autoComplete="off">
         <DialogContent>
           <TextField
+            id="host"
             className={classes.formControl}
             label={config.labels.host || 'Organization'}
             value={values.host}
@@ -147,6 +148,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
           )}
 
           <TextField
+            id="title"
             className={classes.formControl}
             label={config.labels.title || 'Title'}
             value={values.title}
@@ -176,6 +178,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               label={config.labels.description || 'Description'}
               value={values.description}
               name="description"
+              id="description"
               multiline
               onChange={handleChange}
             />
