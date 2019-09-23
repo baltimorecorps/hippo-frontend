@@ -65,6 +65,15 @@ const AddContact = ({ classes, addNewContact }) => {
     setOpen(false);
   };
 
+  const inputLabelProps = {
+    classes: {
+      root: classes.labelRoot,
+      focused: classes.labelFocused,
+    },
+  };
+
+  const inputProps = { classes: { input: classes.resize, shrink: false } };
+
   return (
     <React.Fragment>
       <Button
@@ -91,6 +100,8 @@ const AddContact = ({ classes, addNewContact }) => {
                 name="first_name"
                 value={values.first_name}
                 onChange={handleChange}
+                InputLabelProps={inputLabelProps}
+                InputProps={inputProps}
               />
               <TextField
                 required
@@ -100,6 +111,8 @@ const AddContact = ({ classes, addNewContact }) => {
                 name="last_name"
                 value={values.last_name}
                 onChange={handleChange}
+                InputLabelProps={inputLabelProps}
+                InputProps={inputProps}
               />
               <TextField
                 required
@@ -109,6 +122,8 @@ const AddContact = ({ classes, addNewContact }) => {
                 value={values.email}
                 onChange={handleChange}
                 className={classes.textField}
+                InputLabelProps={inputLabelProps}
+                InputProps={inputProps}
               />
 
               <TextField
@@ -119,6 +134,8 @@ const AddContact = ({ classes, addNewContact }) => {
                 value={values.phone_primary}
                 onChange={handleChange}
                 className={classes.textField}
+                InputLabelProps={inputLabelProps}
+                InputProps={inputProps}
               />
             </Grid>
           </form>
@@ -150,11 +167,20 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     marginBottom: spacing(3),
   },
   textField: {
-    marginBottom: spacing(1),
+    marginBottom: spacing(1.5),
   },
   actions: {
     padding: spacing(0, 3),
     marginBottom: spacing(3),
+  },
+  resize: {
+    fontSize: 17,
+  },
+  labelRoot: {
+    fontSize: 17,
+  },
+  labelFocused: {
+    fontSize: 20,
   },
 });
 

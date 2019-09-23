@@ -30,8 +30,10 @@ const ExperiencesList = ({
     description: '',
     host: '',
     title: '',
-    date_start: '',
-    date_end: '',
+    start_month: '',
+    start_year: '',
+    end_month: '',
+    end_year: '',
     type: experienceType,
     contact_id: contactId,
     achievements: [],
@@ -54,37 +56,35 @@ const ExperiencesList = ({
         <Paper className={classes.paper}>
           <Grid container justify="space-between">
             <Grid item>
-              <Typography gutterBottom variant="h3" component="h1">
+              <Typography gutterBottom variant="h5" component="h1">
                 {header}
               </Typography>
             </Grid>
             <Grid item>
-              <Icon onClick={() => setShowForm(true)}>
-                add
-              </Icon>
+              <Icon onClick={() => setShowForm(true)}>add</Icon>
             </Grid>
           </Grid>
 
           <Divider className={classes.divider} />
 
-          {experiences.map(experience =>
+          {experiences.map((experience) => (
             <ExperiencesListItem
               key={experience.id}
               onUpdate={updateExperience}
               onDelete={deleteExperience}
               experience={experience}
             />
-          )}
+          ))}
         </Paper>
       </Grid>
 
-      {showForm &&
+      {showForm && (
         <AddOrEditExperienceForm
           experience={blankExperience}
           onSubmit={submitNewExperience}
           handleCancel={() => setShowForm(false)}
         />
-      }
+      )}
     </Grid>
   );
 };

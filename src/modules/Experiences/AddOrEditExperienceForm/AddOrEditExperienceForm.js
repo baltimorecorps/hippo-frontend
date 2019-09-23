@@ -13,7 +13,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import useFormUpdate from 'lib/useFormUpdate';
 
 import AchievementInputsList from './AchievementInputsList';
-import DatePicker from './DatePicker';
+import DatePickerForm from './DatePickerForm';
 import DegreeDropdown from './DegreeDropdown';
 
 const useForm = (initialValues, onSubmit) => {
@@ -24,20 +24,6 @@ const useForm = (initialValues, onSubmit) => {
       event.persist();
       update(event.target.name)(event.target.value);
     },
-    handleChangeDateStart: (date) => {
-      if (date > values.date_end) {
-        update('date_end')(date);
-      }
-      update('date_start')(date);
-    },
-
-    handleChangeDateEnd: (date) => {
-      if (date < values.date_start) {
-        update('date_start')(date);
-      }
-      update('date_end')(date);
-    },
-
     handleSubmit: () => {
       onSubmit(values);
     },
@@ -95,17 +81,10 @@ const configureForm = (expType) => {
 };
 
 const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
-  const [
-    values,
-    {
-      handleChange,
-      handleChangeDateStart,
-      handleChangeDateEnd,
-      handleSubmit,
-      handleDegree,
-      handleAchievements,
-    },
-  ] = useForm(experience, onSubmit);
+  const [values, { handleChange, handleSubmit, handleDegree, handleAchievements }] = useForm(
+    experience,
+    onSubmit,
+  );
 
   const config = Object.assign(
     {
@@ -127,6 +106,15 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
     this.setState({ achievements: newAchievements });
   };
 
+  const inputLabelProps = {
+    classes: {
+      root: classes.labelRoot,
+      focused: classes.labelFocused,
+    },
+  };
+
+  const inputProps = { classes: { input: classes.resize, shrink: false } };
+
   return (
     <Dialog className={classes.modal} open={true}>
       <form autoComplete="off">
@@ -138,6 +126,8 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
             value={values.host}
             name="host"
             onChange={handleChange}
+            InputLabelProps={inputLabelProps}
+            InputProps={inputProps}
           />
 
           {config.showDegree && (
@@ -154,23 +144,38 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
             value={values.title}
             name="title"
             onChange={handleChange}
+            InputLabelProps={inputLabelProps}
+            InputProps={inputProps}
           />
 
-          <DatePicker
-            start={true}
-            label={config.labels.startDate}
-            value={values.date_start}
-            onChange={handleChangeDateStart}
+          <DatePickerForm
+            type="month"
+            label="Start Month"
+            name="start_month"
+            value={values.start_month}
+            onChange={handleChange}
           />
-
-          {config.showEndDate && (
-            <DatePicker
-              start={false}
-              label={config.labels.endDate}
-              value={values.date_end}
-              onChange={handleChangeDateEnd}
-            />
-          )}
+          <DatePickerForm
+            type="year"
+            label="Start Year"
+            name="start_year"
+            value={values.start_year}
+            onChange={handleChange}
+          />
+          <DatePickerForm
+            type="month"
+            label="End Month"
+            name="end_month"
+            value={values.end_month}
+            onChange={handleChange}
+          />
+          <DatePickerForm
+            type="year"
+            label="End Year"
+            name="end_year"
+            value={values.end_year}
+            onChange={handleChange}
+          />
 
           {config.showDescription && (
             <TextField
@@ -181,6 +186,8 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               id="description"
               multiline
               onChange={handleChange}
+              InputLabelProps={inputLabelProps}
+              InputProps={inputProps}
             />
           )}
 
@@ -190,6 +197,8 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               contactId={experience.contact_id}
               achievements={values.achievements}
               onChange={handleAchievements}
+              InputLabelProps={inputLabelProps}
+              InputProps={inputProps}
             />
           )}
         </DialogContent>
@@ -214,6 +223,15 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     width: '100%',
     marginBottom: spacing(2),
   },
+  resize: {
+    fontSize: 17,
+  },
+  labelRoot: {
+    fontSize: 17,
+  },
+  labelFocused: {
+    fontSize: 20,
+  },
 });
 
 AddOrEditExperienceForm.propTypes = {
@@ -231,8 +249,10 @@ AddOrEditExperienceForm.propTypes = {
       'Masters',
       'Doctoral',
     ]),
-    date_start: PropTypes.string.isRequired,
-    date_end: PropTypes.string,
+    start_month: PropTypes.string.isRequired,
+    start_year: PropTypes.number.isRequired,
+    end_month: PropTypes.string,
+    end_year: PropTypes.number,
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
     contact_id: PropTypes.number,
     achievements: PropTypes.array,

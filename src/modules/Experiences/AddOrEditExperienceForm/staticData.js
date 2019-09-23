@@ -1,0 +1,24 @@
+const monthFullNames = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+// Creating an array of current year to 1960
+let currentYear = new Date();
+currentYear = currentYear.getFullYear();
+let years = [];
+for (let i = currentYear; i > 1960; i--) {
+  years.push(i);
+}
+
+export { monthFullNames, years };
