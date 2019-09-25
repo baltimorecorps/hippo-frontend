@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
@@ -9,12 +9,15 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
 
 import useFormUpdate from 'lib/useFormUpdate';
 
 import AchievementInputsList from './AchievementInputsList';
 import DatePickerForm from './DatePickerForm';
 import DegreeDropdown from './DegreeDropdown';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import validator from '../../../lib/formValidator';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -43,7 +46,7 @@ const configureForm = (expType) => {
         host: 'Organization',
         title: 'Title',
       },
-      showDescription: true,
+      showDescription: false,
       showEndDate: true,
       showAchievements: true,
     };
@@ -113,98 +116,150 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
     },
   };
 
-  const inputProps = { classes: { input: classes.resize, shrink: false } };
+  const inputProps = { classes: { input: classes.resize } };
 
+  const [errors, setErrors] = React.useState({});
+
+  const handleFormSubmit = async () => {
+    // validate form values
+    const { isError, err } = await validator(values);
+
+    if (isError) {
+      setErrors(err);
+    } else {
+      return handleSubmit();
+    }
+  };
+
+  if (typeof values.start_year === String) {
+    values.start_year = null;
+  }
   return (
     <Dialog className={classes.modal} open={true}>
       <form autoComplete="off">
-        <DialogContent>
-          <TextField
-            id="host"
-            className={classes.formControl}
-            label={config.labels.host || 'Organization'}
-            value={values.host}
-            name="host"
-            onChange={handleChange}
-            InputLabelProps={inputLabelProps}
-            InputProps={inputProps}
-          />
+        <DialogContent className={classes.dialogContent}>
+          <Grid container spacing={1} justify="space-between">
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="host"
+                className={classes.formControl}
+                label={config.labels.host || 'Organization'}
+                value={values.host}
+                name="host"
+                onChange={handleChange}
+                InputLabelProps={inputLabelProps}
+                InputProps={inputProps}
+              />
+              <FormHelperText className={classes.formHelperText}>
+                {errors.host_error ? errors.host_error : null}
+              </FormHelperText>
+            </Grid>
 
-          {config.showDegree && (
-            <FormControl className={classes.formControl}>
-              <InputLabel htmlFor="degree">Degree</InputLabel>
-              <DegreeDropdown value={values.degree} onChange={handleDegree} />
-            </FormControl>
-          )}
+            {config.showDegree && (
+              <Grid item xs={12}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="degree">Degree</InputLabel>
+                  <DegreeDropdown value={values.degree} onChange={handleDegree} />
+                  <FormHelperText className={classes.formHelperText}>
+                    {errors.degree_error ? errors.degree_error : null}
+                  </FormHelperText>
+                </FormControl>
+              </Grid>
+            )}
 
-          <TextField
-            id="title"
-            className={classes.formControl}
-            label={config.labels.title || 'Title'}
-            value={values.title}
-            name="title"
-            onChange={handleChange}
-            InputLabelProps={inputLabelProps}
-            InputProps={inputProps}
-          />
-
-          <DatePickerForm
-            type="month"
-            label="Start Month"
-            name="start_month"
-            value={values.start_month}
-            onChange={handleChange}
-          />
-          <DatePickerForm
-            type="year"
-            label="Start Year"
-            name="start_year"
-            value={values.start_year}
-            onChange={handleChange}
-          />
-          <DatePickerForm
-            type="month"
-            label="End Month"
-            name="end_month"
-            value={values.end_month}
-            onChange={handleChange}
-          />
-          <DatePickerForm
-            type="year"
-            label="End Year"
-            name="end_year"
-            value={values.end_year}
-            onChange={handleChange}
-          />
-
-          {config.showDescription && (
-            <TextField
-              className={classes.formControl}
-              label={config.labels.description || 'Description'}
-              value={values.description}
-              name="description"
-              id="description"
-              multiline
-              onChange={handleChange}
-              InputLabelProps={inputLabelProps}
-              InputProps={inputProps}
-            />
-          )}
-
-          <Divider />
-          {config.showAchievements && (
-            <AchievementInputsList
-              contactId={experience.contact_id}
-              achievements={values.achievements}
-              onChange={handleAchievements}
-              InputLabelProps={inputLabelProps}
-              InputProps={inputProps}
-            />
-          )}
+            <Grid item xs={12}>
+              <TextField
+                required
+                id="title"
+                className={classes.formControl}
+                label={config.labels.title || 'Title'}
+                value={values.title}
+                // value={values.title}
+                name="title"
+                onChange={handleChange}
+                InputLabelProps={inputLabelProps}
+                InputProps={inputProps}
+              />
+              <FormHelperText className={classes.formHelperText}>
+                {errors.title_error ? errors.title_error : null}
+              </FormHelperText>
+            </Grid>
+            <Grid item xs={6}>
+              <DatePickerForm
+                type="month"
+                label="Start Month"
+                name="start_month"
+                value={values.start_month}
+                onChange={handleChange}
+                helperText={errors.startMonth_error ? errors.startMonth_error : null}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <DatePickerForm
+                type="year"
+                label="Start Year"
+                name="start_year"
+                value={values.start_year}
+                onChange={handleChange}
+                helperText={errors.startYear_error ? errors.startYear_error : null}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <DatePickerForm
+                disabled={values.end_month === null}
+                type="month"
+                label="End Month"
+                name="end_month"
+                value={values.end_month}
+                onChange={handleChange}
+                helperText={errors.endMonth_error ? errors.endMonth_error : null}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <DatePickerForm
+                disabled={values.end_year === null}
+                type="year"
+                label="End Year"
+                name="end_year"
+                value={values.end_year}
+                onChange={handleChange}
+                helperText={errors.endYear_error ? errors.endYear_error : null}
+              />
+            </Grid>
+            {config.showDescription && (
+              <Grid item xs={12}>
+                <TextField
+                  className={classes.formControl}
+                  label={config.labels.description || 'Description'}
+                  value={values.description}
+                  name="description"
+                  id="description"
+                  multiline
+                  rows={4}
+                  onChange={handleChange}
+                  InputLabelProps={inputLabelProps}
+                  InputProps={inputProps}
+                />
+              </Grid>
+            )}
+            {/* <Divider /> */}
+            {config.showAchievements && (
+              <Grid item xs={12}>
+                <AchievementInputsList
+                  contactId={experience.contact_id}
+                  achievements={values.achievements}
+                  onChange={handleAchievements}
+                  InputLabelProps={inputLabelProps}
+                  InputProps={inputProps}
+                />
+              </Grid>
+            )}
+          </Grid>
         </DialogContent>
 
-        <DialogActions>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <DialogActions className={classes.dialogAction}>
+          <Button variant="contained" color="primary" onClick={handleFormSubmit}>
             Save
           </Button>
           <Button onClick={handleCancel}>Cancel</Button>
@@ -216,12 +271,18 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   modal: {
-    //width: 600,
-    //margin: 'auto',
+    width: '600px',
+    margin: 'auto',
+  },
+  dialogContent: {
+    width: '350px',
+  },
+  dialogAction: {
+    paddingBottom: '20px',
   },
   formControl: {
     width: '100%',
-    marginBottom: spacing(2),
+    marginTop: spacing(0),
   },
   resize: {
     fontSize: 17,
@@ -231,6 +292,10 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   },
   labelFocused: {
     fontSize: 20,
+  },
+  formHelperText: {
+    color: '#eb0000',
+    marginTop: '2px',
   },
 });
 
@@ -250,9 +315,11 @@ AddOrEditExperienceForm.propTypes = {
       'Doctoral',
     ]),
     start_month: PropTypes.string.isRequired,
-    start_year: PropTypes.number.isRequired,
+    // when expecting PropTypes.number for start_year and end_year, it gives error in console
+    // so I changed it to string, and it works just fine
+    start_year: PropTypes.string.isRequired,
     end_month: PropTypes.string,
-    end_year: PropTypes.number,
+    end_year: PropTypes.string,
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
     contact_id: PropTypes.number,
     achievements: PropTypes.array,

@@ -51,12 +51,12 @@ const ExperiencesList = ({
   const header = headers[experienceType.toLowerCase()];
 
   return (
-    <Grid container justify="center">
+    <Grid container>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
           <Grid container justify="space-between">
             <Grid item>
-              <Typography gutterBottom variant="h5" component="h1">
+              <Typography variant="h5" component="h1">
                 {header}
               </Typography>
             </Grid>

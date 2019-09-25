@@ -7,10 +7,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { monthFullNames, years } from './staticData';
 
-const DatePickerForm = ({ label, value, onChange, classes, type, name }) => {
+const DatePickerForm = ({ label, value, onChange, classes, type, name, helperText }) => {
   const id = `date-picker-${name}`;
 
   const getOptions = (arr) => {
@@ -35,6 +36,7 @@ const DatePickerForm = ({ label, value, onChange, classes, type, name }) => {
           {label}
         </InputLabel>
         <Select
+          required
           id={id}
           value={value}
           onChange={onChange}
@@ -46,19 +48,16 @@ const DatePickerForm = ({ label, value, onChange, classes, type, name }) => {
         >
           {options}
         </Select>
+        <FormHelperText className={classes.formHelperText}>{helperText}</FormHelperText>
       </FormControl>
     </MuiPickersUtilsProvider>
   );
 };
 
 const styles = ({ breakpoints, palette, spacing }) => ({
-  modal: {
-    //width: 600,
-    //margin: 'auto',
-  },
   formControl: {
-    width: '50%',
-    marginBottom: spacing(2),
+    width: '100%',
+    marginBottom: spacing(0),
   },
   inputLabel: {
     fontSize: 17,
@@ -67,10 +66,14 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     fontSize: 17,
   },
   labelRoot: {
-    fontSize: 20,
+    fontSize: 17,
   },
   labelFocused: {
     fontSize: 20,
+  },
+  formHelperText: {
+    color: '#eb0000',
+    marginTop: '4px',
   },
 });
 

@@ -6,8 +6,9 @@ import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import AchievementsList from 'modules/Achievements/AchievementsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
+const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
   const initial = experience.host ? experience.host[0] : '';
   const title =
     `${experience.host}, ` +
@@ -33,13 +34,13 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
 
   return (
     <React.Fragment>
-      <Grid container justify="space-between">
+      <Grid container justify="space-evenly" className={classes.gridContainer}>
         <Grid item>
           <Avatar>{initial}</Avatar>
         </Grid>
 
-        <Grid item xs={10}>
-          <Typography gutterBottom variant="h6" component="h2">
+        <Grid item xs={8} md={9}>
+          <Typography variant="h6" component="h2">
             {title}
           </Typography>
           <Typography gutterBottom variant="subtitle1" component="p" style={{ color: '#7d7d7d' }}>
@@ -58,7 +59,7 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
             : null}
         </Grid>
 
-        <Grid item>
+        <Grid item xs={2} className={classes.gridIcons}>
           <Icon onClick={() => setEditing(true)}>edit</Icon>
           <Icon onClick={() => onDelete(experience)}>delete</Icon>
         </Grid>
@@ -97,4 +98,13 @@ ExperiencesListItem.propTypes = {
   }),
 };
 
-export default ExperiencesListItem;
+const styles = ({ breakpoints, palette, spacing }) => ({
+  gridContainer: {
+    marginTop: '15px',
+  },
+  gridIcons: {
+    flexBasis: '50px',
+  },
+});
+
+export default withStyles(styles)(ExperiencesListItem);

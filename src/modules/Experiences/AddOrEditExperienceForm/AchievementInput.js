@@ -5,7 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const AchievementInput = ({ label, value, onTextChange, onIconClick, classes }) => {
+const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, onKeyPress }) => {
   return (
     <TextField
       type="text"
@@ -14,6 +14,8 @@ const AchievementInput = ({ label, value, onTextChange, onIconClick, classes }) 
       fullWidth
       margin="normal"
       onChange={onTextChange}
+      onKeyPress={onKeyPress}
+      className={classes.formControl}
       InputLabelProps={{
         classes: {
           root: classes.labelRoot,
@@ -39,8 +41,9 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     //margin: 'auto',
   },
   formControl: {
-    width: '45%',
-    marginBottom: spacing(2),
+    width: '100%',
+    marginTop: '3px',
+    marginBottom: spacing(0.5),
   },
   resize: {
     fontSize: 17,

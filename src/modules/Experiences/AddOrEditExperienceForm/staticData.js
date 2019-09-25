@@ -13,11 +13,11 @@ const monthFullNames = [
   'December',
 ];
 
-// Creating an array of current year to 1960
+// Creating an array of current year to 1900
 let currentYear = new Date();
 currentYear = currentYear.getFullYear();
 let years = [];
-for (let i = currentYear; i > 1960; i--) {
+for (let i = currentYear; i > 1900; i--) {
   years.push(i);
 }
 
