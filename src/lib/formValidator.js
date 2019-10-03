@@ -1,6 +1,6 @@
 import { monthFullNames } from '../modules/Experiences/AddOrEditExperienceForm/staticData';
 
-const validator = (values) => {
+const experienceValidator = (values) => {
   let isError = false;
   let err = {};
 
@@ -96,6 +96,50 @@ const individualValidator = (name, value) => {
   return { isError, err };
 };
 
-export default validator;
+const newProfileValidator = (values) => {
+  let isError = false;
+  let err = {};
 
-export { individualValidator };
+  if (values.first_name === undefined || values.first_name.length < 1) {
+    isError = true;
+    err.firstName_error = 'Required';
+  }
+
+  if (values.last_name === undefined || values.last_name.length < 1) {
+    isError = true;
+    err.lastName_error = 'Required';
+  }
+
+  if (values.email === undefined) {
+    isError = true;
+    err.email_error = 'Required';
+  } else if (!validateEmail(values.email)) {
+    isError = true;
+    err.email_error = 'Invalid email address';
+  }
+  if (values.phone_primary === undefined || values.phone_primary.length < 1) {
+    isError = true;
+    err.phonePrimary_error = 'Required';
+  } else if (isNaN(parseInt(values.phone_primary))) {
+    isError = true;
+    err.phonePrimary_error = 'Numbers only';
+  } else if (values.phone_primary.length !== 10) {
+    isError = true;
+    err.phonePrimary_error = 'Phone number must be 10 digits';
+  }
+
+  return { isError, err };
+};
+
+const validateEmail = (inputText) => {
+  const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  if (inputText.match(mailFormat)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export default experienceValidator;
+
+export { individualValidator, newProfileValidator };

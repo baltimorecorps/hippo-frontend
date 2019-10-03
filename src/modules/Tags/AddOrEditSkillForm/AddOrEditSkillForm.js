@@ -38,13 +38,9 @@ const useForm = (initialValues, onSubmit, onReplace) => {
 };
 
 const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onReplace, onCancel, classes }) => {
-  const [values, { handleSelect, handleSubmit, handleScore }] = useForm(
-    tag,
-    onSubmit,
-    onReplace,
-  );
+  const [values, { handleSelect, handleSubmit, handleScore }] = useForm(tag, onSubmit, onReplace);
 
-  const getOptionLabel = ({type, name}) => name;
+  const getOptionLabel = ({ type, name }) => name;
   const isOptionSelected = ({ id }, options) => !!options.find((o) => o.id === id);
   const selectedTag = {
     id: values.tag_id,
@@ -60,7 +56,7 @@ const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onReplace, onCancel, class
       <form noValidate autoComplete="off">
         <DialogContent className={classes.container}>
           <ReactSelect
-            placeholder='Type to find a Skill'
+            placeholder="Type to find a Skill"
             options={allTags}
             value={selectedTag}
             getOptionLabel={getOptionLabel}
@@ -69,9 +65,7 @@ const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onReplace, onCancel, class
           />
 
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="skillLevel">
-              Skill Level
-            </InputLabel>
+            <InputLabel htmlFor="skillLevel">Skill Level</InputLabel>
             <SkillLevelDropdown value={values.score} onChange={handleScore} />
           </FormControl>
         </DialogContent>
@@ -118,6 +112,9 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   actions: {
     padding: spacing(0, 3),
     marginBottom: spacing(3),
+  },
+  formControl: {
+    marginTop: '10px',
   },
 });
 

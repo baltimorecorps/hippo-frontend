@@ -17,7 +17,7 @@ import AchievementInputsList from './AchievementInputsList';
 import DatePickerForm from './DatePickerForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import validator from '../../../lib/formValidator';
+import experienceValidator from '../../../lib/formValidator';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -120,9 +120,9 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
 
   const [errors, setErrors] = React.useState({});
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = () => {
     // validate form values
-    const { isError, err } = await validator(values);
+    const { isError, err } = experienceValidator(values);
 
     if (isError) {
       setErrors(err);

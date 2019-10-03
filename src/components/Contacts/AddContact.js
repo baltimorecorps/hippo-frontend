@@ -9,6 +9,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
+import { newProfileValidator } from '../../lib/formValidator';
 
 // const RACES = [
 //   {
@@ -60,9 +63,19 @@ const useForm = (addNewContact) => {
 const AddContact = ({ classes, addNewContact }) => {
   const [open, setOpen] = useState(false);
   const [values, handleChange, handleSubmit] = useForm(addNewContact);
+  const [errors, setErrors] = useState({});
+
   const submit = () => {
-    handleSubmit();
-    setOpen(false);
+    const { isError, err } = newProfileValidator(values);
+    console.log(isError, err);
+
+    // const isError = false;
+    if (isError) {
+      setErrors(err);
+    } else {
+      handleSubmit();
+      setOpen(false);
+    }
   };
 
   const inputLabelProps = {
@@ -103,6 +116,9 @@ const AddContact = ({ classes, addNewContact }) => {
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
               />
+              <FormHelperText className={classes.formHelperText}>
+                {errors.firstName_error || null}
+              </FormHelperText>
               <TextField
                 required
                 id="last-name"
@@ -114,6 +130,9 @@ const AddContact = ({ classes, addNewContact }) => {
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
               />
+              <FormHelperText className={classes.formHelperText}>
+                {errors.lastName_error || null}
+              </FormHelperText>
               <TextField
                 required
                 id="email"
@@ -125,6 +144,9 @@ const AddContact = ({ classes, addNewContact }) => {
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
               />
+              <FormHelperText className={classes.formHelperText}>
+                {errors.email_error || null}
+              </FormHelperText>
 
               <TextField
                 required
@@ -137,6 +159,9 @@ const AddContact = ({ classes, addNewContact }) => {
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
               />
+              <FormHelperText className={classes.formHelperText}>
+                {errors.phonePrimary_error || null}
+              </FormHelperText>
             </Grid>
           </form>
         </DialogContent>
@@ -181,6 +206,10 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   },
   labelFocused: {
     fontSize: 20,
+  },
+  formHelperText: {
+    color: '#eb0000',
+    marginTop: '2px',
   },
 });
 
