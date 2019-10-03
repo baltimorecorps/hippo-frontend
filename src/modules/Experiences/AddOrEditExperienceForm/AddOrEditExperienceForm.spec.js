@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, prettyDOM } from '@testing-library/react';
+import { render, fireEvent, prettyDOM, waitForElement } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import AddOrEditExperienceForm from './AddOrEditExperienceForm';
 
@@ -81,5 +81,32 @@ describe('AddOrEditExperienceForm', () => {
     expect(submit.mock.calls.length).toBe(1);
     expect(submit.mock.calls[0][0]).toHaveProperty('host');
     expect(submit.mock.calls[0][0].host).toBe('new org');
+  });
+
+  ////////-----------------------------------------------------------------/////////
+  test('DatePicker test', () => {
+    const cancel = jest.fn();
+    const submit = jest.fn();
+    const { queryByText, getByLabelText, getByText, getByTestId } = render(
+      <AddOrEditExperienceForm
+        handleCancel={cancel}
+        labels={{}}
+        onSubmit={submit}
+        experience={experience}
+      />,
+    );
+
+    const select = getByTestId('start_month');
+    expect(select).toBeInTheDocument();
+    expect(select.value).toBe('January');
+
+    fireEvent.change(select, { target: { value: 'April' } });
+    expect(select.value).toBe('April');
+
+    fireEvent.click(getByText(/save/i));
+
+    expect(submit.mock.calls.length).toBe(1);
+    expect(submit.mock.calls[0][0]).toHaveProperty('start_month');
+    expect(submit.mock.calls[0][0].start_month).toBe('April');
   });
 });

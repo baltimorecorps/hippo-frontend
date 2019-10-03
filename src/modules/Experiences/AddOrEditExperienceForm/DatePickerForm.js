@@ -44,6 +44,7 @@ const DatePickerForm = ({ label, value, onChange, classes, type, name, helperTex
             name: name,
             id: name,
             classes: { select: classes.resize },
+            'data-testid': name,
           }}
         >
           {options}
