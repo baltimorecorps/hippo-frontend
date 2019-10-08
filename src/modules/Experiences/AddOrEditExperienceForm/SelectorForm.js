@@ -12,7 +12,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { monthFullNames, years } from './staticData';
 
 const SelectorForm = ({ label, value, onChange, classes, type, name, helperText }) => {
-  const id = `date-picker-${name}`;
+  const id = `selector-${name}`;
 
   const getOptions = (arr) => {
     return arr.map((element) => (

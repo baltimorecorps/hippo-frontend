@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import useFormUpdate from 'lib/useFormUpdate';
 
 import AchievementInputsList from './AchievementInputsList';
-import DatePickerForm from './SelectorForm';
+import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import experienceValidator from '../../../lib/formValidator';
@@ -186,7 +186,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               </FormHelperText>
             </Grid>
             <Grid item xs={6}>
-              <DatePickerForm
+              <SelectorForm
                 type="month"
                 label="Start Month"
                 name="start_month"
@@ -196,7 +196,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               />
             </Grid>
             <Grid item xs={6}>
-              <DatePickerForm
+              <SelectorForm
                 type="year"
                 label="Start Year"
                 name="start_year"
@@ -206,7 +206,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               />
             </Grid>
             <Grid item xs={6}>
-              <DatePickerForm
+              <SelectorForm
                 disabled={values.end_month === null}
                 type="month"
                 label="End Month"
@@ -217,7 +217,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               />
             </Grid>
             <Grid item xs={6}>
-              <DatePickerForm
+              <SelectorForm
                 disabled={values.end_year === null}
                 type="year"
                 label="End Year"

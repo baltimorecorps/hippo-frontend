@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import DatePickerForm from './SelectorForm';
+import SelectorForm from './SelectorForm';
 
 ////////-----------------------------------------------------------------/////////
 test('DatePicker test: Month', () => {
@@ -11,7 +11,7 @@ test('DatePicker test: Month', () => {
 
   const handleChange = jest.fn();
   const { getByTestId } = render(
-    <DatePickerForm
+    <SelectorForm
       disabled={false}
       type="month"
       label="Start Month"
@@ -36,7 +36,7 @@ test('DatePicker test: Year', () => {
 
   const handleChange = jest.fn();
   const { getByTestId } = render(
-    <DatePickerForm
+    <SelectorForm
       disabled={false}
       type="year"
       label="End Year"
