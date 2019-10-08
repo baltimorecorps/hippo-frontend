@@ -53,49 +53,6 @@ const experienceValidator = (values) => {
   return { isError, err };
 };
 
-const individualValidator = (name, value) => {
-  let isError = false;
-  let err = {};
-  console.log(name, value);
-
-  if (name === 'host' && value.length < 1) {
-    isError = true;
-    err = {};
-    err.host_error = 'Required';
-  }
-  if (name === 'title' && value.length < 1) {
-    isError = true;
-    err = {};
-    err.title_error = 'Required';
-  }
-  if (name === 'degree' && value.length < 1) {
-    isError = true;
-    err = {};
-    err.degree_error = 'Required';
-  }
-  if (name === 'start_month' && !value) {
-    isError = true;
-    err = {};
-    err.startMonth_error = 'Required';
-  }
-  if (name === 'start_year' && !value) {
-    isError = true;
-    err = {};
-    err.startYear_error = 'Required';
-  }
-  if (name === 'end_month' && !value) {
-    isError = true;
-    err = {};
-    err.endMonth_error = 'Required';
-  }
-  if (name === 'end_year' && !value) {
-    isError = true;
-    err = {};
-    err.endYear_error = 'Required';
-  }
-  return { isError, err };
-};
-
 const newProfileValidator = (values) => {
   let isError = false;
   let err = {};
@@ -131,6 +88,7 @@ const newProfileValidator = (values) => {
   return { isError, err };
 };
 
+// Validate RegEx
 const validateEmail = (inputText) => {
   const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   if (inputText.match(mailFormat)) {
@@ -142,4 +100,4 @@ const validateEmail = (inputText) => {
 
 export default experienceValidator;
 
-export { individualValidator, newProfileValidator };
+export { newProfileValidator };

@@ -11,7 +11,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { monthFullNames, years } from './staticData';
 
-const DatePickerForm = ({ label, value, onChange, classes, type, name, helperText }) => {
+const SelectorForm = ({ label, value, onChange, classes, type, name, helperText }) => {
   const id = `date-picker-${name}`;
 
   const getOptions = (arr) => {
@@ -78,4 +78,4 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   },
 });
 
-export default withStyles(styles)(DatePickerForm);
+export default withStyles(styles)(SelectorForm);

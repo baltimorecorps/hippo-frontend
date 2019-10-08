@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import useFormUpdate from 'lib/useFormUpdate';
 
 import AchievementInputsList from './AchievementInputsList';
-import DatePickerForm from './DatePickerForm';
+import DatePickerForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import experienceValidator from '../../../lib/formValidator';
