@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import List from '@material-ui/core/List';
@@ -7,9 +7,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 const ContactList = ({ contacts, refreshContacts }) => {
+  let [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    contacts.length === 0 && refreshContacts();
-  });
+    if (!loaded) {
+      refreshContacts();
+    }
+    setLoaded(true);
+  }, [loaded, contacts, refreshContacts]);
 
   return (
     <List>

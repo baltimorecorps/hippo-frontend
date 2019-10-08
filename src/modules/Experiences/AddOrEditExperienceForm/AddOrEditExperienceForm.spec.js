@@ -20,7 +20,7 @@ const experience = {
   title: 'Test Title',
   start_month: 'January',
   start_year: '2015',
-  end_month: 'January',
+  end_month: 'August',
   end_year: '2017',
   type: 'Work',
   contact_id: 1234,
@@ -48,7 +48,7 @@ describe('AddOrEditExperienceForm', () => {
   test('submit sends values', () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { queryByText, getByLabelText, getByText } = render(
+    const { getByText } = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
@@ -66,7 +66,7 @@ describe('AddOrEditExperienceForm', () => {
   test('organization text box', () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { queryByText, getByLabelText, getByText } = render(
+    const { getByLabelText, getByText } = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
@@ -84,10 +84,10 @@ describe('AddOrEditExperienceForm', () => {
   });
 
   ////////-----------------------------------------------------------------/////////
-  test('DatePicker test', () => {
+  test('DatePicker test: Month (selector)', () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { queryByText, getByLabelText, getByText, getByTestId } = render(
+    const { getByText, getAllByText } = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
@@ -96,17 +96,42 @@ describe('AddOrEditExperienceForm', () => {
       />,
     );
 
-    const select = getByTestId('start_month');
-    expect(select).toBeInTheDocument();
-    expect(select.value).toBe('January');
+    // Click the first actual month selector we see (the 'Start Month' one)
+    // Note that 'getByLabelText(/start month/i)' doesn't work because of
+    // the way that the MaterialUI Select is implemented, so we have to search
+    // for the button which has text 'January' instead.
+    fireEvent.click(getAllByText('January')[0]);
 
-    fireEvent.change(select, { target: { value: 'April' } });
-    expect(select.value).toBe('April');
-
+    // Select the month we want
+    fireEvent.click(getByText('April'));
     fireEvent.click(getByText(/save/i));
 
     expect(submit.mock.calls.length).toBe(1);
     expect(submit.mock.calls[0][0]).toHaveProperty('start_month');
     expect(submit.mock.calls[0][0].start_month).toBe('April');
+  });
+
+  test('DatePicker test: Year (selector)', () => {
+    const cancel = jest.fn();
+    const submit = jest.fn();
+    const { getByText, getAllByText } = render(
+      <AddOrEditExperienceForm
+        handleCancel={cancel}
+        labels={{}}
+        onSubmit={submit}
+        experience={experience}
+      />,
+    );
+
+    // click on the current value of end_year
+    fireEvent.click(getAllByText('2017')[0]);
+
+    // Select the year we want to test
+    fireEvent.click(getByText('2019'));
+    fireEvent.click(getByText(/save/i));
+
+    expect(submit.mock.calls.length).toBe(1);
+    expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
+    expect(submit.mock.calls[0][0].end_year).toBe(2019);
   });
 });

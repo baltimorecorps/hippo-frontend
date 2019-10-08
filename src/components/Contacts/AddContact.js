@@ -42,11 +42,13 @@ const useForm = (addNewContact) => {
   const [values, setValues] = useState({});
 
   const handleSubmit = () => {
-    values.email_primary = {
+    let submission = Object.assign({}, values);
+    submission.email_primary = {
       is_primary: true,
       email: values.email,
     };
-    addNewContact(values);
+    delete submission.email;
+    addNewContact(submission);
   };
 
   const handleChange = (event) => {

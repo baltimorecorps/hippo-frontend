@@ -30,7 +30,13 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
   };
 
   const startDate = getMonthAndYear(experience.start_month, experience.start_year);
-  const endDate = getMonthAndYear(experience.end_month, experience.end_year);
+
+  let endDate = '';
+  if (experience.end_month && experience.end_year) {
+    endDate = getMonthAndYear(experience.end_month, experience.end_year);
+  } else {
+    endDate = 'Present';
+  }
 
   return (
     <React.Fragment>
