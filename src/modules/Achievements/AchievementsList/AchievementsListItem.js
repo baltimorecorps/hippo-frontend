@@ -3,7 +3,6 @@ import Typography from '@material-ui/core/Typography';
 
 const AchievementsListItem = ({ text }) => {
   return (
-    // <div style={{ width: '100%' }}>
     <Typography
       variant="body1"
       component="p"
@@ -12,7 +11,6 @@ const AchievementsListItem = ({ text }) => {
     >
       {text}
     </Typography>
-    // </div>
   );
 };
 

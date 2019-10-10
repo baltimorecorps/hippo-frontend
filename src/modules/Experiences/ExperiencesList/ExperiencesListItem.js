@@ -91,8 +91,6 @@ ExperiencesListItem.propTypes = {
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
-    // date_start: PropTypes.instanceOf(Date).isRequired,
-    // date_end: PropTypes.instanceOf(Date),
     start_month: PropTypes.string.isRequired,
     start_year: PropTypes.number.isRequired,
     end_month: PropTypes.string,

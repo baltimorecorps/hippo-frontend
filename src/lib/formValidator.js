@@ -4,17 +4,17 @@ const experienceValidator = (values) => {
   let isError = false;
   let err = {};
 
-  if (values.host.length < 1) {
+  if (!values.host) {
     isError = true;
     err.host_error = 'Required';
   }
-  if (values.degree !== undefined) {
-    if (values.degree.length < 1) {
+  if (values.degree || values.degree !== undefined) {
+    if (!values.degree) {
       isError = true;
       err.degree_error = 'Required';
     }
   }
-  if (values.title.length < 1) {
+  if (!values.title) {
     isError = true;
     err.title_error = 'Required';
   }
@@ -57,14 +57,21 @@ const newProfileValidator = (values) => {
   let isError = false;
   let err = {};
 
-  if (values.first_name === undefined || values.first_name.length < 1) {
+  if (!values.first_name || values.first_name === undefined) {
     isError = true;
     err.firstName_error = 'Required';
+  } else if (!validateName(values.first_name)) {
+    isError = true;
+
+    err.firstName_error = 'Invalid format. Only (a-z, A-Z), ( ), and (-).';
   }
 
-  if (values.last_name === undefined || values.last_name.length < 1) {
+  if (!values.last_name || values.last_name === undefined) {
     isError = true;
     err.lastName_error = 'Required';
+  } else if (!validateName(values.last_name)) {
+    isError = true;
+    err.lastName_error = 'Invalid format. Only (a-z, A-Z), ( ), and (-).';
   }
 
   if (values.email === undefined) {
@@ -89,15 +96,35 @@ const newProfileValidator = (values) => {
 };
 
 // Validate RegEx
-const validateEmail = (inputText) => {
-  const mailFormat = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-  if (inputText.match(mailFormat)) {
+const validateEmail = (input) => {
+  const mailFormat = /^(?=.{1,64}$)[A-Z0-9_%!+-][A-Z0-9._%!+-]*@[A-Z0-9][A-Z0-9-.]+[^.]\.[A-Z]{2,}$/i;
+  // if (mailFormat.split('@')[0].length < 64
+
+  if (input.match(mailFormat)) {
     return true;
   } else {
     return false;
   }
 };
 
-export default experienceValidator;
+const validateName = (input) => {
+  const nameFormat = /^[A-Z]+[A-Z\s-]*[^-\d\S]*$/i;
 
-export { newProfileValidator };
+  if (input.match(nameFormat)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+// const validatePhone = (input) => {
+//   const nameFormat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+//   if (input.match(nameFormat)) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// };
+
+export { newProfileValidator, experienceValidator };

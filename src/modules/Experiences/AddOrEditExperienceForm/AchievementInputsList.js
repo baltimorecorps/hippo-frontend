@@ -25,7 +25,6 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
   };
 
   const handleKeyPress = (e) => {
-    console.log(e.key);
     if (e.key === 'Enter') {
       handleAdd();
     }

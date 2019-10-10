@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-// import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
@@ -17,7 +16,7 @@ import AchievementInputsList from './AchievementInputsList';
 import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import experienceValidator from '../../../lib/formValidator';
+import { experienceValidator } from '../../../lib/formValidator';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -175,7 +174,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 className={classes.formControl}
                 label={config.labels.title || 'Title'}
                 value={values.title}
-                // value={values.title}
                 name="title"
                 onChange={handleChange}
                 InputLabelProps={inputLabelProps}
@@ -243,7 +241,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 />
               </Grid>
             )}
-            {/* <Divider /> */}
+
             {config.showAchievements && (
               <Grid item xs={12}>
                 <AchievementInputsList
@@ -315,8 +313,6 @@ AddOrEditExperienceForm.propTypes = {
       'Doctoral',
     ]),
     start_month: PropTypes.string.isRequired,
-    // when expecting PropTypes.number for start_year and end_year, it gives error in console
-    // so I changed it to string, and it works just fine
     start_year: PropTypes.string.isRequired,
     end_month: PropTypes.string,
     end_year: PropTypes.string,

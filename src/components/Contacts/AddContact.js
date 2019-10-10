@@ -69,9 +69,7 @@ const AddContact = ({ classes, addNewContact }) => {
 
   const submit = () => {
     const { isError, err } = newProfileValidator(values);
-    console.log(isError, err);
 
-    // const isError = false;
     if (isError) {
       setErrors(err);
     } else {
@@ -113,7 +111,7 @@ const AddContact = ({ classes, addNewContact }) => {
                 label="First Name"
                 className={classes.textField}
                 name="first_name"
-                value={values.first_name}
+                value={values.first_name || ''}
                 onChange={handleChange}
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
