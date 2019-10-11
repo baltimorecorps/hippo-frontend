@@ -6,12 +6,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const BasicInfoDisplay = ({firstName, lastName, email, phone, classes}) => {
+const BasicInfoDisplay = ({ firstName, lastName, email, phone, classes }) => {
   return (
     <Grid container justify="center">
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Typography gutterBottom variant="h3" component="h1">
+          <Typography gutterBottom variant="h5" component="h1">
             {firstName} {lastName}
           </Typography>
 

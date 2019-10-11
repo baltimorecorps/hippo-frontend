@@ -3,8 +3,9 @@ import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-const AchievementInput = ({label, value, onTextChange, onIconClick}) => {
+const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, onKeyPress }) => {
   return (
     <TextField
       type="text"
@@ -13,14 +14,18 @@ const AchievementInput = ({label, value, onTextChange, onIconClick}) => {
       fullWidth
       margin="normal"
       onChange={onTextChange}
+      onKeyPress={onKeyPress}
+      className={classes.formControl}
+      InputLabelProps={{
+        classes: {
+          root: classes.labelRoot,
+          focused: classes.labelFocused,
+        },
+      }}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton
-              edge="end"
-              aria-label="delete achievement"
-              onClick={onIconClick}
-            >
+            <IconButton edge="end" aria-label="delete achievement" onClick={onIconClick}>
               <Icon>delete</Icon>
             </IconButton>
           </InputAdornment>
@@ -30,4 +35,25 @@ const AchievementInput = ({label, value, onTextChange, onIconClick}) => {
   );
 };
 
-export default AchievementInput;
+const styles = ({ breakpoints, palette, spacing }) => ({
+  modal: {
+    //width: 600,
+    //margin: 'auto',
+  },
+  formControl: {
+    width: '100%',
+    marginTop: '3px',
+    marginBottom: spacing(0.5),
+  },
+  resize: {
+    fontSize: 17,
+  },
+  labelRoot: {
+    fontSize: 17,
+  },
+  labelFocused: {
+    fontSize: 20,
+  },
+});
+
+export default withStyles(styles)(AchievementInput);

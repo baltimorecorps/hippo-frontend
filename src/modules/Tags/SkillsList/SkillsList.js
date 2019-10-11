@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
@@ -29,7 +29,7 @@ const SkillsList = ({
     tagItems.length === 0 && refreshTagItems();
   }, [refreshTagItems, tagItems.length]);
 
-  const title =  titles[tagType.toLowerCase()];
+  const title = titles[tagType.toLowerCase()];
 
   const blankTag = {
     name: '',
@@ -41,7 +41,7 @@ const SkillsList = ({
     <div className={classes.wrapper}>
       <Grid container justify="space-between">
         <Grid item xs={10}>
-          <Typography gutterBottom variant="h4" component="h2">
+          <Typography gutterBottom variant="subtitle1" component="h2">
             {title}
           </Typography>
         </Grid>
@@ -49,20 +49,20 @@ const SkillsList = ({
           <Icon onClick={() => setShowForm(true)}>add</Icon>
         </Grid>
       </Grid>
-      {tagItems.map(tag =>
-        <SkillsListItem 
-          key={tag.tag_id} 
-          tag={tag} 
-          onSubmit={updateTagItem} 
-          onReplace={(oldTag, newTag) => { 
-            deleteTagItem(oldTag); 
+      {tagItems.map((tag) => (
+        <SkillsListItem
+          key={tag.tag_id}
+          tag={tag}
+          onSubmit={updateTagItem}
+          onReplace={(oldTag, newTag) => {
+            deleteTagItem(oldTag);
             addTagItem(newTag);
           }}
-          onDelete={deleteTagItem} 
+          onDelete={deleteTagItem}
         />
-      )}
+      ))}
 
-      {showForm &&
+      {showForm && (
         <AddOrEditSkillForm
           tag={blankTag}
           tagType={tagType}
@@ -71,7 +71,7 @@ const SkillsList = ({
           }}
           onCancel={() => setShowForm(false)}
         />
-      }
+      )}
     </div>
   );
 };
@@ -87,7 +87,7 @@ SkillsList.propTypes = {
 };
 
 const titles = {
-  'function': 'Functions performed',
+  function: 'Functions performed',
   skill: 'Skills developed',
   topic: 'Topics addressed',
 };

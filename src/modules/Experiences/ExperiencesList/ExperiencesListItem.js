@@ -6,14 +6,15 @@ import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import AchievementsList from 'modules/Achievements/AchievementsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
+const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
   const initial = experience.host ? experience.host[0] : '';
-  const title = `${experience.host}, ` + (
-    experience.type === 'Education'
+  const title =
+    `${experience.host}, ` +
+    (experience.type === 'Education'
       ? `${experience.degree} in ${experience.title}`
-      : `${experience.title}`
-  );
+      : `${experience.title}`);
   const showEndDate = experience.type !== 'Accomplishment';
   const showAchievements = experience.type !== 'Accomplishment';
 
@@ -23,53 +24,61 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete }) => {
     setEditing(false);
   };
 
+  const getMonthAndYear = (month, year) => {
+    month = month.slice(0, 3);
+    return `${month} ${year}`;
+  };
+
+  const startDate = getMonthAndYear(experience.start_month, experience.start_year);
+
+  let endDate = '';
+  if (experience.end_month && experience.end_year) {
+    endDate = getMonthAndYear(experience.end_month, experience.end_year);
+  } else {
+    endDate = 'Present';
+  }
+
   return (
     <React.Fragment>
-      <Grid container justify="space-between">
+      <Grid container justify="space-evenly" className={classes.gridContainer}>
         <Grid item>
-          <Avatar>
-            {initial}
-          </Avatar>
+          <Avatar>{initial}</Avatar>
         </Grid>
 
-        <Grid item xs={10}>
-          <Typography gutterBottom variant="h4" component="h2">
+        <Grid item xs={8} md={9}>
+          <Typography variant="h6" component="h2">
             {title}
           </Typography>
-          <Typography gutterBottom variant="h6" component="p">
-            {experience.date_start}
-            {showEndDate &&
-              <React.Fragment>
-                {' '}&ndash; {experience.date_end}
-              </React.Fragment>
-            }
+          <Typography gutterBottom variant="subtitle1" component="p" style={{ color: '#7d7d7d' }}>
+            {startDate}
+            {showEndDate && <React.Fragment> &ndash; {endDate}</React.Fragment>}
           </Typography>
 
-          {experience.description &&
+          {experience.description && (
             <Typography gutterBottom variant="body1" component="p">
               {experience.description}
             </Typography>
-          }
+          )}
 
-          {showAchievements &&
-            <AchievementsList achievements={experience.achievements} />
-          }
+          {experience.achievements.length
+            ? showAchievements && <AchievementsList achievements={experience.achievements} />
+            : null}
         </Grid>
 
-        <Grid item>
+        <Grid item xs={2} className={classes.gridIcons}>
           <Icon onClick={() => setEditing(true)}>edit</Icon>
           <Icon onClick={() => onDelete(experience)}>delete</Icon>
         </Grid>
       </Grid>
 
-      {editing &&
+      {editing && (
         <AddOrEditExperienceForm
           handleCancel={() => setEditing(false)}
           labels={{}}
           onSubmit={submitUpdate}
           experience={experience}
         />
-      }
+      )}
     </React.Fragment>
   );
 };
@@ -82,8 +91,10 @@ ExperiencesListItem.propTypes = {
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
-    // date_start: PropTypes.instanceOf(Date).isRequired,
-    // date_end: PropTypes.instanceOf(Date),
+    start_month: PropTypes.string.isRequired,
+    start_year: PropTypes.number.isRequired,
+    end_month: PropTypes.string,
+    end_year: PropTypes.number,
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
     contact_id: PropTypes.number.isRequired,
     achievements: PropTypes.array,
@@ -91,4 +102,13 @@ ExperiencesListItem.propTypes = {
   }),
 };
 
-export default ExperiencesListItem;
+const styles = ({ breakpoints, palette, spacing }) => ({
+  gridContainer: {
+    marginTop: '15px',
+  },
+  gridIcons: {
+    flexBasis: '50px',
+  },
+});
+
+export default withStyles(styles)(ExperiencesListItem);

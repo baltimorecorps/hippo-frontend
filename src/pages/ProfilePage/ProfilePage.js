@@ -74,7 +74,6 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
     );
   };
 
-
   const email = contactInfo.email_primary ? contactInfo.email_primary.email : '';
 
   // This page primarily serves as the top level container for the profile of
@@ -99,7 +98,7 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
           <ExperiencesList contactId={contactId} experienceType="Accomplishment" />
 
           <Paper className={classes.paper}>
-            <Typography gutterBottom variant="h3" component="h1">
+            <Typography gutterBottom variant="h5" component="h1">
               Skills and Abilities
             </Typography>
             <Divider className={classes.divider} />

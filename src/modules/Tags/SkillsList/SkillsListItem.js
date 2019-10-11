@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import AddOrEditSkillForm from 'modules/Tags/AddOrEditSkillForm';
 import getTextScore from 'modules/Tags/utilities/getTextScore';
 
-const SkillsListItem = ({tag, onSubmit, onReplace, onDelete, classes}) => {
+const SkillsListItem = ({ tag, onSubmit, onReplace, onDelete, classes }) => {
   const initial = tag.name ? tag.name[0] : '';
 
   const [editing, setEditing] = useState(false);
@@ -17,13 +17,11 @@ const SkillsListItem = ({tag, onSubmit, onReplace, onDelete, classes}) => {
     <React.Fragment>
       <Grid container justify="space-between" className={classes.wrapper}>
         <Grid item>
-          <Avatar>
-            {initial}
-          </Avatar>
+          <Avatar>{initial}</Avatar>
         </Grid>
 
         <Grid item xs={10}>
-          <Typography variant="h5" component="h3">
+          <Typography variant="subtitle1" component="h3">
             {tag.name}
           </Typography>
           <Typography variant="body1" component="p">
@@ -37,7 +35,7 @@ const SkillsListItem = ({tag, onSubmit, onReplace, onDelete, classes}) => {
         </Grid>
       </Grid>
 
-      {editing &&
+      {editing && (
         <AddOrEditSkillForm
           tag={tag}
           tagType={tag.type}
@@ -51,7 +49,7 @@ const SkillsListItem = ({tag, onSubmit, onReplace, onDelete, classes}) => {
           }}
           onCancel={() => setEditing(false)}
         />
-      }
+      )}
     </React.Fragment>
   );
 };

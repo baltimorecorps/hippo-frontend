@@ -9,7 +9,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 const ContactList = ({ contacts, refreshContacts }) => {
   let [loaded, setLoaded] = useState(false);
   useEffect(() => {
+<<<<<<< HEAD
     if(!loaded) { refreshContacts(); }
+=======
+    if (!loaded) {
+      refreshContacts();
+    }
+>>>>>>> date-picker-and-style
     setLoaded(true);
   }, [loaded, contacts, refreshContacts]);
 

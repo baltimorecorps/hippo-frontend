@@ -24,20 +24,24 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
     );
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleAdd();
+    }
+  };
+
   return (
     <React.Fragment>
-      <h3>
-        Achievements:
-      </h3>
-      {achievements.map(({description}, index) =>
+      {achievements.map(({ description }, index) => (
         <AchievementInput
           key={index}
           label={`Achievement #${index + 1}`}
           value={description}
           onTextChange={handleChangeDescription(index)}
           onIconClick={handleRemove(index)}
+          onKeyPress={handleKeyPress}
         />
-      )}
+      ))}
       <Button type="button" onClick={handleAdd}>
         Add Achievement
       </Button>
