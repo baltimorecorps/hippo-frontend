@@ -42,11 +42,7 @@ const useForm = (addNewContact) => {
   const [values, setValues] = useState({});
 
   const handleSubmit = () => {
-<<<<<<< HEAD
-    let submission = Object.assign({}, values)
-=======
     let submission = Object.assign({}, values);
->>>>>>> date-picker-and-style
     submission.email_primary = {
       is_primary: true,
       email: values.email,
