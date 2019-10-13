@@ -1,4 +1,4 @@
-const getMonthAndYear = (month, year) => {
+const formatMonthYearDate = (month, year) => {
   month = month.slice(0, 3);
   return `${month} ${year}`;
 };
@@ -33,4 +33,4 @@ const getWorkLength = (years, months) => {
   return lengthWork;
 };
 
-export { getMonthAndYear, getWorkLength };
+export { formatMonthYearDate, getWorkLength };

@@ -8,7 +8,7 @@ import AchievementsList from 'modules/Achievements/AchievementsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import { getMonthAndYear, getWorkLength } from './helpers';
+import { formatMonthYearDate, getWorkLength } from './helpers';
 
 const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
   const initial = experience.host ? experience.host[0] : '';
@@ -26,11 +26,11 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
     setEditing(false);
   };
 
-  const startDate = getMonthAndYear(experience.start_month, experience.start_year);
+  const startDate = formatMonthYearDate(experience.start_month, experience.start_year);
 
   let endDate = '';
   if (experience.end_month && experience.end_year) {
-    endDate = getMonthAndYear(experience.end_month, experience.end_year);
+    endDate = formatMonthYearDate(experience.end_month, experience.end_year);
   } else {
     endDate = 'Present';
   }
