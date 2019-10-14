@@ -11,15 +11,34 @@ const BasicInfoDisplay = ({ firstName, lastName, email, phone, classes }) => {
     <Grid container justify="center">
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Typography gutterBottom variant="h5" component="h1">
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h1"
+            style={{
+              fontWeight: '700',
+            }}
+          >
             {firstName} {lastName}
           </Typography>
 
-          <Typography gutterBottom variant="body1" component="p">
-            <Icon>mail</Icon> {email}
+          <Typography
+            gutterBottom
+            variant="body1"
+            component="p"
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
+            <Icon style={{ marginRight: '5px' }}>mail</Icon>
+            {email}
           </Typography>
-          <Typography gutterBottom variant="body1" component="p">
-            <Icon>phone</Icon> {phone}
+
+          <Typography
+            gutterBottom
+            variant="body1"
+            component="p"
+            style={{ display: 'flex', alignItems: 'center' }}
+          >
+            <Icon style={{ marginRight: '5px' }}>phone</Icon> {phone}
           </Typography>
         </Paper>
       </Grid>

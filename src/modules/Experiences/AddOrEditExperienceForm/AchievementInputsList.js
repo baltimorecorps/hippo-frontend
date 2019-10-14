@@ -42,7 +42,12 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
           onKeyPress={handleKeyPress}
         />
       ))}
-      <Button type="button" onClick={handleAdd}>
+      <Button
+        type="button"
+        onClick={handleAdd}
+        variant="contained"
+        style={{ fontWeight: '700', marginTop: '5px', fontSize: '12px' }}
+      >
         Add Achievement
       </Button>
     </React.Fragment>

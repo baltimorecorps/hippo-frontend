@@ -23,6 +23,7 @@ const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, on
         },
       }}
       InputProps={{
+        classes: { input: classes.resize },
         endAdornment: (
           <InputAdornment position="end">
             <IconButton edge="end" aria-label="delete achievement" onClick={onIconClick}>
@@ -36,10 +37,6 @@ const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, on
 };
 
 const styles = ({ breakpoints, palette, spacing }) => ({
-  modal: {
-    //width: 600,
-    //margin: 'auto',
-  },
   formControl: {
     width: '100%',
     marginTop: '3px',

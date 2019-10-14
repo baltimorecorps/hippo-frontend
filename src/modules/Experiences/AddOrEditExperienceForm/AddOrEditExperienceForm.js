@@ -184,6 +184,31 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               </FormHelperText>
             </Grid>
             <Grid item xs={6}>
+              <TextField
+                id="city"
+                className={classes.formControl}
+                label="City"
+                value={values.location_city}
+                name="location_city"
+                onChange={handleChange}
+                InputLabelProps={inputLabelProps}
+                InputProps={inputProps}
+              />
+              <FormHelperText className={classes.formHelperText}>
+                {errors.locationCity_error ? errors.locationCity_error : null}
+              </FormHelperText>
+            </Grid>
+            <Grid item xs={6}>
+              <SelectorForm
+                type="states"
+                label="State"
+                name="location_state"
+                value={values.location_state}
+                onChange={handleChange}
+                helperText={errors.locationState_error ? errors.locationState_error : null}
+              />
+            </Grid>
+            <Grid item xs={6}>
               <SelectorForm
                 type="month"
                 label="Start Month"

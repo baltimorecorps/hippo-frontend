@@ -18,6 +18,14 @@ const experienceValidator = (values) => {
     isError = true;
     err.title_error = 'Required';
   }
+  if (!values.location_city) {
+    isError = true;
+    err.locationCity_error = 'Required';
+  }
+  if (!values.location_state) {
+    isError = true;
+    err.locationState_error = 'Required';
+  }
   if (!values.start_month) {
     isError = true;
     err.startMonth_error = 'Required';

@@ -18,6 +18,8 @@ const experience = {
   description: 'Test description',
   host: 'Test host',
   title: 'Test Title',
+  location_city: 'Baltimore',
+  location_state: 'Maryland',
   start_month: 'January',
   start_year: '2015',
   end_month: 'August',
