@@ -48,6 +48,7 @@ const configureForm = (expType) => {
       showDescription: false,
       showEndDate: true,
       showAchievements: true,
+      showLocation: true,
     };
   } else if (expType === 'Service') {
     return {
@@ -57,6 +58,7 @@ const configureForm = (expType) => {
       },
       showEndDate: true,
       showAchievements: true,
+      showLocation: true,
     };
   } else if (expType === 'Accomplishment') {
     return {
@@ -66,6 +68,8 @@ const configureForm = (expType) => {
         startDate: 'Date Issued',
       },
       showDescription: true,
+      showLocation: false,
+      showEndDate: false,
     };
   } else if (expType === 'Education') {
     return {
@@ -78,6 +82,7 @@ const configureForm = (expType) => {
       showDegree: true,
       showDescription: true,
       showAchievements: true,
+      showLocation: true,
     };
   }
 };
@@ -95,6 +100,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
       showDegree: false,
       showDescription: false,
       showAchievements: false,
+      showLocation: false,
     },
     configureForm(experience.type),
   );
@@ -121,7 +127,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
 
   const handleFormSubmit = () => {
     // validate form values
-    const { isError, err } = experienceValidator(values);
+    const { isError, err } = experienceValidator(values, experience.type);
 
     if (isError) {
       setErrors(err);
@@ -132,6 +138,11 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
 
   if (typeof values.start_year === String) {
     values.start_year = null;
+  }
+
+  if (experience.type === 'Accomplishment') {
+    values.end_month = 'none';
+    values.end_year = 0;
   }
   return (
     <Dialog className={classes.modal} open={true}>
@@ -183,35 +194,40 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 {errors.title_error ? errors.title_error : null}
               </FormHelperText>
             </Grid>
-            <Grid item xs={6}>
-              <TextField
-                id="city"
-                className={classes.formControl}
-                label="City"
-                value={values.location_city}
-                name="location_city"
-                onChange={handleChange}
-                InputLabelProps={inputLabelProps}
-                InputProps={inputProps}
-              />
-              <FormHelperText className={classes.formHelperText}>
-                {errors.locationCity_error ? errors.locationCity_error : null}
-              </FormHelperText>
-            </Grid>
-            <Grid item xs={6}>
-              <SelectorForm
-                type="states"
-                label="State"
-                name="location_state"
-                value={values.location_state}
-                onChange={handleChange}
-                helperText={errors.locationState_error ? errors.locationState_error : null}
-              />
-            </Grid>
+            {config.showLocation && (
+              <React.Fragment>
+                <Grid item xs={6}>
+                  <TextField
+                    id="city"
+                    className={classes.formControl}
+                    label="City"
+                    value={values.location_city}
+                    name="location_city"
+                    onChange={handleChange}
+                    InputLabelProps={inputLabelProps}
+                    InputProps={inputProps}
+                  />
+                  <FormHelperText className={classes.formHelperText}>
+                    {errors.locationCity_error ? errors.locationCity_error : null}
+                  </FormHelperText>
+                </Grid>
+                <Grid item xs={6}>
+                  <SelectorForm
+                    type="states"
+                    label="State"
+                    name="location_state"
+                    value={values.location_state}
+                    onChange={handleChange}
+                    helperText={errors.locationState_error ? errors.locationState_error : null}
+                  />
+                </Grid>
+              </React.Fragment>
+            )}
+
             <Grid item xs={6}>
               <SelectorForm
                 type="month"
-                label="Start Month"
+                label={experience.type === 'Accomplishment' ? 'Month' : 'Start Month'}
                 name="start_month"
                 value={values.start_month}
                 onChange={handleChange}
@@ -221,35 +237,39 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
             <Grid item xs={6}>
               <SelectorForm
                 type="year"
-                label="Start Year"
+                label={experience.type === 'Accomplishment' ? 'Year' : 'Start Year'}
                 name="start_year"
                 value={values.start_year}
                 onChange={handleChange}
                 helperText={errors.startYear_error ? errors.startYear_error : null}
               />
             </Grid>
-            <Grid item xs={6}>
-              <SelectorForm
-                disabled={values.end_month === null}
-                type="month"
-                label="End Month"
-                name="end_month"
-                value={values.end_month}
-                onChange={handleChange}
-                helperText={errors.endMonth_error ? errors.endMonth_error : null}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <SelectorForm
-                disabled={values.end_year === null}
-                type="year"
-                label="End Year"
-                name="end_year"
-                value={values.end_year}
-                onChange={handleChange}
-                helperText={errors.endYear_error ? errors.endYear_error : null}
-              />
-            </Grid>
+            {config.showEndDate && (
+              <React.Fragment>
+                <Grid item xs={6}>
+                  <SelectorForm
+                    disabled={values.end_month === null}
+                    type="month"
+                    label="End Month"
+                    name="end_month"
+                    value={values.end_month}
+                    onChange={handleChange}
+                    helperText={errors.endMonth_error ? errors.endMonth_error : null}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SelectorForm
+                    disabled={values.end_year === null}
+                    type="year"
+                    label="End Year"
+                    name="end_year"
+                    value={values.end_year}
+                    onChange={handleChange}
+                    helperText={errors.endYear_error ? errors.endYear_error : null}
+                  />
+                </Grid>
+              </React.Fragment>
+            )}
             {config.showDescription && (
               <Grid item xs={12}>
                 <TextField

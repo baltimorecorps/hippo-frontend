@@ -43,7 +43,7 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
   return (
     <React.Fragment>
       <Grid container justify="space-evenly" className={classes.gridContainer}>
-        <Grid item>
+        <Grid item className={classes.avatar}>
           <Avatar>{initial}</Avatar>
         </Grid>
 
@@ -143,6 +143,11 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   },
   gridIcons: {
     flexBasis: '50px',
+  },
+  avatar: {
+    [breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
 });
 
