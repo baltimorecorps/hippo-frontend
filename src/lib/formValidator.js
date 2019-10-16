@@ -74,18 +74,11 @@ const newProfileValidator = (values) => {
   if (!values.first_name || values.first_name === undefined) {
     isError = true;
     err.firstName_error = 'Required';
-  } else if (!validateName(values.first_name)) {
-    isError = true;
-
-    err.firstName_error = 'Invalid format. Only (a-z, A-Z), ( ), and (-).';
   }
 
   if (!values.last_name || values.last_name === undefined) {
     isError = true;
     err.lastName_error = 'Required';
-  } else if (!validateName(values.last_name)) {
-    isError = true;
-    err.lastName_error = 'Invalid format. Only (a-z, A-Z), ( ), and (-).';
   }
 
   if (values.email === undefined) {
@@ -95,15 +88,9 @@ const newProfileValidator = (values) => {
     isError = true;
     err.email_error = 'Invalid email address';
   }
-  if (values.phone_primary === undefined || values.phone_primary.length < 1) {
+  if (!values.phone_primary || values.phone_primary.replace(/\D/g, '').length < 6) {
     isError = true;
     err.phonePrimary_error = 'Required';
-  } else if (isNaN(parseInt(values.phone_primary))) {
-    isError = true;
-    err.phonePrimary_error = 'Numbers only';
-  } else if (values.phone_primary.length !== 10) {
-    isError = true;
-    err.phonePrimary_error = 'Phone number must be 10 digits';
   }
 
   return { isError, err };
@@ -111,34 +98,13 @@ const newProfileValidator = (values) => {
 
 // Validate RegEx
 const validateEmail = (input) => {
-  const mailFormat = /^(?=.{1,64}$)[A-Z0-9_%!+-][A-Z0-9._%!+-]*@[A-Z0-9][A-Z0-9-.]+[^.]\.[A-Z]{2,}$/i;
-  // if (mailFormat.split('@')[0].length < 64
+  const mailFormat = /^[A-Z0-9_%!+-][A-Z0-9._%!+-]*@[A-Z0-9][A-Z0-9-.]+[^.]\.[A-Z]{2,}$/i;
 
-  if (input.match(mailFormat)) {
+  if (input.match(mailFormat) && input.split('@')[0].length < 64) {
     return true;
   } else {
     return false;
   }
 };
-
-const validateName = (input) => {
-  const nameFormat = /^[A-Z]+[A-Z\s-]*[^-\d\S]*$/i;
-
-  if (input.match(nameFormat)) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-// const validatePhone = (input) => {
-//   const nameFormat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-
-//   if (input.match(nameFormat)) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// };
 
 export { newProfileValidator, experienceValidator };

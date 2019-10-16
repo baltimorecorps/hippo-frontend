@@ -11,6 +11,8 @@ import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+import MuiPhoneNumber from 'material-ui-phone-number';
+
 import { newProfileValidator } from '../../lib/formValidator';
 
 // const RACES = [
@@ -83,9 +85,14 @@ const AddContact = ({ classes, addNewContact }) => {
       root: classes.labelRoot,
       focused: classes.labelFocused,
     },
+    shrink: true,
   };
 
-  const inputProps = { classes: { input: classes.resize, shrink: false } };
+  const inputProps = { classes: { input: classes.resize } };
+
+  const handlePhoneInput = (value) => {
+    values.phone_primary = value;
+  };
 
   return (
     <React.Fragment>
@@ -94,12 +101,13 @@ const AddContact = ({ classes, addNewContact }) => {
         color="primary"
         className={classes.button}
         onClick={() => setOpen(true)}
+        style={{ fontWeight: 700 }}
       >
         New Profile
       </Button>
       <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title" className={classes.header}>
-          Add New Profile
+          <span style={{ fontWeight: 700 }}>Add New Profile</span>
         </DialogTitle>
 
         <DialogContent className={classes.container}>
@@ -125,7 +133,7 @@ const AddContact = ({ classes, addNewContact }) => {
                 label="Last Name"
                 className={classes.textField}
                 name="last_name"
-                value={values.last_name}
+                value={values.last_name || ''}
                 onChange={handleChange}
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
@@ -138,7 +146,7 @@ const AddContact = ({ classes, addNewContact }) => {
                 id="email"
                 label="Primary Email"
                 name="email"
-                value={values.email}
+                value={values.email || ''}
                 onChange={handleChange}
                 className={classes.textField}
                 InputLabelProps={inputLabelProps}
@@ -147,17 +155,15 @@ const AddContact = ({ classes, addNewContact }) => {
               <FormHelperText className={classes.formHelperText}>
                 {errors.email_error || null}
               </FormHelperText>
-
-              <TextField
-                required
-                id="phone"
-                label="Primary Phone"
+              <MuiPhoneNumber
                 name="phone_primary"
+                label="Primary Phone"
+                defaultCountry={'us'}
                 value={values.phone_primary}
-                onChange={handleChange}
-                className={classes.textField}
+                onChange={handlePhoneInput}
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
+                className={classes.textField}
               />
               <FormHelperText className={classes.formHelperText}>
                 {errors.phonePrimary_error || null}
@@ -167,10 +173,10 @@ const AddContact = ({ classes, addNewContact }) => {
         </DialogContent>
 
         <DialogActions className={classes.actions}>
-          <Button onClick={submit} variant="contained" color="primary">
+          <Button onClick={submit} variant="contained" color="primary" style={{ fontWeight: 600 }}>
             Create Profile
           </Button>
-          <Button onClick={() => setOpen(false)} color="primary">
+          <Button onClick={() => setOpen(false)} color="primary" style={{ fontWeight: 600 }}>
             Cancel
           </Button>
         </DialogActions>
@@ -192,24 +198,25 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     marginBottom: spacing(3),
   },
   textField: {
-    marginBottom: spacing(1.5),
+    marginBottom: spacing(0),
   },
   actions: {
     padding: spacing(0, 3),
     marginBottom: spacing(3),
   },
   resize: {
-    fontSize: 17,
+    fontSize: 18,
   },
   labelRoot: {
-    fontSize: 17,
+    fontSize: 18,
   },
   labelFocused: {
-    fontSize: 20,
+    fontSize: 19,
   },
   formHelperText: {
     color: '#eb0000',
     marginTop: '2px',
+    marginBottom: '4px',
   },
 });
 
