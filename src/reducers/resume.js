@@ -1,4 +1,4 @@
-import { createReducer } from 'redux-starter-kit';
+import {createReducer} from "redux-starter-kit";
 
 /* eslint-disable no-unused-vars */
 import {
@@ -22,7 +22,7 @@ import {
   UPDATE_RESUME_ITEMS_API,
   DELETE_SECTION,
   DELETE_SECTION_API,
-} from '../actions/resume';
+} from "../actions/resume";
 /* eslint-enable no-unused-vars */
 
 export const resumeReducer = createReducer(
@@ -55,10 +55,13 @@ export const resumeReducer = createReducer(
           id: data.id,
           name: data.name,
           contact_id: data.contact.id,
-          sections: data.sections.reduce((object, section) => ({
-            ...object,
-            [section.id]: section,
-          }), {}),
+          sections: data.sections.reduce(
+            (object, section) => ({
+              ...object,
+              [section.id]: section,
+            }),
+            {}
+          ),
         },
       };
     },
@@ -73,10 +76,13 @@ export const resumeReducer = createReducer(
       const {data} = action.body;
       return {
         ...state,
-        ...data.reduce((object, resume) => ({
-          ...object,
-          [resume.id]: resume,
-        }), {}),
+        ...data.reduce(
+          (object, resume) => ({
+            ...object,
+            [resume.id]: resume,
+          }),
+          {}
+        ),
       };
     },
     [UPDATE_RESUME_API.RESOLVE]: (state, action) => {
@@ -125,7 +131,6 @@ export const resumeReducer = createReducer(
       return {
         ...state,
         [data.resume_id]: updatedResume,
-
       };
     },
     [UPDATE_RESUME_ITEMS_API.RESOLVE]: (state, action) => {

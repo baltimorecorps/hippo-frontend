@@ -1,17 +1,17 @@
-import { connect } from 'react-redux';
-import { createSelector } from 'redux-starter-kit';
-import ExperiencesList from './ExperiencesList';
+import {connect} from "react-redux";
+import {createSelector} from "redux-starter-kit";
+import ExperiencesList from "./ExperiencesList";
 
 import {
   addExperience,
   refreshExperienceType,
   updateExperience,
   deleteExperience,
-} from 'actions/profile';
+} from "actions/profile";
 
 const getExperiences = createSelector(
-  ['experiences'],
-  (experiences) => Object.keys(experiences).map((id) => experiences[id]),
+  ["experiences"],
+  experiences => Object.keys(experiences).map(id => experiences[id])
 );
 
 const getContact = (state, props) => props.contactId;
@@ -22,8 +22,8 @@ const makeGetRelevantExperiences = () => {
     [getExperiences, getContact, getTypeFilter],
     (exps, contactId, type) =>
       exps
-        .filter((exp) => exp.contact_id.toString() === contactId.toString())
-        .filter((exp) => exp.type === type),
+        .filter(exp => exp.contact_id.toString() === contactId.toString())
+        .filter(exp => exp.type === type)
   );
   return getRelevantExperiences;
 };
@@ -38,9 +38,9 @@ export const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    addNewExperience: (experience) => addExperience(experience)(dispatch),
-    updateExperience: (experience) => updateExperience(experience)(dispatch),
-    deleteExperience: (experience) => deleteExperience(experience)(dispatch),
+    addNewExperience: experience => addExperience(experience)(dispatch),
+    updateExperience: experience => updateExperience(experience)(dispatch),
+    deleteExperience: experience => deleteExperience(experience)(dispatch),
     refreshExperiences: () =>
       refreshExperienceType(props.contactId, props.experienceType)(dispatch),
   };
@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch, props) => {
 
 const Container = connect(
   makeMapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ExperiencesList);
 
 export default Container;

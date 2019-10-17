@@ -4,74 +4,74 @@ const formatMonthYearDate = (month, year) => {
 };
 
 const getWorkLength = (years, months) => {
-  let lengthYear = years + ' years';
-  let lengthMonth = months + ' months';
+  let lengthYear = years + " years";
+  let lengthMonth = months + " months";
   if (years === 0) {
-    lengthYear = '';
+    lengthYear = "";
   }
   if (months === 0) {
-    lengthMonth = '';
+    lengthMonth = "";
   }
   if (years === 1) {
-    lengthYear = years + ' year';
+    lengthYear = years + " year";
   }
   if (months === 1) {
-    lengthMonth = months + ' month';
+    lengthMonth = months + " month";
   }
 
-  let lengthWork = lengthYear + ' ' + lengthMonth;
+  let lengthWork = lengthYear + " " + lengthMonth;
 
-  if (lengthYear === '') {
+  if (lengthYear === "") {
     lengthWork = lengthMonth;
   }
-  if (lengthMonth === '') {
+  if (lengthMonth === "") {
     lengthWork = lengthYear;
   }
-  if (lengthYear === '' && lengthMonth === '') {
-    lengthWork = 'Less than a month';
+  if (lengthYear === "" && lengthMonth === "") {
+    lengthWork = "Less than a month";
   }
   return lengthWork;
 };
 
-const configureForm = (expType) => {
-  if (expType === 'Work') {
+const configureForm = expType => {
+  if (expType === "Work") {
     return {
       labels: {
-        host: 'Organization',
-        title: 'Title',
+        host: "Organization",
+        title: "Title",
       },
       showDescription: false,
       showEndDate: true,
       showAchievements: true,
       showLocation: true,
     };
-  } else if (expType === 'Service') {
+  } else if (expType === "Service") {
     return {
       labels: {
-        host: 'Organization',
-        title: 'Role',
+        host: "Organization",
+        title: "Role",
       },
       showEndDate: true,
       showAchievements: true,
       showLocation: true,
     };
-  } else if (expType === 'Accomplishment') {
+  } else if (expType === "Accomplishment") {
     return {
       labels: {
-        host: 'Institution / Publisher',
-        title: 'Title',
-        startDate: 'Date Issued',
+        host: "Institution / Publisher",
+        title: "Title",
+        startDate: "Date Issued",
       },
       showDescription: true,
       showLocation: false,
       showEndDate: false,
     };
-  } else if (expType === 'Education') {
+  } else if (expType === "Education") {
     return {
       labels: {
-        host: 'Institution',
-        title: 'Field of Study',
-        endDate: 'End Date (or expected)',
+        host: "Institution",
+        title: "Field of Study",
+        endDate: "End Date (or expected)",
       },
       showEndDate: true,
       showDegree: true,
@@ -82,12 +82,12 @@ const configureForm = (expType) => {
   }
 };
 
-const isEndDateNull = (values) => {
-  if (values.type === 'Accomplishment' || values.is_current === true) {
+const isEndDateNull = values => {
+  if (values.type === "Accomplishment" || values.is_current === true) {
     return true;
   } else {
     return false;
   }
 };
 
-export { formatMonthYearDate, getWorkLength, configureForm, isEndDateNull };
+export {formatMonthYearDate, getWorkLength, configureForm, isEndDateNull};

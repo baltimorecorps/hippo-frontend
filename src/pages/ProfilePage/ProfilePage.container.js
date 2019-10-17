@@ -1,9 +1,9 @@
-import { connect } from 'react-redux';
-import { refreshContacts } from 'actions/contacts';
-import ProfilePage from './ProfilePage';
+import {connect} from "react-redux";
+import {refreshContacts} from "actions/contacts";
+import ProfilePage from "./ProfilePage";
 
 // eslint-disable-next-line no-unused-vars
-const addNewContact = (dispatch) =>
+const addNewContact = dispatch =>
   async function(contact) {
     await refreshContacts(dispatch);
   };
@@ -11,7 +11,7 @@ const addNewContact = (dispatch) =>
 // (DK 2019-09-12)
 // The state that the top level page uses is mostly the contact state,
 // which looks like this:
-// { 
+// {
 //   contacts: {
 //     <contact1 id>: { <contact1 details> },
 //     <contact2 id>: { <contact2 details> },
@@ -33,13 +33,13 @@ const mapStateToProps = (state, props) => {
 
 // Refreshes the state of all contacts (as shown above) from the API, via
 // the ALL_CONTACTS event (see reducers/contacts.js for details)
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   refreshContacts: () => refreshContacts(dispatch),
 });
 
 const ProfileContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ProfilePage);
 
 export default ProfileContainer;

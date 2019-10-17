@@ -1,5 +1,6 @@
-import { resumeReducer } from './resume';
+import {resumeReducer} from "./resume";
 
+/* eslint-disable no-unused-vars */
 import {
   CREATE_RESUME_API,
   CREATE_SECTION_API,
@@ -8,52 +9,53 @@ import {
   REFRESH_SECTION_API,
   UPDATE_RESUME_API,
   UPDATE_SECTION_API,
-} from '../actions/resume';
+} from "../actions/resume";
+/* eslint-enable no-unused-vars */
 
-describe('Resumes state', () => {
+describe("Resumes state", () => {
   let initialState = {};
   beforeEach(() => {
     initialState = {};
   });
-  test('initial state', () => {
+  test("initial state", () => {
     const newState = resumeReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
 
-  test('Create new resume - request resolved', () => {
+  test("Create new resume - request resolved", () => {
     const newState = resumeReducer(initialState, {
       type: CREATE_RESUME_API.RESOLVE,
       body: {
         data: {
-          name: 'Test Resume Name',
-          date_created: '2019-05-06',
+          name: "Test Resume Name",
+          date_created: "2019-05-06",
           contact: {
             id: 5678,
-            other_stuff: 'blah',
+            other_stuff: "blah",
           },
           id: 1234,
           sections: [],
         },
       },
     });
-    expect(newState).toHaveProperty('1234');
+    expect(newState).toHaveProperty("1234");
     expect(newState[1234].id).toBe(1234);
-    expect(newState[1234].name).toEqual('Test Resume Name');
-    expect(newState[1234].date_created).toEqual('2019-05-06');
+    expect(newState[1234].name).toEqual("Test Resume Name");
+    expect(newState[1234].date_created).toEqual("2019-05-06");
     expect(newState[1234].contact_id).toBe(5678);
     expect(newState[1234].sections).toEqual({});
   });
 
-  test('Create new resume - request rejected', () => {
+  test("Create new resume - request rejected", () => {
     const newState = resumeReducer(initialState, {
       type: CREATE_RESUME_API.REJECT,
       body: {
         data: {
-          name: 'Test Resume Name',
-          date_created: '2019-05-06',
+          name: "Test Resume Name",
+          date_created: "2019-05-06",
           contact: {
             id: 5678,
-            other_stuff: 'blah',
+            other_stuff: "blah",
           },
           id: 1234,
           sections: [],
@@ -63,37 +65,37 @@ describe('Resumes state', () => {
     expect(newState).toEqual(initialState);
   });
 
-  test('Refresh single resume', () => {
+  test("Refresh single resume", () => {
     const oldResume = {
       id: 1234,
-      name: 'Test Resume',
+      name: "Test Resume",
       contact_id: 333,
       sections: {
         765: {
           id: 765,
-          stuff: 'old',
+          stuff: "old",
         },
       },
     };
 
     const newResume = {
       id: 1234,
-      name: 'Test Resume New',
+      name: "Test Resume New",
       contact: {
-        name: 'Test Person',
+        name: "Test Person",
         id: 333,
         email_primary: {
-          email: 'testperson@testperson.test',
+          email: "testperson@testperson.test",
         },
       },
       sections: [
         {
           id: 987,
-          stuff: 'here',
+          stuff: "here",
         },
         {
           id: 234,
-          stuff: 'here 2',
+          stuff: "here 2",
         },
       ],
     };
@@ -103,21 +105,21 @@ describe('Resumes state', () => {
     };
     const newState = resumeReducer(initialState, {
       type: REFRESH_RESUME_API.RESOLVE,
-      body: { status: 'success', data: newResume },
+      body: {status: "success", data: newResume},
     });
     expect(newState).toEqual({
       1234: {
         id: 1234,
-        name: 'Test Resume New',
+        name: "Test Resume New",
         contact_id: 333,
         sections: {
           987: {
             id: 987,
-            stuff: 'here',
+            stuff: "here",
           },
           234: {
             id: 234,
-            stuff: 'here 2',
+            stuff: "here 2",
           },
         },
       },
@@ -125,10 +127,10 @@ describe('Resumes state', () => {
   });
 
   // TODO
-  test.skip('Refresh all resumes for contact', () => {
+  test.skip("Refresh all resumes for contact", () => {
     const bystander = {
       id: 333,
-      name: 'Test Resume 333',
+      name: "Test Resume 333",
       contact_id: 22,
       sections: {},
     };
@@ -136,13 +138,13 @@ describe('Resumes state', () => {
     initialState = {
       111: {
         id: 111,
-        name: 'Test Resume 111',
+        name: "Test Resume 111",
         contact_id: 11,
         sections: {},
       },
       222: {
         id: 222,
-        name: 'Test Resume 222',
+        name: "Test Resume 222",
         contact_id: 11,
         sections: {},
       },
@@ -151,41 +153,41 @@ describe('Resumes state', () => {
 
     const updatedResume = {
       id: 222,
-      name: 'Test Resume New',
+      name: "Test Resume New",
       contact: {
-        name: 'Test Person',
+        name: "Test Person",
         id: 11,
       },
       sections: [
         {
           id: 123,
-          stuff: 'test update',
+          stuff: "test update",
         },
       ],
     };
 
     const newResume = {
       id: 444,
-      name: 'Test Resume New',
+      name: "Test Resume New",
       contact: {
-        name: 'Test Person',
+        name: "Test Person",
         id: 11,
       },
       sections: [
         {
           id: 987,
-          stuff: 'here',
+          stuff: "here",
         },
         {
           id: 234,
-          stuff: 'here 2',
+          stuff: "here 2",
         },
       ],
     };
     const newState = resumeReducer(initialState, {
       type: REFRESH_RESUMES_API.RESOLVE,
       body: {
-        status: 'success',
+        status: "success",
         data: {}, // TODO what goes here?
         contact_id: 11,
       },
@@ -198,28 +200,28 @@ describe('Resumes state', () => {
   });
 
   // TODO
-  test.skip('Update resume', () => {
+  test.skip("Update resume", () => {
     // Needs to be specced out for UPDATE_RESUME_API response!
     // Probably base this off REFRESH_RESUME_API
     expect(true).toBe(false);
   });
 
-  test('Create new section', () => {
+  test("Create new section", () => {
     const newSection = {
-      name: 'Relevant Experience',
+      name: "Relevant Experience",
       resume_id: 11,
-      items: [{ test: 'item_1' }, { test: 'item_2' }],
+      items: [{test: "item_1"}, {test: "item_2"}],
       id: 8,
-      other_stuff: 'test stuff',
+      other_stuff: "test stuff",
     };
     const resume = {
       id: 11,
-      name: 'Test Resume',
+      name: "Test Resume",
       sections: {
         55: {
           id: 55,
           resume_id: 11,
-          name: 'Test Section 1',
+          name: "Test Section 1",
           items: [],
         },
       },
@@ -230,35 +232,35 @@ describe('Resumes state', () => {
     };
     const newState = resumeReducer(initialState, {
       type: CREATE_SECTION_API.RESOLVE,
-      body: { status: 'success', data: newSection },
+      body: {status: "success", data: newSection},
     });
-    expect(newState[11].sections).toHaveProperty('8');
+    expect(newState[11].sections).toHaveProperty("8");
     expect(newState[11].sections[8]).toEqual(newSection);
-    expect(newState[11].sections).toHaveProperty('55');
+    expect(newState[11].sections).toHaveProperty("55");
     expect(newState[11].sections[55]).toEqual({
       id: 55,
       resume_id: 11,
-      name: 'Test Section 1',
+      name: "Test Section 1",
       items: [],
     });
   });
 
-  test('Update section', () => {
+  test("Update section", () => {
     const newSection = {
-      name: 'Relevant Experience',
+      name: "Relevant Experience",
       resume_id: 11,
-      items: [{ test: 'item_1' }, { test: 'item_2' }],
+      items: [{test: "item_1"}, {test: "item_2"}],
       id: 8,
-      other_stuff: 'test stuff',
+      other_stuff: "test stuff",
     };
     const resume = {
       id: 11,
-      name: 'Test Resume',
+      name: "Test Resume",
       sections: {
         8: {
           id: 8,
           resume_id: 11,
-          name: 'Test Section 1',
+          name: "Test Section 1",
           items: [],
         },
       },
@@ -269,14 +271,14 @@ describe('Resumes state', () => {
     };
     const newState = resumeReducer(initialState, {
       type: UPDATE_SECTION_API.RESOLVE,
-      body: { status: 'success', data: newSection },
+      body: {status: "success", data: newSection},
     });
-    expect(newState[11].sections).toHaveProperty('8');
+    expect(newState[11].sections).toHaveProperty("8");
     expect(newState[11].sections[8]).toEqual(newSection);
   });
 
   // TODO
-  test.skip('Refresh resume section', () => {
+  test.skip("Refresh resume section", () => {
     // Needs to be specced out for REFRESH_SECTION_API response!
     // Probably base this off UPDATE_SECTION_API test
     expect(true).toBe(false);

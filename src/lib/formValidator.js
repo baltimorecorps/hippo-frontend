@@ -1,4 +1,4 @@
-import { monthFullNames } from '../modules/Experiences/AddOrEditExperienceForm/staticData';
+import {monthFullNames} from "../modules/Experiences/AddOrEditExperienceForm/staticData";
 
 const experienceValidator = (values, type) => {
   let isError = false;
@@ -6,111 +6,119 @@ const experienceValidator = (values, type) => {
 
   if (!values.host) {
     isError = true;
-    err.host_error = 'Required';
+    err.host_error = "Required";
   }
 
   if (values.degree || values.degree !== undefined) {
     if (!values.degree) {
       isError = true;
-      err.degree_error = 'Required';
+      err.degree_error = "Required";
     }
   }
 
   if (!values.title) {
     isError = true;
-    err.title_error = 'Required';
+    err.title_error = "Required";
   }
 
   if (!values.start_month) {
     isError = true;
-    err.startMonth_error = 'Required';
+    err.startMonth_error = "Required";
   }
   if (!values.start_year) {
     isError = true;
-    err.startYear_error = 'Required';
+    err.startYear_error = "Required";
   }
 
-  if (type !== 'Accomplishment') {
+  if (type !== "Accomplishment") {
     if (!values.location_city) {
       isError = true;
-      err.locationCity_error = 'Required';
+      err.locationCity_error = "Required";
     }
     if (!values.location_state) {
       isError = true;
-      err.locationState_error = 'Required';
+      err.locationState_error = "Required";
     }
     if (!values.end_month) {
       isError = true;
-      err.endMonth_error = 'Required';
+      err.endMonth_error = "Required";
     }
     if (!values.end_year) {
       isError = true;
-      err.endYear_error = 'Required';
+      err.endYear_error = "Required";
     }
   }
 
-  if (values.start_month && values.start_year && values.end_month && values.end_year) {
+  if (
+    values.start_month &&
+    values.start_year &&
+    values.end_month &&
+    values.end_year
+  ) {
     if (values.end_year === values.start_year) {
-      if (monthFullNames.indexOf(values.end_month) < monthFullNames.indexOf(values.start_month)) {
+      if (
+        monthFullNames.indexOf(values.end_month) <
+        monthFullNames.indexOf(values.start_month)
+      ) {
         isError = true;
-        err.endMonth_error = 'End month must be later than start month';
+        err.endMonth_error = "End month must be later than start month";
       }
     }
   }
   if (values.start_year && values.end_year) {
     if (values.end_year < values.start_year) {
       isError = true;
-      err.endYear_error = 'End year must be greater than start year';
+      err.endYear_error = "End year must be greater than start year";
     }
   }
 
-  return { isError, err };
+  return {isError, err};
 };
 
-const newProfileValidator = (values) => {
+const newProfileValidator = values => {
   let isError = false;
   let err = {};
 
   if (!values.first_name || values.first_name === undefined) {
     isError = true;
-    err.firstName_error = 'Required';
+    err.firstName_error = "Required";
   } else if (!validateName(values.first_name)) {
     isError = true;
 
-    err.firstName_error = 'Invalid format. Only (a-z, A-Z), ( ), and (-).';
+    err.firstName_error = "Invalid format. Only (a-z, A-Z), ( ), and (-).";
   }
 
   if (!values.last_name || values.last_name === undefined) {
     isError = true;
-    err.lastName_error = 'Required';
+    err.lastName_error = "Required";
   } else if (!validateName(values.last_name)) {
     isError = true;
-    err.lastName_error = 'Invalid format. Only (a-z, A-Z), ( ), and (-).';
+    err.lastName_error = "Invalid format. Only (a-z, A-Z), ( ), and (-).";
   }
 
   if (values.email === undefined) {
     isError = true;
-    err.email_error = 'Required';
+    err.email_error = "Required";
   } else if (!validateEmail(values.email)) {
     isError = true;
-    err.email_error = 'Invalid email address';
+    err.email_error = "Invalid email address";
   }
   if (values.phone_primary === undefined || values.phone_primary.length < 1) {
     isError = true;
-    err.phonePrimary_error = 'Required';
+    err.phonePrimary_error = "Required";
   } else if (isNaN(parseInt(values.phone_primary))) {
     isError = true;
-    err.phonePrimary_error = 'Numbers only';
+    err.phonePrimary_error = "Numbers only";
   } else if (values.phone_primary.length !== 10) {
     isError = true;
-    err.phonePrimary_error = 'Phone number must be 10 digits';
+    err.phonePrimary_error = "Phone number must be 10 digits";
   }
 
-  return { isError, err };
+  return {isError, err};
 };
 
 // Validate RegEx
-const validateEmail = (input) => {
+const validateEmail = input => {
   const mailFormat = /^(?=.{1,64}$)[A-Z0-9_%!+-][A-Z0-9._%!+-]*@[A-Z0-9][A-Z0-9-.]+[^.]\.[A-Z]{2,}$/i;
   // if (mailFormat.split('@')[0].length < 64
 
@@ -121,7 +129,7 @@ const validateEmail = (input) => {
   }
 };
 
-const validateName = (input) => {
+const validateName = input => {
   const nameFormat = /^[A-Z]+[A-Z\s-]*[^-\d\S]*$/i;
 
   if (input.match(nameFormat)) {
@@ -141,4 +149,4 @@ const validateName = (input) => {
 //   }
 // };
 
-export { newProfileValidator, experienceValidator };
+export {newProfileValidator, experienceValidator};

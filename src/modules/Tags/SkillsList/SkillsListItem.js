@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import Avatar from '@material-ui/core/Avatar';
-import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-import AddOrEditSkillForm from 'modules/Tags/AddOrEditSkillForm';
-import getTextScore from 'modules/Tags/utilities/getTextScore';
+import React, {useState} from "react";
+import PropTypes from "prop-types";
+import Avatar from "@material-ui/core/Avatar";
+import Grid from "@material-ui/core/Grid";
+import Icon from "@material-ui/core/Icon";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
+import AddOrEditSkillForm from "modules/Tags/AddOrEditSkillForm";
+import getTextScore from "modules/Tags/utilities/getTextScore";
 
-const SkillsListItem = ({ tag, onSubmit, onReplace, onDelete, classes }) => {
-  const initial = tag.name ? tag.name[0] : '';
+const SkillsListItem = ({tag, onSubmit, onReplace, onDelete, classes}) => {
+  const initial = tag.name ? tag.name[0] : "";
 
   const [editing, setEditing] = useState(false);
 
@@ -39,7 +39,7 @@ const SkillsListItem = ({ tag, onSubmit, onReplace, onDelete, classes }) => {
         <AddOrEditSkillForm
           tag={tag}
           tagType={tag.type}
-          onSubmit={(tag) => {
+          onSubmit={tag => {
             onSubmit(tag);
             setEditing(false);
           }}
@@ -61,12 +61,12 @@ SkillsListItem.propTypes = {
     tag_id: PropTypes.number.isRequired,
     contact_id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
+    type: PropTypes.oneOf(["Function", "Skill", "Topic"]).isRequired,
     score: PropTypes.number.isRequired,
   }).isRequired,
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   wrapper: {
     marginBottom: spacing(1),
   },

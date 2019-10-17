@@ -1,58 +1,62 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
-import TextField from '@material-ui/core/TextField';
+import React from "react";
+import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
+import TextField from "@material-ui/core/TextField";
 
 const races = [
   {
-    value: 'asian',
-    label: 'Asian',
+    value: "asian",
+    label: "Asian",
   },
   {
-    value: 'african-american',
-    label: 'African-american',
+    value: "african-american",
+    label: "African-american",
   },
 ];
 const genders = [
   {
-    value: 'female',
-    label: 'Female',
+    value: "female",
+    label: "Female",
   },
   {
-    value: 'male',
-    label: 'Male',
+    value: "male",
+    label: "Male",
   },
   {
-    value: 'other',
-    label: 'Other',
+    value: "other",
+    label: "Other",
   },
 ];
 
 class TextFields extends React.Component {
   state = {
-    last_name: '',
-    first_name: '',
-    email_primary: '',
-    phone_primary: '',
-    gender: '',
-    race_all: '',
-    birthday: '',
+    last_name: "",
+    first_name: "",
+    email_primary: "",
+    phone_primary: "",
+    gender: "",
+    race_all: "",
+    birthday: "",
   };
 
-  handleChange = (varName) => (event) => {
-    this.setState({ varName: event.target.value });
+  handleChange = varName => event => {
+    this.setState({varName: event.target.value});
   };
 
   render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
     return (
       <main className={classes.main}>
         <Paper className={classes.paper}>
-          <img className={classes.avatar} src="/logos/long.png" alt="Baltimore Corps Logo" />
+          <img
+            className={classes.avatar}
+            src="/logos/long.png"
+            alt="Baltimore Corps Logo"
+          />
           <Typography component="h1" variant="h5">
             Contact Form
           </Typography>
@@ -63,7 +67,7 @@ class TextFields extends React.Component {
               label="First Name"
               className={classes.textField}
               value={this.state.firstName}
-              onChange={this.handleChange('first_name')}
+              onChange={this.handleChange("first_name")}
               margin="normal"
             />
             <TextField
@@ -72,7 +76,7 @@ class TextFields extends React.Component {
               label="Last Name"
               className={classes.textField}
               value={this.state.lastName}
-              onChange={this.handleChange('last_name')}
+              onChange={this.handleChange("last_name")}
               margin="normal"
             />
             <TextField
@@ -97,7 +101,7 @@ class TextFields extends React.Component {
               label="Gender select"
               className={classes.textField}
               value={this.state.currency}
-              onChange={this.handleChange('gender')}
+              onChange={this.handleChange("gender")}
               SelectProps={{
                 native: true,
                 MenuProps: {
@@ -106,7 +110,7 @@ class TextFields extends React.Component {
               }}
               margin="normal"
             >
-              {genders.map((option) => (
+              {genders.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -119,7 +123,7 @@ class TextFields extends React.Component {
               label="Race select"
               className={classes.textField}
               value={this.state.currency}
-              onChange={this.handleChange('race')}
+              onChange={this.handleChange("race")}
               SelectProps={{
                 native: true,
                 MenuProps: {
@@ -129,7 +133,7 @@ class TextFields extends React.Component {
               /*helperText="Please select your race"*/
               margin="normal"
             >
-              {races.map((option) => (
+              {races.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -138,7 +142,7 @@ class TextFields extends React.Component {
             <TextField
               id="standard-full-width"
               label="Address"
-              style={{ margin: 8 }}
+              style={{margin: 8}}
               placeholder="110 Waterman Street, Apt 210, Providence, RI, 02215"
               helperText="Please enter your address"
               fullWidth
@@ -164,11 +168,11 @@ class TextFields extends React.Component {
 TextFields.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-const styles = ({ breakpoints, palette, spacing, theme }) => ({
+const styles = ({breakpoints, palette, spacing, theme}) => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: '50px',
+    display: "flex",
+    flexWrap: "wrap",
+    padding: "50px",
   },
   textField: {
     marginLeft: spacing(1),
@@ -182,24 +186,24 @@ const styles = ({ breakpoints, palette, spacing, theme }) => ({
     width: 200,
   },
   main: {
-    width: 'auto',
+    width: "auto",
     marginLeft: spacing(3),
     marginRight: spacing(3),
     [breakpoints.up(400 + spacing(3 * 2))]: {
       width: 400,
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      marginLeft: "auto",
+      marginRight: "auto",
     },
   },
   paper: {
     marginTop: spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     padding: spacing(2, 3, 3),
   },
   avatar: {
-    width: '100%',
+    width: "100%",
     marginBottom: spacing(1),
   },
   password: {

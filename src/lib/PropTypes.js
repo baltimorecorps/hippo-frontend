@@ -1,5 +1,5 @@
-import AirbnbPropTypes from 'airbnb-prop-types';
-import FacebookPropTypes from 'prop-types';
+import AirbnbPropTypes from "airbnb-prop-types";
+import FacebookPropTypes from "prop-types";
 
 const propTypesHandler = (propTypes, styled = false) => {
   const stylesPropTypes = {
@@ -18,7 +18,8 @@ const PropTypes = {
   ...AirbnbPropTypes,
   ...FacebookPropTypes,
   date: FacebookPropTypes.instanceOf(Date),
-  orNull: (...propTypes) => AirbnbPropTypes.or([...propTypes, AirbnbPropTypes.explicitNull()]),
+  orNull: (...propTypes) =>
+    AirbnbPropTypes.or([...propTypes, AirbnbPropTypes.explicitNull()]),
 
   handler: propTypesHandler,
 };

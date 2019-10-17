@@ -1,30 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import withStyles from '@material-ui/core/styles/withStyles';
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-import ReactSelect from 'react-select';
+import ReactSelect from "react-select";
 
-import useFormUpdate from 'lib/useFormUpdate';
-import SkillLevelDropdown from './SkillLevelDropdown';
+import useFormUpdate from "lib/useFormUpdate";
+import SkillLevelDropdown from "./SkillLevelDropdown";
 
 const useForm = (initialValues, onSubmit, onReplace) => {
   const oldTag = initialValues;
   const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
-    handleSelect: (value) => {
-      update('name')(value.name);
-      update('tag_id')(value.id);
+    handleSelect: value => {
+      update("name")(value.name);
+      update("tag_id")(value.id);
     },
-    handleScore: (event) => update('score')(parseInt(event.target.value)),
+    handleScore: event => update("score")(parseInt(event.target.value)),
     handleSubmit: () => {
       if (oldTag.tag_id !== values.tag_id) {
         onReplace(oldTag, values);
@@ -37,11 +37,22 @@ const useForm = (initialValues, onSubmit, onReplace) => {
   return [values, handlers];
 };
 
-const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onReplace, onCancel, classes }) => {
-  const [values, { handleSelect, handleSubmit, handleScore }] = useForm(tag, onSubmit, onReplace);
+const AddOrEditSkillForm = ({
+  allTags,
+  tag,
+  onSubmit,
+  onReplace,
+  onCancel,
+  classes,
+}) => {
+  const [values, {handleSelect, handleSubmit, handleScore}] = useForm(
+    tag,
+    onSubmit,
+    onReplace
+  );
 
-  const getOptionLabel = ({ type, name }) => name;
-  const isOptionSelected = ({ id }, options) => !!options.find((o) => o.id === id);
+  const getOptionLabel = ({type, name}) => name;
+  const isOptionSelected = ({id}, options) => !!options.find(o => o.id === id);
   const selectedTag = {
     id: values.tag_id,
     name: values.name,
@@ -87,17 +98,17 @@ AddOrEditSkillForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   allTags: PropTypes.array.isRequired,
-  tagType: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
+  tagType: PropTypes.oneOf(["Function", "Skill", "Topic"]).isRequired,
   tag: PropTypes.shape({
     tag_id: PropTypes.number,
     contact_id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    type: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
+    type: PropTypes.oneOf(["Function", "Skill", "Topic"]).isRequired,
     score: PropTypes.number,
   }).isRequired,
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   header: {
     padding: spacing(2, 3, 0),
   },
@@ -114,7 +125,7 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     marginBottom: spacing(3),
   },
   formControl: {
-    marginTop: '10px',
+    marginTop: "10px",
   },
 });
 

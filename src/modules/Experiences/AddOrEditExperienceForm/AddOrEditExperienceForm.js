@@ -1,59 +1,64 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
+import React from "react";
+import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Grid from "@material-ui/core/Grid";
 
-import useFormUpdate from 'lib/useFormUpdate';
+import useFormUpdate from "lib/useFormUpdate";
 
-import AchievementInputsList from './AchievementInputsList';
-import SelectorForm from './SelectorForm';
-import DegreeDropdown from './DegreeDropdown';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import { experienceValidator } from '../../../lib/formValidator';
-import { configureForm, isEndDateNull } from '../ExperiencesList/helpers';
+import AchievementInputsList from "./AchievementInputsList";
+import SelectorForm from "./SelectorForm";
+import DegreeDropdown from "./DegreeDropdown";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import {experienceValidator} from "../../../lib/formValidator";
+import {configureForm, isEndDateNull} from "../ExperiencesList/helpers";
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
-    handleChange: (event) => {
+    handleChange: event => {
       event.persist();
       update(event.target.name)(event.target.value);
     },
     handleSubmit: () => {
       onSubmit(values);
     },
-    handleDegree: (event) => {
-      update('degree')(event.target.value);
+    handleDegree: event => {
+      update("degree")(event.target.value);
     },
-    handleAchievements: update('achievements'),
+    handleAchievements: update("achievements"),
   };
 
   return [values, handlers];
 };
 
-const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
-  const [values, { handleChange, handleSubmit, handleDegree, handleAchievements }] = useForm(
-    experience,
-    onSubmit,
-  );
+const AddOrEditExperienceForm = ({
+  experience,
+  onSubmit,
+  handleCancel,
+  classes,
+}) => {
+  const [
+    values,
+    {handleChange, handleSubmit, handleDegree, handleAchievements},
+  ] = useForm(experience, onSubmit);
 
   const config = configureForm(experience.type);
 
   // eslint-disable-next-line no-unused-vars
-  const handleChangeDescription = (idx) => (evt) => {
+  const handleChangeDescription = idx => evt => {
     const newAchievements = this.state.achievements.map((achievement, sidx) => {
       if (idx !== sidx) return achievement;
-      return { ...achievement, description: evt.target.value };
+      return {...achievement, description: evt.target.value};
     });
-    this.setState({ achievements: newAchievements });
+    this.setState({achievements: newAchievements});
   };
 
   const inputLabelProps = {
@@ -63,17 +68,17 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
     },
   };
 
-  const inputProps = { classes: { input: classes.resize } };
+  const inputProps = {classes: {input: classes.resize}};
 
   const [errors, setErrors] = React.useState({});
 
   const handleFormSubmit = () => {
     if (isEndDateNull(values)) {
-      values.end_month = 'none';
+      values.end_month = "none";
       values.end_year = 0;
     }
     // validate form values
-    const { isError, err } = experienceValidator(values, experience.type);
+    const {isError, err} = experienceValidator(values, experience.type);
 
     if (isError) {
       setErrors(err);
@@ -96,7 +101,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 required
                 id="host"
                 className={classes.formControl}
-                label={config.labels.host || 'Organization'}
+                label={config.labels.host || "Organization"}
                 value={values.host}
                 name="host"
                 onChange={handleChange}
@@ -112,7 +117,10 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               <Grid item xs={12}>
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="degree">Degree</InputLabel>
-                  <DegreeDropdown value={values.degree} onChange={handleDegree} />
+                  <DegreeDropdown
+                    value={values.degree}
+                    onChange={handleDegree}
+                  />
                   <FormHelperText className={classes.formHelperText}>
                     {errors.degree_error ? errors.degree_error : null}
                   </FormHelperText>
@@ -125,7 +133,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 required
                 id="title"
                 className={classes.formControl}
-                label={config.labels.title || 'Title'}
+                label={config.labels.title || "Title"}
                 value={values.title}
                 name="title"
                 onChange={handleChange}
@@ -150,7 +158,9 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                     InputProps={inputProps}
                   />
                   <FormHelperText className={classes.formHelperText}>
-                    {errors.locationCity_error ? errors.locationCity_error : null}
+                    {errors.locationCity_error
+                      ? errors.locationCity_error
+                      : null}
                   </FormHelperText>
                 </Grid>
                 <Grid item xs={6}>
@@ -160,7 +170,11 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                     name="location_state"
                     value={values.location_state}
                     onChange={handleChange}
-                    helperText={errors.locationState_error ? errors.locationState_error : null}
+                    helperText={
+                      errors.locationState_error
+                        ? errors.locationState_error
+                        : null
+                    }
                   />
                 </Grid>
               </React.Fragment>
@@ -169,21 +183,29 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
             <Grid item xs={6}>
               <SelectorForm
                 type="month"
-                label={experience.type === 'Accomplishment' ? 'Month' : 'Start Month'}
+                label={
+                  experience.type === "Accomplishment" ? "Month" : "Start Month"
+                }
                 name="start_month"
                 value={values.start_month}
                 onChange={handleChange}
-                helperText={errors.startMonth_error ? errors.startMonth_error : null}
+                helperText={
+                  errors.startMonth_error ? errors.startMonth_error : null
+                }
               />
             </Grid>
             <Grid item xs={6}>
               <SelectorForm
                 type="year"
-                label={experience.type === 'Accomplishment' ? 'Year' : 'Start Year'}
+                label={
+                  experience.type === "Accomplishment" ? "Year" : "Start Year"
+                }
                 name="start_year"
                 value={values.start_year}
                 onChange={handleChange}
-                helperText={errors.startYear_error ? errors.startYear_error : null}
+                helperText={
+                  errors.startYear_error ? errors.startYear_error : null
+                }
               />
             </Grid>
             {config.showEndDate && (
@@ -196,7 +218,9 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                     name="end_month"
                     value={values.end_month}
                     onChange={handleChange}
-                    helperText={errors.endMonth_error ? errors.endMonth_error : null}
+                    helperText={
+                      errors.endMonth_error ? errors.endMonth_error : null
+                    }
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -207,7 +231,9 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                     name="end_year"
                     value={values.end_year}
                     onChange={handleChange}
-                    helperText={errors.endYear_error ? errors.endYear_error : null}
+                    helperText={
+                      errors.endYear_error ? errors.endYear_error : null
+                    }
                   />
                 </Grid>
               </React.Fragment>
@@ -216,7 +242,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               <Grid item xs={12}>
                 <TextField
                   className={classes.formControl}
-                  label={config.labels.description || 'Description'}
+                  label={config.labels.description || "Description"}
                   value={values.description}
                   name="description"
                   id="description"
@@ -244,7 +270,11 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
         </DialogContent>
 
         <DialogActions className={classes.dialogAction}>
-          <Button variant="contained" color="primary" onClick={handleFormSubmit}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleFormSubmit}
+          >
             Save
           </Button>
           <Button onClick={handleCancel}>Cancel</Button>
@@ -254,19 +284,19 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   modal: {
-    width: '600px',
-    margin: 'auto',
+    width: "600px",
+    margin: "auto",
   },
   dialogContent: {
-    width: '350px',
+    width: "350px",
   },
   dialogAction: {
-    paddingBottom: '20px',
+    paddingBottom: "20px",
   },
   formControl: {
-    width: '100%',
+    width: "100%",
     marginTop: spacing(0),
   },
   resize: {
@@ -279,8 +309,8 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     fontSize: 20,
   },
   formHelperText: {
-    color: '#eb0000',
-    marginTop: '2px',
+    color: "#eb0000",
+    marginTop: "2px",
   },
 });
 
@@ -292,18 +322,19 @@ AddOrEditExperienceForm.propTypes = {
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
-      '',
-      'High School',
-      'Associates',
-      'Undergraduate',
-      'Masters',
-      'Doctoral',
+      "",
+      "High School",
+      "Associates",
+      "Undergraduate",
+      "Masters",
+      "Doctoral",
     ]),
     start_month: PropTypes.string.isRequired,
     start_year: PropTypes.string.isRequired,
     end_month: PropTypes.string,
     end_year: PropTypes.string,
-    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
+    type: PropTypes.oneOf(["Work", "Service", "Accomplishment", "Education"])
+      .isRequired,
     contact_id: PropTypes.number,
     achievements: PropTypes.array,
   }).isRequired,

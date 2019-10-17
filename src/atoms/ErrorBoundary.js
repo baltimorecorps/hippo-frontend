@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import PropTypes from '../lib/PropTypes';
-import logger from '../lib/logger';
+import PropTypes from "../lib/PropTypes";
+import logger from "../lib/logger";
 
 class ErrorBoundary extends React.Component {
   componentDidCatch(error, info) {
-    const { fileName } = this.props;
-    logger.error({ fileName, error, info });
+    const {fileName} = this.props;
+    logger.error({fileName, error, info});
   }
 
   render() {
@@ -14,7 +14,7 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-ErrorBoundary.displayName = 'ErrorBoundary';
+ErrorBoundary.displayName = "ErrorBoundary";
 
 ErrorBoundary.propTypes = PropTypes.handler({
   children: PropTypes.node.isRequired,

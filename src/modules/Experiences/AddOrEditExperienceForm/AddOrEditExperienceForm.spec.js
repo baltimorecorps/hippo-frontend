@@ -1,64 +1,39 @@
-import React from 'react';
-import { render, fireEvent, prettyDOM, waitForElement } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import AddOrEditExperienceForm from './AddOrEditExperienceForm';
-
-function isScrollable(e) {
-  if (e.scrollTopMax !== undefined) return e.scrollTopMax > 0;
-
-  if (e == document.scrollingElement) return e.scrollHeight > e.clientHeight;
-
-  return (
-    e.scrollHeight > e.clientHeight &&
-    ['scroll', 'auto'].indexOf(getComputedStyle(e).overflowY) >= 0
-  );
-}
+import React from "react";
+import {render, fireEvent} from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import AddOrEditExperienceForm from "./AddOrEditExperienceForm";
 
 const experience = {
-  description: 'Test description',
-  host: 'Test host',
-  title: 'Test Title',
-  location_city: 'Baltimore',
-  location_state: 'Maryland',
-  start_month: 'January',
-  start_year: '2015',
-  end_month: 'August',
-  end_year: '2017',
+  description: "Test description",
+  host: "Test host",
+  title: "Test Title",
+  location_city: "Baltimore",
+  location_state: "Maryland",
+  start_month: "January",
+  start_year: "2015",
+  end_month: "August",
+  end_year: "2017",
   is_current: false,
 
-  type: 'Work',
+  type: "Work",
   contact_id: 1234,
-  achievements: [{ description: 'Test achievement 1' }, { description: 'Test achievement 2' }],
+  achievements: [
+    {description: "Test achievement 1"},
+    {description: "Test achievement 2"},
+  ],
 };
 
-describe('AddOrEditExperienceForm', () => {
-  //test('ensure form can scroll', () => {
-  //  const {queryByText, getByLabelText, getByText} = render(
-  //    <AddOrEditExperienceForm
-  //      handleCancel={() => {}}
-  //      labels={{}}
-  //      onSubmit={() => {}}
-  //      experience={experience}
-  //    />
-  //  )
-
-  //  // query* functions will return the element or null if it cannot be found
-  //  // get* functions will return the element or throw an error if it cannot be found
-  //  expect(queryByText('Test description')).toBeInTheDocument()
-  //  expect(isScrollable(element)).toBe(true)
-
-  //});
-
-  test('submit sends values', () => {
+describe("AddOrEditExperienceForm", () => {
+  test("submit sends values", () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByText } = render(
+    const {getByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
 
     fireEvent.click(getByText(/save/i));
@@ -67,118 +42,122 @@ describe('AddOrEditExperienceForm', () => {
     expect(submit.mock.calls[0][0]).toEqual(experience);
   });
 
-  test('organization text box', () => {
+  test("organization text box", () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByLabelText, getByText } = render(
+    const {getByLabelText, getByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
-    fireEvent.change(getByLabelText(/organization/i), { target: { value: 'new org' } });
+    fireEvent.change(getByLabelText(/organization/i), {
+      target: {value: "new org"},
+    });
 
     fireEvent.click(getByText(/save/i));
 
     expect(submit.mock.calls.length).toBe(1);
-    expect(submit.mock.calls[0][0]).toHaveProperty('host');
-    expect(submit.mock.calls[0][0].host).toBe('new org');
+    expect(submit.mock.calls[0][0]).toHaveProperty("host");
+    expect(submit.mock.calls[0][0].host).toBe("new org");
   });
 
   ////////-----------------------------------------------------------------/////////
-  test('DatePicker test: Month (selector)', () => {
+  test("DatePicker test: Month (selector)", () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByText, getAllByText } = render(
+    const {getByText, getAllByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
 
     // Click the first actual month selector we see (the 'Start Month' one)
     // Note that 'getByLabelText(/start month/i)' doesn't work because of
     // the way that the MaterialUI Select is implemented, so we have to search
     // for the button which has text 'January' instead.
-    fireEvent.click(getAllByText('January')[0]);
+    fireEvent.click(getAllByText("January")[0]);
 
     // Select the month we want
-    fireEvent.click(getByText('April'));
+    fireEvent.click(getByText("April"));
     fireEvent.click(getByText(/save/i));
 
     expect(submit.mock.calls.length).toBe(1);
-    expect(submit.mock.calls[0][0]).toHaveProperty('start_month');
-    expect(submit.mock.calls[0][0].start_month).toBe('April');
+    expect(submit.mock.calls[0][0]).toHaveProperty("start_month");
+    expect(submit.mock.calls[0][0].start_month).toBe("April");
   });
 
-  test('DatePicker test: Year (selector)', () => {
+  test("DatePicker test: Year (selector)", () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByText, getAllByText } = render(
+    const {getByText, getAllByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
 
     // click on the current value of end_year
-    fireEvent.click(getAllByText('2017')[0]);
+    fireEvent.click(getAllByText("2017")[0]);
 
     // Select the year we want to test
-    fireEvent.click(getByText('2019'));
+    fireEvent.click(getByText("2019"));
     fireEvent.click(getByText(/save/i));
 
     expect(submit.mock.calls.length).toBe(1);
-    expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
+    expect(submit.mock.calls[0][0]).toHaveProperty("end_year");
     expect(submit.mock.calls[0][0].end_year).toBe(2019);
   });
 
-  test('Tes Accomplishment Form', () => {
+  test("Tes Accomplishment Form", () => {
     const experience = {
-      host: 'Award 1',
-      title: 'Test Title',
-      start_month: 'January',
-      start_year: '2015',
-      type: 'Accomplishment',
-      description: 'Test description',
+      host: "Award 1",
+      title: "Test Title",
+      start_month: "January",
+      start_year: "2015",
+      type: "Accomplishment",
+      description: "Test description",
       contact_id: 1234,
     };
 
     const result = {
       contact_id: 1234,
-      description: 'Test description',
-      end_month: 'none',
+      description: "Test description",
+      end_month: "none",
       end_year: 0,
-      host: 'New Award',
-      start_month: 'January',
-      start_year: '2015',
-      title: 'Test Title',
-      type: 'Accomplishment',
+      host: "New Award",
+      start_month: "January",
+      start_year: "2015",
+      title: "Test Title",
+      type: "Accomplishment",
     };
 
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByLabelText, getByText } = render(
+    const {getByLabelText, getByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
-    fireEvent.change(getByLabelText(/institution/i), { target: { value: 'New Award' } });
+    fireEvent.change(getByLabelText(/institution/i), {
+      target: {value: "New Award"},
+    });
 
     fireEvent.click(getByText(/save/i));
 
     expect(submit.mock.calls.length).toBe(1);
-    expect(submit.mock.calls[0][0]).toHaveProperty('host');
-    expect(submit.mock.calls[0][0].host).toBe('New Award');
+    expect(submit.mock.calls[0][0]).toHaveProperty("host");
+    expect(submit.mock.calls[0][0].host).toBe("New Award");
     expect(submit.mock.calls[0][0]).toEqual(result);
   });
 });

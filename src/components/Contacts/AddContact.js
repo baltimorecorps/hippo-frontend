@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, {useState} from "react";
+import PropTypes from "prop-types";
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import withStyles from '@material-ui/core/styles/withStyles';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogActions from "@material-ui/core/DialogActions";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import withStyles from "@material-ui/core/styles/withStyles";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
-import { newProfileValidator } from '../../lib/formValidator';
+import {newProfileValidator} from "../../lib/formValidator";
 
 // const RACES = [
 //   {
@@ -38,7 +38,7 @@ import { newProfileValidator } from '../../lib/formValidator';
 //   },
 // ];
 
-const useForm = (addNewContact) => {
+const useForm = addNewContact => {
   const [values, setValues] = useState({});
 
   const handleSubmit = () => {
@@ -51,9 +51,9 @@ const useForm = (addNewContact) => {
     addNewContact(submission);
   };
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     event.persist();
-    setValues((values) => ({
+    setValues(values => ({
       ...values,
       [event.target.name]: event.target.value,
     }));
@@ -62,13 +62,13 @@ const useForm = (addNewContact) => {
   return [values, handleChange, handleSubmit];
 };
 
-const AddContact = ({ classes, addNewContact }) => {
+const AddContact = ({classes, addNewContact}) => {
   const [open, setOpen] = useState(false);
   const [values, handleChange, handleSubmit] = useForm(addNewContact);
   const [errors, setErrors] = useState({});
 
   const submit = () => {
-    const { isError, err } = newProfileValidator(values);
+    const {isError, err} = newProfileValidator(values);
 
     if (isError) {
       setErrors(err);
@@ -85,7 +85,7 @@ const AddContact = ({ classes, addNewContact }) => {
     },
   };
 
-  const inputProps = { classes: { input: classes.resize, shrink: false } };
+  const inputProps = {classes: {input: classes.resize, shrink: false}};
 
   return (
     <React.Fragment>
@@ -97,7 +97,11 @@ const AddContact = ({ classes, addNewContact }) => {
       >
         New Profile
       </Button>
-      <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title" className={classes.header}>
           Add New Profile
         </DialogTitle>
@@ -111,7 +115,7 @@ const AddContact = ({ classes, addNewContact }) => {
                 label="First Name"
                 className={classes.textField}
                 name="first_name"
-                value={values.first_name || ''}
+                value={values.first_name || ""}
                 onChange={handleChange}
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
@@ -184,7 +188,7 @@ AddContact.propTypes = {
   addNewContact: PropTypes.func.isRequired,
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   header: {
     padding: spacing(2, 3, 0),
   },
@@ -208,8 +212,8 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     fontSize: 20,
   },
   formHelperText: {
-    color: '#eb0000',
-    marginTop: '2px',
+    color: "#eb0000",
+    marginTop: "2px",
   },
 });
 

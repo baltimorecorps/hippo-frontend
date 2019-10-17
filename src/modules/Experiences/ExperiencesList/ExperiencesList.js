@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
+import React, {useState, useEffect} from "react";
+import PropTypes from "prop-types";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import Icon from "@material-ui/core/Icon";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
-import ExperiencesListItem from './ExperiencesListItem';
+import AddOrEditExperienceForm from "modules/Experiences/AddOrEditExperienceForm";
+import ExperiencesListItem from "./ExperiencesListItem";
 
 const ExperiencesList = ({
   contactId,
@@ -27,23 +27,23 @@ const ExperiencesList = ({
   }, [experiences.length, refreshExperiences]);
 
   let blankExperience = {
-    description: '',
-    host: '',
-    title: '',
-    location_city: '',
-    location_state: '',
-    start_month: '',
-    start_year: '',
-    end_month: '',
-    end_year: '',
+    description: "",
+    host: "",
+    title: "",
+    location_city: "",
+    location_state: "",
+    start_month: "",
+    start_year: "",
+    end_month: "",
+    end_year: "",
     is_current: false,
     type: experienceType,
     contact_id: contactId,
     achievements: [],
   };
 
-  if (experienceType === 'Education') {
-    blankExperience.degree = '';
+  if (experienceType === "Education") {
+    blankExperience.degree = "";
   }
 
   const submitNewExperience = async function(experience) {
@@ -63,7 +63,7 @@ const ExperiencesList = ({
                 variant="h5"
                 component="h1"
                 style={{
-                  fontWeight: '700',
+                  fontWeight: "700",
                 }}
               >
                 {header}
@@ -76,7 +76,7 @@ const ExperiencesList = ({
 
           <Divider className={classes.divider} />
 
-          {experiences.map((experience) => (
+          {experiences.map(experience => (
             <ExperiencesListItem
               key={experience.id}
               onUpdate={updateExperience}
@@ -100,7 +100,12 @@ const ExperiencesList = ({
 
 ExperiencesList.propTypes = {
   contactId: PropTypes.number.isRequired,
-  experienceType: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
+  experienceType: PropTypes.oneOf([
+    "Work",
+    "Service",
+    "Accomplishment",
+    "Education",
+  ]).isRequired,
   experiences: PropTypes.array.isRequired,
   addNewExperience: PropTypes.func.isRequired,
   updateExperience: PropTypes.func.isRequired,
@@ -109,13 +114,13 @@ ExperiencesList.propTypes = {
 };
 
 const headers = {
-  work: 'Work Experience',
-  education: 'Education',
-  service: 'Service and Leadership',
-  accomplishment: 'Accomplishments',
+  work: "Work Experience",
+  education: "Education",
+  service: "Service and Leadership",
+  accomplishment: "Accomplishments",
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     padding: spacing(2, 3, 3),
     marginBottom: spacing(5),

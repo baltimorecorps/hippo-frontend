@@ -1,11 +1,11 @@
-const getApiUrl = (environment) => {
+const getApiUrl = environment => {
   switch (environment) {
-    case 'production':
-      return 'https://api.baltimorecorps.org';
-    case 'staging':
-      return 'https://dev-api.baltimorecorps.org';
+    case "production":
+      return "https://api.baltimorecorps.org";
+    case "staging":
+      return "https://dev-api.baltimorecorps.org";
     default:
-      return 'http://localhost:5000';
+      return "http://localhost:5000";
   }
 };
 

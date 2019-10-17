@@ -1,11 +1,18 @@
-import React from 'react';
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
-import withStyles from '@material-ui/core/styles/withStyles';
+import React from "react";
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, onKeyPress }) => {
+const AchievementInput = ({
+  label,
+  value,
+  onTextChange,
+  onIconClick,
+  classes,
+  onKeyPress,
+}) => {
   return (
     <TextField
       type="text"
@@ -23,10 +30,14 @@ const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, on
         },
       }}
       InputProps={{
-        classes: { input: classes.resize },
+        classes: {input: classes.resize},
         endAdornment: (
           <InputAdornment position="end">
-            <IconButton edge="end" aria-label="delete achievement" onClick={onIconClick}>
+            <IconButton
+              edge="end"
+              aria-label="delete achievement"
+              onClick={onIconClick}
+            >
               <Icon>delete</Icon>
             </IconButton>
           </InputAdornment>
@@ -36,10 +47,10 @@ const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, on
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {
-    width: '100%',
-    marginTop: '3px',
+    width: "100%",
+    marginTop: "3px",
     marginBottom: spacing(0.5),
   },
   resize: {

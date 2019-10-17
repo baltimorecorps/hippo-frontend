@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
-import StorageContext from './StorageContext';
+import React, {useContext} from "react";
+import StorageContext from "./StorageContext";
 
 const ResumeContext = React.createContext();
 
-ResumeContext.StorageWrapper = ({ children }) => (
+ResumeContext.StorageWrapper = ({children}) => (
   <StorageContext
     context={ResumeContext}
     storageKey="resume"
@@ -21,8 +21,8 @@ const useInfo = () => {
 
 ResumeContext.useInfo = useInfo;
 
-ResumeContext.addExperience = ({ type, experience, context }) => {
-  const { setResumeInfo, experiences, ...info } = context;
+ResumeContext.addExperience = ({type, experience, context}) => {
+  const {setResumeInfo, experiences, ...info} = context;
 
   setResumeInfo({
     ...info,
@@ -33,8 +33,8 @@ ResumeContext.addExperience = ({ type, experience, context }) => {
   });
 };
 
-ResumeContext.setName = ({ name, context }) => {
-  const { setResumeInfo, ...info } = context;
+ResumeContext.setName = ({name, context}) => {
+  const {setResumeInfo, ...info} = context;
 
   setResumeInfo({
     ...info,
@@ -43,16 +43,16 @@ ResumeContext.setName = ({ name, context }) => {
 };
 
 ResumeContext.defaultValues = {
-  name: '',
+  name: "",
   achievements: [],
   contactInfo: {
-    name: '',
+    name: "",
     roles: [],
-    title: '',
-    email: '',
-    phoneNumber: '',
-    city: '',
-    state: '',
+    title: "",
+    email: "",
+    phoneNumber: "",
+    city: "",
+    state: "",
   },
   experiences: {
     work: [],
