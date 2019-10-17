@@ -33,4 +33,61 @@ const getWorkLength = (years, months) => {
   return lengthWork;
 };
 
-export { formatMonthYearDate, getWorkLength };
+const configureForm = (expType) => {
+  if (expType === 'Work') {
+    return {
+      labels: {
+        host: 'Organization',
+        title: 'Title',
+      },
+      showDescription: false,
+      showEndDate: true,
+      showAchievements: true,
+      showLocation: true,
+    };
+  } else if (expType === 'Service') {
+    return {
+      labels: {
+        host: 'Organization',
+        title: 'Role',
+      },
+      showEndDate: true,
+      showAchievements: true,
+      showLocation: true,
+    };
+  } else if (expType === 'Accomplishment') {
+    return {
+      labels: {
+        host: 'Institution / Publisher',
+        title: 'Title',
+        startDate: 'Date Issued',
+      },
+      showDescription: true,
+      showLocation: false,
+      showEndDate: false,
+    };
+  } else if (expType === 'Education') {
+    return {
+      labels: {
+        host: 'Institution',
+        title: 'Field of Study',
+        endDate: 'End Date (or expected)',
+      },
+      showEndDate: true,
+      showDegree: true,
+      showDescription: true,
+      showAchievements: true,
+      showLocation: true,
+    };
+  }
+};
+
+const isEndDateNull = (values) => {
+  if (values.type === 'Accomplishment' || values.is_current === true) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export { formatMonthYearDate, getWorkLength, configureForm, isEndDateNull };

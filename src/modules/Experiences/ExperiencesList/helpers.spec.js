@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { getMonthAndYear, getWorkLength } from './helpers.js';
+import { getWorkLength } from './helpers.js';
 
 afterEach(cleanup);
 

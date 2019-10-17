@@ -59,7 +59,13 @@ const ExperiencesList = ({
         <Paper className={classes.paper}>
           <Grid container justify="space-between">
             <Grid item>
-              <Typography variant="h5" component="h1">
+              <Typography
+                variant="h5"
+                component="h1"
+                style={{
+                  fontWeight: '700',
+                }}
+              >
                 {header}
               </Typography>
             </Grid>

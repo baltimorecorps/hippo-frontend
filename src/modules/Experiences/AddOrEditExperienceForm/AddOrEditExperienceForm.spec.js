@@ -18,10 +18,14 @@ const experience = {
   description: 'Test description',
   host: 'Test host',
   title: 'Test Title',
+  location_city: 'Baltimore',
+  location_state: 'Maryland',
   start_month: 'January',
   start_year: '2015',
   end_month: 'August',
   end_year: '2017',
+  is_current: false,
+
   type: 'Work',
   contact_id: 1234,
   achievements: [{ description: 'Test achievement 1' }, { description: 'Test achievement 2' }],
@@ -133,5 +137,48 @@ describe('AddOrEditExperienceForm', () => {
     expect(submit.mock.calls.length).toBe(1);
     expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
     expect(submit.mock.calls[0][0].end_year).toBe(2019);
+  });
+
+  test('Tes Accomplishment Form', () => {
+    const experience = {
+      host: 'Award 1',
+      title: 'Test Title',
+      start_month: 'January',
+      start_year: '2015',
+      type: 'Accomplishment',
+      description: 'Test description',
+      contact_id: 1234,
+    };
+
+    const result = {
+      contact_id: 1234,
+      description: 'Test description',
+      end_month: 'none',
+      end_year: 0,
+      host: 'New Award',
+      start_month: 'January',
+      start_year: '2015',
+      title: 'Test Title',
+      type: 'Accomplishment',
+    };
+
+    const cancel = jest.fn();
+    const submit = jest.fn();
+    const { getByLabelText, getByText } = render(
+      <AddOrEditExperienceForm
+        handleCancel={cancel}
+        labels={{}}
+        onSubmit={submit}
+        experience={experience}
+      />,
+    );
+    fireEvent.change(getByLabelText(/institution/i), { target: { value: 'New Award' } });
+
+    fireEvent.click(getByText(/save/i));
+
+    expect(submit.mock.calls.length).toBe(1);
+    expect(submit.mock.calls[0][0]).toHaveProperty('host');
+    expect(submit.mock.calls[0][0].host).toBe('New Award');
+    expect(submit.mock.calls[0][0]).toEqual(result);
   });
 });

@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import { monthFullNames, years } from './staticData';
+import { monthFullNames, years, USAStates } from './staticData';
 
 const SelectorForm = ({ label, value, onChange, classes, type, name, helperText }) => {
   const id = `selector-${name}`;
@@ -25,8 +25,10 @@ const SelectorForm = ({ label, value, onChange, classes, type, name, helperText 
   let options = '';
   if (type === 'month') {
     options = getOptions(monthFullNames);
-  } else {
+  } else if (type === 'year') {
     options = getOptions(years);
+  } else if (type === 'states') {
+    options = getOptions(USAStates);
   }
 
   return (

@@ -1,6 +1,6 @@
 import { monthFullNames } from '../modules/Experiences/AddOrEditExperienceForm/staticData';
 
-const experienceValidator = (values) => {
+const experienceValidator = (values, type) => {
   let isError = false;
   let err = {};
 
@@ -8,16 +8,19 @@ const experienceValidator = (values) => {
     isError = true;
     err.host_error = 'Required';
   }
+
   if (values.degree || values.degree !== undefined) {
     if (!values.degree) {
       isError = true;
       err.degree_error = 'Required';
     }
   }
+
   if (!values.title) {
     isError = true;
     err.title_error = 'Required';
   }
+
   if (!values.start_month) {
     isError = true;
     err.startMonth_error = 'Required';
@@ -26,13 +29,24 @@ const experienceValidator = (values) => {
     isError = true;
     err.startYear_error = 'Required';
   }
-  if (!values.end_month) {
-    isError = true;
-    err.endMonth_error = 'Required';
-  }
-  if (!values.end_year) {
-    isError = true;
-    err.endYear_error = 'Required';
+
+  if (type !== 'Accomplishment') {
+    if (!values.location_city) {
+      isError = true;
+      err.locationCity_error = 'Required';
+    }
+    if (!values.location_state) {
+      isError = true;
+      err.locationState_error = 'Required';
+    }
+    if (!values.end_month) {
+      isError = true;
+      err.endMonth_error = 'Required';
+    }
+    if (!values.end_year) {
+      isError = true;
+      err.endYear_error = 'Required';
+    }
   }
 
   if (values.start_month && values.start_year && values.end_month && values.end_year) {
