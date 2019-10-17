@@ -17,6 +17,7 @@ import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { experienceValidator } from '../../../lib/formValidator';
+import { configureForm, isEndDateNull } from '../ExperiencesList/helpers';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -38,72 +39,13 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const configureForm = (expType) => {
-  if (expType === 'Work') {
-    return {
-      labels: {
-        host: 'Organization',
-        title: 'Title',
-      },
-      showDescription: false,
-      showEndDate: true,
-      showAchievements: true,
-      showLocation: true,
-    };
-  } else if (expType === 'Service') {
-    return {
-      labels: {
-        host: 'Organization',
-        title: 'Role',
-      },
-      showEndDate: true,
-      showAchievements: true,
-      showLocation: true,
-    };
-  } else if (expType === 'Accomplishment') {
-    return {
-      labels: {
-        host: 'Institution / Publisher',
-        title: 'Title',
-        startDate: 'Date Issued',
-      },
-      showDescription: true,
-      showLocation: false,
-      showEndDate: false,
-    };
-  } else if (expType === 'Education') {
-    return {
-      labels: {
-        host: 'Institution',
-        title: 'Field of Study',
-        endDate: 'End Date (or expected)',
-      },
-      showEndDate: true,
-      showDegree: true,
-      showDescription: true,
-      showAchievements: true,
-      showLocation: true,
-    };
-  }
-};
-
 const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
   const [values, { handleChange, handleSubmit, handleDegree, handleAchievements }] = useForm(
     experience,
     onSubmit,
   );
 
-  const config = Object.assign(
-    {
-      labels: {},
-      showEndDate: false,
-      showDegree: false,
-      showDescription: false,
-      showAchievements: false,
-      showLocation: false,
-    },
-    configureForm(experience.type),
-  );
+  const config = configureForm(experience.type);
 
   // eslint-disable-next-line no-unused-vars
   const handleChangeDescription = (idx) => (evt) => {
@@ -126,6 +68,10 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
   const [errors, setErrors] = React.useState({});
 
   const handleFormSubmit = () => {
+    if (isEndDateNull(values)) {
+      values.end_month = 'none';
+      values.end_year = 0;
+    }
     // validate form values
     const { isError, err } = experienceValidator(values, experience.type);
 
@@ -140,10 +86,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
     values.start_year = null;
   }
 
-  if (experience.type === 'Accomplishment') {
-    values.end_month = 'none';
-    values.end_year = 0;
-  }
   return (
     <Dialog className={classes.modal} open={true}>
       <form autoComplete="off">

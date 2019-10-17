@@ -8,7 +8,7 @@ import AchievementsList from 'modules/Achievements/AchievementsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import { formatMonthYearDate, getWorkLength } from './helpers';
+import { formatMonthYearDate, getWorkLength, configureForm } from './helpers';
 
 const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
   const initial = experience.host ? experience.host[0] : '';
@@ -16,9 +16,8 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
     experience.type === 'Education'
       ? `${experience.degree} in ${experience.title}`
       : `${experience.title}`;
-  const showEndDate = experience.type !== 'Accomplishment';
-  const showAchievements = experience.type !== 'Accomplishment';
-  const showWorkLength = experience.type !== 'Accomplishment';
+
+  const config = configureForm(experience.type);
 
   const [editing, setEditing] = useState(false);
   const submitUpdate = async function(values) {
@@ -85,8 +84,8 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
             style={{ color: '#7d7d7d', fontSize: '15px' }}
           >
             {startDate}
-            {showEndDate && <React.Fragment> &ndash; {endDate}</React.Fragment>}
-            {showWorkLength && ` (${lengthWork})`}
+            {config.showEndDate && <React.Fragment> &ndash; {endDate}</React.Fragment>}
+            {config.showWorkLength && ` (${lengthWork})`}
           </Typography>
 
           {experience.description && (
@@ -96,7 +95,7 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
           )}
 
           {experience.achievements.length
-            ? showAchievements && <AchievementsList achievements={experience.achievements} />
+            ? config.showAchievements && <AchievementsList achievements={experience.achievements} />
             : null}
         </Grid>
 
