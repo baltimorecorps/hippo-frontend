@@ -34,25 +34,6 @@ describe('First and Last names Validators', () => {
     expect(isError).toBe(false);
     expect(err).toEqual(expectedErr);
   });
-
-  test('New Profile: Invalid names ', () => {
-    const values = {
-      first_name: 's222d',
-      last_name: 'kk#@',
-      phone_primary: '9990001111',
-      email: 'bay@gmail.com',
-    };
-
-    let expectedErr = {
-      firstName_error: 'Invalid format. Only (a-z, A-Z), ( ), and (-).',
-      lastName_error: 'Invalid format. Only (a-z, A-Z), ( ), and (-).',
-    };
-
-    const { isError, err } = newProfileValidator(values);
-
-    expect(isError).toBe(true);
-    expect(err).toEqual(expectedErr);
-  });
 });
 
 describe('Phone Number Validator', () => {
@@ -64,7 +45,7 @@ describe('Phone Number Validator', () => {
       phone_primary: 'myphoneNumber',
     };
     let expectedErr = {
-      phonePrimary_error: 'Numbers only',
+      phonePrimary_error: 'Required',
     };
     let { isError, err } = newProfileValidator(values);
 
@@ -73,15 +54,15 @@ describe('Phone Number Validator', () => {
   });
 });
 
-test('New Profile: invalid phone number ', () => {
+test('New Profile: invalid phone number (less than six digits)', () => {
   const values = {
     first_name: 'Bay',
     last_name: 'C',
     email: 'email@gmail.com',
-    phone_primary: '000999',
+    phone_primary: '00099',
   };
   const expectedErr = {
-    phonePrimary_error: 'Phone number must be 10 digits',
+    phonePrimary_error: 'Required',
   };
 
   const { isError, err } = newProfileValidator(values);
