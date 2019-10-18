@@ -19,6 +19,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import { experienceValidator } from '../../../lib/formValidator';
 import { configureForm, isEndDateNull } from '../ExperiencesList/helpers';
 
+import LocationTextField from './LocationTextField';
+
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
@@ -33,6 +35,9 @@ const useForm = (initialValues, onSubmit) => {
     handleDegree: (event) => {
       update('degree')(event.target.value);
     },
+    handleLocation: (location) => {
+      update('location_city')(location);
+    },
     handleAchievements: update('achievements'),
   };
 
@@ -40,10 +45,10 @@ const useForm = (initialValues, onSubmit) => {
 };
 
 const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
-  const [values, { handleChange, handleSubmit, handleDegree, handleAchievements }] = useForm(
-    experience,
-    onSubmit,
-  );
+  const [
+    values,
+    { handleChange, handleSubmit, handleDegree, handleAchievements, handleLocation },
+  ] = useForm(experience, onSubmit);
 
   const config = configureForm(experience.type);
 
@@ -86,11 +91,18 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
     values.start_year = null;
   }
 
+  const handleLocationChange = (address) => {
+    values.location_city = address;
+    handleLocation(address);
+  };
+
   return (
     <Dialog className={classes.modal} open={true}>
       <form autoComplete="off">
         <DialogContent className={classes.dialogContent}>
           <Grid container spacing={1} justify="space-between">
+            <Grid item xs={12} />
+
             <Grid item xs={12}>
               <TextField
                 required
@@ -107,7 +119,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 {errors.host_error ? errors.host_error : null}
               </FormHelperText>
             </Grid>
-
             {config.showDegree && (
               <Grid item xs={12}>
                 <FormControl className={classes.formControl}>
@@ -119,7 +130,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 </FormControl>
               </Grid>
             )}
-
             <Grid item xs={12}>
               <TextField
                 required
@@ -139,7 +149,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
             {config.showLocation && (
               <React.Fragment>
                 <Grid item xs={6}>
-                  <TextField
+                  {/* <TextField
                     id="city"
                     className={classes.formControl}
                     label="City"
@@ -151,21 +161,30 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                   />
                   <FormHelperText className={classes.formHelperText}>
                     {errors.locationCity_error ? errors.locationCity_error : null}
-                  </FormHelperText>
+                  </FormHelperText> */}
+                  <LocationTextField
+                    id="city"
+                    className={classes.formControl}
+                    label="City"
+                    value={values.location_city || ''}
+                    name="location_city"
+                    InputLabelProps={inputLabelProps}
+                    InputProps={inputProps}
+                    handleLocationChange={handleLocationChange}
+                  />
                 </Grid>
                 <Grid item xs={6}>
-                  <SelectorForm
+                  {/* <SelectorForm
                     type="states"
                     label="State"
                     name="location_state"
                     value={values.location_state}
                     onChange={handleChange}
                     helperText={errors.locationState_error ? errors.locationState_error : null}
-                  />
+                  /> */}
                 </Grid>
               </React.Fragment>
             )}
-
             <Grid item xs={6}>
               <SelectorForm
                 type="month"
@@ -228,7 +247,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 />
               </Grid>
             )}
-
             {config.showAchievements && (
               <Grid item xs={12}>
                 <AchievementInputsList
