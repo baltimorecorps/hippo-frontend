@@ -12,7 +12,7 @@ describe('Experience Form Validations', () => {
       host_error: 'Required',
       title_error: 'Required',
       locationCity_error: 'Required',
-      locationState_error: 'Required',
+      // locationState_error: 'Required',
       startMonth_error: 'Required',
       startYear_error: 'Required',
       endMonth_error: 'Required',
@@ -88,7 +88,7 @@ describe('Experience Form Validations', () => {
       endMonth_error: 'Required',
       endYear_error: 'Required',
       locationCity_error: 'Required',
-      locationState_error: 'Required',
+      // locationState_error: 'Required',
     };
     const { isError, err } = experienceValidator(values);
 

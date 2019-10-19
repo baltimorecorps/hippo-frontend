@@ -1,8 +1,6 @@
 import React from 'react';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import PlacesAutocomplete from 'react-places-autocomplete';
 import TextField from '@material-ui/core/TextField';
-
-/*global google*/
 
 const LocationTextField = ({ value, handleLocationChange, name }) => {
   const handleChange = (address) => {
