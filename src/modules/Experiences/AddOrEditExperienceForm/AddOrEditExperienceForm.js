@@ -36,7 +36,7 @@ const useForm = (initialValues, onSubmit) => {
       update('degree')(event.target.value);
     },
     handleLocation: (location) => {
-      update('location_city')(location);
+      update('location')(location);
     },
     handleAchievements: update('achievements'),
   };
@@ -91,11 +91,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
     values.start_year = null;
   }
 
-  const handleLocationChange = (address) => {
-    values.location_city = address;
-    handleLocation(address);
-  };
-
   return (
     <Dialog className={classes.modal} open={true}>
       <form autoComplete="off">
@@ -116,7 +111,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 InputProps={inputProps}
               />
               <FormHelperText className={classes.formHelperText}>
-                {errors.host_error ? errors.host_error : null}
+                {errors.host_error || null}
               </FormHelperText>
             </Grid>
             {config.showDegree && (
@@ -125,7 +120,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                   <InputLabel htmlFor="degree">Degree</InputLabel>
                   <DegreeDropdown value={values.degree} onChange={handleDegree} />
                   <FormHelperText className={classes.formHelperText}>
-                    {errors.degree_error ? errors.degree_error : null}
+                    {errors.degree_error || null}
                   </FormHelperText>
                 </FormControl>
               </Grid>
@@ -143,47 +138,23 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 InputProps={inputProps}
               />
               <FormHelperText className={classes.formHelperText}>
-                {errors.title_error ? errors.title_error : null}
+                {errors.title_error || null}
               </FormHelperText>
             </Grid>
             {config.showLocation && (
-              <React.Fragment>
-                <Grid item xs={6}>
-                  {/* <TextField
-                    id="city"
-                    className={classes.formControl}
-                    label="City"
-                    value={values.location_city}
-                    name="location_city"
-                    onChange={handleChange}
-                    InputLabelProps={inputLabelProps}
-                    InputProps={inputProps}
-                  />
-                  <FormHelperText className={classes.formHelperText}>
-                    {errors.locationCity_error ? errors.locationCity_error : null}
-                  </FormHelperText> */}
-                  <LocationTextField
-                    id="city"
-                    className={classes.formControl}
-                    label="City"
-                    value={values.location_city || ''}
-                    name="location_city"
-                    InputLabelProps={inputLabelProps}
-                    InputProps={inputProps}
-                    handleLocationChange={handleLocationChange}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  {/* <SelectorForm
-                    type="states"
-                    label="State"
-                    name="location_state"
-                    value={values.location_state}
-                    onChange={handleChange}
-                    helperText={errors.locationState_error ? errors.locationState_error : null}
-                  /> */}
-                </Grid>
-              </React.Fragment>
+              <Grid item xs={12}>
+                <LocationTextField
+                  id="city"
+                  className={classes.formControl}
+                  label="Location"
+                  value={values.location || ''}
+                  name="location"
+                  handleLocationChange={handleLocation}
+                />
+                <FormHelperText className={classes.formHelperText}>
+                  {errors.location_error || null}
+                </FormHelperText>
+              </Grid>
             )}
             <Grid item xs={6}>
               <SelectorForm
@@ -192,7 +163,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 name="start_month"
                 value={values.start_month}
                 onChange={handleChange}
-                helperText={errors.startMonth_error ? errors.startMonth_error : null}
+                helperText={errors.startMonth_error || null}
               />
             </Grid>
             <Grid item xs={6}>
@@ -202,7 +173,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 name="start_year"
                 value={values.start_year}
                 onChange={handleChange}
-                helperText={errors.startYear_error ? errors.startYear_error : null}
+                helperText={errors.startYear_error || null}
               />
             </Grid>
             {config.showEndDate && (
@@ -215,7 +186,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                     name="end_month"
                     value={values.end_month}
                     onChange={handleChange}
-                    helperText={errors.endMonth_error ? errors.endMonth_error : null}
+                    helperText={errors.endMonth_error || null}
                   />
                 </Grid>
                 <Grid item xs={6}>
@@ -226,7 +197,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                     name="end_year"
                     value={values.end_year}
                     onChange={handleChange}
-                    helperText={errors.endYear_error ? errors.endYear_error : null}
+                    helperText={errors.endYear_error || null}
                   />
                 </Grid>
               </React.Fragment>
@@ -288,13 +259,13 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     marginTop: spacing(0),
   },
   resize: {
-    fontSize: 17,
+    fontSize: 16,
   },
   labelRoot: {
     fontSize: 17,
   },
   labelFocused: {
-    fontSize: 20,
+    fontSize: 19,
   },
   formHelperText: {
     color: '#eb0000',

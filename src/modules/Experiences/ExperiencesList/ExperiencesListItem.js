@@ -36,10 +36,7 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
 
   let lengthWork = getWorkLength(experience.length_year, experience.length_month);
 
-  // const location = ` - ${experience.location_city ? experience.location_city + ', ' : ''}
-  //     ${experience.location_state}`;
-
-  const location = ` - ${experience.location_city}`;
+  const location = ` - ${experience.location}`;
 
   return (
     <React.Fragment>
@@ -58,7 +55,7 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
           >
             {experience.host}
 
-            {experience.location_city ? (
+            {experience.location ? (
               <span
                 style={{
                   color: '#7d7d7d',

@@ -30,8 +30,7 @@ const ExperiencesList = ({
     description: '',
     host: '',
     title: '',
-    location_city: '',
-    location_state: '',
+    location: '',
     start_month: '',
     start_year: '',
     end_month: '',
@@ -109,7 +108,7 @@ ExperiencesList.propTypes = {
 };
 
 const headers = {
-  work: 'Work Experience',
+  work: 'Experience',
   education: 'Education',
   service: 'Service and Leadership',
   accomplishment: 'Accomplishments',

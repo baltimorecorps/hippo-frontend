@@ -1,8 +1,9 @@
 import React from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-const LocationTextField = ({ value, handleLocationChange, name }) => {
+const LocationTextField = ({ value, handleLocationChange, name, classes, className, label }) => {
   const handleChange = (address) => {
     handleLocationChange(address);
   };
@@ -12,6 +13,15 @@ const LocationTextField = ({ value, handleLocationChange, name }) => {
   const searchOptions = {
     types: ['(cities)'],
   };
+
+  const inputLabelProps = {
+    classes: {
+      root: classes.labelRoot,
+      focused: classes.labelFocused,
+    },
+  };
+
+  const inputProps = { classes: { input: classes.resize } };
 
   return (
     <PlacesAutocomplete
@@ -23,11 +33,15 @@ const LocationTextField = ({ value, handleLocationChange, name }) => {
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <div>
           <TextField
+            required
+            InputProps={inputProps}
+            InputLabelProps={inputLabelProps}
             {...getInputProps({
-              className: 'location-search-input',
+              className: `location-search-input ${className}`,
               id: 'location',
-              label: 'Location',
-              name: 'location_city',
+              label: label,
+              name: name,
+              style: { width: '100%' },
             })}
           />
           <div className="autocomplete-dropdown-container">
@@ -55,4 +69,20 @@ const LocationTextField = ({ value, handleLocationChange, name }) => {
   );
 };
 
-export default LocationTextField;
+const styles = ({ breakpoints, palette, spacing }) => ({
+  formControl: {
+    width: '100%',
+    marginTop: spacing(0),
+  },
+  resize: {
+    fontSize: 16,
+  },
+  labelRoot: {
+    fontSize: 17,
+  },
+  labelFocused: {
+    fontSize: 19,
+  },
+});
+
+export default withStyles(styles)(LocationTextField);

@@ -31,14 +31,11 @@ const experienceValidator = (values, type) => {
   }
 
   if (type !== 'Accomplishment') {
-    if (!values.location_city) {
+    if (!values.location) {
       isError = true;
-      err.locationCity_error = 'Required';
+      err.location_error = 'Required';
     }
-    // if (!values.location_state) {
-    //   isError = true;
-    //   err.locationState_error = 'Required';
-    // }
+
     if (!values.end_month) {
       isError = true;
       err.endMonth_error = 'Required';
