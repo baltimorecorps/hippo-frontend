@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
+import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -83,6 +84,34 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
   // ExperiencesList, and SkillsList
   return (
     <React.Fragment>
+      <Drawer
+        anchor="top"
+        variant="persistent"
+        open={true}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <Grid container justify="center" className={classes.drawerContainer}>
+          <Grid item xs={8}>
+            <Grid item xs={12} className={classes.drawerItem}>
+              <Typography variant="body1" component="p">
+                Select the experiences you want to highlight at the top of your resume.
+              </Typography>
+            </Grid>
+            <Grid container justify="flex-end" className={classes.drawerItem}>
+              <Grid item>
+                <Button className={classes.drawerButton}>CANCEL</Button>
+              </Grid>
+              <Grid item>
+                <Button className={classes.drawerButton} variant="contained" color="primary">
+                  NEXT
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Drawer>
       <Grid id="divToPrint" container justify="center" className={classes.wrapper}>
         <Grid item xs={8}>
           <BasicInfoDisplay
@@ -130,12 +159,24 @@ ProfilePage.propTypes = {
   refreshContacts: PropTypes.func.isRequired,
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({ breakpoints, palette, spacing, shadows }) => ({
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
   },
   wrapper: {
     marginBottom: spacing(5),
+  },
+  drawerPaper: {
+    // This is the elevation for the drawer, we have to specify it this way
+    // because of the defaults for persistent drawers in Material-UI
+    boxShadow: shadows[2],
+    borderBottom: 0,
+  },
+  drawerContainer: {
+    margin: spacing(2, 0, 3, 0),
+  },
+  drawerItem: {
+    padding: spacing(0, 3),
   },
   paper: {
     padding: spacing(2, 3, 3),

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
+import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
@@ -39,12 +40,20 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
   const location = ` - ${experience.location_city ? experience.location_city + ', ' : ''}
       ${experience.location_state}`;
 
+  const selectMode = true;
+
   return (
     <React.Fragment>
       <Grid container justify="space-evenly" className={classes.gridContainer}>
-        <Grid item className={classes.avatar}>
-          <Avatar>{initial}</Avatar>
-        </Grid>
+        {selectMode ? (
+          <Grid item>
+            <Checkbox />
+          </Grid>
+        ) : (
+          <Grid item className={classes.avatar}>
+            <Avatar>{initial}</Avatar>
+          </Grid>
+        )}
 
         <Grid item xs={8} md={9}>
           <Typography
