@@ -53,4 +53,35 @@ describe('ExperiencesList', () => {
     expect(deselectFn.mock.calls[0][0]).toEqual(experience)
   });
 
+  test('integration - test selection', () => {
+    const selectFn = jest.fn();
+    const deselectFn = jest.fn();
+    const { getByRole } = render(
+      <ExperiencesList
+        contactId={contactId}
+        experienceType='Work'
+        experiences={[experience]}
+        addNewExperience={jest.fn()}
+        refreshExperiences={jest.fn()}
+        updateExperience={jest.fn()}
+        deleteExperience={jest.fn()}
+        selectExperience={selectFn}
+        deselectExperience={deselectFn}
+        inSelectMode={true}
+      />
+    );
+
+    const checkbox = getByRole('checkbox')
+    fireEvent.click(checkbox)
+    expect(selectFn.mock.calls.length).toBe(1)
+    expect(selectFn.mock.calls[0][0]).toEqual(experience)
+    expect(deselectFn.mock.calls.length).toBe(0)
+
+    fireEvent.click(checkbox)
+    expect(deselectFn.mock.calls.length).toBe(1)
+    expect(selectFn.mock.calls.length).toBe(1)
+    expect(deselectFn.mock.calls[0][0]).toEqual(experience)
+  });
+
+
 });

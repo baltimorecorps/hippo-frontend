@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
 import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
@@ -37,7 +39,9 @@ const ProfilePage = ({
     return <div />;
   }
 
-  const email = contactInfo.email_primary ? contactInfo.email_primary.email : '';
+  const email = contactInfo.email_primary
+    ? contactInfo.email_primary.email
+    : '';
 
   // This page primarily serves as the top level container for the profile of
   // this person's employment-relevant experiences and skills.
@@ -52,9 +56,17 @@ const ProfilePage = ({
         useStandardProfile={cancelResumeSelect}
       />
       {inSelectMode ? (
-        <SelectionDrawer onNext={cancelResumeSelect} onCancel={cancelResumeSelect} />
+        <SelectionDrawer
+          onNext={cancelResumeSelect}
+          onCancel={cancelResumeSelect}
+        />
       ) : null}
-      <Grid id="divToPrint" container justify="center" className={classes.wrapper}>
+      <Grid
+        id="divToPrint"
+        container
+        justify="center"
+        className={classes.wrapper}
+      >
         <Grid item xs={8}>
           <BasicInfoDisplay
             firstName={contactInfo.first_name}
@@ -66,7 +78,10 @@ const ProfilePage = ({
           <ExperiencesList contactId={contactId} experienceType="Work" />
           <ExperiencesList contactId={contactId} experienceType="Education" />
           <ExperiencesList contactId={contactId} experienceType="Service" />
-          <ExperiencesList contactId={contactId} experienceType="Accomplishment" />
+          <ExperiencesList
+            contactId={contactId}
+            experienceType="Accomplishment"
+          />
 
           <Paper className={classes.paper}>
             <Typography gutterBottom variant="h5" component="h1">
@@ -83,7 +98,11 @@ const ProfilePage = ({
       </Grid>
 
       <Grid container justify="center">
-        <Button variant="contained" color="primary" onClick={startResumeCreation}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={startResumeCreation}
+        >
           Create Resume
         </Button>
       </Grid>
@@ -102,33 +121,70 @@ ProfilePage.propTypes = {
 };
 
 const dialogStyles = ({ breakpoints, palette, spacing, shadows }) => ({
-  paper: {
-    // This is the elevation for the drawer, we have to specify it this way
-    // because of the defaults for persistent drawers in Material-UI
-    boxShadow: shadows[2],
-    borderBottom: 0,
-  },
   container: {
-    margin: spacing(2, 0, 3, 0),
+    padding: spacing(2),
   },
-  item: {
-    padding: spacing(0, 3),
+  row: {
+    margin: spacing(1.5, 0),
+    display: 'inline-flex',
+    justifyContent: 'center',
   },
+  rowBottom: {
+    margin: spacing(1.5, 0, 3, 0),
+    display: 'inline-flex',
+  },
+  button: {
+    width: '100%',
+  },
+  line: {
+    width: '50px',
+    borderColor: palette.secondary.main,
+    borderTop: '1px solid',
+    margin: `11px ${spacing(1)}px`,
+  }
 });
 
 const ResumeDialog = withStyles(dialogStyles)(
   ({ open, highlightExperiences, useStandardProfile, classes }) => {
     return (
       <Dialog open={open}>
-        <Typography>Choose Resume Style</Typography>
-        <Typography>Select relevant experiences to highlight at the top of your resume.</Typography>
-        <Button variant="contained" color="primary" onClick={highlightExperiences}>
-            Highlight Experiences
-        </Button>
-        <Typography> OR </Typography>
-        <Button variant="contained" onClick={useStandardProfile}>
-            Use Standard Profile
-        </Button>
+        <DialogTitle>
+          Choose Resume Style
+        </DialogTitle>
+        <DialogContent>
+        <Grid container justify="center">
+          <Grid item xs={12}>
+            <Typography>
+              Select relevant experiences to highlight at the top of your
+              resume.
+            </Typography>
+          </Grid>
+          <Grid item xs={6} className={classes.row}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={highlightExperiences}
+              className={classes.button}
+            >
+                Highlight Experiences
+          </Button>
+        </Grid>
+          <Grid item xs={8} className={classes.row}>
+            <span className={classes.line} /> 
+            <Typography> OR </Typography>
+            <span className={classes.line} />
+          </Grid>
+          <Grid item xs={6} className={classes.rowBottom}>
+            <Button 
+              variant="contained" 
+              onClick={useStandardProfile}
+              className={classes.button}
+            >
+              Use Standard Profile
+            </Button>
+          </Grid>
+        </Grid>
+      </DialogContent>
       </Dialog>
     );
   },
@@ -149,38 +205,41 @@ const drawerStyles = ({ breakpoints, palette, spacing, shadows }) => ({
   },
 });
 
-const SelectionDrawer = withStyles(drawerStyles)(({ classes, onCancel, onNext }) => {
-  return (
-    <Drawer
-      anchor="top"
-      variant="persistent"
-      open={true}
-      classes={{
-        paper: classes.paper,
-      }}
-    >
-      <Grid container justify="center" className={classes.container}>
-        <Grid item xs={8}>
-          <Grid item xs={12} className={classes.item}>
-            <Typography variant="body1" component="p">
-              Select the experiences you want to highlight at the top of your resume.
-            </Typography>
-          </Grid>
-          <Grid container justify="flex-end" className={classes.item}>
-            <Grid item>
-              <Button onClick={onCancel}>Cancel</Button>
+const SelectionDrawer = withStyles(drawerStyles)(
+  ({ classes, onCancel, onNext }) => {
+    return (
+      <Drawer
+        anchor="top"
+        variant="persistent"
+        open={true}
+        classes={{
+          paper: classes.paper,
+        }}
+      >
+        <Grid container justify="center" className={classes.container}>
+          <Grid item xs={8}>
+            <Grid item xs={12} className={classes.item}>
+              <Typography variant="body1" component="p">
+                Select the experiences you want to highlight at the top of your
+                resume.
+              </Typography>
             </Grid>
-            <Grid item>
-              <Button variant="contained" color="primary" onClick={onNext}>
-                Next 
-              </Button>
+            <Grid container justify="flex-end" className={classes.item}>
+              <Grid item>
+                <Button onClick={onCancel}>Cancel</Button>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" color="primary" onClick={onNext}>
+                  Next
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Drawer>
-  );
-});
+      </Drawer>
+    );
+  },
+);
 
 const styles = ({ breakpoints, palette, spacing, shadows }) => ({
   page: {
