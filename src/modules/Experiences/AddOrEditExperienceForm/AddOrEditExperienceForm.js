@@ -237,7 +237,11 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                       color="primary"
                     />
                   }
-                  label="I am currently working in this role"
+                  label={
+                    values.type === 'Education'
+                      ? 'I am currently enrolled'
+                      : 'I am currently working in this role'
+                  }
                 />
               </Grid>
             )}
