@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
@@ -15,9 +16,18 @@ import SkillsList from 'modules/Tags/SkillsList';
 import ResumesList from 'modules/Resumes/ResumesList';
 
 import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
-const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
+const ProfilePage = ({
+  contactId,
+  contactInfo,
+  refreshContacts,
+  startResumeCreation,
+  startResumeSelect,
+  cancelResumeSelect,
+  classes,
+  showResumeDialog,
+  inSelectMode,
+}) => {
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
   // rerendered due to the Redux state update
@@ -26,54 +36,6 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }
-
-  // printDocument is not in use at the moment, but it was an alternate first
-  // pass attempt at a way to generate a pdf version of a resume
-  //
-  // eslint-disable-next-line no-unused-vars
-  const printDocument = () => {
-    const input = document.getElementById('divToPrint');
-    html2canvas(input).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      pdf.addImage(imgData, 'JPEG', 0, 0);
-      //pdf.fromHTML(ReactDOMServer.renderToStaticMarkup(this.render()));
-      pdf.save('resume.pdf');
-    });
-  };
-
-  // pdfToHTML is another first pass attempt at turning the information on a
-  // profile into a PDF resume
-  const pdfToHTML = () => {
-    const pdf = new jsPDF('p', 'pt', 'letter');
-    const source = document.getElementById('divToPrint');
-    const specialElementHandlers = {
-      '#bypassme': function(element, renderer) {
-        return true;
-      },
-    };
-
-    const margins = {
-      top: 50,
-      left: 60,
-      width: 545,
-    };
-
-    pdf.fromHTML(
-      source, // HTML string or DOM elem ref.
-      margins.left, // x coord
-      margins.top, // y coord
-      {
-        width: margins.width, // max width of content on PDF
-        elementHandlers: specialElementHandlers,
-      },
-      function(dispose) {
-        // dispose: object with X, Y of the last line add to the PDF
-        // this allow the insertion of new lines after html
-        pdf.save('html2pdf.pdf');
-      },
-    );
-  };
 
   const email = contactInfo.email_primary ? contactInfo.email_primary.email : '';
 
@@ -84,34 +46,14 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
   // ExperiencesList, and SkillsList
   return (
     <React.Fragment>
-      <Drawer
-        anchor="top"
-        variant="persistent"
-        open={true}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <Grid container justify="center" className={classes.drawerContainer}>
-          <Grid item xs={8}>
-            <Grid item xs={12} className={classes.drawerItem}>
-              <Typography variant="body1" component="p">
-                Select the experiences you want to highlight at the top of your resume.
-              </Typography>
-            </Grid>
-            <Grid container justify="flex-end" className={classes.drawerItem}>
-              <Grid item>
-                <Button className={classes.drawerButton}>CANCEL</Button>
-              </Grid>
-              <Grid item>
-                <Button className={classes.drawerButton} variant="contained" color="primary">
-                  NEXT
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Drawer>
+      <ResumeDialog
+        open={showResumeDialog}
+        highlightExperiences={startResumeSelect}
+        useStandardProfile={cancelResumeSelect}
+      />
+      {inSelectMode ? (
+        <SelectionDrawer onNext={cancelResumeSelect} onCancel={cancelResumeSelect} />
+      ) : null}
       <Grid id="divToPrint" container justify="center" className={classes.wrapper}>
         <Grid item xs={8}>
           <BasicInfoDisplay
@@ -141,8 +83,8 @@ const ProfilePage = ({ contactId, contactInfo, refreshContacts, classes }) => {
       </Grid>
 
       <Grid container justify="center">
-        <Button variant="contained" color="primary" onClick={pdfToHTML}>
-          <Icon className={classes.leftIcon}>cloud_download</Icon> Download Resume
+        <Button variant="contained" color="primary" onClick={startResumeCreation}>
+          Create Resume
         </Button>
       </Grid>
     </React.Fragment>
@@ -159,24 +101,93 @@ ProfilePage.propTypes = {
   refreshContacts: PropTypes.func.isRequired,
 };
 
+const dialogStyles = ({ breakpoints, palette, spacing, shadows }) => ({
+  paper: {
+    // This is the elevation for the drawer, we have to specify it this way
+    // because of the defaults for persistent drawers in Material-UI
+    boxShadow: shadows[2],
+    borderBottom: 0,
+  },
+  container: {
+    margin: spacing(2, 0, 3, 0),
+  },
+  item: {
+    padding: spacing(0, 3),
+  },
+});
+
+const ResumeDialog = withStyles(dialogStyles)(
+  ({ open, highlightExperiences, useStandardProfile, classes }) => {
+    return (
+      <Dialog open={open}>
+        <Typography>Choose Resume Style</Typography>
+        <Typography>Select relevant experiences to highlight at the top of your resume.</Typography>
+        <Button variant="contained" color="primary" onClick={highlightExperiences}>
+            Highlight Experiences
+        </Button>
+        <Typography> OR </Typography>
+        <Button variant="contained" onClick={useStandardProfile}>
+            Use Standard Profile
+        </Button>
+      </Dialog>
+    );
+  },
+);
+
+const drawerStyles = ({ breakpoints, palette, spacing, shadows }) => ({
+  paper: {
+    // This is the elevation for the drawer, we have to specify it this way
+    // because of the defaults for persistent drawers in Material-UI
+    boxShadow: shadows[2],
+    borderBottom: 0,
+  },
+  container: {
+    margin: spacing(2, 0, 3, 0),
+  },
+  item: {
+    padding: spacing(0, 3),
+  },
+});
+
+const SelectionDrawer = withStyles(drawerStyles)(({ classes, onCancel, onNext }) => {
+  return (
+    <Drawer
+      anchor="top"
+      variant="persistent"
+      open={true}
+      classes={{
+        paper: classes.paper,
+      }}
+    >
+      <Grid container justify="center" className={classes.container}>
+        <Grid item xs={8}>
+          <Grid item xs={12} className={classes.item}>
+            <Typography variant="body1" component="p">
+              Select the experiences you want to highlight at the top of your resume.
+            </Typography>
+          </Grid>
+          <Grid container justify="flex-end" className={classes.item}>
+            <Grid item>
+              <Button onClick={onCancel}>Cancel</Button>
+            </Grid>
+            <Grid item>
+              <Button variant="contained" color="primary" onClick={onNext}>
+                Next 
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Drawer>
+  );
+});
+
 const styles = ({ breakpoints, palette, spacing, shadows }) => ({
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
   },
   wrapper: {
     marginBottom: spacing(5),
-  },
-  drawerPaper: {
-    // This is the elevation for the drawer, we have to specify it this way
-    // because of the defaults for persistent drawers in Material-UI
-    boxShadow: shadows[2],
-    borderBottom: 0,
-  },
-  drawerContainer: {
-    margin: spacing(2, 0, 3, 0),
-  },
-  drawerItem: {
-    padding: spacing(0, 3),
   },
   paper: {
     padding: spacing(2, 3, 3),

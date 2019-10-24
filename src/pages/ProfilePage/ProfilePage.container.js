@@ -1,5 +1,8 @@
 import { connect } from 'react-redux';
 import { refreshContacts } from 'actions/contacts';
+import { startResumeCreation, startResumeSelect, cancelResumeSelect } from
+'actions/resume';
+import { RESUME_CREATION } from 'reducers/resume';
 import ProfilePage from './ProfilePage';
 
 // eslint-disable-next-line no-unused-vars
@@ -11,7 +14,7 @@ const addNewContact = (dispatch) =>
 // (DK 2019-09-12)
 // The state that the top level page uses is mostly the contact state,
 // which looks like this:
-// { 
+// {
 //   contacts: {
 //     <contact1 id>: { <contact1 details> },
 //     <contact2 id>: { <contact2 details> },
@@ -28,6 +31,8 @@ const mapStateToProps = (state, props) => {
   return {
     contactId: Number(contactId),
     contactInfo,
+    showResumeDialog: state.resume.resumeCreationStep === RESUME_CREATION.CHOOSE_STYLE,
+    inSelectMode: state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
   };
 };
 
@@ -35,6 +40,9 @@ const mapStateToProps = (state, props) => {
 // the ALL_CONTACTS event (see reducers/contacts.js for details)
 const mapDispatchToProps = (dispatch) => ({
   refreshContacts: () => refreshContacts(dispatch),
+  startResumeCreation: () => dispatch(startResumeCreation()),
+  startResumeSelect: () => dispatch(startResumeSelect()),
+  cancelResumeSelect: () => dispatch(cancelResumeSelect()),
 });
 
 const ProfileContainer = connect(
