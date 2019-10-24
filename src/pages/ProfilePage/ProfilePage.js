@@ -122,7 +122,7 @@ ProfilePage.propTypes = {
 
 const dialogStyles = ({ breakpoints, palette, spacing, shadows }) => ({
   container: {
-    padding: spacing(2),
+    width: spacing(50),
   },
   row: {
     margin: spacing(1.5, 0),
@@ -130,61 +130,80 @@ const dialogStyles = ({ breakpoints, palette, spacing, shadows }) => ({
     justifyContent: 'center',
   },
   rowBottom: {
-    margin: spacing(1.5, 0, 3, 0),
+    margin: spacing(1.5, 0, 8, 0),
     display: 'inline-flex',
   },
   button: {
     width: '100%',
+  },
+  resume: {
+    height: '200px',
+    width: '160px',
+    marginLeft: spacing(1),
+  },
+  resumeContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: spacing(2),
   },
   line: {
     width: '50px',
     borderColor: palette.secondary.main,
     borderTop: '1px solid',
     margin: `11px ${spacing(1)}px`,
-  }
+  },
 });
 
 const ResumeDialog = withStyles(dialogStyles)(
   ({ open, highlightExperiences, useStandardProfile, classes }) => {
     return (
       <Dialog open={open}>
-        <DialogTitle>
-          Choose Resume Style
-        </DialogTitle>
+        <DialogTitle>Choose Resume Style</DialogTitle>
         <DialogContent>
-        <Grid container justify="center">
-          <Grid item xs={12}>
-            <Typography>
-              Select relevant experiences to highlight at the top of your
-              resume.
-            </Typography>
-          </Grid>
-          <Grid item xs={6} className={classes.row}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={highlightExperiences}
-              className={classes.button}
-            >
+          <Grid container className={classes.container} justify="center">
+            <Grid item xs={12}>
+              <Grid container justify="space-between">
+                <Grid item xs={6}>
+                  <Typography>
+                    Select relevant experiences to highlight at the top of your
+                    resume.
+                  </Typography>
+                </Grid>
+                <Grid item xs={6} className={classes.resumeContainer}>
+                  <img
+                    src="/images/resume.svg"
+                    alt="picture of a resume"
+                    className={classes.resume}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={8} className={classes.row}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={highlightExperiences}
+                className={classes.button}
+              >
                 Highlight Experiences
-          </Button>
-        </Grid>
-          <Grid item xs={8} className={classes.row}>
-            <span className={classes.line} /> 
-            <Typography> OR </Typography>
-            <span className={classes.line} />
+              </Button>
+            </Grid>
+            <Grid item xs={12} className={classes.row}>
+              <span className={classes.line} />
+              <Typography> OR </Typography>
+              <span className={classes.line} />
+            </Grid>
+            <Grid item xs={8} className={classes.rowBottom}>
+              <Button
+                variant="contained"
+                onClick={useStandardProfile}
+                className={classes.button}
+              >
+                Use Standard Profile
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={6} className={classes.rowBottom}>
-            <Button 
-              variant="contained" 
-              onClick={useStandardProfile}
-              className={classes.button}
-            >
-              Use Standard Profile
-            </Button>
-          </Grid>
-        </Grid>
-      </DialogContent>
+        </DialogContent>
       </Dialog>
     );
   },
