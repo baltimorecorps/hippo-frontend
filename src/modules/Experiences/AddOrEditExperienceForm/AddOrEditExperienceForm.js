@@ -81,8 +81,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
   const handleFormSubmit = () => {
     // validate form values
     const { isError, err } = experienceValidator(values, experience.type);
-    console.log(err);
-    console.log(values);
 
     if (isError) {
       setErrors(err);
