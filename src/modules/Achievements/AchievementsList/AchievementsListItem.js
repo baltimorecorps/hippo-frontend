@@ -10,7 +10,7 @@ const AchievementsListItem = ({ text }) => {
         padding: '0px 0px 0px 15px',
         wordWrap: 'break-word',
         marginBottom: '0px',
-        fontSize: '15px',
+        fontSize: '14px',
         color: '#2e2e2e',
       }}
       paragraph={true}

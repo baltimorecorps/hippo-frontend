@@ -11,8 +11,7 @@ describe('Experience Form Validations', () => {
     const expectedErr = {
       host_error: 'Required',
       title_error: 'Required',
-      locationCity_error: 'Required',
-      locationState_error: 'Required',
+      location_error: 'Required',
       startMonth_error: 'Required',
       startYear_error: 'Required',
       endMonth_error: 'Required',
@@ -28,8 +27,7 @@ describe('Experience Form Validations', () => {
     const values = {
       host: 'Baltimore Corps',
       title: 'Intern',
-      location_city: 'Baltimore',
-      location_state: 'Maryland',
+      location: 'Baltimore, MD ,USA',
       start_month: 'June',
       start_year: '2018',
       end_month: 'February',
@@ -49,8 +47,7 @@ describe('Experience Form Validations', () => {
     const values = {
       host: 'Baltimore Corps',
       title: 'Intern',
-      location_city: 'Baltimore',
-      location_state: 'Maryland',
+      location: 'Baltimore, MD ,USA',
       start_month: 'June',
       start_year: '2018',
       end_month: 'March',
@@ -75,8 +72,7 @@ describe('Experience Form Validations', () => {
       start_year: '',
       end_month: '',
       end_year: '',
-      location_city: '',
-      location_state: '',
+      location: '',
     };
 
     const expectedErr = {
@@ -87,8 +83,7 @@ describe('Experience Form Validations', () => {
       startYear_error: 'Required',
       endMonth_error: 'Required',
       endYear_error: 'Required',
-      locationCity_error: 'Required',
-      locationState_error: 'Required',
+      location_error: 'Required',
     };
     const { isError, err } = experienceValidator(values);
 
@@ -101,8 +96,7 @@ describe('Experience Form Validations', () => {
       host: 'CCBC',
       title: 'Computer Science',
       degree: 'Associates',
-      location_city: 'Baltimore',
-      location_state: 'Maryland',
+      location: 'Baltimore, MD ,USA',
       start_month: 'January',
       start_year: '2013',
       end_month: 'January',
@@ -121,8 +115,7 @@ describe('Experience Form Validations', () => {
       host: 'CCBC',
       title: 'Computer Science',
       degree: 'Associates',
-      location_city: 'Baltimore',
-      location_state: 'Maryland',
+      location: 'Baltimore, MD ,USA',
       start_month: 'January',
       start_year: '2016',
       end_month: 'January',

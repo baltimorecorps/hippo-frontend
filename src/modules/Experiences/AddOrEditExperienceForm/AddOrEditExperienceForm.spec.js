@@ -3,6 +3,43 @@ import { render, fireEvent, prettyDOM, waitForElement } from '@testing-library/r
 import '@testing-library/jest-dom/extend-expect';
 import AddOrEditExperienceForm from './AddOrEditExperienceForm';
 
+const setupGoogleMock = () => {
+  /*** Mock Google Maps JavaScript API ***/
+  const google = {
+    maps: {
+      places: {
+        AutocompleteService: class {},
+        Autocomplete: class {},
+        PlacesServiceStatus: {
+          INVALID_REQUEST: 'INVALID_REQUEST',
+          NOT_FOUND: 'NOT_FOUND',
+          OK: 'OK',
+          OVER_QUERY_LIMIT: 'OVER_QUERY_LIMIT',
+          REQUEST_DENIED: 'REQUEST_DENIED',
+          UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+          ZERO_RESULTS: 'ZERO_RESULTS',
+        },
+      },
+      Geocoder: () => {},
+      GeocoderStatus: {
+        ERROR: 'ERROR',
+        INVALID_REQUEST: 'INVALID_REQUEST',
+        OK: 'OK',
+        OVER_QUERY_LIMIT: 'OVER_QUERY_LIMIT',
+        REQUEST_DENIED: 'REQUEST_DENIED',
+        UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+        ZERO_RESULTS: 'ZERO_RESULTS',
+      },
+    },
+  };
+  global.window.google = google;
+};
+
+// setup Google Mock
+beforeAll(() => {
+  setupGoogleMock();
+});
+
 function isScrollable(e) {
   if (e.scrollTopMax !== undefined) return e.scrollTopMax > 0;
 
@@ -18,14 +55,12 @@ const experience = {
   description: 'Test description',
   host: 'Test host',
   title: 'Test Title',
-  location_city: 'Baltimore',
-  location_state: 'Maryland',
+  location: 'Baltimore, MD, USA',
   start_month: 'January',
   start_year: '2015',
   end_month: 'August',
   end_year: '2017',
   is_current: false,
-
   type: 'Work',
   contact_id: 1234,
   achievements: [{ description: 'Test achievement 1' }, { description: 'Test achievement 2' }],
@@ -139,7 +174,7 @@ describe('AddOrEditExperienceForm', () => {
     expect(submit.mock.calls[0][0].end_year).toBe(2019);
   });
 
-  test('Tes Accomplishment Form', () => {
+  test('Test Accomplishment Form', () => {
     const experience = {
       host: 'Award 1',
       title: 'Test Title',
@@ -148,6 +183,7 @@ describe('AddOrEditExperienceForm', () => {
       type: 'Accomplishment',
       description: 'Test description',
       contact_id: 1234,
+      is_current: true,
     };
 
     const result = {
@@ -160,6 +196,7 @@ describe('AddOrEditExperienceForm', () => {
       start_year: '2015',
       title: 'Test Title',
       type: 'Accomplishment',
+      is_current: true,
     };
 
     const cancel = jest.fn();

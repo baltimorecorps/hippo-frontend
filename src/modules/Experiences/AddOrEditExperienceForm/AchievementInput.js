@@ -43,13 +43,13 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     marginBottom: spacing(0.5),
   },
   resize: {
-    fontSize: 17,
+    fontSize: 16,
   },
   labelRoot: {
     fontSize: 17,
   },
   labelFocused: {
-    fontSize: 20,
+    fontSize: 19,
   },
 });
 

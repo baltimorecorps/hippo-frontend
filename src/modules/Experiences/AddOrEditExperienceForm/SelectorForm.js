@@ -66,13 +66,13 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     fontSize: 17,
   },
   resize: {
-    fontSize: 17,
+    fontSize: 16,
   },
   labelRoot: {
     fontSize: 17,
   },
   labelFocused: {
-    fontSize: 20,
+    fontSize: 19,
   },
   formHelperText: {
     color: '#eb0000',
