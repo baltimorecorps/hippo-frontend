@@ -136,7 +136,7 @@ describe('AddOrEditExperienceForm', () => {
 
     expect(submit.mock.calls.length).toBe(1);
     expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
-    expect(submit.mock.calls[0][0].end_year).toBe(2019);
+    expect(submit.mock.calls[0][0].end_year).toBe('2019');
   });
 
   test('Tes Accomplishment Form', () => {
@@ -148,18 +148,18 @@ describe('AddOrEditExperienceForm', () => {
       type: 'Accomplishment',
       description: 'Test description',
       contact_id: 1234,
+      is_current: true,
     };
 
     const result = {
       contact_id: 1234,
       description: 'Test description',
-      end_month: 'none',
-      end_year: 0,
       host: 'New Award',
       start_month: 'January',
       start_year: '2015',
       title: 'Test Title',
       type: 'Accomplishment',
+      is_current: true,
     };
 
     const cancel = jest.fn();

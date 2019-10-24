@@ -44,6 +44,7 @@ const configureForm = (expType) => {
       showEndDate: true,
       showAchievements: true,
       showLocation: true,
+      showWorkLength: true,
     };
   } else if (expType === 'Service') {
     return {
@@ -54,6 +55,7 @@ const configureForm = (expType) => {
       showEndDate: true,
       showAchievements: true,
       showLocation: true,
+      showWorkLength: true,
     };
   } else if (expType === 'Accomplishment') {
     return {

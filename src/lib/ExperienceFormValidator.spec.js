@@ -5,8 +5,21 @@ import { experienceValidator } from './formValidator';
 
 afterEach(cleanup);
 describe('Experience Form Validations', () => {
-  test('Work Experience: empty values', () => {
-    const values = {};
+  test('Work Experience: Blank Experience', () => {
+    const values = {
+      description: '',
+      host: '',
+      title: '',
+      location_city: '',
+      location_state: '',
+      start_month: '',
+      start_year: '',
+      end_month: '',
+      end_year: '',
+      is_current: false,
+      type: 'Work',
+      achievements: [],
+    };
 
     const expectedErr = {
       host_error: 'Required',
@@ -77,6 +90,7 @@ describe('Experience Form Validations', () => {
       end_year: '',
       location_city: '',
       location_state: '',
+      is_current: false,
     };
 
     const expectedErr = {
@@ -107,6 +121,7 @@ describe('Experience Form Validations', () => {
       start_year: '2013',
       end_month: 'January',
       end_year: '2018',
+      is_current: false,
     };
 
     const expectedErr = {};
@@ -125,8 +140,9 @@ describe('Experience Form Validations', () => {
       location_state: 'Maryland',
       start_month: 'January',
       start_year: '2016',
-      end_month: 'January',
-      end_year: '2018',
+      end_month: 'none',
+      end_year: '0',
+      is_current: true,
     };
 
     const expectedErr = {};

@@ -11,7 +11,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 
 import { monthFullNames, years, USAStates } from './staticData';
 
-const SelectorForm = ({ label, value, onChange, classes, type, name, helperText }) => {
+const SelectorForm = ({ label, value, onChange, classes, type, name, helperText, disabled }) => {
   const id = `selector-${name}`;
 
   const getOptions = (arr) => {
@@ -38,6 +38,7 @@ const SelectorForm = ({ label, value, onChange, classes, type, name, helperText 
           {label}
         </InputLabel>
         <Select
+          disabled={disabled}
           required
           id={id}
           value={value}

@@ -3,6 +3,12 @@ import { monthFullNames } from '../modules/Experiences/AddOrEditExperienceForm/s
 const experienceValidator = (values, type) => {
   let isError = false;
   let err = {};
+  if (values.start_year) {
+    values.start_year = values.start_year.toString();
+  }
+  if (values.end_year) {
+    values.end_year = values.end_year.toString();
+  }
 
   if (!values.host) {
     isError = true;
@@ -22,8 +28,10 @@ const experienceValidator = (values, type) => {
   }
 
   if (!values.start_month) {
-    isError = true;
-    err.startMonth_error = 'Required';
+    if (!monthFullNames.includes(values.end_month)) {
+      isError = true;
+      err.startMonth_error = 'Required';
+    }
   }
   if (!values.start_year) {
     isError = true;
@@ -39,28 +47,33 @@ const experienceValidator = (values, type) => {
       isError = true;
       err.locationState_error = 'Required';
     }
-    if (!values.end_month) {
+  }
+
+  if (type !== 'Accomplishment' && values.is_current === false) {
+    if (!values.end_month || !monthFullNames.includes(values.end_month)) {
       isError = true;
       err.endMonth_error = 'Required';
     }
-    if (!values.end_year) {
+    if (!values.end_year || values.end_year === '0') {
       isError = true;
       err.endYear_error = 'Required';
     }
   }
 
-  if (values.start_month && values.start_year && values.end_month && values.end_year) {
-    if (values.end_year === values.start_year) {
-      if (monthFullNames.indexOf(values.end_month) < monthFullNames.indexOf(values.start_month)) {
-        isError = true;
-        err.endMonth_error = 'End month must be later than start month';
+  if (values.end_month !== 'none' && values.end_year !== '0') {
+    if (values.start_month && values.start_year && values.end_month && values.end_year) {
+      if (values.end_year === values.start_year) {
+        if (monthFullNames.indexOf(values.end_month) < monthFullNames.indexOf(values.start_month)) {
+          isError = true;
+          err.endMonth_error = 'End month must be later than start month';
+        }
       }
     }
-  }
-  if (values.start_year && values.end_year) {
-    if (values.end_year < values.start_year) {
-      isError = true;
-      err.endYear_error = 'End year must be greater than start year';
+    if (values.start_year && values.end_year) {
+      if (values.end_year < values.start_year) {
+        isError = true;
+        err.endYear_error = 'End year must be greater than start year';
+      }
     }
   }
 
