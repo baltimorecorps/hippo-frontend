@@ -19,6 +19,7 @@ const ExperiencesList = ({
   updateExperience,
   deleteExperience,
   classes,
+  inSelectMode,
 }) => {
   const [showForm, setShowForm] = useState(false);
 
@@ -82,6 +83,7 @@ const ExperiencesList = ({
               onUpdate={updateExperience}
               onDelete={deleteExperience}
               experience={experience}
+              selectable={inSelectMode}
             />
           ))}
         </Paper>

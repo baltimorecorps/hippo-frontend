@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'redux-starter-kit';
+import { RESUME_CREATION } from '../../../reducers/resume'
 import ExperiencesList from './ExperiencesList';
 
 import {
@@ -32,6 +33,7 @@ export const makeMapStateToProps = () => {
   const getRelevantExperiences = makeGetRelevantExperiences();
   const mapStateToProps = (state, ownProps) => ({
     experiences: getRelevantExperiences(state, ownProps),
+    inSelectMode: state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
   });
   return mapStateToProps;
 };

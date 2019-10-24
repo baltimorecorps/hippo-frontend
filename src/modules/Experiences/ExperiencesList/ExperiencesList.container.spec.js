@@ -1,7 +1,16 @@
 import { makeMapStateToProps } from './ExperiencesList.container';
+import { RESUME_CREATION } from '../../../reducers/resume'
+
+const blankState = {
+  contacts: [],
+  experiences: {},
+  tags: {},
+  tagItems: {},
+  resume: {}
+}
 
 test('test state mapping', () => {
-  const state = {
+  const state = Object.assign({}, blankState, {
     contacts: [1, 2, 3, 4],
     experiences: {
       10: { id: 10, data: 'exp 1', contact_id: 1, type: 'Work' },
@@ -30,7 +39,7 @@ test('test state mapping', () => {
         14: { contact_id: 1111, tag_id: 14, data: 'tag 5', type: 'Function' },
       },
     },
-  };
+  });
   const ownProps = {
     contactId: 2,
     experienceType: 'Work',
@@ -45,3 +54,33 @@ test('test state mapping', () => {
     expect(experience.type).toBe('Work');
   });
 });
+
+test('test inSelectMode true', () => {
+  const ownProps = {
+    contactId: 2,
+    experienceType: 'Work',
+  };
+
+  const state = Object.assign({}, blankState,
+    { resume: { resumeCreationStep: RESUME_CREATION.SELECT_HIGHLIGHTS }});
+
+  const mapStateToProps = makeMapStateToProps();
+  const props = mapStateToProps(state, ownProps);
+  expect(props).toHaveProperty('inSelectMode');
+  expect(props.inSelectMode).toBe(true);
+})
+
+test('test inSelectMode true', () => {
+  const ownProps = {
+    contactId: 2,
+    experienceType: 'Work',
+  };
+
+  const state = Object.assign({}, blankState,
+    { resume: { resumeCreationStep: RESUME_CREATION.NOT_ACTIVE }})
+
+  const mapStateToProps = makeMapStateToProps();
+  const props = mapStateToProps(state, ownProps);
+  expect(props).toHaveProperty('inSelectMode');
+  expect(props.inSelectMode).toBe(false);
+})
