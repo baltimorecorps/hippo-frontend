@@ -84,12 +84,4 @@ const configureForm = (expType) => {
   }
 };
 
-const isEndDateNull = (values) => {
-  if (values.type === 'Accomplishment' || values.is_current === true) {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-export { formatMonthYearDate, getWorkLength, configureForm, isEndDateNull };
+export { formatMonthYearDate, getWorkLength, configureForm };

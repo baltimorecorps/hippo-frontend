@@ -17,7 +17,7 @@ import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { experienceValidator } from '../../../lib/formValidator';
-import { configureForm, isEndDateNull } from '../ExperiencesList/helpers';
+import { configureForm } from '../ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -36,12 +36,15 @@ const useForm = (initialValues, onSubmit) => {
     handleDegree: (event) => {
       update('degree')(event.target.value);
     },
-    handleEndDateNone: (e) => {
+    handleIsCurrent: (e) => {
       e.persist();
       values.is_current = e.target.checked;
-      if (isEndDateNull) {
+      if (values.is_current === true) {
         update('end_month')('none');
         update('end_year')('0');
+      } else {
+        update('end_month')('');
+        update('end_year')('');
       }
     },
     handleAchievements: update('achievements'),
@@ -53,7 +56,7 @@ const useForm = (initialValues, onSubmit) => {
 const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
   const [
     values,
-    { handleChange, handleSubmit, handleDegree, handleAchievements, handleEndDateNone },
+    { handleChange, handleSubmit, handleDegree, handleAchievements, handleIsCurrent },
   ] = useForm(experience, onSubmit);
 
   const config = configureForm(experience.type);
@@ -143,35 +146,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 {errors.title_error ? errors.title_error : null}
               </FormHelperText>
             </Grid>
-            {config.showLocation && (
-              <React.Fragment>
-                <Grid item xs={6}>
-                  <TextField
-                    id="city"
-                    className={classes.formControl}
-                    label="City"
-                    value={values.location_city}
-                    name="location_city"
-                    onChange={handleChange}
-                    InputLabelProps={inputLabelProps}
-                    InputProps={inputProps}
-                  />
-                  <FormHelperText className={classes.formHelperText}>
-                    {errors.locationCity_error ? errors.locationCity_error : null}
-                  </FormHelperText>
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectorForm
-                    type="states"
-                    label="State"
-                    name="location_state"
-                    value={values.location_state}
-                    onChange={handleChange}
-                    helperText={errors.locationState_error ? errors.locationState_error : null}
-                  />
-                </Grid>
-              </React.Fragment>
-            )}
 
             <Grid item xs={6}>
               <SelectorForm
@@ -229,10 +203,11 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                   control={
                     <Checkbox
                       checked={values.is_current}
-                      onChange={handleEndDateNone}
+                      onChange={handleIsCurrent}
                       value={values.is_current}
                       name="is_current"
                       color="primary"
+                      data-testid="is_current"
                     />
                   }
                   label={

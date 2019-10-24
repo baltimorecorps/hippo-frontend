@@ -27,26 +27,13 @@ const experienceValidator = (values, type) => {
     err.title_error = 'Required';
   }
 
-  if (!values.start_month) {
-    if (!monthFullNames.includes(values.end_month)) {
-      isError = true;
-      err.startMonth_error = 'Required';
-    }
+  if (!values.start_month || !monthFullNames.includes(values.start_month)) {
+    isError = true;
+    err.startMonth_error = 'Required';
   }
   if (!values.start_year) {
     isError = true;
     err.startYear_error = 'Required';
-  }
-
-  if (type !== 'Accomplishment') {
-    if (!values.location_city) {
-      isError = true;
-      err.locationCity_error = 'Required';
-    }
-    if (!values.location_state) {
-      isError = true;
-      err.locationState_error = 'Required';
-    }
   }
 
   if (type !== 'Accomplishment' && values.is_current === false) {
@@ -61,19 +48,20 @@ const experienceValidator = (values, type) => {
   }
 
   if (values.end_month !== 'none' && values.end_year !== '0') {
-    if (values.start_month && values.start_year && values.end_month && values.end_year) {
-      if (values.end_year === values.start_year) {
-        if (monthFullNames.indexOf(values.end_month) < monthFullNames.indexOf(values.start_month)) {
-          isError = true;
-          err.endMonth_error = 'End month must be later than start month';
-        }
-      }
+    if (
+      values.start_month &&
+      values.start_year &&
+      values.end_month &&
+      values.end_year &&
+      values.end_year === values.start_year &&
+      monthFullNames.indexOf(values.end_month) < monthFullNames.indexOf(values.start_month)
+    ) {
+      isError = true;
+      err.endMonth_error = 'End month must be later than start month';
     }
-    if (values.start_year && values.end_year) {
-      if (values.end_year < values.start_year) {
-        isError = true;
-        err.endYear_error = 'End year must be greater than start year';
-      }
+    if (values.start_year && values.end_year && values.end_year < values.start_year) {
+      isError = true;
+      err.endYear_error = 'End year must be greater than start year';
     }
   }
 
