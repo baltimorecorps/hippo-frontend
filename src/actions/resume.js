@@ -2,6 +2,34 @@ import { format } from 'date-fns';
 import { API_URL } from '../constants';
 import { makeFetchActions, fetchActionTypes } from 'redux-fetch-wrapper';
 
+export const START_RESUME_CREATION = 'START_RESUME_CREATION';
+export const startResumeCreation = () => ({
+  type: START_RESUME_CREATION,
+});
+
+export const START_RESUME_SELECT = 'START_RESUME_SELECT';
+export const startResumeSelect = () => ({
+  type: START_RESUME_SELECT,
+});
+
+export const CANCEL_RESUME_SELECT = 'CANCEL_RESUME_SELECT';
+export const cancelResumeSelect = () => ({
+  type: CANCEL_RESUME_SELECT,
+});
+
+export const GENERATE_RESUME = 'GENERATE_RESUME';
+export const generateResume = (resume) => ({
+  type: GENERATE_RESUME,
+  resume,
+});
+
+export const SELECT_RESUME_EXPERIENCE = 'SELECT_RESUME_EXPERIENCE';
+export const selectResumeExperience = (experience) => ({
+  type: SELECT_RESUME_EXPERIENCE,
+  experience,
+});
+
+
 export const CREATE_RESUME = 'CREATE_RESUME';
 export const CREATE_RESUME_API = fetchActionTypes(CREATE_RESUME);
 export const createResume = (contactId, name) =>

@@ -22,118 +22,63 @@ import {
   UPDATE_RESUME_ITEMS_API,
   DELETE_SECTION,
   DELETE_SECTION_API,
+  START_RESUME_CREATION,
+  CANCEL_RESUME_SELECT,
+  START_RESUME_SELECT,
+  SELECT_RESUME_EXPERIENCE,
+  GENERATE_RESUME,
 } from '../actions/resume';
 /* eslint-enable no-unused-vars */
 
-export const resumeReducer = createReducer(
-  {},
-  {
-    [CREATE_RESUME_API.RESOLVE]: (state, action) => {
-      if (!action.body) {
-        return {};
-      }
-      const {data} = action.body;
-      return {
-        [data.id]: {
-          ...data,
-          contact_id: data.contact.id,
-          sections: {},
-        },
-      };
-    },
-    [CREATE_RESUME_API.REJECT]: (state, action) => {
-      return state;
-    },
-    [REFRESH_RESUME_API.RESOLVE]: (state, action) => {
-      if (!action.body) {
-        return {};
-      }
-      const {data} = action.body;
-      return {
-        ...state,
-        [data.id]: {
-          id: data.id,
-          name: data.name,
-          contact_id: data.contact.id,
-          sections: data.sections.reduce((object, section) => ({
-            ...object,
-            [section.id]: section,
-          }), {}),
-        },
-      };
-    },
-    [REFRESH_RESUME_API.REJECT]: (state, action) => {
-      return state;
-    },
-    [REFRESH_RESUMES_API.RESOLVE]: (state, action) => {
-      if (!action.body) {
-        return {};
-      }
-      // TODO
-      const {data} = action.body;
-      return {
-        ...state,
-        ...data.reduce((object, resume) => ({
-          ...object,
-          [resume.id]: resume,
-        }), {}),
-      };
-    },
-    [UPDATE_RESUME_API.RESOLVE]: (state, action) => {
-      // console.log('UPDATE_RESUME_API', {state, action});
-    },
-    [DELETE_RESUME_API.RESOLVE]: (state, action) => {
-      // console.log('DELETE_RESUME_API', {state, action});
-    },
-    [CREATE_SECTION_API.RESOLVE]: (state, action) => {
-      if (!action.body) {
-        return {};
-      }
-      const {data} = action.body;
-      const resume = state[data.resume_id];
-      const updatedResume = {
-        ...resume,
-        sections: {
-          ...resume.sections,
-          [data.id]: data,
-        },
-      };
-      return {
-        ...state,
-        [data.resume_id]: updatedResume,
-      };
-    },
-    [REFRESH_SECTION_API.RESOLVE]: (state, action) => {
-      // console.log('REFRESH_SECTION_API', {state, action});
-    },
-    [UPDATE_SECTION_API.RESOLVE]: (state, action) => {
-      if (!action.body) {
-        return {};
-      }
-      const {data} = action.body;
-      const resume = state[data.resume_id];
-      const updatedResume = {
-        ...resume,
-        sections: {
-          ...resume.sections,
-          [data.id]: {
-            ...resume.sections[data.id],
-            ...data,
-          },
-        },
-      };
-      return {
-        ...state,
-        [data.resume_id]: updatedResume,
+export const RESUME_CREATION = {
+  NOT_ACTIVE: 'NOT_ACTIVE',
+  CHOOSE_STYLE: 'CHOOSE_STYLE',
+  SELECT_HIGHLIGHTS: 'SELECT_HIGHLIGHTS',
+};
 
-      };
+export const resumeReducer = createReducer(
+  {
+    resumeCreationStep: RESUME_CREATION.NOT_ACTIVE,
+    selected: {
+      experience: [],
+      education: [],
+      accomplishments: [],
     },
-    [UPDATE_RESUME_ITEMS_API.RESOLVE]: (state, action) => {
-      // console.log('UPDATE_RESUME_ITEMS_API', {state, action});
+  },
+  {
+    [START_RESUME_CREATION]: (state, action) => {
+      state.resumeCreationStep = RESUME_CREATION.CHOOSE_STYLE;
     },
-    [DELETE_SECTION_API.RESOLVE]: (state, action) => {
-      // console.log('DELETE_SECTION_API', {state, action});
+    [START_RESUME_SELECT]: (state, action) => {
+      state.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
     },
+    [CANCEL_RESUME_SELECT]: (state, action) => {
+      Object.keys(state.selected).forEach((key) => {
+        state.selected[key] = []
+      })
+      state.resumeCreationStep = RESUME_CREATION.NOT_ACTIVE;
+    },
+    [SELECT_RESUME_EXPERIENCE]: (state, action) => {
+      // Only allow item selection when we're in the right state for it
+      // Hopefully this should keep our state clean across oddly timed
+      // transitions, etc.
+      if (state.resumeCreationStep !== RESUME_CREATION.SELECT_HIGHLIGHTS) {
+        return;
+      }
+
+      const expType = action.experience.type;
+      if (expType === 'Education') {
+        state.selected.education.push(action.experience.id);
+      }
+      else if (expType === 'Accomplishment') {
+        state.selected.accomplishments.push(action.experience.id);
+      }
+      else {
+        state.selected.experience.push(action.experience.id);
+      }
+    },
+
+
   }
 );
 
