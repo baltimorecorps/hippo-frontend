@@ -29,6 +29,12 @@ export const selectResumeExperience = (experience) => ({
   experience,
 });
 
+export const DESELECT_RESUME_EXPERIENCE = 'DESELECT_RESUME_EXPERIENCE';
+export const deselectResumeExperience = (experience) => ({
+  type: DESELECT_RESUME_EXPERIENCE,
+  experience,
+});
+
 
 export const CREATE_RESUME = 'CREATE_RESUME';
 export const CREATE_RESUME_API = fetchActionTypes(CREATE_RESUME);

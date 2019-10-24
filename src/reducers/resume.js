@@ -26,6 +26,7 @@ import {
   CANCEL_RESUME_SELECT,
   START_RESUME_SELECT,
   SELECT_RESUME_EXPERIENCE,
+  DESELECT_RESUME_EXPERIENCE,
   GENERATE_RESUME,
 } from '../actions/resume';
 /* eslint-enable no-unused-vars */
@@ -34,6 +35,17 @@ export const RESUME_CREATION = {
   NOT_ACTIVE: 'NOT_ACTIVE',
   CHOOSE_STYLE: 'CHOOSE_STYLE',
   SELECT_HIGHLIGHTS: 'SELECT_HIGHLIGHTS',
+};
+
+const getExperienceKey = (experience) => {
+  const expType = experience.type;
+  if (expType === 'Education') {
+    return 'education';
+  } else if (expType === 'Accomplishment') {
+    return 'accomplishments';
+  } else {
+    return 'experience';
+  }
 };
 
 export const resumeReducer = createReducer(
@@ -54,8 +66,8 @@ export const resumeReducer = createReducer(
     },
     [CANCEL_RESUME_SELECT]: (state, action) => {
       Object.keys(state.selected).forEach((key) => {
-        state.selected[key] = []
-      })
+        state.selected[key] = [];
+      });
       state.resumeCreationStep = RESUME_CREATION.NOT_ACTIVE;
     },
     [SELECT_RESUME_EXPERIENCE]: (state, action) => {
@@ -66,20 +78,19 @@ export const resumeReducer = createReducer(
         return;
       }
 
-      const expType = action.experience.type;
-      if (expType === 'Education') {
-        state.selected.education.push(action.experience.id);
-      }
-      else if (expType === 'Accomplishment') {
-        state.selected.accomplishments.push(action.experience.id);
-      }
-      else {
-        state.selected.experience.push(action.experience.id);
-      }
+      const key = getExperienceKey(action.experience);
+      state.selected[key].push(
+        action.experience.id,
+      );
     },
 
-
-  }
+    [DESELECT_RESUME_EXPERIENCE]: (state, action) => {
+      const key = getExperienceKey(action.experience);
+      state.selected[key] = state.selected[key].filter(
+        (id) => id !== action.experience.id,
+      );
+    },
+  },
 );
 
 export default resumeReducer;

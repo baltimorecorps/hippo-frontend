@@ -14,7 +14,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import { formatMonthYearDate, getWorkLength, configureForm } from './helpers';
 
-const ExperiencesListItem = ({ experience, onUpdate, onDelete, selectable, classes }) => {
+const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selectable, classes }) => {
   const initial = experience.host ? experience.host[0] : '';
   const title =
     experience.type === 'Education'
@@ -48,7 +48,7 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, selectable, class
       <Grid container justify="space-evenly" className={classes.gridContainer}>
         {selectable ? (
           <Grid item>
-            <Checkbox />
+            <Checkbox onChange={onSelect}/>
           </Grid>
         ) : (
           <Grid item className={classes.avatar}>

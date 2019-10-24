@@ -57,4 +57,32 @@ describe('ExperiencesListItem', () => {
     expect(queryByLabelText(/edit experience/i)).not.toBeNull()
     expect(queryByLabelText(/delete experience/i)).not.toBeNull()
   });
+
+  test('selectable checkbox works', () => {
+    // Hold onto the synthetic events so we can inspect them
+    const selectFn = jest.fn((e) => e.persist());
+
+    const { getByRole } = render(
+      <ExperiencesListItem
+        key={experience.id}
+        onUpdate={jest.fn()}
+        onDelete={jest.fn()}
+        onSelect={selectFn}
+        experience={experience}
+        selectable={true}
+      />,
+    );
+
+    fireEvent.click(getByRole('checkbox'))
+    expect(selectFn.mock.calls.length).toBe(1);
+    expect(selectFn.mock.calls[0][0]).toHaveProperty('target');
+    expect(selectFn.mock.calls[0][0].target).toHaveProperty('checked');
+    expect(selectFn.mock.calls[0][0].target.checked).toBe(true);
+    fireEvent.click(getByRole('checkbox'))
+    expect(selectFn.mock.calls.length).toBe(2);
+    expect(selectFn.mock.calls[1][0]).toHaveProperty('target');
+    expect(selectFn.mock.calls[1][0].target).toHaveProperty('checked');
+    expect(selectFn.mock.calls[1][0].target.checked).toBe(false);
+  });
+
 });

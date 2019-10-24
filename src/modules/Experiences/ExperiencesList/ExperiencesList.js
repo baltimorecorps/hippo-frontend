@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+
+import AddIcon from '@material-ui/icons/Add'
 
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import ExperiencesListItem from './ExperiencesListItem';
@@ -18,8 +20,10 @@ const ExperiencesList = ({
   refreshExperiences,
   updateExperience,
   deleteExperience,
-  classes,
+  selectExperience,
+  deselectExperience,
   inSelectMode,
+  classes,
 }) => {
   const [showForm, setShowForm] = useState(false);
 
@@ -54,6 +58,14 @@ const ExperiencesList = ({
 
   const header = headers[experienceType.toLowerCase()];
 
+  const makeSelectExperience = (experience) => (event) => {
+    if (event.target.checked) {
+      selectExperience(experience)
+    } else {
+      deselectExperience(experience)
+    }
+  }
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -71,7 +83,13 @@ const ExperiencesList = ({
               </Typography>
             </Grid>
             <Grid item>
-              <Icon onClick={() => setShowForm(true)}>add</Icon>
+                {inSelectMode ? null :
+                    <IconButton 
+                      className={classes.addButton}
+                      aria-label="add new experience"
+                      onClick={() => setShowForm(true)}>
+                    <AddIcon />
+                    </IconButton>}
             </Grid>
           </Grid>
 
@@ -82,6 +100,7 @@ const ExperiencesList = ({
               key={experience.id}
               onUpdate={updateExperience}
               onDelete={deleteExperience}
+              onSelect={makeSelectExperience(experience)}
               experience={experience}
               selectable={inSelectMode}
             />
@@ -125,6 +144,9 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   divider: {
     margin: spacing(1, 0),
   },
+  addButton: {
+    padding: spacing(0.5),
+  }
 });
 
 export default withStyles(styles)(ExperiencesList);

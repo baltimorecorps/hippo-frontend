@@ -1,6 +1,10 @@
 import { connect } from 'react-redux';
 import { createSelector } from 'redux-starter-kit';
-import { RESUME_CREATION } from '../../../reducers/resume'
+import { RESUME_CREATION } from '../../../reducers/resume';
+import {
+  selectResumeExperience,
+  deselectResumeExperience,
+} from '../../../actions/resume';
 import ExperiencesList from './ExperiencesList';
 
 import {
@@ -33,7 +37,8 @@ export const makeMapStateToProps = () => {
   const getRelevantExperiences = makeGetRelevantExperiences();
   const mapStateToProps = (state, ownProps) => ({
     experiences: getRelevantExperiences(state, ownProps),
-    inSelectMode: state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
+    inSelectMode:
+      state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
   });
   return mapStateToProps;
 };
@@ -45,6 +50,10 @@ const mapDispatchToProps = (dispatch, props) => {
     deleteExperience: (experience) => deleteExperience(experience)(dispatch),
     refreshExperiences: () =>
       refreshExperienceType(props.contactId, props.experienceType)(dispatch),
+    selectExperience: (experience) =>
+      dispatch(selectResumeExperience(experience)),
+    deselectExperience: (experience) =>
+      dispatch(deselectResumeExperience(experience)),
   };
 };
 
