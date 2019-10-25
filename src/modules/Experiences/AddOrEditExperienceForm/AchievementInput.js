@@ -1,17 +1,20 @@
 import React from 'react';
-import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, onKeyPress }) => {
+import DeleteIcon from '@material-ui/icons/Delete';
+
+const AchievementInput = React.forwardRef(({ label, value, onTextChange, onIconClick, classes, onKeyPress }, ref) => {
   return (
     <TextField
       type="text"
+      inputRef={ref}
       label={label}
       value={value}
       fullWidth
+      multiline
       margin="normal"
       onChange={onTextChange}
       onKeyPress={onKeyPress}
@@ -27,14 +30,14 @@ const AchievementInput = ({ label, value, onTextChange, onIconClick, classes, on
         endAdornment: (
           <InputAdornment position="end">
             <IconButton edge="end" aria-label="delete achievement" onClick={onIconClick}>
-              <Icon>delete</Icon>
+              <DeleteIcon />
             </IconButton>
           </InputAdornment>
         ),
       }}
     />
   );
-};
+});
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   formControl: {

@@ -256,11 +256,10 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   modal: {
-    width: '600px',
     margin: 'auto',
   },
   dialogContent: {
-    width: '350px',
+    width: '500px',
   },
   dialogAction: {
     paddingBottom: '20px',

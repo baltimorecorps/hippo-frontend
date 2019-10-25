@@ -1,9 +1,20 @@
 import React from 'react';
+import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import AchievementInput from './AchievementInput';
 
 const AchievementInputsList = ({ achievements, contactId, onChange }) => {
+  const focusTarget = useRef(null);
+  const [doFocus, setFocus] = useState(false);
+
+  useEffect(() => {
+    if (focusTarget.current && doFocus) {
+      focusTarget.current.focus();
+      setFocus(false);
+    }
+  }, [focusTarget, doFocus])
+
   const handleRemove = (selectedIndex) => (event) => {
     // Stops bug where removing the last achievement triggers an event on the 'add' button,
     // thus preventing you from going back to zero achievements
@@ -27,6 +38,8 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleAdd();
+      setFocus(true);
+      e.preventDefault();
     }
   };
 
@@ -35,6 +48,7 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
       {achievements.map(({ description }, index) => (
         <AchievementInput
           key={index}
+          ref={index === (achievements.length - 1) ? focusTarget : null}
           label={`Achievement #${index + 1}`}
           value={description}
           onTextChange={handleChangeDescription(index)}
