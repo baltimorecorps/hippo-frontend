@@ -10,6 +10,7 @@ import {
   SELECT_RESUME_EXPERIENCE,
   DESELECT_RESUME_EXPERIENCE,
   GENERATE_RESUME,
+  GENERATE_RESUME_API,
   CREATE_RESUME_API,
   CREATE_SECTION_API,
   REFRESH_RESUME_API,
@@ -163,6 +164,21 @@ describe('Resume selection state', () => {
     expect(newState.selected.accomplishments[0]).toBe(123);
     expect(newState.selected.accomplishments[1]).toBe(789);
   });
+
+  test('generate experience', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    initialState.selected.experience.push(123)
+    initialState.selected.education.push(789)
+    initialState.selected.accomplishments.push(456)
+    const newState = resumeReducer(initialState, {
+      type: GENERATE_RESUME_API.RESOLVE,
+    });
+    expect(newState.resumeCreationStep).toBe(RESUME_CREATION.NOT_ACTIVE);
+    expect(newState.selected.experience.length).toBe(0);
+    expect(newState.selected.education.length).toBe(0);
+    expect(newState.selected.accomplishments.length).toBe(0);
+  });
+
 
 
 })

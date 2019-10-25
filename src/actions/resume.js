@@ -18,10 +18,28 @@ export const cancelResumeSelect = () => ({
 });
 
 export const GENERATE_RESUME = 'GENERATE_RESUME';
-export const generateResume = (resume) => ({
-  type: GENERATE_RESUME,
-  resume,
-});
+export const GENERATE_RESUME_API = fetchActionTypes(GENERATE_RESUME);
+export const generateResume = (contactId, resume) =>
+  async function(dispatch) {
+    dispatch({
+      type: GENERATE_RESUME,
+      payload: {
+        contactId,
+        resume,
+      },
+    });
+
+    const response = await makeFetchActions(
+      GENERATE_RESUME,
+      `${API_URL}/api/contacts/${contactId}/generate-resume/`,
+      {
+        body: JSON.stringify(resume),
+        method: 'POST',
+      },
+    )(dispatch);
+
+    console.log('Generate Resume', response);
+  };
 
 export const SELECT_RESUME_EXPERIENCE = 'SELECT_RESUME_EXPERIENCE';
 export const selectResumeExperience = (experience) => ({
@@ -34,7 +52,6 @@ export const deselectResumeExperience = (experience) => ({
   type: DESELECT_RESUME_EXPERIENCE,
   experience,
 });
-
 
 export const CREATE_RESUME = 'CREATE_RESUME';
 export const CREATE_RESUME_API = fetchActionTypes(CREATE_RESUME);
@@ -50,10 +67,14 @@ export const createResume = (contactId, name) =>
       resume,
     });
 
-    return await makeFetchActions(CREATE_RESUME, `${API_URL}/api/contacts/${contactId}/resumes/`, {
-      body: JSON.stringify(resume),
-      method: 'POST',
-    })(dispatch);
+    return await makeFetchActions(
+      CREATE_RESUME,
+      `${API_URL}/api/contacts/${contactId}/resumes/`,
+      {
+        body: JSON.stringify(resume),
+        method: 'POST',
+      },
+    )(dispatch);
   };
 
 export const REFRESH_RESUME = 'REFRESH_RESUME';
@@ -65,7 +86,8 @@ export const REFRESH_RESUMES = 'REFRESH_RESUMES';
 export const REFRESH_RESUMES_API = fetchActionTypes(REFRESH_RESUMES);
 export const refreshResumes = (contactId) =>
   makeFetchActions(
-    REFRESH_RESUMES, `${API_URL}/api/contacts/${contactId}/resumes/`,
+    REFRESH_RESUMES,
+    `${API_URL}/api/contacts/${contactId}/resumes/`,
     null,
     {
       onResolve: (resolveAction) => ({
@@ -73,7 +95,6 @@ export const refreshResumes = (contactId) =>
         contact_id: contactId,
       }),
     },
-
   );
 
 export const UPDATE_RESUME = 'UPDATE_RESUME';
@@ -88,10 +109,14 @@ export const updateResume = (resumeId, name) =>
       update,
     });
 
-    return await makeFetchActions(UPDATE_RESUME, `${API_URL}/api/resumes/${resumeId}/`, {
-      body: JSON.stringify(update),
-      method: 'PUT',
-    })(dispatch);
+    return await makeFetchActions(
+      UPDATE_RESUME,
+      `${API_URL}/api/resumes/${resumeId}/`,
+      {
+        body: JSON.stringify(update),
+        method: 'PUT',
+      },
+    )(dispatch);
   };
 
 export const DELETE_RESUME = 'DELETE_RESUME';
@@ -103,9 +128,13 @@ export const deleteResume = (resumeId, contactId) =>
       resumeId,
     });
 
-    const result = await makeFetchActions(DELETE_RESUME, `${API_URL}/api/resumes/${resumeId}/`, {
-      method: 'DELETE',
-    })(dispatch);
+    const result = await makeFetchActions(
+      DELETE_RESUME,
+      `${API_URL}/api/resumes/${resumeId}/`,
+      {
+        method: 'DELETE',
+      },
+    )(dispatch);
 
     const success = await refreshResumes(contactId)(dispatch);
 
@@ -120,7 +149,11 @@ export const CREATE_SECTION = 'CREATE_SECTION';
 export const CREATE_SECTION_API = fetchActionTypes(CREATE_SECTION);
 export const createResumeSection = (section) =>
   async function(dispatch) {
-    if (!section || section.resume_id === null || section.resume_id === undefined) {
+    if (
+      !section ||
+      section.resume_id === null ||
+      section.resume_id === undefined
+    ) {
       throw new Error('invalid section given to createResumeSection!');
     }
 
@@ -137,7 +170,10 @@ export const createResumeSection = (section) =>
 export const REFRESH_SECTION = 'REFRESH_SECTION';
 export const REFRESH_SECTION_API = fetchActionTypes(REFRESH_SECTION);
 export const refreshResumeSection = (resumeId, sectionId) =>
-  makeFetchActions(REFRESH_SECTION, `${API_URL}/api/resumes/${resumeId}/sections/${sectionId}/`);
+  makeFetchActions(
+    REFRESH_SECTION,
+    `${API_URL}/api/resumes/${resumeId}/sections/${sectionId}/`,
+  );
 
 export const UPDATE_SECTION = 'UPDATE_SECTION';
 export const UPDATE_SECTION_API = fetchActionTypes(UPDATE_SECTION);

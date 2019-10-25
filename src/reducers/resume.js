@@ -28,6 +28,7 @@ import {
   SELECT_RESUME_EXPERIENCE,
   DESELECT_RESUME_EXPERIENCE,
   GENERATE_RESUME,
+  GENERATE_RESUME_API,
 } from '../actions/resume';
 /* eslint-enable no-unused-vars */
 
@@ -48,15 +49,16 @@ const getExperienceKey = (experience) => {
   }
 };
 
-export const resumeReducer = createReducer(
-  {
-    resumeCreationStep: RESUME_CREATION.NOT_ACTIVE,
-    selected: {
-      experience: [],
-      education: [],
-      accomplishments: [],
-    },
+const genInitState = () => ({
+  resumeCreationStep: RESUME_CREATION.NOT_ACTIVE,
+  selected: {
+    experience: [],
+    education: [],
+    accomplishments: [],
   },
+})
+
+export const resumeReducer = createReducer(genInitState(),
   {
     [START_RESUME_CREATION]: (state, action) => {
       state.resumeCreationStep = RESUME_CREATION.CHOOSE_STYLE;
@@ -90,6 +92,16 @@ export const resumeReducer = createReducer(
         (id) => id !== action.experience.id,
       );
     },
+    [DESELECT_RESUME_EXPERIENCE]: (state, action) => {
+      const key = getExperienceKey(action.experience);
+      state.selected[key] = state.selected[key].filter(
+        (id) => id !== action.experience.id,
+      );
+    },
+    [GENERATE_RESUME_API.RESOLVE]: (state, action) => {
+      return genInitState();
+    },
+
   },
 );
 

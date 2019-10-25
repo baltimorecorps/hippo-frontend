@@ -1,7 +1,10 @@
 import { connect } from 'react-redux';
 import { refreshContacts } from 'actions/contacts';
-import { startResumeCreation, startResumeSelect, cancelResumeSelect } from
-'actions/resume';
+import {
+  startResumeCreation,
+  startResumeSelect,
+  cancelResumeSelect,
+} from 'actions/resume';
 import { RESUME_CREATION } from 'reducers/resume';
 import ProfilePage from './ProfilePage';
 
@@ -31,8 +34,10 @@ const mapStateToProps = (state, props) => {
   return {
     contactId: Number(contactId),
     contactInfo,
-    showResumeDialog: state.resume.resumeCreationStep === RESUME_CREATION.CHOOSE_STYLE,
-    inSelectMode: state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
+    showResumeDialog:
+      state.resume.resumeCreationStep === RESUME_CREATION.CHOOSE_STYLE,
+    inSelectMode:
+      state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
   };
 };
 
@@ -43,6 +48,8 @@ const mapDispatchToProps = (dispatch) => ({
   startResumeCreation: () => dispatch(startResumeCreation()),
   startResumeSelect: () => dispatch(startResumeSelect()),
   cancelResumeSelect: () => dispatch(cancelResumeSelect()),
+  generateResume: (contactId, resume) =>
+    generateResume(contactId, resume)(dispatch),
 });
 
 const ProfileContainer = connect(
