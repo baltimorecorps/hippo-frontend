@@ -1,3 +1,4 @@
 import GeneratedResumePage from './GeneratedResumePage.container';
+import Resume from './Resume';
 
-export default GeneratedResumePage;
+export default Resume;
