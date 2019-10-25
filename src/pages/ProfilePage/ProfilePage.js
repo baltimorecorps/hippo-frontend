@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +20,32 @@ import ResumesList from 'modules/Resumes/ResumesList';
 
 import html2canvas from 'html2canvas';
 
+
+// Scroll only works consistently if it happens after any renders that might be
+// happening concurrently, so this will wrap window.scrollTo for the latest
+// render
+const useScroll = () => {
+  const [scroll, setScroll] = useState(null);
+
+  useEffect(() => {
+    if (scroll !== null) {
+      window.scrollTo(scroll);
+      setScroll(null);
+    }
+  }, [scroll, setScroll]);
+
+  const scrollTo = (...args) => {
+    if (args.length >= 2) {
+      setScroll({top: args[0], left: args[1]})
+    }
+    else {
+      setScroll(args[0])
+    }
+  }
+
+  return scrollTo;
+};
+
 const ProfilePage = ({
   contactId,
   contactInfo,
@@ -32,6 +59,8 @@ const ProfilePage = ({
   showResumeDialog,
   inSelectMode,
 }) => {
+  const scrollTo = useScroll();
+
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
   // rerendered due to the Redux state update
@@ -52,6 +81,11 @@ const ProfilePage = ({
   }
 
 
+  const startSelectLocal = () => {
+    startResumeSelect()
+    scrollTo({top: 0, left: 0, behavior: 'auto'})
+  }
+
   // This page primarily serves as the top level container for the profile of
   // this person's employment-relevant experiences and skills.
   //
@@ -61,7 +95,7 @@ const ProfilePage = ({
     <React.Fragment>
       <ResumeDialog
         open={showResumeDialog}
-        highlightExperiences={startResumeSelect}
+        highlightExperiences={startSelectLocal}
         useStandardProfile={genResumeLocal}
       />
       {inSelectMode ? (
