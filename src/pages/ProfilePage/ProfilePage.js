@@ -22,10 +22,12 @@ import html2canvas from 'html2canvas';
 const ProfilePage = ({
   contactId,
   contactInfo,
+  resume,
   refreshContacts,
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
+  generateResume,
   classes,
   showResumeDialog,
   inSelectMode,
@@ -43,6 +45,13 @@ const ProfilePage = ({
     ? contactInfo.email_primary.email
     : '';
 
+  const genResumeLocal = () => {
+    // TODO: How should we get the resume name for real?
+    const resumeName = `${contactInfo.first_name}_${contactInfo.last_name}_${(new Date()).getTime()}`;
+    generateResume(contactId, resumeName, resume);
+  }
+
+
   // This page primarily serves as the top level container for the profile of
   // this person's employment-relevant experiences and skills.
   //
@@ -53,11 +62,11 @@ const ProfilePage = ({
       <ResumeDialog
         open={showResumeDialog}
         highlightExperiences={startResumeSelect}
-        useStandardProfile={cancelResumeSelect}
+        useStandardProfile={genResumeLocal}
       />
       {inSelectMode ? (
         <SelectionDrawer
-          onNext={cancelResumeSelect}
+          onNext={genResumeLocal}
           onCancel={cancelResumeSelect}
         />
       ) : null}
