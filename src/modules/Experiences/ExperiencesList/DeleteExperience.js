@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -58,5 +60,31 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     fontWeight: '700',
   },
 });
+
+DeleteExperience.propTypes = {
+  handleCancel: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  experience: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    host: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    degree: PropTypes.oneOf([
+      'High School',
+      'Associates',
+      'Undergraduate',
+      'Masters',
+      'Doctoral',
+    ]),
+    start_month: PropTypes.string.isRequired,
+    start_year: PropTypes.number.isRequired,
+    end_month: PropTypes.string,
+    end_year: PropTypes.number,
+    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
+      .isRequired,
+    contact_id: PropTypes.number.isRequired,
+    achievements: PropTypes.array,
+    description: PropTypes.string,
+  }),
+};
 
 export default withStyles(styles)(DeleteExperience);
