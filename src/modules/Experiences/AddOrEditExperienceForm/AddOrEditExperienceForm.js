@@ -17,7 +17,10 @@ import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { experienceValidator } from '../../../lib/formValidator';
-import { configureForm, isEndDateNull } from '../ExperiencesList/helpers';
+import { configureForm } from '../ExperiencesList/helpers';
+
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import LocationTextField from './LocationTextField';
 
@@ -38,6 +41,17 @@ const useForm = (initialValues, onSubmit) => {
     handleLocation: (location) => {
       update('location')(location);
     },
+    handleIsCurrent: (e) => {
+      e.persist();
+      values.is_current = e.target.checked;
+      if (values.is_current === true) {
+        update('end_month')('none');
+        update('end_year')('0');
+      } else {
+        update('end_month')('');
+        update('end_year')('');
+      }
+    },
     handleAchievements: update('achievements'),
   };
 
@@ -47,7 +61,14 @@ const useForm = (initialValues, onSubmit) => {
 const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
   const [
     values,
-    { handleChange, handleSubmit, handleDegree, handleAchievements, handleLocation },
+    {
+      handleChange,
+      handleSubmit,
+      handleDegree,
+      handleAchievements,
+      handleLocation,
+      handleIsCurrent,
+    },
   ] = useForm(experience, onSubmit);
 
   const config = configureForm(experience.type);
@@ -73,10 +94,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
   const [errors, setErrors] = React.useState({});
 
   const handleFormSubmit = () => {
-    if (isEndDateNull(values)) {
-      values.end_month = 'none';
-      values.end_year = 0;
-    }
     // validate form values
     const { isError, err } = experienceValidator(values, experience.type);
 
@@ -176,31 +193,56 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                 helperText={errors.startYear_error || null}
               />
             </Grid>
-            {config.showEndDate && (
+            {config.showEndDate ? (
               <React.Fragment>
                 <Grid item xs={6}>
                   <SelectorForm
-                    disabled={values.end_month === null}
+                    disabled={values.is_current}
                     type="month"
-                    label="End Month"
+                    label={values.is_current ? 'Present' : 'End Month'}
                     name="end_month"
-                    value={values.end_month}
+                    value={values.end_month === 'none' ? '' : values.end_month}
                     onChange={handleChange}
-                    helperText={errors.endMonth_error || null}
+                    helperText={
+                      errors.endMonth_error && !values.is_current ? errors.endMonth_error : null
+                    }
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <SelectorForm
-                    disabled={values.end_year === null}
+                    disabled={values.is_current}
                     type="year"
-                    label="End Year"
+                    label={values.is_current ? 'Present' : 'End Year'}
                     name="end_year"
-                    value={values.end_year}
+                    value={values.end_year === 0 || values.end_year === '0' ? '' : values.end_year}
                     onChange={handleChange}
-                    helperText={errors.endYear_error || null}
+                    helperText={
+                      errors.endYear_error && !values.is_current ? errors.endYear_error : null
+                    }
                   />
                 </Grid>
               </React.Fragment>
+            ) : null}
+            {config.showEndDate && (
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={values.is_current}
+                      onChange={handleIsCurrent}
+                      value={values.is_current}
+                      name="is_current"
+                      color="primary"
+                      data-testid="is_current"
+                    />
+                  }
+                  label={
+                    values.type === 'Education'
+                      ? 'I am currently enrolled'
+                      : 'I am currently working in this role'
+                  }
+                />
+              </Grid>
             )}
             {config.showDescription && (
               <Grid item xs={12}>

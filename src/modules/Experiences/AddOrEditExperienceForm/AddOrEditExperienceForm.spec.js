@@ -171,7 +171,34 @@ describe('AddOrEditExperienceForm', () => {
 
     expect(submit.mock.calls.length).toBe(1);
     expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
-    expect(submit.mock.calls[0][0].end_year).toBe(2019);
+    expect(submit.mock.calls[0][0].end_year).toBe('2019');
+  });
+
+  test('Work Experience: Is Current is true (checkbox)  ', () => {
+    const cancel = jest.fn();
+    const submit = jest.fn();
+    const { getByText, getByTestId } = render(
+      <AddOrEditExperienceForm
+        handleCancel={cancel}
+        labels={{}}
+        onSubmit={submit}
+        experience={experience}
+      />,
+    );
+
+    const checkbox = getByTestId('is_current').querySelector('input[type="checkbox"]');
+    expect(checkbox).toHaveProperty('checked', false);
+    fireEvent.click(checkbox);
+    expect(checkbox).toHaveProperty('checked', true);
+    fireEvent.click(getByText(/save/i));
+
+    expect(submit.mock.calls.length).toBe(1);
+    expect(submit.mock.calls[0][0]).toHaveProperty('is_current');
+    expect(submit.mock.calls[0][0].is_current).toBe(true);
+    expect(submit.mock.calls[0][0]).toHaveProperty('end_month');
+    expect(submit.mock.calls[0][0].end_month).toBe('none');
+    expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
+    expect(submit.mock.calls[0][0].end_year).toBe('0');
   });
 
   test('Test Accomplishment Form', () => {
@@ -189,8 +216,6 @@ describe('AddOrEditExperienceForm', () => {
     const result = {
       contact_id: 1234,
       description: 'Test description',
-      end_month: 'none',
-      end_year: 0,
       host: 'New Award',
       start_month: 'January',
       start_year: '2015',
