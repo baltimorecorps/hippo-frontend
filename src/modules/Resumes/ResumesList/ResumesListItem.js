@@ -7,10 +7,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const ResumesListItem = ({resumeId, contactId, name}) => {
+const ResumesListItem = ({resumeId, gdocId, name}) => {
   return (
     <Grid item xs={3}>
-      <Card key={resumeId}>
+      <Card>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {name}
@@ -20,18 +20,10 @@ const ResumesListItem = ({resumeId, contactId, name}) => {
           <Button
             size="small"
             color="secondary"
-            to={`/contacts/${contactId}/resume/${resumeId}`}
+            to={`/resume/${gdocId}`}
             component={AdapterLink}
           >
             View
-          </Button>
-          <Button
-            size="small"
-            color="secondary"
-            to={`/contacts/${contactId}/create-resume/${resumeId}`}
-            component={AdapterLink}
-          >
-            Edit
           </Button>
         </CardActions>
       </Card>

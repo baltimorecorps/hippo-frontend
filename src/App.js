@@ -50,7 +50,7 @@ const App = ({classes}) => (
             <Route exact path="/contacts" component={Contacts} />
             <Route exact path="/search-contact" component={SearchContact} />
 
-            <Route exact path="/resume" component={Resume} />
+            <Route exact path="/resume/:gdocId" component={Resume} />
             <Route exact path="/talent-home" component={TalentHome} />
 
             <Route exact path="/profile/:contactId" component={ProfilePage} />
