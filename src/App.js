@@ -8,7 +8,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import ErrorBoundary from 'atoms/ErrorBoundary';
-import GeneratedResumePage from 'pages/GeneratedResumePage';
+import Resume from 'modules/Resume';
 import CreateResumePage from 'pages/CreateResumePage';
 import ProfilePage from 'pages/ProfilePage';
 import theme from 'styles/theme';
@@ -50,12 +50,13 @@ const App = ({classes}) => (
             <Route exact path="/contacts" component={Contacts} />
             <Route exact path="/search-contact" component={SearchContact} />
 
-            <Route exact path="/resume-template" component={ResumeTemplate} />
+            <Route exact path="/resume" component={Resume} />
             <Route exact path="/talent-home" component={TalentHome} />
 
             <Route exact path="/profile/:contactId" component={ProfilePage} />
 
-            <Route exact path="/contacts/:contactId/Resume/:resumeId" component={GeneratedResumePage} />
+            <Route exact path="/profile/:contactId/resume/:resumeId" component={Resume} />
+            <Route exact path="/contacts/:contactId/resume/:resumeId" component={Resume} />
             <Route exact path="/contacts/:contactId/create-resume" component={CreateResumePage} />
             <Route exact path="/contacts/:contactId/create-resume/:resumeId" component={CreateResumePage} />
           </Switch>

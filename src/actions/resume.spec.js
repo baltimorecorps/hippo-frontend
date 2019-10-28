@@ -23,10 +23,37 @@ import {
   updateResumeItems,
   deleteResume,
   deleteResumeSection,
+  GENERATE_RESUME,
+  GENERATE_RESUME_API,
+  generateResume,
 } from './resume';
 
 afterEach(() => {
   fetchMock.restore();
+});
+
+describe('Generate resume', () => {
+  test('Create new resume', async function() {
+    const dispatch = jest.fn();
+    const contactId = 1234;
+    const resume = {
+      name: 'Test Resume',
+      experiences: [123, 456, 789],
+    }
+    const response = { response: 'win' };
+
+    fetchMock.post(`path:/api/contacts/${contactId}/generate-resume/`, response);
+
+    await generateResume(contactId, resume)(dispatch);
+    expect(dispatch.mock.calls.length).toBe(3);
+    expect(dispatch.mock.calls[0][0].type).toBe(GENERATE_RESUME);
+    expect(dispatch.mock.calls[0][0].payload).toHaveProperty('contactId');
+    expect(dispatch.mock.calls[0][0].payload.contactId).toBe(contactId);
+    expect(dispatch.mock.calls[0][0].payload).toHaveProperty('resume');
+    expect(dispatch.mock.calls[0][0].payload.resume).toEqual(resume);
+    expect(dispatch.mock.calls[2][0].type).toBe(GENERATE_RESUME_API.RESOLVE);
+    expect(dispatch.mock.calls[2][0].body).toEqual(response);
+  });
 });
 
 describe('Top level resume actions', () => {

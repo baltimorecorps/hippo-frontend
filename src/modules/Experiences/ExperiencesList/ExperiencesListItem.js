@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
+import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AchievementsList from 'modules/Achievements/AchievementsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
 import { formatMonthYearDate, getWorkLength, configureForm } from './helpers';
 
-const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
+const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selectable, classes }) => {
   const initial = experience.host ? experience.host[0] : '';
   const title =
     experience.type === 'Education'
@@ -41,9 +45,15 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
   return (
     <React.Fragment>
       <Grid container justify="space-evenly" className={classes.gridContainer}>
-        <Grid item className={classes.avatar}>
-          <Avatar>{initial}</Avatar>
-        </Grid>
+        {selectable ? (
+          <Grid item>
+            <Checkbox onChange={onSelect}/>
+          </Grid>
+        ) : (
+          <Grid item className={classes.avatar}>
+            <Avatar>{initial}</Avatar>
+          </Grid>
+        )}
 
         <Grid item xs={8} md={9}>
           <Typography
@@ -99,8 +109,22 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
         </Grid>
 
         <Grid item xs={2} className={classes.gridIcons}>
-          <Icon onClick={() => setEditing(true)}>edit</Icon>
-          <Icon onClick={() => onDelete(experience)}>delete</Icon>
+            {selectable ? null : (<React.Fragment>
+          <IconButton 
+            onClick={() => setEditing(true)}
+            size='small'
+            aria-label="edit experience"
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton 
+            onClick={() => onDelete(experience)}
+            size='small'
+            aria-label="delete experience"
+          >
+            <DeleteIcon />
+          </IconButton>
+        </React.Fragment>)}
         </Grid>
       </Grid>
 
@@ -119,6 +143,7 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, classes }) => {
 ExperiencesListItem.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  selectable: PropTypes.bool.isRequired,
   experience: PropTypes.shape({
     id: PropTypes.number.isRequired,
     host: PropTypes.string.isRequired,
@@ -140,7 +165,7 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     marginTop: '15px',
   },
   gridIcons: {
-    flexBasis: '50px',
+    flexBasis: '60px',
   },
   avatar: {
     [breakpoints.down('sm')]: {

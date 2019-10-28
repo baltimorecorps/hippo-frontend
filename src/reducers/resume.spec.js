@@ -1,6 +1,16 @@
-import { resumeReducer } from './resume';
+import { 
+  resumeReducer,
+  RESUME_CREATION
+} from './resume';
 
 import {
+  START_RESUME_CREATION,
+  CANCEL_RESUME_SELECT,
+  START_RESUME_SELECT,
+  SELECT_RESUME_EXPERIENCE,
+  DESELECT_RESUME_EXPERIENCE,
+  GENERATE_RESUME,
+  GENERATE_RESUME_API,
   CREATE_RESUME_API,
   CREATE_SECTION_API,
   REFRESH_RESUME_API,
@@ -10,7 +20,170 @@ import {
   UPDATE_SECTION_API,
 } from '../actions/resume';
 
-describe('Resumes state', () => {
+describe('Resume selection state', () => {
+  let initialState = {};
+  beforeEach(() => {
+    initialState = {
+      resumeCreationStep: RESUME_CREATION.NOT_ACTIVE,
+      selected: {
+        experience: [],
+        education: [],
+        accomplishments: [],
+      },
+    }
+  });
+  test('initial state', () => {
+    const newState = resumeReducer(undefined, {});
+    expect(newState).toEqual(initialState);
+  });
+  test('start resume creation', () => {
+    const newState = resumeReducer(undefined, {type: START_RESUME_CREATION});
+    expect(newState.resumeCreationStep).toBe(RESUME_CREATION.CHOOSE_STYLE);
+  });
+  test('start resume select', () => {
+    const newState = resumeReducer(undefined, {type: START_RESUME_SELECT});
+    expect(newState.resumeCreationStep).toBe(RESUME_CREATION.SELECT_HIGHLIGHTS);
+  });
+  test('cancel resume select', () => {
+    Object.values(RESUME_CREATION).forEach((value) => {
+      initialState.resumeCreationStep = value;
+      const newState = resumeReducer(initialState, {type: CANCEL_RESUME_SELECT});
+      expect(newState.resumeCreationStep).toBe(RESUME_CREATION.NOT_ACTIVE);
+    })
+  });
+  test('cancel resume select clears selection', () => {
+    initialState.selected.experience.push(1);
+    initialState.selected.education.push(2);
+    initialState.selected.accomplishments.push(3);
+    initialState.selected.accomplishments.push(4);
+    const newState = resumeReducer(initialState, {type: CANCEL_RESUME_SELECT});
+    expect(newState.selected.experience.length).toBe(0);
+    expect(newState.selected.education.length).toBe(0);
+    expect(newState.selected.accomplishments.length).toBe(0);
+  });
+
+  test('select when select mode is not on', () => {
+    const newState = resumeReducer(undefined, {
+      type: SELECT_RESUME_EXPERIENCE,
+      experience: {id: 123, type: 'Work'},
+    });
+    expect(newState.selected.experience.length).toBe(0);
+  });
+
+  test('select experience', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    const newState = resumeReducer(initialState, {
+      type: SELECT_RESUME_EXPERIENCE,
+      experience: {id: 123, type: 'Work'},
+    });
+    expect(newState.selected.experience.length).toBe(1);
+    expect(newState.selected.experience[0]).toBe(123);
+  });
+
+  test('select second experience', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    initialState.selected.experience.push(456)
+    const newState = resumeReducer(initialState, {
+      type: SELECT_RESUME_EXPERIENCE,
+      experience: {id: 123, type: 'Work'},
+    });
+    expect(newState.selected.experience.length).toBe(2);
+    expect(newState.selected.experience[0]).toBe(456);
+    expect(newState.selected.experience[1]).toBe(123);
+  });
+
+  test('deselect experience', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    initialState.selected.experience.push(123)
+    initialState.selected.experience.push(456)
+    initialState.selected.experience.push(789)
+    const newState = resumeReducer(initialState, {
+      type: DESELECT_RESUME_EXPERIENCE,
+      experience: {id: 456, type: 'Work'},
+    });
+    expect(newState.selected.experience.length).toBe(2);
+    expect(newState.selected.experience[0]).toBe(123);
+    expect(newState.selected.experience[1]).toBe(789);
+  });
+  
+  test('select experience - service', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    const newState = resumeReducer(initialState, {
+      type: SELECT_RESUME_EXPERIENCE,
+      experience: {id: 123, type: 'Service'},
+    });
+    expect(newState.selected.experience.length).toBe(1);
+    expect(newState.selected.experience[0]).toBe(123);
+  });
+
+  test('deselect experience - education', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    initialState.selected.education.push(123)
+    initialState.selected.education.push(456)
+    initialState.selected.education.push(789)
+    const newState = resumeReducer(initialState, {
+      type: DESELECT_RESUME_EXPERIENCE,
+      experience: {id: 456, type: 'Education'},
+    });
+    expect(newState.selected.education.length).toBe(2);
+    expect(newState.selected.education[0]).toBe(123);
+    expect(newState.selected.education[1]).toBe(789);
+  });
+  
+
+  test('select experience - education', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    const newState = resumeReducer(initialState, {
+      type: SELECT_RESUME_EXPERIENCE,
+      experience: {id: 123, type: 'Education'},
+    });
+    expect(newState.selected.education.length).toBe(1);
+    expect(newState.selected.education[0]).toBe(123);
+  });
+
+  test('select experience - accomplishment', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    const newState = resumeReducer(initialState, {
+      type: SELECT_RESUME_EXPERIENCE,
+      experience: {id: 123, type: 'Accomplishment'},
+    });
+    expect(newState.selected.accomplishments.length).toBe(1);
+    expect(newState.selected.accomplishments[0]).toBe(123);
+  });
+
+  test('deselect experience - accomplishment', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    initialState.selected.accomplishments.push(123)
+    initialState.selected.accomplishments.push(456)
+    initialState.selected.accomplishments.push(789)
+    const newState = resumeReducer(initialState, {
+      type: DESELECT_RESUME_EXPERIENCE,
+      experience: {id: 456, type: 'Accomplishment'},
+    });
+    expect(newState.selected.accomplishments.length).toBe(2);
+    expect(newState.selected.accomplishments[0]).toBe(123);
+    expect(newState.selected.accomplishments[1]).toBe(789);
+  });
+
+  test('generate experience', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    initialState.selected.experience.push(123)
+    initialState.selected.education.push(789)
+    initialState.selected.accomplishments.push(456)
+    const newState = resumeReducer(initialState, {
+      type: GENERATE_RESUME_API.RESOLVE,
+    });
+    expect(newState.resumeCreationStep).toBe(RESUME_CREATION.NOT_ACTIVE);
+    expect(newState.selected.experience.length).toBe(0);
+    expect(newState.selected.education.length).toBe(0);
+    expect(newState.selected.accomplishments.length).toBe(0);
+  });
+
+
+
+})
+
+describe.skip('Resumes state', () => {
   let initialState = {};
   beforeEach(() => {
     initialState = {};

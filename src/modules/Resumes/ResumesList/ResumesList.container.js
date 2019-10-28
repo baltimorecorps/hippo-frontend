@@ -5,7 +5,7 @@ import ResumesList from './ResumesList';
 
 const mapStateToProps = (state, props) => {
   const {contactId} = props.match.params;
-  const resumes = Object.values(state.resume);
+  const resumes = [];
   return {
     contactId,
     resumes,
