@@ -125,16 +125,6 @@ const ProfilePage = ({
             experienceType="Accomplishment"
           />
 
-          <Paper className={classes.paper}>
-            <Typography gutterBottom variant="h5" component="h1">
-              Skills and Abilities
-            </Typography>
-            <Divider className={classes.divider} />
-            <SkillsList contactId={contactId} tagType="Function" />
-            <SkillsList contactId={contactId} tagType="Skill" />
-            <SkillsList contactId={contactId} tagType="Topic" />
-          </Paper>
-
           <ResumesList />
         </Grid>
       </Grid>
