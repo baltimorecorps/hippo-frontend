@@ -155,7 +155,7 @@ describe('ProfilePage', () => {
     expect(queryByText('alice@example.com')).not.toBeNull();
     expect(queryByText('(123) 456-7890')).not.toBeNull();
 
-    expect(queryByText(/work experience/i)).not.toBeNull();
+    expect(queryByText(/experience/i)).not.toBeNull();
     expect(queryByText(/education/i)).not.toBeNull();
     expect(queryByText(/service and leaders/i)).not.toBeNull();
     expect(queryByText(/accomplishments/i)).not.toBeNull();
