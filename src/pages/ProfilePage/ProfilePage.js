@@ -80,10 +80,9 @@ const ProfilePage = ({
     generateResume(contactId, resumeName, resume);
   }
 
-
   const startSelectLocal = () => {
     startResumeSelect()
-    scrollTo({top: 0, left: 0, behavior: 'auto'})
+    scrollTo({top: 0, left: 0, behavior: 'smooth'})
   }
 
   // This page primarily serves as the top level container for the profile of
@@ -140,6 +139,7 @@ const ProfilePage = ({
         </Grid>
       </Grid>
 
+      {inSelectMode ? null :(
       <Grid container justify="center">
         <Button
           variant="contained"
@@ -149,6 +149,7 @@ const ProfilePage = ({
           Create Resume
         </Button>
       </Grid>
+      )}
     </React.Fragment>
   );
 };

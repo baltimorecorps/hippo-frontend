@@ -24,6 +24,17 @@ describe('ProfilePage', () => {
     reducer: rootReducer,
   });
 
+  let oldScrollTo = null;
+
+  beforeAll(() => {
+    oldScrollTo = window.scrollTo;
+    window.scrollTo = () => {}
+  })
+
+  afterAll(() => {
+    window.scrollTo = oldScrollTo;
+  });
+
   // Reinit store for every test
   beforeEach(() => {
     store = configureStore({
@@ -108,6 +119,7 @@ describe('ProfilePage', () => {
         </Router>
       </Provider>,
     );
+    expect(queryByText(/create resume/i)).toBeNull();
     expect(queryByText(/choose resume style/i)).toBeNull();
     expect(queryByText(/select the experiences/i)).not.toBeNull();
 
