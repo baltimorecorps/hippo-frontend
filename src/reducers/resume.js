@@ -56,6 +56,7 @@ const genInitState = () => ({
     education: [],
     accomplishments: [],
   },
+  resumes: [],
 })
 
 export const resumeReducer = createReducer(genInitState(),
@@ -99,7 +100,10 @@ export const resumeReducer = createReducer(genInitState(),
       );
     },
     [GENERATE_RESUME_API.RESOLVE]: (state, action) => {
-      return genInitState();
+      const initState = genInitState();
+      state.resumeCreationStep = initState.resumeCreationStep;
+      state.selected = initState.selected;
+      state.resumes.push(action.body.data);
     },
 
   },

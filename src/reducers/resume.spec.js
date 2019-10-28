@@ -30,6 +30,7 @@ describe('Resume selection state', () => {
         education: [],
         accomplishments: [],
       },
+      resumes: [],
     }
   });
   test('initial state', () => {
@@ -170,13 +171,23 @@ describe('Resume selection state', () => {
     initialState.selected.experience.push(123)
     initialState.selected.education.push(789)
     initialState.selected.accomplishments.push(456)
+    const resume =  {
+      'id' : 2,
+      'name': 'test_name',
+      'date_created': '2019-10-28',
+      'gdoc_link': 'ABCD1234',
+    }
+
     const newState = resumeReducer(initialState, {
       type: GENERATE_RESUME_API.RESOLVE,
+      body: {
+        status: 'success',
+        data: resume,
+      }
     });
     expect(newState.resumeCreationStep).toBe(RESUME_CREATION.NOT_ACTIVE);
-    expect(newState.selected.experience.length).toBe(0);
-    expect(newState.selected.education.length).toBe(0);
-    expect(newState.selected.accomplishments.length).toBe(0);
+    expect(newState.resumes.length).toBe(1);
+    expect(newState.resumes[0]).toEqual(resume)
   });
 
 
