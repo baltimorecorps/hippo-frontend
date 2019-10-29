@@ -38,7 +38,7 @@ export const generateResume = (contactId, resume) =>
       },
     )(dispatch);
 
-    console.log('Generate Resume', response);
+    return response;
   };
 
 export const SELECT_RESUME_EXPERIENCE = 'SELECT_RESUME_EXPERIENCE';

@@ -114,7 +114,6 @@ export const resumeReducer = createReducer(genInitState(),
       state.inProgress = false;
     },
 
-
   },
 );
 
