@@ -57,6 +57,7 @@ const ProfilePage = ({
   generateResume,
   classes,
   showResumeDialog,
+  showResumeSpinner,
   inSelectMode,
 }) => {
   const scrollTo = useScroll();
@@ -97,6 +98,7 @@ const ProfilePage = ({
         highlightExperiences={startSelectLocal}
         useStandardProfile={genResumeLocal}
       />
+      <ResumeSpinner />
       {inSelectMode ? (
         <SelectionDrawer
           onNext={genResumeLocal}
@@ -186,6 +188,17 @@ const dialogStyles = ({ breakpoints, palette, spacing, shadows }) => ({
     borderTop: '1px solid',
     margin: `11px ${spacing(1)}px`,
   },
+});
+
+const ResumeSpinner = withStyles(dialogStyles)(() => { 
+    return (
+      <Dialog open={true}>
+        <DialogTitle>Generating Resume</DialogTitle>
+        <DialogContent>
+          <CircularProgress className={classes.progress} />
+        </DialogContent>
+      </Dialog>
+    );
 });
 
 const ResumeDialog = withStyles(dialogStyles)(

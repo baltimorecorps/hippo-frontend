@@ -30,6 +30,7 @@ describe('Resume selection state', () => {
         education: [],
         accomplishments: [],
       },
+      inProgress: false,
       resumes: [],
     }
   });
@@ -171,6 +172,7 @@ describe('Resume selection state', () => {
     initialState.selected.experience.push(123)
     initialState.selected.education.push(789)
     initialState.selected.accomplishments.push(456)
+    initialState.inProgress = true
     const resume =  {
       'id' : 2,
       'name': 'test_name',
@@ -188,8 +190,45 @@ describe('Resume selection state', () => {
     expect(newState.resumeCreationStep).toBe(RESUME_CREATION.NOT_ACTIVE);
     expect(newState.resumes.length).toBe(1);
     expect(newState.resumes[0]).toEqual(resume)
+    expect(newState.inProgress).toBe(false)
   });
 
+  test('generate experience - request', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    initialState.selected.experience.push(123)
+    initialState.selected.education.push(789)
+    initialState.selected.accomplishments.push(456)
+
+    const newState = resumeReducer(initialState, {
+      type: GENERATE_RESUME_API.REQUEST,
+    });
+    expect(newState.resumeCreationStep).toBe(RESUME_CREATION.SELECT_HIGHLIGHTS);
+    expect(newState.resumes.length).toBe(0);
+    expect(newState.selected.experience.length).toBe(1)
+    expect(newState.selected.education.length).toBe(1)
+    expect(newState.selected.accomplishments.length).toBe(1)
+    expect(newState.inProgress).toBe(true)
+
+  });
+
+  test('generate experience - reject', () => {
+    initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+    initialState.selected.experience.push(123)
+    initialState.selected.education.push(789)
+    initialState.selected.accomplishments.push(456)
+    initialState.inProgress = true
+
+    const newState = resumeReducer(initialState, {
+      type: GENERATE_RESUME_API.REJECT,
+    });
+    expect(newState.resumeCreationStep).toBe(RESUME_CREATION.SELECT_HIGHLIGHTS);
+    expect(newState.resumes.length).toBe(0);
+    expect(newState.selected.experience.length).toBe(1)
+    expect(newState.selected.education.length).toBe(1)
+    expect(newState.selected.accomplishments.length).toBe(1)
+    expect(newState.inProgress).toBe(false)
+
+  });
 
 
 })
