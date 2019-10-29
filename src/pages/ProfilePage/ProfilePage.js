@@ -83,7 +83,7 @@ const ProfilePage = ({
     // TODO: How should we get the resume name for real?
     const resumeName = `${contactInfo.first_name}_${contactInfo.last_name}_${(new Date()).getTime()}`;
     const response = await generateResume(contactId, resumeName, resume);
-    setResumeLink(`/resume/${response.body.data.gdoc_link}`);
+    setResumeLink(`/resume/${response.body.data.gdoc_id}`);
   }
 
   const startSelectLocal = () => {
@@ -135,13 +135,13 @@ const ProfilePage = ({
 
           <ExperiencesList contactId={contactId} experienceType="Work" />
           <ExperiencesList contactId={contactId} experienceType="Education" />
-          <ExperiencesList contactId={contactId} experienceType="Service" />
+          {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
           <ExperiencesList
             contactId={contactId}
             experienceType="Accomplishment"
           />
 
-          <ResumesList />
+          {/*<ResumesList />*/}
         </Grid>
       </Grid>
 

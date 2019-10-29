@@ -18,11 +18,11 @@ const ResumesList = ({ contactId, refreshResumes, resumes, classes }) => {
             Resumes
           </Typography>
           <Grid container spacing={3}>
-            {resumes.map(({ id, gdoc_link }) => (
+            {resumes.map(({ id, gdoc_id }) => (
               <ResumesListItem
                 key={id}
                 resumeId={id}
-                gdocId={gdoc_link}
+                gdocId={gdoc_id}
               />
             ))}
           </Grid>

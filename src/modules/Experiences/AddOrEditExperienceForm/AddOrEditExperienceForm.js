@@ -59,6 +59,12 @@ const useForm = (initialValues, onSubmit) => {
 };
 
 const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
+  const config = configureForm(experience.type);
+  if (!config.showEndDate) {
+    experience['end_year'] = 0;
+    experience['end_month'] = 'none';
+  }
+
   const [
     values,
     {
@@ -71,7 +77,6 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
     },
   ] = useForm(experience, onSubmit);
 
-  const config = configureForm(experience.type);
 
   // eslint-disable-next-line no-unused-vars
   const handleChangeDescription = (idx) => (evt) => {
@@ -96,6 +101,7 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
   const handleFormSubmit = () => {
     // validate form values
     const { isError, err } = experienceValidator(values, experience.type);
+
 
     if (isError) {
       setErrors(err);

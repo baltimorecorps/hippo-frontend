@@ -177,7 +177,7 @@ describe('Resume selection state', () => {
       'id' : 2,
       'name': 'test_name',
       'date_created': '2019-10-28',
-      'gdoc_link': 'ABCD1234',
+      'gdoc_id': 'ABCD1234',
     }
 
     const newState = resumeReducer(initialState, {
