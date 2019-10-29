@@ -11,10 +11,18 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteExperience from './DeleteExperience';
 
 import { formatMonthYearDate, getWorkLength, configureForm } from './helpers';
 
-const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selectable, classes }) => {
+const ExperiencesListItem = ({
+  experience,
+  onUpdate,
+  onDelete,
+  onSelect,
+  selectable,
+  classes,
+}) => {
   const initial = experience.host ? experience.host[0] : '';
   const title =
     experience.type === 'Education'
@@ -29,7 +37,12 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selecta
     setEditing(false);
   };
 
-  const startDate = formatMonthYearDate(experience.start_month, experience.start_year);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+  const startDate = formatMonthYearDate(
+    experience.start_month,
+    experience.start_year,
+  );
 
   let endDate = '';
   if (experience.end_month && experience.end_year) {
@@ -38,7 +51,10 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selecta
     endDate = 'Present';
   }
 
-  let lengthWork = getWorkLength(experience.length_year, experience.length_month);
+  let lengthWork = getWorkLength(
+    experience.length_year,
+    experience.length_month,
+  );
 
   const location = ` - ${experience.location}`;
 
@@ -47,7 +63,7 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selecta
       <Grid container justify="space-evenly" className={classes.gridContainer}>
         {selectable ? (
           <Grid item>
-            <Checkbox onChange={onSelect}/>
+            <Checkbox onChange={onSelect} />
           </Grid>
         ) : (
           <Grid item className={classes.avatar}>
@@ -82,7 +98,12 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selecta
           <Typography
             variant="subtitle1"
             component="h3"
-            style={{ fontSize: '17px', color: '#3b3b3b', fontWeight: 'bold', fontFamily: 'Lato' }}
+            style={{
+              fontSize: '17px',
+              color: '#3b3b3b',
+              fontWeight: 'bold',
+              fontFamily: 'Lato',
+            }}
           >
             {title}
           </Typography>
@@ -93,7 +114,9 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selecta
             style={{ color: '#7d7d7d', fontSize: '15px' }}
           >
             {startDate}
-            {config.showEndDate && <React.Fragment> &ndash; {endDate}</React.Fragment>}
+            {config.showEndDate && (
+              <React.Fragment> &ndash; {endDate}</React.Fragment>
+            )}
             {config.showWorkLength && ` (${lengthWork})`}
           </Typography>
 
@@ -104,29 +127,40 @@ const ExperiencesListItem = ({ experience, onUpdate, onDelete, onSelect, selecta
           )}
 
           {experience.achievements.length
-            ? config.showAchievements && <AchievementsList achievements={experience.achievements} />
+            ? config.showAchievements && (
+                <AchievementsList achievements={experience.achievements} />
+              )
             : null}
         </Grid>
 
         <Grid item xs={2} className={classes.gridIcons}>
-            {selectable ? null : (<React.Fragment>
-          <IconButton 
-            onClick={() => setEditing(true)}
-            size='small'
-            aria-label="edit experience"
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton 
-            onClick={() => onDelete(experience)}
-            size='small'
-            aria-label="delete experience"
-          >
-            <DeleteIcon />
-          </IconButton>
-        </React.Fragment>)}
+          {selectable ? null : (
+            <React.Fragment>
+              <IconButton
+                onClick={() => setEditing(true)}
+                size="small"
+                aria-label="edit experience"
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => setOpenDeleteDialog(true)}
+                size="small"
+                aria-label="delete experience"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </React.Fragment>
+          )}
         </Grid>
       </Grid>
+      {openDeleteDialog && (
+        <DeleteExperience
+          experience={experience}
+          onDelete={() => onDelete(experience)}
+          handleCancel={() => setOpenDeleteDialog(false)}
+        />
+      )}
 
       {editing && (
         <AddOrEditExperienceForm
@@ -148,12 +182,19 @@ ExperiencesListItem.propTypes = {
     id: PropTypes.number.isRequired,
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    degree: PropTypes.oneOf(['High School', 'Associates', 'Undergraduate', 'Masters', 'Doctoral']),
+    degree: PropTypes.oneOf([
+      'High School',
+      'Associates',
+      'Undergraduate',
+      'Masters',
+      'Doctoral',
+    ]),
     start_month: PropTypes.string.isRequired,
     start_year: PropTypes.number.isRequired,
     end_month: PropTypes.string,
     end_year: PropTypes.number,
-    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
+    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
+      .isRequired,
     contact_id: PropTypes.number.isRequired,
     achievements: PropTypes.array,
     description: PropTypes.string,
