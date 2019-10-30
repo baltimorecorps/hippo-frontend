@@ -91,6 +91,25 @@ const AddOrEditExperienceForm = ({
     this.setState({ achievements: newAchievements });
   };
 
+  if (typeof values.start_year === String) {
+    values.start_year = null;
+  }
+
+  const {
+    type,
+    start_month,
+    end_month,
+    start_year,
+    end_year,
+    is_current,
+    location,
+    host,
+    title,
+    degree,
+    description,
+    achievements,
+  } = values;
+
   const inputLabelProps = {
     classes: {
       root: classes.labelRoot,
@@ -104,7 +123,7 @@ const AddOrEditExperienceForm = ({
 
   const handleFormSubmit = () => {
     // validate form values
-    const { isError, err } = experienceValidator(values, experience.type);
+    const { isError, err } = experienceValidator(values);
 
     if (isError) {
       setErrors(err);
@@ -112,10 +131,6 @@ const AddOrEditExperienceForm = ({
       return handleSubmit();
     }
   };
-
-  if (typeof values.start_year === String) {
-    values.start_year = null;
-  }
 
   return (
     <Dialog className={classes.modal} open={true}>
@@ -130,7 +145,7 @@ const AddOrEditExperienceForm = ({
                 id="host"
                 className={classes.formControl}
                 label={config.labels.host || 'Organization'}
-                value={values.host}
+                value={host}
                 name="host"
                 onChange={handleChange}
                 InputLabelProps={inputLabelProps}
@@ -144,10 +159,7 @@ const AddOrEditExperienceForm = ({
               <Grid item xs={12}>
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="degree">Degree</InputLabel>
-                  <DegreeDropdown
-                    value={values.degree}
-                    onChange={handleDegree}
-                  />
+                  <DegreeDropdown value={degree} onChange={handleDegree} />
                   <FormHelperText className={classes.formHelperText}>
                     {errors.degree_error || null}
                   </FormHelperText>
@@ -160,7 +172,7 @@ const AddOrEditExperienceForm = ({
                 id="title"
                 className={classes.formControl}
                 label={config.labels.title || 'Title'}
-                value={values.title}
+                value={title}
                 name="title"
                 onChange={handleChange}
                 InputLabelProps={inputLabelProps}
@@ -176,7 +188,7 @@ const AddOrEditExperienceForm = ({
                   id="city"
                   className={classes.formControl}
                   label="Location"
-                  value={values.location || ''}
+                  value={location || ''}
                   name="location"
                   handleLocationChange={handleLocation}
                 />
@@ -192,7 +204,7 @@ const AddOrEditExperienceForm = ({
                   experience.type === 'Accomplishment' ? 'Month' : 'Start Month'
                 }
                 name="start_month"
-                value={values.start_month}
+                value={start_month}
                 onChange={handleChange}
                 helperText={errors.startMonth_error || null}
               />
@@ -204,7 +216,7 @@ const AddOrEditExperienceForm = ({
                   experience.type === 'Accomplishment' ? 'Year' : 'Start Year'
                 }
                 name="start_year"
-                value={values.start_year}
+                value={start_year}
                 onChange={handleChange}
                 helperText={errors.startYear_error || null}
               />
@@ -213,14 +225,14 @@ const AddOrEditExperienceForm = ({
               <React.Fragment>
                 <Grid item xs={6}>
                   <SelectorForm
-                    disabled={values.is_current}
+                    disabled={is_current}
                     type="month"
-                    label={values.is_current ? 'Present' : 'End Month'}
+                    label={is_current ? 'Present' : 'End Month'}
                     name="end_month"
-                    value={values.end_month === 'none' ? '' : values.end_month}
+                    value={end_month === 'none' ? '' : end_month}
                     onChange={handleChange}
                     helperText={
-                      errors.endMonth_error && !values.is_current
+                      errors.endMonth_error && !is_current
                         ? errors.endMonth_error
                         : null
                     }
@@ -228,18 +240,14 @@ const AddOrEditExperienceForm = ({
                 </Grid>
                 <Grid item xs={6}>
                   <SelectorForm
-                    disabled={values.is_current}
+                    disabled={is_current}
                     type="year"
-                    label={values.is_current ? 'Present' : 'End Year'}
+                    label={is_current ? 'Present' : 'End Year'}
                     name="end_year"
-                    value={
-                      values.end_year === 0 || values.end_year === '0'
-                        ? ''
-                        : values.end_year
-                    }
+                    value={end_year === 0 || end_year === '0' ? '' : end_year}
                     onChange={handleChange}
                     helperText={
-                      errors.endYear_error && !values.is_current
+                      errors.endYear_error && !is_current
                         ? errors.endYear_error
                         : null
                     }
@@ -252,16 +260,16 @@ const AddOrEditExperienceForm = ({
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={values.is_current}
+                      checked={is_current}
                       onChange={handleIsCurrent}
-                      value={values.is_current}
+                      value={is_current}
                       name="is_current"
                       color="primary"
                       data-testid="is_current"
                     />
                   }
                   label={
-                    values.type === 'Education'
+                    type === 'Education'
                       ? 'I am currently enrolled'
                       : 'I am currently working in this role'
                   }
@@ -273,7 +281,7 @@ const AddOrEditExperienceForm = ({
                 <TextField
                   className={classes.formControl}
                   label={config.labels.description || 'Description'}
-                  value={values.description}
+                  value={description}
                   name="description"
                   id="description"
                   multiline
@@ -288,7 +296,7 @@ const AddOrEditExperienceForm = ({
               <Grid item xs={12}>
                 <AchievementInputsList
                   contactId={experience.contact_id}
-                  achievements={values.achievements}
+                  achievements={achievements}
                   onChange={handleAchievements}
                   InputLabelProps={inputLabelProps}
                   InputProps={inputProps}
