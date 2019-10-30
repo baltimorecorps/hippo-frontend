@@ -219,6 +219,8 @@ describe('AddOrEditExperienceForm', () => {
       host: 'New Award',
       start_month: 'January',
       start_year: '2015',
+      end_month: 'none',
+      end_year: 0,
       title: 'Test Title',
       type: 'Accomplishment',
       is_current: true,

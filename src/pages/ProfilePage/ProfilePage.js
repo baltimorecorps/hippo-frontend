@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,6 +12,8 @@ import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import BasicInfoDisplay from 'modules/Users/BasicInfoDisplay';
@@ -57,9 +60,11 @@ const ProfilePage = ({
   generateResume,
   classes,
   showResumeDialog,
+  showResumeSpinner,
   inSelectMode,
 }) => {
   const scrollTo = useScroll();
+  const [resumeLink, setResumeLink] = useState(null);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -74,10 +79,11 @@ const ProfilePage = ({
     ? contactInfo.email_primary.email
     : '';
 
-  const genResumeLocal = () => {
+  const genResumeLocal = async () => {
     // TODO: How should we get the resume name for real?
     const resumeName = `${contactInfo.first_name}_${contactInfo.last_name}_${(new Date()).getTime()}`;
-    generateResume(contactId, resumeName, resume);
+    const response = await generateResume(contactId, resumeName, resume);
+    setResumeLink(`/resume/${response.body.data.gdoc_id}`);
   }
 
   const startSelectLocal = () => {
@@ -94,9 +100,19 @@ const ProfilePage = ({
     <React.Fragment>
       <ResumeDialog
         open={showResumeDialog}
+        onCancel={cancelResumeSelect}
         highlightExperiences={startSelectLocal}
         useStandardProfile={genResumeLocal}
       />
+      <Modal open={showResumeSpinner}>
+        <Grid container justify="center" alignItems="center"
+          className={classes.progress}
+        >
+          <CircularProgress />
+        </Grid>
+      </Modal>
+      {resumeLink ? <Redirect to={resumeLink} /> : null }
+
       {inSelectMode ? (
         <SelectionDrawer
           onNext={genResumeLocal}
@@ -119,13 +135,13 @@ const ProfilePage = ({
 
           <ExperiencesList contactId={contactId} experienceType="Work" />
           <ExperiencesList contactId={contactId} experienceType="Education" />
-          <ExperiencesList contactId={contactId} experienceType="Service" />
+          {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
           <ExperiencesList
             contactId={contactId}
             experienceType="Accomplishment"
           />
 
-          <ResumesList />
+          {/*<ResumesList />*/}
         </Grid>
       </Grid>
 
@@ -189,9 +205,12 @@ const dialogStyles = ({ breakpoints, palette, spacing, shadows }) => ({
 });
 
 const ResumeDialog = withStyles(dialogStyles)(
-  ({ open, highlightExperiences, useStandardProfile, classes }) => {
+  ({ open, onCancel, highlightExperiences, useStandardProfile, classes }) => {
     return (
-      <Dialog open={open}>
+      <Dialog 
+        open={open}
+        onClose={onCancel}
+      >
         <DialogTitle>Choose Resume Style</DialogTitle>
         <DialogContent>
           <Grid container className={classes.container} justify="center">
@@ -310,6 +329,9 @@ const styles = ({ breakpoints, palette, spacing, shadows }) => ({
   },
   leftIcon: {
     marginRight: spacing(1),
+  },
+  progress: {
+    height: '100%',
   },
 });
 

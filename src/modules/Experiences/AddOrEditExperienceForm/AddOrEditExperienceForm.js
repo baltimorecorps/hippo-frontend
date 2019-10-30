@@ -64,6 +64,12 @@ const AddOrEditExperienceForm = ({
   handleCancel,
   classes,
 }) => {
+  const config = configureForm(experience.type);
+  if (!config.showEndDate) {
+    experience['end_year'] = 0;
+    experience['end_month'] = 'none';
+  }
+
   const [
     values,
     {
@@ -75,8 +81,6 @@ const AddOrEditExperienceForm = ({
       handleIsCurrent,
     },
   ] = useForm(experience, onSubmit);
-
-  const config = configureForm(experience.type);
 
   // eslint-disable-next-line no-unused-vars
   const handleChangeDescription = (idx) => (evt) => {

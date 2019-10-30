@@ -51,11 +51,13 @@ const getExperienceKey = (experience) => {
 
 const genInitState = () => ({
   resumeCreationStep: RESUME_CREATION.NOT_ACTIVE,
+  inProgress: false,
   selected: {
     experience: [],
     education: [],
     accomplishments: [],
   },
+  resumes: [],
 })
 
 export const resumeReducer = createReducer(genInitState(),
@@ -98,8 +100,18 @@ export const resumeReducer = createReducer(genInitState(),
         (id) => id !== action.experience.id,
       );
     },
+    [GENERATE_RESUME_API.REQUEST]: (state, action) => {
+      state.inProgress = true;
+    },
     [GENERATE_RESUME_API.RESOLVE]: (state, action) => {
-      return genInitState();
+      const initState = genInitState();
+      state.resumeCreationStep = initState.resumeCreationStep;
+      state.selected = initState.selected;
+      state.resumes.push(action.body.data);
+      state.inProgress = false;
+    },
+    [GENERATE_RESUME_API.REJECT]: (state, action) => {
+      state.inProgress = false;
     },
 
   },

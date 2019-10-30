@@ -55,6 +55,7 @@ describe('ProfilePage', () => {
           startResumeSelect={jest.fn()}
           cancelResumeSelect={jest.fn()}
           showResumeDialog={false}
+          showResumeSpinner={false}
           inSelectMode={false}
         />
         </Router>
@@ -85,6 +86,7 @@ describe('ProfilePage', () => {
           startResumeSelect={start}
           cancelResumeSelect={jest.fn()}
           showResumeDialog={true}
+          showResumeSpinner={false}
           inSelectMode={false}
         />
         </Router>
@@ -114,6 +116,7 @@ describe('ProfilePage', () => {
           startResumeSelect={jest.fn()}
           cancelResumeSelect={cancel}
           showResumeDialog={false}
+          showResumeSpinner={false}
           inSelectMode={true}
         />
         </Router>
@@ -145,6 +148,7 @@ describe('ProfilePage', () => {
           startResumeSelect={jest.fn()}
           cancelResumeSelect={jest.fn()}
           showResumeDialog={false}
+          showResumeSpinner={false}
           inSelectMode={false}
         />
         </Router>
@@ -157,7 +161,6 @@ describe('ProfilePage', () => {
 
     expect(queryByText(/experience/i)).not.toBeNull();
     expect(queryByText(/education/i)).not.toBeNull();
-    expect(queryByText(/service and leaders/i)).not.toBeNull();
     expect(queryByText(/accomplishments/i)).not.toBeNull();
   });
 });

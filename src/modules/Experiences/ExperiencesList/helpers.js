@@ -77,7 +77,7 @@ const configureForm = (expType) => {
       },
       showEndDate: true,
       showDegree: true,
-      showDescription: true,
+      showDescription: false,
       showAchievements: true,
       showLocation: true,
     };
