@@ -58,7 +58,12 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }) => {
+const AddOrEditExperienceForm = ({
+  experience,
+  onSubmit,
+  handleCancel,
+  classes,
+}) => {
   const [
     values,
     {
@@ -135,7 +140,10 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
               <Grid item xs={12}>
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="degree">Degree</InputLabel>
-                  <DegreeDropdown value={values.degree} onChange={handleDegree} />
+                  <DegreeDropdown
+                    value={values.degree}
+                    onChange={handleDegree}
+                  />
                   <FormHelperText className={classes.formHelperText}>
                     {errors.degree_error || null}
                   </FormHelperText>
@@ -176,7 +184,9 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
             <Grid item xs={6}>
               <SelectorForm
                 type="month"
-                label={experience.type === 'Accomplishment' ? 'Month' : 'Start Month'}
+                label={
+                  experience.type === 'Accomplishment' ? 'Month' : 'Start Month'
+                }
                 name="start_month"
                 value={values.start_month}
                 onChange={handleChange}
@@ -186,7 +196,9 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
             <Grid item xs={6}>
               <SelectorForm
                 type="year"
-                label={experience.type === 'Accomplishment' ? 'Year' : 'Start Year'}
+                label={
+                  experience.type === 'Accomplishment' ? 'Year' : 'Start Year'
+                }
                 name="start_year"
                 value={values.start_year}
                 onChange={handleChange}
@@ -204,7 +216,9 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                     value={values.end_month === 'none' ? '' : values.end_month}
                     onChange={handleChange}
                     helperText={
-                      errors.endMonth_error && !values.is_current ? errors.endMonth_error : null
+                      errors.endMonth_error && !values.is_current
+                        ? errors.endMonth_error
+                        : null
                     }
                   />
                 </Grid>
@@ -214,10 +228,16 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
                     type="year"
                     label={values.is_current ? 'Present' : 'End Year'}
                     name="end_year"
-                    value={values.end_year === 0 || values.end_year === '0' ? '' : values.end_year}
+                    value={
+                      values.end_year === 0 || values.end_year === '0'
+                        ? ''
+                        : values.end_year
+                    }
                     onChange={handleChange}
                     helperText={
-                      errors.endYear_error && !values.is_current ? errors.endYear_error : null
+                      errors.endYear_error && !values.is_current
+                        ? errors.endYear_error
+                        : null
                     }
                   />
                 </Grid>
@@ -275,7 +295,11 @@ const AddOrEditExperienceForm = ({ experience, onSubmit, handleCancel, classes }
         </DialogContent>
 
         <DialogActions className={classes.dialogAction}>
-          <Button variant="contained" color="primary" onClick={handleFormSubmit}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleFormSubmit}
+          >
             Save
           </Button>
           <Button onClick={handleCancel}>Cancel</Button>
@@ -309,7 +333,7 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     fontSize: 19,
   },
   formHelperText: {
-    color: '#eb0000',
+    color: palette.error.main,
     marginTop: '2px',
   },
 });
@@ -333,7 +357,8 @@ AddOrEditExperienceForm.propTypes = {
     start_year: PropTypes.string.isRequired,
     end_month: PropTypes.string,
     end_year: PropTypes.string,
-    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
+    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
+      .isRequired,
     contact_id: PropTypes.number,
     achievements: PropTypes.array,
   }).isRequired,

@@ -8,6 +8,10 @@ const theme = createMuiTheme({
     secondary: {
       main: 'hsl(232, 57%, 26%)',
     },
+    error: {
+      main: 'hsl(0, 88%, 44%)',
+      dark: 'hsl(0, 89%, 40%)',
+    },
   },
   typography: {
     // useNextVariants: true,

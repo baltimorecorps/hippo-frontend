@@ -105,7 +105,11 @@ const AddContact = ({ classes, addNewContact }) => {
       >
         New Profile
       </Button>
-      <Dialog open={open} onClose={() => setOpen(false)} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title" className={classes.header}>
           <span style={{ fontWeight: 700 }}>Add New Profile</span>
         </DialogTitle>
@@ -174,10 +178,19 @@ const AddContact = ({ classes, addNewContact }) => {
         </DialogContent>
 
         <DialogActions className={classes.actions}>
-          <Button onClick={submit} variant="contained" color="primary" style={{ fontWeight: 600 }}>
+          <Button
+            onClick={submit}
+            variant="contained"
+            color="primary"
+            style={{ fontWeight: 600 }}
+          >
             Create Profile
           </Button>
-          <Button onClick={() => setOpen(false)} color="primary" style={{ fontWeight: 600 }}>
+          <Button
+            onClick={() => setOpen(false)}
+            color="primary"
+            style={{ fontWeight: 600 }}
+          >
             Cancel
           </Button>
         </DialogActions>
@@ -215,7 +228,7 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     fontSize: 19,
   },
   formHelperText: {
-    color: '#eb0000',
+    color: palette.error.main,
     marginTop: '2px',
     marginBottom: '4px',
   },

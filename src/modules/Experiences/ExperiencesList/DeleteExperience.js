@@ -10,15 +10,24 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const DeleteExperience = ({ experience, onDelete, classes, handleCancel }) => {
-  const experienceName = `${experience.host} - ${experience.title}`;
+  let experienceName = 'this item';
+
+  if (experience.host && experience.title) {
+    experienceName = (
+      <React.Fragment>
+        <br />
+        <span className={classes.experienceName}>
+          {experience.host} &mdash; {experience.title}
+        </span>
+      </React.Fragment>
+    );
+  }
 
   return (
     <Dialog open={true}>
       <DialogContent className={classes.dialogContent}>
         <Typography align="center">
-          Are you sure you want to delete
-          <br />
-          <span className={classes.experienceName}>{experienceName}</span>?
+          Are you sure you want to delete {experienceName}?
         </Typography>
       </DialogContent>
       <DialogActions className={classes.dialogAction} align="between">
@@ -51,9 +60,9 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   },
   delete: {
     '&:hover': {
-      backgroundColor: '#d10d0d',
+      backgroundColor: palette.error.main,
       color: '#ffffff',
-      borderColor: '#bf0b0b',
+      borderColor: palette.error.dark,
     },
   },
   experienceName: {
