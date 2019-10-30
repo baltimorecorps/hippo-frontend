@@ -78,6 +78,7 @@ describe('Experience Form Validations', () => {
 
   test('Education: empty values', () => {
     const values = {
+      type: 'Education',
       host: '',
       title: '',
       degree: '',
@@ -107,6 +108,7 @@ describe('Experience Form Validations', () => {
 
   test('Education: valid values', () => {
     const values = {
+      type: 'Education',
       host: 'CCBC',
       title: 'Computer Science',
       degree: 'Associates',
