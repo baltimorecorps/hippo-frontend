@@ -30,11 +30,9 @@ const experienceValidator = (values) => {
     err.host_error = 'Required';
   }
 
-  if (type === 'Education') {
-    if (!degree) {
-      isError = true;
-      err.degree_error = 'Required';
-    }
+  if (type === 'Education' && !degree) {
+    isError = true;
+    err.degree_error = 'Required';
   }
 
   if (!title) {
@@ -54,14 +52,12 @@ const experienceValidator = (values) => {
     err.startYear_error = 'Required';
   }
 
-  if (type !== 'Accomplishment') {
-    if (!location) {
-      isError = true;
-      err.location_error = 'Required';
-    }
+  if (type !== 'Accomplishment' && !location) {
+    isError = true;
+    err.location_error = 'Required';
   }
 
-  // require end_mont and end_year if is_current is false
+  // require end_month and end_year if is_current is false
   if (type !== 'Accomplishment' && is_current === false) {
     if (!end_month || !monthFullNames.includes(end_month)) {
       isError = true;
