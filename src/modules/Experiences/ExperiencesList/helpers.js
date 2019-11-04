@@ -84,4 +84,52 @@ const configureForm = (expType) => {
   }
 };
 
-export { formatMonthYearDate, getWorkLength, configureForm };
+const monthScore = {
+  January: 1,
+  February: 2,
+  March: 3,
+  April: 4,
+  May: 5,
+  June: 6,
+  July: 7,
+  August: 8,
+  September: 9,
+  October: 10,
+  November: 11,
+  December: 12,
+};
+
+const getMonthScore = (experiences) => {
+  console.log(experiences);
+
+  experiences.map((exp) => {
+    const endMonthName = exp['end_month'];
+    const startMonthName = exp['start_month'];
+    const endMonthScore = monthScore[endMonthName];
+    const startMonthScore = monthScore[startMonthName];
+    exp.end_month_score = endMonthScore;
+    exp.start_month_score = startMonthScore;
+  });
+
+  return experiences;
+};
+
+const sortExperiences = (experiences) => {
+  const experiencesWithScores = getMonthScore(experiences);
+
+  experiencesWithScores.sort(function(exp1, exp2) {
+    // if is_current is True sort from start month/year
+    if (exp1.is_current === true && exp2.is_current === true) {
+      if (exp1.start_month_score > exp2.start_month_score) return -1;
+      if (exp1.start_month_score < exp2.start_month_score) return 1;
+      if (exp1.start_year > exp2.start_year) return -1;
+      if (exp1.start_year < exp2.start_year) return 1;
+    }
+    if (exp1.is_current === false) {
+    }
+  });
+
+  return experiences;
+};
+
+export { formatMonthYearDate, getWorkLength, configureForm, sortExperiences };
