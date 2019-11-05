@@ -133,191 +133,175 @@ const AddOrEditExperienceForm = ({
   };
 
   return (
-    <Dialog className={classes.modal} open={true}>
-      <form autoComplete="off">
-        <DialogContent className={classes.dialogContent}>
-          <Grid container spacing={1} justify="space-between">
-            <Grid item xs={12} />
+    <Grid container spacing={1} justify="space-between">
+      <Grid item xs={12} />
 
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="host"
-                className={classes.formControl}
-                label={config.labels.host || 'Organization'}
-                value={host}
-                name="host"
-                onChange={handleChange}
-                InputLabelProps={inputLabelProps}
-                InputProps={inputProps}
-              />
-              <FormHelperText className={classes.formHelperText}>
-                {errors.host_error || null}
-              </FormHelperText>
-            </Grid>
-            {config.showDegree && (
-              <Grid item xs={12}>
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="degree">Degree</InputLabel>
-                  <DegreeDropdown value={degree} onChange={handleDegree} />
-                  <FormHelperText className={classes.formHelperText}>
-                    {errors.degree_error || null}
-                  </FormHelperText>
-                </FormControl>
-              </Grid>
-            )}
-            <Grid item xs={12}>
-              <TextField
-                required
-                id="title"
-                className={classes.formControl}
-                label={config.labels.title || 'Title'}
-                value={title}
-                name="title"
-                onChange={handleChange}
-                InputLabelProps={inputLabelProps}
-                InputProps={inputProps}
-              />
-              <FormHelperText className={classes.formHelperText}>
-                {errors.title_error || null}
-              </FormHelperText>
-            </Grid>
-            {config.showLocation && (
-              <Grid item xs={12}>
-                <LocationTextField
-                  id="city"
-                  className={classes.formControl}
-                  label="Location"
-                  value={location || ''}
-                  name="location"
-                  handleLocationChange={handleLocation}
-                />
-                <FormHelperText className={classes.formHelperText}>
-                  {errors.location_error || null}
-                </FormHelperText>
-              </Grid>
-            )}
-            <Grid item xs={6}>
-              <SelectorForm
-                type="month"
-                label={
-                  experience.type === 'Accomplishment' ? 'Month' : 'Start Month'
-                }
-                name="start_month"
-                value={start_month}
-                onChange={handleChange}
-                helperText={errors.startMonth_error || null}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <SelectorForm
-                type="year"
-                label={
-                  experience.type === 'Accomplishment' ? 'Year' : 'Start Year'
-                }
-                name="start_year"
-                value={start_year}
-                onChange={handleChange}
-                helperText={errors.startYear_error || null}
-              />
-            </Grid>
-            {config.showEndDate ? (
-              <React.Fragment>
-                <Grid item xs={6}>
-                  <SelectorForm
-                    disabled={is_current}
-                    type="month"
-                    label={is_current ? 'Present' : 'End Month'}
-                    name="end_month"
-                    value={end_month === 'none' ? '' : end_month}
-                    onChange={handleChange}
-                    helperText={
-                      errors.endMonth_error && !is_current
-                        ? errors.endMonth_error
-                        : null
-                    }
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <SelectorForm
-                    disabled={is_current}
-                    type="year"
-                    label={is_current ? 'Present' : 'End Year'}
-                    name="end_year"
-                    value={end_year === 0 || end_year === '0' ? '' : end_year}
-                    onChange={handleChange}
-                    helperText={
-                      errors.endYear_error && !is_current
-                        ? errors.endYear_error
-                        : null
-                    }
-                  />
-                </Grid>
-              </React.Fragment>
-            ) : null}
-            {config.showEndDate && (
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={is_current}
-                      onChange={handleIsCurrent}
-                      value={is_current}
-                      name="is_current"
-                      color="primary"
-                      data-testid="is_current"
-                    />
-                  }
-                  label={
-                    type === 'Education'
-                      ? 'I am currently enrolled'
-                      : 'I am currently working in this role'
-                  }
-                />
-              </Grid>
-            )}
-            {config.showDescription && (
-              <Grid item xs={12}>
-                <TextField
-                  className={classes.formControl}
-                  label={config.labels.description || 'Description'}
-                  value={description}
-                  name="description"
-                  id="description"
-                  multiline
-                  rows={4}
-                  onChange={handleChange}
-                  InputLabelProps={inputLabelProps}
-                  InputProps={inputProps}
-                />
-              </Grid>
-            )}
-            {config.showAchievements && (
-              <Grid item xs={12}>
-                <AchievementInputsList
-                  contactId={experience.contact_id}
-                  achievements={achievements}
-                  onChange={handleAchievements}
-                  InputLabelProps={inputLabelProps}
-                  InputProps={inputProps}
-                />
-              </Grid>
-            )}
+      <Grid item xs={12}>
+        <TextField
+          required
+          id="host"
+          className={classes.formControl}
+          label={config.labels.host || 'Organization'}
+          value={host}
+          name="host"
+          onChange={handleChange}
+          InputLabelProps={inputLabelProps}
+          InputProps={inputProps}
+        />
+        <FormHelperText className={classes.formHelperText}>
+          {errors.host_error || null}
+        </FormHelperText>
+      </Grid>
+      {config.showDegree && (
+        <Grid item xs={12}>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="degree">Degree</InputLabel>
+            <DegreeDropdown value={degree} onChange={handleDegree} />
+            <FormHelperText className={classes.formHelperText}>
+              {errors.degree_error || null}
+            </FormHelperText>
+          </FormControl>
+        </Grid>
+      )}
+      <Grid item xs={12}>
+        <TextField
+          required
+          id="title"
+          className={classes.formControl}
+          label={config.labels.title || 'Title'}
+          value={title}
+          name="title"
+          onChange={handleChange}
+          InputLabelProps={inputLabelProps}
+          InputProps={inputProps}
+        />
+        <FormHelperText className={classes.formHelperText}>
+          {errors.title_error || null}
+        </FormHelperText>
+      </Grid>
+      {config.showLocation && (
+        <Grid item xs={12}>
+          <LocationTextField
+            id="city"
+            className={classes.formControl}
+            label="Location"
+            value={location || ''}
+            name="location"
+            handleLocationChange={handleLocation}
+          />
+          <FormHelperText className={classes.formHelperText}>
+            {errors.location_error || null}
+          </FormHelperText>
+        </Grid>
+      )}
+      <Grid item xs={6}>
+        <SelectorForm
+          type="month"
+          label={experience.type === 'Accomplishment' ? 'Month' : 'Start Month'}
+          name="start_month"
+          value={start_month}
+          onChange={handleChange}
+          helperText={errors.startMonth_error || null}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SelectorForm
+          type="year"
+          label={experience.type === 'Accomplishment' ? 'Year' : 'Start Year'}
+          name="start_year"
+          value={start_year}
+          onChange={handleChange}
+          helperText={errors.startYear_error || null}
+        />
+      </Grid>
+      {config.showEndDate ? (
+        <React.Fragment>
+          <Grid item xs={6}>
+            <SelectorForm
+              disabled={is_current}
+              type="month"
+              label={is_current ? 'Present' : 'End Month'}
+              name="end_month"
+              value={end_month === 'none' ? '' : end_month}
+              onChange={handleChange}
+              helperText={
+                errors.endMonth_error && !is_current
+                  ? errors.endMonth_error
+                  : null
+              }
+            />
           </Grid>
-        </DialogContent>
+          <Grid item xs={6}>
+            <SelectorForm
+              disabled={is_current}
+              type="year"
+              label={is_current ? 'Present' : 'End Year'}
+              name="end_year"
+              value={end_year === 0 || end_year === '0' ? '' : end_year}
+              onChange={handleChange}
+              helperText={
+                errors.endYear_error && !is_current
+                  ? errors.endYear_error
+                  : null
+              }
+            />
+          </Grid>
+        </React.Fragment>
+      ) : null}
+      {config.showEndDate && (
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={is_current}
+                onChange={handleIsCurrent}
+                value={is_current}
+                name="is_current"
+                color="primary"
+                data-testid="is_current"
+              />
+            }
+            label={
+              type === 'Education'
+                ? 'I am currently enrolled'
+                : 'I am currently working in this role'
+            }
+          />
+        </Grid>
+      )}
+      {config.showDescription && (
+        <Grid item xs={12}>
+          <TextField
+            className={classes.formControl}
+            label={config.labels.description || 'Description'}
+            value={description}
+            name="description"
+            id="description"
+            multiline
+            rows={4}
+            onChange={handleChange}
+            InputLabelProps={inputLabelProps}
+            InputProps={inputProps}
+          />
+        </Grid>
+      )}
+      {config.showAchievements && (
+        <Grid item xs={12}>
+          <AchievementInputsList
+            contactId={experience.contact_id}
+            achievements={achievements}
+            onChange={handleAchievements}
+            InputLabelProps={inputLabelProps}
+            InputProps={inputProps}
+          />
+        </Grid>
+      )}
 
-        <DialogActions className={classes.dialogAction}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleFormSubmit}
-          >
-            Save
-          </Button>
-          <Button onClick={handleCancel}>Cancel</Button>
-        </DialogActions>
-      </form>
-    </Dialog>
+      <Button onClick={handleCancel}>Cancel</Button>
+      <Button variant="contained" color="primary" onClick={handleFormSubmit}>
+        Save
+      </Button>
+    </Grid>
   );
 };
 

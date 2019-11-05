@@ -72,102 +72,105 @@ const ExperiencesListItem = ({
         )}
 
         <Grid item xs={8} md={9}>
-          <Typography
-            variant="h6"
-            component="h2"
-            style={{
-              fontWeight: '700',
-            }}
-          >
-            {experience.host}
-
-            {experience.location ? (
-              <span
+          {!editing && (
+            <React.Fragment>
+              <Typography
+                variant="h6"
+                component="h2"
                 style={{
-                  color: '#7d7d7d',
-                  fontSize: '15px',
-                  fontStyle: 'italic',
-                  fontWeight: 'normal',
+                  fontWeight: '700',
                 }}
               >
-                {location}
-              </span>
-            ) : null}
-          </Typography>
+                {experience.host}
 
-          <Typography
-            variant="subtitle1"
-            component="h3"
-            style={{
-              fontSize: '17px',
-              color: '#3b3b3b',
-              fontWeight: 'bold',
-              fontFamily: 'Lato',
-            }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            gutterBottom
-            variant="subtitle1"
-            component="p"
-            style={{ color: '#7d7d7d', fontSize: '15px' }}
-          >
-            {startDate}
-            {config.showEndDate && (
-              <React.Fragment> &ndash; {endDate}</React.Fragment>
-            )}
-            {config.showWorkLength && ` (${lengthWork})`}
-          </Typography>
+                {experience.location ? (
+                  <span
+                    style={{
+                      color: '#7d7d7d',
+                      fontSize: '15px',
+                      fontStyle: 'italic',
+                      fontWeight: 'normal',
+                    }}
+                  >
+                    {location}
+                  </span>
+                ) : null}
+              </Typography>
 
-          {experience.description && (
-            <Typography gutterBottom variant="body1" component="p">
-              {experience.description}
-            </Typography>
-          )}
-
-          {experience.achievements.length
-            ? config.showAchievements && (
-                <AchievementsList achievements={experience.achievements} />
-              )
-            : null}
-        </Grid>
-
-        <Grid item xs={2} className={classes.gridIcons}>
-          {selectable ? null : (
-            <React.Fragment>
-              <IconButton
-                onClick={() => setEditing(true)}
-                size="small"
-                aria-label="edit experience"
+              <Typography
+                variant="subtitle1"
+                component="h3"
+                style={{
+                  fontSize: '17px',
+                  color: '#3b3b3b',
+                  fontWeight: 'bold',
+                  fontFamily: 'Lato',
+                }}
               >
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => setOpenDeleteDialog(true)}
-                size="small"
-                aria-label="delete experience"
+                {title}
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="subtitle1"
+                component="p"
+                style={{ color: '#7d7d7d', fontSize: '15px' }}
               >
-                <DeleteIcon />
-              </IconButton>
+                {startDate}
+                {config.showEndDate && (
+                  <React.Fragment> &ndash; {endDate}</React.Fragment>
+                )}
+                {config.showWorkLength && ` (${lengthWork})`}
+              </Typography>
+
+              {experience.description && (
+                <Typography gutterBottom variant="body1" component="p">
+                  {experience.description}
+                </Typography>
+              )}
+
+              {experience.achievements.length
+                ? config.showAchievements && (
+                    <AchievementsList achievements={experience.achievements} />
+                  )
+                : null}
             </React.Fragment>
           )}
+          {editing && (
+            <AddOrEditExperienceForm
+              handleCancel={() => setEditing(false)}
+              labels={{}}
+              onSubmit={submitUpdate}
+              experience={experience}
+            />
+          )}
         </Grid>
+
+          <Grid item xs={2} className={classes.gridIcons}>
+            {editing || selectable ? null : (
+              <React.Fragment>
+                <IconButton
+                  onClick={() => setEditing(true)}
+                  size="small"
+                  aria-label="edit experience"
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  onClick={() => setOpenDeleteDialog(true)}
+                  size="small"
+                  aria-label="delete experience"
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </React.Fragment>
+            )}
+          </Grid>
       </Grid>
       {openDeleteDialog && (
         <DeleteExperience
           experience={experience}
           onDelete={() => onDelete(experience)}
           handleCancel={() => setOpenDeleteDialog(false)}
-        />
-      )}
-
-      {editing && (
-        <AddOrEditExperienceForm
-          handleCancel={() => setEditing(false)}
-          labels={{}}
-          onSubmit={submitUpdate}
-          experience={experience}
         />
       )}
     </React.Fragment>

@@ -94,7 +94,16 @@ const ExperiencesList = ({
 
           <Divider className={classes.divider} />
 
+          {showForm && (
+            <AddOrEditExperienceForm
+              experience={blankExperience}
+              onSubmit={submitNewExperience}
+              handleCancel={() => setShowForm(false)}
+            />
+          )}
+
           {experiences.map((experience) => (
+
             <ExperiencesListItem
               key={experience.id}
               onUpdate={updateExperience}
@@ -107,13 +116,6 @@ const ExperiencesList = ({
         </Paper>
       </Grid>
 
-      {showForm && (
-        <AddOrEditExperienceForm
-          experience={blankExperience}
-          onSubmit={submitNewExperience}
-          handleCancel={() => setShowForm(false)}
-        />
-      )}
     </Grid>
   );
 };
