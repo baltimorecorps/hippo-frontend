@@ -100,15 +100,13 @@ const monthScore = {
 };
 
 const getMonthScore = (experiences) => {
-  console.log(experiences);
-
   experiences.map((exp) => {
-    const endMonthName = exp['end_month'];
-    const startMonthName = exp['start_month'];
-    const endMonthScore = monthScore[endMonthName];
-    const startMonthScore = monthScore[startMonthName];
-    exp.end_month_score = endMonthScore;
-    exp.start_month_score = startMonthScore;
+    exp.start_month_score = monthScore[exp.start_month];
+
+    // handle end_month === 'none'
+    if (exp.is_current === false) {
+      exp.end_month_score = monthScore[exp.end_month];
+    }
   });
 
   return experiences;
@@ -117,19 +115,30 @@ const getMonthScore = (experiences) => {
 const sortExperiences = (experiences) => {
   const experiencesWithScores = getMonthScore(experiences);
 
-  experiencesWithScores.sort(function(exp1, exp2) {
-    // if is_current is True sort from start month/year
-    if (exp1.is_current === true && exp2.is_current === true) {
-      if (exp1.start_month_score > exp2.start_month_score) return -1;
-      if (exp1.start_month_score < exp2.start_month_score) return 1;
+  const sortedExperiences = experiencesWithScores.sort(function(exp1, exp2) {
+    // if is_current is True or have the same end month/year
+    // sort from start month/year (newest experience)
+    if (exp1.end_month === exp2.end_month && exp1.end_year === exp2.end_year) {
       if (exp1.start_year > exp2.start_year) return -1;
       if (exp1.start_year < exp2.start_year) return 1;
+      if (exp1.start_month_score > exp2.start_month_score) return -1;
+      if (exp1.start_month_score < exp2.start_month_score) return 1;
+    } else if (exp1.is_current === false && exp2.is_current === false) {
+      if (exp1.end_year > exp2.end_year) return -1;
+      if (exp1.end_year < exp2.end_year) return 1;
+      if (exp1.end_month_score > exp2.end_month_score) return -1;
+      if (exp1.end_month_score < exp2.end_month_score) return 1;
     }
-    if (exp1.is_current === false) {
-    }
+    if (exp1.is_current === true) return -1;
   });
 
-  return experiences;
+  return sortedExperiences;
 };
 
-export { formatMonthYearDate, getWorkLength, configureForm, sortExperiences };
+export {
+  formatMonthYearDate,
+  getWorkLength,
+  configureForm,
+  getMonthScore,
+  sortExperiences,
+};

@@ -70,7 +70,6 @@ const ExperiencesList = ({
   let sortedExperiences = [];
   if (experiences.length > 0) {
     sortedExperiences = sortExperiences(experiences);
-    console.log('sorted exp', sortedExperiences);
   }
 
   return (
