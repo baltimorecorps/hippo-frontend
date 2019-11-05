@@ -3,7 +3,14 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const LocationTextField = ({ value, handleLocationChange, name, classes, className, label }) => {
+const LocationTextField = ({
+  value,
+  handleLocationChange,
+  name,
+  classes,
+  className,
+  label,
+}) => {
   const handleChange = (address) => {
     handleLocationChange(address);
   };
@@ -23,8 +30,13 @@ const LocationTextField = ({ value, handleLocationChange, name, classes, classNa
 
   const inputProps = { classes: { input: classes.resize } };
 
+  const handleError = (status, clearSuggestions) => {
+    console.log('Google Maps API returned error with status: ', status);
+    clearSuggestions();
+  };
   return (
     <PlacesAutocomplete
+      onError={handleError}
       value={value}
       onChange={handleChange}
       onSelect={handleSelect}
@@ -47,10 +59,20 @@ const LocationTextField = ({ value, handleLocationChange, name, classes, classNa
           <div className="autocomplete-dropdown-container">
             {loading && <div>Loading...</div>}
             {suggestions.map((suggestion) => {
-              const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
+              const className = suggestion.active
+                ? 'suggestion-item--active'
+                : 'suggestion-item';
               const style = suggestion.active
-                ? { backgroundColor: '#fafafa', cursor: 'pointer', fontFamily: 'Lato' }
-                : { backgroundColor: '#ffffff', cursor: 'pointer', fontFamily: 'Lato' };
+                ? {
+                    backgroundColor: '#fafafa',
+                    cursor: 'pointer',
+                    fontFamily: 'Lato',
+                  }
+                : {
+                    backgroundColor: '#ffffff',
+                    cursor: 'pointer',
+                    fontFamily: 'Lato',
+                  };
               return (
                 <div
                   {...getSuggestionItemProps(suggestion, {
