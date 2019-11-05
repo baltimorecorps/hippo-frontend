@@ -103,7 +103,7 @@ const getMonthScore = (experiences) => {
   experiences.map((exp) => {
     exp.start_month_score = monthScore[exp.start_month];
 
-    // handle end_month === 'none'
+    // exclude end_month === 'none'
     if (exp.is_current === false) {
       exp.end_month_score = monthScore[exp.end_month];
     }
