@@ -7,10 +7,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import AddIcon from '@material-ui/icons/Add'
+import AddIcon from '@material-ui/icons/Add';
 
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import ExperiencesListItem from './ExperiencesListItem';
+
+import { sortExperiences } from './helpers';
 
 const ExperiencesList = ({
   contactId,
@@ -59,10 +61,15 @@ const ExperiencesList = ({
 
   const makeSelectExperience = (experience) => (event) => {
     if (event.target.checked) {
-      selectExperience(experience)
+      selectExperience(experience);
     } else {
-      deselectExperience(experience)
+      deselectExperience(experience);
     }
+  };
+
+  let sortedExperiences = [];
+  if (experiences.length > 0) {
+    sortedExperiences = sortExperiences(experiences);
   }
 
   return (
@@ -82,19 +89,21 @@ const ExperiencesList = ({
               </Typography>
             </Grid>
             <Grid item>
-                {inSelectMode ? null :
-                    <IconButton 
-                      className={classes.addButton}
-                      aria-label="add new experience"
-                      onClick={() => setShowForm(true)}>
-                    <AddIcon />
-                    </IconButton>}
+              {inSelectMode ? null : (
+                <IconButton
+                  className={classes.addButton}
+                  aria-label="add new experience"
+                  onClick={() => setShowForm(true)}
+                >
+                  <AddIcon />
+                </IconButton>
+              )}
             </Grid>
           </Grid>
 
           <Divider className={classes.divider} />
 
-          {experiences.map((experience) => (
+          {sortedExperiences.map((experience) => (
             <ExperiencesListItem
               key={experience.id}
               onUpdate={updateExperience}
@@ -120,7 +129,12 @@ const ExperiencesList = ({
 
 ExperiencesList.propTypes = {
   contactId: PropTypes.number.isRequired,
-  experienceType: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
+  experienceType: PropTypes.oneOf([
+    'Work',
+    'Service',
+    'Accomplishment',
+    'Education',
+  ]).isRequired,
   experiences: PropTypes.array.isRequired,
   addNewExperience: PropTypes.func.isRequired,
   updateExperience: PropTypes.func.isRequired,
@@ -145,7 +159,7 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   },
   addButton: {
     padding: spacing(0.5),
-  }
+  },
 });
 
 export default withStyles(styles)(ExperiencesList);

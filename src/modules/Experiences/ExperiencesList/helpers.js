@@ -84,4 +84,58 @@ const configureForm = (expType) => {
   }
 };
 
-export { formatMonthYearDate, getWorkLength, configureForm };
+const monthScore = {
+  January: 1,
+  February: 2,
+  March: 3,
+  April: 4,
+  May: 5,
+  June: 6,
+  July: 7,
+  August: 8,
+  September: 9,
+  October: 10,
+  November: 11,
+  December: 12,
+};
+
+const getMonthScore = (experiences) => {
+  experiences.map((exp) => {
+    exp.start_month_score = monthScore[exp.start_month];
+
+    // exclude end_month === 'none'
+    if (exp.is_current === false) {
+      exp.end_month_score = monthScore[exp.end_month];
+    }
+  });
+
+  return experiences;
+};
+
+const sortExperiences = (experiences) => {
+  const experiencesWithScores = getMonthScore(experiences);
+
+  const sortedExperiences = experiencesWithScores.sort(function(exp1, exp2) {
+    // sort by is_current first, then end_date, then start_date
+    if (exp1.is_current !== exp2.is_current) {
+      return exp1.is_current === true ? -1 : 1;
+    } else {
+      return (
+        exp2.end_year - exp1.end_year ||
+        exp2.end_month - exp1.end_month ||
+        exp2.start_year - exp1.start_year ||
+        exp2.start_month - exp1.start_month
+      );
+    }
+  });
+
+  return sortedExperiences;
+};
+
+export {
+  formatMonthYearDate,
+  getWorkLength,
+  configureForm,
+  getMonthScore,
+  sortExperiences,
+};
