@@ -129,13 +129,12 @@ describe('Test sortExperiences Functions', () => {
 
   test('sortExperiences Function', () => {
     const sortedExperiences = sortExperiences(experiences);
-    console.log('sorted', sortedExperiences);
 
     expect(sortedExperiences[0].id).toBe(3);
     expect(sortedExperiences[1].id).toBe(4);
     expect(sortedExperiences[2].id).toBe(5);
-    expect(sortedExperiences[3].id).toBe(2);
-    expect(sortedExperiences[4].id).toBe(1);
+    expect(sortedExperiences[3].id).toBe(1);
+    expect(sortedExperiences[4].id).toBe(2);
     expect(sortedExperiences[5].id).toBe(6);
   });
 });

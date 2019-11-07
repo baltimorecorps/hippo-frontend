@@ -116,20 +116,16 @@ const sortExperiences = (experiences) => {
   const experiencesWithScores = getMonthScore(experiences);
 
   const sortedExperiences = experiencesWithScores.sort(function(exp1, exp2) {
-    // if is_current is True or have the same end month/year
-    // sort from start month/year (newest experience)
-    if (exp1.end_month === exp2.end_month && exp1.end_year === exp2.end_year) {
-      if (exp1.start_year > exp2.start_year) return -1;
-      if (exp1.start_year < exp2.start_year) return 1;
-      if (exp1.start_month_score > exp2.start_month_score) return -1;
-      if (exp1.start_month_score < exp2.start_month_score) return 1;
-    } else if (exp1.is_current === false && exp2.is_current === false) {
-      if (exp1.end_year > exp2.end_year) return -1;
-      if (exp1.end_year < exp2.end_year) return 1;
-      if (exp1.end_month_score > exp2.end_month_score) return -1;
-      if (exp1.end_month_score < exp2.end_month_score) return 1;
+    if (exp1.is_current !== exp2.is_current) {
+      return exp1.is_current === true ? -1 : 1;
+    } else {
+      return (
+        exp2.end_year - exp1.end_year ||
+        exp2.end_month - exp1.end_month ||
+        exp2.start_year - exp1.start_year ||
+        exp2.start_month - exp1.start_month
+      );
     }
-    if (exp1.is_current === true) return -1;
   });
 
   return sortedExperiences;
