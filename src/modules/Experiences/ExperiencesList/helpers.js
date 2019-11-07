@@ -116,6 +116,7 @@ const sortExperiences = (experiences) => {
   const experiencesWithScores = getMonthScore(experiences);
 
   const sortedExperiences = experiencesWithScores.sort(function(exp1, exp2) {
+    // sort by is_current first, then end_date, then start_date
     if (exp1.is_current !== exp2.is_current) {
       return exp1.is_current === true ? -1 : 1;
     } else {
