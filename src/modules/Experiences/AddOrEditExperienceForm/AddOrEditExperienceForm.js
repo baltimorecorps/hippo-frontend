@@ -133,9 +133,12 @@ const AddOrEditExperienceForm = ({
   };
 
   return (
-    <Grid container spacing={1} justify="space-between">
-      <Grid item xs={12} />
-
+    <Grid
+      container
+      spacing={1}
+      justify="space-between"
+      className={classes.form}
+    >
       <Grid item xs={12}>
         <TextField
           required
@@ -306,8 +309,10 @@ const AddOrEditExperienceForm = ({
 };
 
 const styles = ({ breakpoints, palette, spacing }) => ({
-  modal: {
-    margin: 'auto',
+  form: {
+    padding: '20px',
+    marginBottom: '20px',
+    backgroundColor: '#f7f7f7',
   },
   dialogContent: {
     width: '500px',

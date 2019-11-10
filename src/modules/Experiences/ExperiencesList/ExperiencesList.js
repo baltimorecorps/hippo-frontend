@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import AddIcon from '@material-ui/icons/Add'
+import AddIcon from '@material-ui/icons/Add';
 
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import ExperiencesListItem from './ExperiencesListItem';
@@ -59,11 +59,11 @@ const ExperiencesList = ({
 
   const makeSelectExperience = (experience) => (event) => {
     if (event.target.checked) {
-      selectExperience(experience)
+      selectExperience(experience);
     } else {
-      deselectExperience(experience)
+      deselectExperience(experience);
     }
-  }
+  };
 
   return (
     <Grid container>
@@ -82,28 +82,31 @@ const ExperiencesList = ({
               </Typography>
             </Grid>
             <Grid item>
-                {inSelectMode ? null :
-                    <IconButton 
-                      className={classes.addButton}
-                      aria-label="add new experience"
-                      onClick={() => setShowForm(true)}>
-                    <AddIcon />
-                    </IconButton>}
+              {inSelectMode ? null : (
+                <IconButton
+                  className={classes.addButton}
+                  aria-label="add new experience"
+                  onClick={() => setShowForm(true)}
+                >
+                  <AddIcon />
+                </IconButton>
+              )}
             </Grid>
           </Grid>
 
           <Divider className={classes.divider} />
 
           {showForm && (
-            <AddOrEditExperienceForm
-              experience={blankExperience}
-              onSubmit={submitNewExperience}
-              handleCancel={() => setShowForm(false)}
-            />
+            <Grid item xs={10}>
+              <AddOrEditExperienceForm
+                experience={blankExperience}
+                onSubmit={submitNewExperience}
+                handleCancel={() => setShowForm(false)}
+              />
+            </Grid>
           )}
 
           {experiences.map((experience) => (
-
             <ExperiencesListItem
               key={experience.id}
               onUpdate={updateExperience}
@@ -115,14 +118,18 @@ const ExperiencesList = ({
           ))}
         </Paper>
       </Grid>
-
     </Grid>
   );
 };
 
 ExperiencesList.propTypes = {
   contactId: PropTypes.number.isRequired,
-  experienceType: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education']).isRequired,
+  experienceType: PropTypes.oneOf([
+    'Work',
+    'Service',
+    'Accomplishment',
+    'Education',
+  ]).isRequired,
   experiences: PropTypes.array.isRequired,
   addNewExperience: PropTypes.func.isRequired,
   updateExperience: PropTypes.func.isRequired,
@@ -141,13 +148,17 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   paper: {
     padding: spacing(2, 3, 3),
     marginBottom: spacing(5),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   divider: {
     margin: spacing(1, 0),
   },
   addButton: {
     padding: spacing(0.5),
-  }
+  },
 });
 
 export default withStyles(styles)(ExperiencesList);

@@ -60,18 +60,20 @@ const ExperiencesListItem = ({
 
   return (
     <React.Fragment>
-      <Grid container justify="space-evenly" className={classes.gridContainer}>
+      <Grid container justify="center" className={classes.gridContainer}>
         {selectable ? (
           <Grid item>
             <Checkbox onChange={onSelect} />
           </Grid>
         ) : (
-          <Grid item className={classes.avatar}>
-            <Avatar>{initial}</Avatar>
-          </Grid>
+          !editing && (
+            <Grid item className={classes.avatar}>
+              <Avatar>{initial}</Avatar>
+            </Grid>
+          )
         )}
 
-        <Grid item xs={8} md={9}>
+        <Grid item xs={8}>
           {!editing && (
             <React.Fragment>
               <Typography
@@ -135,36 +137,38 @@ const ExperiencesListItem = ({
                 : null}
             </React.Fragment>
           )}
-          {editing && (
+        </Grid>
+        {editing && (
+          <Grid item xs={10}>
             <AddOrEditExperienceForm
               handleCancel={() => setEditing(false)}
               labels={{}}
               onSubmit={submitUpdate}
               experience={experience}
             />
-          )}
-        </Grid>
-
-          <Grid item xs={2} className={classes.gridIcons}>
-            {editing || selectable ? null : (
-              <React.Fragment>
-                <IconButton
-                  onClick={() => setEditing(true)}
-                  size="small"
-                  aria-label="edit experience"
-                >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => setOpenDeleteDialog(true)}
-                  size="small"
-                  aria-label="delete experience"
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </React.Fragment>
-            )}
           </Grid>
+        )}
+
+        {editing || selectable ? null : (
+          <Grid item xs={2} className={classes.gridIcons}>
+            <React.Fragment>
+              <IconButton
+                onClick={() => setEditing(true)}
+                size="small"
+                aria-label="edit experience"
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => setOpenDeleteDialog(true)}
+                size="small"
+                aria-label="delete experience"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </React.Fragment>
+          </Grid>
+        )}
       </Grid>
       {openDeleteDialog && (
         <DeleteExperience
@@ -215,6 +219,7 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     [breakpoints.down('sm')]: {
       display: 'none',
     },
+    marginRight: '20px',
   },
 });
 
