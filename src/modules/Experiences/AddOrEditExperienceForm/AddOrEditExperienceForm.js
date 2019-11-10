@@ -4,9 +4,6 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
@@ -23,6 +20,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import LocationTextField from './LocationTextField';
+
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -139,6 +139,16 @@ const AddOrEditExperienceForm = ({
       justify="space-between"
       className={classes.form}
     >
+      <Grid item xs={12} align="end">
+        <IconButton
+          edge="end"
+          aria-label="cancel form"
+          onMouseDown={handleCancel}
+          className={classes.iconButton}
+        >
+          <CloseIcon className={classes.delete} />
+        </IconButton>
+      </Grid>
       <Grid item xs={12}>
         <TextField
           required
@@ -299,27 +309,22 @@ const AddOrEditExperienceForm = ({
           />
         </Grid>
       )}
-
-      <Button onClick={handleCancel}>Cancel</Button>
-      <Button variant="contained" color="primary" onClick={handleFormSubmit}>
-        Save
-      </Button>
+      <Grid item xs={12} align="end">
+        <Button variant="contained" color="primary" onClick={handleFormSubmit}>
+          Save
+        </Button>
+      </Grid>
     </Grid>
   );
 };
 
 const styles = ({ breakpoints, palette, spacing }) => ({
   form: {
-    padding: '20px',
+    padding: '7px 20px 20px 20px',
     marginBottom: '20px',
     backgroundColor: '#f7f7f7',
   },
-  dialogContent: {
-    width: '500px',
-  },
-  dialogAction: {
-    paddingBottom: '20px',
-  },
+
   formControl: {
     width: '100%',
     marginTop: spacing(0),
@@ -336,6 +341,12 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   formHelperText: {
     color: palette.error.main,
     marginTop: '2px',
+  },
+  iconButton: {
+    padding: '3px',
+    '&:hover': {
+      color: 'black',
+    },
   },
 });
 

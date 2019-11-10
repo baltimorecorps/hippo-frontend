@@ -73,11 +73,11 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     '&:hover': {
       backgroundColor: palette.error.main,
       color: '#ffffff',
-      borderColor: palette.error.dark,
     },
   },
   iconButton: {
     padding: 0,
+    margin: 0,
   },
 });
 
