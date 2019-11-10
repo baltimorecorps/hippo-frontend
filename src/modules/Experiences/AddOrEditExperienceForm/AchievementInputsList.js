@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import AchievementInput from './AchievementInput';
 
+import InputLabel from '@material-ui/core/InputLabel';
+
 const AchievementInputsList = ({ achievements, contactId, onChange }) => {
   const focusTarget = useRef(null);
   const [doFocus, setFocus] = useState(false);
@@ -13,7 +15,7 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
       focusTarget.current.focus();
       setFocus(false);
     }
-  }, [focusTarget, doFocus])
+  }, [focusTarget, doFocus]);
 
   const handleRemove = (selectedIndex) => (event) => {
     // Stops bug where removing the last achievement triggers an event on the 'add' button,
@@ -45,11 +47,15 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
 
   return (
     <React.Fragment>
+      <InputLabel
+        style={{ fontWeight: 'bold', color: '#000000', marginBottom: '10px' }}
+      >
+        Achievements
+      </InputLabel>
       {achievements.map(({ description }, index) => (
         <AchievementInput
           key={index}
-          ref={index === (achievements.length - 1) ? focusTarget : null}
-          label={`Achievement #${index + 1}`}
+          ref={index === achievements.length - 1 ? focusTarget : null}
           value={description}
           onTextChange={handleChangeDescription(index)}
           onIconClick={handleRemove(index)}
@@ -69,7 +75,8 @@ const AchievementInputsList = ({ achievements, contactId, onChange }) => {
 };
 
 AchievementInputsList.propTypes = {
-  contactId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  contactId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
   achievements: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
