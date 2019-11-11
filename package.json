@@ -8,6 +8,7 @@
     "npm": "6.4.1"
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^1.5.0",
     "@babel/runtime": "^7.0.0-beta.55",
     "@date-io/date-fns": "^1.3.9",
     "@material-ui/core": "^4.3.3",
@@ -44,16 +45,9 @@
     "format": "eslint --fix ."
   },
   "prettier": {
-    "printWidth": 80,
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": true,
     "singleQuote": true,
-    "trailingComma": "all",
-    "bracketSpacing": true,
-    "jsxBracketSameLine": false,
-    "arrowParens": "always",
-    "proseWrap": "preserve"
+    "bracketSpacing": false,
+    "trailingComma": "es5"
   },
   "eslintConfig": {
     "extends": [
@@ -64,11 +58,6 @@
   "eslintIgnore": [
     "build/"
   ],
-  "prettier": {
-    "singleQuote": true,
-    "bracketSpacing": false,
-    "trailingComma": "es5"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
