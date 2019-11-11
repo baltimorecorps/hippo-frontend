@@ -6,13 +6,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const AchievementsListItem = ({ classes, text }) => {
+const AchievementsListItem = ({classes, text}) => {
   const selectMode = false;
   return (
     <ListItem>
       {selectMode ? (
         <ListItemIcon className={classes.icon}>
-          <Checkbox className={classes.checkbox}/>
+          <Checkbox className={classes.checkbox} />
         </ListItemIcon>
       ) : null}
       <ListItemText
@@ -34,7 +34,7 @@ const AchievementsListItem = ({ classes, text }) => {
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   icon: {
     'min-width': spacing(4),
   },

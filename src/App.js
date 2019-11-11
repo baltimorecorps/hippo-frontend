@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import {MuiThemeProvider} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Icon from '@material-ui/core/Icon';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -25,11 +25,12 @@ const App = ({classes}) => (
     <MuiThemeProvider theme={theme}>
       <Router>
         <div className={classes.page}>
-
           <AppBar position="fixed">
             <Toolbar>
               <Link to="/">
-                <MenuItem><Icon>home</Icon></MenuItem>
+                <MenuItem>
+                  <Icon>home</Icon>
+                </MenuItem>
               </Link>
               <Link to="/resume">
                 <MenuItem>Generated Resume</MenuItem>
@@ -43,7 +44,6 @@ const App = ({classes}) => (
             </Toolbar>
           </AppBar>
           <Toolbar /> {/* for automatic padding of AppBar */}
-
           <Switch>
             <Route exact path="/" component={Home} />
 
@@ -55,19 +55,34 @@ const App = ({classes}) => (
 
             <Route exact path="/profile/:contactId" component={ProfilePage} />
 
-            <Route exact path="/profile/:contactId/resume/:resumeId" component={Resume} />
-            <Route exact path="/contacts/:contactId/resume/:resumeId" component={Resume} />
-            <Route exact path="/contacts/:contactId/create-resume" component={CreateResumePage} />
-            <Route exact path="/contacts/:contactId/create-resume/:resumeId" component={CreateResumePage} />
+            <Route
+              exact
+              path="/profile/:contactId/resume/:resumeId"
+              component={Resume}
+            />
+            <Route
+              exact
+              path="/contacts/:contactId/resume/:resumeId"
+              component={Resume}
+            />
+            <Route
+              exact
+              path="/contacts/:contactId/create-resume"
+              component={CreateResumePage}
+            />
+            <Route
+              exact
+              path="/contacts/:contactId/create-resume/:resumeId"
+              component={CreateResumePage}
+            />
           </Switch>
-
         </div>
       </Router>
     </MuiThemeProvider>
   </ErrorBoundary>
 );
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
     paddingBottom: spacing(5),

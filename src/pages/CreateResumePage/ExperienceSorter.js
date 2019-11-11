@@ -10,19 +10,19 @@ const ExperienceSorter = ({experiences}) => {
     setExperiences(
       update(sortedExperiences, {
         $splice: [[dragIndex, 1], [hoverIndex, 0, dragCard]],
-      }),
+      })
     );
   };
   return (
     <ul>
-      {sortedExperiences.map(({ positionName, orgName }) =>
+      {sortedExperiences.map(({positionName, orgName}) => (
         <ExperienceSortItem
           key={`${positionName}.${orgName}`}
           positionName={positionName}
           orgName={orgName}
           move={move}
         />
-      )}
+      ))}
     </ul>
   );
 };

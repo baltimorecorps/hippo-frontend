@@ -1,5 +1,3 @@
-
-
 const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
@@ -87,7 +85,7 @@ function getClientEnvironment(publicUrl) {
     }, {}),
   };
 
-  return { raw, stringified };
+  return {raw, stringified};
 }
 
 module.exports = getClientEnvironment;

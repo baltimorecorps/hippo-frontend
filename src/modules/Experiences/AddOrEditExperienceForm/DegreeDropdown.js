@@ -12,21 +12,21 @@ const DegreeDropdown = ({onChange, value}) => {
         id: 'degree',
       }}
     >
-      {DegreeDropdown.options.map(({key, value}) =>
+      {DegreeDropdown.options.map(({key, value}) => (
         <MenuItem key={key} value={value}>
           {value}
         </MenuItem>
-      )}
+      ))}
     </Select>
   );
 };
 
 DegreeDropdown.options = [
-  { key: 'high_school', text: 'High School', value: 'High School' },
-  { key: 'associates', text: 'Associates', value: 'Associates' },
-  { key: 'undergraduate', text: 'Undergraduate', value: 'Undergraduate' },
-  { key: 'masters', text: 'Masters', value: 'Masters' },
-  { key: 'doctoral', text: 'Doctoral', value: 'Doctoral' },
+  {key: 'high_school', text: 'High School', value: 'High School'},
+  {key: 'associates', text: 'Associates', value: 'Associates'},
+  {key: 'undergraduate', text: 'Undergraduate', value: 'Undergraduate'},
+  {key: 'masters', text: 'Masters', value: 'Masters'},
+  {key: 'doctoral', text: 'Doctoral', value: 'Doctoral'},
 ];
 
 export default DegreeDropdown;

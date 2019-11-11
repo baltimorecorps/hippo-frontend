@@ -1,6 +1,6 @@
-import { cleanup } from '@testing-library/react';
+import {cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { newProfileValidator } from './formValidator';
+import {newProfileValidator} from './formValidator';
 
 afterEach(cleanup);
 
@@ -13,7 +13,7 @@ test('New Profile Validator: no values ', () => {
     phonePrimary_error: 'Required',
   };
 
-  const { isError, err } = newProfileValidator(values);
+  const {isError, err} = newProfileValidator(values);
 
   expect(isError).toBe(true);
   expect(err).toEqual(expectedErr);
@@ -29,7 +29,7 @@ describe('First and Last names Validators', () => {
     };
     let expectedErr = {};
 
-    const { isError, err } = newProfileValidator(values);
+    const {isError, err} = newProfileValidator(values);
 
     expect(isError).toBe(false);
     expect(err).toEqual(expectedErr);
@@ -47,7 +47,7 @@ describe('Phone Number Validator', () => {
     let expectedErr = {
       phonePrimary_error: 'Required',
     };
-    let { isError, err } = newProfileValidator(values);
+    let {isError, err} = newProfileValidator(values);
 
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
@@ -65,7 +65,7 @@ test('New Profile: invalid phone number (less than six digits)', () => {
     phonePrimary_error: 'Required',
   };
 
-  const { isError, err } = newProfileValidator(values);
+  const {isError, err} = newProfileValidator(values);
 
   expect(isError).toBe(true);
   expect(err).toEqual(expectedErr);
@@ -122,9 +122,9 @@ describe('Email Validators', () => {
   test('New Profile: Valid Emails ', () => {
     let expectedErr = {};
 
-    validEmails.map((email) => {
+    validEmails.map(email => {
       values.email = email;
-      const { isError, err } = newProfileValidator(values);
+      const {isError, err} = newProfileValidator(values);
 
       expect(isError).toBe(false);
       expect(err).toEqual(expectedErr);
@@ -132,11 +132,11 @@ describe('Email Validators', () => {
   });
 
   test('New Profile: Invalid Emails ', () => {
-    const expectedErr = { email_error: 'Invalid email address' };
+    const expectedErr = {email_error: 'Invalid email address'};
 
-    invalidEmails.map((email) => {
+    invalidEmails.map(email => {
       values.email = email;
-      const { isError, err } = newProfileValidator(values);
+      const {isError, err} = newProfileValidator(values);
 
       expect(isError).toBe(true);
       expect(err).toEqual(expectedErr);

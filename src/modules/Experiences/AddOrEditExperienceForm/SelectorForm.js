@@ -1,6 +1,6 @@
 import React from 'react';
 import DateFns from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,13 +9,22 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import { monthFullNames, years, USAStates } from './staticData';
+import {monthFullNames, years, USAStates} from './staticData';
 
-const SelectorForm = ({ label, value, onChange, classes, type, name, helperText, disabled }) => {
+const SelectorForm = ({
+  label,
+  value,
+  onChange,
+  classes,
+  type,
+  name,
+  helperText,
+  disabled,
+}) => {
   const id = `selector-${name}`;
 
-  const getOptions = (arr) => {
-    return arr.map((element) => (
+  const getOptions = arr => {
+    return arr.map(element => (
       <MenuItem value={element} key={element}>
         {element}
       </MenuItem>
@@ -46,19 +55,21 @@ const SelectorForm = ({ label, value, onChange, classes, type, name, helperText,
           inputProps={{
             name: name,
             id: name,
-            classes: { select: classes.resize },
+            classes: {select: classes.resize},
             'data-testid': name,
           }}
         >
           {options}
         </Select>
-        <FormHelperText className={classes.formHelperText}>{helperText}</FormHelperText>
+        <FormHelperText className={classes.formHelperText}>
+          {helperText}
+        </FormHelperText>
       </FormControl>
     </MuiPickersUtilsProvider>
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {
     width: '100%',
     marginBottom: spacing(0),

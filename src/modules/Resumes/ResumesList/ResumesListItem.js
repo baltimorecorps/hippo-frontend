@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -31,6 +31,8 @@ const ResumesListItem = ({resumeId, gdocId, name}) => {
   );
 };
 
-const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+const AdapterLink = React.forwardRef((props, ref) => (
+  <Link innerRef={ref} {...props} />
+));
 
 export default ResumesListItem;

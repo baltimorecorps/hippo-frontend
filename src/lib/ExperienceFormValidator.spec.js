@@ -1,6 +1,6 @@
-import { cleanup } from '@testing-library/react';
+import {cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { experienceValidator } from './formValidator';
+import {experienceValidator} from './formValidator';
 // example
 
 afterEach(cleanup);
@@ -30,7 +30,7 @@ describe('Experience Form Validations', () => {
       endMonth_error: 'Required',
       endYear_error: 'Required',
     };
-    const { isError, err } = experienceValidator(values);
+    const {isError, err} = experienceValidator(values);
 
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
@@ -50,7 +50,7 @@ describe('Experience Form Validations', () => {
     const expectedErr = {
       endYear_error: 'End year must be greater than start year',
     };
-    const { isError, err } = experienceValidator(values);
+    const {isError, err} = experienceValidator(values);
 
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
@@ -70,7 +70,7 @@ describe('Experience Form Validations', () => {
     const expectedErr = {
       endMonth_error: 'End month must be later than start month',
     };
-    const { isError, err } = experienceValidator(values);
+    const {isError, err} = experienceValidator(values);
 
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
@@ -100,7 +100,7 @@ describe('Experience Form Validations', () => {
       endYear_error: 'Required',
       location_error: 'Required',
     };
-    const { isError, err } = experienceValidator(values);
+    const {isError, err} = experienceValidator(values);
 
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
@@ -121,7 +121,7 @@ describe('Experience Form Validations', () => {
     };
 
     const expectedErr = {};
-    const { isError, err } = experienceValidator(values);
+    const {isError, err} = experienceValidator(values);
 
     expect(isError).toBe(false);
     expect(err).toEqual(expectedErr);
@@ -141,7 +141,7 @@ describe('Experience Form Validations', () => {
     };
 
     const expectedErr = {};
-    const { isError, err } = experienceValidator(values);
+    const {isError, err} = experienceValidator(values);
 
     expect(isError).toBe(false);
     expect(err).toEqual(expectedErr);

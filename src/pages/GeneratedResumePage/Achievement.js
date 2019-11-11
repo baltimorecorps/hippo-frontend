@@ -3,7 +3,7 @@ import format from 'date-fns/format';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-const Achievement = ({ date, name, description }) => {
+const Achievement = ({date, name, description}) => {
   return (
     <Grid container spacing={24}>
       <Grid item xs={3}>

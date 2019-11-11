@@ -1,6 +1,6 @@
-import { format } from 'date-fns';
-import { API_URL } from '../constants';
-import { makeFetchActions, fetchActionTypes } from 'redux-fetch-wrapper';
+import {format} from 'date-fns';
+import {API_URL} from '../constants';
+import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
 
 export const START_RESUME_CREATION = 'START_RESUME_CREATION';
 export const startResumeCreation = () => ({
@@ -35,20 +35,20 @@ export const generateResume = (contactId, resume) =>
       {
         body: JSON.stringify(resume),
         method: 'POST',
-      },
+      }
     )(dispatch);
 
     return response;
   };
 
 export const SELECT_RESUME_EXPERIENCE = 'SELECT_RESUME_EXPERIENCE';
-export const selectResumeExperience = (experience) => ({
+export const selectResumeExperience = experience => ({
   type: SELECT_RESUME_EXPERIENCE,
   experience,
 });
 
 export const DESELECT_RESUME_EXPERIENCE = 'DESELECT_RESUME_EXPERIENCE';
-export const deselectResumeExperience = (experience) => ({
+export const deselectResumeExperience = experience => ({
   type: DESELECT_RESUME_EXPERIENCE,
   experience,
 });
@@ -73,28 +73,28 @@ export const createResume = (contactId, name) =>
       {
         body: JSON.stringify(resume),
         method: 'POST',
-      },
+      }
     )(dispatch);
   };
 
 export const REFRESH_RESUME = 'REFRESH_RESUME';
 export const REFRESH_RESUME_API = fetchActionTypes(REFRESH_RESUME);
-export const refreshResume = (resumeId) =>
+export const refreshResume = resumeId =>
   makeFetchActions(REFRESH_RESUME, `${API_URL}/api/resumes/${resumeId}/`);
 
 export const REFRESH_RESUMES = 'REFRESH_RESUMES';
 export const REFRESH_RESUMES_API = fetchActionTypes(REFRESH_RESUMES);
-export const refreshResumes = (contactId) =>
+export const refreshResumes = contactId =>
   makeFetchActions(
     REFRESH_RESUMES,
     `${API_URL}/api/contacts/${contactId}/resumes/`,
     null,
     {
-      onResolve: (resolveAction) => ({
+      onResolve: resolveAction => ({
         ...resolveAction,
         contact_id: contactId,
       }),
-    },
+    }
   );
 
 export const UPDATE_RESUME = 'UPDATE_RESUME';
@@ -115,7 +115,7 @@ export const updateResume = (resumeId, name) =>
       {
         body: JSON.stringify(update),
         method: 'PUT',
-      },
+      }
     )(dispatch);
   };
 
@@ -133,7 +133,7 @@ export const deleteResume = (resumeId, contactId) =>
       `${API_URL}/api/resumes/${resumeId}/`,
       {
         method: 'DELETE',
-      },
+      }
     )(dispatch);
 
     const success = await refreshResumes(contactId)(dispatch);
@@ -147,7 +147,7 @@ export const deleteResume = (resumeId, contactId) =>
 
 export const CREATE_SECTION = 'CREATE_SECTION';
 export const CREATE_SECTION_API = fetchActionTypes(CREATE_SECTION);
-export const createResumeSection = (section) =>
+export const createResumeSection = section =>
   async function(dispatch) {
     if (
       !section ||
@@ -163,7 +163,7 @@ export const createResumeSection = (section) =>
       {
         body: JSON.stringify(section),
         method: 'POST',
-      },
+      }
     )(dispatch);
   };
 
@@ -172,19 +172,19 @@ export const REFRESH_SECTION_API = fetchActionTypes(REFRESH_SECTION);
 export const refreshResumeSection = (resumeId, sectionId) =>
   makeFetchActions(
     REFRESH_SECTION,
-    `${API_URL}/api/resumes/${resumeId}/sections/${sectionId}/`,
+    `${API_URL}/api/resumes/${resumeId}/sections/${sectionId}/`
   );
 
 export const UPDATE_SECTION = 'UPDATE_SECTION';
 export const UPDATE_SECTION_API = fetchActionTypes(UPDATE_SECTION);
-export const updateResumeSection = (section) =>
+export const updateResumeSection = section =>
   makeFetchActions(
     UPDATE_SECTION,
     `${API_URL}/api/resumes/${section.resume_id}/sections/${section.id}/`,
     {
       body: JSON.stringify(section),
       method: 'PUT',
-    },
+    }
   );
 
 export const UPDATE_RESUME_ITEMS = 'UPDATE_RESUME_ITEMS';
@@ -218,7 +218,7 @@ export const deleteResumeSection = (resumeId, sectionId) =>
       `${API_URL}/api/resumes/${resumeId}/sections/${sectionId}/`,
       {
         method: 'DELETE',
-      },
+      }
     )(dispatch);
 
     const success = await refreshResume(resumeId)(dispatch);

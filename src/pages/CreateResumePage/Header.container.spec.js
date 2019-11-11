@@ -1,4 +1,4 @@
-import { mapStateToProps } from './Header.container';
+import {mapStateToProps} from './Header.container';
 
 test('test state mapping', () => {
   const state = {
@@ -11,7 +11,7 @@ test('test state mapping', () => {
         id: 4,
         name: 'Test Resume 4',
       },
-    }
+    },
   };
   const ownProps = {
     contactId: 2,

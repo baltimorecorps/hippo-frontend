@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
 import {refreshResume} from 'actions/resume';
 import ResumePreview from './ResumePreview';
 
@@ -7,7 +7,7 @@ export const mapStateToProps = (state, props) => {
   const {resumeId} = props.match ? props.match.params : props;
   const resume = state.resumes[resumeId];
 
-  if (! resume ) {
+  if (!resume) {
     return {
       resumeId,
       achievements: [],
@@ -33,19 +33,18 @@ export const mapStateToProps = (state, props) => {
   const contactInfo = state.contacts[contactId];
 
   const sections = Object.values(resume.sections);
-  const getExperiences = (name) => (
-    (
-      (sections.find(experience => experience.name === name) || {items: []}).items
-    ).filter(i => i.experience).map(({experience}) => ({
-      positionName: experience.title,
-      orgName: experience.host,
-      startDate: experience.date_start,
-      endDate: experience.date_end,
-      feats: [],
-    }))
-  );
+  const getExperiences = name =>
+    (sections.find(experience => experience.name === name) || {items: []}).items
+      .filter(i => i.experience)
+      .map(({experience}) => ({
+        positionName: experience.title,
+        orgName: experience.host,
+        startDate: experience.date_start,
+        endDate: experience.date_end,
+        feats: [],
+      }));
 
-  return ({
+  return {
     resumeId,
     achievements: [],
     contactInfo: {
@@ -59,14 +58,16 @@ export const mapStateToProps = (state, props) => {
       work: getExperiences('Work Experience'),
     },
     skillGroups: [],
-  });
+  };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  refreshResume: (resumeId) => refreshResume(resumeId)(dispatch),
+const mapDispatchToProps = dispatch => ({
+  refreshResume: resumeId => refreshResume(resumeId)(dispatch),
 });
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ResumePreview));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(ResumePreview)
+);

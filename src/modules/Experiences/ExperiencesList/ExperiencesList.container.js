@@ -1,6 +1,6 @@
-import { connect } from 'react-redux';
-import { createSelector } from 'redux-starter-kit';
-import { RESUME_CREATION } from '../../../reducers/resume';
+import {connect} from 'react-redux';
+import {createSelector} from 'redux-starter-kit';
+import {RESUME_CREATION} from '../../../reducers/resume';
 import {
   selectResumeExperience,
   deselectResumeExperience,
@@ -16,7 +16,7 @@ import {
 
 const getExperiences = createSelector(
   ['experiences'],
-  (experiences) => Object.keys(experiences).map((id) => experiences[id]),
+  experiences => Object.keys(experiences).map(id => experiences[id])
 );
 
 const getContact = (state, props) => props.contactId;
@@ -27,8 +27,8 @@ const makeGetRelevantExperiences = () => {
     [getExperiences, getContact, getTypeFilter],
     (exps, contactId, type) =>
       exps
-        .filter((exp) => exp.contact_id.toString() === contactId.toString())
-        .filter((exp) => exp.type === type),
+        .filter(exp => exp.contact_id.toString() === contactId.toString())
+        .filter(exp => exp.type === type)
   );
   return getRelevantExperiences;
 };
@@ -45,21 +45,21 @@ export const makeMapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    addNewExperience: (experience) => addExperience(experience)(dispatch),
-    updateExperience: (experience) => updateExperience(experience)(dispatch),
-    deleteExperience: (experience) => deleteExperience(experience)(dispatch),
+    addNewExperience: experience => addExperience(experience)(dispatch),
+    updateExperience: experience => updateExperience(experience)(dispatch),
+    deleteExperience: experience => deleteExperience(experience)(dispatch),
     refreshExperiences: () =>
       refreshExperienceType(props.contactId, props.experienceType)(dispatch),
-    selectExperience: (experience) =>
+    selectExperience: experience =>
       dispatch(selectResumeExperience(experience)),
-    deselectExperience: (experience) =>
+    deselectExperience: experience =>
       dispatch(deselectResumeExperience(experience)),
   };
 };
 
 const Container = connect(
   makeMapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ExperiencesList);
 
 export default Container;

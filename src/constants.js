@@ -1,4 +1,4 @@
-const getApiUrl = (environment) => {
+const getApiUrl = environment => {
   switch (environment) {
     case 'production':
       return 'https://api.baltimorecorps.org';

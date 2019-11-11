@@ -32,9 +32,18 @@ const GeneratedResumePage = ({
             </Grid>
 
             <Grid item xs={8}>
-              <ExperiencesList name="Work Experience" experiences={experiences.work} />
-              <ExperiencesList name="Service and Leadership" experiences={experiences.service} />
-              <ExperiencesList name="Education" experiences={experiences.education} />
+              <ExperiencesList
+                name="Work Experience"
+                experiences={experiences.work}
+              />
+              <ExperiencesList
+                name="Service and Leadership"
+                experiences={experiences.service}
+              />
+              <ExperiencesList
+                name="Education"
+                experiences={experiences.education}
+              />
             </Grid>
 
             <Grid item xs={4}>
@@ -48,7 +57,7 @@ const GeneratedResumePage = ({
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     marginTop: spacing(8),
     display: 'flex',

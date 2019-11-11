@@ -11,10 +11,10 @@ const LocationTextField = ({
   className,
   label,
 }) => {
-  const handleChange = (address) => {
+  const handleChange = address => {
     handleLocationChange(address);
   };
-  const handleSelect = (address) => {
+  const handleSelect = address => {
     handleLocationChange(address);
   };
   const searchOptions = {
@@ -28,7 +28,7 @@ const LocationTextField = ({
     },
   };
 
-  const inputProps = { classes: { input: classes.resize } };
+  const inputProps = {classes: {input: classes.resize}};
 
   const handleError = (status, clearSuggestions) => {
     console.log('Google Maps API returned error with status: ', status);
@@ -42,7 +42,7 @@ const LocationTextField = ({
       onSelect={handleSelect}
       searchOptions={searchOptions}
     >
-      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+      {({getInputProps, suggestions, getSuggestionItemProps, loading}) => (
         <div>
           <TextField
             required
@@ -53,12 +53,12 @@ const LocationTextField = ({
               id: 'location',
               label: label,
               name: name,
-              style: { width: '100%' },
+              style: {width: '100%'},
             })}
           />
           <div className="autocomplete-dropdown-container">
             {loading && <div>Loading...</div>}
-            {suggestions.map((suggestion) => {
+            {suggestions.map(suggestion => {
               const className = suggestion.active
                 ? 'suggestion-item--active'
                 : 'suggestion-item';
@@ -91,7 +91,7 @@ const LocationTextField = ({
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {
     width: '100%',
     marginTop: spacing(0),

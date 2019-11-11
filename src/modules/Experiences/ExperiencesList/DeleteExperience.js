@@ -9,7 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const DeleteExperience = ({ experience, onDelete, classes, handleCancel }) => {
+const DeleteExperience = ({experience, onDelete, classes, handleCancel}) => {
   let experienceName = 'this item';
 
   if (experience.host && experience.title) {
@@ -47,7 +47,7 @@ const DeleteExperience = ({ experience, onDelete, classes, handleCancel }) => {
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   dialogContent: {
     width: '350px',
   },

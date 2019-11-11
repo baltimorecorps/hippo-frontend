@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -16,7 +16,7 @@ const Home = () => {
           Baltimore Corps Talent Matching
         </Typography>
         <Grid container justify="space-between" spacing={3}>
-          {Home.cardDetails.map(({header, description, imageName, url}) =>
+          {Home.cardDetails.map(({header, description, imageName, url}) => (
             <Grid item key={header} xs={3}>
               <Link to={url}>
                 <Card>
@@ -41,7 +41,7 @@ const Home = () => {
                 </Card>
               </Link>
             </Grid>
-          )}
+          ))}
         </Grid>
       </Grid>
     </Grid>
@@ -51,19 +51,22 @@ const Home = () => {
 Home.cardDetails = [
   {
     header: 'Talent',
-    description: 'Join as a talent, you can find numerous positions/opportunities in NGO here.',
+    description:
+      'Join as a talent, you can find numerous positions/opportunities in NGO here.',
     imageName: 'talent',
     url: '/contacts',
   },
   {
     header: 'Organization',
-    description: 'Join as an organization, you can find numerous talents for your organization.',
+    description:
+      'Join as an organization, you can find numerous talents for your organization.',
     imageName: 'organization',
     url: '/contacts',
   },
   {
     header: 'Baltimore Corps Staff',
-    description: 'As a Baltimore Staff, you can access data stored in database.',
+    description:
+      'As a Baltimore Staff, you can access data stored in database.',
     imageName: 'baltimoreCorpsStaff',
     url: '/contacts',
   },

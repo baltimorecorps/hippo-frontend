@@ -1,4 +1,4 @@
-import { mapStateToProps } from './ResumePreview.container';
+import {mapStateToProps} from './ResumePreview.container';
 
 const SECTIONS = {
   1: {
@@ -172,14 +172,14 @@ describe.skip('State mapping', () => {
         endDate: null,
         orgName: 'Baltimore Corps',
         positionName: 'Data Analyst',
-        feats: [{ text: 'Thing 1' }, { text: 'Thing 2' }, { text: 'Thing 3' }],
+        feats: [{text: 'Thing 1'}, {text: 'Thing 2'}, {text: 'Thing 3'}],
       },
       {
         startDate: '2011-07-01',
         endDate: '2014-06-20',
         orgName: 'OkCupid',
         positionName: 'Software Engineer',
-        feats: [{ text: 'Thing 4' }, { text: 'Thing 5' }],
+        feats: [{text: 'Thing 4'}, {text: 'Thing 5'}],
       },
     ]);
   });
@@ -198,14 +198,14 @@ describe.skip('State mapping', () => {
         endDate: null,
         orgName: 'Baltimore Corps',
         positionName: 'Data Analyst',
-        feats: [{ text: 'Thing 1' }, { text: 'Thing 2' }, { text: 'Thing 3' }],
+        feats: [{text: 'Thing 1'}, {text: 'Thing 2'}, {text: 'Thing 3'}],
       },
       {
         startDate: '2011-07-01',
         endDate: '2014-06-20',
         orgName: 'OkCupid',
         positionName: 'Software Engineer',
-        feats: [{ text: 'Thing 4' }, { text: 'Thing 5' }],
+        feats: [{text: 'Thing 4'}, {text: 'Thing 5'}],
       },
     ]);
   });
@@ -234,7 +234,7 @@ describe.skip('State mapping', () => {
         orgName: 'Goucher University',
         positionName: 'Economics',
         degree: 'Undergraduate',
-        feats: [{ text: 'Thing 1' }, { text: 'Thing 2' }, { text: 'Thing 3' }],
+        feats: [{text: 'Thing 1'}, {text: 'Thing 2'}, {text: 'Thing 3'}],
       },
     ]);
   });

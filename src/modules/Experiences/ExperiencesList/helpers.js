@@ -33,7 +33,7 @@ const getWorkLength = (years, months) => {
   return lengthWork;
 };
 
-const configureForm = (expType) => {
+const configureForm = expType => {
   if (expType === 'Work') {
     return {
       labels: {
@@ -99,8 +99,8 @@ const monthScore = {
   December: 12,
 };
 
-const getMonthScore = (experiences) => {
-  experiences.map((exp) => {
+const getMonthScore = experiences => {
+  experiences.map(exp => {
     exp.start_month_score = monthScore[exp.start_month];
 
     // exclude end_month === 'none'
@@ -112,7 +112,7 @@ const getMonthScore = (experiences) => {
   return experiences;
 };
 
-const sortExperiences = (experiences) => {
+const sortExperiences = experiences => {
   const experiencesWithScores = getMonthScore(experiences);
 
   const sortedExperiences = experiencesWithScores.sort(function(exp1, exp2) {

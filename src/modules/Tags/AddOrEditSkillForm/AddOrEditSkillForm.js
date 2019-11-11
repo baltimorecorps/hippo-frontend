@@ -20,11 +20,11 @@ const useForm = (initialValues, onSubmit, onReplace) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
-    handleSelect: (value) => {
+    handleSelect: value => {
       update('name')(value.name);
       update('tag_id')(value.id);
     },
-    handleScore: (event) => update('score')(parseInt(event.target.value)),
+    handleScore: event => update('score')(parseInt(event.target.value)),
     handleSubmit: () => {
       if (oldTag.tag_id !== values.tag_id) {
         onReplace(oldTag, values);
@@ -37,11 +37,22 @@ const useForm = (initialValues, onSubmit, onReplace) => {
   return [values, handlers];
 };
 
-const AddOrEditSkillForm = ({ allTags, tag, onSubmit, onReplace, onCancel, classes }) => {
-  const [values, { handleSelect, handleSubmit, handleScore }] = useForm(tag, onSubmit, onReplace);
+const AddOrEditSkillForm = ({
+  allTags,
+  tag,
+  onSubmit,
+  onReplace,
+  onCancel,
+  classes,
+}) => {
+  const [values, {handleSelect, handleSubmit, handleScore}] = useForm(
+    tag,
+    onSubmit,
+    onReplace
+  );
 
-  const getOptionLabel = ({ type, name }) => name;
-  const isOptionSelected = ({ id }, options) => !!options.find((o) => o.id === id);
+  const getOptionLabel = ({type, name}) => name;
+  const isOptionSelected = ({id}, options) => !!options.find(o => o.id === id);
   const selectedTag = {
     id: values.tag_id,
     name: values.name,
@@ -97,7 +108,7 @@ AddOrEditSkillForm.propTypes = {
   }).isRequired,
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   header: {
     padding: spacing(2, 3, 0),
   },

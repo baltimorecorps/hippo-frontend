@@ -83,4 +83,4 @@ const USAStates = [
   'Wyoming',
 ];
 
-export { monthFullNames, years, USAStates };
+export {monthFullNames, years, USAStates};

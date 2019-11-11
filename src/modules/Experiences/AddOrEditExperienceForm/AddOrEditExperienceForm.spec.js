@@ -1,5 +1,10 @@
 import React from 'react';
-import { render, fireEvent, prettyDOM, waitForElement } from '@testing-library/react';
+import {
+  render,
+  fireEvent,
+  prettyDOM,
+  waitForElement,
+} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import AddOrEditExperienceForm from './AddOrEditExperienceForm';
 
@@ -63,7 +68,10 @@ const experience = {
   is_current: false,
   type: 'Work',
   contact_id: 1234,
-  achievements: [{ description: 'Test achievement 1' }, { description: 'Test achievement 2' }],
+  achievements: [
+    {description: 'Test achievement 1'},
+    {description: 'Test achievement 2'},
+  ],
 };
 
 describe('AddOrEditExperienceForm', () => {
@@ -87,13 +95,13 @@ describe('AddOrEditExperienceForm', () => {
   test('submit sends values', () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByText } = render(
+    const {getByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
 
     fireEvent.click(getByText(/save/i));
@@ -105,15 +113,17 @@ describe('AddOrEditExperienceForm', () => {
   test('organization text box', () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByLabelText, getByText } = render(
+    const {getByLabelText, getByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
-    fireEvent.change(getByLabelText(/organization/i), { target: { value: 'new org' } });
+    fireEvent.change(getByLabelText(/organization/i), {
+      target: {value: 'new org'},
+    });
 
     fireEvent.click(getByText(/save/i));
 
@@ -126,13 +136,13 @@ describe('AddOrEditExperienceForm', () => {
   test('DatePicker test: Month (selector)', () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByText, getAllByText } = render(
+    const {getByText, getAllByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
 
     // Click the first actual month selector we see (the 'Start Month' one)
@@ -153,13 +163,13 @@ describe('AddOrEditExperienceForm', () => {
   test('DatePicker test: Year (selector)', () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByText, getAllByText } = render(
+    const {getByText, getAllByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
 
     // click on the current value of end_year
@@ -177,16 +187,18 @@ describe('AddOrEditExperienceForm', () => {
   test('Work Experience: Is Current is true (checkbox)  ', () => {
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByText, getByTestId } = render(
+    const {getByText, getByTestId} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
 
-    const checkbox = getByTestId('is_current').querySelector('input[type="checkbox"]');
+    const checkbox = getByTestId('is_current').querySelector(
+      'input[type="checkbox"]'
+    );
     expect(checkbox).toHaveProperty('checked', false);
     fireEvent.click(checkbox);
     expect(checkbox).toHaveProperty('checked', true);
@@ -228,15 +240,17 @@ describe('AddOrEditExperienceForm', () => {
 
     const cancel = jest.fn();
     const submit = jest.fn();
-    const { getByLabelText, getByText } = render(
+    const {getByLabelText, getByText} = render(
       <AddOrEditExperienceForm
         handleCancel={cancel}
         labels={{}}
         onSubmit={submit}
         experience={experience}
-      />,
+      />
     );
-    fireEvent.change(getByLabelText(/institution/i), { target: { value: 'New Award' } });
+    fireEvent.change(getByLabelText(/institution/i), {
+      target: {value: 'New Award'},
+    });
 
     fireEvent.click(getByText(/save/i));
 

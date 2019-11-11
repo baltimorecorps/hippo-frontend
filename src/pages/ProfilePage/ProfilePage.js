@@ -1,7 +1,7 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -23,7 +23,6 @@ import ResumesList from 'modules/Resumes/ResumesList';
 
 import html2canvas from 'html2canvas';
 
-
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
 // render
@@ -39,12 +38,11 @@ const useScroll = () => {
 
   const scrollTo = (...args) => {
     if (args.length >= 2) {
-      setScroll({top: args[0], left: args[1]})
+      setScroll({top: args[0], left: args[1]});
+    } else {
+      setScroll(args[0]);
     }
-    else {
-      setScroll(args[0])
-    }
-  }
+  };
 
   return scrollTo;
 };
@@ -81,15 +79,17 @@ const ProfilePage = ({
 
   const genResumeLocal = async () => {
     // TODO: How should we get the resume name for real?
-    const resumeName = `${contactInfo.first_name}_${contactInfo.last_name}_${(new Date()).getTime()}`;
+    const resumeName = `${contactInfo.first_name}_${
+      contactInfo.last_name
+    }_${new Date().getTime()}`;
     const response = await generateResume(contactId, resumeName, resume);
     setResumeLink(`/resume/${response.body.data.gdoc_id}`);
-  }
+  };
 
   const startSelectLocal = () => {
-    startResumeSelect()
-    scrollTo({top: 0, left: 0, behavior: 'smooth'})
-  }
+    startResumeSelect();
+    scrollTo({top: 0, left: 0, behavior: 'smooth'});
+  };
 
   // This page primarily serves as the top level container for the profile of
   // this person's employment-relevant experiences and skills.
@@ -105,13 +105,16 @@ const ProfilePage = ({
         useStandardProfile={genResumeLocal}
       />
       <Modal open={showResumeSpinner}>
-        <Grid container justify="center" alignItems="center"
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
           className={classes.progress}
         >
           <CircularProgress />
         </Grid>
       </Modal>
-      {resumeLink ? <Redirect to={resumeLink} /> : null }
+      {resumeLink ? <Redirect to={resumeLink} /> : null}
 
       {inSelectMode ? (
         <SelectionDrawer
@@ -145,16 +148,16 @@ const ProfilePage = ({
         </Grid>
       </Grid>
 
-      {inSelectMode ? null :(
-      <Grid container justify="center">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={startResumeCreation}
-        >
-          Create Resume
-        </Button>
-      </Grid>
+      {inSelectMode ? null : (
+        <Grid container justify="center">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={startResumeCreation}
+          >
+            Create Resume
+          </Button>
+        </Grid>
       )}
     </React.Fragment>
   );
@@ -170,7 +173,7 @@ ProfilePage.propTypes = {
   refreshContacts: PropTypes.func.isRequired,
 };
 
-const dialogStyles = ({ breakpoints, palette, spacing, shadows }) => ({
+const dialogStyles = ({breakpoints, palette, spacing, shadows}) => ({
   container: {
     width: spacing(50),
   },
@@ -205,12 +208,9 @@ const dialogStyles = ({ breakpoints, palette, spacing, shadows }) => ({
 });
 
 const ResumeDialog = withStyles(dialogStyles)(
-  ({ open, onCancel, highlightExperiences, useStandardProfile, classes }) => {
+  ({open, onCancel, highlightExperiences, useStandardProfile, classes}) => {
     return (
-      <Dialog 
-        open={open}
-        onClose={onCancel}
-      >
+      <Dialog open={open} onClose={onCancel}>
         <DialogTitle>Choose Resume Style</DialogTitle>
         <DialogContent>
           <Grid container className={classes.container} justify="center">
@@ -259,10 +259,10 @@ const ResumeDialog = withStyles(dialogStyles)(
         </DialogContent>
       </Dialog>
     );
-  },
+  }
 );
 
-const drawerStyles = ({ breakpoints, palette, spacing, shadows }) => ({
+const drawerStyles = ({breakpoints, palette, spacing, shadows}) => ({
   paper: {
     // This is the elevation for the drawer, we have to specify it this way
     // because of the defaults for persistent drawers in Material-UI
@@ -278,7 +278,7 @@ const drawerStyles = ({ breakpoints, palette, spacing, shadows }) => ({
 });
 
 const SelectionDrawer = withStyles(drawerStyles)(
-  ({ classes, onCancel, onNext }) => {
+  ({classes, onCancel, onNext}) => {
     return (
       <Drawer
         anchor="top"
@@ -310,10 +310,10 @@ const SelectionDrawer = withStyles(drawerStyles)(
         </Grid>
       </Drawer>
     );
-  },
+  }
 );
 
-const styles = ({ breakpoints, palette, spacing, shadows }) => ({
+const styles = ({breakpoints, palette, spacing, shadows}) => ({
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
   },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -13,7 +13,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteExperience from './DeleteExperience';
 
-import { formatMonthYearDate, getWorkLength, configureForm } from './helpers';
+import {formatMonthYearDate, getWorkLength, configureForm} from './helpers';
 
 const ExperiencesListItem = ({
   experience,
@@ -41,7 +41,7 @@ const ExperiencesListItem = ({
 
   const startDate = formatMonthYearDate(
     experience.start_month,
-    experience.start_year,
+    experience.start_year
   );
 
   let endDate = '';
@@ -53,88 +53,104 @@ const ExperiencesListItem = ({
 
   let lengthWork = getWorkLength(
     experience.length_year,
-    experience.length_month,
+    experience.length_month
   );
 
   const location = ` - ${experience.location}`;
 
   return (
     <React.Fragment>
-      <Grid container justify="space-evenly" className={classes.gridContainer}>
+      <Grid container justify="center" className={classes.gridContainer}>
         {selectable ? (
           <Grid item>
             <Checkbox onChange={onSelect} />
           </Grid>
         ) : (
-          <Grid item className={classes.avatar}>
-            <Avatar>{initial}</Avatar>
+          !editing && (
+            <Grid item className={classes.avatar}>
+              <Avatar>{initial}</Avatar>
+            </Grid>
+          )
+        )}
+
+        <Grid item xs={8}>
+          {!editing && (
+            <React.Fragment>
+              <Typography
+                variant="h6"
+                component="h2"
+                style={{
+                  fontWeight: '700',
+                }}
+              >
+                {experience.host}
+
+                {experience.location ? (
+                  <span
+                    style={{
+                      color: '#7d7d7d',
+                      fontSize: '15px',
+                      fontStyle: 'italic',
+                      fontWeight: 'normal',
+                    }}
+                  >
+                    {location}
+                  </span>
+                ) : null}
+              </Typography>
+
+              <Typography
+                variant="subtitle1"
+                component="h3"
+                style={{
+                  fontSize: '17px',
+                  color: '#3b3b3b',
+                  fontWeight: 'bold',
+                  fontFamily: 'Lato',
+                }}
+              >
+                {title}
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="subtitle1"
+                component="p"
+                style={{color: '#7d7d7d', fontSize: '15px'}}
+              >
+                {startDate}
+                {config.showEndDate && (
+                  <React.Fragment> &ndash; {endDate}</React.Fragment>
+                )}
+                {config.showWorkLength && ` (${lengthWork})`}
+              </Typography>
+
+              {experience.description && (
+                <Typography gutterBottom variant="body1" component="p">
+                  {experience.description}
+                </Typography>
+              )}
+
+              {experience.achievements.length
+                ? config.showAchievements && (
+                    <AchievementsList achievements={experience.achievements} />
+                  )
+                : null}
+            </React.Fragment>
+          )}
+        </Grid>
+        {editing && (
+          <Grid item xs={10}>
+            <AddOrEditExperienceForm
+              handleCancel={() => setEditing(false)}
+              labels={{}}
+              onSubmit={submitUpdate}
+              experience={experience}
+            />
           </Grid>
         )}
 
-        <Grid item xs={8} md={9}>
-          <Typography
-            variant="h6"
-            component="h2"
-            style={{
-              fontWeight: '700',
-            }}
-          >
-            {experience.host}
-
-            {experience.location ? (
-              <span
-                style={{
-                  color: '#7d7d7d',
-                  fontSize: '15px',
-                  fontStyle: 'italic',
-                  fontWeight: 'normal',
-                }}
-              >
-                {location}
-              </span>
-            ) : null}
-          </Typography>
-
-          <Typography
-            variant="subtitle1"
-            component="h3"
-            style={{
-              fontSize: '17px',
-              color: '#3b3b3b',
-              fontWeight: 'bold',
-              fontFamily: 'Lato',
-            }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            gutterBottom
-            variant="subtitle1"
-            component="p"
-            style={{ color: '#7d7d7d', fontSize: '15px' }}
-          >
-            {startDate}
-            {config.showEndDate && (
-              <React.Fragment> &ndash; {endDate}</React.Fragment>
-            )}
-            {config.showWorkLength && ` (${lengthWork})`}
-          </Typography>
-
-          {experience.description && (
-            <Typography gutterBottom variant="body1" component="p">
-              {experience.description}
-            </Typography>
-          )}
-
-          {experience.achievements.length
-            ? config.showAchievements && (
-                <AchievementsList achievements={experience.achievements} />
-              )
-            : null}
-        </Grid>
-
-        <Grid item xs={2} className={classes.gridIcons}>
-          {selectable ? null : (
+        {editing || selectable ? null : (
+          <Grid item xs={2} className={classes.gridIcons}>
             <React.Fragment>
               <IconButton
                 onClick={() => setEditing(true)}
@@ -151,23 +167,14 @@ const ExperiencesListItem = ({
                 <DeleteIcon />
               </IconButton>
             </React.Fragment>
-          )}
-        </Grid>
+          </Grid>
+        )}
       </Grid>
       {openDeleteDialog && (
         <DeleteExperience
           experience={experience}
           onDelete={() => onDelete(experience)}
           handleCancel={() => setOpenDeleteDialog(false)}
-        />
-      )}
-
-      {editing && (
-        <AddOrEditExperienceForm
-          handleCancel={() => setEditing(false)}
-          labels={{}}
-          onSubmit={submitUpdate}
-          experience={experience}
         />
       )}
     </React.Fragment>
@@ -201,7 +208,7 @@ ExperiencesListItem.propTypes = {
   }),
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   gridContainer: {
     marginTop: '15px',
   },
@@ -212,6 +219,7 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     [breakpoints.down('sm')]: {
       display: 'none',
     },
+    marginRight: '20px',
   },
 });
 

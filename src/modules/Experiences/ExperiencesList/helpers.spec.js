@@ -1,6 +1,6 @@
-import { cleanup } from '@testing-library/react';
+import {cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import { getWorkLength, getMonthScore, sortExperiences } from './helpers.js';
+import {getWorkLength, getMonthScore, sortExperiences} from './helpers.js';
 
 afterEach(cleanup);
 
@@ -49,7 +49,7 @@ describe('getWorkLength Function', () => {
 
   test('more than one year and one month', () => {
     let result = '';
-    values.map((value) => {
+    values.map(value => {
       result = `${value} years ${value} months`;
       const lengthWork = getWorkLength(value, value);
       expect(lengthWork).toEqual(result);

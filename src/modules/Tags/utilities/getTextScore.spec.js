@@ -11,6 +11,6 @@ describe('score to string', () => {
     expect(getTextScore(5)).toBe('Unknown');
   });
   test('random input ', () => {
-    expect(getTextScore({ random: 5 })).toBe('Unknown');
+    expect(getTextScore({random: 5})).toBe('Unknown');
   });
 });

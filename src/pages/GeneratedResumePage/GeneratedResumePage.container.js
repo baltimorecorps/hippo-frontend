@@ -1,14 +1,16 @@
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import GeneratedResumePage from './GeneratedResumePage';
 
 import {refreshResume} from 'actions/resume';
-import { refreshContacts } from 'actions/contacts';
+import {refreshContacts} from 'actions/contacts';
 
 const mapStateToProps = (state, ownProps) => {
-  const {contactId, resumeId} = ownProps.match ? ownProps.match.params : ownProps;
+  const {contactId, resumeId} = ownProps.match
+    ? ownProps.match.params
+    : ownProps;
   const contactInfo = state.contacts[contactId];
   const resume = state.resume[resumeId];
-  if (! resume || ! contactInfo) {
+  if (!resume || !contactInfo) {
     return {
       resumeId,
       achievements: [],
@@ -31,19 +33,18 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   const sections = Object.values(resume.sections);
-  const getExperiences = (name) => (
-    (
-      (sections.find(experience => experience.name === name) || {items: []}).items
-    ).filter(i => i.experience).map(({experience}) => ({
-      positionName: experience.title,
-      orgName: experience.host,
-      startDate: experience.date_start,
-      endDate: experience.date_end,
-      feats: [],
-    }))
-  );
+  const getExperiences = name =>
+    (sections.find(experience => experience.name === name) || {items: []}).items
+      .filter(i => i.experience)
+      .map(({experience}) => ({
+        positionName: experience.title,
+        orgName: experience.host,
+        startDate: experience.date_start,
+        endDate: experience.date_end,
+        feats: [],
+      }));
 
-  return ({
+  return {
     resumeId,
     achievements: [],
     contactInfo: {
@@ -61,19 +62,19 @@ const mapStateToProps = (state, ownProps) => {
       work: getExperiences('Experience'),
     },
     skillGroups: [],
-  });
+  };
 };
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
     refreshContacts: () => refreshContacts(dispatch),
-    refreshResume: (resumeId) => refreshResume(resumeId)(dispatch),
+    refreshResume: resumeId => refreshResume(resumeId)(dispatch),
   };
 };
 
 const Container = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(GeneratedResumePage);
 
 export default Container;

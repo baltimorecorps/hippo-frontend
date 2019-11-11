@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import { createSelector } from 'redux-starter-kit';
+import {connect} from 'react-redux';
+import {createSelector} from 'redux-starter-kit';
 import SkillsList from './SkillsList';
 
 import {
@@ -12,7 +12,7 @@ import {
 
 const getTags = createSelector(
   ['tags'],
-  (tags) => Object.keys(tags).map((id) => tags[id]),
+  tags => Object.keys(tags).map(id => tags[id])
 );
 
 const getContact = (state, props) => props.contactId;
@@ -23,14 +23,14 @@ const makeGetRelevantTagItems = () => {
     ['tagItems', getContact, getTypeFilter],
     (tagItems, contactId, type) => {
       const tagItemMap = tagItems[contactId];
-      if (! tagItemMap) {
+      if (!tagItemMap) {
         return [];
       }
 
       return Object.keys(tagItemMap)
-        .map((id) => tagItemMap[id])
-        .filter((tagItem) => tagItem.type === type);
-    },
+        .map(id => tagItemMap[id])
+        .filter(tagItem => tagItem.type === type);
+    }
   );
   return getRelevantTagItems;
 };
@@ -49,15 +49,16 @@ export const makeMapStateToProps = () => {
 const mapDispatchToProps = (dispatch, props) => {
   return {
     refreshTags: () => refreshTags()(dispatch),
-    addTagItem: (tagItem) => addTagItem(tagItem)(dispatch),
-    deleteTagItem: (tagItem) => deleteTagItem(tagItem)(dispatch),
-    updateTagItem: (tagItem) => updateTagItem(tagItem)(dispatch),
-    refreshTagItems: () => refreshTagItems(props.contactId, props.tagType)(dispatch),
+    addTagItem: tagItem => addTagItem(tagItem)(dispatch),
+    deleteTagItem: tagItem => deleteTagItem(tagItem)(dispatch),
+    updateTagItem: tagItem => updateTagItem(tagItem)(dispatch),
+    refreshTagItems: () =>
+      refreshTagItems(props.contactId, props.tagType)(dispatch),
   };
 };
 
 const SkillsListContainer = connect(
   makeMapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(SkillsList);
 export default SkillsListContainer;

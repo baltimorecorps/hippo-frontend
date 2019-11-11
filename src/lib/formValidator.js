@@ -1,7 +1,7 @@
-import { monthFullNames } from '../modules/Experiences/AddOrEditExperienceForm/staticData';
+import {monthFullNames} from '../modules/Experiences/AddOrEditExperienceForm/staticData';
 
 // Validate add new experience form (Work/Education/Accomplishment)
-const experienceValidator = (values) => {
+const experienceValidator = values => {
   if (values.start_year) {
     values.start_year = values.start_year.toString();
   }
@@ -93,11 +93,11 @@ const experienceValidator = (values) => {
     }
   }
 
-  return { isError, err };
+  return {isError, err};
 };
 
-const newProfileValidator = (values) => {
-  const { first_name, last_name, email, phone_primary } = values;
+const newProfileValidator = values => {
+  const {first_name, last_name, email, phone_primary} = values;
 
   let isError = false;
   let err = {};
@@ -124,11 +124,11 @@ const newProfileValidator = (values) => {
     err.phonePrimary_error = 'Required';
   }
 
-  return { isError, err };
+  return {isError, err};
 };
 
 // Validate RegEx
-const validateEmail = (input) => {
+const validateEmail = input => {
   const mailFormat = /^[A-Z0-9_%!+-][A-Z0-9._%!+-]*@[A-Z0-9][A-Z0-9-.]+[^.]\.[A-Z]{2,}$/i;
 
   if (input.match(mailFormat) && input.split('@')[0].length < 64) {
@@ -138,4 +138,4 @@ const validateEmail = (input) => {
   }
 };
 
-export { newProfileValidator, experienceValidator };
+export {newProfileValidator, experienceValidator};

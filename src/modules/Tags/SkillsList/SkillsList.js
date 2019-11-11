@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
@@ -49,7 +49,7 @@ const SkillsList = ({
           <Icon onClick={() => setShowForm(true)}>add</Icon>
         </Grid>
       </Grid>
-      {tagItems.map((tag) => (
+      {tagItems.map(tag => (
         <SkillsListItem
           key={tag.tag_id}
           tag={tag}
@@ -66,7 +66,7 @@ const SkillsList = ({
         <AddOrEditSkillForm
           tag={blankTag}
           tagType={tagType}
-          onSubmit={(tagItem) => {
+          onSubmit={tagItem => {
             addTagItem(tagItem).then(setShowForm(false));
           }}
           onCancel={() => setShowForm(false)}
@@ -92,7 +92,7 @@ const titles = {
   topic: 'Topics addressed',
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   wrapper: {
     marginBottom: spacing(4),
   },

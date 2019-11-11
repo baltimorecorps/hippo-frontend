@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -12,7 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import ExperiencesListItem from './ExperiencesListItem';
 
-import { sortExperiences } from './helpers';
+import {sortExperiences} from './helpers';
 
 const ExperiencesList = ({
   contactId,
@@ -59,14 +59,13 @@ const ExperiencesList = ({
 
   const header = headers[experienceType.toLowerCase()];
 
-  const makeSelectExperience = (experience) => (event) => {
+  const makeSelectExperience = experience => event => {
     if (event.target.checked) {
       selectExperience(experience);
     } else {
       deselectExperience(experience);
     }
   };
-
   let sortedExperiences = [];
   if (experiences.length > 0) {
     sortedExperiences = sortExperiences(experiences);
@@ -103,7 +102,17 @@ const ExperiencesList = ({
 
           <Divider className={classes.divider} />
 
-          {sortedExperiences.map((experience) => (
+          {showForm && (
+            <Grid item xs={10}>
+              <AddOrEditExperienceForm
+                experience={blankExperience}
+                onSubmit={submitNewExperience}
+                handleCancel={() => setShowForm(false)}
+              />
+            </Grid>
+          )}
+
+          {sortedExperiences.map(experience => (
             <ExperiencesListItem
               key={experience.id}
               onUpdate={updateExperience}
@@ -115,14 +124,6 @@ const ExperiencesList = ({
           ))}
         </Paper>
       </Grid>
-
-      {showForm && (
-        <AddOrEditExperienceForm
-          experience={blankExperience}
-          onSubmit={submitNewExperience}
-          handleCancel={() => setShowForm(false)}
-        />
-      )}
     </Grid>
   );
 };
@@ -149,10 +150,14 @@ const headers = {
   accomplishment: 'Accomplishments',
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     padding: spacing(2, 3, 3),
     marginBottom: spacing(5),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   divider: {
     margin: spacing(1, 0),

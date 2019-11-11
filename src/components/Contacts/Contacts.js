@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import ContactList from './ContactList';
 import AddContact from './AddContact';
 
-const Contacts = (props) => {
+const Contacts = props => {
   const classes = props.classes;
   return (
     <main className={classes.layout}>
@@ -15,7 +15,10 @@ const Contacts = (props) => {
           Profiles
         </Typography>
         <React.Fragment>
-          <ContactList contacts={props.contacts} refreshContacts={props.refreshContacts} />
+          <ContactList
+            contacts={props.contacts}
+            refreshContacts={props.refreshContacts}
+          />
           <AddContact addNewContact={props.addNewContact} />
         </React.Fragment>
       </Paper>

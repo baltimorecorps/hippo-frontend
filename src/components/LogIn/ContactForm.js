@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -43,16 +43,20 @@ class TextFields extends React.Component {
     birthday: '',
   };
 
-  handleChange = (varName) => (event) => {
-    this.setState({ varName: event.target.value });
+  handleChange = varName => event => {
+    this.setState({varName: event.target.value});
   };
 
   render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
     return (
       <main className={classes.main}>
         <Paper className={classes.paper}>
-          <img className={classes.avatar} src="/logos/long.png" alt="Baltimore Corps Logo" />
+          <img
+            className={classes.avatar}
+            src="/logos/long.png"
+            alt="Baltimore Corps Logo"
+          />
           <Typography component="h1" variant="h5">
             Contact Form
           </Typography>
@@ -106,7 +110,7 @@ class TextFields extends React.Component {
               }}
               margin="normal"
             >
-              {genders.map((option) => (
+              {genders.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -129,7 +133,7 @@ class TextFields extends React.Component {
               /*helperText="Please select your race"*/
               margin="normal"
             >
-              {races.map((option) => (
+              {races.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -138,7 +142,7 @@ class TextFields extends React.Component {
             <TextField
               id="standard-full-width"
               label="Address"
-              style={{ margin: 8 }}
+              style={{margin: 8}}
               placeholder="110 Waterman Street, Apt 210, Providence, RI, 02215"
               helperText="Please enter your address"
               fullWidth
@@ -164,7 +168,7 @@ class TextFields extends React.Component {
 TextFields.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-const styles = ({ breakpoints, palette, spacing, theme }) => ({
+const styles = ({breakpoints, palette, spacing, theme}) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',

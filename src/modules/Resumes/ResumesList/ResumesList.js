@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ResumesListItem from './ResumesListItem';
 
-const ResumesList = ({ contactId, refreshResumes, resumes, classes }) => {
+const ResumesList = ({contactId, refreshResumes, resumes, classes}) => {
   useEffect(() => {
     refreshResumes(contactId);
   }, [refreshResumes, contactId]);
@@ -18,12 +18,8 @@ const ResumesList = ({ contactId, refreshResumes, resumes, classes }) => {
             Resumes
           </Typography>
           <Grid container spacing={3}>
-            {resumes.map(({ id, gdoc_id }) => (
-              <ResumesListItem
-                key={id}
-                resumeId={id}
-                gdocId={gdoc_id}
-              />
+            {resumes.map(({id, gdoc_id}) => (
+              <ResumesListItem key={id} resumeId={id} gdocId={gdoc_id} />
             ))}
           </Grid>
         </Paper>
@@ -32,7 +28,7 @@ const ResumesList = ({ contactId, refreshResumes, resumes, classes }) => {
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     padding: spacing(2, 3, 3),
   },

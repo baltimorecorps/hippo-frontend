@@ -13,16 +13,16 @@ class StorageContext extends React.Component {
     this.setState(value);
   };
 
-  saveStateToStorage = (state) => {
+  saveStateToStorage = state => {
     window.localStorage.setItem(this.storageKey, JSON.stringify(state));
   };
 
   render() {
-    const { children, context: Context, setterName } = this.props;
+    const {children, context: Context, setterName} = this.props;
     const value = this.state;
 
     if (setterName) {
-      value[setterName] = (state) => {
+      value[setterName] = state => {
         this.saveStateToStorage(state);
         this.setState(state);
       };

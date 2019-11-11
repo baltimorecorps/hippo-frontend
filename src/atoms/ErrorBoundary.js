@@ -5,8 +5,8 @@ import logger from '../lib/logger';
 
 class ErrorBoundary extends React.Component {
   componentDidCatch(error, info) {
-    const { fileName } = this.props;
-    logger.error({ fileName, error, info });
+    const {fileName} = this.props;
+    logger.error({fileName, error, info});
   }
 
   render() {

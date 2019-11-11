@@ -1,5 +1,3 @@
-
-
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
@@ -83,7 +81,5 @@ module.exports = {
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
 };
-
-
 
 module.exports.moduleFileExtensions = moduleFileExtensions;

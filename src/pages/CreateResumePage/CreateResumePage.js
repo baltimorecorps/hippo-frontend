@@ -1,5 +1,5 @@
 import React from 'react';
-import { DragDropContextProvider } from 'react-dnd';
+import {DragDropContextProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ResumeContext from 'lib/context/ResumeContext';
 import ProgressContext from 'lib/context/ProgressContext';
