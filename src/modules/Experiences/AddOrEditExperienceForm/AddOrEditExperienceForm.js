@@ -1,58 +1,58 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
+import React from "react";
+import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import TextField from "@material-ui/core/TextField";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Grid from "@material-ui/core/Grid";
 
-import useFormUpdate from 'lib/useFormUpdate';
+import useFormUpdate from "lib/useFormUpdate";
 
-import AchievementInputsList from './AchievementInputsList';
-import SelectorForm from './SelectorForm';
-import DegreeDropdown from './DegreeDropdown';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import { experienceValidator } from '../../../lib/formValidator';
-import { configureForm } from '../ExperiencesList/helpers';
+import AchievementInputsList from "./AchievementInputsList";
+import SelectorForm from "./SelectorForm";
+import DegreeDropdown from "./DegreeDropdown";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import {experienceValidator} from "../../../lib/formValidator";
+import {configureForm} from "../ExperiencesList/helpers";
 
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import LocationTextField from './LocationTextField';
+import LocationTextField from "./LocationTextField";
 
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
-    handleChange: (event) => {
+    handleChange: event => {
       event.persist();
       update(event.target.name)(event.target.value);
     },
     handleSubmit: () => {
       onSubmit(values);
     },
-    handleDegree: (event) => {
-      update('degree')(event.target.value);
+    handleDegree: event => {
+      update("degree")(event.target.value);
     },
-    handleLocation: (location) => {
-      update('location')(location);
+    handleLocation: location => {
+      update("location")(location);
     },
-    handleIsCurrent: (e) => {
+    handleIsCurrent: e => {
       e.persist();
       values.is_current = e.target.checked;
       if (values.is_current === true) {
-        update('end_month')('none');
-        update('end_year')('0');
+        update("end_month")("none");
+        update("end_year")("0");
       } else {
-        update('end_month')('');
-        update('end_year')('');
+        update("end_month")("");
+        update("end_year")("");
       }
     },
-    handleAchievements: update('achievements'),
+    handleAchievements: update("achievements"),
   };
 
   return [values, handlers];
@@ -66,8 +66,8 @@ const AddOrEditExperienceForm = ({
 }) => {
   const config = configureForm(experience.type);
   if (!config.showEndDate) {
-    experience['end_year'] = 0;
-    experience['end_month'] = 'none';
+    experience["end_year"] = 0;
+    experience["end_month"] = "none";
   }
 
   const [
@@ -83,12 +83,12 @@ const AddOrEditExperienceForm = ({
   ] = useForm(experience, onSubmit);
 
   // eslint-disable-next-line no-unused-vars
-  const handleChangeDescription = (idx) => (evt) => {
+  const handleChangeDescription = idx => evt => {
     const newAchievements = this.state.achievements.map((achievement, sidx) => {
       if (idx !== sidx) return achievement;
-      return { ...achievement, description: evt.target.value };
+      return {...achievement, description: evt.target.value};
     });
-    this.setState({ achievements: newAchievements });
+    this.setState({achievements: newAchievements});
   };
 
   if (typeof values.start_year === String) {
@@ -117,13 +117,13 @@ const AddOrEditExperienceForm = ({
     },
   };
 
-  const inputProps = { classes: { input: classes.resize } };
+  const inputProps = {classes: {input: classes.resize}};
 
   const [errors, setErrors] = React.useState({});
 
   const handleFormSubmit = () => {
     // validate form values
-    const { isError, err } = experienceValidator(values);
+    const {isError, err} = experienceValidator(values);
 
     if (isError) {
       setErrors(err);
@@ -154,7 +154,7 @@ const AddOrEditExperienceForm = ({
           required
           id="host"
           className={classes.formControl}
-          label={config.labels.host || 'Organization'}
+          label={config.labels.host || "Organization"}
           value={host}
           name="host"
           onChange={handleChange}
@@ -181,7 +181,7 @@ const AddOrEditExperienceForm = ({
           required
           id="title"
           className={classes.formControl}
-          label={config.labels.title || 'Title'}
+          label={config.labels.title || "Title"}
           value={title}
           name="title"
           onChange={handleChange}
@@ -198,7 +198,7 @@ const AddOrEditExperienceForm = ({
             id="city"
             className={classes.formControl}
             label="Location"
-            value={location || ''}
+            value={location || ""}
             name="location"
             handleLocationChange={handleLocation}
           />
@@ -210,7 +210,7 @@ const AddOrEditExperienceForm = ({
       <Grid item xs={6}>
         <SelectorForm
           type="month"
-          label={experience.type === 'Accomplishment' ? 'Month' : 'Start Month'}
+          label={experience.type === "Accomplishment" ? "Month" : "Start Month"}
           name="start_month"
           value={start_month}
           onChange={handleChange}
@@ -220,7 +220,7 @@ const AddOrEditExperienceForm = ({
       <Grid item xs={6}>
         <SelectorForm
           type="year"
-          label={experience.type === 'Accomplishment' ? 'Year' : 'Start Year'}
+          label={experience.type === "Accomplishment" ? "Year" : "Start Year"}
           name="start_year"
           value={start_year}
           onChange={handleChange}
@@ -233,9 +233,9 @@ const AddOrEditExperienceForm = ({
             <SelectorForm
               disabled={is_current}
               type="month"
-              label={is_current ? 'Present' : 'End Month'}
+              label={is_current ? "Present" : "End Month"}
               name="end_month"
-              value={end_month === 'none' ? '' : end_month}
+              value={end_month === "none" ? "" : end_month}
               onChange={handleChange}
               helperText={
                 errors.endMonth_error && !is_current
@@ -248,9 +248,9 @@ const AddOrEditExperienceForm = ({
             <SelectorForm
               disabled={is_current}
               type="year"
-              label={is_current ? 'Present' : 'End Year'}
+              label={is_current ? "Present" : "End Year"}
               name="end_year"
-              value={end_year === 0 || end_year === '0' ? '' : end_year}
+              value={end_year === 0 || end_year === "0" ? "" : end_year}
               onChange={handleChange}
               helperText={
                 errors.endYear_error && !is_current
@@ -275,9 +275,9 @@ const AddOrEditExperienceForm = ({
               />
             }
             label={
-              type === 'Education'
-                ? 'I am currently enrolled'
-                : 'I am currently working in this role'
+              type === "Education"
+                ? "I am currently enrolled"
+                : "I am currently working in this role"
             }
           />
         </Grid>
@@ -286,7 +286,7 @@ const AddOrEditExperienceForm = ({
         <Grid item xs={12}>
           <TextField
             className={classes.formControl}
-            label={config.labels.description || 'Description'}
+            label={config.labels.description || "Description"}
             value={description}
             name="description"
             id="description"
@@ -318,15 +318,15 @@ const AddOrEditExperienceForm = ({
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   form: {
-    padding: '7px 20px 20px 20px',
-    marginBottom: '20px',
-    backgroundColor: '#f7f7f7',
+    padding: "7px 20px 20px 20px",
+    marginBottom: "20px",
+    backgroundColor: "#f7f7f7",
   },
 
   formControl: {
-    width: '100%',
+    width: "100%",
     marginTop: spacing(0),
   },
   resize: {
@@ -340,12 +340,12 @@ const styles = ({ breakpoints, palette, spacing }) => ({
   },
   formHelperText: {
     color: palette.error.main,
-    marginTop: '2px',
+    marginTop: "2px",
   },
   iconButton: {
-    padding: '3px',
-    '&:hover': {
-      color: 'black',
+    padding: "3px",
+    "&:hover": {
+      color: "black",
     },
   },
 });
@@ -358,18 +358,18 @@ AddOrEditExperienceForm.propTypes = {
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
-      '',
-      'High School',
-      'Associates',
-      'Undergraduate',
-      'Masters',
-      'Doctoral',
+      "",
+      "High School",
+      "Associates",
+      "Undergraduate",
+      "Masters",
+      "Doctoral",
     ]),
     start_month: PropTypes.string.isRequired,
     start_year: PropTypes.string.isRequired,
     end_month: PropTypes.string,
     end_year: PropTypes.string,
-    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
+    type: PropTypes.oneOf(["Work", "Service", "Accomplishment", "Education"])
       .isRequired,
     contact_id: PropTypes.number,
     achievements: PropTypes.array,

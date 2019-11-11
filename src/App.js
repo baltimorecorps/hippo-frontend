@@ -1,35 +1,36 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Icon from '@material-ui/core/Icon';
-import MenuItem from '@material-ui/core/MenuItem';
-import Toolbar from '@material-ui/core/Toolbar';
-import withStyles from '@material-ui/core/styles/withStyles';
+import React from "react";
+import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
+import {MuiThemeProvider} from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Icon from "@material-ui/core/Icon";
+import MenuItem from "@material-ui/core/MenuItem";
+import Toolbar from "@material-ui/core/Toolbar";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-import ErrorBoundary from 'atoms/ErrorBoundary';
-import Resume from 'modules/Resume';
-import CreateResumePage from 'pages/CreateResumePage';
-import ProfilePage from 'pages/ProfilePage';
-import theme from 'styles/theme';
+import ErrorBoundary from "atoms/ErrorBoundary";
+import Resume from "modules/Resume";
+import CreateResumePage from "pages/CreateResumePage";
+import ProfilePage from "pages/ProfilePage";
+import theme from "styles/theme";
 
 /* TODO remove these or move to pages folder */
-import Home from 'components/Other/Home.js';
-import Contacts from 'components/Contacts/Contacts.container';
-import SearchContact from 'components/SearchContact/SearchContact';
-import ResumeTemplate from 'components/Other/ResumeTemplate';
-import TalentHome from 'components/TalentHome/TalentHome';
+import Home from "components/Other/Home.js";
+import Contacts from "components/Contacts/Contacts.container";
+import SearchContact from "components/SearchContact/SearchContact";
+import ResumeTemplate from "components/Other/ResumeTemplate";
+import TalentHome from "components/TalentHome/TalentHome";
 
 const App = ({classes}) => (
   <ErrorBoundary fileName="src/App.js">
     <MuiThemeProvider theme={theme}>
       <Router>
         <div className={classes.page}>
-
           <AppBar position="fixed">
             <Toolbar>
               <Link to="/">
-                <MenuItem><Icon>home</Icon></MenuItem>
+                <MenuItem>
+                  <Icon>home</Icon>
+                </MenuItem>
               </Link>
               <Link to="/resume">
                 <MenuItem>Generated Resume</MenuItem>
@@ -43,7 +44,6 @@ const App = ({classes}) => (
             </Toolbar>
           </AppBar>
           <Toolbar /> {/* for automatic padding of AppBar */}
-
           <Switch>
             <Route exact path="/" component={Home} />
 
@@ -55,21 +55,36 @@ const App = ({classes}) => (
 
             <Route exact path="/profile/:contactId" component={ProfilePage} />
 
-            <Route exact path="/profile/:contactId/resume/:resumeId" component={Resume} />
-            <Route exact path="/contacts/:contactId/resume/:resumeId" component={Resume} />
-            <Route exact path="/contacts/:contactId/create-resume" component={CreateResumePage} />
-            <Route exact path="/contacts/:contactId/create-resume/:resumeId" component={CreateResumePage} />
+            <Route
+              exact
+              path="/profile/:contactId/resume/:resumeId"
+              component={Resume}
+            />
+            <Route
+              exact
+              path="/contacts/:contactId/resume/:resumeId"
+              component={Resume}
+            />
+            <Route
+              exact
+              path="/contacts/:contactId/create-resume"
+              component={CreateResumePage}
+            />
+            <Route
+              exact
+              path="/contacts/:contactId/create-resume/:resumeId"
+              component={CreateResumePage}
+            />
           </Switch>
-
         </div>
       </Router>
     </MuiThemeProvider>
   </ErrorBoundary>
 );
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   page: {
-    backgroundColor: 'hsl(216, 18%, 89%)',
+    backgroundColor: "hsl(216, 18%, 89%)",
     paddingBottom: spacing(5),
   },
 });

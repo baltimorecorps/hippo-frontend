@@ -1,17 +1,17 @@
-import { connect } from 'react-redux';
-import { createSelector } from 'redux-starter-kit';
-import AddOrEditSkillForm from './AddOrEditSkillForm';
+import {connect} from "react-redux";
+import {createSelector} from "redux-starter-kit";
+import AddOrEditSkillForm from "./AddOrEditSkillForm";
 
 const getTags = createSelector(
-  ['tags'],
-  (tags) => Object.keys(tags).map((id) => tags[id]),
+  ["tags"],
+  tags => Object.keys(tags).map(id => tags[id])
 );
 const getTypeFilter = (state, props) => props.tagType;
 
 const makeGetRelevantTags = () => {
   const getRelevantTags = createSelector(
     [getTags, getTypeFilter],
-    (tags, type) => tags.filter((tag) => tag.type === type),
+    (tags, type) => tags.filter(tag => tag.type === type)
   );
   return getRelevantTags;
 };
@@ -26,5 +26,7 @@ export const makeMapStateToProps = () => {
   return mapStateToProps;
 };
 
-const AddOrEditSkillFormContainer = connect(makeMapStateToProps)(AddOrEditSkillForm);
+const AddOrEditSkillFormContainer = connect(makeMapStateToProps)(
+  AddOrEditSkillForm
+);
 export default AddOrEditSkillFormContainer;

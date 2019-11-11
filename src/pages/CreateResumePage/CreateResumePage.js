@@ -1,11 +1,11 @@
-import React from 'react';
-import { DragDropContextProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-import ResumeContext from 'lib/context/ResumeContext';
-import ProgressContext from 'lib/context/ProgressContext';
-import Header from './Header';
-import StepComponent from './StepComponent';
-import ProgressBar from './ProgressBar';
+import React from "react";
+import {DragDropContextProvider} from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+import ResumeContext from "lib/context/ResumeContext";
+import ProgressContext from "lib/context/ProgressContext";
+import Header from "./Header";
+import StepComponent from "./StepComponent";
+import ProgressBar from "./ProgressBar";
 
 const CreateResumePage = ({match}) => {
   //const {contactId} = match.params;

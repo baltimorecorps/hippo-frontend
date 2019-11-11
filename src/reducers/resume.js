@@ -1,4 +1,4 @@
-import { createReducer } from 'redux-starter-kit';
+import {createReducer} from "redux-starter-kit";
 
 /* eslint-disable no-unused-vars */
 import {
@@ -29,23 +29,23 @@ import {
   DESELECT_RESUME_EXPERIENCE,
   GENERATE_RESUME,
   GENERATE_RESUME_API,
-} from '../actions/resume';
+} from "../actions/resume";
 /* eslint-enable no-unused-vars */
 
 export const RESUME_CREATION = {
-  NOT_ACTIVE: 'NOT_ACTIVE',
-  CHOOSE_STYLE: 'CHOOSE_STYLE',
-  SELECT_HIGHLIGHTS: 'SELECT_HIGHLIGHTS',
+  NOT_ACTIVE: "NOT_ACTIVE",
+  CHOOSE_STYLE: "CHOOSE_STYLE",
+  SELECT_HIGHLIGHTS: "SELECT_HIGHLIGHTS",
 };
 
-const getExperienceKey = (experience) => {
+const getExperienceKey = experience => {
   const expType = experience.type;
-  if (expType === 'Education') {
-    return 'education';
-  } else if (expType === 'Accomplishment') {
-    return 'accomplishments';
+  if (expType === "Education") {
+    return "education";
+  } else if (expType === "Accomplishment") {
+    return "accomplishments";
   } else {
-    return 'experience';
+    return "experience";
   }
 };
 
@@ -58,63 +58,58 @@ const genInitState = () => ({
     accomplishments: [],
   },
   resumes: [],
-})
+});
 
-export const resumeReducer = createReducer(genInitState(),
-  {
-    [START_RESUME_CREATION]: (state, action) => {
-      state.resumeCreationStep = RESUME_CREATION.CHOOSE_STYLE;
-    },
-    [START_RESUME_SELECT]: (state, action) => {
-      state.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
-    },
-    [CANCEL_RESUME_SELECT]: (state, action) => {
-      Object.keys(state.selected).forEach((key) => {
-        state.selected[key] = [];
-      });
-      state.resumeCreationStep = RESUME_CREATION.NOT_ACTIVE;
-    },
-    [SELECT_RESUME_EXPERIENCE]: (state, action) => {
-      // Only allow item selection when we're in the right state for it
-      // Hopefully this should keep our state clean across oddly timed
-      // transitions, etc.
-      if (state.resumeCreationStep !== RESUME_CREATION.SELECT_HIGHLIGHTS) {
-        return;
-      }
-
-      const key = getExperienceKey(action.experience);
-      state.selected[key].push(
-        action.experience.id,
-      );
-    },
-
-    [DESELECT_RESUME_EXPERIENCE]: (state, action) => {
-      const key = getExperienceKey(action.experience);
-      state.selected[key] = state.selected[key].filter(
-        (id) => id !== action.experience.id,
-      );
-    },
-    [DESELECT_RESUME_EXPERIENCE]: (state, action) => {
-      const key = getExperienceKey(action.experience);
-      state.selected[key] = state.selected[key].filter(
-        (id) => id !== action.experience.id,
-      );
-    },
-    [GENERATE_RESUME_API.REQUEST]: (state, action) => {
-      state.inProgress = true;
-    },
-    [GENERATE_RESUME_API.RESOLVE]: (state, action) => {
-      const initState = genInitState();
-      state.resumeCreationStep = initState.resumeCreationStep;
-      state.selected = initState.selected;
-      state.resumes.push(action.body.data);
-      state.inProgress = false;
-    },
-    [GENERATE_RESUME_API.REJECT]: (state, action) => {
-      state.inProgress = false;
-    },
-
+export const resumeReducer = createReducer(genInitState(), {
+  [START_RESUME_CREATION]: (state, action) => {
+    state.resumeCreationStep = RESUME_CREATION.CHOOSE_STYLE;
   },
-);
+  [START_RESUME_SELECT]: (state, action) => {
+    state.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
+  },
+  [CANCEL_RESUME_SELECT]: (state, action) => {
+    Object.keys(state.selected).forEach(key => {
+      state.selected[key] = [];
+    });
+    state.resumeCreationStep = RESUME_CREATION.NOT_ACTIVE;
+  },
+  [SELECT_RESUME_EXPERIENCE]: (state, action) => {
+    // Only allow item selection when we're in the right state for it
+    // Hopefully this should keep our state clean across oddly timed
+    // transitions, etc.
+    if (state.resumeCreationStep !== RESUME_CREATION.SELECT_HIGHLIGHTS) {
+      return;
+    }
+
+    const key = getExperienceKey(action.experience);
+    state.selected[key].push(action.experience.id);
+  },
+
+  [DESELECT_RESUME_EXPERIENCE]: (state, action) => {
+    const key = getExperienceKey(action.experience);
+    state.selected[key] = state.selected[key].filter(
+      id => id !== action.experience.id
+    );
+  },
+  [DESELECT_RESUME_EXPERIENCE]: (state, action) => {
+    const key = getExperienceKey(action.experience);
+    state.selected[key] = state.selected[key].filter(
+      id => id !== action.experience.id
+    );
+  },
+  [GENERATE_RESUME_API.REQUEST]: (state, action) => {
+    state.inProgress = true;
+  },
+  [GENERATE_RESUME_API.RESOLVE]: (state, action) => {
+    const initState = genInitState();
+    state.resumeCreationStep = initState.resumeCreationStep;
+    state.selected = initState.selected;
+    state.resumes.push(action.body.data);
+    state.inProgress = false;
+  },
+  [GENERATE_RESUME_API.REJECT]: (state, action) => {
+    state.inProgress = false;
+  },
+});
 
 export default resumeReducer;

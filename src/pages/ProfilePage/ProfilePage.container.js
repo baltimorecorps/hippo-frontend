@@ -1,29 +1,29 @@
-import { connect } from 'react-redux';
-import { createSelector } from 'redux-starter-kit';
-import { refreshContacts } from 'actions/contacts';
+import {connect} from "react-redux";
+import {createSelector} from "redux-starter-kit";
+import {refreshContacts} from "actions/contacts";
 import {
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
   generateResume,
-} from 'actions/resume';
-import { RESUME_CREATION } from 'reducers/resume';
-import ProfilePage from './ProfilePage';
+} from "actions/resume";
+import {RESUME_CREATION} from "reducers/resume";
+import ProfilePage from "./ProfilePage";
 
 // eslint-disable-next-line no-unused-vars
-const addNewContact = (dispatch) =>
+const addNewContact = dispatch =>
   async function(contact) {
     await refreshContacts(dispatch);
   };
 
 // TODO: refactor to use generic selectors, merge with ExperiencesList.container
 const getExperiences = createSelector(
-  ['experiences'],
-  (experiences) => Object.keys(experiences).map((id) => experiences[id]),
+  ["experiences"],
+  experiences => Object.keys(experiences).map(id => experiences[id])
 );
 
-const getSelection = createSelector(['resume.selected']);
-const getResumeCreationStep = createSelector(['resume.resumeCreationStep']);
+const getSelection = createSelector(["resume.selected"]);
+const getResumeCreationStep = createSelector(["resume.resumeCreationStep"]);
 
 const getContact = (state, props) => props.match.params.contactId;
 
@@ -41,21 +41,23 @@ const getResumeAll = createSelector(
       other_skills: [],
     };
     const contactExps = exps.filter(
-      (exp) => exp.contact_id.toString() === contactId.toString(),
+      exp => exp.contact_id.toString() === contactId.toString()
     );
 
     [
-      ['Work', 'exp'],
-      ['Service', 'exp'],
-      ['Education', 'edu'],
-      ['Accomplishment', 'achieve'],
+      ["Work", "exp"],
+      ["Service", "exp"],
+      ["Education", "edu"],
+      ["Accomplishment", "achieve"],
     ].forEach(([type, suffix]) => {
       contactExps
-        .filter((exp) => exp.type === type)
-        .forEach((exp) => { resume[`relevant_${suffix}`].push(exp.id); });
+        .filter(exp => exp.type === type)
+        .forEach(exp => {
+          resume[`relevant_${suffix}`].push(exp.id);
+        });
     });
     return resume;
-  },
+  }
 );
 
 const getResumeSelected = createSelector(
@@ -72,18 +74,18 @@ const getResumeSelected = createSelector(
       other_skills: [],
     };
     const contactExps = exps.filter(
-      (exp) => exp.contact_id.toString() === contactId.toString(),
+      exp => exp.contact_id.toString() === contactId.toString()
     );
 
     [
-      ['Work', 'exp', 'experience'],
-      ['Service', 'exp', 'experience'],
-      ['Education', 'edu', 'education'],
-      ['Accomplishment', 'achieve', 'accomplishments'],
+      ["Work", "exp", "experience"],
+      ["Service", "exp", "experience"],
+      ["Education", "edu", "education"],
+      ["Accomplishment", "achieve", "accomplishments"],
     ].forEach(([type, suffix, selectKey]) => {
       contactExps
-        .filter((exp) => exp.type === type)
-        .forEach((exp) => {
+        .filter(exp => exp.type === type)
+        .forEach(exp => {
           if (selection[selectKey].indexOf(exp.id) !== -1) {
             resume[`relevant_${suffix}`].push(exp.id);
           } else {
@@ -92,7 +94,7 @@ const getResumeSelected = createSelector(
         });
     });
     return resume;
-  },
+  }
 );
 
 const getResume = createSelector(
@@ -105,7 +107,6 @@ const getResume = createSelector(
     }
   }
 );
-
 
 // (DK 2019-09-12)
 // The state that the top level page uses is mostly the contact state,
@@ -138,7 +139,7 @@ export const mapStateToProps = (state, props) => {
 
 // Refreshes the state of all contacts (as shown above) from the API, via
 // the ALL_CONTACTS event (see reducers/contacts.js for details)
-export const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = dispatch => ({
   refreshContacts: () => refreshContacts(dispatch),
   startResumeCreation: () => dispatch(startResumeCreation()),
   startResumeSelect: () => dispatch(startResumeSelect()),
@@ -151,7 +152,7 @@ export const mapDispatchToProps = (dispatch) => ({
 
 const ProfileContainer = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ProfilePage);
 
 export default ProfileContainer;

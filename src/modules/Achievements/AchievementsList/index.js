@@ -1,3 +1,3 @@
-import AchievementsList from './AchievementsList';
+import AchievementsList from "./AchievementsList";
 
 export default AchievementsList;

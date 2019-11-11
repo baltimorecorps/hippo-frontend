@@ -1,33 +1,42 @@
-import React from 'react';
-import DateFns from '@date-io/date-fns';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-import withStyles from '@material-ui/core/styles/withStyles';
+import React from "react";
+import DateFns from "@date-io/date-fns";
+import {MuiPickersUtilsProvider} from "@material-ui/pickers";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
-import { monthFullNames, years, USAStates } from './staticData';
+import {monthFullNames, years, USAStates} from "./staticData";
 
-const SelectorForm = ({ label, value, onChange, classes, type, name, helperText, disabled }) => {
+const SelectorForm = ({
+  label,
+  value,
+  onChange,
+  classes,
+  type,
+  name,
+  helperText,
+  disabled,
+}) => {
   const id = `selector-${name}`;
 
-  const getOptions = (arr) => {
-    return arr.map((element) => (
+  const getOptions = arr => {
+    return arr.map(element => (
       <MenuItem value={element} key={element}>
         {element}
       </MenuItem>
     ));
   };
 
-  let options = '';
-  if (type === 'month') {
+  let options = "";
+  if (type === "month") {
     options = getOptions(monthFullNames);
-  } else if (type === 'year') {
+  } else if (type === "year") {
     options = getOptions(years);
-  } else if (type === 'states') {
+  } else if (type === "states") {
     options = getOptions(USAStates);
   }
 
@@ -46,21 +55,23 @@ const SelectorForm = ({ label, value, onChange, classes, type, name, helperText,
           inputProps={{
             name: name,
             id: name,
-            classes: { select: classes.resize },
-            'data-testid': name,
+            classes: {select: classes.resize},
+            "data-testid": name,
           }}
         >
           {options}
         </Select>
-        <FormHelperText className={classes.formHelperText}>{helperText}</FormHelperText>
+        <FormHelperText className={classes.formHelperText}>
+          {helperText}
+        </FormHelperText>
       </FormControl>
     </MuiPickersUtilsProvider>
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {
-    width: '100%',
+    width: "100%",
     marginBottom: spacing(0),
   },
   inputLabel: {
@@ -76,8 +87,8 @@ const styles = ({ breakpoints, palette, spacing }) => ({
     fontSize: 19,
   },
   formHelperText: {
-    color: '#eb0000',
-    marginTop: '4px',
+    color: "#eb0000",
+    marginTop: "4px",
   },
 });
 

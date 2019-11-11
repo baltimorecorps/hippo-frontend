@@ -1,3 +1,3 @@
-import AddOrEditSkillForm from './AddOrEditSkillForm.container';
+import AddOrEditSkillForm from "./AddOrEditSkillForm.container";
 
 export default AddOrEditSkillForm;

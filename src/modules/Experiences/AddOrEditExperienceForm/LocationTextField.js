@@ -1,17 +1,24 @@
-import React from 'react';
-import PlacesAutocomplete from 'react-places-autocomplete';
-import TextField from '@material-ui/core/TextField';
-import withStyles from '@material-ui/core/styles/withStyles';
+import React from "react";
+import PlacesAutocomplete from "react-places-autocomplete";
+import TextField from "@material-ui/core/TextField";
+import withStyles from "@material-ui/core/styles/withStyles";
 
-const LocationTextField = ({ value, handleLocationChange, name, classes, className, label }) => {
-  const handleChange = (address) => {
+const LocationTextField = ({
+  value,
+  handleLocationChange,
+  name,
+  classes,
+  className,
+  label,
+}) => {
+  const handleChange = address => {
     handleLocationChange(address);
   };
-  const handleSelect = (address) => {
+  const handleSelect = address => {
     handleLocationChange(address);
   };
   const searchOptions = {
-    types: ['(cities)'],
+    types: ["(cities)"],
   };
 
   const inputLabelProps = {
@@ -21,7 +28,7 @@ const LocationTextField = ({ value, handleLocationChange, name, classes, classNa
     },
   };
 
-  const inputProps = { classes: { input: classes.resize } };
+  const inputProps = {classes: {input: classes.resize}};
 
   return (
     <PlacesAutocomplete
@@ -30,7 +37,7 @@ const LocationTextField = ({ value, handleLocationChange, name, classes, classNa
       onSelect={handleSelect}
       searchOptions={searchOptions}
     >
-      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+      {({getInputProps, suggestions, getSuggestionItemProps, loading}) => (
         <div>
           <TextField
             required
@@ -38,19 +45,29 @@ const LocationTextField = ({ value, handleLocationChange, name, classes, classNa
             InputLabelProps={inputLabelProps}
             {...getInputProps({
               className: `location-search-input ${className}`,
-              id: 'location',
+              id: "location",
               label: label,
               name: name,
-              style: { width: '100%' },
+              style: {width: "100%"},
             })}
           />
           <div className="autocomplete-dropdown-container">
             {loading && <div>Loading...</div>}
-            {suggestions.map((suggestion) => {
-              const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
+            {suggestions.map(suggestion => {
+              const className = suggestion.active
+                ? "suggestion-item--active"
+                : "suggestion-item";
               const style = suggestion.active
-                ? { backgroundColor: '#fafafa', cursor: 'pointer', fontFamily: 'Lato' }
-                : { backgroundColor: '#ffffff', cursor: 'pointer', fontFamily: 'Lato' };
+                ? {
+                    backgroundColor: "#fafafa",
+                    cursor: "pointer",
+                    fontFamily: "Lato",
+                  }
+                : {
+                    backgroundColor: "#ffffff",
+                    cursor: "pointer",
+                    fontFamily: "Lato",
+                  };
               return (
                 <div
                   {...getSuggestionItemProps(suggestion, {
@@ -69,9 +86,9 @@ const LocationTextField = ({ value, handleLocationChange, name, classes, classNa
   );
 };
 
-const styles = ({ breakpoints, palette, spacing }) => ({
+const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {
-    width: '100%',
+    width: "100%",
     marginTop: spacing(0),
   },
   resize: {

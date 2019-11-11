@@ -1,3 +1,3 @@
-import CreateResumePage from './CreateResumePage';
+import CreateResumePage from "./CreateResumePage";
 
 export default CreateResumePage;
