@@ -1,11 +1,11 @@
-import React from "react";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import CloseIcon from "@material-ui/icons/Close";
-import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import CloseIcon from '@material-ui/icons/Close';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 const AchievementInput = React.forwardRef(
   ({value, onTextChange, onIconClick, classes, onKeyPress}, ref) => {
@@ -56,13 +56,13 @@ const AchievementInput = React.forwardRef(
 
 const styles = ({breakpoints, palette, spacing}) => ({
   input: {
-    width: "100%",
-    marginTop: "0px",
+    width: '100%',
+    marginTop: '0px',
     marginBottom: spacing(0),
     padding: 0,
   },
   focused: {
-    "&$focused": {},
+    '&$focused': {},
   },
   resize: {
     fontSize: 16,
@@ -70,9 +70,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     margin: 0,
   },
   delete: {
-    "&:hover": {
+    '&:hover': {
       backgroundColor: palette.error.main,
-      color: "#ffffff",
+      color: '#ffffff',
     },
   },
   iconButton: {

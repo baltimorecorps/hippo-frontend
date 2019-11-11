@@ -1,8 +1,8 @@
-import React from "react";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import getTextScore from "modules/Tags/utilities/getTextScore";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import getTextScore from 'modules/Tags/utilities/getTextScore';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const SkillLevelDropdown = ({onChange, value, classes}) => {
   return (
@@ -11,8 +11,8 @@ const SkillLevelDropdown = ({onChange, value, classes}) => {
       value={value || 0}
       onChange={onChange}
       inputProps={{
-        name: "skillLevel",
-        id: "skillLevel",
+        name: 'skillLevel',
+        id: 'skillLevel',
       }}
     >
       {SkillLevelDropdown.options.map(level => (

@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import StorageContext from "./StorageContext";
+import React, {useContext} from 'react';
+import StorageContext from './StorageContext';
 
 const ProgressContext = React.createContext();
 
@@ -35,24 +35,24 @@ ProgressContext.useStepName = useStepName;
 
 ProgressContext.steps = [
   {
-    name: "Name Your Resume",
-    type: "name",
+    name: 'Name Your Resume',
+    type: 'name',
   },
   {
-    name: "Select Work",
-    type: "work",
+    name: 'Select Work',
+    type: 'work',
   },
   {
-    name: "Select Education",
-    type: "education",
+    name: 'Select Education',
+    type: 'education',
   },
   {
-    name: "Select Service",
-    type: "service",
+    name: 'Select Service',
+    type: 'service',
   },
   {
-    name: "Select Skills",
-    type: "skills",
+    name: 'Select Skills',
+    type: 'skills',
   },
 ];
 

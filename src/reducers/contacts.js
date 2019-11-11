@@ -1,8 +1,8 @@
-import {createReducer} from "redux-starter-kit";
+import {createReducer} from 'redux-starter-kit';
 
 /* eslint-disable no-unused-vars */
-import {ALL_CONTACTS, ALL_CONTACTS_API} from "../actions/contacts";
-import {CREATE_RESUME, CREATE_RESUME_API} from "actions/resume";
+import {ALL_CONTACTS, ALL_CONTACTS_API} from '../actions/contacts';
+import {CREATE_RESUME, CREATE_RESUME_API} from 'actions/resume';
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(

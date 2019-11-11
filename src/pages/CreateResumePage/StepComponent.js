@@ -1,11 +1,11 @@
-import React, {useContext} from "react";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import withStyles from "@material-ui/core/styles/withStyles";
-import ProgressContext from "lib/context/ProgressContext";
-import ResumeContext from "lib/context/ResumeContext";
-import ResumePreview from "./ResumePreview";
-import ResumeBuilder from "./ResumeBuilder";
+import React, {useContext} from 'react';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
+import ProgressContext from 'lib/context/ProgressContext';
+import ResumeContext from 'lib/context/ResumeContext';
+import ResumePreview from './ResumePreview';
+import ResumeBuilder from './ResumeBuilder';
 
 const StepComponent = ({classes}) => {
   const stepType = ProgressContext.useStepType();
@@ -16,7 +16,7 @@ const StepComponent = ({classes}) => {
     ResumeContext.setName({name, context});
   };
 
-  if (stepType === "name") {
+  if (stepType === 'name') {
     return (
       <Grid container justify="center">
         <Grid item xs={6}>
@@ -51,8 +51,8 @@ const StepComponent = ({classes}) => {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   preview: {
-    transform: "scale(0.7)",
-    transformOrigin: "top",
+    transform: 'scale(0.7)',
+    transformOrigin: 'top',
   },
 });
 

@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from "react";
-import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import Icon from "@material-ui/core/Icon";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
-import AddOrEditSkillForm from "modules/Tags/AddOrEditSkillForm";
-import SkillsListItem from "./SkillsListItem";
+import React, {useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
+import Icon from '@material-ui/core/Icon';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import AddOrEditSkillForm from 'modules/Tags/AddOrEditSkillForm';
+import SkillsListItem from './SkillsListItem';
 
 const SkillsList = ({
   contactId,
@@ -32,7 +32,7 @@ const SkillsList = ({
   const title = titles[tagType.toLowerCase()];
 
   const blankTag = {
-    name: "",
+    name: '',
     contact_id: contactId,
     type: tagType,
   };
@@ -78,7 +78,7 @@ const SkillsList = ({
 
 SkillsList.propTypes = {
   contactId: PropTypes.number.isRequired,
-  tagType: PropTypes.oneOf(["Function", "Skill", "Topic"]).isRequired,
+  tagType: PropTypes.oneOf(['Function', 'Skill', 'Topic']).isRequired,
   tags: PropTypes.array.isRequired,
   addTagItem: PropTypes.func.isRequired,
   deleteTagItem: PropTypes.func.isRequired,
@@ -87,9 +87,9 @@ SkillsList.propTypes = {
 };
 
 const titles = {
-  function: "Functions performed",
-  skill: "Skills developed",
-  topic: "Topics addressed",
+  function: 'Functions performed',
+  skill: 'Skills developed',
+  topic: 'Topics addressed',
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

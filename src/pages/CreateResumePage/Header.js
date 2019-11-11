@@ -1,7 +1,7 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import ProgressContext from "lib/context/ProgressContext";
-import ResumeContext from "lib/context/ResumeContext";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import ProgressContext from 'lib/context/ProgressContext';
+import ResumeContext from 'lib/context/ResumeContext';
 
 const Header = () => {
   const stepName = ProgressContext.useStepName();

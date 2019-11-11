@@ -1,9 +1,9 @@
-import {connect} from "react-redux";
-import {createSelector} from "redux-starter-kit";
-import AddOrEditSkillForm from "./AddOrEditSkillForm";
+import {connect} from 'react-redux';
+import {createSelector} from 'redux-starter-kit';
+import AddOrEditSkillForm from './AddOrEditSkillForm';
 
 const getTags = createSelector(
-  ["tags"],
+  ['tags'],
   tags => Object.keys(tags).map(id => tags[id])
 );
 const getTypeFilter = (state, props) => props.tagType;

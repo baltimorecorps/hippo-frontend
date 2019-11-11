@@ -1,24 +1,24 @@
-import {mapStateToProps} from "./ResumePreview.container";
+import {mapStateToProps} from './ResumePreview.container';
 
 const SECTIONS = {
   1: {
     id: 1,
-    name: "Work Experience",
+    name: 'Work Experience',
     items: [],
   },
   2: {
     id: 2,
-    name: "Service and Leadership",
+    name: 'Service and Leadership',
     items: [],
   },
   3: {
     id: 3,
-    name: "Education",
+    name: 'Education',
     items: [],
   },
   4: {
     id: 4,
-    name: "Accomplishments",
+    name: 'Accomplishments',
     items: [],
   },
   5: {
@@ -41,22 +41,22 @@ const SECTIONS = {
 const STATE = {
   contacts: {
     111: {
-      first_name: "Lysander",
-      last_name: "Lance",
+      first_name: 'Lysander',
+      last_name: 'Lance',
       email_primary: {
         is_primary: true,
         type: null,
-        email: "something@thing.com",
+        email: 'something@thing.com',
         id: 2,
       },
-      phone_primary: "555-123-4567",
+      phone_primary: '555-123-4567',
     },
   },
   resumes: {
     3: {
       id: 3,
       contact_id: 111,
-      name: "Test Resume 3",
+      name: 'Test Resume 3',
       sections: SECTIONS,
     },
   },
@@ -71,7 +71,7 @@ const STATE = {
 // NOTE: Doesn't seem like this ever made it to a _passing_ test state, and
 // we may not be using the code at all anyway, so I'm just skipping the whole
 // test suite for now
-describe.skip("State mapping", () => {
+describe.skip('State mapping', () => {
   let state = {};
   beforeEach(() => {
     state = Object.assign({}, STATE);
@@ -80,11 +80,11 @@ describe.skip("State mapping", () => {
     {
       resume_order: 1,
       experience: {
-        type: "Work",
+        type: 'Work',
         id: 1,
-        host: "Baltimore Corps",
-        title: "Data Analyst",
-        date_start: "2015-09-01",
+        host: 'Baltimore Corps',
+        title: 'Data Analyst',
+        date_start: '2015-09-01',
         date_end: null,
       },
       indented: false,
@@ -93,7 +93,7 @@ describe.skip("State mapping", () => {
       resume_order: 2,
       indented: true,
       achievement: {
-        description: "Thing 1",
+        description: 'Thing 1',
         id: 15,
       },
     },
@@ -101,7 +101,7 @@ describe.skip("State mapping", () => {
       resume_order: 3,
       indented: true,
       achievement: {
-        description: "Thing 2",
+        description: 'Thing 2',
         id: 13,
       },
     },
@@ -109,19 +109,19 @@ describe.skip("State mapping", () => {
       resume_order: 3,
       indented: true,
       achievement: {
-        description: "Thing 3",
+        description: 'Thing 3',
         id: 21,
       },
     },
     {
       resume_order: 4,
       experience: {
-        type: "Work",
+        type: 'Work',
         id: 574,
-        host: "OkCupid",
-        title: "Software Engineer",
-        date_start: "2011-07-01",
-        date_end: "2014-06-20",
+        host: 'OkCupid',
+        title: 'Software Engineer',
+        date_start: '2011-07-01',
+        date_end: '2014-06-20',
       },
       indented: false,
     },
@@ -129,7 +129,7 @@ describe.skip("State mapping", () => {
       resume_order: 5,
       indented: true,
       achievement: {
-        description: "Thing 4",
+        description: 'Thing 4',
         id: 55,
       },
     },
@@ -137,87 +137,87 @@ describe.skip("State mapping", () => {
       resume_order: 6,
       indented: true,
       achievement: {
-        description: "Thing 5",
+        description: 'Thing 5',
         id: 56,
       },
     },
   ];
 
-  test("test contact", () => {
+  test('test contact', () => {
     const ownProps = {
       resumeId: 3,
     };
 
     const props = mapStateToProps(state, ownProps);
-    expect(props).toHaveProperty("contactInfo");
+    expect(props).toHaveProperty('contactInfo');
     expect(props.contactInfo).toEqual({
-      name: "Lysander Lance",
-      email: "something@thing.com",
-      phoneNumber: "5551234567",
+      name: 'Lysander Lance',
+      email: 'something@thing.com',
+      phoneNumber: '5551234567',
     });
   });
 
-  test("test work experience", () => {
+  test('test work experience', () => {
     state.resumes[3].sections[1].items = items;
     const ownProps = {
       resumeId: 3,
     };
 
     const props = mapStateToProps(state, ownProps);
-    expect(props).toHaveProperty("experiences");
-    expect(props.experiences).toHaveProperty("work");
+    expect(props).toHaveProperty('experiences');
+    expect(props.experiences).toHaveProperty('work');
     expect(props.experiences.work).toEqual([
       {
-        startDate: "2015-09-01",
+        startDate: '2015-09-01',
         endDate: null,
-        orgName: "Baltimore Corps",
-        positionName: "Data Analyst",
-        feats: [{text: "Thing 1"}, {text: "Thing 2"}, {text: "Thing 3"}],
+        orgName: 'Baltimore Corps',
+        positionName: 'Data Analyst',
+        feats: [{text: 'Thing 1'}, {text: 'Thing 2'}, {text: 'Thing 3'}],
       },
       {
-        startDate: "2011-07-01",
-        endDate: "2014-06-20",
-        orgName: "OkCupid",
-        positionName: "Software Engineer",
-        feats: [{text: "Thing 4"}, {text: "Thing 5"}],
+        startDate: '2011-07-01',
+        endDate: '2014-06-20',
+        orgName: 'OkCupid',
+        positionName: 'Software Engineer',
+        feats: [{text: 'Thing 4'}, {text: 'Thing 5'}],
       },
     ]);
   });
-  test("test service experience", () => {
+  test('test service experience', () => {
     state.resumes[3].sections[2].items = items;
     const ownProps = {
       resumeId: 3,
     };
 
     const props = mapStateToProps(state, ownProps);
-    expect(props).toHaveProperty("experiences");
-    expect(props.experiences).toHaveProperty("service");
+    expect(props).toHaveProperty('experiences');
+    expect(props.experiences).toHaveProperty('service');
     expect(props.experiences.service).toEqual([
       {
-        startDate: "2015-09-01",
+        startDate: '2015-09-01',
         endDate: null,
-        orgName: "Baltimore Corps",
-        positionName: "Data Analyst",
-        feats: [{text: "Thing 1"}, {text: "Thing 2"}, {text: "Thing 3"}],
+        orgName: 'Baltimore Corps',
+        positionName: 'Data Analyst',
+        feats: [{text: 'Thing 1'}, {text: 'Thing 2'}, {text: 'Thing 3'}],
       },
       {
-        startDate: "2011-07-01",
-        endDate: "2014-06-20",
-        orgName: "OkCupid",
-        positionName: "Software Engineer",
-        feats: [{text: "Thing 4"}, {text: "Thing 5"}],
+        startDate: '2011-07-01',
+        endDate: '2014-06-20',
+        orgName: 'OkCupid',
+        positionName: 'Software Engineer',
+        feats: [{text: 'Thing 4'}, {text: 'Thing 5'}],
       },
     ]);
   });
-  test("test education", () => {
+  test('test education', () => {
     state.resumes[3].sections[3].items = items;
     state.resumes[3].sections[3].items[0] = {
-      type: "Education",
-      degree: "Undergraduate",
-      date_end: "2019-05-02",
-      date_start: "2019-04-30",
-      host: "Goucher University",
-      title: "Economics",
+      type: 'Education',
+      degree: 'Undergraduate',
+      date_end: '2019-05-02',
+      date_start: '2019-04-30',
+      host: 'Goucher University',
+      title: 'Economics',
     };
     state.resumes[3].sections[3].splice(4);
     const ownProps = {
@@ -225,28 +225,28 @@ describe.skip("State mapping", () => {
     };
 
     const props = mapStateToProps(state, ownProps);
-    expect(props).toHaveProperty("experiences");
-    expect(props.experiences).toHaveProperty("education");
+    expect(props).toHaveProperty('experiences');
+    expect(props.experiences).toHaveProperty('education');
     expect(props.experiences.education).toEqual([
       {
-        startDate: "2015-04-30",
-        endDate: "2019-05-02",
-        orgName: "Goucher University",
-        positionName: "Economics",
-        degree: "Undergraduate",
-        feats: [{text: "Thing 1"}, {text: "Thing 2"}, {text: "Thing 3"}],
+        startDate: '2015-04-30',
+        endDate: '2019-05-02',
+        orgName: 'Goucher University',
+        positionName: 'Economics',
+        degree: 'Undergraduate',
+        feats: [{text: 'Thing 1'}, {text: 'Thing 2'}, {text: 'Thing 3'}],
       },
     ]);
   });
 
-  test("test skills", () => {
+  test('test skills', () => {
     state.resumes[3].sections[5].items = [
       {
         resume_order: 1,
         indented: false,
         tag: {
-          name: "Data Science",
-          type: "Function",
+          name: 'Data Science',
+          type: 'Function',
           tag_id: 123,
           score: 3,
           id: 54,
@@ -259,12 +259,12 @@ describe.skip("State mapping", () => {
     };
 
     const props = mapStateToProps(state, ownProps);
-    expect(props).toHaveProperty("skillGroups");
+    expect(props).toHaveProperty('skillGroups');
     expect(props.skillGroups).toHaveProperty("Functions I've Performed");
     expect(props.skillGroups["Functions I've Performed"].skills).toEqual([
       {
-        name: "Data Science",
-        level: "Can Teach with Help",
+        name: 'Data Science',
+        level: 'Can Teach with Help',
       },
     ]);
   });

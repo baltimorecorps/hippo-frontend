@@ -1,5 +1,5 @@
-import React, {useImperativeHandle, useRef} from "react";
-import {DragSource, DropTarget} from "react-dnd";
+import React, {useImperativeHandle, useRef} from 'react';
+import {DragSource, DropTarget} from 'react-dnd';
 
 const ExperienceSortItem = React.forwardRef(
   (
@@ -23,7 +23,7 @@ const ExperienceSortItem = React.forwardRef(
   }
 );
 
-const ExperienceItemType = "experience";
+const ExperienceItemType = 'experience';
 
 export default DropTarget(
   ExperienceItemType,

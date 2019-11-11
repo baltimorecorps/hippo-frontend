@@ -1,5 +1,5 @@
-import AirbnbPropTypes from "airbnb-prop-types";
-import FacebookPropTypes from "prop-types";
+import AirbnbPropTypes from 'airbnb-prop-types';
+import FacebookPropTypes from 'prop-types';
 
 const propTypesHandler = (propTypes, styled = false) => {
   const stylesPropTypes = {

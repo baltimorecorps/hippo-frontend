@@ -1,6 +1,6 @@
-import {connect} from "react-redux";
-import Contacts from "./Contacts";
-import {addContact, refreshContacts} from "../../actions/contacts";
+import {connect} from 'react-redux';
+import Contacts from './Contacts';
+import {addContact, refreshContacts} from '../../actions/contacts';
 
 const addNewContact = dispatch =>
   async function(contact) {

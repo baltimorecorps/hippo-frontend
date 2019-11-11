@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import ContactList from "./ContactList";
-import AddContact from "./AddContact";
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import ContactList from './ContactList';
+import AddContact from './AddContact';
 
 const Contacts = props => {
   const classes = props.classes;
@@ -35,13 +35,13 @@ Contacts.propTypes = {
 
 const styles = ({breakpoints, spacing}) => ({
   layout: {
-    width: "auto",
+    width: 'auto',
     marginLeft: spacing(2),
     marginRight: spacing(2),
     [breakpoints.up(600 + spacing(2 * 2))]: {
       width: 600,
-      marginLeft: "auto",
-      marginRight: "auto",
+      marginLeft: 'auto',
+      marginRight: 'auto',
     },
   },
   paper: {

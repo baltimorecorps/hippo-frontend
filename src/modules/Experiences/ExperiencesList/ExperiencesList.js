@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from "react";
-import PropTypes from "prop-types";
-import Divider from "@material-ui/core/Divider";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React, {useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import AddIcon from "@material-ui/icons/Add";
+import AddIcon from '@material-ui/icons/Add';
 
-import AddOrEditExperienceForm from "modules/Experiences/AddOrEditExperienceForm";
-import ExperiencesListItem from "./ExperiencesListItem";
+import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
+import ExperiencesListItem from './ExperiencesListItem';
 
 const ExperiencesList = ({
   contactId,
@@ -32,22 +32,22 @@ const ExperiencesList = ({
   }, [experiences.length, refreshExperiences]);
 
   let blankExperience = {
-    description: "",
-    host: "",
-    title: "",
-    location: "",
-    start_month: "",
-    start_year: "",
-    end_month: "",
-    end_year: "",
+    description: '',
+    host: '',
+    title: '',
+    location: '',
+    start_month: '',
+    start_year: '',
+    end_month: '',
+    end_year: '',
     is_current: false,
     type: experienceType,
     contact_id: contactId,
     achievements: [],
   };
 
-  if (experienceType === "Education") {
-    blankExperience.degree = "";
+  if (experienceType === 'Education') {
+    blankExperience.degree = '';
   }
 
   const submitNewExperience = async function(experience) {
@@ -75,7 +75,7 @@ const ExperiencesList = ({
                 variant="h5"
                 component="h1"
                 style={{
-                  fontWeight: "700",
+                  fontWeight: '700',
                 }}
               >
                 {header}
@@ -125,10 +125,10 @@ const ExperiencesList = ({
 ExperiencesList.propTypes = {
   contactId: PropTypes.number.isRequired,
   experienceType: PropTypes.oneOf([
-    "Work",
-    "Service",
-    "Accomplishment",
-    "Education",
+    'Work',
+    'Service',
+    'Accomplishment',
+    'Education',
   ]).isRequired,
   experiences: PropTypes.array.isRequired,
   addNewExperience: PropTypes.func.isRequired,
@@ -138,20 +138,20 @@ ExperiencesList.propTypes = {
 };
 
 const headers = {
-  work: "Experience",
-  education: "Education",
-  service: "Service and Leadership",
-  accomplishment: "Accomplishments",
+  work: 'Experience',
+  education: 'Education',
+  service: 'Service and Leadership',
+  accomplishment: 'Accomplishments',
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     padding: spacing(2, 3, 3),
     marginBottom: spacing(5),
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   divider: {
     margin: spacing(1, 0),

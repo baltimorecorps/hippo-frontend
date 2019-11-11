@@ -1,8 +1,8 @@
-import {connect} from "react-redux";
-import GeneratedResumePage from "./GeneratedResumePage";
+import {connect} from 'react-redux';
+import GeneratedResumePage from './GeneratedResumePage';
 
-import {refreshResume} from "actions/resume";
-import {refreshContacts} from "actions/contacts";
+import {refreshResume} from 'actions/resume';
+import {refreshContacts} from 'actions/contacts';
 
 const mapStateToProps = (state, ownProps) => {
   const {contactId, resumeId} = ownProps.match
@@ -15,13 +15,13 @@ const mapStateToProps = (state, ownProps) => {
       resumeId,
       achievements: [],
       contactInfo: {
-        name: "",
+        name: '',
         roles: [],
-        title: "",
-        email: "",
-        phoneNumber: "",
-        city: "",
-        state: "",
+        title: '',
+        email: '',
+        phoneNumber: '',
+        city: '',
+        state: '',
       },
       experiences: {
         service: [],
@@ -50,16 +50,16 @@ const mapStateToProps = (state, ownProps) => {
     contactInfo: {
       name: `${contactInfo.first_name} ${contactInfo.last_name}`,
       roles: [],
-      title: "",
+      title: '',
       email: contactInfo.email_primary.email,
-      phoneNumber: contactInfo.phone_primary.replace(/-/g, ""),
-      city: "",
-      state: "",
+      phoneNumber: contactInfo.phone_primary.replace(/-/g, ''),
+      city: '',
+      state: '',
     },
     experiences: {
-      service: getExperiences("Relevant Experience"),
-      education: getExperiences("Education"),
-      work: getExperiences("Experience"),
+      service: getExperiences('Relevant Experience'),
+      education: getExperiences('Education'),
+      work: getExperiences('Experience'),
     },
     skillGroups: [],
   };

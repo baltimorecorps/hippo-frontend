@@ -1,13 +1,13 @@
-import React from "react";
-import formatDate from "lib/formatDate";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import formatDate from 'lib/formatDate';
+import Typography from '@material-ui/core/Typography';
 
 const Experience = ({startDate, endDate, orgName, positionName, feats}) => {
   return (
     <div>
       <Typography component="h4" variant="h5">
-        {formatDate(startDate, "MMM YYYY")} to{" "}
-        {endDate ? formatDate(endDate, "MMM YYYY") : "Present"}
+        {formatDate(startDate, 'MMM YYYY')} to{' '}
+        {endDate ? formatDate(endDate, 'MMM YYYY') : 'Present'}
       </Typography>
       <Typography component="h4" variant="h6">
         {positionName}, {orgName}

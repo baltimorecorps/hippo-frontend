@@ -1,6 +1,6 @@
-import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 const ResumeHeader = ({contactInfo}) => {
   const {
@@ -13,7 +13,7 @@ const ResumeHeader = ({contactInfo}) => {
     state,
   } = contactInfo;
 
-  const phoneString = (phoneNumber || "").toString();
+  const phoneString = (phoneNumber || '').toString();
   const formattedPhoneNumber = `${phoneString.slice(0, 3)}-${phoneString.slice(
     3,
     6

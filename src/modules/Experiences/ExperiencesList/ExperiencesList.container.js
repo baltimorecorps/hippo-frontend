@@ -1,21 +1,21 @@
-import {connect} from "react-redux";
-import {createSelector} from "redux-starter-kit";
-import {RESUME_CREATION} from "../../../reducers/resume";
+import {connect} from 'react-redux';
+import {createSelector} from 'redux-starter-kit';
+import {RESUME_CREATION} from '../../../reducers/resume';
 import {
   selectResumeExperience,
   deselectResumeExperience,
-} from "../../../actions/resume";
-import ExperiencesList from "./ExperiencesList";
+} from '../../../actions/resume';
+import ExperiencesList from './ExperiencesList';
 
 import {
   addExperience,
   refreshExperienceType,
   updateExperience,
   deleteExperience,
-} from "actions/profile";
+} from 'actions/profile';
 
 const getExperiences = createSelector(
-  ["experiences"],
+  ['experiences'],
   experiences => Object.keys(experiences).map(id => experiences[id])
 );
 

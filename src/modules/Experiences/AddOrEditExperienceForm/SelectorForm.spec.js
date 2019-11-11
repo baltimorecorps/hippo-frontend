@@ -1,12 +1,12 @@
-import React from "react";
-import {render, fireEvent} from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
-import SelectorForm from "./SelectorForm";
+import React from 'react';
+import {render, fireEvent} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import SelectorForm from './SelectorForm';
 
 ////////-----------------------------------------------------------------/////////
-test("DatePicker test: Month", () => {
+test('DatePicker test: Month', () => {
   const values = {
-    start_month: "March",
+    start_month: 'March',
   };
 
   const handleChange = jest.fn();
@@ -21,15 +21,15 @@ test("DatePicker test: Month", () => {
       helperText={null}
     />
   );
-  const select = getByTestId("start_month");
+  const select = getByTestId('start_month');
   expect(select).toBeInTheDocument();
-  expect(select.value).toBe("March");
+  expect(select.value).toBe('March');
 
-  fireEvent.change(select, {target: {value: "April"}});
-  expect(select.value).toBe("April");
+  fireEvent.change(select, {target: {value: 'April'}});
+  expect(select.value).toBe('April');
 });
 
-test("DatePicker test: Year", () => {
+test('DatePicker test: Year', () => {
   const values = {
     end_year: 2015,
   };
@@ -46,10 +46,10 @@ test("DatePicker test: Year", () => {
       helperText={null}
     />
   );
-  const select = getByTestId("end_year");
+  const select = getByTestId('end_year');
   expect(select).toBeInTheDocument();
-  expect(select.value).toBe("2015");
+  expect(select.value).toBe('2015');
 
   fireEvent.change(select, {target: {value: 2019}});
-  expect(select.value).toBe("2019");
+  expect(select.value).toBe('2019');
 });

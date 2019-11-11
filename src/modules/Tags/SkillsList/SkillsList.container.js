@@ -1,6 +1,6 @@
-import {connect} from "react-redux";
-import {createSelector} from "redux-starter-kit";
-import SkillsList from "./SkillsList";
+import {connect} from 'react-redux';
+import {createSelector} from 'redux-starter-kit';
+import SkillsList from './SkillsList';
 
 import {
   refreshTags,
@@ -8,10 +8,10 @@ import {
   deleteTagItem,
   updateTagItem,
   refreshTagItems,
-} from "actions/profile";
+} from 'actions/profile';
 
 const getTags = createSelector(
-  ["tags"],
+  ['tags'],
   tags => Object.keys(tags).map(id => tags[id])
 );
 
@@ -20,7 +20,7 @@ const getTypeFilter = (state, props) => props.tagType;
 
 const makeGetRelevantTagItems = () => {
   const getRelevantTagItems = createSelector(
-    ["tagItems", getContact, getTypeFilter],
+    ['tagItems', getContact, getTypeFilter],
     (tagItems, contactId, type) => {
       const tagItemMap = tagItems[contactId];
       if (!tagItemMap) {

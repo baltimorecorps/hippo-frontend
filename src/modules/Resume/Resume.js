@@ -1,8 +1,8 @@
-import React from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const Resume = ({match, classes}) => {
   const gdocId = match.params.gdocId;
@@ -28,15 +28,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(1),
   },
   container: {
-    display: "inline",
+    display: 'inline',
   },
   button: {
     marginBottom: spacing(1),
   },
   frame: {
-    border: "none",
-    minWidth: "800px",
-    minHeight: "800px",
+    border: 'none',
+    minWidth: '800px',
+    minHeight: '800px',
   },
 });
 

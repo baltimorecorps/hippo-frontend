@@ -1,27 +1,27 @@
-import React from "react";
-import {useState, useEffect} from "react";
-import PropTypes from "prop-types";
-import {Redirect} from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import Divider from "@material-ui/core/Divider";
-import Icon from "@material-ui/core/Icon";
-import Paper from "@material-ui/core/Paper";
-import Drawer from "@material-ui/core/Drawer";
-import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Modal from "@material-ui/core/Modal";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import {useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
+import {Redirect} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import Divider from '@material-ui/core/Divider';
+import Icon from '@material-ui/core/Icon';
+import Paper from '@material-ui/core/Paper';
+import Drawer from '@material-ui/core/Drawer';
+import Typography from '@material-ui/core/Typography';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Modal from '@material-ui/core/Modal';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import BasicInfoDisplay from "modules/Users/BasicInfoDisplay";
-import ExperiencesList from "modules/Experiences/ExperiencesList";
-import SkillsList from "modules/Tags/SkillsList";
-import ResumesList from "modules/Resumes/ResumesList";
+import BasicInfoDisplay from 'modules/Users/BasicInfoDisplay';
+import ExperiencesList from 'modules/Experiences/ExperiencesList';
+import SkillsList from 'modules/Tags/SkillsList';
+import ResumesList from 'modules/Resumes/ResumesList';
 
-import html2canvas from "html2canvas";
+import html2canvas from 'html2canvas';
 
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
@@ -67,7 +67,7 @@ const ProfilePage = ({
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
   // rerendered due to the Redux state update
-  if (typeof contactInfo === "undefined") {
+  if (typeof contactInfo === 'undefined') {
     refreshContacts();
     // TODO: Ideally we have a better empty/error state here
     return <div />;
@@ -75,7 +75,7 @@ const ProfilePage = ({
 
   const email = contactInfo.email_primary
     ? contactInfo.email_primary.email
-    : "";
+    : '';
 
   const genResumeLocal = async () => {
     // TODO: How should we get the resume name for real?
@@ -88,7 +88,7 @@ const ProfilePage = ({
 
   const startSelectLocal = () => {
     startResumeSelect();
-    scrollTo({top: 0, left: 0, behavior: "smooth"});
+    scrollTo({top: 0, left: 0, behavior: 'smooth'});
   };
 
   // This page primarily serves as the top level container for the profile of
@@ -179,30 +179,30 @@ const dialogStyles = ({breakpoints, palette, spacing, shadows}) => ({
   },
   row: {
     margin: spacing(1.5, 0),
-    display: "inline-flex",
-    justifyContent: "center",
+    display: 'inline-flex',
+    justifyContent: 'center',
   },
   rowBottom: {
     margin: spacing(1.5, 0, 8, 0),
-    display: "inline-flex",
+    display: 'inline-flex',
   },
   button: {
-    width: "100%",
+    width: '100%',
   },
   resume: {
-    height: "200px",
-    width: "160px",
+    height: '200px',
+    width: '160px',
     marginLeft: spacing(1),
   },
   resumeContainer: {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
     marginBottom: spacing(2),
   },
   line: {
-    width: "50px",
+    width: '50px',
     borderColor: palette.secondary.main,
-    borderTop: "1px solid",
+    borderTop: '1px solid',
     margin: `11px ${spacing(1)}px`,
   },
 });
@@ -315,7 +315,7 @@ const SelectionDrawer = withStyles(drawerStyles)(
 
 const styles = ({breakpoints, palette, spacing, shadows}) => ({
   page: {
-    backgroundColor: "hsl(216, 18%, 89%)",
+    backgroundColor: 'hsl(216, 18%, 89%)',
   },
   wrapper: {
     marginBottom: spacing(5),
@@ -331,7 +331,7 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     marginRight: spacing(1),
   },
   progress: {
-    height: "100%",
+    height: '100%',
   },
 });
 

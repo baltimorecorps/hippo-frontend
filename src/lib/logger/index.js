@@ -6,7 +6,7 @@ const logger = {
       console.group(`logger.error in ${fileName}`);
       console.error(name, message);
 
-      console.group("stack");
+      console.group('stack');
       console.error(stack);
       console.groupEnd();
 

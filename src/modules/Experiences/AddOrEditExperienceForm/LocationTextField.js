@@ -1,7 +1,7 @@
-import React from "react";
-import PlacesAutocomplete from "react-places-autocomplete";
-import TextField from "@material-ui/core/TextField";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import PlacesAutocomplete from 'react-places-autocomplete';
+import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const LocationTextField = ({
   value,
@@ -18,7 +18,7 @@ const LocationTextField = ({
     handleLocationChange(address);
   };
   const searchOptions = {
-    types: ["(cities)"],
+    types: ['(cities)'],
   };
 
   const inputLabelProps = {
@@ -45,28 +45,28 @@ const LocationTextField = ({
             InputLabelProps={inputLabelProps}
             {...getInputProps({
               className: `location-search-input ${className}`,
-              id: "location",
+              id: 'location',
               label: label,
               name: name,
-              style: {width: "100%"},
+              style: {width: '100%'},
             })}
           />
           <div className="autocomplete-dropdown-container">
             {loading && <div>Loading...</div>}
             {suggestions.map(suggestion => {
               const className = suggestion.active
-                ? "suggestion-item--active"
-                : "suggestion-item";
+                ? 'suggestion-item--active'
+                : 'suggestion-item';
               const style = suggestion.active
                 ? {
-                    backgroundColor: "#fafafa",
-                    cursor: "pointer",
-                    fontFamily: "Lato",
+                    backgroundColor: '#fafafa',
+                    cursor: 'pointer',
+                    fontFamily: 'Lato',
                   }
                 : {
-                    backgroundColor: "#ffffff",
-                    cursor: "pointer",
-                    fontFamily: "Lato",
+                    backgroundColor: '#ffffff',
+                    cursor: 'pointer',
+                    fontFamily: 'Lato',
                   };
               return (
                 <div
@@ -88,7 +88,7 @@ const LocationTextField = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {
-    width: "100%",
+    width: '100%',
     marginTop: spacing(0),
   },
   resize: {

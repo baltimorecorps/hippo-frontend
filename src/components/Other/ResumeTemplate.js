@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import {blue} from "@material-ui/core/colors";
+import {blue} from '@material-ui/core/colors';
 
 class ContactInfo extends React.Component {
   state = {
-    last_name: "",
-    first_name: "",
-    email_primary: "",
-    phone_primary: "",
-    gender: "",
-    race_all: "",
-    birthday: "",
+    last_name: '',
+    first_name: '',
+    email_primary: '',
+    phone_primary: '',
+    gender: '',
+    race_all: '',
+    birthday: '',
   };
 
   handleChange = varName => event => {
@@ -26,7 +26,7 @@ class ContactInfo extends React.Component {
       <Grid container justify="center">
         <Grid item xs={11}>
           <Grid container className="profileHeader">
-            <div style={{paddingTop: "30px", margin: "20px"}}>
+            <div style={{paddingTop: '30px', margin: '20px'}}>
               <h1>Billy Daly</h1>
               <p>Data Science & Data Architecture</p>
             </div>
@@ -36,7 +36,7 @@ class ContactInfo extends React.Component {
               alt="Baltimore Corps Logo"
               height="200px"
             />
-            <div className="contact" style={{paddingTop: "30px"}}>
+            <div className="contact" style={{paddingTop: '30px'}}>
               <p>billy@baltimorecorps.org</p>
               <p>908-578-4622</p>
               <p>Baltimore, MD 21201</p>
@@ -46,9 +46,9 @@ class ContactInfo extends React.Component {
           <Grid
             container
             style={{
-              minHeight: "780px",
-              minWidth: "800px",
-              overflow: "scroll",
+              minHeight: '780px',
+              minWidth: '800px',
+              overflow: 'scroll',
             }}
           >
             <Grid
@@ -56,7 +56,7 @@ class ContactInfo extends React.Component {
               className="column"
               xs={12}
               md={8}
-              style={{backgroundColor: "#eaf9f9", overflow: "hidden"}}
+              style={{backgroundColor: '#eaf9f9', overflow: 'hidden'}}
             >
               <Grid container>
                 <div className="infoBlock">
@@ -64,11 +64,11 @@ class ContactInfo extends React.Component {
                   <p>
                     <strong>September 2015 - Present</strong>
                   </p>
-                  <p style={{color: "grey"}}>
+                  <p style={{color: 'grey'}}>
                     <strong>Baltimore Corps, Systems Design Manager</strong>
                   </p>
                   <div>
-                    {" "}
+                    {' '}
                     Redesigned the Salesforce architecture to facilitate easier
                     reporting. Formalized organizational strategy for defining
                     and analyzing KPIs. Developed recruitment projection tools
@@ -80,10 +80,10 @@ class ContactInfo extends React.Component {
                   </div>
                   <br />
                   <p>
-                    {" "}
+                    {' '}
                     <strong>September 2015 - December 2015</strong>
                   </p>
-                  <p style={{color: "grey"}}>
+                  <p style={{color: 'grey'}}>
                     <strong>
                       Baltimore Green Currency Association, Database
                       Administrator
@@ -106,11 +106,11 @@ class ContactInfo extends React.Component {
                   <p>
                     <strong>September 2015 - Present</strong>
                   </p>
-                  <p style={{color: "grey"}}>
+                  <p style={{color: 'grey'}}>
                     <strong>Baltimore Corps, Systems Design Manager</strong>
                   </p>
                   <div>
-                    {" "}
+                    {' '}
                     Contributed to the DGS GitHub repository for analyzing
                     city-wide data. Presented on Baltimore Corps use of python
                     for data science.
@@ -124,7 +124,7 @@ class ContactInfo extends React.Component {
                   <p>
                     <strong>September 2015 - Present</strong>
                   </p>
-                  <p style={{color: "grey"}}>
+                  <p style={{color: 'grey'}}>
                     <strong>
                       University of Michigan, Applied Data Science with Python
                     </strong>
@@ -146,26 +146,26 @@ class ContactInfo extends React.Component {
               className="accomColumn"
               xs={6}
               md={4}
-              style={{backgroundColor: "#e6f9e3", overflow: "hidden"}}
+              style={{backgroundColor: '#e6f9e3', overflow: 'hidden'}}
             >
               <Grid container>
                 <div className="infoBlock">
                   <h5> Accomplishments </h5>
                   <div className="rightCol">
-                    <div style={{marginRight: "5px"}}> Nov 2017 </div>
-                    <div style={{color: "grey"}}>
+                    <div style={{marginRight: '5px'}}> Nov 2017 </div>
+                    <div style={{color: 'grey'}}>
                       <div>
-                        {" "}
+                        {' '}
                         <strong>Dreamforce Conference</strong>
                       </div>
                       <div> Salesforce Communities Presentation</div>
                     </div>
                   </div>
                   <div className="rightCol">
-                    <div style={{marginRight: "5px"}}> Nov 2017 </div>
-                    <div style={{color: "grey"}}>
+                    <div style={{marginRight: '5px'}}> Nov 2017 </div>
+                    <div style={{color: 'grey'}}>
                       <div>
-                        {" "}
+                        {' '}
                         <strong>FormAssembly Blog</strong>
                       </div>
                       <div> Salesforce Communities Presentation</div>
@@ -179,7 +179,7 @@ class ContactInfo extends React.Component {
                   <h5>Skills and Abilities </h5>
                   <div className="allSkills">
                     <div className="skillCategory">
-                      <p style={{color: "grey"}}>
+                      <p style={{color: 'grey'}}>
                         <strong>Data Science</strong>
                       </p>
                       <div className="skills">
@@ -199,7 +199,7 @@ class ContactInfo extends React.Component {
                     </div>
                     <br />
                     <div className="skillCategory">
-                      <p style={{color: "grey"}}>
+                      <p style={{color: 'grey'}}>
                         <strong>Data Architecture</strong>
                       </p>
                       <div className="skills">
@@ -235,9 +235,9 @@ ContactInfo.propTypes = {
 
 const styles = ({breakpoints, palette, spacing, theme}) => ({
   Grid: {
-    display: "flex",
-    flexWrap: "wrap",
-    padding: "50px",
+    display: 'flex',
+    flexWrap: 'wrap',
+    padding: '50px',
   },
   row: {
     backgroundColor: blue,
@@ -254,24 +254,24 @@ const styles = ({breakpoints, palette, spacing, theme}) => ({
     width: 200,
   },
   main: {
-    width: "auto",
+    width: 'auto',
     marginLeft: spacing(3),
     marginRight: spacing(3),
     [breakpoints.up(400 + spacing(3 * 2))]: {
       width: 400,
-      marginLeft: "auto",
-      marginRight: "auto",
+      marginLeft: 'auto',
+      marginRight: 'auto',
     },
   },
   paper: {
     marginTop: spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: spacing(2, 3, 3),
   },
   avatar: {
-    width: "100%",
+    width: '100%',
     marginBottom: spacing(1),
   },
   password: {

@@ -1,6 +1,6 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import SkillGroup from "./SkillGroup";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import SkillGroup from './SkillGroup';
 
 const SkillGroups = ({skillGroups}) => {
   return (

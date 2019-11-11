@@ -1,4 +1,4 @@
-import {createReducer} from "redux-starter-kit";
+import {createReducer} from 'redux-starter-kit';
 /* eslint-disable no-unused-vars */
 import {
   ADD_EXPERIENCE,
@@ -19,7 +19,7 @@ import {
   UPDATE_TAG_ITEM_API,
   REFRESH_TAG_ITEMS,
   REFRESH_TAG_ITEMS_API,
-} from "../actions/profile";
+} from '../actions/profile';
 /* eslint-enable no-unused-vars */
 
 export const experiencesReducer = createReducer(

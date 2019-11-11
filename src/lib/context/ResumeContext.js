@@ -1,5 +1,5 @@
-import React, {useContext} from "react";
-import StorageContext from "./StorageContext";
+import React, {useContext} from 'react';
+import StorageContext from './StorageContext';
 
 const ResumeContext = React.createContext();
 
@@ -43,16 +43,16 @@ ResumeContext.setName = ({name, context}) => {
 };
 
 ResumeContext.defaultValues = {
-  name: "",
+  name: '',
   achievements: [],
   contactInfo: {
-    name: "",
+    name: '',
     roles: [],
-    title: "",
-    email: "",
-    phoneNumber: "",
-    city: "",
-    state: "",
+    title: '',
+    email: '',
+    phoneNumber: '',
+    city: '',
+    state: '',
   },
   experiences: {
     work: [],

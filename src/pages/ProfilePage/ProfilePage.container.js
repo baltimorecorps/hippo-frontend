@@ -1,14 +1,14 @@
-import {connect} from "react-redux";
-import {createSelector} from "redux-starter-kit";
-import {refreshContacts} from "actions/contacts";
+import {connect} from 'react-redux';
+import {createSelector} from 'redux-starter-kit';
+import {refreshContacts} from 'actions/contacts';
 import {
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
   generateResume,
-} from "actions/resume";
-import {RESUME_CREATION} from "reducers/resume";
-import ProfilePage from "./ProfilePage";
+} from 'actions/resume';
+import {RESUME_CREATION} from 'reducers/resume';
+import ProfilePage from './ProfilePage';
 
 // eslint-disable-next-line no-unused-vars
 const addNewContact = dispatch =>
@@ -18,12 +18,12 @@ const addNewContact = dispatch =>
 
 // TODO: refactor to use generic selectors, merge with ExperiencesList.container
 const getExperiences = createSelector(
-  ["experiences"],
+  ['experiences'],
   experiences => Object.keys(experiences).map(id => experiences[id])
 );
 
-const getSelection = createSelector(["resume.selected"]);
-const getResumeCreationStep = createSelector(["resume.resumeCreationStep"]);
+const getSelection = createSelector(['resume.selected']);
+const getResumeCreationStep = createSelector(['resume.resumeCreationStep']);
 
 const getContact = (state, props) => props.match.params.contactId;
 
@@ -45,10 +45,10 @@ const getResumeAll = createSelector(
     );
 
     [
-      ["Work", "exp"],
-      ["Service", "exp"],
-      ["Education", "edu"],
-      ["Accomplishment", "achieve"],
+      ['Work', 'exp'],
+      ['Service', 'exp'],
+      ['Education', 'edu'],
+      ['Accomplishment', 'achieve'],
     ].forEach(([type, suffix]) => {
       contactExps
         .filter(exp => exp.type === type)
@@ -78,10 +78,10 @@ const getResumeSelected = createSelector(
     );
 
     [
-      ["Work", "exp", "experience"],
-      ["Service", "exp", "experience"],
-      ["Education", "edu", "education"],
-      ["Accomplishment", "achieve", "accomplishments"],
+      ['Work', 'exp', 'experience'],
+      ['Service', 'exp', 'experience'],
+      ['Education', 'edu', 'education'],
+      ['Accomplishment', 'achieve', 'accomplishments'],
     ].forEach(([type, suffix, selectKey]) => {
       contactExps
         .filter(exp => exp.type === type)

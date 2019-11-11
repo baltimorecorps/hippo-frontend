@@ -1,19 +1,19 @@
-import {contactsReducer} from "./contacts";
+import {contactsReducer} from './contacts';
 
-import {ALL_CONTACTS, ALL_CONTACTS_API} from "../actions/contacts";
-import {CREATE_RESUME_API} from "../actions/resume";
+import {ALL_CONTACTS, ALL_CONTACTS_API} from '../actions/contacts';
+import {CREATE_RESUME_API} from '../actions/resume';
 
-describe("Contacts state", () => {
+describe('Contacts state', () => {
   const initialState = {};
-  test("inital state", () => {
+  test('inital state', () => {
     const newState = contactsReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
-  test("Fetch all contacts", () => {
+  test('Fetch all contacts', () => {
     const contacts = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
     const newState = contactsReducer(undefined, {
       type: ALL_CONTACTS_API.RESOLVE,
-      body: {status: "success", data: contacts},
+      body: {status: 'success', data: contacts},
     });
     expect(newState).toEqual({
       1: {id: 1},
@@ -22,7 +22,7 @@ describe("Contacts state", () => {
       4: {id: 4},
     });
   });
-  test("Replace existing contacts", () => {
+  test('Replace existing contacts', () => {
     const contacts = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
     const newState = contactsReducer(
       {
@@ -30,7 +30,7 @@ describe("Contacts state", () => {
       },
       {
         type: ALL_CONTACTS_API.RESOLVE,
-        body: {status: "success", data: contacts},
+        body: {status: 'success', data: contacts},
       }
     );
     expect(newState).toEqual({
@@ -41,17 +41,17 @@ describe("Contacts state", () => {
     });
   });
 
-  test("Contacts - Create new resume - request resolved", () => {
+  test('Contacts - Create new resume - request resolved', () => {
     const newState = contactsReducer(
       {5: {id: 5}},
       {
         type: CREATE_RESUME_API.RESOLVE,
         body: {
           data: {
-            other_stuff: "blah",
+            other_stuff: 'blah',
             contact: {
               id: 5678,
-              other_stuff: "blah",
+              other_stuff: 'blah',
             },
             id: 1234,
           },
@@ -60,7 +60,7 @@ describe("Contacts state", () => {
     );
     expect(newState).toEqual({
       5: {id: 5},
-      5678: {id: 5678, other_stuff: "blah"},
+      5678: {id: 5678, other_stuff: 'blah'},
     });
   });
 });

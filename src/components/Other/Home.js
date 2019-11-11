@@ -1,12 +1,12 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const Home = () => {
   return (
@@ -50,25 +50,25 @@ const Home = () => {
 
 Home.cardDetails = [
   {
-    header: "Talent",
+    header: 'Talent',
     description:
-      "Join as a talent, you can find numerous positions/opportunities in NGO here.",
-    imageName: "talent",
-    url: "/contacts",
+      'Join as a talent, you can find numerous positions/opportunities in NGO here.',
+    imageName: 'talent',
+    url: '/contacts',
   },
   {
-    header: "Organization",
+    header: 'Organization',
     description:
-      "Join as an organization, you can find numerous talents for your organization.",
-    imageName: "organization",
-    url: "/contacts",
+      'Join as an organization, you can find numerous talents for your organization.',
+    imageName: 'organization',
+    url: '/contacts',
   },
   {
-    header: "Baltimore Corps Staff",
+    header: 'Baltimore Corps Staff',
     description:
-      "As a Baltimore Staff, you can access data stored in database.",
-    imageName: "baltimoreCorpsStaff",
-    url: "/contacts",
+      'As a Baltimore Staff, you can access data stored in database.',
+    imageName: 'baltimoreCorpsStaff',
+    url: '/contacts',
   },
 ];
 

@@ -1,10 +1,10 @@
-import React from "react";
-import {useRef, useState, useEffect} from "react";
-import PropTypes from "prop-types";
-import Button from "@material-ui/core/Button";
-import AchievementInput from "./AchievementInput";
+import React from 'react';
+import {useRef, useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+import AchievementInput from './AchievementInput';
 
-import InputLabel from "@material-ui/core/InputLabel";
+import InputLabel from '@material-ui/core/InputLabel';
 
 const AchievementInputsList = ({achievements, contactId, onChange}) => {
   const focusTarget = useRef(null);
@@ -25,7 +25,7 @@ const AchievementInputsList = ({achievements, contactId, onChange}) => {
   };
 
   const handleAdd = () => {
-    onChange([...achievements, {contact_id: contactId, description: ""}]);
+    onChange([...achievements, {contact_id: contactId, description: ''}]);
   };
 
   const handleChangeDescription = selectedIndex => event => {
@@ -38,7 +38,7 @@ const AchievementInputsList = ({achievements, contactId, onChange}) => {
   };
 
   const handleKeyPress = e => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleAdd();
       setFocus(true);
       e.preventDefault();
@@ -48,7 +48,7 @@ const AchievementInputsList = ({achievements, contactId, onChange}) => {
   return (
     <React.Fragment>
       <InputLabel
-        style={{fontWeight: "bold", color: "#000000", marginBottom: "10px"}}
+        style={{fontWeight: 'bold', color: '#000000', marginBottom: '10px'}}
       >
         Achievements
       </InputLabel>
@@ -66,7 +66,7 @@ const AchievementInputsList = ({achievements, contactId, onChange}) => {
         type="button"
         onClick={handleAdd}
         variant="contained"
-        style={{fontWeight: "700", marginTop: "5px", fontSize: "12px"}}
+        style={{fontWeight: '700', marginTop: '5px', fontSize: '12px'}}
       >
         Add Achievement
       </Button>

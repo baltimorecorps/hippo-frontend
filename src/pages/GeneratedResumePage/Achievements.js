@@ -1,7 +1,7 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Achievement from "./Achievement";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Achievement from './Achievement';
 
 const Achievements = ({achievements, classes}) => {
   return (

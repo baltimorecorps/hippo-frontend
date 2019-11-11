@@ -1,15 +1,15 @@
-import {mapStateToProps} from "./Header.container";
+import {mapStateToProps} from './Header.container';
 
-test("test state mapping", () => {
+test('test state mapping', () => {
   const state = {
     resumes: {
       3: {
         id: 3,
-        name: "Test Resume 3",
+        name: 'Test Resume 3',
       },
       4: {
         id: 4,
-        name: "Test Resume 4",
+        name: 'Test Resume 4',
       },
     },
   };
@@ -19,6 +19,6 @@ test("test state mapping", () => {
   };
 
   const props = mapStateToProps(state, ownProps);
-  expect(props).toHaveProperty("name");
-  expect(props.name).toEqual("Test Resume 3");
+  expect(props).toHaveProperty('name');
+  expect(props.name).toEqual('Test Resume 3');
 });

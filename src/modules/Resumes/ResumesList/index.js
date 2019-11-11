@@ -1,3 +1,3 @@
-import ResumesList from "./ResumesList.container";
+import ResumesList from './ResumesList.container';
 
 export default ResumesList;

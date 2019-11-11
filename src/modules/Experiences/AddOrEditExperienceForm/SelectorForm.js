@@ -1,15 +1,15 @@
-import React from "react";
-import DateFns from "@date-io/date-fns";
-import {MuiPickersUtilsProvider} from "@material-ui/pickers";
-import withStyles from "@material-ui/core/styles/withStyles";
+import React from 'react';
+import DateFns from '@date-io/date-fns';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
-import {monthFullNames, years, USAStates} from "./staticData";
+import {monthFullNames, years, USAStates} from './staticData';
 
 const SelectorForm = ({
   label,
@@ -31,12 +31,12 @@ const SelectorForm = ({
     ));
   };
 
-  let options = "";
-  if (type === "month") {
+  let options = '';
+  if (type === 'month') {
     options = getOptions(monthFullNames);
-  } else if (type === "year") {
+  } else if (type === 'year') {
     options = getOptions(years);
-  } else if (type === "states") {
+  } else if (type === 'states') {
     options = getOptions(USAStates);
   }
 
@@ -56,7 +56,7 @@ const SelectorForm = ({
             name: name,
             id: name,
             classes: {select: classes.resize},
-            "data-testid": name,
+            'data-testid': name,
           }}
         >
           {options}
@@ -71,7 +71,7 @@ const SelectorForm = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {
-    width: "100%",
+    width: '100%',
     marginBottom: spacing(0),
   },
   inputLabel: {
@@ -87,8 +87,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: 19,
   },
   formHelperText: {
-    color: "#eb0000",
-    marginTop: "4px",
+    color: '#eb0000',
+    marginTop: '4px',
   },
 });
 

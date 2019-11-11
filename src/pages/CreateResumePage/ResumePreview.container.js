@@ -1,7 +1,7 @@
-import {connect} from "react-redux";
-import {withRouter} from "react-router";
-import {refreshResume} from "actions/resume";
-import ResumePreview from "./ResumePreview";
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
+import {refreshResume} from 'actions/resume';
+import ResumePreview from './ResumePreview';
 
 export const mapStateToProps = (state, props) => {
   const {resumeId} = props.match ? props.match.params : props;
@@ -12,13 +12,13 @@ export const mapStateToProps = (state, props) => {
       resumeId,
       achievements: [],
       contactInfo: {
-        name: "",
+        name: '',
         roles: [],
-        title: "",
-        email: "",
-        phoneNumber: "",
-        city: "",
-        state: "",
+        title: '',
+        email: '',
+        phoneNumber: '',
+        city: '',
+        state: '',
       },
       experiences: {
         service: [],
@@ -50,12 +50,12 @@ export const mapStateToProps = (state, props) => {
     contactInfo: {
       name: `${contactInfo.first_name} ${contactInfo.last_name}`,
       email: contactInfo.email_primary.email,
-      phoneNumber: contactInfo.phone_primary.replace(/-/g, ""),
+      phoneNumber: contactInfo.phone_primary.replace(/-/g, ''),
     },
     experiences: {
-      service: getExperiences("Relevant Experience"),
-      education: getExperiences("Education"),
-      work: getExperiences("Work Experience"),
+      service: getExperiences('Relevant Experience'),
+      education: getExperiences('Education'),
+      work: getExperiences('Work Experience'),
     },
     skillGroups: [],
   };

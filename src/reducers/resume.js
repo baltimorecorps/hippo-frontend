@@ -1,4 +1,4 @@
-import {createReducer} from "redux-starter-kit";
+import {createReducer} from 'redux-starter-kit';
 
 /* eslint-disable no-unused-vars */
 import {
@@ -29,23 +29,23 @@ import {
   DESELECT_RESUME_EXPERIENCE,
   GENERATE_RESUME,
   GENERATE_RESUME_API,
-} from "../actions/resume";
+} from '../actions/resume';
 /* eslint-enable no-unused-vars */
 
 export const RESUME_CREATION = {
-  NOT_ACTIVE: "NOT_ACTIVE",
-  CHOOSE_STYLE: "CHOOSE_STYLE",
-  SELECT_HIGHLIGHTS: "SELECT_HIGHLIGHTS",
+  NOT_ACTIVE: 'NOT_ACTIVE',
+  CHOOSE_STYLE: 'CHOOSE_STYLE',
+  SELECT_HIGHLIGHTS: 'SELECT_HIGHLIGHTS',
 };
 
 const getExperienceKey = experience => {
   const expType = experience.type;
-  if (expType === "Education") {
-    return "education";
-  } else if (expType === "Accomplishment") {
-    return "accomplishments";
+  if (expType === 'Education') {
+    return 'education';
+  } else if (expType === 'Accomplishment') {
+    return 'accomplishments';
   } else {
-    return "experience";
+    return 'experience';
   }
 };
 

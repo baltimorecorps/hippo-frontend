@@ -1,11 +1,11 @@
-import React, {useContext, useState} from "react";
-import {withStyles} from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepButton from "@material-ui/core/StepButton";
-import ProgressContext from "lib/context/ProgressContext";
+import React, {useContext, useState} from 'react';
+import {withStyles} from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepButton from '@material-ui/core/StepButton';
+import ProgressContext from 'lib/context/ProgressContext';
 
 const ProgressBar = ({classes}) => {
   const {progress: activeStep, setProgress} = useContext(ProgressContext);
@@ -87,11 +87,11 @@ const ProgressBar = ({classes}) => {
 
 const styles = ({spacing}) => ({
   container: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
   },
   root: {
-    width: "100%",
+    width: '100%',
   },
   stepButton: {
     outline: 0,

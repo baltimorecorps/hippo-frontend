@@ -1,26 +1,26 @@
-import React from "react";
+import React from 'react';
 import {
   render,
   fireEvent,
   prettyDOM,
   waitForElement,
-} from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
+} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
-import {Provider} from "react-redux";
-import {configureStore} from "redux-starter-kit";
-import rootReducer from "../../reducers";
-import {BrowserRouter as Router} from "react-router-dom";
+import {Provider} from 'react-redux';
+import {configureStore} from 'redux-starter-kit';
+import rootReducer from '../../reducers';
+import {BrowserRouter as Router} from 'react-router-dom';
 
-import ProfilePage from "./ProfilePage";
+import ProfilePage from './ProfilePage';
 
-describe("ProfilePage", () => {
+describe('ProfilePage', () => {
   const contactInfo = {
     contactId: 123,
-    first_name: "Alice",
-    last_name: "Tester",
-    email_primary: {email: "alice@example.com"},
-    phone_primary: "(123) 456-7890",
+    first_name: 'Alice',
+    last_name: 'Tester',
+    email_primary: {email: 'alice@example.com'},
+    phone_primary: '(123) 456-7890',
   };
 
   let store = configureStore({
@@ -45,7 +45,7 @@ describe("ProfilePage", () => {
     });
   });
 
-  test("render base page", () => {
+  test('render base page', () => {
     const start = jest.fn();
     const {queryByText} = render(
       <Provider store={store}>
@@ -75,7 +75,7 @@ describe("ProfilePage", () => {
     expect(start.mock.calls.length).toBe(1);
   });
 
-  test("render resume dialog", () => {
+  test('render resume dialog', () => {
     const start = jest.fn();
     const {queryByText} = render(
       <Provider store={store}>
@@ -105,7 +105,7 @@ describe("ProfilePage", () => {
     expect(start.mock.calls.length).toBe(1);
   });
 
-  test("render select drawer", () => {
+  test('render select drawer', () => {
     const cancel = jest.fn();
     const {queryByText} = render(
       <Provider store={store}>
@@ -138,7 +138,7 @@ describe("ProfilePage", () => {
     expect(cancel.mock.calls.length).toBe(1);
   });
 
-  test("integration - render base page", () => {
+  test('integration - render base page', () => {
     const {queryByText} = render(
       <Provider store={store}>
         <Router>
@@ -157,9 +157,9 @@ describe("ProfilePage", () => {
       </Provider>
     );
 
-    expect(queryByText("Alice Tester")).not.toBeNull();
-    expect(queryByText("alice@example.com")).not.toBeNull();
-    expect(queryByText("(123) 456-7890")).not.toBeNull();
+    expect(queryByText('Alice Tester')).not.toBeNull();
+    expect(queryByText('alice@example.com')).not.toBeNull();
+    expect(queryByText('(123) 456-7890')).not.toBeNull();
 
     expect(queryByText(/experience/i)).not.toBeNull();
     expect(queryByText(/education/i)).not.toBeNull();

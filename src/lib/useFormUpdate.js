@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState} from 'react';
 
 // This is a generic hook we use in the forms of this application.
 // (See https://reactjs.org/docs/hooks-custom.html for more on custom hooks)
@@ -23,7 +23,7 @@ const useFormUpdate = initialValues => {
   const [values, setValues] = useState(filteredValues || {});
 
   const update = name => value => {
-    if (value || value === "") {
+    if (value || value === '') {
       setValues(values => ({
         ...values,
         [name]: value,

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class StorageContext extends React.Component {
   state = this.props.value;
@@ -30,7 +30,7 @@ class StorageContext extends React.Component {
 
     return (
       <Context.Provider value={value}>
-        {typeof children === "function" ? children(value) : children}
+        {typeof children === 'function' ? children(value) : children}
       </Context.Provider>
     );
   }

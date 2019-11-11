@@ -1,16 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import withStyles from "@material-ui/core/styles/withStyles";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const DeleteExperience = ({experience, onDelete, classes, handleCancel}) => {
-  let experienceName = "this item";
+  let experienceName = 'this item';
 
   if (experience.host && experience.title) {
     experienceName = (
@@ -49,24 +49,24 @@ const DeleteExperience = ({experience, onDelete, classes, handleCancel}) => {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   dialogContent: {
-    width: "350px",
+    width: '350px',
   },
   dialogAction: {
-    width: "350px",
-    paddingBottom: "20px",
-    display: "flex",
-    alignSelf: "center",
-    justifyContent: "space-between",
+    width: '350px',
+    paddingBottom: '20px',
+    display: 'flex',
+    alignSelf: 'center',
+    justifyContent: 'space-between',
   },
   delete: {
-    "&:hover": {
+    '&:hover': {
       backgroundColor: palette.error.main,
-      color: "#ffffff",
+      color: '#ffffff',
       borderColor: palette.error.dark,
     },
   },
   experienceName: {
-    fontWeight: "700",
+    fontWeight: '700',
   },
 });
 
@@ -78,17 +78,17 @@ DeleteExperience.propTypes = {
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
-      "High School",
-      "Associates",
-      "Undergraduate",
-      "Masters",
-      "Doctoral",
+      'High School',
+      'Associates',
+      'Undergraduate',
+      'Masters',
+      'Doctoral',
     ]),
     start_month: PropTypes.string.isRequired,
     start_year: PropTypes.number.isRequired,
     end_month: PropTypes.string,
     end_year: PropTypes.number,
-    type: PropTypes.oneOf(["Work", "Service", "Accomplishment", "Education"])
+    type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
       .isRequired,
     contact_id: PropTypes.number.isRequired,
     achievements: PropTypes.array,

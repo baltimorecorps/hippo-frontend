@@ -1,19 +1,19 @@
-import React, {useState} from "react";
-import PropTypes from "prop-types";
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogActions from "@material-ui/core/DialogActions";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import withStyles from "@material-ui/core/styles/withStyles";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
-import MuiPhoneNumber from "material-ui-phone-number";
+import MuiPhoneNumber from 'material-ui-phone-number';
 
-import {newProfileValidator} from "../../lib/formValidator";
+import {newProfileValidator} from '../../lib/formValidator';
 
 // const RACES = [
 //   {
@@ -123,7 +123,7 @@ const AddContact = ({classes, addNewContact}) => {
                 label="First Name"
                 className={classes.textField}
                 name="first_name"
-                value={values.first_name || ""}
+                value={values.first_name || ''}
                 onChange={handleChange}
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
@@ -137,7 +137,7 @@ const AddContact = ({classes, addNewContact}) => {
                 label="Last Name"
                 className={classes.textField}
                 name="last_name"
-                value={values.last_name || ""}
+                value={values.last_name || ''}
                 onChange={handleChange}
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
@@ -150,7 +150,7 @@ const AddContact = ({classes, addNewContact}) => {
                 id="email"
                 label="Primary Email"
                 name="email"
-                value={values.email || ""}
+                value={values.email || ''}
                 onChange={handleChange}
                 className={classes.textField}
                 InputLabelProps={inputLabelProps}
@@ -162,7 +162,7 @@ const AddContact = ({classes, addNewContact}) => {
               <MuiPhoneNumber
                 name="phone_primary"
                 label="Primary Phone"
-                defaultCountry={"us"}
+                defaultCountry={'us'}
                 value={values.phone_primary}
                 onChange={handlePhoneInput}
                 InputLabelProps={inputLabelProps}
@@ -229,8 +229,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   formHelperText: {
     color: palette.error.main,
-    marginTop: "2px",
-    marginBottom: "4px",
+    marginTop: '2px',
+    marginBottom: '4px',
   },
 });
 

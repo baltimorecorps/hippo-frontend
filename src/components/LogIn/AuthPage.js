@@ -1,11 +1,11 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import PropTypes from "../../lib/PropTypes";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import withStyles from "@material-ui/core/styles/withStyles";
-import TextField from "@material-ui/core/TextField";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import PropTypes from '../../lib/PropTypes';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import TextField from '@material-ui/core/TextField';
 
 const AuthPage = ({classes}) => {
   return (
@@ -71,24 +71,24 @@ AuthPage.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   main: {
-    width: "auto",
+    width: 'auto',
     marginLeft: spacing(3),
     marginRight: spacing(3),
     [breakpoints.up(400 + spacing(3 * 2))]: {
       width: 400,
-      marginLeft: "auto",
-      marginRight: "auto",
+      marginLeft: 'auto',
+      marginRight: 'auto',
     },
   },
   paper: {
     marginTop: spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: spacing(2, 3, 3),
   },
   avatar: {
-    width: "100%",
+    width: '100%',
     marginBottom: spacing(1),
   },
   password: {

@@ -1,7 +1,7 @@
-import {connect} from "react-redux";
-import {withRouter} from "react-router";
-import {refreshResumes} from "actions/resume";
-import ResumesList from "./ResumesList";
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router';
+import {refreshResumes} from 'actions/resume';
+import ResumesList from './ResumesList';
 
 const mapStateToProps = (state, props) => {
   const {contactId} = props.match.params;

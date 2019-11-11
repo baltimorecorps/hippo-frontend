@@ -1,14 +1,14 @@
-import React, {useContext} from "react";
-import ReactSelect from "react-select";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import withStyles from "@material-ui/core/styles/withStyles";
-import ExperienceSorter from "./ExperienceSorter";
+import React, {useContext} from 'react';
+import ReactSelect from 'react-select';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
+import ExperienceSorter from './ExperienceSorter';
 
-import ResumeContext from "lib/context/ResumeContext";
-import ProgressContext from "lib/context/ProgressContext";
+import ResumeContext from 'lib/context/ResumeContext';
+import ProgressContext from 'lib/context/ProgressContext';
 
-import experienceOptions from "./experienceOptions";
+import experienceOptions from './experienceOptions';
 
 const getOptionLabel = ({orgName, positionName}) =>
   `${orgName} | ${positionName}`;
@@ -48,10 +48,10 @@ const ResumeBuilder = ({
                 onChange={onChange}
               />
             </Grid>
-            {type !== "skills" && (
+            {type !== 'skills' && (
               <ExperienceSorter experiences={selectedExperiences[type]} />
             )}
-            {type === "skills" && (
+            {type === 'skills' && (
               <ul>
                 {selectedSkillGroups.map(({name: groupName, skills}) => (
                   <React.Fragment key={groupName}>
@@ -74,9 +74,9 @@ const ResumeBuilder = ({
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     marginTop: spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: spacing(2, 3, 3),
   },
 });

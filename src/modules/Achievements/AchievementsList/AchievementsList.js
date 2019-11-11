@@ -1,6 +1,6 @@
-import React from "react";
-import List from "@material-ui/core/List";
-import AchievementsListItem from "./AchievementsListItem";
+import React from 'react';
+import List from '@material-ui/core/List';
+import AchievementsListItem from './AchievementsListItem';
 
 const AchievementsList = ({achievements}) => {
   return (

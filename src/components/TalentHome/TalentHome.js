@@ -1,13 +1,13 @@
-import React from "react";
-import {Link} from "react-router-dom";
-import CardGroup from "components/CardGroup";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import Grid from "@material-ui/core/Grid";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import CardGroup from 'components/CardGroup';
+import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 
-import applicationCardItems from "./applicationCardItems";
-import opportunityCardItems from "./opportunityCardItems";
-import talentCardItems from "./talentCardItems";
+import applicationCardItems from './applicationCardItems';
+import opportunityCardItems from './opportunityCardItems';
+import talentCardItems from './talentCardItems';
 
 const TalentHome = () => {
   return (
@@ -15,7 +15,7 @@ const TalentHome = () => {
       <Grid item xs={11}>
         <Grid
           container
-          style={{backgroundColor: "lightblue", padding: 20, marginBottom: 20}}
+          style={{backgroundColor: 'lightblue', padding: 20, marginBottom: 20}}
         >
           <Grid item xs={12} sm={6}>
             <h1>Billy Daly</h1>
@@ -30,7 +30,7 @@ const TalentHome = () => {
             <Link to="/profile">
               <Button variant="contained">Update Education</Button>
             </Link>
-            <Divider style={{margin: "20px 0"}} />
+            <Divider style={{margin: '20px 0'}} />
             <Link to="/profile">
               <Button variant="contained">Update Work Experience</Button>
             </Link>
@@ -58,7 +58,7 @@ const TalentHome = () => {
 
 const styles = {
   section: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 20,
     marginBottom: 20,
   },

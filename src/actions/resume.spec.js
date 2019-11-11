@@ -1,4 +1,4 @@
-import fetchMock from "fetch-mock";
+import fetchMock from 'fetch-mock';
 import {
   CREATE_RESUME,
   CREATE_RESUME_API,
@@ -26,21 +26,21 @@ import {
   GENERATE_RESUME,
   GENERATE_RESUME_API,
   generateResume,
-} from "./resume";
+} from './resume';
 
 afterEach(() => {
   fetchMock.restore();
 });
 
-describe("Generate resume", () => {
-  test("Create new resume", async function() {
+describe('Generate resume', () => {
+  test('Create new resume', async function() {
     const dispatch = jest.fn();
     const contactId = 1234;
     const resume = {
-      name: "Test Resume",
+      name: 'Test Resume',
       experiences: [123, 456, 789],
     };
-    const response = {response: "win"};
+    const response = {response: 'win'};
 
     fetchMock.post(
       `path:/api/contacts/${contactId}/generate-resume/`,
@@ -50,21 +50,21 @@ describe("Generate resume", () => {
     await generateResume(contactId, resume)(dispatch);
     expect(dispatch.mock.calls.length).toBe(3);
     expect(dispatch.mock.calls[0][0].type).toBe(GENERATE_RESUME);
-    expect(dispatch.mock.calls[0][0].payload).toHaveProperty("contactId");
+    expect(dispatch.mock.calls[0][0].payload).toHaveProperty('contactId');
     expect(dispatch.mock.calls[0][0].payload.contactId).toBe(contactId);
-    expect(dispatch.mock.calls[0][0].payload).toHaveProperty("resume");
+    expect(dispatch.mock.calls[0][0].payload).toHaveProperty('resume');
     expect(dispatch.mock.calls[0][0].payload.resume).toEqual(resume);
     expect(dispatch.mock.calls[2][0].type).toBe(GENERATE_RESUME_API.RESOLVE);
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 });
 
-describe("Top level resume actions", () => {
-  test("Create new resume", async function() {
+describe('Top level resume actions', () => {
+  test('Create new resume', async function() {
     const dispatch = jest.fn();
     const contactId = 1234;
-    const name = "Test Resume";
-    const response = {response: "win"};
+    const name = 'Test Resume';
+    const response = {response: 'win'};
 
     fetchMock.post(`path:/api/contacts/${contactId}/resumes/`, response);
 
@@ -74,15 +74,15 @@ describe("Top level resume actions", () => {
     expect(dispatch.mock.calls[0][0].type).toBe(CREATE_RESUME);
     expect(dispatch.mock.calls[0][0].resume.contact_id).toBe(contactId);
     expect(dispatch.mock.calls[0][0].resume.name).toBe(name);
-    expect(dispatch.mock.calls[0][0].resume).toHaveProperty("date_created");
+    expect(dispatch.mock.calls[0][0].resume).toHaveProperty('date_created');
     expect(dispatch.mock.calls[2][0].type).toBe(CREATE_RESUME_API.RESOLVE);
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 
-  test("Get resumes", async function() {
+  test('Get resumes', async function() {
     const dispatch = jest.fn();
     const contactId = 1234;
-    const response = {response: "win"};
+    const response = {response: 'win'};
 
     fetchMock.get(`path:/api/contacts/${contactId}/resumes/`, response);
 
@@ -91,13 +91,13 @@ describe("Top level resume actions", () => {
     expect(dispatch.mock.calls.length).toBe(2);
     expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_RESUMES_API.RESOLVE);
     expect(dispatch.mock.calls[1][0].contact_id).toEqual(contactId);
-    expect(dispatch.mock.calls[1][0].body.response).toEqual("win");
+    expect(dispatch.mock.calls[1][0].body.response).toEqual('win');
   });
 
-  test("Get single resume", async function() {
+  test('Get single resume', async function() {
     const dispatch = jest.fn();
     const resumeId = 1234;
-    const response = {response: "win"};
+    const response = {response: 'win'};
 
     fetchMock.get(`path:/api/resumes/${resumeId}/`, response);
 
@@ -108,11 +108,11 @@ describe("Top level resume actions", () => {
     expect(dispatch.mock.calls[1][0].body).toEqual(response);
   });
 
-  test("Update resume", async function() {
+  test('Update resume', async function() {
     const dispatch = jest.fn();
     const resumeId = 111;
-    const name = "Test Resume";
-    const response = {response: "win"};
+    const name = 'Test Resume';
+    const response = {response: 'win'};
 
     fetchMock.put(`path:/api/resumes/${resumeId}/`, response);
 
@@ -125,16 +125,16 @@ describe("Top level resume actions", () => {
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 
-  test("Delete resume", async function() {
+  test('Delete resume', async function() {
     const dispatch = jest.fn();
     const resumeId = 111;
     const contactId = 1234;
 
     fetchMock.delete(`path:/api/resumes/${resumeId}/`, {
-      body: {status: "success"},
+      body: {status: 'success'},
     });
     fetchMock.get(`path:/api/contacts/${contactId}/resumes/`, {
-      body: {status: "success", data: []},
+      body: {status: 'success', data: []},
     });
 
     await deleteResume(resumeId, contactId)(dispatch);
@@ -146,17 +146,17 @@ describe("Top level resume actions", () => {
     expect(dispatch.mock.calls[4][0].type).toBe(REFRESH_RESUMES_API.RESOLVE);
   });
 
-  test("Delete resume - failure", async function() {
+  test('Delete resume - failure', async function() {
     const dispatch = jest.fn();
     const resumeId = 111;
     const contactId = 1234;
 
     fetchMock.delete(`path:/api/resumes/${resumeId}/`, {
       status: 500,
-      body: "",
+      body: '',
     });
     fetchMock.get(`path:/api/contacts/${contactId}/resumes/`, {
-      body: {status: "success", data: []},
+      body: {status: 'success', data: []},
     });
 
     const result = await deleteResume(resumeId, contactId)(dispatch);
@@ -171,15 +171,15 @@ describe("Top level resume actions", () => {
   });
 });
 
-describe("Resume section actions", () => {
-  test("Create new resume section ", async function() {
+describe('Resume section actions', () => {
+  test('Create new resume section ', async function() {
     const dispatch = jest.fn();
     const section = {
       resume_id: 111,
-      name: "Test Resume Section",
+      name: 'Test Resume Section',
       max_items: 0,
     };
-    const response = {response: "win"};
+    const response = {response: 'win'};
 
     fetchMock.post(
       `path:/api/resumes/${section.resume_id}/sections/`,
@@ -193,11 +193,11 @@ describe("Resume section actions", () => {
     expect(dispatch.mock.calls[1][0].body).toEqual(response);
   });
 
-  test("Refresh resume section", async function() {
+  test('Refresh resume section', async function() {
     const dispatch = jest.fn();
     const resumeId = 1234;
     const sectionId = 111;
-    const response = {response: "win"};
+    const response = {response: 'win'};
 
     fetchMock.get(
       `path:/api/resumes/${resumeId}/sections/${sectionId}/`,
@@ -211,13 +211,13 @@ describe("Resume section actions", () => {
     expect(dispatch.mock.calls[1][0].body).toEqual(response);
   });
 
-  test("Update resume section", async function() {
+  test('Update resume section', async function() {
     const dispatch = jest.fn();
-    const response = {response: "win"};
+    const response = {response: 'win'};
     const section = {
       id: 23,
       resume_id: 111,
-      name: "Test Resume Section",
+      name: 'Test Resume Section',
       max_items: 0,
     };
 
@@ -233,12 +233,12 @@ describe("Resume section actions", () => {
     expect(dispatch.mock.calls[1][0].body).toEqual(response);
   });
 
-  test("Update resume section items", async function() {
+  test('Update resume section items', async function() {
     const dispatch = jest.fn();
     const resumeId = 111;
     const sectionId = 23;
     const items = [{id: 1}, {id: 2}];
-    const response = {response: "win"};
+    const response = {response: 'win'};
 
     fetchMock.put(
       `path:/api/resumes/${resumeId}/sections/${sectionId}/`,
@@ -256,17 +256,17 @@ describe("Resume section actions", () => {
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 
-  test("Delete resume section", async function() {
+  test('Delete resume section', async function() {
     const dispatch = jest.fn();
     const resumeId = 111;
     const sectionId = 1234;
 
     fetchMock.delete(`path:/api/resumes/${resumeId}/sections/${sectionId}/`, {
-      body: {status: "success"},
+      body: {status: 'success'},
     });
 
     fetchMock.get(`path:/api/resumes/${resumeId}/`, {
-      body: {status: "success", data: []},
+      body: {status: 'success', data: []},
     });
 
     await deleteResumeSection(resumeId, sectionId)(dispatch);

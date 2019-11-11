@@ -1,6 +1,6 @@
-import React from "react";
-import GeneratedResumePage from "pages/GeneratedResumePage/GeneratedResumePage.container";
-import ResumeContext from "lib/context/ResumeContext";
+import React from 'react';
+import GeneratedResumePage from 'pages/GeneratedResumePage/GeneratedResumePage.container';
+import ResumeContext from 'lib/context/ResumeContext';
 
 const ResumePreview = () => {
   const resumeInfo = ResumeContext.useInfo();
