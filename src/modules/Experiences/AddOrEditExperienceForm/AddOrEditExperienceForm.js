@@ -65,6 +65,7 @@ const AddOrEditExperienceForm = ({
   onSubmit,
   handleCancel,
   classes,
+  onDelete,
 }) => {
   const config = configureForm(experience.type);
   if (!config.showEndDate) {
@@ -110,7 +111,6 @@ const AddOrEditExperienceForm = ({
     degree,
     description,
     achievements,
-    onDelete,
   } = values;
 
   const inputLabelProps = {
@@ -313,18 +313,35 @@ const AddOrEditExperienceForm = ({
           />
         </Grid>
       )}
-      <Grid item xs={12} className={classes.alignButtons}>
-        <Button
-          className={classes.delete}
-          variant="text"
-          onClick={() => setOpenDeleteDialog(true)}
-        >
-          Delete
-        </Button>
+      <Grid
+        item
+        xs={12}
+        style={{display: 'flex'}}
+        className={
+          onDelete ? classes.alignButtonsBetween : classes.alignButtonsEnd
+        }
+      >
+        {onDelete ? (
+          <Button
+            className={classes.delete}
+            variant="text"
+            onClick={() => setOpenDeleteDialog(true)}
+          >
+            Delete
+          </Button>
+        ) : null}
+
         <Button variant="contained" color="primary" onClick={handleFormSubmit}>
           Save
         </Button>
       </Grid>
+      {openDeleteDialog && (
+        <DeleteExperience
+          experience={experience}
+          onDelete={onDelete}
+          handleCancel={() => setOpenDeleteDialog(false)}
+        />
+      )}
     </Grid>
   );
 };
@@ -359,9 +376,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
       color: 'black',
     },
   },
-  alignButtons: {
-    display: 'flex',
+  alignButtonsBetween: {
     justifyContent: 'space-between',
+  },
+  alignButtonsEnd: {
+    justifyContent: 'flex-end',
   },
   delete: {
     padding: '5px 15px',
