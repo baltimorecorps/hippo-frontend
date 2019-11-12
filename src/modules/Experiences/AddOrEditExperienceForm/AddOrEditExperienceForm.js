@@ -24,6 +24,8 @@ import LocationTextField from './LocationTextField';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
+import DeleteExperience from '../ExperiencesList/DeleteExperience';
+
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
@@ -108,6 +110,7 @@ const AddOrEditExperienceForm = ({
     degree,
     description,
     achievements,
+    onDelete,
   } = values;
 
   const inputLabelProps = {
@@ -120,6 +123,7 @@ const AddOrEditExperienceForm = ({
   const inputProps = {classes: {input: classes.resize}};
 
   const [errors, setErrors] = React.useState({});
+  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
 
   const handleFormSubmit = () => {
     // validate form values
@@ -146,7 +150,7 @@ const AddOrEditExperienceForm = ({
           onMouseDown={handleCancel}
           className={classes.iconButton}
         >
-          <CloseIcon className={classes.delete} />
+          <CloseIcon />
         </IconButton>
       </Grid>
       <Grid item xs={12}>
@@ -309,7 +313,14 @@ const AddOrEditExperienceForm = ({
           />
         </Grid>
       )}
-      <Grid item xs={12} align="end">
+      <Grid item xs={12} className={classes.alignButtons}>
+        <Button
+          className={classes.delete}
+          variant="text"
+          onClick={() => setOpenDeleteDialog(true)}
+        >
+          Delete
+        </Button>
         <Button variant="contained" color="primary" onClick={handleFormSubmit}>
           Save
         </Button>
@@ -348,10 +359,23 @@ const styles = ({breakpoints, palette, spacing}) => ({
       color: 'black',
     },
   },
+  alignButtons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  delete: {
+    padding: '5px 15px',
+    '&:hover': {
+      backgroundColor: palette.error.main,
+      color: '#ffffff',
+      borderColor: palette.error.dark,
+    },
+  },
 });
 
 AddOrEditExperienceForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   experience: PropTypes.shape({
     id: PropTypes.number,
     description: PropTypes.string,

@@ -9,9 +9,7 @@ import AchievementsList from 'modules/Achievements/AchievementsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteExperience from './DeleteExperience';
 
 import {formatMonthYearDate, getWorkLength, configureForm} from './helpers';
 
@@ -145,38 +143,23 @@ const ExperiencesListItem = ({
               labels={{}}
               onSubmit={submitUpdate}
               experience={experience}
+              onDelete={onDelete}
             />
           </Grid>
         )}
 
         {editing || selectable ? null : (
           <Grid item xs={2} className={classes.gridIcons}>
-            <React.Fragment>
-              <IconButton
-                onClick={() => setEditing(true)}
-                size="small"
-                aria-label="edit experience"
-              >
-                <EditIcon />
-              </IconButton>
-              <IconButton
-                onClick={() => setOpenDeleteDialog(true)}
-                size="small"
-                aria-label="delete experience"
-              >
-                <DeleteIcon />
-              </IconButton>
-            </React.Fragment>
+            <IconButton
+              onClick={() => setEditing(true)}
+              size="small"
+              aria-label="edit experience"
+            >
+              <EditIcon />
+            </IconButton>
           </Grid>
         )}
       </Grid>
-      {openDeleteDialog && (
-        <DeleteExperience
-          experience={experience}
-          onDelete={() => onDelete(experience)}
-          handleCancel={() => setOpenDeleteDialog(false)}
-        />
-      )}
     </React.Fragment>
   );
 };
