@@ -108,6 +108,7 @@ const ExperiencesList = ({
                 experience={blankExperience}
                 onSubmit={submitNewExperience}
                 handleCancel={() => setShowForm(false)}
+                onDelete={null}
               />
             </Grid>
           )}

@@ -36,7 +36,7 @@ const DeleteExperience = ({experience, onDelete, classes, handleCancel}) => {
           variant="outlined"
           onClick={() => onDelete(experience)}
         >
-          Delete
+          Yes, Delete
         </Button>
 
         <Button variant="contained" color="secondary" onClick={handleCancel}>

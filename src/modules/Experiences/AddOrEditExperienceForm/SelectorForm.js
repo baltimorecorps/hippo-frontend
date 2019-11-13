@@ -87,7 +87,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: 19,
   },
   formHelperText: {
-    color: '#eb0000',
+    color: palette.error.main,
     marginTop: '4px',
   },
 });

@@ -37,7 +37,6 @@ describe('ExperiencesListItem', () => {
 
     expect(queryByRole('checkbox')).not.toBeNull();
     expect(queryByLabelText(/edit experience/i)).toBeNull();
-    expect(queryByLabelText(/delete experience/i)).toBeNull();
   });
 
   test('render with selectable false', () => {
@@ -55,7 +54,6 @@ describe('ExperiencesListItem', () => {
 
     expect(queryByRole('checkbox')).toBeNull();
     expect(queryByLabelText(/edit experience/i)).not.toBeNull();
-    expect(queryByLabelText(/delete experience/i)).not.toBeNull();
   });
 
   test('selectable checkbox works', () => {
