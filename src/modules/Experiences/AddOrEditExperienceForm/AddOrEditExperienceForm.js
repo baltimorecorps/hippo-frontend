@@ -313,14 +313,7 @@ const AddOrEditExperienceForm = ({
           />
         </Grid>
       )}
-      <Grid
-        item
-        xs={12}
-        style={{display: 'flex'}}
-        className={
-          onDelete ? classes.alignButtonsBetween : classes.alignButtonsEnd
-        }
-      >
+      <Grid item xs={12} className={classes.alignButtonsBetween}>
         {onDelete ? (
           <Button
             className={classes.delete}
@@ -329,7 +322,9 @@ const AddOrEditExperienceForm = ({
           >
             Delete
           </Button>
-        ) : null}
+        ) : (
+          <span />
+        )}
 
         <Button variant="contained" color="primary" onClick={handleFormSubmit}>
           Save
@@ -377,11 +372,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   alignButtonsBetween: {
+    display: 'flex',
     justifyContent: 'space-between',
   },
-  alignButtonsEnd: {
-    justifyContent: 'flex-end',
-  },
+
   delete: {
     padding: '5px 15px',
     '&:hover': {

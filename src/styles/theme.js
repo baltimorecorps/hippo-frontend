@@ -9,7 +9,7 @@ const theme = createMuiTheme({
       main: 'hsl(232, 57%, 26%)',
     },
     error: {
-      main: 'hsl(0, 88%, 44%)',
+      main: '#eb0000',
       dark: 'hsl(0, 89%, 40%)',
     },
   },
