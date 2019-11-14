@@ -4,6 +4,7 @@ import {createReducer} from 'redux-starter-kit';
 import {
   ALL_CONTACTS,
   ALL_CONTACTS_API,
+  ADD_CONTACT_API,
   GET_MY_CONTACT_API,
 } from '../actions/contacts';
 import {CREATE_RESUME, CREATE_RESUME_API} from 'actions/resume';
@@ -24,6 +25,10 @@ export const contactsReducer = createReducer(
       }
     },
     [GET_MY_CONTACT_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id] = contact;
+    },
+    [ADD_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id] = contact;
     },
@@ -50,6 +55,12 @@ export const accountsReducer = createReducer(
     [GET_MY_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.account_id] = contact;
+    },
+    [ADD_CONTACT_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      if (contact.account_id) {
+        state[contact.account_id] = contact;
+      }
     },
   }
 );

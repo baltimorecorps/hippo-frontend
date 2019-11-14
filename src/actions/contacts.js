@@ -30,7 +30,7 @@ export const addContact = contact =>
   async function(dispatch) {
     dispatch(addContactLocal(contact));
 
-    await apiAddContact(contact)(dispatch);
+    return await apiAddContact(contact)(dispatch);
   };
 
 const addContactLocal = contact => ({
@@ -46,7 +46,7 @@ export const getMyContact = authToken =>
       type: GET_MY_CONTACT,
     });
 
-    await apiGetMyContact(authToken)(dispatch);
+    return await apiGetMyContact(authToken)(dispatch);
   };
 
 const apiGetMyContact = authToken =>

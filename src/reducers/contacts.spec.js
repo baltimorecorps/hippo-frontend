@@ -3,6 +3,7 @@ import {contactsReducer, accountsReducer} from './contacts';
 import {
   ALL_CONTACTS,
   ALL_CONTACTS_API,
+  ADD_CONTACT_API,
   GET_MY_CONTACT_API,
 } from '../actions/contacts';
 import {CREATE_RESUME_API} from '../actions/resume';
@@ -24,6 +25,16 @@ describe('Contacts state', () => {
       2: {id: 2},
       3: {id: 3},
       4: {id: 4},
+    });
+  });
+  test('Add contact', () => {
+    const contact = {id: 123};
+    const newState = contactsReducer(undefined, {
+      type: ADD_CONTACT_API.RESOLVE,
+      body: {status: 'success', data: contact},
+    });
+    expect(newState).toEqual({
+      123: {id: 123},
     });
   });
   test('Get my contact', () => {
@@ -62,6 +73,25 @@ describe('accounts state', () => {
     const newState = accountsReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
+  test('Add contact', () => {
+    const contact = {id: 123, account_id: 'auth|123'};
+    const newState = accountsReducer(undefined, {
+      type: ADD_CONTACT_API.RESOLVE,
+      body: {status: 'success', data: contact},
+    });
+    expect(newState).toEqual({
+      'auth|123': contact,
+    });
+  });
+  test('Add contact - no account id', () => {
+    const contact = {id: 123};
+    const newState = accountsReducer(undefined, {
+      type: ADD_CONTACT_API.RESOLVE,
+      body: {status: 'success', data: contact},
+    });
+    expect(newState).toEqual({});
+  });
+
   test('Fetch all contacts', () => {
     const contacts = [
       {id: 1},

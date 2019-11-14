@@ -42,12 +42,19 @@ import {newProfileValidator} from '../../lib/formValidator';
 //   },
 // ];
 
-const useForm = (addNewContact, accountId) => {
-  const [values, setValues] = useState({});
+const useForm = (addNewContact, accountId, emailSuggest) => {
+  const initValues = {};
+  if (accountId) {
+    initValues.account_id = accountId;
+  }
+  if (emailSuggest) {
+    initValues.email = emailSuggest;
+  }
+
+  const [values, setValues] = useState(initValues);
 
   const handleSubmit = () => {
     let submission = Object.assign({}, values);
-    submission.account_id = accountId || null;
     submission.email_primary = {
       is_primary: true,
       email: values.email,
@@ -67,11 +74,18 @@ const useForm = (addNewContact, accountId) => {
   return [values, handleChange, handleSubmit];
 };
 
-const AddContact = ({classes, addNewContact, dialog, accountId}) => {
+const AddContact = ({
+  classes,
+  addNewContact,
+  dialog,
+  accountId,
+  emailSuggest,
+}) => {
   const [open, setOpen] = useState(false);
   const [values, handleChange, handleSubmit] = useForm(
     addNewContact,
-    accountId
+    accountId,
+    emailSuggest
   );
   const [errors, setErrors] = useState({});
 
@@ -238,7 +252,8 @@ AddContact.propTypes = {
   classes: PropTypes.object.isRequired,
   addNewContact: PropTypes.func.isRequired,
   dialog: PropTypes.bool,
-  userId: PropTypes.string,
+  accountId: PropTypes.string,
+  emailSuggest: PropTypes.string,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

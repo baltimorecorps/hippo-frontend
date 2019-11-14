@@ -33,7 +33,11 @@ const Profile = ({accounts, addContact, getMyContact}) => {
   if (!contactId) {
     return (
       <Grid xs={12} container justify="center">
-        <AddContact addNewContact={addContact} accountId={user.sub} />
+        <AddContact
+          addNewContact={addContact}
+          accountId={user.sub}
+          emailSuggest={user.email}
+        />
       </Grid>
     );
   } else {
