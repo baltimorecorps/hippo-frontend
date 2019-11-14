@@ -3,9 +3,34 @@
 
 import React, {useState, useEffect, useContext} from 'react';
 import createAuth0Client from '@auth0/auth0-spa-js';
+import {makeFetchActions} from 'redux-fetch-wrapper';
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
+
+export const makeAuthFetchActions = (
+  token,
+  action,
+  url,
+  init = null,
+  actions = null,
+  abortController = null,
+  conditional = null
+) => {
+  if (init === null) {
+    init = {headers: {}};
+  }
+
+  init.headers['Authorization'] = `Bearer ${token}`;
+  return makeFetchActions(
+    action,
+    url,
+    init,
+    actions,
+    abortController,
+    conditional
+  );
+};
 
 export const Auth0Context = React.createContext();
 export const useAuth0 = () => useContext(Auth0Context);

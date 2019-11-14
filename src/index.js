@@ -33,6 +33,7 @@ ReactDOM.render(
       domain={config.domain}
       client_id={config.clientId}
       redirect_uri={window.location.origin}
+      audience={'http://localhost:5000'}
       onRedirectCallback={onRedirectCallback}
     >
       <App />

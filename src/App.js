@@ -39,19 +39,13 @@ const App = ({classes}) => {
                     <HomeIcon />
                   </MenuItem>
                 </Link>
-                <Link to="/resume">
-                  <MenuItem>Generated Resume</MenuItem>
-                </Link>
-                <Link to="/create-resume">
-                  <MenuItem>Create Resume</MenuItem>
-                </Link>
                 <Link to="/contacts">
                   <MenuItem>Contacts</MenuItem>
                 </Link>
                 <div className={classes.grow} />
                 {!isAuthenticated && (
                   <Button color="inherit" onClick={() => loginWithRedirect({})}>
-                    Log in
+                    Log in / Sign up
                   </Button>
                 )}
                 {isAuthenticated && (
@@ -71,6 +65,7 @@ const App = ({classes}) => {
               <Route exact path="/resume/:gdocId" component={Resume} />
               <Route exact path="/talent-home" component={TalentHome} />
 
+              <Route exact path="/profile/" component={ProfilePage} />
               <Route exact path="/profile/:contactId" component={ProfilePage} />
 
               <Route

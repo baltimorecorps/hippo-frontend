@@ -1,5 +1,8 @@
 import {combineReducers} from 'redux';
-import contacts from './contacts';
+import {
+  contactsReducer as contacts,
+  accountsReducer as accounts,
+} from './contacts';
 import {
   experiencesReducer as experiences,
   tagReducer as tags,
@@ -8,6 +11,7 @@ import {
 import resume from './resume';
 
 const rootReducer = combineReducers({
+  accounts,
   contacts,
   experiences,
   resume,
