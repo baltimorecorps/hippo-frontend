@@ -374,6 +374,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   alignButtonsBetween: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginTop: spacing(1),
   },
 
   delete: {

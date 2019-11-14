@@ -1,8 +1,8 @@
 import React from 'react';
 import {useRef, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
 import AchievementInput from './AchievementInput';
+import Grid from '@material-ui/core/Grid';
 
 import InputLabel from '@material-ui/core/InputLabel';
 
@@ -26,6 +26,7 @@ const AchievementInputsList = ({achievements, contactId, onChange}) => {
 
   const handleAdd = () => {
     onChange([...achievements, {contact_id: contactId, description: ''}]);
+    setFocus(true);
   };
 
   const handleChangeDescription = selectedIndex => event => {
@@ -45,32 +46,45 @@ const AchievementInputsList = ({achievements, contactId, onChange}) => {
     }
   };
 
+  const [description, setDescription] = React.useState();
+
+  const handleChange = event => {
+    event.persist();
+    // let value = event.target.value;
+    // value = value.split('\n').join('');
+    setDescription(event.target.value.split('\n').join(''));
+  };
+
   return (
-    <React.Fragment>
-      <InputLabel
-        style={{fontWeight: 'bold', color: '#000000', marginBottom: '10px'}}
-      >
-        Achievements
-      </InputLabel>
+    <Grid container>
+      <Grid item xs={12}>
+        <InputLabel
+          style={{fontWeight: 'bold', color: '#000000', marginBottom: '10px'}}
+        >
+          Responsibilities and Achievements:
+        </InputLabel>
+      </Grid>
       {achievements.map(({description}, index) => (
-        <AchievementInput
-          key={index}
-          ref={index === achievements.length - 1 ? focusTarget : null}
-          value={description}
-          onTextChange={handleChangeDescription(index)}
-          onIconClick={handleRemove(index)}
-          onKeyPress={handleKeyPress}
-        />
+        <Grid item xs={12}>
+          <AchievementInput
+            key={index}
+            ref={index === achievements.length - 1 ? focusTarget : null}
+            value={description}
+            onTextChange={handleChangeDescription(index)}
+            onDelete={handleRemove(index)}
+            handleAdd={handleAdd}
+          />
+        </Grid>
       ))}
-      <Button
-        type="button"
-        onClick={handleAdd}
-        variant="contained"
-        style={{fontWeight: '700', marginTop: '5px', fontSize: '12px'}}
-      >
-        Add Achievement
-      </Button>
-    </React.Fragment>
+      <Grid item xs={12} align="end">
+        <AchievementInput
+          style={{width: '100%'}}
+          value={description}
+          onChange={handleChange}
+          handleAdd={handleAdd}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

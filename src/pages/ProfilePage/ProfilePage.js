@@ -62,6 +62,7 @@ const ProfilePage = ({
   inSelectMode,
 }) => {
   const scrollTo = useScroll();
+
   const [resumeLink, setResumeLink] = useState(null);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
@@ -129,12 +130,31 @@ const ProfilePage = ({
         className={classes.wrapper}
       >
         <Grid item xs={8}>
-          <BasicInfoDisplay
-            firstName={contactInfo.first_name}
-            lastName={contactInfo.last_name}
-            email={email}
-            phone={contactInfo.phone_primary}
-          />
+          <Grid container>
+            <Grid item xs={12}>
+              <Paper className={classes.BasicInfoPaper}>
+                <div className={classes.headerContainer}>
+                  <Typography
+                    variant="h5"
+                    component="h1"
+                    style={{
+                      fontWeight: '700',
+                    }}
+                  >
+                    About Me
+                  </Typography>
+                </div>
+
+                <BasicInfoDisplay
+                  firstName={contactInfo.first_name}
+                  lastName={contactInfo.last_name}
+                  email={email}
+                  phone={contactInfo.phone_primary}
+                  onClickEdit={() => console.log('open form')}
+                />
+              </Paper>
+            </Grid>
+          </Grid>
 
           <ExperiencesList contactId={contactId} experienceType="Work" />
           <ExperiencesList contactId={contactId} experienceType="Education" />
@@ -275,6 +295,9 @@ const drawerStyles = ({breakpoints, palette, spacing, shadows}) => ({
   item: {
     padding: spacing(0, 3),
   },
+  BasicInfoPaper: {
+    marginTop: '20px',
+  },
 });
 
 const SelectionDrawer = withStyles(drawerStyles)(
@@ -323,6 +346,10 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   paper: {
     padding: spacing(2, 3, 3),
     marginBottom: spacing(5),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   divider: {
     margin: spacing(1, 0),
@@ -332,6 +359,17 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   },
   progress: {
     height: '100%',
+  },
+  BasicInfoPaper: {
+    padding: spacing(2, 3, 3),
+    paddingBottom: spacing(3),
+    marginTop: spacing(5),
+    marginBottom: spacing(5),
+  },
+  headerContainer: {
+    paddingBottom: spacing(2),
+    marginBottom: spacing(2),
+    borderBottom: 'solid #e0e0e0 1px',
   },
 });
 
