@@ -317,10 +317,10 @@ const AddOrEditExperienceForm = ({
         {onDelete ? (
           <Button
             className={classes.delete}
-            variant="text"
+            variant="contained"
             onClick={() => setOpenDeleteDialog(true)}
           >
-            Delete
+            Delete this experience
           </Button>
         ) : (
           <span />

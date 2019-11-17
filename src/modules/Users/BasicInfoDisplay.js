@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -57,7 +56,6 @@ const BasicInfoDisplay = ({
         >
           <Icon style={{marginRight: '5px'}}>phone</Icon> {phone}
         </Typography>
-        {/* </Paper> */}
       </Grid>
     </Grid>
   );
