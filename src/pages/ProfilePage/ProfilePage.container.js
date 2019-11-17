@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {refreshContacts} from 'actions/contacts';
+import {refreshContacts, updateContact} from 'actions/contacts';
 import {
   startResumeCreation,
   startResumeSelect,
