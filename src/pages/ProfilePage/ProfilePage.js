@@ -154,21 +154,24 @@ const ProfilePage = ({
                     About Me
                   </Typography>
                 </div>
-
-                <BasicInfoDisplay
-                  firstName={contactInfo.first_name}
-                  lastName={contactInfo.last_name}
-                  email={email}
-                  phone={contactInfo.phone_primary}
-                  onClickEdit={() => setOpenForm(true)}
-                />
-                {openForm && (
-                  <BasicInfoForm
-                    contact={contactInfo}
-                    onSubmit={handleUpdateContact}
-                    onCloseForm={() => setOpenForm(false)}
-                  />
-                )}
+                <Grid container justify="center">
+                  {!openForm && (
+                    <BasicInfoDisplay
+                      firstName={contactInfo.first_name}
+                      lastName={contactInfo.last_name}
+                      email={email}
+                      phone={contactInfo.phone_primary}
+                      onClickEdit={() => setOpenForm(true)}
+                    />
+                  )}
+                  {openForm && (
+                    <BasicInfoForm
+                      contact={contactInfo}
+                      onSubmit={handleUpdateContact}
+                      onCloseForm={() => setOpenForm(false)}
+                    />
+                  )}
+                </Grid>
               </Paper>
             </Grid>
           </Grid>

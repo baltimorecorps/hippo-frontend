@@ -366,7 +366,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: '2px',
   },
   iconButton: {
-    padding: '3px',
+    flexBasis: '60px',
+    padding: spacing(0.5),
     '&:hover': {
       color: 'black',
     },

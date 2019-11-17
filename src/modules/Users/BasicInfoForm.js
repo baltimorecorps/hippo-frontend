@@ -75,26 +75,26 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const inputProps = {classes: {input: classes.resize}};
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={12} md={9}>
-        <Grid item xs={12} align="end">
-          <IconButton
-            edge="end"
-            aria-label="cancel form"
-            onMouseDown={onCloseForm}
-            className={classes.iconButton}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-        <Grid item xs={12}>
-          <form noValidate autoComplete="off">
-            <Grid container direction="column">
+    <Grid item xs={12} md={9} justify="center" className={classes.form}>
+      <Grid item xs={12} align="end">
+        <IconButton
+          edge="end"
+          aria-label="cancel form"
+          onMouseDown={onCloseForm}
+          className={classes.iconButton}
+        >
+          <CloseIcon />
+        </IconButton>
+      </Grid>
+      <Grid item xs={12}>
+        <form noValidate autoComplete="off">
+          <Grid container>
+            <Grid item xs={12} lg={6}>
               <TextField
                 required
                 id="first_name"
                 label="First Name"
-                className={classes.textField}
+                className={classes.formControl}
                 name="first_name"
                 value={values.first_name}
                 onChange={handleChange}
@@ -104,11 +104,13 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               <FormHelperText className={classes.formHelperText}>
                 {errors.firstName_error || null}
               </FormHelperText>
+            </Grid>
+            <Grid item xs={12} lg={6}>
               <TextField
                 required
                 id="last_name"
                 label="Last Name"
-                className={classes.textField}
+                className={classes.formControl}
                 name="last_name"
                 value={values.last_name}
                 onChange={handleChange}
@@ -118,6 +120,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               <FormHelperText className={classes.formHelperText}>
                 {errors.lastName_error || null}
               </FormHelperText>
+            </Grid>
+            <Grid item xs={12} lg={6}>
               <TextField
                 required
                 id="email"
@@ -125,13 +129,16 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 name="email"
                 value={values.email_primary.email}
                 onChange={handleEmailChange}
-                className={classes.textField}
+                className={classes.formControl}
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
               />
               <FormHelperText className={classes.formHelperText}>
                 {errors.email_error || null}
               </FormHelperText>
+            </Grid>
+
+            <Grid item xs={12} lg={6}>
               <MuiPhoneNumber
                 name="phone_primary"
                 label="Primary Phone"
@@ -140,40 +147,49 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 onChange={handlePhoneChange}
                 InputLabelProps={inputLabelProps}
                 InputProps={inputProps}
-                className={classes.textField}
+                inputClass={classes.formControl}
                 disableAreaCodes={true}
               />
               <FormHelperText className={classes.formHelperText}>
                 {errors.phonePrimary_error || null}
               </FormHelperText>
             </Grid>
-          </form>
-        </Grid>
-        <Button variant="contained" color="primary" onClick={submit}>
-          Save
-        </Button>
+            <Grid item xs={12} align="end">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={submit}
+                align="end"
+              >
+                Save
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
       </Grid>
     </Grid>
   );
 };
 
 BasicInfoForm.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  onClickEdit: PropTypes.func.isRequired,
+  contact: PropTypes.shape({
+    first_name: PropTypes.string.isRequired,
+    last_name: PropTypes.string.isRequired,
+    email_primary: PropTypes.object.isRequired,
+    phone_primary: PropTypes.string.isRequired,
+  }),
+  onSubmit: PropTypes.func.isRequired,
+  onCloseForm: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
     padding: '7px 20px 20px 20px',
-    marginBottom: '20px',
     backgroundColor: '#f7f7f7',
   },
 
   formControl: {
-    width: '100%',
+    width: '95%',
     marginTop: spacing(0),
   },
   resize: {
@@ -188,6 +204,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
   formHelperText: {
     color: palette.error.main,
     marginTop: '2px',
+  },
+  iconButton: {
+    flexBasis: '60px',
+    padding: spacing(0.5),
+    '&:hover': {
+      color: 'black',
+    },
   },
 });
 

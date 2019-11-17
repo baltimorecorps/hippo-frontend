@@ -72,9 +72,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: 16,
     padding: '0px',
     margin: 0,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
   },
   delete: {
     '&:hover': {
