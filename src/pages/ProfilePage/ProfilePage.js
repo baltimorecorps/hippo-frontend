@@ -68,6 +68,12 @@ const ProfilePage = ({
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
 
+  const handleUpdateContact = async values => {
+    await updateContact(values);
+    refreshContacts();
+    setOpenForm(false);
+  };
+
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
   // rerendered due to the Redux state update
@@ -159,7 +165,7 @@ const ProfilePage = ({
                 {openForm && (
                   <BasicInfoForm
                     contact={contactInfo}
-                    onSubmit={updateContact}
+                    onSubmit={handleUpdateContact}
                     onCloseForm={() => setOpenForm(false)}
                   />
                 )}
