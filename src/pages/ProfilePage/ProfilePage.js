@@ -17,6 +17,7 @@ import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import BasicInfoDisplay from 'modules/Users/BasicInfoDisplay';
+import BasicInfoForm from 'modules/Users/BasicInfoForm';
 import ExperiencesList from 'modules/Experiences/ExperiencesList';
 import SkillsList from 'modules/Tags/SkillsList';
 import ResumesList from 'modules/Resumes/ResumesList';
@@ -48,6 +49,7 @@ const useScroll = () => {
 };
 
 const ProfilePage = ({
+  updateContact,
   contactId,
   contactInfo,
   resume,
@@ -64,6 +66,7 @@ const ProfilePage = ({
   const scrollTo = useScroll();
 
   const [resumeLink, setResumeLink] = useState(null);
+  const [openForm, setOpenForm] = useState(false);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -97,6 +100,7 @@ const ProfilePage = ({
   //
   // The three main components it makes use of are BasicInfoDisplay,
   // ExperiencesList, and SkillsList
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -150,8 +154,15 @@ const ProfilePage = ({
                   lastName={contactInfo.last_name}
                   email={email}
                   phone={contactInfo.phone_primary}
-                  onClickEdit={() => console.log('open form')}
+                  onClickEdit={() => setOpenForm(true)}
                 />
+                {openForm && (
+                  <BasicInfoForm
+                    contact={contactInfo}
+                    onSubmit={updateContact}
+                    onCloseForm={() => setOpenForm(false)}
+                  />
+                )}
               </Paper>
             </Grid>
           </Grid>
