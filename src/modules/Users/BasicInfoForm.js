@@ -1,12 +1,9 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
-import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
@@ -72,10 +69,12 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     shrink: true,
   };
 
-  const inputProps = {classes: {input: classes.resize}};
+  const inputProps = {
+    classes: {input: classes.resize},
+  };
 
   return (
-    <Grid item xs={12} md={9} justify="center" className={classes.form}>
+    <Grid item xs={12} md={10} className={classes.form}>
       <Grid item xs={12} align="end">
         <IconButton
           edge="end"
@@ -86,10 +85,10 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
           <CloseIcon />
         </IconButton>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} justify="center">
         <form noValidate autoComplete="off">
-          <Grid container>
-            <Grid item xs={12} lg={6}>
+          <Grid container justify="space-between">
+            <Grid item xs={12} lg={6} align="center">
               <TextField
                 required
                 id="first_name"
@@ -105,7 +104,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {errors.firstName_error || null}
               </FormHelperText>
             </Grid>
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} lg={6} align="center">
               <TextField
                 required
                 id="last_name"
@@ -121,7 +120,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {errors.lastName_error || null}
               </FormHelperText>
             </Grid>
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} lg={6} align="center">
               <TextField
                 required
                 id="email"
@@ -138,7 +137,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               </FormHelperText>
             </Grid>
 
-            <Grid item xs={12} lg={6}>
+            <Grid item xs={12} lg={6} align="center">
               <MuiPhoneNumber
                 name="phone_primary"
                 label="Primary Phone"
@@ -204,6 +203,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
   formHelperText: {
     color: palette.error.main,
     marginTop: '2px',
+    width: '95%',
+    marginBottom: spacing(1),
   },
   iconButton: {
     flexBasis: '60px',

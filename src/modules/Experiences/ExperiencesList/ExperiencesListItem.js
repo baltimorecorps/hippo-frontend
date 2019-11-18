@@ -135,7 +135,7 @@ const ExperiencesListItem = ({
           )}
         </Grid>
         {editing && (
-          <Grid item xs={10}>
+          <Grid item xs={12} md={10}>
             <AddOrEditExperienceForm
               handleCancel={() => setEditing(false)}
               labels={{}}
@@ -190,7 +190,6 @@ ExperiencesListItem.propTypes = {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
-  gridContainer: {},
   editIcon: {
     flexBasis: '60px',
     padding: spacing(0.5),

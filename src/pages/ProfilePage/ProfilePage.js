@@ -7,8 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import Divider from '@material-ui/core/Divider';
-import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
@@ -155,20 +153,19 @@ const ProfilePage = ({
                   </Typography>
                 </div>
                 <Grid container justify="center">
-                  {!openForm && (
+                  {openForm ? (
+                    <BasicInfoForm
+                      contact={contactInfo}
+                      onSubmit={handleUpdateContact}
+                      onCloseForm={() => setOpenForm(false)}
+                    />
+                  ) : (
                     <BasicInfoDisplay
                       firstName={contactInfo.first_name}
                       lastName={contactInfo.last_name}
                       email={email}
                       phone={contactInfo.phone_primary}
                       onClickEdit={() => setOpenForm(true)}
-                    />
-                  )}
-                  {openForm && (
-                    <BasicInfoForm
-                      contact={contactInfo}
-                      onSubmit={handleUpdateContact}
-                      onCloseForm={() => setOpenForm(false)}
                     />
                   )}
                 </Grid>

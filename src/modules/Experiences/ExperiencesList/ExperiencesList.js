@@ -102,7 +102,7 @@ const ExperiencesList = ({
           </Grid>
 
           {showForm && (
-            <Grid item xs={10}>
+            <Grid item xs={12} md={10}>
               <AddOrEditExperienceForm
                 experience={blankExperience}
                 onSubmit={submitNewExperience}
