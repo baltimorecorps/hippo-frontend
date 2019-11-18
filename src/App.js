@@ -49,7 +49,14 @@ const App = ({classes}) => {
                   </Button>
                 )}
                 {isAuthenticated && (
-                  <Button color="inherit" onClick={() => logout()}>
+                  <Button
+                    color="inherit"
+                    onClick={() =>
+                      logout({
+                        returnTo: window.location.origin,
+                      })
+                    }
+                  >
                     Log out
                   </Button>
                 )}
