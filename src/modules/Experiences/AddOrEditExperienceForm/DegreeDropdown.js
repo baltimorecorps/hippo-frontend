@@ -22,11 +22,26 @@ const DegreeDropdown = ({onChange, value}) => {
 };
 
 DegreeDropdown.options = [
+  {
+    key: 'completed_classes',
+    text: 'Completed Classes',
+    value: 'Completed Classes',
+  },
+  {
+    key: 'completed_training',
+    text: 'Completed Training',
+    value: 'Completed Training',
+  },
+  {key: 'certificate', text: 'Certificate', value: 'Certificate'},
+  {key: 'ged', text: 'GED', value: 'GED'},
+
   {key: 'high_school', text: 'High School', value: 'High School'},
   {key: 'associates', text: 'Associates', value: 'Associates'},
   {key: 'undergraduate', text: 'Undergraduate', value: 'Undergraduate'},
   {key: 'masters', text: 'Masters', value: 'Masters'},
   {key: 'doctoral', text: 'Doctoral', value: 'Doctoral'},
+
+  {key: 'other', text: 'Other', value: 'Other'},
 ];
 
 export default DegreeDropdown;

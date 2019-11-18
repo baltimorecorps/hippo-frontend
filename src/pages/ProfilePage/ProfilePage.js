@@ -315,9 +315,6 @@ const drawerStyles = ({breakpoints, palette, spacing, shadows}) => ({
   item: {
     padding: spacing(0, 3),
   },
-  BasicInfoPaper: {
-    marginTop: '20px',
-  },
 });
 
 const SelectionDrawer = withStyles(drawerStyles)(
