@@ -1,5 +1,12 @@
 import fetchMock from 'fetch-mock';
-import {ADD_CONTACT, ADD_CONTACT_API, addContact} from './contacts';
+import {
+  GET_MY_CONTACT,
+  GET_MY_CONTACT_API,
+  getMyContact,
+  ADD_CONTACT,
+  ADD_CONTACT_API,
+  addContact,
+} from './contacts';
 
 afterEach(() => {
   fetchMock.restore();
@@ -40,4 +47,31 @@ test('Create new contact action - failure', async function() {
   expect(dispatch.mock.calls.length).toBe(3);
   expect(dispatch.mock.calls[2][0].type).toBe(ADD_CONTACT_API.REJECT);
   expect(dispatch.mock.calls[2][0].statusCode).toBe(500);
+});
+
+test('Get my contact', async function() {
+  const dispatch = jest.fn();
+  const token = 'testAuthToken';
+  const response = {contact: 'me'};
+
+  fetchMock.get(
+    `path:/api/contacts/me/`,
+    {
+      status: 200,
+      body: response,
+    },
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  await getMyContact(token)(dispatch);
+
+  expect(dispatch.mock.calls.length).toBe(3);
+  expect(dispatch.mock.calls[0][0].type).toBe(GET_MY_CONTACT);
+  expect(dispatch.mock.calls[1][0].type).toBe(GET_MY_CONTACT_API.REQUEST);
+  expect(dispatch.mock.calls[2][0].type).toBe(GET_MY_CONTACT_API.RESOLVE);
+  expect(dispatch.mock.calls[2][0].body).toEqual(response);
 });

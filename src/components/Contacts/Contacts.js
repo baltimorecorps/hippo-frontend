@@ -19,7 +19,7 @@ const Contacts = props => {
             contacts={props.contacts}
             refreshContacts={props.refreshContacts}
           />
-          <AddContact addNewContact={props.addNewContact} />
+          <AddContact addNewContact={props.addNewContact} dialog />
         </React.Fragment>
       </Paper>
     </main>

@@ -1,5 +1,6 @@
 import {API_URL} from '../constants';
 import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
+import {makeAuthFetchActions} from 'lib/auth0';
 
 // ## API ACTION CREATORS ##
 // Note on naming convention here:
@@ -35,7 +36,7 @@ export const addContact = contact =>
   async function(dispatch) {
     dispatch(addContactLocal(contact));
 
-    await apiAddContact(contact)(dispatch);
+    return await apiAddContact(contact)(dispatch);
   };
 
 const addContactLocal = contact => ({
@@ -65,3 +66,21 @@ export const updateContact = contact =>
   };
 
 // ------------------------------------------------------------------------------------
+
+export const GET_MY_CONTACT = 'GET_MY_CONTACT';
+export const GET_MY_CONTACT_API = fetchActionTypes(GET_MY_CONTACT);
+export const getMyContact = authToken =>
+  async function(dispatch) {
+    dispatch({
+      type: GET_MY_CONTACT,
+    });
+
+    return await apiGetMyContact(authToken)(dispatch);
+  };
+
+const apiGetMyContact = authToken =>
+  makeAuthFetchActions(
+    authToken,
+    GET_MY_CONTACT,
+    `${API_URL}/api/contacts/me/`
+  );

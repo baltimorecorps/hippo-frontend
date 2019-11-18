@@ -25,7 +25,8 @@ const getExperiences = createSelector(
 const getSelection = createSelector(['resume.selected']);
 const getResumeCreationStep = createSelector(['resume.resumeCreationStep']);
 
-const getContact = (state, props) => props.match.params.contactId;
+const getContact = (state, props) =>
+  props.contactId || props.match.params.contactId;
 
 const getResumeAll = createSelector(
   [getExperiences, getSelection, getContact],
@@ -123,7 +124,7 @@ const getResume = createSelector(
 // The props to this container specify which particular contact we want to
 // display on the page, and we pull that contact's info out of the state
 export const mapStateToProps = (state, props) => {
-  const contactId = props.match.params.contactId;
+  const contactId = props.contactId || props.match.params.contactId;
   const contactInfo = state.contacts[contactId];
   return {
     contactId: Number(contactId),
