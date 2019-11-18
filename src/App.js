@@ -12,7 +12,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import ErrorBoundary from 'atoms/ErrorBoundary';
 import Resume from 'modules/Resume';
 import CreateResumePage from 'pages/CreateResumePage';
-import ProfilePage from 'pages/ProfilePage';
+import {ProfileAuth, ProfileStaff} from 'pages/ProfilePage';
 import theme from 'styles/theme';
 
 import {useAuth0} from 'lib/auth0';
@@ -65,8 +65,12 @@ const App = ({classes}) => {
               <Route exact path="/resume/:gdocId" component={Resume} />
               <Route exact path="/talent-home" component={TalentHome} />
 
-              <Route exact path="/profile/" component={ProfilePage} />
-              <Route exact path="/profile/:contactId" component={ProfilePage} />
+              <Route exact path="/profile/" component={ProfileAuth} />
+              <Route
+                exact
+                path="/profile/:contactId"
+                component={ProfileStaff}
+              />
 
               <Route
                 exact

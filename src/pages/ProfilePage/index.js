@@ -1,3 +1,7 @@
 import Profile from './Profile.container';
+import ProfilePage from './ProfilePage.container';
 
-export default Profile;
+export const ProfileAuth = Profile;
+export const ProfileStaff = ProfilePage;
+
+export default ProfileAuth;
