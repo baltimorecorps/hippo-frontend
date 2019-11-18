@@ -6,6 +6,7 @@ import rootReducer from './reducers';
 import App from './App';
 import {Auth0Provider} from './lib/auth0';
 import config from './authConfig.json';
+import {API_URL} from './constants';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -33,7 +34,7 @@ ReactDOM.render(
       domain={config.domain}
       client_id={config.clientId}
       redirect_uri={window.location.origin}
-      audience={'http://localhost:5000'}
+      audience={API_URL}
       onRedirectCallback={onRedirectCallback}
     >
       <App />
