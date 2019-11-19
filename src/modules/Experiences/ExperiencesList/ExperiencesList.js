@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
@@ -11,6 +10,9 @@ import AddIcon from '@material-ui/icons/Add';
 
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import ExperiencesListItem from './ExperiencesListItem';
+
+import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import Link from '@material-ui/core/Link';
 
 import {sortExperiences} from './helpers';
 
@@ -58,6 +60,7 @@ const ExperiencesList = ({
   };
 
   const header = headers[experienceType.toLowerCase()];
+  const helpText = helpTexts[experienceType.toLowerCase()];
 
   const makeSelectExperience = experience => event => {
     if (event.target.checked) {
@@ -75,29 +78,55 @@ const ExperiencesList = ({
     <Grid container>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Grid container justify="space-between" className={classes.container}>
-            <Grid item>
-              <Typography
-                variant="h5"
-                component="h1"
-                style={{
-                  fontWeight: '700',
-                }}
-              >
-                {header}
-              </Typography>
-            </Grid>
-            <Grid item>
-              {inSelectMode ? null : (
-                <IconButton
-                  className={classes.addButton}
-                  size="small"
-                  aria-label="add new experience"
-                  onClick={() => setShowForm(true)}
+          <Grid container className={classes.container}>
+            <Grid container justify="space-between">
+              <Grid item>
+                <Typography
+                  variant="h5"
+                  component="h1"
+                  style={{
+                    fontWeight: '700',
+                  }}
                 >
-                  <AddIcon />
-                </IconButton>
-              )}
+                  {header}
+                </Typography>
+              </Grid>
+
+              <Grid item>
+                {inSelectMode ? null : (
+                  <IconButton
+                    className={classes.addButton}
+                    size="small"
+                    aria-label="add new experience"
+                    onClick={() => setShowForm(true)}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                )}
+              </Grid>
+            </Grid>
+            <Grid container alignItems="center">
+              <HelpOutlineOutlinedIcon
+                fontSize="small"
+                className={classes.helpIcon}
+              />
+              <Typography
+                variant="subtitle1"
+                component="p"
+                className={classes.helpText}
+              >
+                {helpText}
+              </Typography>
+              <Link
+                component="button"
+                variant="body2"
+                onClick={() => {
+                  console.info("I'm a button.");
+                }}
+                className={classes.moreDetails}
+              >
+                More...
+              </Link>
             </Grid>
           </Grid>
 
@@ -147,7 +176,14 @@ const headers = {
   work: 'Experience',
   education: 'Education',
   service: 'Service and Leadership',
-  accomplishment: 'Accomplishments',
+  accomplishment: 'Portfolio and Work Products',
+};
+
+const helpTexts = {
+  work:
+    'Include your professional community service, and leadership experiences',
+  education: 'For example: diplomas, training courses, degrees, certificates',
+  accomplishment: 'Add any awards, presentations, projects, and publications',
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -164,6 +200,27 @@ const styles = ({breakpoints, palette, spacing}) => ({
     paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+  },
+  helpIcon: {
+    color: '#5e5e5e',
+  },
+  helpText: {
+    marginLeft: '3px',
+    color: '#5e5e5e',
+    fontSize: '15px',
+    fontWeight: 'normal',
+  },
+  moreDetails: {
+    marginLeft: '5px',
+    color: '#2971ff',
+    fontSize: '15px',
+    alignSelf: 'center',
+    '&:hover': {
+      fontWeight: 'bold',
+      textDecoration: 'none',
+      fontSize: '15px',
+      color: '#0f60ff',
+    },
   },
   addButton: {
     flexBasis: '60px',

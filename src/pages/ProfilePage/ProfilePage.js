@@ -22,6 +22,8 @@ import ResumesList from 'modules/Resumes/ResumesList';
 
 import html2canvas from 'html2canvas';
 
+import SideDrawer from '../../modules/SideBarDrawer/SideDrawer';
+
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
 // render
@@ -131,60 +133,69 @@ const ProfilePage = ({
           onCancel={cancelResumeSelect}
         />
       ) : null}
-      <Grid
-        id="divToPrint"
-        container
-        justify="center"
-        className={classes.wrapper}
-      >
-        <Grid item xs={8}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Paper className={classes.BasicInfoPaper}>
-                <div className={classes.headerContainer}>
-                  <Typography
-                    variant="h5"
-                    component="h1"
-                    style={{
-                      fontWeight: '700',
-                    }}
-                  >
-                    About Me
-                  </Typography>
-                </div>
-                <Grid container justify="center">
-                  {openForm ? (
-                    <BasicInfoForm
-                      contact={contactInfo}
-                      onSubmit={handleUpdateContact}
-                      onCloseForm={() => setOpenForm(false)}
-                    />
-                  ) : (
-                    <BasicInfoDisplay
-                      firstName={contactInfo.first_name}
-                      lastName={contactInfo.last_name}
-                      email={email}
-                      phone={contactInfo.phone_primary}
-                      onClickEdit={() => setOpenForm(true)}
-                    />
-                  )}
+      <Grid container justify="space-between">
+        <Grid item xs={9}>
+          <Grid
+            id="divToPrint"
+            container
+            justify="center"
+            className={classes.wrapper}
+          >
+            <Grid item xs={10}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Paper className={classes.BasicInfoPaper}>
+                    <div className={classes.headerContainer}>
+                      <Typography
+                        variant="h5"
+                        component="h1"
+                        style={{
+                          fontWeight: '700',
+                        }}
+                      >
+                        About Me
+                      </Typography>
+                    </div>
+                    <Grid container justify="center">
+                      {openForm ? (
+                        <BasicInfoForm
+                          contact={contactInfo}
+                          onSubmit={handleUpdateContact}
+                          onCloseForm={() => setOpenForm(false)}
+                        />
+                      ) : (
+                        <BasicInfoDisplay
+                          firstName={contactInfo.first_name}
+                          lastName={contactInfo.last_name}
+                          email={email}
+                          phone={contactInfo.phone_primary}
+                          onClickEdit={() => setOpenForm(true)}
+                        />
+                      )}
+                    </Grid>
+                  </Paper>
                 </Grid>
-              </Paper>
+
+                <ExperiencesList contactId={contactId} experienceType="Work" />
+                <ExperiencesList
+                  contactId={contactId}
+                  experienceType="Education"
+                />
+                {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
+                <ExperiencesList
+                  contactId={contactId}
+                  experienceType="Accomplishment"
+                />
+
+                {/*<ResumesList />*/}
+              </Grid>
             </Grid>
           </Grid>
-
-          <ExperiencesList contactId={contactId} experienceType="Work" />
-          <ExperiencesList contactId={contactId} experienceType="Education" />
-          {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
-          <ExperiencesList
-            contactId={contactId}
-            experienceType="Accomplishment"
-          />
-
-          {/*<ResumesList />*/}
+        </Grid>
+        <Grid item xs={3}>
+          <SideDrawer />
         </Grid>
       </Grid>
-
       {inSelectMode ? null : (
         <Grid container justify="center">
           <Button
