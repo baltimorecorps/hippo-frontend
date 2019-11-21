@@ -204,7 +204,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginRight: '20px',
   },
   initial: {
-    backgroundColor: palette.primary.darker,
+    backgroundColor: palette.primary.darkerYellow,
   },
 });
 
