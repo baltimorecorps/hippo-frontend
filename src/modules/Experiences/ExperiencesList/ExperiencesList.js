@@ -11,12 +11,12 @@ import AddIcon from '@material-ui/icons/Add';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import ExperiencesListItem from './ExperiencesListItem';
 
-import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
 import Link from '@material-ui/core/Link';
 
 import {sortExperiences} from './helpers';
 
 const ExperiencesList = ({
+  onClickMore,
   contactId,
   experienceType,
   experiences,
@@ -74,6 +74,10 @@ const ExperiencesList = ({
     sortedExperiences = sortExperiences(experiences);
   }
 
+  const handleOnClickMore = () => {
+    onClickMore(experienceType.toLowerCase());
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -106,10 +110,6 @@ const ExperiencesList = ({
               </Grid>
             </Grid>
             <Grid container alignItems="center">
-              <HelpOutlineOutlinedIcon
-                fontSize="small"
-                className={classes.helpIcon}
-              />
               <Typography
                 variant="subtitle1"
                 component="p"
@@ -120,9 +120,7 @@ const ExperiencesList = ({
               <Link
                 component="button"
                 variant="body2"
-                onClick={() => {
-                  console.info("I'm a button.");
-                }}
+                onClick={handleOnClickMore}
                 className={classes.moreDetails}
               >
                 More...

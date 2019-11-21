@@ -22,7 +22,7 @@ import ResumesList from 'modules/Resumes/ResumesList';
 
 import html2canvas from 'html2canvas';
 
-import SideDrawer from '../../modules/SideBarDrawer/SideDrawer';
+import HelpDrawer from '../../modules/SideBarDrawer/HelpDrawer';
 
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
@@ -67,6 +67,8 @@ const ProfilePage = ({
 
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const [helpText, setHelpText] = useState();
 
   const handleUpdateContact = async values => {
     await updateContact(values);
@@ -107,6 +109,11 @@ const ProfilePage = ({
   // The three main components it makes use of are BasicInfoDisplay,
   // ExperiencesList, and SkillsList
 
+  const onClickMoreDetails = header => {
+    setHelpText(helpTextOptions[header]);
+    setOpenSidebar(true);
+  };
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -134,14 +141,19 @@ const ProfilePage = ({
         />
       ) : null}
       <Grid container justify="space-between">
-        <Grid item xs={9}>
+        <Grid
+          item
+          xs={openSidebar ? 8 : 11}
+          md={openSidebar ? 9 : 11}
+          xl={openSidebar ? 10 : 11}
+        >
           <Grid
             id="divToPrint"
             container
-            justify="center"
+            justify={openSidebar ? 'center' : 'flex-end'}
             className={classes.wrapper}
           >
-            <Grid item xs={10}>
+            <Grid item xs={11}>
               <Grid container>
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>
@@ -176,15 +188,21 @@ const ProfilePage = ({
                   </Paper>
                 </Grid>
 
-                <ExperiencesList contactId={contactId} experienceType="Work" />
+                <ExperiencesList
+                  contactId={contactId}
+                  experienceType="Work"
+                  onClickMore={onClickMoreDetails}
+                />
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Education"
+                  onClickMore={onClickMoreDetails}
                 />
                 {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Accomplishment"
+                  onClickMore={onClickMoreDetails}
                 />
 
                 {/*<ResumesList />*/}
@@ -192,8 +210,18 @@ const ProfilePage = ({
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <SideDrawer />
+        <Grid
+          item
+          xs={openSidebar ? 4 : 1}
+          md={openSidebar ? 3 : 1}
+          xl={openSidebar ? 2 : 1}
+        >
+          {openSidebar && (
+            <HelpDrawer
+              helpText={helpText}
+              onClose={() => setOpenSidebar(false)}
+            />
+          )}
         </Grid>
       </Grid>
       {inSelectMode ? null : (
@@ -210,6 +238,16 @@ const ProfilePage = ({
     </React.Fragment>
   );
 };
+
+const helpTextOptions = {
+  work: {header: 'Experience', content: 'Experience help text content.'},
+  education: {header: 'Education', content: 'Education help text content.'},
+  accomplishment: {
+    header: 'Portfolio and Work Products',
+    content: 'Portfolio and Work Products help text content.',
+  },
+};
+
 ProfilePage.propTypes = {
   contactId: PropTypes.any.isRequired,
   contactInfo: PropTypes.shape({
