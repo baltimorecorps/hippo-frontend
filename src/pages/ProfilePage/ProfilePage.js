@@ -22,6 +22,8 @@ import ResumesList from 'modules/Resumes/ResumesList';
 
 import html2canvas from 'html2canvas';
 
+import HelpDrawer from '../../modules/SideBarDrawer/HelpDrawer';
+
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
 // render
@@ -65,6 +67,8 @@ const ProfilePage = ({
 
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const [helpText, setHelpText] = useState();
 
   const handleUpdateContact = async values => {
     await updateContact(values);
@@ -106,6 +110,11 @@ const ProfilePage = ({
   // The three main components it makes use of are BasicInfoDisplay,
   // ExperiencesList, and SkillsList
 
+  const onClickMoreDetails = header => {
+    setHelpText(helpTextOptions[header]);
+    setOpenSidebar(true);
+  };
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -132,60 +141,90 @@ const ProfilePage = ({
           onCancel={cancelResumeSelect}
         />
       ) : null}
-      <Grid
-        id="divToPrint"
-        container
-        justify="center"
-        className={classes.wrapper}
-      >
-        <Grid item xs={8}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Paper className={classes.BasicInfoPaper}>
-                <div className={classes.headerContainer}>
-                  <Typography
-                    variant="h5"
-                    component="h1"
-                    style={{
-                      fontWeight: '700',
-                    }}
-                  >
-                    About Me
-                  </Typography>
-                </div>
-                <Grid container justify="center">
-                  {openForm ? (
-                    <BasicInfoForm
-                      contact={contactInfo}
-                      onSubmit={handleUpdateContact}
-                      onCloseForm={() => setOpenForm(false)}
-                    />
-                  ) : (
-                    <BasicInfoDisplay
-                      firstName={contactInfo.first_name}
-                      lastName={contactInfo.last_name}
-                      email={email}
-                      phone={contactInfo.phone_primary}
-                      onClickEdit={() => setOpenForm(true)}
-                    />
-                  )}
+      <Grid container justify="space-between">
+        <Grid
+          item
+          xs={openSidebar ? 8 : 11}
+          md={openSidebar ? 9 : 11}
+          xl={openSidebar ? 10 : 11}
+        >
+          <Grid
+            id="divToPrint"
+            container
+            justify={openSidebar ? 'center' : 'flex-end'}
+            className={classes.wrapper}
+          >
+            <Grid item xs={11}>
+              <Grid container>
+                <Grid item xs={12}>
+                  <Paper className={classes.BasicInfoPaper}>
+                    <div className={classes.headerContainer}>
+                      <Typography
+                        variant="h5"
+                        component="h1"
+                        style={{
+                          fontWeight: '700',
+                        }}
+                      >
+                        About Me
+                      </Typography>
+                    </div>
+                    <Grid container justify="center">
+                      {openForm ? (
+                        <BasicInfoForm
+                          contact={contactInfo}
+                          onSubmit={handleUpdateContact}
+                          onCloseForm={() => setOpenForm(false)}
+                        />
+                      ) : (
+                        <BasicInfoDisplay
+                          firstName={contactInfo.first_name}
+                          lastName={contactInfo.last_name}
+                          email={email}
+                          phone={contactInfo.phone_primary}
+                          onClickEdit={() => setOpenForm(true)}
+                        />
+                      )}
+                    </Grid>
+                  </Paper>
                 </Grid>
-              </Paper>
+
+                <ExperiencesList
+                  contactId={contactId}
+                  experienceType="Work"
+                  onClickMore={onClickMoreDetails}
+                />
+                <ExperiencesList
+                  contactId={contactId}
+                  experienceType="Education"
+                  onClickMore={onClickMoreDetails}
+                />
+                {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
+                <ExperiencesList
+                  contactId={contactId}
+                  experienceType="Accomplishment"
+                  onClickMore={onClickMoreDetails}
+                />
+
+                {/*<ResumesList />*/}
+              </Grid>
             </Grid>
           </Grid>
-
-          <ExperiencesList contactId={contactId} experienceType="Work" />
-          <ExperiencesList contactId={contactId} experienceType="Education" />
-          {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
-          <ExperiencesList
-            contactId={contactId}
-            experienceType="Accomplishment"
-          />
-
-          {/*<ResumesList />*/}
+        </Grid>
+        <Grid
+          item
+          xs={openSidebar ? 4 : 1}
+          md={openSidebar ? 3 : 1}
+          xl={openSidebar ? 2 : 1}
+        >
+          {openSidebar && (
+            <HelpDrawer
+              helpText={helpText}
+              onClose={() => setOpenSidebar(false)}
+            />
+          )}
         </Grid>
       </Grid>
-
       {inSelectMode ? null : (
         <Grid container justify="center">
           <Button
@@ -200,6 +239,16 @@ const ProfilePage = ({
     </React.Fragment>
   );
 };
+
+const helpTextOptions = {
+  work: {header: 'Experience', content: 'Experience help text content.'},
+  education: {header: 'Education', content: 'Education help text content.'},
+  accomplishment: {
+    header: 'Portfolio and Work Products',
+    content: 'Portfolio and Work Products help text content.',
+  },
+};
+
 ProfilePage.propTypes = {
   contactId: PropTypes.any.isRequired,
   contactInfo: PropTypes.shape({
