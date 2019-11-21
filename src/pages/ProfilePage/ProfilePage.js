@@ -68,7 +68,7 @@ const ProfilePage = ({
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
-  const [helpText, setHelpText] = useState();
+  const [helpText, setHelpText] = useState(helpTextOptions['work']);
 
   const handleUpdateContact = async values => {
     await updateContact(values);
@@ -219,6 +219,7 @@ const ProfilePage = ({
           {openSidebar && (
             <HelpDrawer
               helpText={helpText}
+              skillInfo={skillHelpTextInfo}
               onClose={() => setOpenSidebar(false)}
             />
           )}
@@ -240,12 +241,72 @@ const ProfilePage = ({
 };
 
 const helpTextOptions = {
-  work: {header: 'Experience', content: 'Experience help text content.'},
-  education: {header: 'Education', content: 'Education help text content.'},
+  work: {
+    header: 'Experience',
+    content: [
+      'Employers want to see how your previous experience is relevant to the position. Include current and past work experience, but also any volunteering, community organizing, or leadership experience you may have.',
+      '✦ Use 2 to 4 bullet points to describe your responsibilities and achievements',
+      '✦ Start each with an action verb',
+      '✦ Use numbers where you can to quantify your achievements',
+    ],
+  },
+  education: {
+    header: 'Education',
+    content: [
+      'Education can mean more than a degree. Have you taken classes to learn a skill or trade? Do you have a certificate or license you’ve earned? Have you been taking online courses?',
+    ],
+  },
   accomplishment: {
     header: 'Portfolio and Work Products',
     content: 'Portfolio and Work Products help text content.',
   },
+};
+
+const skillHelpTextInfo = {
+  names: [
+    'Process Improvement',
+    'Project Management',
+    'Communication',
+    'Data Analysis',
+    'Software Development',
+  ],
+  contents: [
+    {
+      content: [
+        'Process Improvement Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
+        'content paragraph 2',
+        'content paragraph 3',
+      ],
+    },
+    {
+      content: [
+        'Project Management Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
+        'content paragraph 2',
+        'content paragraph 3',
+      ],
+    },
+    {
+      content: [
+        'Communication Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
+        'content paragraph 2',
+        'content paragraph 3',
+      ],
+    },
+    {
+      content: [
+        'Data Analysis Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
+        'content paragraph 2',
+        'content paragraph 3',
+      ],
+    },
+    {
+      content: [
+        'Software Development Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
+        'content paragraph 2',
+        'content paragraph 3',
+      ],
+    },
+  ],
 };
 
 ProfilePage.propTypes = {
