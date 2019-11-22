@@ -21,6 +21,7 @@ describe('ExperiencesList', () => {
     type: 'Work',
     contact_id: contactId,
     achievements: [],
+    skills: [],
   };
 
   test('integration - test selection', () => {
