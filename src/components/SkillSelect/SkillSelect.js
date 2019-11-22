@@ -8,7 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import withStyles from '@material-ui/core/styles/withStyles';
-import startCase from 'lodash/startCase';
+
+import '@gouch/to-title-case';
 import findIndex from 'lodash/findIndex';
 
 import {FixedSizeList} from 'react-window';
@@ -93,7 +94,7 @@ const SkillSelect = ({classes, load, value, onChange}) => {
       findIndex(value, element => element.name === candidate.name) === -1;
 
     (async () => {
-      const cleanValue = startCase(inputValue);
+      const cleanValue = inputValue.toTitleCase();
       const inputNew = {
         name: cleanValue,
         label: `Create skill "${cleanValue}"`,

@@ -7,7 +7,7 @@ import throttle from 'lodash/throttle';
 import SkillSelect from './SkillSelect'
 
 const loadOptions = async query => {
-  const url = encodeURI(`${API_URL}/api/skills/autocomplete/?q=${query}`);
+  const url = `${API_URL}/api/skills/autocomplete/?q=${encodeURIComponent(query)}`;
   let results = [];
   try {
     const response = await fetch(url, {
