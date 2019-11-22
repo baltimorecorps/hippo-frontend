@@ -76,8 +76,9 @@ const ProfilePage = ({
   // that state from the API. If this load goes well, this page should be
   // rerendered due to the Redux state update
   if (typeof contactInfo === 'undefined') {
-    console.log(contactId);
-    //refreshContacts();
+    if (typeof contactId !== 'undefined') {
+      refreshContacts();
+    }
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }

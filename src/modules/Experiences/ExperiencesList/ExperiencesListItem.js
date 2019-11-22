@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AchievementsList from 'modules/Achievements/AchievementsList';
+import SkillsList from 'components/SkillsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -131,6 +132,13 @@ const ExperiencesListItem = ({
                     <AchievementsList achievements={experience.achievements} />
                   )
                 : null}
+
+              {experience.skills.length
+                ? config.showSkills && (
+                    <SkillsList skills={experience.skills} />
+                  )
+                : null}
+
             </React.Fragment>
           )}
         </Grid>

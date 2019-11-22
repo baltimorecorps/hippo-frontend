@@ -13,13 +13,14 @@ import AchievementInputsList from './AchievementInputsList';
 import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {experienceValidator} from '../../../lib/formValidator';
+import {experienceValidator} from 'lib/formValidator';
 import {configureForm} from '../ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import LocationTextField from './LocationTextField';
+import SkillSelect from 'components/SkillSelect';
 
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -55,6 +56,7 @@ const useForm = (initialValues, onSubmit) => {
       }
     },
     handleAchievements: update('achievements'),
+    handleSkills: update('skills'),
   };
 
   return [values, handlers];
@@ -80,6 +82,7 @@ const AddOrEditExperienceForm = ({
       handleSubmit,
       handleDegree,
       handleAchievements,
+      handleSkills,
       handleLocation,
       handleIsCurrent,
     },
@@ -283,6 +286,14 @@ const AddOrEditExperienceForm = ({
                 ? 'I am currently enrolled'
                 : 'I am currently working in this role'
             }
+          />
+        </Grid>
+      )}
+      {config.showSkills && (
+        <Grid item xs={12}>
+          <SkillSelect 
+            value={values.skills}
+            onChange={handleSkills}
           />
         </Grid>
       )}

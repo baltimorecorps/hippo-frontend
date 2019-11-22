@@ -46,6 +46,7 @@ const ExperiencesList = ({
     type: experienceType,
     contact_id: contactId,
     achievements: [],
+    skills: [],
   };
 
   if (experienceType === 'Education') {
