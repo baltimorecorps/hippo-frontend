@@ -228,12 +228,12 @@ describe('AddOrEditExperienceForm', () => {
     const result = {
       contact_id: 1234,
       description: 'Test description',
-      host: 'New Award',
+      host: 'Award 1',
       start_month: 'January',
       start_year: '2015',
       end_month: 'none',
       end_year: 0,
-      title: 'Test Title',
+      title: 'New Title',
       type: 'Accomplishment',
       is_current: true,
     };
@@ -248,15 +248,15 @@ describe('AddOrEditExperienceForm', () => {
         experience={experience}
       />
     );
-    fireEvent.change(getByLabelText(/institution/i), {
-      target: {value: 'New Award'},
+    fireEvent.change(getByLabelText(/title/i), {
+      target: {value: 'New Title'},
     });
 
     fireEvent.click(getByText(/save/i));
 
     expect(submit.mock.calls.length).toBe(1);
-    expect(submit.mock.calls[0][0]).toHaveProperty('host');
-    expect(submit.mock.calls[0][0].host).toBe('New Award');
+    expect(submit.mock.calls[0][0]).toHaveProperty('title');
+    expect(submit.mock.calls[0][0].title).toBe('New Title');
     expect(submit.mock.calls[0][0]).toEqual(result);
   });
 });
