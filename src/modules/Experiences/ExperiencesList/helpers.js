@@ -39,6 +39,7 @@ const configureForm = expType => {
       labels: {
         host: 'Name of Company or Organization',
         title: 'Title',
+        achievements: 'Responsibilities and Achievements:',
       },
       showHost: true,
       showDescription: false,
@@ -76,6 +77,7 @@ const configureForm = expType => {
         host: 'School',
         title: 'Area of Study/Course Title',
         endDate: 'End Date (or expected)',
+        achievements: "What you've accomplished in this education/course:",
       },
       showHost: true,
       showEndDate: true,

@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 
 import InputLabel from '@material-ui/core/InputLabel';
 
-const AchievementInputsList = ({achievements, contactId, onChange}) => {
+const AchievementInputsList = ({achievements, contactId, onChange, label}) => {
   const focusTarget = useRef(null);
   const [doFocus, setFocus] = useState(false);
 
@@ -53,7 +53,7 @@ const AchievementInputsList = ({achievements, contactId, onChange}) => {
         <InputLabel
           style={{fontWeight: 'bold', color: '#000000', marginBottom: '5px'}}
         >
-          Responsibilities and Achievements:
+          {label}
         </InputLabel>
       </Grid>
       <Grid item xs={12}>

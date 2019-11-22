@@ -312,6 +312,7 @@ const AddOrEditExperienceForm = ({
             onChange={handleAchievements}
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
+            label={config.labels.achievements || 'Resposibilities'}
           />
         </Grid>
       )}
