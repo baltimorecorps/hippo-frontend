@@ -1,23 +1,35 @@
 import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import withStyles from '@material-ui/core/styles/withStyles';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
-const DegreeDropdown = ({onChange, value}) => {
+const DegreeDropdown = ({onChange, value, classes, name, label, errors}) => {
   return (
-    <Select
-      value={value}
-      onChange={onChange}
-      inputProps={{
-        name: 'degree',
-        id: 'degree',
-      }}
-    >
-      {DegreeDropdown.options.map(({key, value}) => (
-        <MenuItem key={key} value={value}>
-          {value}
-        </MenuItem>
-      ))}
-    </Select>
+    <FormControl className={classes.formControl}>
+      <InputLabel htmlFor={name} className={classes.inputLabel}>
+        {label}
+      </InputLabel>
+      <Select
+        name="degree"
+        id="degree"
+        autoComplete="off"
+        value={value}
+        onChange={onChange}
+        className={classes.resize}
+      >
+        {DegreeDropdown.options.map(({key, value}) => (
+          <MenuItem key={key} value={value}>
+            {value}
+          </MenuItem>
+        ))}
+      </Select>
+      <FormHelperText className={classes.formHelperText}>
+        {errors || null}
+      </FormHelperText>
+    </FormControl>
   );
 };
 
@@ -44,4 +56,27 @@ DegreeDropdown.options = [
   {key: 'other', text: 'Other', value: 'Other'},
 ];
 
-export default DegreeDropdown;
+const styles = ({breakpoints, palette, spacing}) => ({
+  formControl: {
+    width: '100%',
+    marginBottom: spacing(0),
+  },
+  inputLabel: {
+    fontSize: 17,
+  },
+  resize: {
+    fontSize: 16,
+  },
+  labelRoot: {
+    fontSize: 17,
+  },
+  labelFocused: {
+    fontSize: 19,
+  },
+  formHelperText: {
+    color: palette.error.main,
+    marginTop: '4px',
+  },
+});
+
+export default withStyles(styles)(DegreeDropdown);

@@ -89,7 +89,7 @@ const AddContact = ({classes, addNewContact}) => {
     shrink: true,
   };
 
-  const inputProps = {classes: {input: classes.resize}};
+  const inputProps = {classes: {input: classes.resize}, autoComplete: 'off'};
 
   const handlePhoneInput = value => {
     values.phone_primary = value;
