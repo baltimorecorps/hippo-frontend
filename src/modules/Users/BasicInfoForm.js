@@ -71,6 +71,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
   const inputProps = {
     classes: {input: classes.resize},
+    autoComplete: 'off',
   };
 
   return (

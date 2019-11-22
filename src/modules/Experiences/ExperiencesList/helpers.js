@@ -37,9 +37,11 @@ const configureForm = expType => {
   if (expType === 'Work') {
     return {
       labels: {
-        host: 'Organization',
+        host: 'Name of Company or Organization',
         title: 'Title',
+        achievements: 'Responsibilities and Achievements:',
       },
+      showHost: true,
       showDescription: false,
       showEndDate: true,
       showAchievements: true,
@@ -50,7 +52,7 @@ const configureForm = expType => {
     return {
       labels: {
         host: 'Organization',
-        title: 'Role',
+        title: 'Your Role or Job Title',
       },
       showEndDate: true,
       showAchievements: true,
@@ -60,10 +62,11 @@ const configureForm = expType => {
   } else if (expType === 'Accomplishment') {
     return {
       labels: {
-        host: 'Institution / Publisher',
-        title: 'Title',
+        host: 'Organization / Institution / Publisher (optional)',
+        title: 'Name/Title',
         startDate: 'Date Issued',
       },
+      showHost: false,
       showDescription: true,
       showLocation: false,
       showEndDate: false,
@@ -71,10 +74,12 @@ const configureForm = expType => {
   } else if (expType === 'Education') {
     return {
       labels: {
-        host: 'Institution',
-        title: 'Field of Study',
+        host: 'School',
+        title: 'Area of Study/Course Title',
         endDate: 'End Date (or expected)',
+        achievements: "What you've accomplished in this education/course:",
       },
+      showHost: true,
       showEndDate: true,
       showDegree: true,
       showDescription: false,

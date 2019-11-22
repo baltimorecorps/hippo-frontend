@@ -120,7 +120,7 @@ const AddOrEditExperienceForm = ({
     },
   };
 
-  const inputProps = {classes: {input: classes.resize}};
+  const inputProps = {classes: {input: classes.resize}, autoComplete: 'off'};
 
   const [errors, setErrors] = React.useState({});
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
@@ -153,31 +153,33 @@ const AddOrEditExperienceForm = ({
           <CloseIcon />
         </IconButton>
       </Grid>
-      <Grid item xs={12}>
-        <TextField
-          required
-          id="host"
-          className={classes.formControl}
-          label={config.labels.host || 'Organization'}
-          value={host}
-          name="host"
-          onChange={handleChange}
-          InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
-        />
-        <FormHelperText className={classes.formHelperText}>
-          {errors.host_error || null}
-        </FormHelperText>
-      </Grid>
+      {config.showHost && (
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="host"
+            className={classes.formControl}
+            label={config.labels.host || 'Organization'}
+            value={host}
+            name="host"
+            onChange={handleChange}
+            InputLabelProps={inputLabelProps}
+            InputProps={inputProps}
+          />
+          <FormHelperText className={classes.formHelperText}>
+            {errors.host_error || null}
+          </FormHelperText>
+        </Grid>
+      )}
       {config.showDegree && (
         <Grid item xs={12}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="degree">Degree</InputLabel>
-            <DegreeDropdown value={degree} onChange={handleDegree} />
-            <FormHelperText className={classes.formHelperText}>
-              {errors.degree_error || null}
-            </FormHelperText>
-          </FormControl>
+          <DegreeDropdown
+            value={degree}
+            onChange={handleDegree}
+            name="degree"
+            label="Type of Education"
+            errors={errors.degree_error}
+          />
         </Grid>
       )}
       <Grid item xs={12}>
@@ -201,7 +203,7 @@ const AddOrEditExperienceForm = ({
           <LocationTextField
             id="city"
             className={classes.formControl}
-            label="Location"
+            label="City, State"
             value={location || ''}
             name="location"
             handleLocationChange={handleLocation}
@@ -310,6 +312,7 @@ const AddOrEditExperienceForm = ({
             onChange={handleAchievements}
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
+            label={config.labels.achievements || 'Resposibilities'}
           />
         </Grid>
       )}
