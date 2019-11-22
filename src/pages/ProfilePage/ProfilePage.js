@@ -258,7 +258,7 @@ const helpTextOptions = {
   },
   accomplishment: {
     header: 'Portfolio and Work Products',
-    content: 'Portfolio and Work Products help text content.',
+    content: ['Portfolio and Work Products help text content.'],
   },
 };
 
