@@ -20,6 +20,7 @@ describe('ExperiencesListItem', () => {
     type: 'Work',
     contact_id: 1234,
     achievements: [],
+    skills: [],
   };
 
   test('render with selectable true', () => {

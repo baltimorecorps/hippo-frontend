@@ -56,7 +56,7 @@ describe('SkillSelect', () => {
     expect(elem).toBeInTheDocument();
   });
 
-  test('can select value', async () => {
+  test.skip('can select value', async () => {
     const load = jest.fn(_ => AUTOCOMPLETE);
     const onChange = jest.fn();
     const {getByLabelText, findByText} = render(
