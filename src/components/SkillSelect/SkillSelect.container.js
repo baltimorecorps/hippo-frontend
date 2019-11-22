@@ -18,6 +18,10 @@ const loadOptions = async query => {
   } catch (error) {
     console.error(error);
   }
+  
+  if (!results) {
+    return {matches: [], gotExact: false}
+  }
 
   const matches = results.matches ? results.matches.map(item => ({
     name: item,
