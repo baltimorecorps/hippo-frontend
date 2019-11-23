@@ -1,8 +1,8 @@
 import 'isomorphic-fetch';
-import React, {useEffect, useMemo, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -188,5 +188,11 @@ const SkillSelect = ({classes, load, value, onChange}) => {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({});
+
+SkillSelect.propTypes = {
+  value: PropTypes.array.isRequired,
+  load: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default withStyles(styles)(SkillSelect);

@@ -19,6 +19,7 @@ import BasicInfoForm from 'modules/Users/BasicInfoForm';
 import ExperiencesList from 'modules/Experiences/ExperiencesList';
 import SkillsList from 'modules/Tags/SkillsList';
 import ResumesList from 'modules/Resumes/ResumesList';
+import SkillsSection from 'components/SkillsSection';
 
 import html2canvas from 'html2canvas';
 
@@ -181,6 +182,9 @@ const ProfilePage = ({
           <ExperiencesList
             contactId={contactId}
             experienceType="Accomplishment"
+          />
+          <SkillsSection
+            header="Tell us more to help your resume stand out"
           />
 
           {/*<ResumesList />*/}
