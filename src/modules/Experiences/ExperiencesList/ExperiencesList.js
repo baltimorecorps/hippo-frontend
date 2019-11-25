@@ -82,6 +82,8 @@ const ExperiencesList = ({
   const handleOnClickMore = () => {
     onClickMore(experienceType.toLowerCase());
   };
+  
+  const handleOnSkillsMore = () => { onClickMore('skills')}
 
   return (
     <Grid container>
@@ -140,6 +142,7 @@ const ExperiencesList = ({
                 onSubmit={submitNewExperience}
                 handleCancel={() => setShowForm(false)}
                 onDelete={null}
+                onSkillsMore={handleOnSkillsMore}
               />
             </Grid>
           )}
@@ -150,6 +153,7 @@ const ExperiencesList = ({
               onUpdate={updateExperience}
               onDelete={deleteExperience}
               onSelect={makeSelectExperience(experience)}
+              onSkillsMore={handleOnSkillsMore}
               experience={experience}
               selectable={inSelectMode}
             />

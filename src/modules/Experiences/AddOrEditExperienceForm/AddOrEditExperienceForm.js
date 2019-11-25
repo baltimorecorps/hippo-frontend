@@ -6,6 +6,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 
 import useFormUpdate from 'lib/useFormUpdate';
 
@@ -68,6 +70,7 @@ const AddOrEditExperienceForm = ({
   handleCancel,
   classes,
   onDelete,
+  onSkillsMore,
 }) => {
   const config = configureForm(experience.type);
   if (!config.showEndDate) {
@@ -293,6 +296,22 @@ const AddOrEditExperienceForm = ({
       )}
       {config.showSkills && (
         <Grid item xs={12}>
+          <Typography className={classes.skillLabel}>
+            Skills
+          </Typography>
+          <Typography className={classes.skillSublabel}>
+            Employers are looking for things like Project Management, Communication and 
+              <Link
+                component="span"
+                variant="body2"
+                onClick={onSkillsMore}
+                className={classes.moreDetails}
+              >
+                more...
+              </Link>
+          </Typography>
+
+
           <SkillSelect 
             value={values.skills}
             onChange={handleSkills}
@@ -323,7 +342,8 @@ const AddOrEditExperienceForm = ({
             onChange={handleAchievements}
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
-            label={config.labels.achievements || 'Resposibilities'}
+            label={config.labels.achievements.label || 'Resposibilities and Achievements:'}
+            sublabel={config.labels.achievements.sublabel || ''}
           />
         </Grid>
       )}
@@ -391,7 +411,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'space-between',
     marginTop: spacing(1),
   },
-
+  moreDetails: {
+    display: 'inline',
+    marginLeft: spacing(0.5),
+    color: '#2971ff',
+    alignSelf: 'center',
+    '&:hover': {
+      fontWeight: 'bold',
+      textDecoration: 'none',
+      color: '#0f60ff',
+    },
+  },
   delete: {
     padding: '5px 15px',
     '&:hover': {
@@ -399,6 +429,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
       color: '#ffffff',
       borderColor: palette.error.dark,
     },
+  },
+  skillLabel: {
+    fontSize: 18,
+  },
+  skillSublabel: {
+    fontSize: 14,
+    color: 'rgba(0, 0, 0, 0.54)',
+    marginBottom: spacing(1),
   },
 });
 

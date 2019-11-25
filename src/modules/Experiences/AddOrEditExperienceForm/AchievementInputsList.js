@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import AchievementInput from './AchievementInput';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
-import InputLabel from '@material-ui/core/InputLabel';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
-const AchievementInputsList = ({achievements, contactId, onChange, label}) => {
+const AchievementInputsList = ({classes, achievements, contactId, onChange, label, sublabel}) => {
   const focusTarget = useRef(null);
   const [doFocus, setFocus] = useState(false);
 
@@ -50,11 +52,12 @@ const AchievementInputsList = ({achievements, contactId, onChange, label}) => {
   return (
     <Grid container justify="center">
       <Grid item xs={12}>
-        <InputLabel
-          style={{fontWeight: 'bold', color: '#000000', marginBottom: '5px'}}
-        >
+        <Typography className={classes.label}>
           {label}
-        </InputLabel>
+        </Typography>
+        <Typography className={classes.sublabel}>
+          {sublabel}
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         {achievements.map(({description}, index) => (
@@ -87,6 +90,17 @@ const AchievementInputsList = ({achievements, contactId, onChange, label}) => {
   );
 };
 
+const styles = ({breakpoints, palette, spacing}) => ({
+  label: {
+    fontSize: 18,
+  },
+  sublabel: {
+    fontSize: 14,
+    color: 'rgba(0, 0, 0, 0.54)',
+    marginBottom: spacing(1),
+  },
+});
+
 AchievementInputsList.propTypes = {
   contactId: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
     .isRequired,
@@ -101,4 +115,4 @@ AchievementInputsList.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-export default AchievementInputsList;
+export default withStyles(styles)(AchievementInputsList);

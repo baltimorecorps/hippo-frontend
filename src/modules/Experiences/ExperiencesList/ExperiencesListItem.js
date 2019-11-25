@@ -19,6 +19,7 @@ const ExperiencesListItem = ({
   onUpdate,
   onDelete,
   onSelect,
+  onSkillsMore,
   selectable,
   classes,
 }) => {
@@ -150,6 +151,7 @@ const ExperiencesListItem = ({
               onSubmit={submitUpdate}
               experience={experience}
               onDelete={onDelete}
+              onSkillsMore={onSkillsMore}
             />
           </Grid>
         )}
