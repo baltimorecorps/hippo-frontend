@@ -7,8 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
-import Divider from '@material-ui/core/Divider';
-import Icon from '@material-ui/core/Icon';
 import Paper from '@material-ui/core/Paper';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +15,7 @@ import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import BasicInfoDisplay from 'modules/Users/BasicInfoDisplay';
+import BasicInfoForm from 'modules/Users/BasicInfoForm';
 import ExperiencesList from 'modules/Experiences/ExperiencesList';
 import SkillsList from 'modules/Tags/SkillsList';
 import ResumesList from 'modules/Resumes/ResumesList';
@@ -48,6 +47,7 @@ const useScroll = () => {
 };
 
 const ProfilePage = ({
+  updateContact,
   contactId,
   contactInfo,
   resume,
@@ -62,7 +62,14 @@ const ProfilePage = ({
   inSelectMode,
 }) => {
   const scrollTo = useScroll();
+
   const [resumeLink, setResumeLink] = useState(null);
+  const [openForm, setOpenForm] = useState(false);
+
+  const handleUpdateContact = async values => {
+    await updateContact(values);
+    setOpenForm(false);
+  };
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -96,6 +103,7 @@ const ProfilePage = ({
   //
   // The three main components it makes use of are BasicInfoDisplay,
   // ExperiencesList, and SkillsList
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -129,12 +137,40 @@ const ProfilePage = ({
         className={classes.wrapper}
       >
         <Grid item xs={8}>
-          <BasicInfoDisplay
-            firstName={contactInfo.first_name}
-            lastName={contactInfo.last_name}
-            email={email}
-            phone={contactInfo.phone_primary}
-          />
+          <Grid container>
+            <Grid item xs={12}>
+              <Paper className={classes.BasicInfoPaper}>
+                <div className={classes.headerContainer}>
+                  <Typography
+                    variant="h5"
+                    component="h1"
+                    style={{
+                      fontWeight: '700',
+                    }}
+                  >
+                    About Me
+                  </Typography>
+                </div>
+                <Grid container justify="center">
+                  {openForm ? (
+                    <BasicInfoForm
+                      contact={contactInfo}
+                      onSubmit={handleUpdateContact}
+                      onCloseForm={() => setOpenForm(false)}
+                    />
+                  ) : (
+                    <BasicInfoDisplay
+                      firstName={contactInfo.first_name}
+                      lastName={contactInfo.last_name}
+                      email={email}
+                      phone={contactInfo.phone_primary}
+                      onClickEdit={() => setOpenForm(true)}
+                    />
+                  )}
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
 
           <ExperiencesList contactId={contactId} experienceType="Work" />
           <ExperiencesList contactId={contactId} experienceType="Education" />
@@ -323,6 +359,10 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   paper: {
     padding: spacing(2, 3, 3),
     marginBottom: spacing(5),
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   divider: {
     margin: spacing(1, 0),
@@ -332,6 +372,17 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   },
   progress: {
     height: '100%',
+  },
+  BasicInfoPaper: {
+    padding: spacing(2, 3, 3),
+    paddingBottom: spacing(3),
+    marginTop: spacing(5),
+    marginBottom: spacing(5),
+  },
+  headerContainer: {
+    paddingBottom: spacing(2),
+    marginBottom: spacing(2),
+    borderBottom: 'solid #e0e0e0 1px',
   },
 });
 

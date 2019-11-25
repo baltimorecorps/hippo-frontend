@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {refreshContacts} from 'actions/contacts';
+import {refreshContacts, updateContact} from 'actions/contacts';
 import {
   startResumeCreation,
   startResumeSelect,
@@ -140,6 +140,7 @@ export const mapStateToProps = (state, props) => {
 // Refreshes the state of all contacts (as shown above) from the API, via
 // the ALL_CONTACTS event (see reducers/contacts.js for details)
 export const mapDispatchToProps = dispatch => ({
+  updateContact: contact => updateContact(contact)(dispatch),
   refreshContacts: () => refreshContacts(dispatch),
   startResumeCreation: () => dispatch(startResumeCreation()),
   startResumeSelect: () => dispatch(startResumeSelect()),
