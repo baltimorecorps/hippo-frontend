@@ -72,6 +72,7 @@ const experience = {
     {description: 'Test achievement 1'},
     {description: 'Test achievement 2'},
   ],
+  skills: [],
 };
 
 describe('AddOrEditExperienceForm', () => {
