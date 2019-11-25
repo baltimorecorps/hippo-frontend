@@ -26,6 +26,7 @@ export const contactsReducer = createReducer(
         return newState;
       }
     },
+
     [GET_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id] = contact;
@@ -34,6 +35,7 @@ export const contactsReducer = createReducer(
       const contact = action.body.data;
       state[contact.id] = contact;
     },
+
     [UPDATE_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id] = contact;
