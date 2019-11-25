@@ -135,11 +135,8 @@ const ExperiencesListItem = ({
                 : null}
 
               {experience.skills.length
-                ? config.showSkills && (
-                    <SkillsList skills={experience.skills} />
-                  )
+                ? config.showSkills && <SkillsList skills={experience.skills} />
                 : null}
-
             </React.Fragment>
           )}
         </Grid>
@@ -181,11 +178,17 @@ ExperiencesListItem.propTypes = {
     host: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
+      '',
+      'Completes Classes',
+      'Completed Training',
+      'Certificate',
+      'GED',
       'High School',
       'Associates',
       'Undergraduate',
       'Masters',
       'Doctoral',
+      'Other',
     ]),
     start_month: PropTypes.string.isRequired,
     start_year: PropTypes.number.isRequired,

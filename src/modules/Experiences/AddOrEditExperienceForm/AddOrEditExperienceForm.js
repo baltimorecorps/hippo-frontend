@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
@@ -40,9 +38,7 @@ const useForm = (initialValues, onSubmit) => {
     handleSubmit: () => {
       onSubmit(values);
     },
-    handleDegree: event => {
-      update('degree')(event.target.value);
-    },
+
     handleLocation: location => {
       update('location')(location);
     },
@@ -83,7 +79,6 @@ const AddOrEditExperienceForm = ({
     {
       handleChange,
       handleSubmit,
-      handleDegree,
       handleAchievements,
       handleSkills,
       handleLocation,
@@ -115,6 +110,8 @@ const AddOrEditExperienceForm = ({
     host,
     title,
     degree,
+    degree_other,
+    link,
     description,
     achievements,
   } = values;
@@ -130,6 +127,9 @@ const AddOrEditExperienceForm = ({
 
   const [errors, setErrors] = React.useState({});
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
+  const [isDegreeOther, setIsDegreeOther] = React.useState(
+    degree === 'Other' ? true : false
+  );
 
   const handleFormSubmit = () => {
     // validate form values
@@ -141,6 +141,21 @@ const AddOrEditExperienceForm = ({
       return handleSubmit();
     }
   };
+
+  const handleDegree = event => {
+    event.persist();
+    handleChange(event);
+    if (event.target.value === 'Other') {
+      setIsDegreeOther(true);
+    } else {
+      setIsDegreeOther(false);
+    }
+  };
+
+  console.log(experience);
+  console.log(degree);
+  console.log(degree_other);
+  console.log(isDegreeOther);
 
   return (
     <Grid
@@ -188,6 +203,26 @@ const AddOrEditExperienceForm = ({
           />
         </Grid>
       )}
+
+      {isDegreeOther && (
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="degree_other"
+            className={classes.formControl}
+            label="Explain Other (Type of Education)"
+            value={degree_other}
+            name="degree_other"
+            onChange={handleChange}
+            InputLabelProps={inputLabelProps}
+            InputProps={inputProps}
+          />
+          <FormHelperText className={classes.formHelperText}>
+            {errors.degreeOther_error || null}
+          </FormHelperText>
+        </Grid>
+      )}
+
       <Grid item xs={12}>
         <TextField
           required
@@ -204,6 +239,31 @@ const AddOrEditExperienceForm = ({
           {errors.title_error || null}
         </FormHelperText>
       </Grid>
+
+      {config.showLink && (
+        <Grid item xs={12}>
+          <TextField
+            id="link"
+            className={classes.formControl}
+            label="Link (optional)"
+            placeholder="Link to external documents, websites, photos, or documents"
+            value={link}
+            name="link"
+            onChange={handleChange}
+            InputLabelProps={{
+              classes: {
+                root: classes.labelRoot,
+                focused: classes.labelFocused,
+              },
+              shrink: true,
+            }}
+            InputProps={inputProps}
+          />
+          <FormHelperText className={classes.formHelperText}>
+            {errors.link_error || null}
+          </FormHelperText>
+        </Grid>
+      )}
       {config.showLocation && (
         <Grid item xs={12}>
           <LocationTextField
@@ -296,26 +356,21 @@ const AddOrEditExperienceForm = ({
       )}
       {config.showSkills && (
         <Grid item xs={12}>
-          <Typography className={classes.skillLabel}>
-            Skills
-          </Typography>
+          <Typography className={classes.skillLabel}>Skills</Typography>
           <Typography className={classes.skillSublabel}>
-            Employers are looking for things like Project Management, Communication and 
-              <Link
-                component="span"
-                variant="body2"
-                onClick={onSkillsMore}
-                className={classes.moreDetails}
-              >
-                more...
-              </Link>
+            Employers are looking for things like Project Management,
+            Communication and
+            <Link
+              component="span"
+              variant="body2"
+              onClick={onSkillsMore}
+              className={classes.moreDetails}
+            >
+              more...
+            </Link>
           </Typography>
 
-
-          <SkillSelect 
-            value={values.skills}
-            onChange={handleSkills}
-          />
+          <SkillSelect value={values.skills} onChange={handleSkills} />
         </Grid>
       )}
       {config.showDescription && (
@@ -342,7 +397,10 @@ const AddOrEditExperienceForm = ({
             onChange={handleAchievements}
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
-            label={config.labels.achievements.label || 'Resposibilities and Achievements:'}
+            label={
+              config.labels.achievements.label ||
+              'Resposibilities and Achievements:'
+            }
             sublabel={config.labels.achievements.sublabel || ''}
           />
         </Grid>
@@ -450,11 +508,16 @@ AddOrEditExperienceForm.propTypes = {
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
       '',
+      'Completes Classes',
+      'Completed Training',
+      'Certificate',
+      'GED',
       'High School',
       'Associates',
       'Undergraduate',
       'Masters',
       'Doctoral',
+      'Other',
     ]),
     start_month: PropTypes.string.isRequired,
     start_year: PropTypes.string.isRequired,
