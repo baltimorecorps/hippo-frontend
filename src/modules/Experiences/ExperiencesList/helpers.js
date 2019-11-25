@@ -48,6 +48,7 @@ const configureForm = expType => {
       showAchievements: true,
       showLocation: true,
       showWorkLength: true,
+      showLink: false,
     };
   } else if (expType === 'Service') {
     return {
@@ -73,6 +74,7 @@ const configureForm = expType => {
       showDescription: true,
       showLocation: false,
       showEndDate: false,
+      showLink: true,
     };
   } else if (expType === 'Education') {
     return {
@@ -89,6 +91,7 @@ const configureForm = expType => {
       showDescription: false,
       showAchievements: true,
       showLocation: true,
+      showLink: false,
     };
   }
 };

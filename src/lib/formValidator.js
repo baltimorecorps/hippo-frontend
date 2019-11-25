@@ -20,6 +20,7 @@ const experienceValidator = values => {
     host,
     title,
     degree,
+    link,
   } = values;
 
   let isError = false;
@@ -38,6 +39,11 @@ const experienceValidator = values => {
   if (!title) {
     isError = true;
     err.title_error = 'Required';
+  }
+
+  if (link && link.length > 255) {
+    isError = true;
+    err.link_error = 'Link must be less than 255 characters';
   }
 
   // check if start_month is null, invalid month name, or 'none'

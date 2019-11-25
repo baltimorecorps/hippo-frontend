@@ -112,6 +112,7 @@ const AddOrEditExperienceForm = ({
     host,
     title,
     degree,
+    link,
     description,
     achievements,
   } = values;
@@ -201,6 +202,31 @@ const AddOrEditExperienceForm = ({
           {errors.title_error || null}
         </FormHelperText>
       </Grid>
+
+      {config.showLink && (
+        <Grid item xs={12}>
+          <TextField
+            id="link"
+            className={classes.formControl}
+            label="Link (optional)"
+            placeholder="Link to external documents, websites, photos, or documents"
+            value={link}
+            name="link"
+            onChange={handleChange}
+            InputLabelProps={{
+              classes: {
+                root: classes.labelRoot,
+                focused: classes.labelFocused,
+              },
+              shrink: true,
+            }}
+            InputProps={inputProps}
+          />
+          <FormHelperText className={classes.formHelperText}>
+            {errors.link_error || null}
+          </FormHelperText>
+        </Grid>
+      )}
       {config.showLocation && (
         <Grid item xs={12}>
           <LocationTextField
@@ -293,10 +319,7 @@ const AddOrEditExperienceForm = ({
       )}
       {config.showSkills && (
         <Grid item xs={12}>
-          <SkillSelect 
-            value={values.skills}
-            onChange={handleSkills}
-          />
+          <SkillSelect value={values.skills} onChange={handleSkills} />
         </Grid>
       )}
       {config.showDescription && (
@@ -412,11 +435,16 @@ AddOrEditExperienceForm.propTypes = {
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
       '',
+      'Completes Classes',
+      'Completed Training',
+      'Certificate',
+      'GED',
       'High School',
       'Associates',
       'Undergraduate',
       'Masters',
       'Doctoral',
+      'Other',
     ]),
     start_month: PropTypes.string.isRequired,
     start_year: PropTypes.string.isRequired,
