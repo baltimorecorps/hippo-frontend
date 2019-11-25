@@ -21,6 +21,7 @@ describe('ProfilePage', () => {
     last_name: 'Tester',
     email_primary: {email: 'alice@example.com'},
     phone_primary: '(123) 456-7890',
+    skills: [],
   };
 
   let store = configureStore({
