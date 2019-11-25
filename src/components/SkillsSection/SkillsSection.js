@@ -8,6 +8,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import CapabilitySkills from './CapabilitySkills';
 import SkillSelect from 'components/SkillSelect';
 
+import Link from '@material-ui/core/Link';
+
 // TODO: Eventually this info will need to find a home on the backend
 const CAPABILITIES = [
   {
@@ -45,33 +47,33 @@ const SkillsSection = ({
   addSkill,
   deleteSkill,
   onChange,
+  onClickMore,
 }) => {
   let capSkillMap = {};
-  CAPABILITIES.forEach((cap) => {
-    cap.skills.forEach((skill) => {
+  CAPABILITIES.forEach(cap => {
+    cap.skills.forEach(skill => {
       capSkillMap[skill] = true;
     });
   });
 
-  const capSkills = contactSkills.filter(
-    (skill) => capSkillMap[skill.name])
+  const capSkills = contactSkills.filter(skill => capSkillMap[skill.name]);
 
   const additionalSkills = contactSkills.filter(
-    (skill) => !capSkillMap[skill.name])
+    skill => !capSkillMap[skill.name]
+  );
 
-  const deleteSkillShim = (skill) => {
+  const deleteSkillShim = skill => {
     const skills = contactSkills.filter(
       contactSkill => contactSkill.name !== skill
-    )
-    console.log(skill, skills, contactSkills)
-    onChange(skills)
-  }
+    );
+    console.log(skill, skills, contactSkills);
+    onChange(skills);
+  };
 
-  const addSkillShim = (skill) => onChange(contactSkills.concat([{name: skill}]))
-  
+  const addSkillShim = skill => onChange(contactSkills.concat([{name: skill}]));
 
-  const updateAdditionalSkills = (newAdditionalSkills) => onChange(capSkills.concat(newAdditionalSkills || []))
-  
+  const updateAdditionalSkills = newAdditionalSkills =>
+    onChange(capSkills.concat(newAdditionalSkills || []));
 
   return (
     <Grid container>
@@ -89,29 +91,47 @@ const SkillsSection = ({
                 {header}
               </Typography>
             </Grid>
-            <Grid container>
-              {CAPABILITIES.map(({name, skills}) => (
-                <Grid item xs={12} md={6} key={name}>
-                  <CapabilitySkills
-                    name={name}
-                    capSkills={skills}
-                    contactSkills={contactSkills}
-                    addSkill={addSkillShim}
-                    deleteSkill={deleteSkillShim}
-                  />
-                </Grid>
-              ))}
-              <Grid item xs={12}>
-                <Paper className={[classes.paper, classes.element]}>
-                  <Typography variant="h5" component="h2">
-                    Additional Skills
-                  </Typography>
-                    <SkillSelect 
-                      value={additionalSkills} 
-                      onChange={updateAdditionalSkills} 
-                    />
-                </Paper>
+            <Grid container alignItems="center">
+              <Typography
+                variant="subtitle1"
+                component="p"
+                className={classes.helpText}
+              >
+                Do you have any of these
+              </Typography>
+              <Link
+                component="button"
+                variant="body2"
+                onClick={() => onClickMore('skills')}
+                className={classes.moreDetails}
+              >
+                top skills employers are looking for?
+              </Link>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            {CAPABILITIES.map(({name, skills}) => (
+              <Grid item xs={12} md={6} key={name}>
+                <CapabilitySkills
+                  name={name}
+                  capSkills={skills}
+                  contactSkills={contactSkills}
+                  addSkill={addSkillShim}
+                  deleteSkill={deleteSkillShim}
+                />
               </Grid>
+            ))}
+            <Grid item xs={12}>
+              <Paper className={[classes.paper, classes.element]}>
+                <Typography variant="h5" component="h2">
+                  Additional Skills
+                </Typography>
+                <SkillSelect
+                  value={additionalSkills}
+                  onChange={updateAdditionalSkills}
+                />
+              </Paper>
             </Grid>
           </Grid>
         </Paper>
@@ -126,6 +146,23 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   element: {
     margin: spacing(1),
+  },
+  container: {
+    paddingBottom: spacing(2),
+    marginBottom: spacing(2),
+    borderBottom: 'solid #e0e0e0 1px',
+  },
+  moreDetails: {
+    marginLeft: '5px',
+    color: '#2971ff',
+    fontSize: '15px',
+    alignSelf: 'center',
+    '&:hover': {
+      fontWeight: 'bold',
+      textDecoration: 'none',
+      fontSize: '15px',
+      color: '#0f60ff',
+    },
   },
 });
 
