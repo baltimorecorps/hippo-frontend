@@ -11,6 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
+  console.log(contents);
   return (
     <Paper className={classes.BasicInfoPaper}>
       <Grid container direction="column">
@@ -43,21 +44,49 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
             </Typography>
           </Box>
           <Box mb={2}>
-            {contents.map((subContent, index) => (
-              <Typography
-                key={index}
-                variant="body1"
-                component="p"
-                className={classes.textContent}
-              >
-                {subContent}
-              </Typography>
-            ))}
+            <Typography
+              variant="body1"
+              component="p"
+              className={classes.textContent}
+            >
+              {contents.summary}
+            </Typography>
+            <Typography
+              variant="body1"
+              component="p"
+              className={classes.textContent}
+            >
+              Here are some examples of {name}:
+            </Typography>
+            <ul>
+              {contents.examples.map((example, index) => (
+                <li key={index} className={classes.bullet}>
+                  <Typography variant="body1" component="p">
+                    {example}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+            <Typography
+              variant="body1"
+              component="p"
+              className={classes.textContent}
+            >
+              Questions to spark ideas:
+            </Typography>
+            <div className={classes.questions}>
+              <ul>
+                {contents.questions.map((question, index) => (
+                  <li key={index} className={classes.bullet}>
+                    <Typography variant="body1" component="p">
+                      {question}
+                    </Typography>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </Box>
         </Grid>
-        <Divider className={classes.divider} />
-
-        <Divider className={classes.divider} />
       </Grid>
     </Paper>
   );
@@ -97,13 +126,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   section: {
     padding: spacing(1, 3, 0.5, 3),
+    maxHeight: '80vh',
+    overflow: 'auto',
+  },
+  questions: {
+    maxHeight: '200px',
+    overflow: 'auto',
   },
   textHeader: {fontWeight: '700', fontSize: '16px'},
   textContent: {
-    color: palette.primary.darkGray,
-    fontSize: '15px',
-    textIndent: '15px',
-    marginBottom: spacing(0.7),
+    marginBottom: spacing(1),
   },
 
   divider: {
