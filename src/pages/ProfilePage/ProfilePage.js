@@ -66,20 +66,38 @@ const ProfilePage = ({
 
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleUpdateContact = async values => {
     await updateContact(values);
-    refreshContacts();
     setOpenForm(false);
   };
+
+  const handleUpdateSkills = skills => {
+    updateContact({
+      id: contactId,
+      skills: skills,
+    });
+  };
+
+  useEffect(() => {
+    if (
+      !loading &&
+      typeof contactInfo == 'undefined' &&
+      contactId !== 'undefined'
+    ) {
+      setLoading(true);
+      (async () => {
+        await refreshContacts();
+        setLoading(false);
+      })();
+    }
+  }, [loading, setLoading, contactId, contactInfo, refreshContacts]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
   // rerendered due to the Redux state update
   if (typeof contactInfo === 'undefined') {
-    if (typeof contactId !== 'undefined') {
-      refreshContacts();
-    }
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }

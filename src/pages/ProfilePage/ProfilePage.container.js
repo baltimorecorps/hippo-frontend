@@ -142,7 +142,7 @@ export const mapStateToProps = (state, props) => {
 // the ALL_CONTACTS event (see reducers/contacts.js for details)
 export const mapDispatchToProps = dispatch => ({
   updateContact: contact => updateContact(contact)(dispatch),
-  refreshContacts: () => refreshContacts(dispatch),
+  refreshContacts: async () => { await refreshContacts(dispatch) },
   startResumeCreation: () => dispatch(startResumeCreation()),
   startResumeSelect: () => dispatch(startResumeSelect()),
   cancelResumeSelect: () => dispatch(cancelResumeSelect()),
