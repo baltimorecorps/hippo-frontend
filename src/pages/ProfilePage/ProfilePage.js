@@ -255,14 +255,22 @@ const ProfilePage = ({
         </Grid>
       </Grid>
       {inSelectMode ? null : (
-        <Grid container justify="center">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={startResumeCreation}
-          >
-            Create Resume
-          </Button>
+        <Grid
+          item
+          xs={openSidebar ? 8 : 11}
+          md={openSidebar ? 9 : 11}
+          xl={openSidebar ? 10 : 11}
+          align="center"
+        >
+          <Grid container justify="center">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={startResumeCreation}
+            >
+              Create Resume
+            </Button>
+          </Grid>
         </Grid>
       )}
     </React.Fragment>

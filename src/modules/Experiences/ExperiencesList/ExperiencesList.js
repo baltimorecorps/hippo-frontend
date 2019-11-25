@@ -184,7 +184,7 @@ const headers = {
 
 const helpTexts = {
   work:
-    'Include your professional community service, and leadership experiences',
+    'Include your professional and community service, and leadership experiences',
   education: 'For example: diplomas, training courses, degrees, certificates',
   accomplishment: 'Add any awards, presentations, projects, and publications',
 };
