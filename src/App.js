@@ -39,9 +39,6 @@ const App = ({classes}) => {
                     <HomeIcon />
                   </MenuItem>
                 </Link>
-                <Link to="/contacts">
-                  <MenuItem>Contacts</MenuItem>
-                </Link>
                 <div className={classes.grow} />
                 {!isAuthenticated && (
                   <Button color="inherit" onClick={() => loginWithRedirect({})}>
