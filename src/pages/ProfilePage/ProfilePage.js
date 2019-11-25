@@ -70,7 +70,7 @@ const ProfilePage = ({
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
-  const [helpText, setHelpText] = useState(helpTextOptions['work']);
+  const [sidebarType, setSidebarType] = useState('work');
   const [loading, setLoading] = useState(false);
 
   const handleUpdateContact = async values => {
@@ -132,7 +132,7 @@ const ProfilePage = ({
   // ExperiencesList, and SkillsList
 
   const onClickMoreDetails = header => {
-    setHelpText(helpTextOptions[header]);
+    setSidebarType(header)
     setOpenSidebar(true);
   };
 
@@ -232,6 +232,7 @@ const ProfilePage = ({
             onChange={handleUpdateSkills}
             addSkill={skill => addContactSkill(contactId, skill)}
             deleteSkill={skill => {console.log(skill);}}
+            onClickMore={onClickMoreDetails}
           />
 
                 {/*<ResumesList />*/}
@@ -247,8 +248,9 @@ const ProfilePage = ({
         >
           {openSidebar && (
             <HelpDrawer
-              helpText={helpText}
+              helpText={helpTextOptions[sidebarType]}
               skillInfo={skillHelpTextInfo}
+              skillsOnly={sidebarType === 'skills'}
               onClose={() => setOpenSidebar(false)}
             />
           )}
@@ -295,7 +297,11 @@ const helpTextOptions = {
   },
   accomplishment: {
     header: 'Portfolio and Work Products',
-    content: ['Portfolio and Work Products help text content.'],
+    content: ['Include things that can further demonstrate your experience and abilities. This could be a portfolio or a personal website, a class project where you put new coding skills to use, or a presentation you gave at a local meetup.'],
+  },
+  skills: {
+    header: '',
+    content: [''],
   },
 };
 

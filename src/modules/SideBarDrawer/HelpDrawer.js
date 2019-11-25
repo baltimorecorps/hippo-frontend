@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider';
 import SkillInfoDrawer from './SkillInfoDrawer';
 import SkillLink from './SkillLink';
 
-const HelpDrawer = ({helpText, skillInfo, onClose, classes}) => {
+const HelpDrawer = ({helpText, skillInfo, skillsOnly, onClose, classes}) => {
   const [openDrawer2, setOpenDrawer2] = React.useState(false);
   const [skillContent, setSkillContent] = React.useState();
   const [skillName, setSkillName] = React.useState();
@@ -34,30 +34,34 @@ const HelpDrawer = ({helpText, skillInfo, onClose, classes}) => {
             <CloseIcon />
           </IconButton>
         </Grid>
-        <Grid item className={classes.section}>
-          <Box my={1}>
-            <Typography
-              variant="h6"
-              component="h6"
-              className={classes.textHeader}
-            >
-              How to write your {helpText.header}:
-            </Typography>
-          </Box>
-          <Box mb={2}>
-            {helpText.content.map((content, index) => (
-              <Typography
-                key={index}
-                variant="body1"
-                component="p"
-                className={classes.textContent}
-              >
-                {content}
-              </Typography>
-            ))}
-          </Box>
-        </Grid>
-        <Divider className={classes.divider} />
+        {!skillsOnly && (
+          <React.Fragment>
+            <Grid item className={classes.section}>
+              <Box my={1}>
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  className={classes.textHeader}
+                >
+                  How to write your {helpText.header}:
+                </Typography>
+              </Box>
+              <Box mb={2}>
+                {helpText.content.map((content, index) => (
+                  <Typography
+                    key={index}
+                    variant="body1"
+                    component="p"
+                    className={classes.textContent}
+                  >
+                    {content}
+                  </Typography>
+                ))}
+              </Box>
+            </Grid>
+            <Divider className={classes.divider} />
+          </React.Fragment>
+        )}
 
         <Grid item className={classes.section}>
           <Box my={1}>
@@ -66,7 +70,9 @@ const HelpDrawer = ({helpText, skillInfo, onClose, classes}) => {
               component="h6"
               className={classes.textHeader}
             >
-              See if your prior {helpText.header} includes these abilities:
+              {skillsOnly
+                ? 'Read more on each of these capabilities: '
+                : 'See if you can include these abilities in your profile:'}
             </Typography>
           </Box>
 
