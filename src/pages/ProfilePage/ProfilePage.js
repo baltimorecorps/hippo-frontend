@@ -132,7 +132,7 @@ const ProfilePage = ({
   // ExperiencesList, and SkillsList
 
   const onClickMoreDetails = header => {
-    setSidebarType(header)
+    setSidebarType(header);
     setOpenSidebar(true);
   };
 
@@ -226,14 +226,16 @@ const ProfilePage = ({
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                 />
-          <SkillsSection
-            header="Tell us more to help your resume stand out"
-            contactSkills={contactInfo.skills}
-            onChange={handleUpdateSkills}
-            addSkill={skill => addContactSkill(contactId, skill)}
-            deleteSkill={skill => {console.log(skill);}}
-            onClickMore={onClickMoreDetails}
-          />
+                <SkillsSection
+                  header="Tell us more to help your resume stand out"
+                  contactSkills={contactInfo.skills}
+                  onChange={handleUpdateSkills}
+                  addSkill={skill => addContactSkill(contactId, skill)}
+                  deleteSkill={skill => {
+                    console.log(skill);
+                  }}
+                  onClickMore={onClickMoreDetails}
+                />
 
                 {/*<ResumesList />*/}
               </Grid>
@@ -256,7 +258,7 @@ const ProfilePage = ({
           )}
         </Grid>
       </Grid>
-        {/*inSelectMode ? null : (
+      {/*inSelectMode ? null : (
         <Grid
           item
           xs={openSidebar ? 8 : 11}
@@ -297,7 +299,9 @@ const helpTextOptions = {
   },
   accomplishment: {
     header: 'Portfolio and Work Products',
-    content: ['Include things that can further demonstrate your experience and abilities. This could be a portfolio or a personal website, a class project where you put new coding skills to use, or a presentation you gave at a local meetup.'],
+    content: [
+      'Include things that can further demonstrate your experience and abilities. This could be a portfolio or a personal website, a class project where you put new coding skills to use, or a presentation you gave at a local meetup.',
+    ],
   },
   skills: {
     header: '',
@@ -313,43 +317,120 @@ const skillHelpTextInfo = {
     'Data Analysis',
     'Software Development',
   ],
-  contents: [
-    {
-      content: [
-        'Process Improvement Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
-        'content paragraph 2',
-        'content paragraph 3',
+  contents: {
+    'Process Improvement': {
+      summary:
+        'Process Improvement is the ability to understand and improve the process that some group or organization uses to accomplish some goal.',
+      examples: [
+        'Changing the way a food bank packs and/or delivers lunches so they can deliver more with less',
+        'Helping a store sell more of its products by making sure customers can find what they are looking for more easily',
+        'Helping teachers integrate new technology into their classes so they can better help their students',
+      ],
+      questions: [
+        'What were people or organizations you’ve helped or worked with in the past trying to do?',
+        'What was their process for doing it?',
+        'Did you help them change those processes to improve?',
+
+        'Have you ever investigated why something was done the way that it was?',
+        'Who did you tell about what you found out?',
+        'Did you find anything that you thought could have been done better?',
+
+        'Have you worked with metrics or other ways of measuring how well a process was going that you were involved with?',
+        'Did you have any ideas to make those numbers go up?',
+        'Did you try and make those ideas a reality?',
+        'What was your experience like trying to do that, and how did it turn out?',
       ],
     },
-    {
-      content: [
-        'Project Management Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
-        'content paragraph 2',
-        'content paragraph 3',
+
+    'Communication': {
+      summary:
+        'Communication skills are what you use to understand others and to help others understand you.',
+      examples: [
+        "Listening to a customers' problem and helping to resolve it,",
+        'writing up your ideas for what a community organization should focus on next year and sharing with the group,',
+        'creating a presentation that you have to give to multiple audiences.',
+      ],
+
+      questions: [
+        'Have you ever had to write up a summary or a report to help someone else understand an issue?',
+        'What were your main points you wanted to get across?',
+        'Did your report help that person make a decision?',
+        ,
+        'Have you done any public speaking or an oral presentation?',
+        'What was the topic?',
+        'Who was the audience?',
+        ,
+        'Have you ever helped people or an organization with their social media accounts or content on their website?',
+        'How did you plan what to write?',
+        'What was the goal of writing the posts and how did it turn out?',
       ],
     },
-    {
-      content: [
-        'Communication Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
-        'content paragraph 2',
-        'content paragraph 3',
+
+    'Project Management': {
+      summary:
+        'Project Management is the planning and organizing the work of a team to meet a goal or complete a task.',
+      examples: [
+        'planning an event where you identified what was needed and made a plan to get it',
+        'leading a class project where you tracked the completion of different steps until the due date',
+        'figuring out how to deliver a community project under budget.',
+      ],
+
+      questions: [
+        'Have you ever worked on a project or effort that involved multiple steps?',
+        'Who were the other people involved?',
+        'How did you come up with a plan?',
+        'How did you communicate progress?',
+        ,
+        "Have you stepped up to take on a project when other's hadn't or wouldn't?",
+        'What did you see as an opportunity?',
+        'Did you convince others to join you?',
+        ,
+        'Have you had to work with a set amount of money to make something?',
+        'How did you decide how much to spend on the various parts?',
+        'Did you have creative ideas on how to make the most of your budget?',
+        'Were you able to stay within the budget?',
       ],
     },
-    {
-      content: [
-        'Data Analysis Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
-        'content paragraph 2',
-        'content paragraph 3',
+
+    'Data Analysis': {
+      summary:
+        'Data analysis is the application of critical thinking and statistical methods to identify, summarize, and communicate key insights about a collection of information.',
+      examples: [
+        'summarizing the results of a survey',
+        'exploring the relationship between different variables in a dataset',
+        'tracking your spending habits and predicting whether you will be over or under budget based on current expenses and expected income',
+      ],
+      questions: [
+        'Have you ever used data to answer a question about a cause or issue you cared about?',
+        'How did you frame the question?',
+        'What kind of data did you use and how did you use it to answer your question?',
+        'Has anyone ever asked you to summarize the key takeaways from a collection of data?',
+        'What kinds of insights did you pull from the data?',
+        'How did you communicate those insights to others?',
+        'Have you ever used data to estimate or predict something uncertain?',
+        'How did you choose which variables to base your estimate on?',
+        'What methods did you use to generate possible outcomes from the existing information?',
       ],
     },
-    {
-      content: [
-        'Software Development Content Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, reiciendis. ',
-        'content paragraph 2',
-        'content paragraph 3',
-      ],
-    },
-  ],
+    'Software Engineering': 
+    
+{
+    summary: 'Software engineering is the application of a systematic approach to the development, operation, and maintenance of a piece of software, such as a pogramming script, website, or desktop application.',
+    examples: [
+    'Writing a script to automate a simple workflow', 
+    'Building a website or API as part of a class assignment or side project', 
+    'Contributing to an open source project on GitHub or at your local meetup.',
+    ],
+    questions: [
+'Have you ever had to write a piece of code to accomplish a task?',
+'How did you approach this process?',
+'What languages or frameworks did you use?',
+'Have you ever had to maintain or conribute to an existing code base?',
+'What features did you add or bugs did you fix?',
+'How did you manage versions of the code you were working on?',
+],
+}
+  },
 };
 
 ProfilePage.propTypes = {
