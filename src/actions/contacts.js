@@ -44,6 +44,62 @@ const addContactLocal = contact => ({
   contact,
 });
 
+export const ADD_CONTACT_SKILL = 'ADD_CONTACT_SKILL';
+export const ADD_CONTACT_SKILL_API = fetchActionTypes(ADD_CONTACT_SKILL);
+export const addContactSkill = (contactId, skill) =>
+  async function(dispatch) {
+    const payload = {
+      contact_id: contactId,
+      name: skill,
+    }
+    dispatch({
+      type: ADD_CONTACT_SKILL,
+      payload,
+    });
+
+    const result = await makeFetchActions(
+      ADD_CONTACT_SKILL,
+      `${API_URL}/api/contacts/${contactId}/skills/`,
+      {
+        body: JSON.stringify(payload),
+        method: 'POST',
+      }
+    )(dispatch);
+
+    // TODO: make the ADD_CONTACT_SKILL_API.RESOLVE update the state and
+    // turn this into a conditional fetch if this contact isn't already in the
+    // state
+    await apiGetContact(contactId);
+    return result;
+  };
+
+export const DELETE_CONTACT_SKILL = 'DELETE_CONTACT_SKILL';
+export const DELETE_CONTACT_SKILL_API = fetchActionTypes(DELETE_CONTACT_SKILL);
+export const deleteContactSkill = (contactId, skillId) =>
+  async function(dispatch) {
+    dispatch({
+      type: DELETE_CONTACT_SKILL,
+      payload: {
+        contact_id: contactId,
+        skill_id: skillId,
+      },
+    });
+
+    const result = await makeFetchActions(
+      DELETE_CONTACT_SKILL,
+      `${API_URL}/api/contacts/${contactId}/skills/`,
+      {
+        method: 'DELETE',
+      }
+    )(dispatch);
+
+    // TODO: make the DELETE_CONTACT_SKILL_API.RESOLVE update the state and
+    // turn this into a conditional fetch if this contact isn't already in the
+    // state
+    await apiGetContact(contactId);
+    return result;
+  };
+
 // Update/Edit a contact
 export const UPDATE_CONTACT = 'UPDATE_CONTACT';
 export const UPDATE_CONTACT_API = fetchActionTypes(UPDATE_CONTACT);
@@ -54,7 +110,7 @@ export const updateContact = contact =>
       contact,
     });
 
-    await makeFetchActions(
+    return await makeFetchActions(
       UPDATE_CONTACT,
       `${API_URL}/api/contacts/${contact.id}/`,
       {
@@ -62,7 +118,6 @@ export const updateContact = contact =>
         method: 'PUT',
       }
     )(dispatch);
-    await apiGetContact(contact.id)(dispatch);
   };
 
 // ------------------------------------------------------------------------------------

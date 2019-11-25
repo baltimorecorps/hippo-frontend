@@ -1,8 +1,8 @@
 import 'isomorphic-fetch';
-import React, {useEffect, useMemo, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -94,6 +94,8 @@ const SkillSelect = ({classes, load, value, onChange}) => {
       findIndex(value, element => element.name === candidate.name) === -1;
 
     (async () => {
+      if (typeof inputValue !== 'string') { return; }
+
       const cleanValue = inputValue.toTitleCase();
       const inputNew = {
         name: cleanValue,
@@ -153,8 +155,8 @@ const SkillSelect = ({classes, load, value, onChange}) => {
   return (
     <React.Fragment>
       <Grid>
-        <Typography>Skills</Typography>
         <Autocomplete
+          id="add-skill"
           multiple
           autoComplete
           autoHighlight
@@ -170,14 +172,13 @@ const SkillSelect = ({classes, load, value, onChange}) => {
           renderInput={params => (
             <TextField
               {...params}
-              label="Add Skills"
+              placeholder="Add New Skill"
               fullWidth
               variant="outlined"
             />
           )}
           renderTags={(value, getTagProps) => {
             return value.map((option, index) => {
-              console.log(option.name);
               return <Chip label={option.name} {...getTagProps({index})} />;
             });
           }}
@@ -188,5 +189,11 @@ const SkillSelect = ({classes, load, value, onChange}) => {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({});
+
+SkillSelect.propTypes = {
+  value: PropTypes.array.isRequired,
+  load: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
 
 export default withStyles(styles)(SkillSelect);

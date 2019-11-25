@@ -19,6 +19,7 @@ import BasicInfoForm from 'modules/Users/BasicInfoForm';
 import ExperiencesList from 'modules/Experiences/ExperiencesList';
 import SkillsList from 'modules/Tags/SkillsList';
 import ResumesList from 'modules/Resumes/ResumesList';
+import SkillsSection from 'components/SkillsSection';
 
 import html2canvas from 'html2canvas';
 
@@ -57,6 +58,7 @@ const ProfilePage = ({
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
+  addContactSkill,
   generateResume,
   classes,
   showResumeDialog,
@@ -69,20 +71,38 @@ const ProfilePage = ({
   const [openForm, setOpenForm] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [helpText, setHelpText] = useState(helpTextOptions['work']);
+  const [loading, setLoading] = useState(false);
 
   const handleUpdateContact = async values => {
     await updateContact(values);
-    refreshContacts();
     setOpenForm(false);
   };
+
+  const handleUpdateSkills = skills => {
+    updateContact({
+      id: contactId,
+      skills: skills,
+    });
+  };
+
+  useEffect(() => {
+    if (
+      !loading &&
+      typeof contactInfo == 'undefined' &&
+      contactId !== 'undefined'
+    ) {
+      setLoading(true);
+      (async () => {
+        await refreshContacts();
+        setLoading(false);
+      })();
+    }
+  }, [loading, setLoading, contactId, contactInfo, refreshContacts]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
   // rerendered due to the Redux state update
   if (typeof contactInfo === 'undefined') {
-    if (typeof contactId !== 'undefined') {
-      refreshContacts();
-    }
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }
@@ -206,6 +226,13 @@ const ProfilePage = ({
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                 />
+          <SkillsSection
+            header="Tell us more to help your resume stand out"
+            contactSkills={contactInfo.skills}
+            onChange={handleUpdateSkills}
+            addSkill={skill => addContactSkill(contactId, skill)}
+            deleteSkill={skill => {console.log(skill);}}
+          />
 
                 {/*<ResumesList />*/}
               </Grid>
