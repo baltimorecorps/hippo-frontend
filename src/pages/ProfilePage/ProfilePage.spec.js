@@ -68,12 +68,13 @@ describe('ProfilePage', () => {
     expect(queryByText(/choose resume style/i)).toBeNull();
     expect(queryByText(/select the experiences/i)).toBeNull();
 
-    const button = queryByText(/create resume/i);
-    expect(button).not.toBeNull();
+    // Removed for now
+    //const button = queryByText(/create resume/i);
+    //expect(button).not.toBeNull();
 
-    expect(start.mock.calls.length).toBe(0);
-    fireEvent.click(button);
-    expect(start.mock.calls.length).toBe(1);
+    //expect(start.mock.calls.length).toBe(0);
+    //fireEvent.click(button);
+    //expect(start.mock.calls.length).toBe(1);
   });
 
   test('render resume dialog', () => {
