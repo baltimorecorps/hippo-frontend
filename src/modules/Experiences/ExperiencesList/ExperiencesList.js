@@ -75,7 +75,7 @@ const ExperiencesList = ({
     <Grid container>
       <Grid item xs={12}>
         <Paper className={classes.paper}>
-          <Grid container justify="space-between" className={classes.container}>
+          <Grid container justify="space-between">
             <Grid item>
               <Typography
                 variant="h5"
@@ -91,7 +91,6 @@ const ExperiencesList = ({
               {inSelectMode ? null : (
                 <IconButton
                   className={classes.addButton}
-                  size="small"
                   aria-label="add new experience"
                   onClick={() => setShowForm(true)}
                 >
@@ -101,8 +100,10 @@ const ExperiencesList = ({
             </Grid>
           </Grid>
 
+          <Divider className={classes.divider} />
+
           {showForm && (
-            <Grid item xs={12} md={10}>
+            <Grid item xs={10}>
               <AddOrEditExperienceForm
                 experience={blankExperience}
                 onSubmit={submitNewExperience}
@@ -153,24 +154,17 @@ const headers = {
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     padding: spacing(2, 3, 3),
-
     marginBottom: spacing(5),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
   },
-  container: {
-    paddingBottom: spacing(2),
-    marginBottom: spacing(2),
-    borderBottom: 'solid #e0e0e0 1px',
+  divider: {
+    margin: spacing(1, 0),
   },
   addButton: {
-    flexBasis: '60px',
     padding: spacing(0.5),
-    '&:hover': {
-      color: 'black',
-    },
   },
 });
 

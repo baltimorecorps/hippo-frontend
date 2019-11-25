@@ -48,7 +48,6 @@ const useForm = addNewContact => {
     submission.email_primary = {
       is_primary: true,
       email: values.email,
-      type: 'Personal',
     };
     delete submission.email;
     addNewContact(submission);
