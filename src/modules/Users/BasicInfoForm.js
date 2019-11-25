@@ -85,7 +85,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
           <CloseIcon />
         </IconButton>
       </Grid>
-      <Grid item xs={12} justify="center">
+      <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
           <Grid container justify="space-between">
             <Grid item xs={12} lg={6} align="center">

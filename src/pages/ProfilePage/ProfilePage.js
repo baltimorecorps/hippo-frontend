@@ -68,7 +68,6 @@ const ProfilePage = ({
 
   const handleUpdateContact = async values => {
     await updateContact(values);
-    refreshContacts();
     setOpenForm(false);
   };
 
