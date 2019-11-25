@@ -39,7 +39,10 @@ const configureForm = expType => {
       labels: {
         host: 'Name of Company or Organization',
         title: 'Title',
-        achievements: 'Responsibilities and Achievements:',
+        achievements: {
+          label: 'Responsibilities and Achivements:',
+          sublabel: 'Write about skills you gained and how you used them; what you were proud of or recognized for',
+        }
       },
       showHost: true,
       showSkills: true,
@@ -80,7 +83,10 @@ const configureForm = expType => {
         host: 'School',
         title: 'Area of Study/Course Title',
         endDate: 'End Date (or expected)',
-        achievements: "What you've accomplished in this education/course:",
+        achievements: {
+          label: 'Additional Details:',
+          sublabel: '(ex: projects where you used new skills, specific classes, clubs, activites)',
+        }
       },
       showHost: true,
       showSkills: true,
