@@ -153,8 +153,8 @@ const SkillSelect = ({classes, load, value, onChange}) => {
   return (
     <React.Fragment>
       <Grid>
-        <Typography>Skills</Typography>
         <Autocomplete
+          id="add-skill"
           multiple
           autoComplete
           autoHighlight
@@ -170,7 +170,7 @@ const SkillSelect = ({classes, load, value, onChange}) => {
           renderInput={params => (
             <TextField
               {...params}
-              label="Add Skills"
+              placeholder="Add New Skill"
               fullWidth
               variant="outlined"
             />

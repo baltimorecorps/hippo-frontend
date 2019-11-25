@@ -39,13 +39,13 @@ describe('SkillSelect', () => {
   test('can load value', async () => {
     const load = jest.fn(_ => AUTOCOMPLETE);
     const onChange = jest.fn();
-    const {getByLabelText, findByText} = render(
+    const {getByPlaceholderText, findByText} = render(
       <MuiThemeProvider theme={theme}>
         <SkillSelect load={load} value={[]} onChange={onChange} />
       </MuiThemeProvider>
     );
 
-    fireEvent.change(getByLabelText(/add skill/i), {
+    fireEvent.change(getByPlaceholderText(/add new skill/i), {
       target: {value: 'test'},
     });
 
