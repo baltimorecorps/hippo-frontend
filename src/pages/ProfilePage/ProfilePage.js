@@ -256,7 +256,7 @@ const ProfilePage = ({
           )}
         </Grid>
       </Grid>
-      {inSelectMode ? null : (
+        {/*inSelectMode ? null : (
         <Grid
           item
           xs={openSidebar ? 8 : 11}
@@ -274,7 +274,7 @@ const ProfilePage = ({
             </Button>
           </Grid>
         </Grid>
-      )}
+      )*/}
     </React.Fragment>
   );
 };
