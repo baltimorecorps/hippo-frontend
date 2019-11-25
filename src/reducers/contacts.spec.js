@@ -4,6 +4,7 @@ import {
   ALL_CONTACTS,
   ALL_CONTACTS_API,
   ADD_CONTACT_API,
+  ADD_CONTACT_SKILL_API,
   GET_MY_CONTACT_API,
 } from '../actions/contacts';
 import {CREATE_RESUME_API} from '../actions/resume';

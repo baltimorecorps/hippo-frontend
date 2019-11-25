@@ -8,7 +8,28 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
 
-const CapabilitySkills = ({classes, name, skills}) => {
+const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
+  if (selected) {
+    return <Chip
+      onDelete={() => onDelete(skill)}
+      label={skill}
+      />
+  } else {
+    return <Chip
+      variant="outlined"
+      icon={<AddIcon />}
+        onClick={() => onClick(skill)}
+        label={skill}
+      />
+  }
+}
+
+const CapabilitySkills = ({classes, name, addSkill, deleteSkill, capSkills, contactSkills}) => {
+  let contactSkillMap = {};
+  contactSkills.forEach((skill) => {
+    contactSkillMap[skill.name] = true;
+  });
+
   return (
     <Paper className={classes.paper}>
       <Grid container justify="space-between" direction="column">
@@ -17,13 +38,13 @@ const CapabilitySkills = ({classes, name, skills}) => {
             {name}
           </Typography>
         </Grid>
-        {skills.map(skill => (
+        {capSkills.map(skill => (
           <Grid item key={skill} className={classes.skill}>
-            <Chip
-              variant="outlined"
-              icon={<AddIcon />}
-              clickable
-              label={skill}
+            <SkillCheckbox
+              selected={contactSkillMap[skill] || false}
+              skill={skill}
+              onClick={addSkill}
+              onDelete={deleteSkill}
             />
           </Grid>
         ))}
@@ -47,7 +68,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
 CapabilitySkills.propTypes = {
   name: PropTypes.string.isRequired,
-  skills: PropTypes.array.isRequired,
+  capSkills: PropTypes.array.isRequired,
+  contactSkills: PropTypes.array.isRequired,
+  addSkill: PropTypes.func.isRequired,
+  deleteSkill: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(CapabilitySkills);

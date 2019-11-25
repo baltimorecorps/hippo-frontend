@@ -1,6 +1,10 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {refreshContacts, updateContact} from 'actions/contacts';
+import {
+  refreshContacts,
+  updateContact,
+  addContactSkill,
+} from 'actions/contacts';
 import {
   startResumeCreation,
   startResumeSelect,
@@ -17,9 +21,8 @@ const addNewContact = dispatch =>
   };
 
 // TODO: refactor to use generic selectors, merge with ExperiencesList.container
-const getExperiences = createSelector(
-  ['experiences'],
-  experiences => Object.keys(experiences).map(id => experiences[id])
+const getExperiences = createSelector(['experiences'], experiences =>
+  Object.keys(experiences).map(id => experiences[id])
 );
 
 const getSelection = createSelector(['resume.selected']);
@@ -142,7 +145,11 @@ export const mapStateToProps = (state, props) => {
 // the ALL_CONTACTS event (see reducers/contacts.js for details)
 export const mapDispatchToProps = dispatch => ({
   updateContact: contact => updateContact(contact)(dispatch),
-  refreshContacts: async () => { await refreshContacts(dispatch) },
+  refreshContacts: async () => {
+    await refreshContacts(dispatch);
+  },
+  addContactSkill: (contactId, skill) =>
+    addContactSkill(contactId, skill)(dispatch),
   startResumeCreation: () => dispatch(startResumeCreation()),
   startResumeSelect: () => dispatch(startResumeSelect()),
   cancelResumeSelect: () => dispatch(cancelResumeSelect()),

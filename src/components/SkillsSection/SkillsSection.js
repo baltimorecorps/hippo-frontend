@@ -10,44 +10,69 @@ import SkillSelect from 'components/SkillSelect';
 
 // TODO: Eventually this info will need to find a home on the backend
 const CAPABILITIES = [
-  { 
-    name: "Project Management",
-    skills: [
-      "Budgeting",
-      "Scheduling",
-      "Project Planning",
-      "Leadership",
-    ]
+  {
+    name: 'Project Management',
+    skills: ['Budgeting', 'Scheduling', 'Project Planning', 'Leadership'],
   },
   {
-    name: "Communication",
-    skills: ["Report Writing",
-      "Presenting",
-      "Documentation",
-      "Technical Requirements"],
-  },
-  {
-    name: "Data Analysis",
+    name: 'Communication',
     skills: [
-      "Metrics",
-      "Statistics",
-      "Excel",
-      "SQL",
-      "R",
+      'Report Writing',
+      'Presenting',
+      'Documentation',
+      'Technical Requirements',
     ],
   },
   {
-    name: "Software Development",
+    name: 'Data Analysis',
+    skills: ['Metrics', 'Statistics', 'Microsoft Excel', 'SQL', 'R'],
+  },
+  {
+    name: 'Software Development',
     skills: [
-      "Scripting",
-      "Web Development",
-      "Python",
-      "Database Administration",
+      'Scripting',
+      'Web Development',
+      'Python',
+      'Database Administration',
     ],
   },
-]
+];
 
-const SkillsSection = ({classes, header, contactSkills, onChange}) => {
+const SkillsSection = ({
+  classes,
+  header,
+  contactSkills,
+  addSkill,
+  deleteSkill,
+  onChange,
+}) => {
+  let capSkillMap = {};
+  CAPABILITIES.forEach((cap) => {
+    cap.skills.forEach((skill) => {
+      capSkillMap[skill] = true;
+    });
+  });
+
+  const capSkills = contactSkills.filter(
+    (skill) => capSkillMap[skill.name])
+
+  const additionalSkills = contactSkills.filter(
+    (skill) => !capSkillMap[skill.name])
+
+  const deleteSkillShim = (skill) => {
+    const skills = contactSkills.filter(
+      contactSkill => contactSkill.name !== skill
+    )
+    console.log(skill, skills, contactSkills)
+    onChange(skills)
+  }
+
+  const addSkillShim = (skill) => onChange(contactSkills.concat([{name: skill}]))
+  
+
+  const updateAdditionalSkills = (newAdditionalSkills) => onChange(capSkills.concat(newAdditionalSkills || []))
+  
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -67,15 +92,24 @@ const SkillsSection = ({classes, header, contactSkills, onChange}) => {
             <Grid container>
               {CAPABILITIES.map(({name, skills}) => (
                 <Grid item xs={12} md={6} key={name}>
-                  <CapabilitySkills name={name} skills={skills} />
+                  <CapabilitySkills
+                    name={name}
+                    capSkills={skills}
+                    contactSkills={contactSkills}
+                    addSkill={addSkillShim}
+                    deleteSkill={deleteSkillShim}
+                  />
                 </Grid>
               ))}
               <Grid item xs={12}>
                 <Paper className={[classes.paper, classes.element]}>
-                  <Typography variant="h5" component="h2" >
-                      Additional Skills
+                  <Typography variant="h5" component="h2">
+                    Additional Skills
                   </Typography>
-                  <SkillSelect value={contactSkills} onChange={onChange}/>
+                    <SkillSelect 
+                      value={additionalSkills} 
+                      onChange={updateAdditionalSkills} 
+                    />
                 </Paper>
               </Grid>
             </Grid>
@@ -92,13 +126,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   element: {
     margin: spacing(1),
-  }
+  },
 });
 
 SkillsSection.propTypes = {
   header: PropTypes.string.isRequired,
   contactSkills: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
+  addSkill: PropTypes.func.isRequired,
+  deleteSkill: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SkillsSection);

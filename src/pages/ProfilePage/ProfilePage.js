@@ -56,6 +56,7 @@ const ProfilePage = ({
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
+  addContactSkill,
   generateResume,
   classes,
   showResumeDialog,
@@ -205,6 +206,8 @@ const ProfilePage = ({
             header="Tell us more to help your resume stand out"
             contactSkills={contactInfo.skills}
             onChange={handleUpdateSkills}
+            addSkill={skill => addContactSkill(contactId, skill)}
+            deleteSkill={skill => {console.log(skill);}}
           />
 
           {/*<ResumesList />*/}
