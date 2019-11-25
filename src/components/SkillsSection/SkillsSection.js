@@ -66,7 +66,7 @@ const SkillsSection = ({classes, header, contactSkills, onChange}) => {
             </Grid>
             <Grid container>
               {CAPABILITIES.map(({name, skills}) => (
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} key={name}>
                   <CapabilitySkills name={name} skills={skills} />
                 </Grid>
               ))}
@@ -75,7 +75,7 @@ const SkillsSection = ({classes, header, contactSkills, onChange}) => {
                   <Typography variant="h5" component="h2" >
                       Additional Skills
                   </Typography>
-                  <SkillSelect />
+                  <SkillSelect value={contactSkills} onChange={onChange}/>
                 </Paper>
               </Grid>
             </Grid>

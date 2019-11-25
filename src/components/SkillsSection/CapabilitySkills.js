@@ -46,7 +46,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
 });
 
 CapabilitySkills.propTypes = {
-  header: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  skills: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(CapabilitySkills);

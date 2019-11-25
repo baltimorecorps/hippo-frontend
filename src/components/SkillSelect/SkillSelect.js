@@ -94,6 +94,8 @@ const SkillSelect = ({classes, load, value, onChange}) => {
       findIndex(value, element => element.name === candidate.name) === -1;
 
     (async () => {
+      if (typeof inputValue !== 'string') { return; }
+
       const cleanValue = inputValue.toTitleCase();
       const inputNew = {
         name: cleanValue,
@@ -177,7 +179,6 @@ const SkillSelect = ({classes, load, value, onChange}) => {
           )}
           renderTags={(value, getTagProps) => {
             return value.map((option, index) => {
-              console.log(option.name);
               return <Chip label={option.name} {...getTagProps({index})} />;
             });
           }}

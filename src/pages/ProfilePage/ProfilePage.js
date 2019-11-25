@@ -203,6 +203,8 @@ const ProfilePage = ({
           />
           <SkillsSection
             header="Tell us more to help your resume stand out"
+            contactSkills={contactInfo.skills}
+            onChange={handleUpdateSkills}
           />
 
           {/*<ResumesList />*/}

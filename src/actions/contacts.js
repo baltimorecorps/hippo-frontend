@@ -54,7 +54,7 @@ export const updateContact = contact =>
       contact,
     });
 
-    await makeFetchActions(
+    return await makeFetchActions(
       UPDATE_CONTACT,
       `${API_URL}/api/contacts/${contact.id}/`,
       {
@@ -62,7 +62,6 @@ export const updateContact = contact =>
         method: 'PUT',
       }
     )(dispatch);
-    await apiGetContact(contact.id)(dispatch);
   };
 
 // ------------------------------------------------------------------------------------
