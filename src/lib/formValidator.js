@@ -20,6 +20,7 @@ const experienceValidator = values => {
     host,
     title,
     degree,
+    degree_other,
     link,
   } = values;
 
@@ -34,6 +35,18 @@ const experienceValidator = values => {
   if (type === 'Education' && !degree) {
     isError = true;
     err.degree_error = 'Required';
+  }
+
+  if (type === 'Education' && degree) {
+    if (!degree_other) {
+      isError = true;
+      err.degreeOther_error = 'Required';
+    }
+    if (degree_other && degree_other.length > 100) {
+      isError = true;
+      err.degreeOther_error =
+        'Type of Education must be less than 100 characters';
+    }
   }
 
   if (!title) {
