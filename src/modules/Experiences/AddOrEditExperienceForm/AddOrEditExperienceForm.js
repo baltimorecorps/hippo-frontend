@@ -317,10 +317,10 @@ const AddOrEditExperienceForm = ({
         {onDelete ? (
           <Button
             className={classes.delete}
-            variant="contained"
+            variant="text"
             onClick={() => setOpenDeleteDialog(true)}
           >
-            Delete this experience
+            Delete
           </Button>
         ) : (
           <span />
@@ -366,8 +366,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: '2px',
   },
   iconButton: {
-    flexBasis: '60px',
-    padding: spacing(0.5),
+    padding: '3px',
     '&:hover': {
       color: 'black',
     },
@@ -375,7 +374,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   alignButtonsBetween: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginTop: spacing(1),
   },
 
   delete: {

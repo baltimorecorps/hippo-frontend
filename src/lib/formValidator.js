@@ -102,17 +102,17 @@ const newProfileValidator = values => {
   let isError = false;
   let err = {};
 
-  if (!first_name) {
+  if (!first_name || first_name === undefined) {
     isError = true;
     err.firstName_error = 'Required';
   }
 
-  if (!last_name) {
+  if (!last_name || last_name === undefined) {
     isError = true;
     err.lastName_error = 'Required';
   }
 
-  if (!email) {
+  if (email === undefined) {
     isError = true;
     err.email_error = 'Required';
   } else if (!validateEmail(email)) {

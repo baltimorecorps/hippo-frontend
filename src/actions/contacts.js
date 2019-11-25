@@ -19,12 +19,6 @@ const apiAddContact = contact =>
     method: 'POST',
   });
 
-// Get a contact
-export const GET_CONTACT = 'GET_CONTACT';
-export const GET_CONTACT_API = fetchActionTypes(GET_CONTACT);
-export const apiGetContact = contactId =>
-  makeFetchActions(GET_CONTACT, `${API_URL}/api/contacts/${contactId}/`);
-
 // ## ACTION CREATORS ##
 
 export const refreshContacts = apiGetAllContacts();
@@ -42,26 +36,3 @@ const addContactLocal = contact => ({
   type: ADD_CONTACT,
   contact,
 });
-
-// Update/Edit a contact
-export const UPDATE_CONTACT = 'UPDATE_CONTACT';
-export const UPDATE_CONTACT_API = fetchActionTypes(UPDATE_CONTACT);
-export const updateContact = contact =>
-  async function(dispatch) {
-    dispatch({
-      type: UPDATE_CONTACT,
-      contact,
-    });
-
-    await makeFetchActions(
-      UPDATE_CONTACT,
-      `${API_URL}/api/contacts/${contact.id}/`,
-      {
-        body: JSON.stringify(contact),
-        method: 'PUT',
-      }
-    )(dispatch);
-    await apiGetContact(contact.id)(dispatch);
-  };
-
-// ------------------------------------------------------------------------------------

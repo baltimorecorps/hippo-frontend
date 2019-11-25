@@ -35,6 +35,8 @@ const ExperiencesListItem = ({
     setEditing(false);
   };
 
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
   const startDate = formatMonthYearDate(
     experience.start_month,
     experience.start_year
@@ -64,12 +66,12 @@ const ExperiencesListItem = ({
         ) : (
           !editing && (
             <Grid item className={classes.avatar}>
-              <Avatar className={classes.initial}>{initial}</Avatar>
+              <Avatar>{initial}</Avatar>
             </Grid>
           )
         )}
 
-        <Grid item xs={11} md={8}>
+        <Grid item xs={8}>
           {!editing && (
             <React.Fragment>
               <Typography
@@ -135,7 +137,7 @@ const ExperiencesListItem = ({
           )}
         </Grid>
         {editing && (
-          <Grid item xs={12} md={10}>
+          <Grid item xs={10}>
             <AddOrEditExperienceForm
               handleCancel={() => setEditing(false)}
               labels={{}}
@@ -147,13 +149,13 @@ const ExperiencesListItem = ({
         )}
 
         {editing || selectable ? null : (
-          <Grid item xs={1}>
+          <Grid item xs={2} className={classes.gridIcons}>
             <IconButton
               onClick={() => setEditing(true)}
               size="small"
               aria-label="edit experience"
             >
-              <EditIcon className={classes.editIcon} />
+              <EditIcon />
             </IconButton>
           </Grid>
         )}
@@ -190,21 +192,17 @@ ExperiencesListItem.propTypes = {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
-  editIcon: {
+  gridContainer: {
+    marginTop: '15px',
+  },
+  gridIcons: {
     flexBasis: '60px',
-    padding: spacing(0.5),
-    '&:hover': {
-      color: 'black',
-    },
   },
   avatar: {
     [breakpoints.down('sm')]: {
       display: 'none',
     },
     marginRight: '20px',
-  },
-  initial: {
-    backgroundColor: palette.primary.darker,
   },
 });
 
