@@ -38,6 +38,7 @@ describe('Experience Form Validations', () => {
 
   test('Work Experience: invalid end_year values', () => {
     const values = {
+      type: 'Work',
       host: 'Baltimore Corps',
       title: 'Intern',
       location: 'Baltimore, MD ,USA',
@@ -58,6 +59,7 @@ describe('Experience Form Validations', () => {
 
   test('Work Experience: invalid end_month values', () => {
     const values = {
+      type: 'Work',
       host: 'Baltimore Corps',
       title: 'Intern',
       location: 'Baltimore, MD ,USA',
@@ -129,7 +131,7 @@ describe('Experience Form Validations', () => {
 
   test('Accomplishments: valid values', () => {
     const values = {
-      host: 'CCBC',
+      host: '',
       title: 'Computer Science',
       degree: 'Associates',
       location: 'Baltimore, MD ,USA',
@@ -138,6 +140,7 @@ describe('Experience Form Validations', () => {
       end_month: 'none',
       end_year: '0',
       is_current: true,
+      type: 'Accomplishment',
     };
 
     const expectedErr = {};
