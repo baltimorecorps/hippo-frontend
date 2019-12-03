@@ -110,7 +110,6 @@ const AddOrEditExperienceForm = ({
     host,
     title,
     degree,
-    // degree_other,
     link,
     description,
     achievements,
@@ -127,9 +126,6 @@ const AddOrEditExperienceForm = ({
 
   const [errors, setErrors] = React.useState({});
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
-  // const [isDegreeOther, setIsDegreeOther] = React.useState(
-  //   degree === 'Other' ? true : false
-  // );
 
   const handleFormSubmit = () => {
     // validate form values
@@ -141,21 +137,6 @@ const AddOrEditExperienceForm = ({
       return handleSubmit();
     }
   };
-
-  // const handleDegree = event => {
-  //   event.persist();
-  //   handleChange(event);
-  //   if (event.target.value === 'Other') {
-  //     setIsDegreeOther(true);
-  //   } else {
-  //     setIsDegreeOther(false);
-  //   }
-  // };
-
-  // console.log(experience);
-  // console.log(degree);
-  // console.log(degree_other);
-  // console.log(isDegreeOther);
 
   return (
     <Grid
@@ -196,7 +177,6 @@ const AddOrEditExperienceForm = ({
         <Grid item xs={12}>
           <DegreeDropdown
             value={degree}
-            // onChange={handleDegree}
             onChange={handleChange}
             name="degree"
             label="Type of Education *"
@@ -204,25 +184,6 @@ const AddOrEditExperienceForm = ({
           />
         </Grid>
       )}
-
-      {/* {isDegreeOther && (
-        <Grid item xs={12}>
-          <TextField
-            required
-            id="degree_other"
-            className={classes.formControl}
-            label="Explain Other (Type of Education)"
-            value={degree_other}
-            name="degree_other"
-            onChange={handleChange}
-            InputLabelProps={inputLabelProps}
-            InputProps={inputProps}
-          />
-          <FormHelperText className={classes.formHelperText}>
-            {errors.degreeOther_error || null}
-          </FormHelperText>
-        </Grid>
-      )} */}
 
       <Grid item xs={12}>
         <TextField
