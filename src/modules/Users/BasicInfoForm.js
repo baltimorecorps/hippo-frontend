@@ -141,7 +141,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             <Grid item xs={12} lg={6} align="center">
               <MuiPhoneNumber
                 name="phone_primary"
-                label="Primary Phone"
+                label="Primary Phone *"
                 defaultCountry={'us'}
                 value={values.phone_primary}
                 onChange={handlePhoneChange}
