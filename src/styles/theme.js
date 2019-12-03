@@ -6,6 +6,7 @@ const theme = createMuiTheme({
       main: 'hsl(45, 100%, 60%)',
       darkerYellow: '#f5b800',
       darkGray: '#4a4a4a',
+      link: '#295bff',
     },
     secondary: {
       main: 'hsl(232, 57%, 26%)',

@@ -82,8 +82,10 @@ const ExperiencesList = ({
   const handleOnClickMore = () => {
     onClickMore(experienceType.toLowerCase());
   };
-  
-  const handleOnSkillsMore = () => { onClickMore('skills')}
+
+  const handleOnSkillsMore = () => {
+    onClickMore('skills');
+  };
 
   return (
     <Grid container>
@@ -219,14 +221,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   moreDetails: {
     marginLeft: '5px',
-    color: '#2971ff',
+    color: palette.primary.link,
     fontSize: '15px',
     alignSelf: 'center',
     '&:hover': {
       fontWeight: 'bold',
       textDecoration: 'none',
       fontSize: '15px',
-      color: '#0f60ff',
     },
   },
   addButton: {

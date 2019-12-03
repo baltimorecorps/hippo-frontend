@@ -10,6 +10,8 @@ import SkillsList from 'components/SkillsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import Button from '@material-ui/core/Button';
+
 import EditIcon from '@material-ui/icons/Edit';
 
 import {formatMonthYearDate, getWorkLength, configureForm} from './helpers';
@@ -23,7 +25,9 @@ const ExperiencesListItem = ({
   selectable,
   classes,
 }) => {
-  const initial = experience.host ? experience.host[0] : '';
+  const initial = experience.host
+    ? experience.host[0].toUpperCase()
+    : experience.title[0].toUpperCase();
   const title =
     experience.type === 'Education'
       ? `${experience.degree} in ${experience.title}`
@@ -81,7 +85,7 @@ const ExperiencesListItem = ({
                   fontWeight: '700',
                 }}
               >
-                {experience.host}
+                {experience.host || experience.title}
 
                 {experience.location ? (
                   <span
@@ -107,8 +111,19 @@ const ExperiencesListItem = ({
                   fontFamily: 'Lato',
                 }}
               >
-                {title}
+                {experience.host && title}
               </Typography>
+              {experience.link && (
+                <Button
+                  target="_blank"
+                  component="button"
+                  href={experience.link}
+                  variant="text"
+                  className={classes.link}
+                >
+                  {experience.link}
+                </Button>
+              )}
               <Typography
                 gutterBottom
                 variant="subtitle1"
@@ -218,6 +233,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   initial: {
     backgroundColor: palette.primary.darkerYellow,
+  },
+  link: {
+    color: palette.primary.link,
+    padding: '0 5px',
+    fontSize: '15px',
+    textTransform: 'lowercase',
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
 });
 
