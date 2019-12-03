@@ -27,7 +27,7 @@ const experienceValidator = values => {
   let isError = false;
   let err = {};
 
-  if (!host) {
+  if (type !== 'Accomplishment' && !host) {
     isError = true;
     err.host_error = 'Required';
   }

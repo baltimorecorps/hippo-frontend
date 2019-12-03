@@ -216,7 +216,6 @@ describe('AddOrEditExperienceForm', () => {
 
   test('Test Accomplishment Form', () => {
     const experience = {
-      host: 'Award 1',
       title: 'Test Title',
       start_month: 'January',
       start_year: '2015',
@@ -229,7 +228,6 @@ describe('AddOrEditExperienceForm', () => {
     const result = {
       contact_id: 1234,
       description: 'Test description',
-      host: 'Award 1',
       start_month: 'January',
       start_year: '2015',
       end_month: 'none',
