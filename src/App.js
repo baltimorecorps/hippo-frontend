@@ -21,7 +21,6 @@ import {useAuth0} from 'lib/auth0';
 import Home from 'components/Other/Home.js';
 import Contacts from 'components/Contacts/Contacts.container';
 import SearchContact from 'components/SearchContact/SearchContact';
-import ResumeTemplate from 'components/Other/ResumeTemplate';
 import TalentHome from 'components/TalentHome/TalentHome';
 
 const App = ({classes}) => {

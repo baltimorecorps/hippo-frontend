@@ -29,6 +29,17 @@ const ExperiencesListItem = ({
       ? `${experience.degree} in ${experience.title}`
       : `${experience.title}`;
 
+  // let title = '';
+  // if (experience.type === 'Education') {
+  //   if (experience.degree === 'Other') {
+  //     title = `${experience.degree_other} in ${experience.title}`;
+  //   } else {
+  //     title = `${experience.degree} in ${experience.title}`;
+  //   }
+  // } else {
+  //   title = `${experience.title}`;
+  // }
+
   const config = configureForm(experience.type);
 
   const [editing, setEditing] = useState(false);

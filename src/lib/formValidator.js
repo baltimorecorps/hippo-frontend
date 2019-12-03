@@ -38,15 +38,15 @@ const experienceValidator = values => {
   }
 
   // if (type === 'Education' && degree) {
-  //   if (!degree_other) {
+  //   if (degree === 'Other' && !degree_other) {
   //     isError = true;
   //     err.degreeOther_error = 'Required';
   //   }
-  // if (degree_other && degree_other.length > 100) {
-  //   isError = true;
-  //   err.degreeOther_error =
-  //     'Type of Education must be less than 100 characters';
-  // }
+  //   if (degree_other && degree_other.length > 100) {
+  //     isError = true;
+  //     err.degreeOther_error =
+  //       'Type of Education must be less than 100 characters';
+  //   }
   // }
 
   if (!title) {
