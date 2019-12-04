@@ -110,7 +110,7 @@ const AddOrEditExperienceForm = ({
     host,
     title,
     degree,
-    // degree_other,
+    degree_other,
     link,
     description,
     achievements,
@@ -127,9 +127,9 @@ const AddOrEditExperienceForm = ({
 
   const [errors, setErrors] = React.useState({});
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
-  // const [isDegreeOther, setIsDegreeOther] = React.useState(
-  //   degree === 'Other' ? true : false
-  // );
+  const [isDegreeOther, setIsDegreeOther] = React.useState(
+    degree === 'Other' ? true : false
+  );
 
   const handleFormSubmit = () => {
     // validate form values
@@ -139,6 +139,16 @@ const AddOrEditExperienceForm = ({
       setErrors(err);
     } else {
       return handleSubmit();
+    }
+  };
+
+  const handleDegree = event => {
+    event.persist();
+    handleChange(event);
+    if (event.target.value === 'Other') {
+      setIsDegreeOther(true);
+    } else {
+      setIsDegreeOther(false);
     }
   };
 
@@ -181,11 +191,29 @@ const AddOrEditExperienceForm = ({
         <Grid item xs={12}>
           <DegreeDropdown
             value={degree}
-            onChange={handleChange}
+            onChange={handleDegree}
             name="degree"
             label="Type of Education *"
             errors={errors.degree_error}
           />
+        </Grid>
+      )}
+      {isDegreeOther && (
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="degree_other"
+            className={classes.formControl}
+            label="Explain Other (Type of Education)"
+            value={degree_other}
+            name="degree_other"
+            onChange={handleChange}
+            InputLabelProps={inputLabelProps}
+            InputProps={inputProps}
+          />
+          <FormHelperText className={classes.formHelperText}>
+            {errors.degreeOther_error || null}
+          </FormHelperText>
         </Grid>
       )}
 
