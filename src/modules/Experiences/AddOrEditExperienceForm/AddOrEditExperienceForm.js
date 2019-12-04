@@ -127,9 +127,9 @@ const AddOrEditExperienceForm = ({
 
   const [errors, setErrors] = React.useState({});
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
-  const [isDegreeOther, setIsDegreeOther] = React.useState(
-    degree === 'Other' ? true : false
-  );
+  // const [isDegreeOther, setIsDegreeOther] = React.useState(
+  //   degree === 'Other' ? true : false
+  // );
 
   const handleFormSubmit = () => {
     // validate form values
@@ -213,7 +213,7 @@ const AddOrEditExperienceForm = ({
             className={classes.formControl}
             label="Link (optional)"
             placeholder="Link to external documents, websites, photos, or documents"
-            value={link}
+            value={link || ''}
             name="link"
             onChange={handleChange}
             InputLabelProps={{
