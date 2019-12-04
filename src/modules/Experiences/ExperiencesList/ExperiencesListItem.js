@@ -24,10 +24,14 @@ const ExperiencesListItem = ({
   classes,
 }) => {
   const initial = experience.host ? experience.host[0] : '';
-  const title =
-    experience.type === 'Education'
-      ? `${experience.degree} in ${experience.title}`
-      : `${experience.title}`;
+  let title = experience.title;
+  if (experience.type === 'Education') {
+    if (experience.degree === 'Other') {
+      title = `${experience.degree_other} in ${experience.title}`;
+    } else {
+      title = `${experience.degree} in ${experience.title}`;
+    }
+  }
 
   const config = configureForm(experience.type);
 
