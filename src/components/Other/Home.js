@@ -19,28 +19,45 @@ const Home = () => {
 
   return (
     <Grid container justify="center">
-      <Grid item xs={10}>
-        <Typography gutterBottom variant="h3" component="h1">
+      <Grid item xs={10} align="center">
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="h1"
+          style={{margin: '20px', fontSize: '25px'}}
+        >
           Baltimore Corps Talent Matching
         </Typography>
         <Grid container justify="center" spacing={3}>
           {Home.cardDetails.map(({header, description, imageName, url}) => (
-            <Grid item key={header} xs={3}>
-              <Card>
+            <Grid item key={header} xs={11} sm={8} md={5}>
+              <Card style={{padding: '20px 16px'}}>
                 <CardMedia
                   component="img"
                   height="140"
                   image={`/images/${imageName}.jpeg`}
                 />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
+                <CardContent style={{padding: '12px 10px 0px 10px'}}>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    component="h2"
+                    style={{fontSize: '23px'}}
+                  >
                     {header}
                   </Typography>
-                  <Typography gutterBottom variant="body1" component="p">
+                  <Typography
+                    gutterBottom
+                    variant="body1"
+                    component="p"
+                    align="flex-start"
+                  >
                     {description}
                   </Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions
+                  style={{display: 'flex', justifyContent: 'center'}}
+                >
                   <Button
                     variant="contained"
                     color="primary"
@@ -60,7 +77,7 @@ const Home = () => {
 
 Home.cardDetails = [
   {
-    header: 'Sign up or log in',
+    header: 'Sign Up or Log In',
     description:
       'Create an account or log in to create a Baltimore Corps community profile.\nGet access to job opportunities and development opportunities in the Baltimore Corps network',
     imageName: 'talent',
