@@ -37,10 +37,13 @@ const ExperiencesListItem = ({
     setEditing(false);
   };
 
-  const startDate = formatMonthYearDate(
-    experience.start_month,
-    experience.start_year
-  );
+  let startDate = '';
+  if (experience.start_month && experience.start_year) {
+    startDate = formatMonthYearDate(
+      experience.start_month,
+      experience.start_year
+    );
+  }
 
   let endDate = '';
   if (experience.end_month && experience.end_year) {
@@ -203,6 +206,9 @@ ExperiencesListItem.propTypes = {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
+  gridContainer: {
+    marginBottom: '10px',
+  },
   editIcon: {
     flexBasis: '60px',
     padding: spacing(0.5),
@@ -211,7 +217,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   avatar: {
-    [breakpoints.down('sm')]: {
+    display: 'flex',
+    justifyContent: 'center',
+
+    [breakpoints.down('xs')]: {
       display: 'none',
     },
     marginRight: '20px',

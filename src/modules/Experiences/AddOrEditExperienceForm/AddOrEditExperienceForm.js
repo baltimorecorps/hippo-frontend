@@ -250,7 +250,7 @@ const AddOrEditExperienceForm = ({
           type="month"
           label={experience.type === 'Accomplishment' ? 'Month' : 'Start Month'}
           name="start_month"
-          value={start_month}
+          value={start_month === 'none' ? '' : start_month}
           onChange={handleChange}
           helperText={errors.startMonth_error || null}
         />
@@ -260,7 +260,7 @@ const AddOrEditExperienceForm = ({
           type="year"
           label={experience.type === 'Accomplishment' ? 'Year' : 'Start Year'}
           name="start_year"
-          value={start_year}
+          value={start_year === 0 || start_year === '0' ? '' : start_year}
           onChange={handleChange}
           helperText={errors.startYear_error || null}
         />

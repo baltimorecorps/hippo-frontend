@@ -60,13 +60,17 @@ const experienceValidator = values => {
   }
 
   // check if start_month is null, invalid month name, or 'none'
-  if (!start_month || !monthFullNames.includes(start_month)) {
+
+  if (
+    type !== 'Accomplishment' &&
+    (!start_month || !monthFullNames.includes(start_month))
+  ) {
     isError = true;
     err.startMonth_error = 'Required';
   }
 
   // check if start_year is null or '0'
-  if (!start_year || start_year === '0') {
+  if (type !== 'Accomplishment' && (!start_year || start_year === '0')) {
     isError = true;
     err.startYear_error = 'Required';
   }

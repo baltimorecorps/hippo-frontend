@@ -44,8 +44,8 @@ const ExperiencesList = ({
     host: '',
     title: '',
     location: '',
-    start_month: '',
-    start_year: '',
+    start_month: 'none',
+    start_year: 0,
     end_month: '',
     end_year: '',
     is_current: false,
@@ -82,8 +82,10 @@ const ExperiencesList = ({
   const handleOnClickMore = () => {
     onClickMore(experienceType.toLowerCase());
   };
-  
-  const handleOnSkillsMore = () => { onClickMore('skills')}
+
+  const handleOnSkillsMore = () => {
+    onClickMore('skills');
+  };
 
   return (
     <Grid container>
