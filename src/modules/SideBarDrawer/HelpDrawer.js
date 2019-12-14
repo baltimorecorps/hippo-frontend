@@ -11,8 +11,6 @@ import Divider from '@material-ui/core/Divider';
 import SkillInfoDrawer from './SkillInfoDrawer';
 import SkillLink from './SkillLink';
 
-import { typography } from '@material-ui/system';
-
 const HelpDrawer = ({helpText, skillInfo, skillsOnly, onClose, classes}) => {
   const [openDrawer2, setOpenDrawer2] = React.useState(false);
   const [skillContent, setSkillContent] = React.useState();
@@ -25,7 +23,11 @@ const HelpDrawer = ({helpText, skillInfo, skillsOnly, onClose, classes}) => {
   };
   return (
     <Paper className={classes.BasicInfoPaper}>
-      <Grid container direction="column">
+      <Grid
+        container
+        direction="column"
+        style={openDrawer2 ? {display: 'none'} : null}
+      >
         <Grid item align="end">
           <IconButton
             edge="end"
@@ -122,12 +124,23 @@ HelpDrawer.propTypes = {
 const styles = ({breakpoints, palette, spacing}) => ({
   BasicInfoPaper: {
     paddingTop: spacing(10),
-    paddingBottom: spacing(8),
+    paddingBottom: spacing(5),
     borderRadius: '0',
     position: 'fixed',
     top: '25px',
     height: '100vh',
     margin: '0',
+
+    [breakpoints.down('sm')]: {
+      width: '100%',
+    },
+
+    [breakpoints.down('xs')]: {
+      paddingTop: spacing(6),
+      position: 'absolute',
+      margin: spacing(0.3),
+      height: 'auto',
+    },
   },
   iconButton: {
     alignSelf: 'flex-end',

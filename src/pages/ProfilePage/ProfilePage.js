@@ -165,17 +165,17 @@ const ProfilePage = ({
       <Grid container justify="space-between">
         <Grid
           item
-          xs={openSidebar ? 8 : 11}
-          md={openSidebar ? 9 : 11}
-          xl={openSidebar ? 10 : 11}
+          md={openSidebar ? 9 : 12}
+          xl={openSidebar ? 10 : 12}
+          className={openSidebar ? classes.container : null}
         >
           <Grid
             id="divToPrint"
             container
-            justify={openSidebar ? 'center' : 'flex-end'}
+            justify="center"
             className={classes.wrapper}
           >
-            <Grid item xs={11}>
+            <Grid item xs={12} sm={11}>
               <Grid container>
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>
@@ -235,6 +235,7 @@ const ProfilePage = ({
                     console.log(skill);
                   }}
                   onClickMore={onClickMoreDetails}
+                  openSidebar={openSidebar}
                 />
 
                 {/*<ResumesList />*/}
@@ -242,18 +243,14 @@ const ProfilePage = ({
             </Grid>
           </Grid>
         </Grid>
-        <Grid
-          item
-          xs={openSidebar ? 4 : 1}
-          md={openSidebar ? 3 : 1}
-          xl={openSidebar ? 2 : 1}
-        >
+        <Grid item md={openSidebar ? 3 : null} xl={openSidebar ? 2 : null}>
           {openSidebar && (
             <HelpDrawer
               helpText={helpTextOptions[sidebarType]}
               skillInfo={skillHelpTextInfo}
               skillsOnly={sidebarType === 'skills'}
               onClose={() => setOpenSidebar(false)}
+              isMoreClicked={openSidebar}
             />
           )}
         </Grid>
@@ -340,7 +337,7 @@ const skillHelpTextInfo = {
       ],
     },
 
-    'Communication': {
+    Communication: {
       summary:
         'Communication skills are what you use to understand others and to help others understand you.',
       examples: [
@@ -406,24 +403,23 @@ const skillHelpTextInfo = {
         'What methods did you use to generate possible outcomes from the existing information?',
       ],
     },
-    'Software Development': 
-    
-{
-    summary: 'Software development is the application of a systematic approach to the engineering, operation, and maintenance of a piece of software, such as a pogramming script, website, or desktop application.',
-    examples: [
-    'Writing a script to automate a simple workflow', 
-    'Building a website or API as part of a class assignment or side project', 
-    'Contributing to an open source project on GitHub or at your local meetup',
-    ],
-    questions: [
-'Have you ever had to write a piece of code to accomplish a task?',
-'How did you approach this process?',
-'What languages or frameworks did you use?',
-'Have you ever had to maintain or conribute to an existing code base?',
-'What features did you add or bugs did you fix?',
-'How did you manage versions of the code you were working on?',
-],
-}
+    'Software Development': {
+      summary:
+        'Software development is the application of a systematic approach to the engineering, operation, and maintenance of a piece of software, such as a pogramming script, website, or desktop application.',
+      examples: [
+        'Writing a script to automate a simple workflow',
+        'Building a website or API as part of a class assignment or side project',
+        'Contributing to an open source project on GitHub or at your local meetup',
+      ],
+      questions: [
+        'Have you ever had to write a piece of code to accomplish a task?',
+        'How did you approach this process?',
+        'What languages or frameworks did you use?',
+        'Have you ever had to maintain or conribute to an existing code base?',
+        'What features did you add or bugs did you fix?',
+        'How did you manage versions of the code you were working on?',
+      ],
+    },
   },
 };
 
@@ -585,6 +581,11 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   wrapper: {
     marginBottom: spacing(5),
   },
+  container: {
+    [breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
   paper: {
     padding: spacing(2, 3, 3),
     marginBottom: spacing(5),
@@ -607,6 +608,9 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     paddingBottom: spacing(3),
     marginTop: spacing(5),
     marginBottom: spacing(5),
+    [breakpoints.down('xs')]: {
+      margin: spacing(0.2),
+    },
   },
   headerContainer: {
     paddingBottom: spacing(2),

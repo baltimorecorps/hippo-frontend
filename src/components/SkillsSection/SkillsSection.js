@@ -48,6 +48,7 @@ const SkillsSection = ({
   deleteSkill,
   onChange,
   onClickMore,
+  openSidebar,
 }) => {
   let capSkillMap = {};
   CAPABILITIES.forEach(cap => {
@@ -76,8 +77,8 @@ const SkillsSection = ({
     onChange(capSkills.concat(newAdditionalSkills || []));
 
   return (
-    <Grid container>
-      <Grid item xs={12}>
+    <Grid container className={openSidebar ? classes.displayNone : null}>
+      <Grid item>
         <Paper className={classes.paper}>
           <Grid container justify="space-between" className={classes.container}>
             <Grid item>
@@ -143,6 +144,9 @@ const SkillsSection = ({
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     padding: spacing(2, 3, 3),
+    [breakpoints.down('xs')]: {
+      margin: spacing(0.2),
+    },
   },
   element: {
     margin: spacing(1),
@@ -151,6 +155,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+  },
+  displayNone: {
+    [breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
   moreDetails: {
     marginLeft: '5px',

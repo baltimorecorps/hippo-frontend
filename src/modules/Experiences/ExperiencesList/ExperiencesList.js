@@ -82,8 +82,10 @@ const ExperiencesList = ({
   const handleOnClickMore = () => {
     onClickMore(experienceType.toLowerCase());
   };
-  
-  const handleOnSkillsMore = () => { onClickMore('skills')}
+
+  const handleOnSkillsMore = () => {
+    onClickMore('skills');
+  };
 
   return (
     <Grid container>
@@ -202,6 +204,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    [breakpoints.down('xs')]: {
+      margin: spacing(0.2),
+    },
   },
   container: {
     paddingBottom: spacing(2),
