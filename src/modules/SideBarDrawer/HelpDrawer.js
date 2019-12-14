@@ -11,18 +11,26 @@ import Divider from '@material-ui/core/Divider';
 import SkillInfoDrawer from './SkillInfoDrawer';
 import SkillLink from './SkillLink';
 
-import { typography } from '@material-ui/system';
-
-const HelpDrawer = ({helpText, skillInfo, skillsOnly, onClose, classes}) => {
-  const [openDrawer2, setOpenDrawer2] = React.useState(false);
+const HelpDrawer = ({
+  helpText,
+  skillInfo,
+  skillsOnly,
+  onClose,
+  isOpenDrawer1,
+  isOpenDrawer2,
+  doOpenDrawer1,
+  doOpenDrawer2,
+  classes,
+}) => {
   const [skillContent, setSkillContent] = React.useState();
   const [skillName, setSkillName] = React.useState();
 
   const handleOnClickSkillLink = index => {
     setSkillName(skillInfo.names[index]);
     setSkillContent(skillInfo.contents[skillInfo.names[index]]);
-    setOpenDrawer2(true);
+    doOpenDrawer2();
   };
+
   return (
     <Paper className={classes.BasicInfoPaper}>
       <Grid container direction="column">
@@ -36,7 +44,7 @@ const HelpDrawer = ({helpText, skillInfo, skillsOnly, onClose, classes}) => {
             <CloseIcon />
           </IconButton>
         </Grid>
-        {!skillsOnly && (
+        {!skillsOnly && isOpenDrawer1 && (
           <React.Fragment>
             <Grid item className={classes.section}>
               <Box my={1}>
@@ -89,11 +97,11 @@ const HelpDrawer = ({helpText, skillInfo, skillsOnly, onClose, classes}) => {
         </Grid>
         <Divider className={classes.divider} />
       </Grid>
-      {openDrawer2 && (
+      {isOpenDrawer2 && (
         <SkillInfoDrawer
           name={skillName}
           contents={skillContent}
-          onBack={() => setOpenDrawer2(false)}
+          onBack={() => doOpenDrawer1()}
           onClose={onClose}
         />
       )}

@@ -11,7 +11,6 @@ import Divider from '@material-ui/core/Divider';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
-  console.log(contents);
   return (
     <Paper className={classes.BasicInfoPaper}>
       <Grid container direction="column">
