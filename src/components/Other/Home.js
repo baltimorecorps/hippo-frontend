@@ -35,9 +35,9 @@ const Home = () => {
                 <CardMedia
                   component="img"
                   height="140"
-                  image={`/images/${imageName}.jpeg`}
+                  image={`/logos/long.png`}
                 />
-                <CardContent style={{padding: '12px 10px 0px 10px'}}>
+                <CardContent style={{padding: '0px 10px 0px 10px'}}>
                   <Typography
                     gutterBottom
                     variant="h6"
