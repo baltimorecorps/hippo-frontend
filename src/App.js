@@ -24,6 +24,8 @@ import SearchContact from 'components/SearchContact/SearchContact';
 import ResumeTemplate from 'components/Other/ResumeTemplate';
 import TalentHome from 'components/TalentHome/TalentHome';
 
+import NavBarIcons from '../src/components/Other/NavBarIcons';
+
 const App = ({classes}) => {
   const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
 
@@ -36,7 +38,7 @@ const App = ({classes}) => {
               <Toolbar>
                 <Link to="/">
                   <MenuItem>
-                    <HomeIcon />
+                    <HomeIcon style={{fontSize: '35px'}} />
                   </MenuItem>
                 </Link>
                 <div className={classes.grow} />
@@ -46,16 +48,13 @@ const App = ({classes}) => {
                   </Button>
                 )}
                 {isAuthenticated && (
-                  <Button
-                    color="inherit"
-                    onClick={() =>
+                  <NavBarIcons
+                    logout={() =>
                       logout({
                         returnTo: window.location.origin,
                       })
                     }
-                  >
-                    Log out
-                  </Button>
+                  />
                 )}
               </Toolbar>
             </AppBar>
@@ -111,6 +110,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
     paddingBottom: spacing(5),
+    height: '200vh',
   },
 });
 

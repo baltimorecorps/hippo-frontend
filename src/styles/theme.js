@@ -3,9 +3,12 @@ import {createMuiTheme} from '@material-ui/core/styles';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: 'hsl(45, 100%, 60%)',
+      main: '#ffcc33',
       darkerYellow: '#f5b800',
       darkGray: '#4a4a4a',
+      offWhite: '#fafafa',
+      redDot: '#ff1717',
+      almostBlack: 'rgba(0, 0, 0, 0.87)',
     },
     secondary: {
       main: 'hsl(232, 57%, 26%)',
