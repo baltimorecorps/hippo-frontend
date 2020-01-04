@@ -17,7 +17,10 @@ const NavBarIcons = ({logout, classes}) => {
     notifications: {
       menuHeader: 'Notifications',
       menuItems: [
-        {name: 'Notification 1', url: '#'},
+        {
+          name: 'Click to answer and submit Baltimore Corps Value Questions',
+          url: '#',
+        },
         {name: 'Notification 2', url: '#'},
         {name: 'Notification 3', url: '#'},
       ],

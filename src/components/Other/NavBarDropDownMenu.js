@@ -23,6 +23,7 @@ const NavBarDropdownMenu = ({
       placement="bottom-end"
       transition
       disablePortal={true}
+      // className={classes.popper}
     >
       {({TransitionProps}) => (
         <ClickAwayListener onClickAway={onClickAway}>
@@ -34,6 +35,11 @@ const NavBarDropdownMenu = ({
               {menuItems.map((item, index) => (
                 <MenuItem
                   key={index}
+                  style={
+                    menuHeader === 'Account'
+                      ? {width: '100px'}
+                      : {width: '230px'}
+                  }
                   className={classes.menuItem}
                   component={Link}
                   to={item.url}
@@ -52,26 +58,28 @@ const NavBarDropdownMenu = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   menuItem: {
-    padding: '10px 20px',
+    padding: '8px 10px',
     borderBottom: 'solid 1px #e8e8e8',
+    whiteSpace: 'normal',
+    lineHeight: '1.3',
+    fontSize: '16px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
   },
   paper: {
-    borderRadius: 0,
-    zIndex: 10,
-    top: 100,
+    right: 0,
+    position: 'absolute',
     backgroundColor: palette.primary.offWhite,
     border: 'solid 1px #e8e8e8',
   },
-
   dropdownHeader: {
     borderBottom: 'solid 1px #dedede',
     fontWeight: 'bold',
     padding: '5px',
-  },
-
-  bellIcon: {
-    padding: '7px',
-    fontSize: '26px',
+    lineHeight: '1.2',
+    fontSize: '16px',
   },
 });
 
