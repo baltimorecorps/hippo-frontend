@@ -38,7 +38,7 @@ const NavBarDropdownMenu = ({
                   style={
                     menuHeader === 'Account'
                       ? {width: '100px'}
-                      : {width: '230px'}
+                      : {width: '240px'}
                   }
                   className={classes.menuItem}
                   component={Link}
@@ -58,7 +58,7 @@ const NavBarDropdownMenu = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   menuItem: {
-    padding: '8px 10px',
+    padding: '8px 5px',
     borderBottom: 'solid 1px #e8e8e8',
     whiteSpace: 'normal',
     lineHeight: '1.3',
@@ -67,12 +67,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
+    '&:nth-child(2)': {
+      // color: '#e8aa00',
+      // textDecoration: 'underline',
+    },
   },
   paper: {
     right: 0,
     position: 'absolute',
     backgroundColor: palette.primary.offWhite,
-    border: 'solid 1px #e8e8e8',
+    border: 'solid 1px #ffffff',
   },
   dropdownHeader: {
     borderBottom: 'solid 1px #dedede',

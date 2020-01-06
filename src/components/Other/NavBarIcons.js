@@ -18,7 +18,8 @@ const NavBarIcons = ({logout, classes}) => {
       menuHeader: 'Notifications',
       menuItems: [
         {
-          name: 'Click to answer and submit Baltimore Corps Value Questions',
+          name:
+            '* Please submit Race and Equity questions to be able to get approved to see job listings',
           url: '#',
         },
         {name: 'Notification 2', url: '#'},
