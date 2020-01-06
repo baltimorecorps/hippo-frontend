@@ -1,5 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import withStyles from '@material-ui/core/styles/withStyles';
+
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -10,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import {useAuth0} from 'lib/auth0';
 
-const Home = () => {
+const Home = ({classes}) => {
   const {isAuthenticated, loginWithRedirect} = useAuth0();
 
   if (isAuthenticated) {
@@ -19,30 +21,35 @@ const Home = () => {
 
   return (
     <Grid container justify="center">
-      <Grid item xs={10} align="center">
+      <Grid item xs={12} align="center">
         <Typography
           gutterBottom
           variant="h5"
           component="h1"
-          style={{margin: '20px', fontSize: '25px'}}
+          className={classes.pageHeader}
         >
           Baltimore Corps Talent Matching
         </Typography>
-        <Grid container justify="center" spacing={3}>
+        <Grid
+          container
+          justify="center"
+          // spacing={2}
+          className={classes.cardContainer}
+        >
           {Home.cardDetails.map(({header, description, imageName, url}) => (
-            <Grid item key={header} xs={11} sm={8} md={5}>
-              <Card style={{padding: '20px 16px'}}>
+            <Grid item key={header} xs={12} sm={8} md={5}>
+              <Card className={classes.card}>
                 <CardMedia
                   component="img"
                   height="140"
                   image={`/logos/long.png`}
                 />
-                <CardContent style={{padding: '0px 10px 0px 10px'}}>
+                <CardContent className={classes.cardContent}>
                   <Typography
                     gutterBottom
                     variant="h6"
                     component="h2"
-                    style={{fontSize: '23px'}}
+                    className={classes.cardContentHeader}
                   >
                     {header}
                   </Typography>
@@ -55,9 +62,7 @@ const Home = () => {
                     {description}
                   </Typography>
                 </CardContent>
-                <CardActions
-                  style={{display: 'flex', justifyContent: 'center'}}
-                >
+                <CardActions className={classes.cardActions}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -84,4 +89,51 @@ Home.cardDetails = [
   },
 ];
 
-export default Home;
+const styles = ({breakpoints, palette, spacing}) => ({
+  pageHeader: {
+    fontSize: '35px',
+    margin: '20px ',
+
+    [breakpoints.down('sm')]: {
+      fontSize: '30px',
+      margin: '18px ',
+    },
+    [breakpoints.down('xs')]: {
+      fontSize: '20px',
+      margin: '15px 15px 5px 15px',
+    },
+  },
+  cardContainer: {
+    [breakpoints.down('xs')]: {
+      padding: '0px',
+    },
+  },
+  card: {
+    padding: '20px 16px',
+    fontSize: '25px',
+
+    [breakpoints.down('xs')]: {
+      margin: '10px',
+      padding: '6px 6px 12px 6px',
+      fontSize: '18px',
+    },
+  },
+  cardContent: {
+    padding: '0px 10px',
+  },
+  cardContentHeader: {
+    fontSize: '23px',
+    margin: '10px',
+
+    [breakpoints.down('xs')]: {
+      margin: '5px',
+      fontSize: '20px',
+    },
+  },
+  cardActions: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+});
+
+export default withStyles(styles)(Home);
