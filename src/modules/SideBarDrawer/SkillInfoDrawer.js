@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {

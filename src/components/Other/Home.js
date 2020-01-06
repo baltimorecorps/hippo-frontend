@@ -1,5 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import withStyles from '@material-ui/core/styles/withStyles';
+
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -10,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 
 import {useAuth0} from 'lib/auth0';
 
-const Home = () => {
+const Home = ({classes}) => {
   const {isAuthenticated, loginWithRedirect} = useAuth0();
 
   if (isAuthenticated) {
@@ -19,28 +21,48 @@ const Home = () => {
 
   return (
     <Grid container justify="center">
-      <Grid item xs={10}>
-        <Typography gutterBottom variant="h3" component="h1">
+      <Grid item xs={12} align="center">
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="h1"
+          className={classes.pageHeader}
+        >
           Baltimore Corps Talent Matching
         </Typography>
-        <Grid container justify="center" spacing={3}>
+        <Grid
+          container
+          justify="center"
+          // spacing={2}
+          className={classes.cardContainer}
+        >
           {Home.cardDetails.map(({header, description, imageName, url}) => (
-            <Grid item key={header} xs={3}>
-              <Card>
+            <Grid item key={header} xs={12} sm={8} md={5}>
+              <Card className={classes.card}>
                 <CardMedia
                   component="img"
                   height="140"
-                  image={`/images/${imageName}.jpeg`}
+                  image={`/logos/long.png`}
                 />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
+                <CardContent className={classes.cardContent}>
+                  <Typography
+                    gutterBottom
+                    variant="h6"
+                    component="h2"
+                    className={classes.cardContentHeader}
+                  >
                     {header}
                   </Typography>
-                  <Typography gutterBottom variant="body1" component="p">
+                  <Typography
+                    gutterBottom
+                    variant="body1"
+                    component="p"
+                    align="flex-start"
+                  >
                     {description}
                   </Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions className={classes.cardActions}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -60,11 +82,58 @@ const Home = () => {
 
 Home.cardDetails = [
   {
-    header: 'Sign up or log in',
+    header: 'Sign Up or Log In',
     description:
       'Create an account or log in to create a Baltimore Corps community profile.\nGet access to job opportunities and development opportunities in the Baltimore Corps network',
     imageName: 'talent',
   },
 ];
 
-export default Home;
+const styles = ({breakpoints, palette, spacing}) => ({
+  pageHeader: {
+    fontSize: '35px',
+    margin: '20px ',
+
+    [breakpoints.down('sm')]: {
+      fontSize: '30px',
+      margin: '18px ',
+    },
+    [breakpoints.down('xs')]: {
+      fontSize: '20px',
+      margin: '15px 15px 5px 15px',
+    },
+  },
+  cardContainer: {
+    [breakpoints.down('xs')]: {
+      padding: '0px',
+    },
+  },
+  card: {
+    padding: '20px 16px',
+    fontSize: '25px',
+
+    [breakpoints.down('xs')]: {
+      margin: '10px',
+      padding: '6px 6px 12px 6px',
+      fontSize: '18px',
+    },
+  },
+  cardContent: {
+    padding: '0px 10px',
+  },
+  cardContentHeader: {
+    fontSize: '23px',
+    margin: '10px',
+
+    [breakpoints.down('xs')]: {
+      margin: '5px',
+      fontSize: '20px',
+    },
+  },
+  cardActions: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+});
+
+export default withStyles(styles)(Home);

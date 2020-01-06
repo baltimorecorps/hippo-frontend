@@ -221,8 +221,6 @@ describe('Experience Form Validations', () => {
       title: 'Computer Science',
       degree: 'Associates',
       location: 'Baltimore, MD ,USA',
-      start_month: 'January',
-      start_year: '2016',
       end_month: 'none',
       end_year: '0',
       is_current: true,
@@ -233,6 +231,26 @@ describe('Experience Form Validations', () => {
     const {isError, err} = experienceValidator(values);
 
     expect(isError).toBe(false);
+    expect(err).toEqual(expectedErr);
+  });
+  test('Accomplishments: invalid values', () => {
+    const values = {
+      host: '',
+      title: '',
+      degree: '',
+      location: '',
+      start_month: 'none',
+      start_year: '0',
+      end_month: 'none',
+      end_year: '0',
+      is_current: true,
+      type: 'Accomplishment',
+    };
+
+    const expectedErr = {title_error: 'Required'};
+    const {isError, err} = experienceValidator(values);
+
+    expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
   });
 });

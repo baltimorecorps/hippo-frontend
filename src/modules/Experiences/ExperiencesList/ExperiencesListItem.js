@@ -10,6 +10,8 @@ import SkillsList from 'components/SkillsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import Button from '@material-ui/core/Button';
+
 import EditIcon from '@material-ui/icons/Edit';
 
 import {formatMonthYearDate, getWorkLength, configureForm} from './helpers';
@@ -41,10 +43,13 @@ const ExperiencesListItem = ({
     setEditing(false);
   };
 
-  const startDate = formatMonthYearDate(
-    experience.start_month,
-    experience.start_year
-  );
+  let startDate = '';
+  if (experience.start_month && experience.start_year) {
+    startDate = formatMonthYearDate(
+      experience.start_month,
+      experience.start_year
+    );
+  }
 
   let endDate = '';
   if (experience.end_month && experience.end_year) {
@@ -85,7 +90,7 @@ const ExperiencesListItem = ({
                   fontWeight: '700',
                 }}
               >
-                {experience.host}
+                {experience.host || experience.title}
 
                 {experience.location ? (
                   <span
@@ -111,8 +116,19 @@ const ExperiencesListItem = ({
                   fontFamily: 'Lato',
                 }}
               >
-                {title}
+                {experience.host && title}
               </Typography>
+              {experience.link && (
+                <Button
+                  target="_blank"
+                  component="button"
+                  href={experience.link}
+                  variant="text"
+                  className={classes.link}
+                >
+                  {experience.link}
+                </Button>
+              )}
               <Typography
                 gutterBottom
                 variant="subtitle1"
@@ -207,6 +223,9 @@ ExperiencesListItem.propTypes = {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
+  gridContainer: {
+    marginBottom: '10px',
+  },
   editIcon: {
     flexBasis: '60px',
     padding: spacing(0.5),
@@ -215,13 +234,25 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   avatar: {
-    [breakpoints.down('sm')]: {
+    display: 'flex',
+    justifyContent: 'center',
+
+    [breakpoints.down('xs')]: {
       display: 'none',
     },
     marginRight: '20px',
   },
   initial: {
     backgroundColor: palette.primary.darkerYellow,
+  },
+  link: {
+    color: palette.primary.link,
+    padding: '0 5px',
+    fontSize: '15px',
+    textTransform: 'lowercase',
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
 });
 

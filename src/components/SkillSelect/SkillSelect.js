@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -94,7 +93,9 @@ const SkillSelect = ({classes, load, value, onChange}) => {
       findIndex(value, element => element.name === candidate.name) === -1;
 
     (async () => {
-      if (typeof inputValue !== 'string') { return; }
+      if (typeof inputValue !== 'string') {
+        return;
+      }
 
       const cleanValue = inputValue.toTitleCase();
       const inputNew = {
