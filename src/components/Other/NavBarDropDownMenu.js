@@ -23,7 +23,6 @@ const NavBarDropdownMenu = ({
       placement="bottom-end"
       transition
       disablePortal={true}
-      // className={classes.popper}
     >
       {({TransitionProps}) => (
         <ClickAwayListener onClickAway={onClickAway}>
@@ -38,14 +37,16 @@ const NavBarDropdownMenu = ({
                   style={
                     menuHeader === 'Account'
                       ? {width: '100px'}
-                      : {width: '240px'}
+                      : {width: '72vw'}
                   }
                   className={classes.menuItem}
-                  component={Link}
-                  to={item.url}
-                  onClick={item.function}
+                  component={item.page && Link}
+                  to={item.page}
+                  onClick={item.function ? item.function : null}
                 >
-                  {item.name}
+                  
+                    {item.name}
+                
                 </MenuItem>
               ))}
             </div>
@@ -71,12 +72,24 @@ const styles = ({breakpoints, palette, spacing}) => ({
       // color: '#e8aa00',
       // textDecoration: 'underline',
     },
+    '&:hover': {
+    backgroundColor: "#000000",
+    // color: palette.primary.almostBlack,
+    }
+    // '& span': {
+    //   color: palette.primary.main
+    // }
   },
   paper: {
+    color:"#ffffff",
+
     right: 0,
     position: 'absolute',
     backgroundColor: palette.primary.offWhite,
-    border: 'solid 1px #ffffff',
+    backgroundColor: "#3d3d3d",
+    backgroundColor: palette.primary.darkGray,
+    border: `solid 1px ${palette.primary.offWhite}`,
+    // borderTop:'none'
   },
   dropdownHeader: {
     borderBottom: 'solid 1px #dedede',
