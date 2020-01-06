@@ -123,7 +123,7 @@ const SkillsSection = ({
               </Grid>
             ))}
             <Grid item xs={12}>
-              <Paper className={[classes.paper, classes.element]}>
+              <Paper className={classes.element}>
                 <Typography variant="h5" component="h2">
                   Additional Skills
                 </Typography>
@@ -145,6 +145,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(2, 3, 3),
   },
   element: {
+    padding: spacing(2, 3, 3),
     margin: spacing(1),
   },
   container: {

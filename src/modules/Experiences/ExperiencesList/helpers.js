@@ -41,8 +41,9 @@ const configureForm = expType => {
         title: 'Title',
         achievements: {
           label: 'Responsibilities and Achivements:',
-          sublabel: 'Write about skills you gained and how you used them; what you were proud of or recognized for',
-        }
+          sublabel:
+            'Write about skills you gained and how you used them; what you were proud of or recognized for',
+        },
       },
       showHost: true,
       showSkills: true,
@@ -87,8 +88,9 @@ const configureForm = expType => {
         endDate: 'End Date (or expected)',
         achievements: {
           label: 'Additional Details:',
-          sublabel: '(ex: projects where you used new skills, specific classes, clubs, activites)',
-        }
+          sublabel:
+            '(ex: projects where you used new skills, specific classes, clubs, activites)',
+        },
       },
       showHost: true,
       showSkills: true,
@@ -123,7 +125,7 @@ const getMonthScore = experiences => {
 
     // exclude end_month === 'none'
     if (exp.is_current === false) {
-      exp.end_month_score = monthScore[exp.end_month];
+      return (exp.end_month_score = monthScore[exp.end_month]);
     }
   });
 

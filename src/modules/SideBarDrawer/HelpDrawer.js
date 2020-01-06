@@ -11,8 +11,6 @@ import Divider from '@material-ui/core/Divider';
 import SkillInfoDrawer from './SkillInfoDrawer';
 import SkillLink from './SkillLink';
 
-import { typography } from '@material-ui/system';
-
 const HelpDrawer = ({helpText, skillInfo, skillsOnly, onClose, classes}) => {
   const [openDrawer2, setOpenDrawer2] = React.useState(false);
   const [skillContent, setSkillContent] = React.useState();

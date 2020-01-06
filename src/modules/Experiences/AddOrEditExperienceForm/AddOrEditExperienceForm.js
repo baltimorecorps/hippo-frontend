@@ -110,7 +110,6 @@ const AddOrEditExperienceForm = ({
     host,
     title,
     degree,
-    // degree_other,
     link,
     description,
     achievements,
@@ -127,9 +126,6 @@ const AddOrEditExperienceForm = ({
 
   const [errors, setErrors] = React.useState({});
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
-  // const [isDegreeOther, setIsDegreeOther] = React.useState(
-  //   degree === 'Other' ? true : false
-  // );
 
   const handleFormSubmit = () => {
     // validate form values
@@ -472,7 +468,7 @@ AddOrEditExperienceForm.propTypes = {
   experience: PropTypes.shape({
     id: PropTypes.number,
     description: PropTypes.string,
-    host: PropTypes.string.isRequired,
+    host: PropTypes.string,
     title: PropTypes.string.isRequired,
     degree: PropTypes.oneOf([
       '',

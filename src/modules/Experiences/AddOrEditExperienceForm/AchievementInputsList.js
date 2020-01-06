@@ -7,9 +7,15 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import withStyles from '@material-ui/core/styles/withStyles';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 
-const AchievementInputsList = ({classes, achievements, contactId, onChange, label, sublabel}) => {
+const AchievementInputsList = ({
+  classes,
+  achievements,
+  contactId,
+  onChange,
+  label,
+  sublabel,
+}) => {
   const focusTarget = useRef(null);
   const [doFocus, setFocus] = useState(false);
 
@@ -52,12 +58,8 @@ const AchievementInputsList = ({classes, achievements, contactId, onChange, labe
   return (
     <Grid container justify="center">
       <Grid item xs={12}>
-        <Typography className={classes.label}>
-          {label}
-        </Typography>
-        <Typography className={classes.sublabel}>
-          {sublabel}
-        </Typography>
+        <Typography className={classes.label}>{label}</Typography>
+        <Typography className={classes.sublabel}>{sublabel}</Typography>
       </Grid>
       <Grid item xs={12}>
         {achievements.map(({description}, index) => (
