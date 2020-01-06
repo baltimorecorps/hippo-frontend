@@ -43,13 +43,9 @@ const App = ({classes}) => {
                 </Link>
                 <div className={classes.grow} />
                 {!isAuthenticated && (
-                  <NavBarIcons
-                    logout={() =>
-                      logout({
-                        returnTo: window.location.origin,
-                      })
-                    }
-                  />
+                  <Button color="inherit" onClick={() => loginWithRedirect({})}>
+                    Log in / Sign up
+                  </Button>
                 )}
                 {isAuthenticated && (
                   <NavBarIcons

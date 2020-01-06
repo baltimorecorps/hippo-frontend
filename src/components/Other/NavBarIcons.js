@@ -13,30 +13,51 @@ const NavBarIcons = ({logout, classes}) => {
   const [openNotification, setOpenNotification] = useState(false);
   const wrapperRef = useRef(null);
 
-  const contactSupport = (
-    <a href="https://www.tfaforms.com/4602493">Contact Support</a>
+  const BetaMessage = (
+    <p className={classes.betaMessage}>
+      <span>
+        ** This website is currently in beta. There will be updates to the look
+        and feel and you may experience some bugs as we introduce new
+        features.**
+      </span>
+      <br />
+      <br />
+      <span className={classes.smallerFont}>
+        If you notice an issue or are having a problem with the website,
+        <br /> you can let us know through our{' '}
+        <a
+          className={classes.contactSupportLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.tfaforms.com/4602493"
+        >
+          Contact Support Page
+        </a>
+      </span>
+    </p>
   );
-  const BetaMessage = <span><span className="contactSupport" style={{fontStyle: 'normal'}}>** This website is currently in beta. There will be updates to the look and feel and you may experience some bugs as we introduce new features.**</span> <br/><br/> <span style={{fontSize: '14px'}}>If you notice an issue or are having a problem with the website,<br/> you can let us know through our <a href="https://www.tfaforms.com/4602493">Contact Support</a> page.</span></span>;
+
+  const helpLink = (
+    <a
+      className={classes.helpLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      href="https://www.tfaforms.com/4602493"
+    >
+      Help
+    </a>
+  );
 
   const dropdownMenuInfo = {
     notifications: {
       menuHeader: 'Notifications',
-      menuItems: [
-        // {
-        //   name:
-        //     '* Please submit Race and Equity questions to be able to get approved to see job listings',
-        //   url: '#',
-        // },
-        {name: BetaMessage},
-        // {name: 'Notification 3', url: '#'},
-      ],
+      menuItems: [{name: BetaMessage}],
     },
 
     user: {
       menuHeader: 'Account',
       menuItems: [
-        // {name: 'Profile', url: '#'},
-        // {name: 'Account', url: '#'},
+        {name: helpLink},
         {name: 'Logout', url: '#', function: logout},
       ],
     },
@@ -73,7 +94,7 @@ const NavBarIcons = ({logout, classes}) => {
         onClick={e => handleClickIcon(e, 'notifications')}
         className={
           openNotification
-            ? `${classes.buttons} + ${classes.offWhiteBG}`
+            ? `${classes.buttons} + ${classes.darkGrayBG}`
             : classes.buttons
         }
       >
@@ -99,7 +120,7 @@ const NavBarIcons = ({logout, classes}) => {
         onClick={e => handleClickIcon(e, 'user')}
         className={
           openUser
-            ? `${classes.buttons} + ${classes.offWhiteBG}`
+            ? `${classes.buttons} + ${classes.darkGrayBG}`
             : classes.buttons
         }
       >
@@ -158,7 +179,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.08)',
     },
-   
   },
 
   icons: {
@@ -174,17 +194,28 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '26px',
   },
   offWhiteColor: {
-    color: palette.primary.offWhite,
-    // backgroundColor: palette.primary.darkGray,
     backgroundColor: palette.primary.offWhite,
     color: palette.primary.darkGray,
-  
   },
-  offWhiteBG: {
+  darkGrayBG: {
     backgroundColor: palette.primary.darkGray,
     '&:hover': {
       backgroundColor: palette.primary.darkGray,
     },
+  },
+  betaMessage: {
+    cursor: 'default',
+  },
+  smallerFont: {
+    fontSize: '14px',
+  },
+  contactSupportLink: {
+    cursor: 'pointer',
+    color: palette.primary.main,
+  },
+  helpLink: {
+    width: '100%',
+    height: '100%',
   },
 });
 

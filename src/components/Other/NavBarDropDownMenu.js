@@ -44,9 +44,7 @@ const NavBarDropdownMenu = ({
                   to={item.page}
                   onClick={item.function ? item.function : null}
                 >
-                  
-                    {item.name}
-                
+                  {item.name}
                 </MenuItem>
               ))}
             </div>
@@ -68,28 +66,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    '&:nth-child(2)': {
-      // color: '#e8aa00',
-      // textDecoration: 'underline',
-    },
     '&:hover': {
-    backgroundColor: "#000000",
-    // color: palette.primary.almostBlack,
-    }
-    // '& span': {
-    //   color: palette.primary.main
-    // }
+      backgroundColor: '#000000',
+    },
   },
   paper: {
-    color:"#ffffff",
-
+    color: '#ffffff',
     right: 0,
     position: 'absolute',
-    backgroundColor: palette.primary.offWhite,
-    backgroundColor: "#3d3d3d",
     backgroundColor: palette.primary.darkGray,
     border: `solid 1px ${palette.primary.offWhite}`,
-    // borderTop:'none'
   },
   dropdownHeader: {
     borderBottom: 'solid 1px #dedede',
