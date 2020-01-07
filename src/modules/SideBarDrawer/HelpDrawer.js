@@ -141,11 +141,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.down('md')]: {
       maxWidth: '33%',
     },
-    [breakpoints.down('sm')]: {
-      maxWidth: '41%',
-    },
+    // [breakpoints.down('sm')]: {
+    //   maxWidth: '41%',
+    // },
 
-    [breakpoints.down('xs')]: {
+    [breakpoints.down('sm')]: {
       paddingTop: spacing(6),
       position: 'absolute',
       margin: spacing(0.3),

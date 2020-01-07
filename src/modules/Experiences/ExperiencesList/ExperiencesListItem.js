@@ -25,7 +25,7 @@ const ExperiencesListItem = ({
   selectable,
   classes,
 }) => {
-  const initial = experience.host ? experience.host[0] : '';
+  const initial = experience.host ? experience.host[0] : experience.title[0];
   let title = experience.title;
   if (experience.type === 'Education') {
     if (experience.degree === 'Other') {
@@ -67,7 +67,7 @@ const ExperiencesListItem = ({
 
   return (
     <React.Fragment>
-      <Grid container justify="center" className={classes.gridContainer}>
+      <Grid container className={classes.gridContainer}>
         {selectable ? (
           <Grid item>
             <Checkbox onChange={onSelect} />
@@ -80,7 +80,7 @@ const ExperiencesListItem = ({
           )
         )}
 
-        <Grid item xs={11} md={8}>
+        <Grid item xs={10} sm={7} md={8}>
           {!editing && (
             <React.Fragment>
               <Typography
@@ -174,7 +174,7 @@ const ExperiencesListItem = ({
         )}
 
         {editing || selectable ? null : (
-          <Grid item xs={1}>
+          <Grid item sm={1}>
             <IconButton
               onClick={() => setEditing(true)}
               size="small"
@@ -224,6 +224,9 @@ ExperiencesListItem.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   gridContainer: {
+    // width: '100%',
+    // display: 'flex',
+    justifyContent: 'center',
     marginBottom: '10px',
   },
   editIcon: {

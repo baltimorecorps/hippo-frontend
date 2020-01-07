@@ -581,7 +581,7 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     backgroundColor: 'hsl(216, 18%, 89%)',
   },
   container: {
-    [breakpoints.down('xs')]: {
+    [breakpoints.down('sm')]: {
       display: 'none',
     },
   },
