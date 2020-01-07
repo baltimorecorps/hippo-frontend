@@ -204,6 +204,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    [breakpoints.down('xs')]: {
+      margin: spacing(0.2),
+    },
   },
   container: {
     paddingBottom: spacing(2),
