@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
-  console.log(contents);
   return (
     <div className={classes.BasicInfoPaper}>
       <Grid container direction="column">

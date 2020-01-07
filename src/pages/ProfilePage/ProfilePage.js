@@ -66,6 +66,8 @@ const ProfilePage = ({
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [isOpenDrawer1, setOpenDrawer1] = React.useState(false);
+  const [isOpenDrawer2, setOpenDrawer2] = React.useState(false);
   const [sidebarType, setSidebarType] = useState('work');
   const [loading, setLoading] = useState(false);
 
@@ -130,6 +132,16 @@ const ProfilePage = ({
   const onClickMoreDetails = header => {
     setSidebarType(header);
     setOpenSidebar(true);
+    doOpenDrawer1();
+  };
+
+  const doOpenDrawer1 = () => {
+    setOpenDrawer1(true);
+    setOpenDrawer2(false);
+  };
+  const doOpenDrawer2 = () => {
+    setOpenDrawer1(false);
+    setOpenDrawer2(true);
   };
 
   return (
@@ -244,6 +256,25 @@ const ProfilePage = ({
             </Grid>
           </Grid>
         </Grid>
+        {/* <Grid
+          item
+          xs={openSidebar ? 4 : 1}
+          md={openSidebar ? 3 : 1}
+          xl={openSidebar ? 2 : 1}
+        >
+          {openSidebar && (
+            <HelpDrawer
+              helpText={helpTextOptions[sidebarType]}
+              skillInfo={skillHelpTextInfo}
+              skillsOnly={sidebarType === 'skills'}
+              onClose={() => setOpenSidebar(false)}
+              isOpenDrawer1={isOpenDrawer1}
+              isOpenDrawer2={isOpenDrawer2}
+              doOpenDrawer1={doOpenDrawer1}
+              doOpenDrawer2={doOpenDrawer2}
+            />
+          )}
+        </Grid> */}
       </Grid>
       <Grid item>
         {openSidebar && (
@@ -252,7 +283,10 @@ const ProfilePage = ({
             skillInfo={skillHelpTextInfo}
             skillsOnly={sidebarType === 'skills'}
             onClose={() => setOpenSidebar(false)}
-            isMoreClicked={openSidebar}
+            isOpenDrawer1={isOpenDrawer1}
+            isOpenDrawer2={isOpenDrawer2}
+            doOpenDrawer1={doOpenDrawer1}
+            doOpenDrawer2={doOpenDrawer2}
           />
         )}
       </Grid>
