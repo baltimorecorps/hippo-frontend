@@ -77,7 +77,7 @@ const SkillsSection = ({
     onChange(capSkills.concat(newAdditionalSkills || []));
 
   return (
-    <Grid container className={openSidebar ? classes.displayNone : null}>
+    <Grid container>
       <Grid item>
         <Paper className={classes.paper}>
           <Grid container justify="space-between" className={classes.container}>
@@ -156,11 +156,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
   },
-  displayNone: {
-    [breakpoints.down('xs')]: {
-      display: 'none',
-    },
-  },
+
   moreDetails: {
     marginLeft: '5px',
     color: '#2971ff',
