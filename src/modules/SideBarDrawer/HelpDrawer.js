@@ -129,10 +129,20 @@ const styles = ({breakpoints, palette, spacing}) => ({
     position: 'fixed',
     top: '25px',
     height: '100vh',
-    margin: '0',
+    margin: '0px',
+    right: 0,
 
+    [breakpoints.down('xl')]: {
+      maxWidth: '18%',
+    },
+    [breakpoints.down('lg')]: {
+      maxWidth: '26%',
+    },
+    [breakpoints.down('md')]: {
+      maxWidth: '33%',
+    },
     [breakpoints.down('sm')]: {
-      width: '100%',
+      maxWidth: '41%',
     },
 
     [breakpoints.down('xs')]: {
@@ -140,6 +150,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
       position: 'absolute',
       margin: spacing(0.3),
       height: 'auto',
+      maxWidth: '100%',
+      left: 0,
     },
   },
   iconButton: {
@@ -153,7 +165,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   section: {
     padding: spacing(1, 3, 0.5, 3),
   },
-  textHeader: {fontWeight: '700', fontSize: '16px'},
+  textHeader: {fontWeight: '700', fontSize: '16px', padding: '0px 25px'},
   textContent: {
     color: palette.primary.darkGray,
     fontSize: '15px',

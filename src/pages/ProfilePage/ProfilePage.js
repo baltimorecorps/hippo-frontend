@@ -162,12 +162,17 @@ const ProfilePage = ({
           onCancel={cancelResumeSelect}
         />
       ) : null}
-      <Grid container justify="space-between">
+      <Grid
+        container
+        justify="flex-start"
+        className={openSidebar ? classes.container : null}
+      >
         <Grid
           item
-          md={openSidebar ? 9 : 12}
+          sm={openSidebar ? 7 : 12}
+          md={openSidebar ? 8 : 12}
+          lg={openSidebar ? 9 : 12}
           xl={openSidebar ? 10 : 12}
-          className={openSidebar ? classes.container : null}
         >
           <Grid
             id="divToPrint"
@@ -243,18 +248,19 @@ const ProfilePage = ({
             </Grid>
           </Grid>
         </Grid>
-        <Grid item md={openSidebar ? 3 : null} xl={openSidebar ? 2 : null}>
-          {openSidebar && (
-            <HelpDrawer
-              helpText={helpTextOptions[sidebarType]}
-              skillInfo={skillHelpTextInfo}
-              skillsOnly={sidebarType === 'skills'}
-              onClose={() => setOpenSidebar(false)}
-              isMoreClicked={openSidebar}
-            />
-          )}
-        </Grid>
       </Grid>
+      <Grid item>
+        {openSidebar && (
+          <HelpDrawer
+            helpText={helpTextOptions[sidebarType]}
+            skillInfo={skillHelpTextInfo}
+            skillsOnly={sidebarType === 'skills'}
+            onClose={() => setOpenSidebar(false)}
+            isMoreClicked={openSidebar}
+          />
+        )}
+      </Grid>
+
       {/*inSelectMode ? null : (
         <Grid
           item
@@ -578,14 +584,16 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
   },
-  wrapper: {
-    marginBottom: spacing(5),
-  },
   container: {
-    [breakpoints.down('sm')]: {
+    [breakpoints.down('xs')]: {
       display: 'none',
     },
   },
+  wrapper: {
+    marginBottom: spacing(5),
+    width: '100%',
+  },
+
   paper: {
     padding: spacing(2, 3, 3),
     marginBottom: spacing(5),
