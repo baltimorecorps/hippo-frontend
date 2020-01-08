@@ -18,6 +18,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import BasicInfoDisplay from 'components/Users/BasicInfoDisplay';
 import BasicInfoForm from 'components/Users/BasicInfoForm';
 import ExperiencesList from 'components/Experiences/ExperiencesList';
+import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
 import CapabilityScores from 'components/CapabilityScores';
 
@@ -198,12 +199,18 @@ const ProfilePage = ({
         justify="flex-start"
         className={openSidebar ? classes.container : null}
       >
+          {/*
         <Grid
           item
           sm={openSidebar ? 7 : 12}
           md={openSidebar ? 8 : 12}
           lg={openSidebar ? 9 : 12}
           xl={openSidebar ? 10 : 12}
+        >
+        */}
+        <Grid
+          item
+          sm={6}
         >
           <Grid
             id="divToPrint"
@@ -308,25 +315,9 @@ const ProfilePage = ({
             </Grid>
           </Grid>
         </Grid>
-        {/* <Grid
-          item
-          xs={openSidebar ? 4 : 1}
-          md={openSidebar ? 3 : 1}
-          xl={openSidebar ? 2 : 1}
-        >
-          {openSidebar && (
-            <HelpDrawer
-              helpText={helpTextOptions[sidebarType]}
-              skillInfo={skillHelpTextInfo}
-              skillsOnly={sidebarType === 'skills'}
-              onClose={() => setOpenSidebar(false)}
-              isOpenDrawer1={isOpenDrawer1}
-              isOpenDrawer2={isOpenDrawer2}
-              doOpenDrawer1={doOpenDrawer1}
-              doOpenDrawer2={doOpenDrawer2}
-            />
-          )}
-        </Grid> */}
+        <Grid item xs={6}>
+          <ResumeCreator />
+        </Grid>
       </Grid>
       <Grid item>
         {openSidebar && (
