@@ -316,7 +316,9 @@ const ProfilePage = ({
           </Grid>
         </Grid>
         <Grid item xs={6}>
-          <ResumeCreator />
+          <ResumeCreator 
+            sections={{experience: [{id: 48}]}}
+          />
         </Grid>
       </Grid>
       <Grid item>

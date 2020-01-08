@@ -1,3 +1,3 @@
-import ResumeCreator from './ResumeCreator';
+import ResumeCreator from './ResumeCreator.container';
 export default ResumeCreator;
 
