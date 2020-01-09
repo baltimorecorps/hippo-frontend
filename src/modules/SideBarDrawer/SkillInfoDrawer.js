@@ -55,7 +55,7 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
             >
               Here are some examples of {name}:
             </Typography>
-            <ul style={{paddingLeft: '30px'}} className={classes.uls}>
+            <ul className={classes.exampleUls}>
               {contents.examples.map((example, index) => (
                 <li key={index} className={classes.bullet}>
                   <Typography variant="body1" component="p">
@@ -72,10 +72,7 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
               Questions to spark ideas:
             </Typography>
             <div className={classes.questions}>
-              <ul
-                style={{margin: '15px', padding: '0px 5px 0px 15px'}}
-                className={classes.uls}
-              >
+              <ul className={classes.questionUls}>
                 {contents.questions.map((question, index) => (
                   <li key={index} className={classes.bullet}>
                     <Typography variant="body1" component="p">
@@ -105,7 +102,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     borderRadius: '0',
     height: '100vh',
     margin: '0',
-    maxHeight: '80vh',
+    maxHeight: '85vh',
     overflow: 'auto',
     [breakpoints.down('xs')]: {
       paddingTop: spacing(2.5),
@@ -142,9 +139,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(0.7),
     textIndent: '15px',
   },
-  uls: {
+  exampleUls: {
     marginBottom: spacing(0.7),
     marginTop: spacing(0),
+    paddingLeft: '30px',
+  },
+  questionUls: {
+    // marginBottom: spacing(0.7),
+    // marginTop: spacing(0),
+    paddingLeft: '30px',
+    margin: '15px',
+    padding: '0px 5px 0px 15px',
   },
   divider: {
     backgroundColor: palette.primary.darkGray,

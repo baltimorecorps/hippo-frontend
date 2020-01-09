@@ -165,7 +165,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   divContainer: {
-    maxHeight: '80vh',
+    maxHeight: '85vh',
     overflow: 'auto',
   },
   iconButton: {
