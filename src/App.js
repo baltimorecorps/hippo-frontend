@@ -37,7 +37,7 @@ const App = ({classes}) => {
               <Toolbar>
                 <Link to="/">
                   <MenuItem>
-                    <HomeIcon style={{fontSize: '35px'}} />
+                    <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
                 <div className={classes.grow} />
@@ -110,6 +110,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     backgroundColor: 'hsl(216, 18%, 89%)',
     paddingBottom: spacing(5),
   },
+  homeIcon: {fontSize: '35px'},
 });
 
 export default withStyles(styles)(App);
