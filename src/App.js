@@ -21,7 +21,6 @@ import {useAuth0} from 'lib/auth0';
 import Home from 'components/Other/Home.js';
 import Contacts from 'components/Contacts/Contacts.container';
 import SearchContact from 'components/SearchContact/SearchContact';
-import ResumeTemplate from 'components/Other/ResumeTemplate';
 import TalentHome from 'components/TalentHome/TalentHome';
 
 import NavBarIcons from '../src/components/Other/NavBarIcons';
@@ -110,7 +109,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
     paddingBottom: spacing(5),
-    height: '200vh',
   },
 });
 

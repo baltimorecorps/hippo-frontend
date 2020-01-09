@@ -11,89 +11,104 @@ import Divider from '@material-ui/core/Divider';
 import SkillInfoDrawer from './SkillInfoDrawer';
 import SkillLink from './SkillLink';
 
-import { typography } from '@material-ui/system';
-
-const HelpDrawer = ({helpText, skillInfo, skillsOnly, onClose, classes}) => {
-  const [openDrawer2, setOpenDrawer2] = React.useState(false);
+const HelpDrawer = ({
+  helpText,
+  skillInfo,
+  skillsOnly,
+  onClose,
+  isOpenDrawer1,
+  isOpenDrawer2,
+  doOpenDrawer1,
+  doOpenDrawer2,
+  classes,
+}) => {
   const [skillContent, setSkillContent] = React.useState();
   const [skillName, setSkillName] = React.useState();
 
   const handleOnClickSkillLink = index => {
     setSkillName(skillInfo.names[index]);
     setSkillContent(skillInfo.contents[skillInfo.names[index]]);
-    setOpenDrawer2(true);
+    doOpenDrawer2();
   };
+
   return (
     <Paper className={classes.BasicInfoPaper}>
-      <Grid container direction="column">
-        <Grid item align="end">
-          <IconButton
-            edge="end"
-            aria-label="cancel form"
-            onClick={onClose}
-            className={classes.iconButton}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-        {!skillsOnly && (
-          <React.Fragment>
-            <Grid item className={classes.section}>
-              <Box my={1}>
-                <Typography
-                  variant="h6"
-                  component="h6"
-                  className={classes.textHeader}
-                >
-                  How to write your {helpText.header}:
-                </Typography>
-              </Box>
-              <Box mb={2}>
-                {helpText.content.map((content, index) => (
-                  <Typography
-                    key={index}
-                    variant="body1"
-                    component="p"
-                    className={classes.textContent}
-                  >
-                    {content}
-                  </Typography>
-                ))}
-              </Box>
-            </Grid>
-            <Divider className={classes.divider} />
-          </React.Fragment>
-        )}
-
-        <Grid item className={classes.section}>
-          <Box my={1}>
-            <Typography
-              variant="h6"
-              component="h6"
-              className={classes.textHeader}
+      <div className={classes.divContainer}>
+        <Grid
+          container
+          direction="column"
+          style={isOpenDrawer2 ? {display: 'none'} : null}
+        >
+          <Grid item align="end">
+            <IconButton
+              edge="end"
+              aria-label="cancel form"
+              onClick={onClose}
+              className={classes.iconButton}
             >
-              {skillsOnly
-                ? 'Read more on each of these capabilities: '
-                : 'See if you can include these abilities in your profile:'}
-            </Typography>
-          </Box>
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+          {!skillsOnly && isOpenDrawer1 && (
+            <React.Fragment>
+              <Grid item className={classes.section}>
+                <Box my={1}>
+                  <Typography
+                    variant="h6"
+                    component="h6"
+                    className={classes.textHeader}
+                  >
+                    How to write your {helpText.header}:
+                  </Typography>
+                </Box>
+                <Box mb={2}>
+                  {helpText.content.map((content, index) => (
+                    <Typography
+                      key={index}
+                      variant="body1"
+                      component="p"
+                      className={classes.textContent}
+                    >
+                      {content}
+                    </Typography>
+                  ))}
+                </Box>
+              </Grid>
+              <Divider className={classes.divider} />
+            </React.Fragment>
+          )}
 
-          {skillInfo.names.map((name, index) => (
-            <SkillLink
-              key={index}
-              onClick={handleOnClickSkillLink}
-              skillName={name}
-              index={index}
-            />
-          ))}
+          <Grid item className={classes.section}>
+            <Box my={1}>
+              <Typography
+                variant="h6"
+                component="h6"
+                className={classes.textHeader}
+              >
+                {skillsOnly
+                  ? 'Read more on each of these capabilities: '
+                  : 'See if you can include these abilities in your profile:'}
+              </Typography>
+            </Box>
+
+            {skillInfo.names.map((name, index) => (
+              <SkillLink
+                key={index}
+                onClick={handleOnClickSkillLink}
+                skillName={name}
+                index={index}
+              />
+            ))}
+          </Grid>
+          <Divider className={classes.divider} />
         </Grid>
-        <Divider className={classes.divider} />
-      </Grid>
-      {openDrawer2 && (
+      </div>
+
+      {isOpenDrawer2 && (
         <SkillInfoDrawer
           name={skillName}
           contents={skillContent}
-          onBack={() => setOpenDrawer2(false)}
+          onBack={() => doOpenDrawer1()}
           onClose={onClose}
         />
       )}
@@ -121,13 +136,37 @@ HelpDrawer.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   BasicInfoPaper: {
-    paddingTop: spacing(10),
-    paddingBottom: spacing(8),
+    paddingTop: spacing(7),
+    paddingBottom: spacing(5),
     borderRadius: '0',
     position: 'fixed',
     top: '25px',
     height: '100vh',
-    margin: '0',
+    margin: '0px',
+    right: 0,
+
+    [breakpoints.down('xl')]: {
+      maxWidth: '18%',
+    },
+    [breakpoints.down('lg')]: {
+      maxWidth: '26%',
+    },
+    [breakpoints.down('md')]: {
+      maxWidth: '33%',
+    },
+
+    [breakpoints.down('sm')]: {
+      paddingTop: spacing(6),
+      position: 'absolute',
+      margin: spacing(0.3),
+      height: 'auto',
+      maxWidth: '100%',
+      left: 0,
+    },
+  },
+  divContainer: {
+    maxHeight: '80vh',
+    overflow: 'auto',
   },
   iconButton: {
     alignSelf: 'flex-end',
@@ -138,12 +177,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   section: {
-    padding: spacing(1, 3, 0.5, 3),
+    padding: spacing(1, 3, 0.7, 3),
+    maxHeight: '80vh',
+    overflow: 'auto',
   },
-  textHeader: {fontWeight: '700', fontSize: '16px'},
+  textHeader: {
+    fontWeight: '700',
+    fontSize: '16px',
+    padding: '0px 25px',
+  },
   textContent: {
     color: palette.primary.darkGray,
-    fontSize: '15px',
     textIndent: '15px',
     marginBottom: spacing(0.7),
   },

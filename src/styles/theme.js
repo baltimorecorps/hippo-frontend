@@ -9,6 +9,7 @@ const theme = createMuiTheme({
       offWhite: '#fafafa',
       redDot: '#ff1717',
       almostBlack: 'rgba(0, 0, 0, 0.87)',
+      link: '#295bff',
     },
     secondary: {
       main: 'hsl(232, 57%, 26%)',

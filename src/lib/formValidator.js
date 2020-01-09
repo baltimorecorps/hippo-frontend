@@ -37,17 +37,17 @@ const experienceValidator = values => {
     err.degree_error = 'Required';
   }
 
-  // if (type === 'Education' && degree) {
-  //   if (!degree_other) {
-  //     isError = true;
-  //     err.degreeOther_error = 'Required';
-  //   }
-  // if (degree_other && degree_other.length > 100) {
-  //   isError = true;
-  //   err.degreeOther_error =
-  //     'Type of Education must be less than 100 characters';
-  // }
-  // }
+  if (type === 'Education' && degree) {
+    if (degree === 'Other' && !degree_other) {
+      isError = true;
+      err.degreeOther_error = 'Required';
+    }
+    if (degree_other && degree_other.length > 100) {
+      isError = true;
+      err.degreeOther_error =
+        'Type of Education must be less than 100 characters';
+    }
+  }
 
   if (!title) {
     isError = true;
@@ -60,13 +60,17 @@ const experienceValidator = values => {
   }
 
   // check if start_month is null, invalid month name, or 'none'
-  if (!start_month || !monthFullNames.includes(start_month)) {
+
+  if (
+    type !== 'Accomplishment' &&
+    (!start_month || !monthFullNames.includes(start_month))
+  ) {
     isError = true;
     err.startMonth_error = 'Required';
   }
 
   // check if start_year is null or '0'
-  if (!start_year || start_year === '0') {
+  if (type !== 'Accomplishment' && (!start_year || start_year === '0')) {
     isError = true;
     err.startYear_error = 'Required';
   }

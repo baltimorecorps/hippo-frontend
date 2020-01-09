@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
 import CloseIcon from '@material-ui/icons/Close';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
-  console.log(contents);
   return (
-    <Paper className={classes.BasicInfoPaper}>
+    <div className={classes.BasicInfoPaper}>
       <Grid container direction="column">
         <Grid item xs={12} className={classes.iconsContainer}>
           <IconButton
@@ -58,7 +55,7 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
             >
               Here are some examples of {name}:
             </Typography>
-            <ul>
+            <ul style={{paddingLeft: '30px'}} className={classes.uls}>
               {contents.examples.map((example, index) => (
                 <li key={index} className={classes.bullet}>
                   <Typography variant="body1" component="p">
@@ -70,12 +67,15 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
             <Typography
               variant="body1"
               component="p"
-              className={classes.textContent}
+              className={classes.textHeader}
             >
               Questions to spark ideas:
             </Typography>
             <div className={classes.questions}>
-              <ul>
+              <ul
+                style={{margin: '15px', padding: '0px 5px 0px 15px'}}
+                className={classes.uls}
+              >
                 {contents.questions.map((question, index) => (
                   <li key={index} className={classes.bullet}>
                     <Typography variant="body1" component="p">
@@ -88,7 +88,7 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
           </Box>
         </Grid>
       </Grid>
-    </Paper>
+    </div>
   );
 };
 
@@ -102,14 +102,16 @@ SkillInfoDrawer.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   BasicInfoPaper: {
-    paddingTop: spacing(10),
-    paddingBottom: spacing(8),
     borderRadius: '0',
-    position: 'fixed',
-    top: '25px',
     height: '100vh',
     margin: '0',
-    zIndex: 2,
+    maxHeight: '80vh',
+    overflow: 'auto',
+    [breakpoints.down('xs')]: {
+      paddingTop: spacing(2.5),
+      height: 'auto',
+      margin: spacing(0.5),
+    },
   },
   iconsContainer: {
     width: '100%',
@@ -130,16 +132,25 @@ const styles = ({breakpoints, palette, spacing}) => ({
     overflow: 'auto',
   },
   questions: {
-    maxHeight: '200px',
+    maxHeight: '250px',
     overflow: 'auto',
+    backgroundColor: '#f2f2f2',
+    margin: '5px 0px',
   },
   textHeader: {fontWeight: '700', fontSize: '16px'},
   textContent: {
-    marginBottom: spacing(1),
+    marginBottom: spacing(0.7),
+    textIndent: '15px',
   },
-
+  uls: {
+    marginBottom: spacing(0.7),
+    marginTop: spacing(0),
+  },
   divider: {
     backgroundColor: palette.primary.darkGray,
+  },
+  bullet: {
+    marginBottom: '5px',
   },
 });
 

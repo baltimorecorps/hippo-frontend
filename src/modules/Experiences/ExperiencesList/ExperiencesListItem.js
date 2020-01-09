@@ -10,6 +10,8 @@ import SkillsList from 'components/SkillsList';
 import AddOrEditExperienceForm from 'modules/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import Button from '@material-ui/core/Button';
+
 import EditIcon from '@material-ui/icons/Edit';
 
 import {formatMonthYearDate, getWorkLength, configureForm} from './helpers';
@@ -23,11 +25,15 @@ const ExperiencesListItem = ({
   selectable,
   classes,
 }) => {
-  const initial = experience.host ? experience.host[0] : '';
-  const title =
-    experience.type === 'Education'
-      ? `${experience.degree} in ${experience.title}`
-      : `${experience.title}`;
+  const initial = experience.host ? experience.host[0] : experience.title[0];
+  let title = experience.title;
+  if (experience.type === 'Education') {
+    if (experience.degree === 'Other') {
+      title = `${experience.degree_other} in ${experience.title}`;
+    } else {
+      title = `${experience.degree} in ${experience.title}`;
+    }
+  }
 
   const config = configureForm(experience.type);
 
@@ -37,10 +43,13 @@ const ExperiencesListItem = ({
     setEditing(false);
   };
 
-  const startDate = formatMonthYearDate(
-    experience.start_month,
-    experience.start_year
-  );
+  let startDate = '';
+  if (experience.start_month && experience.start_year) {
+    startDate = formatMonthYearDate(
+      experience.start_month,
+      experience.start_year
+    );
+  }
 
   let endDate = '';
   if (experience.end_month && experience.end_year) {
@@ -58,7 +67,7 @@ const ExperiencesListItem = ({
 
   return (
     <React.Fragment>
-      <Grid container justify="center" className={classes.gridContainer}>
+      <Grid container className={classes.gridContainer}>
         {selectable ? (
           <Grid item>
             <Checkbox onChange={onSelect} />
@@ -71,7 +80,7 @@ const ExperiencesListItem = ({
           )
         )}
 
-        <Grid item xs={11} md={8}>
+        <Grid item xs={10} sm={7} md={8}>
           {!editing && (
             <React.Fragment>
               <Typography
@@ -81,7 +90,7 @@ const ExperiencesListItem = ({
                   fontWeight: '700',
                 }}
               >
-                {experience.host}
+                {experience.host || experience.title}
 
                 {experience.location ? (
                   <span
@@ -107,8 +116,19 @@ const ExperiencesListItem = ({
                   fontFamily: 'Lato',
                 }}
               >
-                {title}
+                {experience.host && title}
               </Typography>
+              {experience.link && (
+                <Button
+                  target="_blank"
+                  component="button"
+                  href={experience.link}
+                  variant="text"
+                  className={classes.link}
+                >
+                  {experience.link}
+                </Button>
+              )}
               <Typography
                 gutterBottom
                 variant="subtitle1"
@@ -154,7 +174,7 @@ const ExperiencesListItem = ({
         )}
 
         {editing || selectable ? null : (
-          <Grid item xs={1}>
+          <Grid item sm={1}>
             <IconButton
               onClick={() => setEditing(true)}
               size="small"
@@ -203,6 +223,12 @@ ExperiencesListItem.propTypes = {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
+  gridContainer: {
+    // width: '100%',
+    // display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '10px',
+  },
   editIcon: {
     flexBasis: '60px',
     padding: spacing(0.5),
@@ -211,13 +237,25 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   avatar: {
-    [breakpoints.down('sm')]: {
+    display: 'flex',
+    justifyContent: 'center',
+
+    [breakpoints.down('xs')]: {
       display: 'none',
     },
     marginRight: '20px',
   },
   initial: {
     backgroundColor: palette.primary.darkerYellow,
+  },
+  link: {
+    color: palette.primary.link,
+    padding: '0 5px',
+    fontSize: '15px',
+    textTransform: 'lowercase',
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
 });
 
