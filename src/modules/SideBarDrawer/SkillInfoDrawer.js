@@ -55,7 +55,7 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
             >
               Here are some examples of {name}:
             </Typography>
-            <ul className={classes.exampleUls}>
+            <ul className={classes.exampleUl}>
               {contents.examples.map((example, index) => (
                 <li key={index} className={classes.bullet}>
                   <Typography variant="body1" component="p">
@@ -72,7 +72,7 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
               Questions to spark ideas:
             </Typography>
             <div className={classes.questions}>
-              <ul className={classes.questionUls}>
+              <ul className={classes.questionUl}>
                 {contents.questions.map((question, index) => (
                   <li key={index} className={classes.bullet}>
                     <Typography variant="body1" component="p">
@@ -139,12 +139,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(0.7),
     textIndent: '15px',
   },
-  exampleUls: {
+  exampleUl: {
     marginBottom: spacing(0.7),
     marginTop: spacing(0),
     paddingLeft: '30px',
   },
-  questionUls: {
+  questionUl: {
     // marginBottom: spacing(0.7),
     // marginTop: spacing(0),
     paddingLeft: '30px',
