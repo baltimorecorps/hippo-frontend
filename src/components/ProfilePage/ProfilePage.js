@@ -343,11 +343,7 @@ const ProfilePage = ({
         </Grid>
         {inSelectMode ? (
           <Grid item xs={6} className={classes.wrapper}>
-            <ResumeCreator
-              sections={{
-                experience: [{id: 48}, {id: 49}],
-              }}
-            />
+            <ResumeCreator />
           </Grid>
         ) : null}
       </Grid>
