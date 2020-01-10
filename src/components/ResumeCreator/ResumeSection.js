@@ -4,10 +4,10 @@ import {Droppable} from 'react-beautiful-dnd';
 
 import ExperienceItem from './ExperienceItem';
 
-const ResumeSection = ({classes, section, sectionName}) => (
+const ResumeSection = ({classes, section, sectionId, sectionLabel}) => (
   <div className={classes.section}>
-    <div className={classes.header}>{sectionName}</div>
-    <Droppable droppableId={sectionName}>
+    <div className={classes.header}>{sectionLabel}</div>
+    <Droppable droppableId={sectionId}>
       {provided => (
         <div ref={provided.innerRef} {...provided.droppableProps}>
           {section.map((experience, index) => (

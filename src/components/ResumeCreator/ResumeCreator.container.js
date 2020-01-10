@@ -1,4 +1,5 @@
 import {connect} from 'react-redux';
+import {moveResumeItem} from 'actions/resume';
 import ResumeCreator from './ResumeCreator';
 
 export const mapStateToProps = (state, props) => {
@@ -10,8 +11,16 @@ export const mapStateToProps = (state, props) => {
   }
 };
 
+export const mapDispatchToProps = dispatch => {
+  return {
+    moveResumeItem: (id, destination, source) => dispatch(moveResumeItem(id, destination, source))
+  };
+}
+
+
 const Container = connect(
   mapStateToProps,
+  mapDispatchToProps,
 )(ResumeCreator);
 
 export default Container;

@@ -12,7 +12,7 @@ const formatDate = experience => {
 
 const ExperienceItem = ({classes, experience, index}) => {
   return (
-    <Draggable draggableId={`exp${experience.id}`} index={index}>
+    <Draggable draggableId={`${experience.id}`} index={index}>
       {provided => (
         <div 
           className={classes.item}
