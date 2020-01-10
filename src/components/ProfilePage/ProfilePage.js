@@ -1,6 +1,5 @@
 import React from 'react';
-
-import {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect, useCallback, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -31,15 +30,15 @@ import CAPABILITIES from './capabilities.yml';
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
 // render
-const useScroll = () => {
+const useScroll = (ref) => {
   const [scroll, setScroll] = useState(null);
 
   useEffect(() => {
-    if (scroll !== null) {
-      window.scrollTo(scroll);
+    if (scroll !== null && ref.current) {
+      ref.current.scrollTo(scroll);
       setScroll(null);
     }
-  }, [scroll, setScroll]);
+  }, [ref, scroll, setScroll]);
 
   const scrollTo = (...args) => {
     if (args.length >= 2) {
@@ -69,7 +68,8 @@ const ProfilePage = ({
   showResumeSpinner,
   inSelectMode,
 }) => {
-  const scrollTo = useScroll();
+  const wrapperRef = useRef();
+  const scrollTo = useScroll(wrapperRef);
 
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
@@ -177,7 +177,7 @@ const ProfilePage = ({
     if (breakpoint === 'xl') { return openSidebar ? 10 : 12;}
 
     return 12;
-  }
+  };
 
   return (
     <React.Fragment>
@@ -219,6 +219,7 @@ const ProfilePage = ({
         >
           <Grid
             id="divToPrint"
+            ref={wrapperRef}
             container
             justify="center"
             className={openSidebar ? classes.wrapperSmall : classes.wrapper}
@@ -316,12 +317,32 @@ const ProfilePage = ({
                 />
 
                 {/*<ResumesList />*/}
+                {inSelectMode ? null : (
+                  <Grid
+                    item
+                    xs={openSidebar ? 8 : 11}
+                    md={openSidebar ? 9 : 11}
+                    xl={openSidebar ? 10 : 11}
+                    align="center"
+                  >
+                    <Grid container justify="center">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={startSelectLocal}
+                        className={classes.resumeButton}
+                      >
+                        Create Resume
+                      </Button>
+                    </Grid>
+                  </Grid>
+                )}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
         {inSelectMode ? (
-          <Grid item xs={6}>
+          <Grid item xs={6} className={classes.wrapper}>
             <ResumeCreator
               sections={{
                 experience: [{id: 48}, {id: 49}],
@@ -344,26 +365,6 @@ const ProfilePage = ({
           />
         )}
       </Grid>
-
-      {inSelectMode ? null : (
-        <Grid
-          item
-          xs={openSidebar ? 8 : 11}
-          md={openSidebar ? 9 : 11}
-          xl={openSidebar ? 10 : 11}
-          align="center"
-        >
-          <Grid container justify="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={startResumeSelect}
-            >
-              Create Resume
-            </Button>
-          </Grid>
-        </Grid>
-      )}
     </React.Fragment>
   );
 };
@@ -502,6 +503,7 @@ const drawerStyles = ({breakpoints, palette, spacing, shadows}) => ({
     // because of the defaults for persistent drawers in Material-UI
     boxShadow: shadows[2],
     borderBottom: 0,
+    maxHeight: '64px',
   },
   container: {
     margin: spacing(2, 0, 3, 0),
@@ -524,17 +526,17 @@ const SelectionDrawer = withStyles(drawerStyles)(
       >
         <Grid container justify="center" className={classes.container}>
           <Grid item xs={8}>
-            <Grid item xs={12} className={classes.item}>
-              <Typography variant="body1" component="p">
-                Select the experiences you want to highlight at the top of your
-                resume.
-              </Typography>
-            </Grid>
             <Grid container justify="flex-end" className={classes.item}>
-              <Grid item>
+              <Grid item xs={10} className={classes.item}>
+                <Typography variant="body1" component="p">
+                  Select the experiences you want to highlight at the top of
+                  your resume.
+                </Typography>
+              </Grid>
+              <Grid item xs={1}>
                 <Button onClick={onCancel}>Cancel</Button>
               </Grid>
-              <Grid item>
+              <Grid item xs={1}>
                 <Button variant="contained" color="primary" onClick={onNext}>
                   Next
                 </Button>
@@ -557,20 +559,23 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     },
   },
   wrapper: {
-    marginBottom: spacing(5),
+    paddingBottom: spacing(5),
     width: '100%',
+    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    overflow: 'auto',
     paddingLeft: '18vw',
     paddingRight: '18vw',
   },
   wrapperSmall: {
     marginBottom: spacing(5),
     width: '100%',
+    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    overflow: 'auto',
     paddingLeft: '8vw',
   },
 
   paper: {
     padding: spacing(2, 3, 3),
-    marginBottom: spacing(5),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -620,6 +625,8 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     '&:hover': {
       fontWeight: 'bold',
     },
+  resumeButton: {
+    marginTop: spacing(5),
   },
 });
 
