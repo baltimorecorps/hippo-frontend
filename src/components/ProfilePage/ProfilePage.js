@@ -168,6 +168,17 @@ const ProfilePage = ({
     classes.link
   );
 
+  const getContainerSize = (breakpoint) => {
+    if (inSelectMode) { return 6; }
+    
+    if (breakpoint === 'sm') { return openSidebar ? 7 : 12; }
+    if (breakpoint === 'md') { return openSidebar ? 8 : 12;}
+    if (breakpoint === 'lg') { return openSidebar ? 9 : 12;}
+    if (breakpoint === 'xl') { return openSidebar ? 10 : 12;}
+
+    return 12;
+  }
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -199,18 +210,12 @@ const ProfilePage = ({
         justify="flex-start"
         className={openSidebar ? classes.container : null}
       >
-          {/*
         <Grid
           item
-          sm={openSidebar ? 7 : 12}
-          md={openSidebar ? 8 : 12}
-          lg={openSidebar ? 9 : 12}
-          xl={openSidebar ? 10 : 12}
-        >
-        */}
-        <Grid
-          item
-          sm={6}
+          sm={getContainerSize('sm')}
+          md={getContainerSize('md')}
+          lg={getContainerSize('lg')}
+          xl={getContainerSize('xl')}
         >
           <Grid
             id="divToPrint"
@@ -315,11 +320,15 @@ const ProfilePage = ({
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <ResumeCreator 
-            sections={{experience: [{id: 48}]}}
-          />
-        </Grid>
+        {inSelectMode ? (
+          <Grid item xs={6}>
+            <ResumeCreator
+              sections={{
+                experience: [{id: 48}, {id: 49}],
+              }}
+            />
+          </Grid>
+        ) : null}
       </Grid>
       <Grid item>
         {openSidebar && (
@@ -336,7 +345,7 @@ const ProfilePage = ({
         )}
       </Grid>
 
-      {/*inSelectMode ? null : (
+      {inSelectMode ? null : (
         <Grid
           item
           xs={openSidebar ? 8 : 11}
@@ -348,13 +357,13 @@ const ProfilePage = ({
             <Button
               variant="contained"
               color="primary"
-              onClick={startResumeCreation}
+              onClick={startResumeSelect}
             >
               Create Resume
             </Button>
           </Grid>
         </Grid>
-      )*/}
+      )}
     </React.Fragment>
   );
 };

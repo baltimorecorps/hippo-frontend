@@ -21,7 +21,6 @@ const formatDate = experience => {
 };
 
 const ResumeCreator = ({classes, sections}) => {
-  console.log(sections);
   return (
     <Grid container className={classes.container}>
       <Paper className={classes.paper}>
