@@ -537,7 +537,7 @@ const SelectionDrawer = withStyles(drawerStyles)(
                 <Button onClick={onCancel}>Cancel</Button>
               </Grid>
               <Grid item xs={1}>
-                <Button variant="contained" color="primary" onClick={onNext}>
+                <Button variant="contained" color="primary" >
                   Next
                 </Button>
               </Grid>
