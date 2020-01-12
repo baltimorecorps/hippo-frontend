@@ -99,7 +99,6 @@ const NavBarIcons = ({logout, classes}) => {
         handleClickAway={handleClickAway}
         menuHeader={dropdownMenuInfo.notifications.menuHeader}
         menuItems={dropdownMenuInfo.notifications.menuItems}
-        iconClasses={iconClasses}
       />
       <Icon
         name="user"
@@ -109,7 +108,6 @@ const NavBarIcons = ({logout, classes}) => {
         handleClickAway={handleClickAway}
         menuHeader={dropdownMenuInfo.user.menuHeader}
         menuItems={dropdownMenuInfo.user.menuItems}
-        iconClasses={iconClasses}
       />
     </div>
   );
