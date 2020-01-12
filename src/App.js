@@ -23,7 +23,7 @@ import Contacts from 'components/Contacts/Contacts.container';
 import SearchContact from 'components/SearchContact/SearchContact';
 import TalentHome from 'components/TalentHome/TalentHome';
 
-import NavBarIcons from '../src/components/Other/NavBarIcons';
+import NavBarIcons from './components/NavigationBar/NavBarIcons';
 
 const App = ({classes}) => {
   const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
