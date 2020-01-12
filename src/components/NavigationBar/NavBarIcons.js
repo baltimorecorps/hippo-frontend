@@ -59,13 +59,6 @@ const NavBarIcons = ({logout, classes}) => {
     },
   };
 
-  const iconClasses = {
-    buttons: classes.buttons,
-    icons: classes.icons,
-    darkGreyBG: classes.darkGrayBG,
-    offWhiteColor: classes.offWhiteColor,
-  };
-
   const handleClickIcon = (event, type) => {
     setAnchorEl(event.currentTarget);
     if (type === 'user') {
