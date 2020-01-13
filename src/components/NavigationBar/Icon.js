@@ -74,7 +74,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     borderRadius: '50%',
     padding: '5px',
     backgroundColor: palette.primary.almostBlack,
-    fontSize: '30px',
+    fontSize: '40px',
   },
 
   offWhiteColor: {
