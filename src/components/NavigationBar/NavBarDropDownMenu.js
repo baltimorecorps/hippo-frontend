@@ -79,10 +79,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   dropdownHeader: {
     borderBottom: 'solid 1px #dedede',
-    fontWeight: 'bold',
     padding: '5px',
     lineHeight: '1.2',
-    fontSize: '16px',
+    fontSize: '13px',
+    backgroundColor: '#707070;',
   },
 });
 
