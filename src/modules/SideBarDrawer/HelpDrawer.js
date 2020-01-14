@@ -50,58 +50,60 @@ const HelpDrawer = ({
             <CloseIcon />
           </IconButton>
         </Grid>
-        {!skillsOnly && isOpenDrawer1 && (
-          <React.Fragment>
-            <Grid item className={classes.section}>
-              <Box my={1}>
-                <Typography
-                  variant="h6"
-                  component="h6"
-                  className={classes.textHeader}
-                >
-                  How to write your {helpText.header}:
-                </Typography>
-              </Box>
-              <Box mb={2}>
-                {helpText.content.map((content, index) => (
+        <Grid item className={classes.scroller}>
+          {!skillsOnly && isOpenDrawer1 && (
+            <React.Fragment>
+              <Grid item className={classes.section}>
+                <Box my={1}>
                   <Typography
-                    key={index}
-                    variant="body1"
-                    component="p"
-                    className={classes.textContent}
+                    variant="h6"
+                    component="h6"
+                    className={classes.textHeader}
                   >
-                    {content}
+                    How to write your {helpText.header}:
                   </Typography>
-                ))}
-              </Box>
-            </Grid>
-            <Divider className={classes.divider} />
-          </React.Fragment>
-        )}
+                </Box>
+                <Box mb={2}>
+                  {helpText.content.map((content, index) => (
+                    <Typography
+                      key={index}
+                      variant="body1"
+                      component="p"
+                      className={classes.textContent}
+                    >
+                      {content}
+                    </Typography>
+                  ))}
+                </Box>
+              </Grid>
+              <Divider className={classes.divider} />
+            </React.Fragment>
+          )}
 
-        <Grid item className={classes.section}>
-          <Box my={1}>
-            <Typography
-              variant="h6"
-              component="h6"
-              className={classes.textHeader}
-            >
-              {skillsOnly
-                ? 'Read more on each of these capabilities: '
-                : 'See if you can include these abilities in your profile:'}
-            </Typography>
-          </Box>
+          <Grid item className={classes.section}>
+            <Box my={1}>
+              <Typography
+                variant="h6"
+                component="h6"
+                className={classes.textHeader}
+              >
+                {skillsOnly
+                  ? 'Read more on each of these capabilities: '
+                  : 'See if you can include these abilities in your profile:'}
+              </Typography>
+            </Box>
 
-          {names.map((name, index) => (
-            <SkillLink
-              key={index}
-              onClick={handleOnClickSkillLink}
-              skillName={name}
-              index={index}
-            />
-          ))}
+            {names.map((name, index) => (
+              <SkillLink
+                key={index}
+                onClick={handleOnClickSkillLink}
+                skillName={name}
+                index={index}
+              />
+            ))}
+          </Grid>
+          <Divider className={classes.divider} />
         </Grid>
-        <Divider className={classes.divider} />
       </Grid>
       {isOpenDrawer2 && (
         <SkillInfoDrawer
@@ -174,10 +176,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
       color: 'black',
     },
   },
+  scroller: {
+    height: '80vh',
+    overflow: 'auto',
+  },
   section: {
     padding: spacing(1, 3, 0.5, 3),
   },
-  textHeader: {fontWeight: '700', fontSize: '16px', padding: '0px 25px'},
+  textHeader: {
+    fontWeight: '700', 
+    fontSize: '16px', 
+  },
   textContent: {
     color: palette.primary.darkGray,
     fontSize: '15px',
