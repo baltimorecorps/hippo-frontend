@@ -85,7 +85,7 @@ const NavBarIcons = ({logout, classes}) => {
     <div className={classes.container} id="navLinks" ref={wrapperRef}>
       <Icon
         name="notifications"
-        isWarning={false}
+        isWarning={isWarning}
         handleClickIcon={e => handleClickIcon(e, 'notifications')}
         openIcon={openIcon === 2}
         anchorEl={anchorEl}
