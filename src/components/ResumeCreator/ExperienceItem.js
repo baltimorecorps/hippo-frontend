@@ -40,6 +40,7 @@ const ExperienceItem = ({classes, experience, index}) => {
 const styles = ({breakpoints, palette, spacing}) => ({
   item: {
     display: 'inline-flex',
+    width: '100%',
     flexDirection: 'column',
     marginTop: spacing(1.5),
     padding: spacing(1),
