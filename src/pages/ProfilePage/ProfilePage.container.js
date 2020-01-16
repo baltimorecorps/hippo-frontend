@@ -5,6 +5,7 @@ import {
   updateContact,
   addContactSkill,
 } from 'actions/contacts';
+import {refreshPrograms, addNewProgram} from 'actions/programs';
 import {
   startResumeCreation,
   startResumeSelect,
@@ -147,6 +148,12 @@ export const mapDispatchToProps = dispatch => ({
   updateContact: contact => updateContact(contact)(dispatch),
   refreshContacts: async () => {
     await refreshContacts(dispatch);
+  },
+  refreshPrograms: async contactId => {
+    await refreshPrograms(contactId)(dispatch);
+  },
+  addNewProgram: async program => {
+    await addNewProgram(program)(dispatch);
   },
   addContactSkill: (contactId, skill) =>
     addContactSkill(contactId, skill)(dispatch),

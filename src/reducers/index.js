@@ -10,9 +10,12 @@ import {
 } from './profile';
 import resume from './resume';
 
+import {programsReducer as programs} from './programs';
+
 const rootReducer = combineReducers({
   accounts,
   contacts,
+  programs,
   experiences,
   resume,
   tags,

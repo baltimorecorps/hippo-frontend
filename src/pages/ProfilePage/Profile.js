@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {useAuth0} from 'lib/auth0';
 import Grid from '@material-ui/core/Grid';
@@ -9,47 +9,98 @@ import ProfilePage from './ProfilePage.container';
 const LOADING_STATE = {
   notLoaded: 0,
   loading: 1,
-  loaded: 2,
+  loadedAll: 2,
 };
 
-const Profile = ({accounts, addContact, getMyContact}) => {
-  const {getTokenSilently, loadingAuth, user} = useAuth0();
+const Profile = ({
+  accounts,
+  programs,
+  addContact,
+  getMyContact,
+  addNewProgram,
+  refreshPrograms,
+}) => {
+  const {getTokenSilently, loadingAuth, user, logout} = useAuth0();
   const [loadingState, setLoadingState] = useState(LOADING_STATE.notLoaded);
 
-  // Loads contact associated with our account (requires us to be AuthN'd)
-  const getAccountContact = async () => {
-    try {
-      // Don't load a bunch of times in a row
-      if (loadingState === LOADING_STATE.loading) {
-        return;
-      }
-
-      // getTokenSilently will fail if we're not authenticated already
-      if (!user) {
-        return;
-      }
-
-      setLoadingState(LOADING_STATE.loading);
-      const token = await getTokenSilently();
-      const result = await getMyContact(token);
-      console.log(result);
-      setLoadingState(LOADING_STATE.loaded);
-    } catch (error) {
-      setLoadingState(LOADING_STATE.notLoaded);
-      console.error(error);
-    }
+  const PFPProgram = {
+    program_id: 1,
+    card_id: 'card',
+    is_approved: false,
+    is_active: true,
+    stage: 1,
+    responses: [
+      {
+        program_contact_id: 1,
+        question_id: 1,
+        response_text: '',
+      },
+      {
+        program_contact_id: 1,
+        question_id: 2,
+        response_text: '',
+      },
+    ],
   };
 
-  // If we haven't started loading the contact yet, do so
-  if (loadingState === LOADING_STATE.notLoaded) {
-    getAccountContact();
-  }
+  useEffect(() => {
+    if (loadingState === LOADING_STATE.notLoaded)
+      // Loads contact associated with our account (requires us to be AuthN'd)
+      (async () => {
+        try {
+          // getTokenSilently will fail if we're not authenticated already
+          if (!user) {
+            return;
+          }
+
+          setLoadingState(LOADING_STATE.loading);
+          const token = await getTokenSilently();
+          const result = await getMyContact(token);
+          let id = null;
+          let programResult = null;
+
+          // Checking if this account with a token has a profile in this application
+          if (result.body) {
+            id = result.body.data.id;
+            programResult = await refreshPrograms(id);
+            if (programResult.body.data[0]) {
+              console.log(
+                'This contact is already in PFP program.',
+                programResult
+              );
+              setLoadingState(LOADING_STATE.loadedAll);
+            } else {
+              PFPProgram.contact_id = id;
+              programResult = await addNewProgram(PFPProgram);
+              console.log('adding contact to new program (PFP)', programResult);
+              setLoadingState(LOADING_STATE.loadedAll);
+            }
+          } else {
+            // This is to handle when account has token but never create a profile before [GetMyContact REJECT]
+            // So it will skip this part and go to create profile form page.
+            setLoadingState(LOADING_STATE.loadedAll);
+          }
+        } catch (error) {
+          setLoadingState(LOADING_STATE.notLoaded);
+          console.error(error);
+        }
+      })();
+  }, [
+    user,
+    loadingState,
+    getMyContact,
+    getTokenSilently,
+    addNewProgram,
+    refreshPrograms,
+    programs,
+    PFPProgram,
+  ]);
 
   // Show this page if we're not yet authenticated
   if (!loadingAuth && !user) {
     return <div>You are not logged in.</div>;
   }
-  if (loadingState !== LOADING_STATE.loaded) {
+  if (loadingState !== LOADING_STATE.loadedAll) {
     return <div>Loading...</div>;
   }
 
@@ -69,7 +120,7 @@ const Profile = ({accounts, addContact, getMyContact}) => {
       </Grid>
     );
   } else {
-    return <ProfilePage contactId={contactId} />;
+    return <ProfilePage contactId={contactId} programs={programs} />;
   }
 };
 
