@@ -23,25 +23,25 @@ const Profile = ({
   const {getTokenSilently, loadingAuth, user, logout} = useAuth0();
   const [loadingState, setLoadingState] = useState(LOADING_STATE.notLoaded);
 
-  const PFPProgram = {
-    program_id: 1,
-    card_id: 'card',
-    is_approved: false,
-    is_active: true,
-    stage: 1,
-    responses: [
-      {
-        program_contact_id: 1,
-        question_id: 1,
-        response_text: '',
-      },
-      {
-        program_contact_id: 1,
-        question_id: 2,
-        response_text: '',
-      },
-    ],
-  };
+  // const PFPProgram = {
+  //   program_id: 1,
+  //   card_id: 'card',
+  //   is_approved: false,
+  //   is_active: true,
+  //   stage: 1,
+  //   responses: [
+  //     {
+  //       program_contact_id: 1,
+  //       question_id: 1,
+  //       response_text: '',
+  //     },
+  //     {
+  //       program_contact_id: 1,
+  //       question_id: 2,
+  //       response_text: '',
+  //     },
+  //   ],
+  // };
 
   useEffect(() => {
     if (loadingState === LOADING_STATE.notLoaded)
@@ -56,30 +56,33 @@ const Profile = ({
           setLoadingState(LOADING_STATE.loading);
           const token = await getTokenSilently();
           const result = await getMyContact(token);
-          let id = null;
-          let programResult = null;
+          console.log(result);
+          setLoadingState(LOADING_STATE.loadedAll);
 
-          // Checking if this account with a token has a profile in this application
-          if (result.body) {
-            id = result.body.data.id;
-            programResult = await refreshPrograms(id);
-            if (programResult.body.data[0]) {
-              console.log(
-                'This contact is already in PFP program.',
-                programResult
-              );
-              setLoadingState(LOADING_STATE.loadedAll);
-            } else {
-              PFPProgram.contact_id = id;
-              programResult = await addNewProgram(PFPProgram);
-              console.log('adding contact to new program (PFP)', programResult);
-              setLoadingState(LOADING_STATE.loadedAll);
-            }
-          } else {
-            // This is to handle when account has token but never create a profile before [GetMyContact REJECT]
-            // So it will skip this part and go to create profile form page.
-            setLoadingState(LOADING_STATE.loadedAll);
-          }
+          // let id = null;
+          // let programResult = null;
+
+          // // Checking if this account with a token has a profile in this application
+          // if (result.body) {
+          //   id = result.body.data.id;
+          //   programResult = await refreshPrograms(id);
+          //   if (programResult.body.data[0]) {
+          //     console.log(
+          //       'This contact is already in PFP program.',
+          //       programResult
+          //     );
+          //     setLoadingState(LOADING_STATE.loadedAll);
+          //   } else {
+          //     PFPProgram.contact_id = id;
+          //     programResult = await addNewProgram(PFPProgram);
+          //     console.log('adding contact to new program (PFP)', programResult);
+          //     setLoadingState(LOADING_STATE.loadedAll);
+          //   }
+          // } else {
+          //   // This is to handle when account has token but never create a profile before [GetMyContact REJECT]
+          //   // So it will skip this part and go to create profile form page.
+          //   setLoadingState(LOADING_STATE.loadedAll);
+          // }
         } catch (error) {
           setLoadingState(LOADING_STATE.notLoaded);
           console.error(error);
@@ -90,10 +93,10 @@ const Profile = ({
     loadingState,
     getMyContact,
     getTokenSilently,
-    addNewProgram,
-    refreshPrograms,
-    programs,
-    PFPProgram,
+    // addNewProgram,
+    // refreshPrograms,
+    // programs,
+    // PFPProgram,
   ]);
 
   // Show this page if we're not yet authenticated
@@ -120,7 +123,7 @@ const Profile = ({
       </Grid>
     );
   } else {
-    return <ProfilePage contactId={contactId} programs={programs} />;
+    return <ProfilePage contactId={contactId} />;
   }
 };
 

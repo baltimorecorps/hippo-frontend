@@ -214,7 +214,7 @@ const ProfilePage = ({
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={`https://www.tfaforms.com/4798338&tfa_2=${programs.contact_id}&tfa_3=${programs.program.id}`}
+                        href={`https://www.tfaforms.com/4798338&tfa_2=${contactId}&tfa_3=1`}
                         className={classes.link}
                       >
                         questionnaire
