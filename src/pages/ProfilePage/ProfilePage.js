@@ -20,6 +20,7 @@ import ExperiencesList from 'modules/Experiences/ExperiencesList';
 import SkillsSection from 'components/SkillsSection';
 
 import HelpDrawer from '../../modules/SideBarDrawer/HelpDrawer';
+import {createExternalLink} from '../../lib/helpers';
 
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
@@ -145,6 +146,12 @@ const ProfilePage = ({
     setOpenDrawer2(true);
   };
 
+  const screeningQuestionLink = createExternalLink(
+    'questionnaire',
+    `https://www.tfaforms.com/4798338&tfa_2=${contactId}&tfa_3=1`,
+    classes.link
+  );
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -211,14 +218,7 @@ const ProfilePage = ({
                     >
                       <span className={classes.stepNum}>Step 1:</span> Answer a
                       brief
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href={`https://www.tfaforms.com/4798338&tfa_2=${contactId}&tfa_3=1`}
-                        className={classes.link}
-                      >
-                        questionnaire
-                      </a>
+                      {screeningQuestionLink}
                     </Typography>
                     <Typography
                       variant="body1"

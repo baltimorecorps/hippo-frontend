@@ -75,7 +75,6 @@ export const addNewProgram = program =>
   async function(dispatch) {
     dispatch(addNewProgramLocal(program));
     const result = await apiAddNewProgram(program)(dispatch);
-    await apiGetAllPrograms(program.contact_id);
     return result;
   };
 
