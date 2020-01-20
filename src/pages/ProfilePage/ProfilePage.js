@@ -20,6 +20,7 @@ import ExperiencesList from 'modules/Experiences/ExperiencesList';
 import SkillsSection from 'components/SkillsSection';
 
 import HelpDrawer from '../../modules/SideBarDrawer/HelpDrawer';
+import {createExternalLink} from '../../lib/helpers';
 
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
@@ -49,6 +50,7 @@ const ProfilePage = ({
   updateContact,
   contactId,
   contactInfo,
+  programs,
   resume,
   refreshContacts,
   startResumeCreation,
@@ -144,6 +146,12 @@ const ProfilePage = ({
     setOpenDrawer2(true);
   };
 
+  const screeningQuestionLink = createExternalLink(
+    'questionnaire',
+    `https://www.tfaforms.com/4798338&tfa_2=${contactId}&tfa_3=1`,
+    classes.link
+  );
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -189,7 +197,39 @@ const ProfilePage = ({
             className={classes.wrapper}
           >
             <Grid item xs={12} sm={11}>
-              <Grid container>
+              <Grid container justify="center">
+                <Grid item xs={12} md={8} lg={6}>
+                  <Paper className={classes.instructions}>
+                    <div className={classes.headerContainer}>
+                      <Typography
+                        variant="h5"
+                        component="h1"
+                        style={{
+                          fontWeight: '700',
+                        }}
+                      >
+                        Instructions
+                      </Typography>
+                    </div>
+                    <Typography
+                      variant="body1"
+                      component="h3"
+                      className={classes.steps}
+                    >
+                      <span className={classes.stepNum}>Step 1:</span> Answer a
+                      brief
+                      {screeningQuestionLink}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      component="h3"
+                      className={classes.steps}
+                    >
+                      <span className={classes.stepNum}>Step 2:</span> Complete
+                      your profile by filing out the sections below.
+                    </Typography>
+                  </Paper>
+                </Grid>
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>
                     <div className={classes.headerContainer}>
@@ -654,6 +694,28 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+  },
+  instructions: {
+    padding: spacing(2, 3, 3),
+    paddingBottom: spacing(3),
+    marginTop: spacing(5),
+    [breakpoints.down('xs')]: {
+      margin: spacing(0.2),
+    },
+  },
+  steps: {
+    fontSize: '17px',
+  },
+  stepNum: {
+    fontWeight: 'bold',
+    marginRight: '3px',
+  },
+  link: {
+    color: palette.primary.link,
+    marginLeft: '4px',
+    '&:hover': {
+      fontWeight: 'bold',
+    },
   },
 });
 

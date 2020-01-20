@@ -18,10 +18,10 @@ const Icon = ({
   menuItems,
   classes,
 }) => {
-  const iconOpened = `${classes.icons} + ${classes.offWhiteColor}`;
-  const iconClosed = `${classes.icons} `;
-  const buttonOpened = `${classes.buttons} + ${classes.darkGrayBG}`;
-  const buttonClosed = `${classes.buttons} `;
+  const iconOpened = `${classes.icons} ${classes.offWhiteColor}`;
+  const iconClosed = `${classes.icons}`;
+  const buttonOpened = `${classes.buttons} ${classes.darkGrayBG}`;
+  const buttonClosed = `${classes.buttons}`;
 
   const iconOptions = {
     user: <PersonIcon className={openIcon ? iconOpened : iconClosed} />,

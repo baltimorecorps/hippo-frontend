@@ -109,6 +109,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
     paddingBottom: spacing(5),
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   homeIcon: {fontSize: '35px'},
 });

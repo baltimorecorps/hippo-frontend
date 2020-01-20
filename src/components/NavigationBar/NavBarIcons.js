@@ -3,11 +3,24 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from './Icon';
 
+import {createExternalLink} from '../../lib/helpers';
+
 const NavBarIcons = ({logout, classes}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openIcon, setOpenIcon] = useState(0);
   const [isWarning, setIsWarning] = useState(false);
   const wrapperRef = useRef(null);
+
+  const contactSupportLink = createExternalLink(
+    'Contact Support Page',
+    'https://www.tfaforms.com/4602493',
+    classes.contactSupportLink
+  );
+  const helpLink = createExternalLink(
+    'Help',
+    'https://www.tfaforms.com/4602493',
+    classes.helpLink
+  );
 
   const BetaMessage = (
     <p className={classes.betaMessage}>
@@ -20,28 +33,9 @@ const NavBarIcons = ({logout, classes}) => {
       <br />
       <span className={classes.smallerFont}>
         If you notice an issue or are having a problem with the website,
-        <br /> you can let us know through our{' '}
-        <a
-          className={classes.contactSupportLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://www.tfaforms.com/4602493"
-        >
-          Contact Support Page
-        </a>
+        <br /> you can let us know through our {contactSupportLink}
       </span>
     </p>
-  );
-
-  const helpLink = (
-    <a
-      className={classes.helpLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      href="https://www.tfaforms.com/4602493"
-    >
-      Help
-    </a>
   );
 
   const dropdownMenuInfo = {
@@ -85,7 +79,7 @@ const NavBarIcons = ({logout, classes}) => {
     <div className={classes.container} id="navLinks" ref={wrapperRef}>
       <Icon
         name="notifications"
-        isWarning={isWarning}
+        isWarning={false}
         handleClickIcon={e => handleClickIcon(e, 'notifications')}
         openIcon={openIcon === 2}
         anchorEl={anchorEl}
