@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Divider from '@material-ui/core/Divider';
 
 const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
   return (
@@ -55,7 +56,7 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
             >
               Here are some examples of {name}:
             </Typography>
-            <ul style={{paddingLeft: '30px'}}>
+            <ul className={classes.uls}>
               {contents.examples.map((example, index) => (
                 <li key={index} className={classes.bullet}>
                   <Typography variant="body1" component="p">
@@ -64,6 +65,8 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
                 </li>
               ))}
             </ul>
+            <Divider className={classes.divider} />
+
             <Typography
               variant="body1"
               component="p"
@@ -71,8 +74,8 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
             >
               Questions to spark ideas:
             </Typography>
-            <div className={classes.questions}>
-              <ul style={{margin: '15px', padding: '0px 5px 0px 15px'}}>
+            <div>
+              <ul className={classes.uls}>
                 {contents.questions.map((question, index) => (
                   <li key={index} className={classes.bullet}>
                     <Typography variant="body1" component="p">
@@ -102,6 +105,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     borderRadius: '0',
     height: '100vh',
     margin: '0',
+    maxHeight: '85vh',
+    overflow: 'auto',
     [breakpoints.down('xs')]: {
       paddingTop: spacing(2.5),
       height: 'auto',
@@ -126,19 +131,20 @@ const styles = ({breakpoints, palette, spacing}) => ({
     maxHeight: '80vh',
     overflow: 'auto',
   },
-  questions: {
-    maxHeight: '250px',
-    overflow: 'auto',
-    backgroundColor: '#f2f2f2',
-    margin: '5px 0px',
-  },
+
   textHeader: {fontWeight: '700', fontSize: '16px'},
   textContent: {
-    marginBottom: spacing(1),
+    marginBottom: spacing(0.7),
     textIndent: '15px',
+  },
+  uls: {
+    marginBottom: spacing(0.7),
+    marginTop: spacing(0),
+    paddingLeft: '30px',
   },
 
   divider: {
+    margin: '15px',
     backgroundColor: palette.primary.darkGray,
   },
   bullet: {

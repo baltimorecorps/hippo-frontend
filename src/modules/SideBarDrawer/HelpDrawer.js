@@ -33,74 +33,77 @@ const HelpDrawer = ({
 
   return (
     <Paper className={classes.BasicInfoPaper}>
-      <Grid
-        container
-        direction="column"
-        style={isOpenDrawer2 ? {display: 'none'} : null}
-      >
-        <Grid item align="end">
-          <IconButton
-            edge="end"
-            aria-label="cancel form"
-            onClick={onClose}
-            className={classes.iconButton}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-        {!skillsOnly && isOpenDrawer1 && (
-          <React.Fragment>
-            <Grid item className={classes.section}>
-              <Box my={1}>
-                <Typography
-                  variant="h6"
-                  component="h6"
-                  className={classes.textHeader}
-                >
-                  How to write your {helpText.header}:
-                </Typography>
-              </Box>
-              <Box mb={2}>
-                {helpText.content.map((content, index) => (
-                  <Typography
-                    key={index}
-                    variant="body1"
-                    component="p"
-                    className={classes.textContent}
-                  >
-                    {content}
-                  </Typography>
-                ))}
-              </Box>
-            </Grid>
-            <Divider className={classes.divider} />
-          </React.Fragment>
-        )}
-
-        <Grid item className={classes.section}>
-          <Box my={1}>
-            <Typography
-              variant="h6"
-              component="h6"
-              className={classes.textHeader}
+      <div className={classes.divContainer}>
+        <Grid
+          container
+          direction="column"
+          style={isOpenDrawer2 ? {display: 'none'} : null}
+        >
+          <Grid item align="end">
+            <IconButton
+              edge="end"
+              aria-label="cancel form"
+              onClick={onClose}
+              className={classes.iconButton}
             >
-              {skillsOnly
-                ? 'Read more on each of these capabilities: '
-                : 'See if you can include these abilities in your profile:'}
-            </Typography>
-          </Box>
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+          {!skillsOnly && isOpenDrawer1 && (
+            <React.Fragment>
+              <Grid item className={classes.section}>
+                <Box my={1}>
+                  <Typography
+                    variant="h6"
+                    component="h6"
+                    className={classes.textHeader}
+                  >
+                    How to write your {helpText.header}:
+                  </Typography>
+                </Box>
+                <Box mb={2}>
+                  {helpText.content.map((content, index) => (
+                    <Typography
+                      key={index}
+                      variant="body1"
+                      component="p"
+                      className={classes.textContent}
+                    >
+                      {content}
+                    </Typography>
+                  ))}
+                </Box>
+              </Grid>
+              <Divider className={classes.divider} />
+            </React.Fragment>
+          )}
 
-          {skillInfo.names.map((name, index) => (
-            <SkillLink
-              key={index}
-              onClick={handleOnClickSkillLink}
-              skillName={name}
-              index={index}
-            />
-          ))}
+          <Grid item className={classes.section}>
+            <Box my={1}>
+              <Typography
+                variant="h6"
+                component="h6"
+                className={classes.textHeader}
+              >
+                {skillsOnly
+                  ? 'Read more on each of these capabilities: '
+                  : 'See if you can include these abilities in your profile:'}
+              </Typography>
+            </Box>
+
+            {skillInfo.names.map((name, index) => (
+              <SkillLink
+                key={index}
+                onClick={handleOnClickSkillLink}
+                skillName={name}
+                index={index}
+              />
+            ))}
+          </Grid>
+          <Divider className={classes.divider} />
         </Grid>
-        <Divider className={classes.divider} />
-      </Grid>
+      </div>
+
       {isOpenDrawer2 && (
         <SkillInfoDrawer
           name={skillName}
@@ -133,7 +136,7 @@ HelpDrawer.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   BasicInfoPaper: {
-    paddingTop: spacing(10),
+    paddingTop: spacing(7),
     paddingBottom: spacing(5),
     borderRadius: '0',
     position: 'fixed',
@@ -151,9 +154,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.down('md')]: {
       maxWidth: '33%',
     },
-    // [breakpoints.down('sm')]: {
-    //   maxWidth: '41%',
-    // },
 
     [breakpoints.down('sm')]: {
       paddingTop: spacing(6),
@@ -164,6 +164,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
       left: 0,
     },
   },
+  divContainer: {
+    maxHeight: '85vh',
+    overflow: 'auto',
+  },
   iconButton: {
     alignSelf: 'flex-end',
     margin: spacing(0, 2.5),
@@ -173,12 +177,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   section: {
-    padding: spacing(1, 3, 0.5, 3),
+    padding: spacing(1, 3, 0.7, 3),
+    maxHeight: '80vh',
+    overflow: 'auto',
   },
-  textHeader: {fontWeight: '700', fontSize: '16px', padding: '0px 25px'},
+  textHeader: {
+    fontWeight: '700',
+    fontSize: '16px',
+    padding: '0px 25px',
+  },
   textContent: {
     color: palette.primary.darkGray,
-    fontSize: '15px',
     textIndent: '15px',
     marginBottom: spacing(0.7),
   },

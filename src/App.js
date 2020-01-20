@@ -23,6 +23,8 @@ import Contacts from 'components/Contacts/Contacts.container';
 import SearchContact from 'components/SearchContact/SearchContact';
 import TalentHome from 'components/TalentHome/TalentHome';
 
+import NavBarIcons from './components/NavigationBar/NavBarIcons';
+
 const App = ({classes}) => {
   const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
 
@@ -35,7 +37,7 @@ const App = ({classes}) => {
               <Toolbar>
                 <Link to="/">
                   <MenuItem>
-                    <HomeIcon />
+                    <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
                 <div className={classes.grow} />
@@ -45,16 +47,13 @@ const App = ({classes}) => {
                   </Button>
                 )}
                 {isAuthenticated && (
-                  <Button
-                    color="inherit"
-                    onClick={() =>
+                  <NavBarIcons
+                    logout={() =>
                       logout({
                         returnTo: window.location.origin,
                       })
                     }
-                  >
-                    Log out
-                  </Button>
+                  />
                 )}
               </Toolbar>
             </AppBar>
@@ -111,6 +110,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     backgroundColor: 'hsl(216, 18%, 89%)',
     paddingBottom: spacing(5),
   },
+  homeIcon: {fontSize: '35px'},
 });
 
 export default withStyles(styles)(App);
