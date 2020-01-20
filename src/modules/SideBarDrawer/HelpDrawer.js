@@ -13,7 +13,7 @@ import SkillLink from './SkillLink';
 
 const HelpDrawer = ({
   helpText,
-  skillInfo,
+  capabilities,
   skillsOnly,
   onClose,
   isOpenDrawer1,
@@ -24,10 +24,12 @@ const HelpDrawer = ({
 }) => {
   const [skillContent, setSkillContent] = React.useState();
   const [skillName, setSkillName] = React.useState();
+  const names = Object.keys(capabilities);
+  names.sort();
 
   const handleOnClickSkillLink = index => {
-    setSkillName(skillInfo.names[index]);
-    setSkillContent(skillInfo.contents[skillInfo.names[index]]);
+    setSkillName(names[index]);
+    setSkillContent(capabilities[names[index]]);
     doOpenDrawer2();
   };
 
@@ -91,7 +93,7 @@ const HelpDrawer = ({
               </Typography>
             </Box>
 
-            {skillInfo.names.map((name, index) => (
+            {names.map((name, index) => (
               <SkillLink
                 key={index}
                 onClick={handleOnClickSkillLink}

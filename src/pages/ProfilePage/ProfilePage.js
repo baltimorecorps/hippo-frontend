@@ -22,6 +22,9 @@ import SkillsSection from 'components/SkillsSection';
 import HelpDrawer from '../../modules/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from '../../lib/helpers';
 
+import CAPABILITIES from './capabilities.yml';
+
+
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
 // render
@@ -72,6 +75,8 @@ const ProfilePage = ({
   const [isOpenDrawer2, setOpenDrawer2] = React.useState(false);
   const [sidebarType, setSidebarType] = useState('work');
   const [loading, setLoading] = useState(false);
+
+  console.log(CAPABILITIES);
 
   const handleUpdateContact = async values => {
     await updateContact(values);
@@ -320,7 +325,7 @@ const ProfilePage = ({
         {openSidebar && (
           <HelpDrawer
             helpText={helpTextOptions[sidebarType]}
-            skillInfo={skillHelpTextInfo}
+            capabilities={CAPABILITIES}
             skillsOnly={sidebarType === 'skills'}
             onClose={() => setOpenSidebar(false)}
             isOpenDrawer1={isOpenDrawer1}
@@ -382,122 +387,6 @@ const helpTextOptions = {
   },
 };
 
-const skillHelpTextInfo = {
-  names: [
-    'Process Improvement',
-    'Project Management',
-    'Communication',
-    'Data Analysis',
-    'Software Development',
-  ],
-  contents: {
-    'Process Improvement': {
-      summary:
-        'Process Improvement is the ability to understand and improve the process that some group or organization uses to accomplish some goal.',
-      examples: [
-        'Changing the way a food bank packs and/or delivers lunches so they can deliver more with less',
-        'Helping a store sell more of its products by making sure customers can find what they are looking for more easily',
-        'Helping teachers integrate new technology into their classes so they can better help their students',
-      ],
-      questions: [
-        'What were people or organizations you’ve helped or worked with in the past trying to do?',
-        'What was their process for doing it?',
-        'Did you help them change those processes to improve?',
-        'Have you ever investigated why something was done the way that it was?',
-        'Who did you tell about what you found out?',
-        'Did you find anything that you thought could have been done better?',
-        'Have you worked with metrics or other ways of measuring how well a process was going that you were involved with?',
-        'Did you have any ideas to make those numbers go up?',
-        'Did you try and make those ideas a reality?',
-        'What was your experience like trying to do that, and how did it turn out?',
-      ],
-    },
-
-    Communication: {
-      summary:
-        'Communication skills are what you use to understand others and to help others understand you.',
-      examples: [
-        "Listening to a customers' problem and helping to resolve it",
-        'Writing up your ideas for what a community organization should focus on next year and sharing with the group',
-        'Creating a presentation that you have to give to multiple audiences',
-      ],
-
-      questions: [
-        'Have you ever had to write up a summary or a report to help someone else understand an issue?',
-        'What were your main points you wanted to get across?',
-        'Did your report help that person make a decision?',
-        'Have you done any public speaking or an oral presentation?',
-        'What was the topic?',
-        'Who was the audience?',
-        'Have you ever helped people or an organization with their social media accounts or content on their website?',
-        'How did you plan what to write?',
-        'What was the goal of writing the posts and how did it turn out?',
-      ],
-    },
-
-    'Project Management': {
-      summary:
-        'Project Management is the planning and organizing the work of a team to meet a goal or complete a task.',
-      examples: [
-        'Planning an event where you identified what was needed and made a plan to get it',
-        'Leading a class project where you tracked the completion of different steps until the due date',
-        'Figuring out how to deliver a community project under budget',
-      ],
-
-      questions: [
-        'Have you ever worked on a project or effort that involved multiple steps?',
-        'Who were the other people involved?',
-        'How did you come up with a plan?',
-        'How did you communicate progress?',
-        "Have you stepped up to take on a project when other's hadn't or wouldn't?",
-        'What did you see as an opportunity?',
-        'Did you convince others to join you?',
-        'Have you had to work with a set amount of money to make something?',
-        'How did you decide how much to spend on the various parts?',
-        'Did you have creative ideas on how to make the most of your budget?',
-        'Were you able to stay within the budget?',
-      ],
-    },
-
-    'Data Analysis': {
-      summary:
-        'Data analysis is the application of critical thinking and statistical methods to identify, summarize, and communicate key insights about a collection of information.',
-      examples: [
-        'Summarizing the results of a survey',
-        'Exploring the relationship between different variables in a dataset',
-        'Tracking your spending habits and predicting whether you will be over or under budget based on current expenses and expected income',
-      ],
-      questions: [
-        'Have you ever used data to answer a question about a cause or issue you cared about?',
-        'How did you frame the question?',
-        'What kind of data did you use and how did you use it to answer your question?',
-        'Has anyone ever asked you to summarize the key takeaways from a collection of data?',
-        'What kinds of insights did you pull from the data?',
-        'How did you communicate those insights to others?',
-        'Have you ever used data to estimate or predict something uncertain?',
-        'How did you choose which variables to base your estimate on?',
-        'What methods did you use to generate possible outcomes from the existing information?',
-      ],
-    },
-    'Software Development': {
-      summary:
-        'Software development is the application of a systematic approach to the engineering, operation, and maintenance of a piece of software, such as a pogramming script, website, or desktop application.',
-      examples: [
-        'Writing a script to automate a simple workflow',
-        'Building a website or API as part of a class assignment or side project',
-        'Contributing to an open source project on GitHub or at your local meetup',
-      ],
-      questions: [
-        'Have you ever had to write a piece of code to accomplish a task?',
-        'How did you approach this process?',
-        'What languages or frameworks did you use?',
-        'Have you ever had to maintain or contribute to an existing code base?',
-        'What features did you add or bugs did you fix?',
-        'How did you manage versions of the code you were working on?',
-      ],
-    },
-  },
-};
 
 ProfilePage.propTypes = {
   contactId: PropTypes.any.isRequired,

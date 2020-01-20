@@ -52,7 +52,7 @@ const SkillInfoDrawer = ({onBack, name, contents, onClose, classes}) => {
             <Typography
               variant="body1"
               component="p"
-              className={classes.textContent}
+              className={classes.textHeader}
             >
               Here are some examples of {name}:
             </Typography>
@@ -131,7 +131,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     maxHeight: '80vh',
     overflow: 'auto',
   },
-
   textHeader: {fontWeight: '700', fontSize: '16px'},
   textContent: {
     marginBottom: spacing(0.7),
