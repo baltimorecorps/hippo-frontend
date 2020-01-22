@@ -1,15 +1,17 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 
 const createExternalLink = (content, url, className) => {
   return (
-    <a
+    <ReactGA.OutboundLink
+      eventLabel={content}
       className={className}
       target="_blank"
       rel="noopener noreferrer"
-      href={url}
+      to={url}
     >
       {content}
-    </a>
+    </ReactGA.OutboundLink>
   );
 };
 

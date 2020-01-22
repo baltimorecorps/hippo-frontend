@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import ReactGA from 'react-ga';
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -27,6 +28,16 @@ import NavBarIcons from './components/NavigationBar/NavBarIcons';
 
 const App = ({classes}) => {
   const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
+
+  useEffect(() => {
+    ReactGA.initialize('UA-156685867-1', {debug: true});
+    // to report page view
+
+    // Update the user's current page
+
+    ReactGA.set({page: window.location.pathname});
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
 
   return (
     <ErrorBoundary fileName="src/App.js">
