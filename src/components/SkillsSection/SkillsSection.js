@@ -1,4 +1,5 @@
 import React from 'react';
+import {createClickTracking} from '../../lib/helpers';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -76,6 +77,15 @@ const SkillsSection = ({
   const updateAdditionalSkills = newAdditionalSkills =>
     onChange(capSkills.concat(newAdditionalSkills || []));
 
+  const onClickMoreHandler = () => {
+    createClickTracking(
+      'Sidebar Drawer',
+      `Open Drawer (Skills)`,
+      `Click more... under skill section`
+    );
+    onClickMore('skills');
+  };
+
   return (
     <Grid container>
       <Grid item>
@@ -103,7 +113,7 @@ const SkillsSection = ({
               <Link
                 component="button"
                 variant="body2"
-                onClick={() => onClickMore('skills')}
+                onClick={onClickMoreHandler}
                 className={classes.moreDetails}
               >
                 top skills employers are looking for?

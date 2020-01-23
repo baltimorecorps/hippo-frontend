@@ -16,6 +16,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import MuiPhoneNumber from 'material-ui-phone-number';
 
 import {newProfileValidator} from '../../lib/formValidator';
+import {createClickTracking} from '../../lib/helpers';
 
 // const RACES = [
 //   {
@@ -115,6 +116,15 @@ const AddContact = ({
     values.phone_primary = value;
   };
 
+  const clickSubmitHandler = () => {
+    createClickTracking(
+      'Contact',
+      'Add/Create New Contact/Account',
+      'Click submit on add new contact form'
+    );
+    submit();
+  };
+
   // It's kind of gross to have this component have two different forms
   // it renders in, but the <DialogActions> element makes this difficult to
   // factor out
@@ -206,7 +216,7 @@ const AddContact = ({
 
           <DialogActions className={classes.actions}>
             <Button
-              onClick={submit}
+              onClick={clickSubmitHandler}
               variant="contained"
               color="primary"
               style={{fontWeight: 600}}
@@ -237,7 +247,7 @@ const AddContact = ({
         </Typography>
         {form}
         <Button
-          onClick={submit}
+          onClick={clickSubmitHandler}
           variant="contained"
           color="primary"
           className={classes.createButton}

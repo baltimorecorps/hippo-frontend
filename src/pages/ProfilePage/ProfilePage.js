@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
@@ -23,7 +24,6 @@ import HelpDrawer from '../../modules/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from '../../lib/helpers';
 
 import CAPABILITIES from './capabilities.yml';
-
 
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
@@ -386,7 +386,6 @@ const helpTextOptions = {
     content: [''],
   },
 };
-
 
 ProfilePage.propTypes = {
   contactId: PropTypes.any.isRequired,

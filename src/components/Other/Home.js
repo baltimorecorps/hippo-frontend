@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {createClickTracking} from '../../lib/helpers';
 
 import {useAuth0} from 'lib/auth0';
 
@@ -18,6 +19,15 @@ const Home = ({classes}) => {
   if (isAuthenticated) {
     return <Redirect to="/profile" />;
   }
+
+  const onClickLogInHandler = () => {
+    createClickTracking(
+      'Home Page, Log In/Sign Up Box',
+      'Click Log In/Sign Up',
+      'Click Log In/Sign Up Button'
+    );
+    loginWithRedirect({});
+  };
 
   return (
     <Grid container justify="center">
@@ -66,7 +76,7 @@ const Home = ({classes}) => {
                   <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => loginWithRedirect({})}
+                    onClick={onClickLogInHandler}
                   >
                     Log in / Sign up
                   </Button>

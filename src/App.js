@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import ReactGA from 'react-ga';
+import {createClickTracking} from './lib/helpers';
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -28,6 +30,32 @@ import NavBarIcons from './components/NavigationBar/NavBarIcons';
 const App = ({classes}) => {
   const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
 
+  useEffect(() => {
+    ReactGA.initialize('UA-156685867-1');
+    // to report page view
+    ReactGA.set({page: window.location.pathname});
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
+
+  const onClickLogInHandler = () => {
+    createClickTracking(
+      'Navigation Bar',
+      'Click Log In/Sign Up',
+      'Click Log In/Sign Up Button'
+    );
+    loginWithRedirect({});
+  };
+  const onClickLogOutHandler = () => {
+    createClickTracking(
+      'Navigation Bar',
+      'Click Log Out',
+      'Click Log Out Button'
+    );
+    logout({
+      returnTo: window.location.origin,
+    });
+  };
+
   return (
     <ErrorBoundary fileName="src/App.js">
       <MuiThemeProvider theme={theme}>
@@ -42,18 +70,12 @@ const App = ({classes}) => {
                 </Link>
                 <div className={classes.grow} />
                 {!isAuthenticated && (
-                  <Button color="inherit" onClick={() => loginWithRedirect({})}>
+                  <Button color="inherit" onClick={onClickLogInHandler}>
                     Log in / Sign up
                   </Button>
                 )}
                 {isAuthenticated && (
-                  <NavBarIcons
-                    logout={() =>
-                      logout({
-                        returnTo: window.location.origin,
-                      })
-                    }
-                  />
+                  <NavBarIcons logout={onClickLogOutHandler} />
                 )}
               </Toolbar>
             </AppBar>
