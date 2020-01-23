@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from './Icon';
 
-import {createExternalLink} from '../../lib/helpers';
+import {createExternalLink, createClickTracking} from '../../lib/helpers';
 
 const NavBarIcons = ({logout, classes}) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -75,12 +75,21 @@ const NavBarIcons = ({logout, classes}) => {
     }
   };
 
+  const onClickIconHandler = (e, name) => {
+    createClickTracking(
+      'Navigation Bar',
+      `Click ${name} Icon`,
+      `Click ${name} Icon Button`
+    );
+    handleClickIcon(e, name);
+  };
+
   return (
     <div className={classes.container} id="navLinks" ref={wrapperRef}>
       <Icon
         name="notifications"
         isWarning={false}
-        handleClickIcon={e => handleClickIcon(e, 'notifications')}
+        handleClickIcon={e => onClickIconHandler(e, 'notifications')}
         openIcon={openIcon === 2}
         anchorEl={anchorEl}
         handleClickAway={handleClickAway}
@@ -89,7 +98,7 @@ const NavBarIcons = ({logout, classes}) => {
       />
       <Icon
         name="user"
-        handleClickIcon={e => handleClickIcon(e, 'user')}
+        handleClickIcon={e => onClickIconHandler(e, 'user')}
         openIcon={openIcon === 1}
         anchorEl={anchorEl}
         handleClickAway={handleClickAway}

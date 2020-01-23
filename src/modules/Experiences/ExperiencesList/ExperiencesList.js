@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {createClickTracking} from '../../../lib/helpers';
+
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -79,12 +81,26 @@ const ExperiencesList = ({
     sortedExperiences = sortExperiences(experiences);
   }
 
-  const handleOnClickMore = () => {
-    onClickMore(experienceType.toLowerCase());
-  };
-
   const handleOnSkillsMore = () => {
     onClickMore('skills');
+  };
+
+  const addNewExperienceHandler = () => {
+    createClickTracking(
+      'Experience',
+      `Add New ${experienceType}`,
+      `Add New ${experienceType} Button`
+    );
+    setShowForm(true);
+  };
+
+  const onClickMoreHandler = () => {
+    createClickTracking(
+      'Sidebar Drawer',
+      `Open Drawer (${experienceType})`,
+      `Click more... under ${experienceType} section`
+    );
+    onClickMore(experienceType.toLowerCase());
   };
 
   return (
@@ -111,7 +127,7 @@ const ExperiencesList = ({
                     className={classes.addButton}
                     size="small"
                     aria-label="add new experience"
-                    onClick={() => setShowForm(true)}
+                    onClick={addNewExperienceHandler}
                   >
                     <AddIcon />
                   </IconButton>
@@ -129,7 +145,7 @@ const ExperiencesList = ({
               <Link
                 component="button"
                 variant="body2"
-                onClick={handleOnClickMore}
+                onClick={onClickMoreHandler}
                 className={classes.moreDetails}
               >
                 More...

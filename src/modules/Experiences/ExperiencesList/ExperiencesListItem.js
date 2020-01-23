@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import {createClickTracking} from '../../../lib/helpers';
+
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -64,6 +66,15 @@ const ExperiencesListItem = ({
   );
 
   const location = ` - ${experience.location}`;
+
+  const editExperienceHandler = () => {
+    createClickTracking(
+      'Experience',
+      `Edit ${experience.type}`,
+      `Edit ${experience.type} Button`
+    );
+    setEditing(true);
+  };
 
   return (
     <React.Fragment>
@@ -176,7 +187,7 @@ const ExperiencesListItem = ({
         {editing || selectable ? null : (
           <Grid item sm={1}>
             <IconButton
-              onClick={() => setEditing(true)}
+              onClick={editExperienceHandler}
               size="small"
               aria-label="edit experience"
             >

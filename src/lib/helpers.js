@@ -15,4 +15,12 @@ const createExternalLink = (content, url, className) => {
   );
 };
 
-export {createExternalLink};
+const createClickTracking = (category, action, label) => {
+  return ReactGA.event({
+    category: category,
+    action: action,
+    label: label,
+  });
+};
+
+export {createExternalLink, createClickTracking};

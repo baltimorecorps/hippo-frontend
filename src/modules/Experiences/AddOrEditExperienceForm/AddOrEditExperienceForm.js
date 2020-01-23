@@ -1,4 +1,6 @@
 import React from 'react';
+import {createClickTracking} from '../../../lib/helpers';
+
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -150,6 +152,15 @@ const AddOrEditExperienceForm = ({
     } else {
       setIsDegreeOther(false);
     }
+  };
+
+  const saveExperienceHandler = () => {
+    createClickTracking(
+      'Experience',
+      `Save ${experience.type}`,
+      `Save ${experience.type} Button`
+    );
+    handleFormSubmit();
   };
 
   return (
@@ -414,7 +425,11 @@ const AddOrEditExperienceForm = ({
           <span />
         )}
 
-        <Button variant="contained" color="primary" onClick={handleFormSubmit}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={saveExperienceHandler}
+        >
           Save
         </Button>
       </Grid>
