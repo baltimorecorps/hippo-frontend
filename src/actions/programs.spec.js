@@ -46,20 +46,19 @@ describe('Programs', () => {
     // const program = data;
 
     // ---------------------------------------------------------------------
-      const program = {data: 'test', contact_id: contactId};
-      const response = {response: 'win'};
+    const program = {data: 'test', contact_id: contactId};
+    const response = {response: 'win'};
 
-      fetchMock.post(`path:/api/contacts/${contactId}/programs/`, response);
+    fetchMock.post(`path:/api/contacts/${contactId}/programs/`, response);
 
-      await addNewProgram(program)(dispatch);
+    await addNewProgram(program)(dispatch);
 
-      expect(dispatch.mock.calls.length).toBe(3);
-      expect(dispatch.mock.calls[0][0].type).toBe(ADD_NEW_PROGRAM);
-      expect(dispatch.mock.calls[0][0].program).toEqual(program);
-      console.log(dispatch.mock.calls);
-      expect(dispatch.mock.calls[1][0].type).toBe(ADD_NEW_PROGRAM_API.REQUEST);
-      expect(dispatch.mock.calls[2][0].type).toBe(ADD_NEW_PROGRAM_API.RESOLVE);
-      expect(dispatch.mock.calls[2][0].body).toEqual(response);
+    expect(dispatch.mock.calls.length).toBe(3);
+    expect(dispatch.mock.calls[0][0].type).toBe(ADD_NEW_PROGRAM);
+    expect(dispatch.mock.calls[0][0].program).toEqual(program);
+    expect(dispatch.mock.calls[1][0].type).toBe(ADD_NEW_PROGRAM_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(ADD_NEW_PROGRAM_API.RESOLVE);
+    expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 
   // ---------------------------------------------------------------------

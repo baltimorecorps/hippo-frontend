@@ -4,12 +4,13 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import CloseIcon from '@material-ui/icons/Close';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 const AchievementInput = React.forwardRef(
-  ({value, onTextChange, onIconClick, classes, onKeyPress}, ref) => {
+  ({value, onTextChange, onIconClick, classes, onKeyPress, errors}, ref) => {
     const [isFocused, setFocused] = React.useState(false);
 
     let endAdornment;
@@ -52,6 +53,10 @@ const AchievementInput = React.forwardRef(
               endAdornment: endAdornment,
             }}
           />
+
+          <FormHelperText className={classes.formHelperText}>
+            {value.length > 750 && errors.achievements_error}
+          </FormHelperText>
         </Grid>
       </Grid>
     );
@@ -85,6 +90,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   arrowIcon: {
     paddingTop: '6px',
+  },
+  formHelperText: {
+    color: palette.error.main,
+    marginTop: '2px',
   },
 });
 

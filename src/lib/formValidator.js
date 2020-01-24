@@ -22,6 +22,8 @@ const experienceValidator = values => {
     degree,
     degree_other,
     link,
+    description,
+    achievements,
   } = values;
 
   let isError = false;
@@ -90,6 +92,21 @@ const experienceValidator = values => {
       isError = true;
       err.endYear_error = 'Required';
     }
+  }
+
+  if (description && description.length > 750) {
+    isError = true;
+    err.description_error = 'Your content is too long. Maximum 750 characters.';
+  }
+
+  if (achievements && achievements.length > 0) {
+    achievements.forEach(achievement => {
+      if (achievement.description.length > 750) {
+        isError = true;
+        err.achievements_error =
+          'Your content is too long. Maximum 750 characters.';
+      }
+    });
   }
 
   if (

@@ -40,7 +40,7 @@ const configureForm = expType => {
         host: 'Name of Company or Organization',
         title: 'Title',
         achievements: {
-          label: 'Responsibilities and Achivements:',
+          label: 'Responsibilities and Achievements:',
           sublabel:
             'Write about skills you gained and how you used them; what you were proud of or recognized for',
         },
