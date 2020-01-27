@@ -394,11 +394,15 @@ const AddOrEditExperienceForm = ({
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
           />
+          <FormHelperText className={classes.formHelperText}>
+            {description.length > 750 && errors.description_error}
+          </FormHelperText>
         </Grid>
       )}
       {config.showAchievements && (
         <Grid item xs={12}>
           <AchievementInputsList
+            errors={errors}
             contactId={experience.contact_id}
             achievements={achievements}
             onChange={handleAchievements}
@@ -406,7 +410,7 @@ const AddOrEditExperienceForm = ({
             InputProps={inputProps}
             label={
               config.labels.achievements.label ||
-              'Resposibilities and Achievements:'
+              'Responsibilities and Achievements:'
             }
             sublabel={config.labels.achievements.sublabel || ''}
           />

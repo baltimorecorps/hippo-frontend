@@ -15,6 +15,7 @@ const AchievementInputsList = ({
   onChange,
   label,
   sublabel,
+  errors,
 }) => {
   const focusTarget = useRef(null);
   const [doFocus, setFocus] = useState(false);
@@ -64,6 +65,7 @@ const AchievementInputsList = ({
       <Grid item xs={12}>
         {achievements.map(({description}, index) => (
           <AchievementInput
+            errors={errors}
             key={index}
             ref={index === achievements.length - 1 ? focusTarget : null}
             value={description}

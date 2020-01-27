@@ -76,8 +76,6 @@ const ProfilePage = ({
   const [sidebarType, setSidebarType] = useState('work');
   const [loading, setLoading] = useState(false);
 
-  console.log(CAPABILITIES);
-
   const handleUpdateContact = async values => {
     await updateContact(values);
     setOpenForm(false);
