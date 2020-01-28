@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import {createClickTracking, createALink} from '../../lib/helpers';
+import terms from '../../lib/terms-and-policy/services-terms.pdf';
+import policy from '../../lib/terms-and-policy/privacy -policy.pdf';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
@@ -12,11 +15,11 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import FormHelperText from '@material-ui/core/FormHelperText';
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MuiPhoneNumber from 'material-ui-phone-number';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import {newProfileValidator} from '../../lib/formValidator';
-import {createClickTracking} from '../../lib/helpers';
 
 // const RACES = [
 //   {
@@ -84,6 +87,7 @@ const AddContact = ({
   emailSuggest,
 }) => {
   const [open, setOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [values, handleChange, handleSubmit] = useForm(
     addNewContact,
     accountId,
@@ -116,13 +120,39 @@ const AddContact = ({
     values.phone_primary = value;
   };
 
+  const termsLink = createALink('Services Terms', terms, classes.link);
+  const policyLink = createALink('Privacy Policy', policy, classes.link);
+
+  const checkboxLabel = (
+    <span>
+      Agree to Baltimore Corps {termsLink} and {policyLink}
+    </span>
+  );
+
   const clickSubmitHandler = () => {
     createClickTracking(
-      'Contact',
+      'Creating New Contact',
       'Add/Create New Contact/Account',
       'Click submit on add new contact form'
     );
     submit();
+  };
+
+  const termsAndPrivacyHandler = () => {
+    setIsChecked(!isChecked);
+    let result = '';
+    if (isChecked === false) {
+      result = 'Disagree';
+      // console.log(isChecked);
+    } else {
+      result = 'Agree';
+    }
+    console.log(result);
+    createClickTracking(
+      'Creating New Contact',
+      `Click ${result} on terms and privacy checkbox`,
+      `Click ${result} checkbox on terms and privacy checkbox`
+    );
   };
 
   // It's kind of gross to have this component have two different forms
@@ -187,6 +217,22 @@ const AddContact = ({
         <FormHelperText className={classes.formHelperText}>
           {errors.phonePrimary_error || null}
         </FormHelperText>
+        <Grid item className={classes.checkboxContainer}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isChecked}
+                // onChange={termsAndPrivacyHandler}
+                onClick={() => termsAndPrivacyHandler()}
+                value="agree"
+              />
+            }
+            className={classes.checkbox}
+          />
+          <FormHelperText className={classes.checkboxLabel}>
+            {checkboxLabel}
+          </FormHelperText>
+        </Grid>
       </Grid>
     </form>
   );
@@ -310,6 +356,30 @@ const styles = ({breakpoints, palette, spacing}) => ({
   createButton: {
     fontWeight: 600,
     margin: spacing(2, 0, 0, 0),
+  },
+  link: {
+    color: palette.primary.link,
+
+    '&:hover': {
+      color: '#2556f7',
+    },
+  },
+  checkbox: {
+    display: 'inline',
+    margin: 0,
+    padding: 0,
+  },
+  checkboxContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkboxLabel: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '0 17px 0 0',
+    fontSize: '15px',
   },
 });
 

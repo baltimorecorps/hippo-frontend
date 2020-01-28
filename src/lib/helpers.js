@@ -15,6 +15,18 @@ const createExternalLink = (content, url, className) => {
   );
 };
 
+const createALink = (content, url, className) => {
+  return (
+    <a
+      className={className}
+      target="_blank"
+      rel="noopener noreferrer"
+      href={url}
+    >
+      {content}
+    </a>
+  );
+};
 const createClickTracking = (category, action, label) => {
   return ReactGA.event({
     category: category,
@@ -23,4 +35,4 @@ const createClickTracking = (category, action, label) => {
   });
 };
 
-export {createExternalLink, createClickTracking};
+export {createExternalLink, createClickTracking, createALink};
