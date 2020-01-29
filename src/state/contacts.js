@@ -1,10 +1,16 @@
-import {API_URL} from '../constants';
+import {createReducer} from 'redux-starter-kit';
 import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
 import {makeAuthFetchActions} from 'lib/auth0';
+
+import {API_URL} from '../constants';
 
 // ## API ACTION CREATORS ##
 // Note on naming convention here:
 // All fetch API methods creators are prefixed with 'api' for clarity in use
+
+export const GET_SESSION_API = fetchActionTypes('GET_SESSION');
+const getSession = () =>
+  makeFetchActions('GET_SESSION', `${API_URL}/api/session/`);
 
 export const ALL_CONTACTS = 'ALL_CONTACTS';
 export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
@@ -139,3 +145,71 @@ const apiGetMyContact = authToken =>
     GET_MY_CONTACT,
     `${API_URL}/api/contacts/me/`
   );
+
+
+/* eslint-enable no-unused-vars */
+
+export const contactsReducer = createReducer(
+  {},
+  {
+    [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
+      if (!action.body) {
+        return {};
+      } else {
+        let newState = {};
+        action.body.data.forEach(contact => {
+          newState[contact.id] = contact;
+        });
+        return newState;
+      }
+    },
+
+    [GET_CONTACT_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id] = contact;
+    },
+    [GET_MY_CONTACT_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id] = contact;
+    },
+
+    [UPDATE_CONTACT_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id] = contact;
+    },
+    [ADD_CONTACT_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id] = contact;
+    },
+  }
+);
+
+export const accountsReducer = createReducer(
+  {},
+  {
+    [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
+      if (!action.body) {
+        return {};
+      } else {
+        let newState = {};
+        action.body.data.forEach(contact => {
+          if (!contact.account_id) {
+            return;
+          }
+          newState[contact.account_id] = contact;
+        });
+        return newState;
+      }
+    },
+    [GET_MY_CONTACT_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.account_id] = contact;
+    },
+    [ADD_CONTACT_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      if (contact.account_id) {
+        state[contact.account_id] = contact;
+      }
+    },
+  }
+);

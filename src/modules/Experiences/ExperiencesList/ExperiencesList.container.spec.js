@@ -1,5 +1,5 @@
 import {makeMapStateToProps} from './ExperiencesList.container';
-import {RESUME_CREATION} from '../../../reducers/resume';
+import {RESUME_CREATION} from '../../../state/resume';
 
 const blankState = {
   contacts: [],

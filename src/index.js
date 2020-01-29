@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {configureStore} from 'redux-starter-kit';
-import rootReducer from './reducers';
+import rootReducer from './state';
 import App from './App';
 import {Auth0Provider} from './lib/auth0';
 import config from './authConfig.json';

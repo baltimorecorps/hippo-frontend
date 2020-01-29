@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
-import {addContact, getMyContact} from 'actions/contacts';
+import {addContact, getMyContact} from 'state/contacts';
 import Profile from './Profile';
-import {addNewProgram, refreshPrograms} from '../../actions/programs';
+import {addNewProgram, refreshPrograms} from '../../state/programs';
 
 export const mapStateToProps = state => {
   const keys = Object.keys(state.programs);

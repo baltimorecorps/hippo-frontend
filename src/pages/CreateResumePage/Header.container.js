@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import {refreshResume} from 'actions/resume';
+import {refreshResume} from 'state/resume';
 import Header from './Header';
 
 export const mapStateToProps = (state, props) => {
