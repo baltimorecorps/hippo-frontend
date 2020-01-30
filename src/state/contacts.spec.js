@@ -9,13 +9,15 @@ import {
   ADD_CONTACT,
   ADD_CONTACT_API,
   addContact,
+  GET_SESSION_API,
+  getSession,
+  CREATE_SESSION_API,
+  createSession,
   contactsReducer, 
   accountsReducer,
 } from './contacts';
 
 import {CREATE_RESUME_API} from './resume';
-
-
 
 afterEach(() => {
   fetchMock.restore();
@@ -25,11 +27,19 @@ test('Create new contact action - success', async function() {
   const dispatch = jest.fn();
   const contact = {data: 'test'};
   const response = {result: 'win'};
+  const token = 'testAuthToken';
   const path = `path:/api/contacts/`;
 
-  fetchMock.post(path, response);
+  fetchMock.post(path, response,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
-  await addContact(contact)(dispatch);
+
+  const res = await addContact(async () => token, contact)(dispatch);
 
   expect(fetchMock.lastCall(path)[1].body).toBe(JSON.stringify(contact));
 
@@ -45,13 +55,14 @@ test('Create new contact action - failure', async function() {
   const dispatch = jest.fn();
   const contactId = 1234;
   const contact = {data: 'test'};
+  const token = async () => 'testAuthToken';
 
   fetchMock.post(`path:/api/contacts/`, {
     status: 500,
     body: '',
   });
 
-  await addContact(contact)(dispatch);
+  await addContact(async () => token, contact)(dispatch);
 
   expect(dispatch.mock.calls.length).toBe(3);
   expect(dispatch.mock.calls[2][0].type).toBe(ADD_CONTACT_API.REJECT);
@@ -60,7 +71,7 @@ test('Create new contact action - failure', async function() {
 
 test('Get my contact', async function() {
   const dispatch = jest.fn();
-  const token = 'testAuthToken';
+  const token = async () => 'testAuthToken';
   const response = {contact: 'me'};
 
   fetchMock.get(
@@ -76,7 +87,7 @@ test('Get my contact', async function() {
     }
   );
 
-  await getMyContact(token)(dispatch);
+  await getMyContact(async () => token)(dispatch);
 
   expect(dispatch.mock.calls.length).toBe(3);
   expect(dispatch.mock.calls[0][0].type).toBe(GET_MY_CONTACT);
@@ -85,12 +96,41 @@ test('Get my contact', async function() {
   expect(dispatch.mock.calls[2][0].body).toEqual(response);
 });
 
+test('Create Session', async function() {
+  const dispatch = jest.fn();
+  const token = async () => 'testAuthToken';
+  const response = {contact: 'me'};
+
+  fetchMock.post(
+    `path:/api/session/`,
+    {
+      status: 201,
+      body: response,
+    },
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  await createSession(async () => token)(dispatch);
+
+  expect(dispatch.mock.calls.length).toBe(2);
+  expect(dispatch.mock.calls[0][0].type).toBe(CREATE_SESSION_API.REQUEST);
+  expect(dispatch.mock.calls[1][0].type).toBe(CREATE_SESSION_API.RESOLVE);
+  expect(dispatch.mock.calls[1][0].body).toEqual(response);
+});
+
+
+
 describe('Contacts state', () => {
   const initialState = {};
   test('inital state', () => {
     const newState = contactsReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
+
   test('Fetch all contacts', () => {
     const contacts = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
     const newState = contactsReducer(undefined, {
@@ -114,6 +154,38 @@ describe('Contacts state', () => {
       123: {id: 123},
     });
   });
+  test('Get session', () => {
+    const contact = {id: 123};
+    const newState = contactsReducer(undefined, {
+      type: GET_SESSION_API.RESOLVE,
+      body: {status: 'success', data: {contact}},
+    });
+    expect(newState).toEqual({
+      123: {id: 123},
+    });
+  });
+  test('Create session', () => {
+    const contact = {id: 123};
+    const newState = contactsReducer(undefined, {
+      type: CREATE_SESSION_API.RESOLVE,
+      body: {status: 'success', data: {contact}},
+    });
+    expect(newState).toEqual({
+      123: {id: 123},
+    });
+  });
+
+  test('Add contact', () => {
+    const contact = {id: 123};
+    const newState = contactsReducer(undefined, {
+      type: ADD_CONTACT_API.RESOLVE,
+      body: {status: 'success', data: contact},
+    });
+    expect(newState).toEqual({
+      123: {id: 123},
+    });
+  });
+
   test('Get my contact', () => {
     const contact = {id: 123};
     const newState = contactsReducer(undefined, {
@@ -122,6 +194,30 @@ describe('Contacts state', () => {
     });
     expect(newState).toEqual({
       123: {id: 123},
+    });
+  });
+
+  test('Get session', () => {
+    const contact = {info: 'me'}
+    const newState = accountsReducer(undefined, {
+      type: GET_SESSION_API.RESOLVE,
+      body: {status: 'success', data: {
+        contact,
+      }},
+    });
+    expect(newState).toEqual({
+      has_session: true,
+      contact,
+    });
+  });
+  test('Get session reject', () => {
+    const newState = accountsReducer(undefined, {
+      type: GET_SESSION_API.REJECT,
+      body: {status: 'success', data: {}},
+    });
+    expect(newState).toEqual({
+      has_session: false,
+      contact: null,
     });
   });
 
@@ -150,6 +246,43 @@ describe('accounts state', () => {
     const newState = accountsReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
+  test('Get session', () => {
+    const contact = {info: 'me'}
+    const newState = accountsReducer(undefined, {
+      type: GET_SESSION_API.RESOLVE,
+      body: {status: 'success', data: {
+        contact,
+      }},
+    });
+    expect(newState).toEqual({
+      has_session: true,
+      contact,
+    });
+  });
+  test('Get session reject', () => {
+    const newState = accountsReducer(undefined, {
+      type: GET_SESSION_API.REJECT,
+      body: {status: 'success', data: {}},
+    });
+    expect(newState).toEqual({
+      has_session: false,
+      contact: null,
+    });
+  });
+
+  test('Create session', () => {
+    const contact = {info: 'me'}
+    const newState = accountsReducer(undefined, {
+      type: CREATE_SESSION_API.RESOLVE,
+      body: {status: 'success', data: {
+        contact,
+      }},
+    });
+    expect(newState).toEqual({
+      has_session: true,
+      contact,
+    });
+  });
   test('Add contact', () => {
     const contact = {id: 123, account_id: 'auth|123'};
     const newState = accountsReducer(undefined, {
@@ -157,16 +290,9 @@ describe('accounts state', () => {
       body: {status: 'success', data: contact},
     });
     expect(newState).toEqual({
-      'auth|123': contact,
+      has_session: true,
+      contact,
     });
-  });
-  test('Add contact - no account id', () => {
-    const contact = {id: 123};
-    const newState = accountsReducer(undefined, {
-      type: ADD_CONTACT_API.RESOLVE,
-      body: {status: 'success', data: contact},
-    });
-    expect(newState).toEqual({});
   });
 
   test('Fetch all contacts', () => {

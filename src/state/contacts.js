@@ -9,8 +9,24 @@ import {API_URL} from '../constants';
 // All fetch API methods creators are prefixed with 'api' for clarity in use
 
 export const GET_SESSION_API = fetchActionTypes('GET_SESSION');
-const getSession = () =>
-  makeFetchActions('GET_SESSION', `${API_URL}/api/session/`);
+export const getSession = () =>
+  makeFetchActions('GET_SESSION', 
+    `${API_URL}/api/session/`,
+    {
+      credentials: 'include',
+    }
+  );
+
+export const CREATE_SESSION_API = fetchActionTypes('CREATE_SESSION');
+export const createSession = authToken =>
+  makeAuthFetchActions(
+    authToken,
+    'CREATE_SESSION',
+    `${API_URL}/api/session/`,
+    {
+      method: 'POST',
+    },
+  );
 
 export const ALL_CONTACTS = 'ALL_CONTACTS';
 export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
@@ -20,8 +36,8 @@ const apiGetAllContacts = () =>
 // const apiGetContact = contactId =>
 //   makeFetchActions(CONTACT, `${API_URL}/api/contacts/${contactId}/`);
 
-const apiAddContact = contact =>
-  makeFetchActions(ADD_CONTACT, `${API_URL}/api/contacts/`, {
+const apiAddContact = (authToken, contact) =>
+  makeAuthFetchActions(authToken, ADD_CONTACT, `${API_URL}/api/contacts/`, {
     body: JSON.stringify(contact),
     method: 'POST',
   });
@@ -38,11 +54,11 @@ export const refreshContacts = apiGetAllContacts();
 
 export const ADD_CONTACT = 'ADD_CONTACT';
 export const ADD_CONTACT_API = fetchActionTypes(ADD_CONTACT);
-export const addContact = contact =>
+export const addContact = (authToken, contact) =>
   async function(dispatch) {
     dispatch(addContactLocal(contact));
 
-    return await apiAddContact(contact)(dispatch);
+    return await apiAddContact(authToken, contact)(dispatch);
   };
 
 const addContactLocal = contact => ({
@@ -57,7 +73,7 @@ export const addContactSkill = (contactId, skill) =>
     const payload = {
       contact_id: contactId,
       name: skill,
-    }
+    };
     dispatch({
       type: ADD_CONTACT_SKILL,
       payload,
@@ -139,13 +155,12 @@ export const getMyContact = authToken =>
     return await apiGetMyContact(authToken)(dispatch);
   };
 
-const apiGetMyContact = authToken =>
+export const apiGetMyContact = authToken =>
   makeAuthFetchActions(
     authToken,
     GET_MY_CONTACT,
     `${API_URL}/api/contacts/me/`
   );
-
 
 /* eslint-enable no-unused-vars */
 
@@ -181,6 +196,15 @@ export const contactsReducer = createReducer(
       const contact = action.body.data;
       state[contact.id] = contact;
     },
+    [GET_SESSION_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data.contact;
+      state[contact.id] = contact;
+    },
+    [CREATE_SESSION_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data.contact;
+      state[contact.id] = contact;
+    },
+
   }
 );
 
@@ -205,11 +229,21 @@ export const accountsReducer = createReducer(
       const contact = action.body.data;
       state[contact.account_id] = contact;
     },
+    [CREATE_SESSION_API.RESOLVE]: (state, action) => {
+      state.has_session = true;
+      state.contact = action.body.data.contact;
+    },
+    [GET_SESSION_API.RESOLVE]: (state, action) => {
+      state.has_session = true;
+      state.contact = action.body.data.contact;
+    },
+    [GET_SESSION_API.REJECT]: (state, action) => {
+      state.has_session = false;
+      state.contact = null;
+    },
     [ADD_CONTACT_API.RESOLVE]: (state, action) => {
-      const contact = action.body.data;
-      if (contact.account_id) {
-        state[contact.account_id] = contact;
-      }
+      state.has_session = true
+      state.contact = action.body.data;
     },
   }
 );

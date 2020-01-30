@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import ReactGA from 'react-ga';
 import {createClickTracking} from './lib/helpers';
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
@@ -27,8 +27,64 @@ import TalentHome from 'components/TalentHome/TalentHome';
 
 import NavBarIcons from './components/NavigationBar/NavBarIcons';
 
-const App = ({classes}) => {
-  const {isAuthenticated, loginWithRedirect, logout} = useAuth0();
+const App = ({hasSession, getSession, createSession, classes}) => {
+  const {isAuthenticated, getTokenSilently, loginWithRedirect, logout} = useAuth0();
+  const loadingSession = useRef(false);
+  const creatingSession = useRef(false);
+
+  // Attempts to load the session if we don't currenlty have one
+  useEffect(() => {
+    const loadSession = async () => {
+      if (hasSession) {
+        return;
+      }
+
+      if (!loadingSession.current) {
+        loadingSession.current = true;
+        const response = await getSession();
+        if (response.statusCode === 200) {
+          return;
+        }
+      }
+    };
+    loadSession();
+  },
+  [hasSession, getSession]);
+
+  // Tries to create a new session if we land from authentication
+  useEffect(() => {
+    const getNewSession = async () => {
+      console.log('getNewSession start');
+      if (hasSession || !isAuthenticated) {
+        return;
+      }
+
+      if (!creatingSession.current) {
+        console.log('getNewSession inside');
+        creatingSession.current = true;
+
+        try {
+          console.log('getNewSession before create');
+          const result = await createSession(getTokenSilently);
+          console.log(result)
+        } catch (error) {
+          console.log('getNewSession fail');
+          console.log('moo', error)
+          console.error(error)
+          // We land here if we don't have a contact yet
+        }
+        creatingSession.current = false;
+      }
+    };
+    getNewSession();
+  }, [
+    isAuthenticated,
+    getSession,
+    hasSession,
+    createSession,
+    getTokenSilently,
+  ]);
+
 
   useEffect(() => {
     ReactGA.initialize('UA-156685867-1');
@@ -69,12 +125,13 @@ const App = ({classes}) => {
                   </MenuItem>
                 </Link>
                 <div className={classes.grow} />
-                {!isAuthenticated && (
+
+                {(!hasSession && !isAuthenticated) && (
                   <Button color="inherit" onClick={onClickLogInHandler}>
                     Log in / Sign up
                   </Button>
                 )}
-                {isAuthenticated && (
+                {(hasSession || isAuthenticated) && (
                   <NavBarIcons logout={onClickLogOutHandler} />
                 )}
               </Toolbar>
