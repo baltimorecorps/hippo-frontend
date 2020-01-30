@@ -35,7 +35,7 @@ const App = ({classes}) => {
     // to report page view
     ReactGA.set({page: window.location.pathname});
 
-    ReactGA.pageview(window.location.pathname);
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
   const onClickLogInHandler = () => {
