@@ -78,7 +78,6 @@ const useForm = (addNewContact, accountId, emailSuggest) => {
 
   const handleCheckBoxChange = event => {
     event.persist();
-    console.log(event);
     setValues(values => ({
       ...values,
       [event.target.name]: event.target.checked,
@@ -156,7 +155,6 @@ const AddContact = ({
     } else {
       result = 'Disagree';
     }
-
     createClickTracking(
       'Creating New Contact',
       `Click ${result} on terms and privacy checkbox`,
