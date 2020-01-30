@@ -236,9 +236,13 @@ const AddContact = ({
             }
             className={classes.checkbox}
           />
-          <FormHelperText className={classes.checkboxLabel}>
+          <Typography
+            component="body2"
+            variant="body2"
+            className={classes.checkboxLabel}
+          >
             {checkboxLabel}
-          </FormHelperText>
+          </Typography>
         </Grid>
         <FormHelperText className={classes.formHelperText}>
           {errors.termsAgreement_error || null}
