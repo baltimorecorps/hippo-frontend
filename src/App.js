@@ -34,7 +34,8 @@ const App = ({classes}) => {
     ReactGA.initialize('UA-156685867-1');
     // to report page view
     ReactGA.set({page: window.location.pathname});
-    ReactGA.pageview(window.location.pathname + window.location.search);
+
+    ReactGA.pageview(window.location.pathname);
   }, []);
 
   const onClickLogInHandler = () => {

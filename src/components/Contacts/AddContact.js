@@ -76,7 +76,16 @@ const useForm = (addNewContact, accountId, emailSuggest) => {
     }));
   };
 
-  return [values, handleChange, handleSubmit];
+  const handleCheckBoxChange = event => {
+    event.persist();
+    console.log(event);
+    setValues(values => ({
+      ...values,
+      [event.target.name]: event.target.checked,
+    }));
+  };
+
+  return [values, handleChange, handleSubmit, handleCheckBoxChange];
 };
 
 const AddContact = ({
@@ -87,8 +96,7 @@ const AddContact = ({
   emailSuggest,
 }) => {
   const [open, setOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [values, handleChange, handleSubmit] = useForm(
+  const [values, handleChange, handleSubmit, handleCheckBoxChange] = useForm(
     addNewContact,
     accountId,
     emailSuggest
@@ -138,16 +146,17 @@ const AddContact = ({
     submit();
   };
 
-  const termsAndPrivacyHandler = () => {
-    setIsChecked(!isChecked);
+  const termsAndPrivacyHandler = e => {
+    e.persist();
+    handleCheckBoxChange(e);
+
     let result = '';
-    if (isChecked === false) {
-      result = 'Disagree';
-      // console.log(isChecked);
-    } else {
+    if (e.target.checked) {
       result = 'Agree';
+    } else {
+      result = 'Disagree';
     }
-    console.log(result);
+
     createClickTracking(
       'Creating New Contact',
       `Click ${result} on terms and privacy checkbox`,
@@ -221,10 +230,10 @@ const AddContact = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={isChecked}
-                // onChange={termsAndPrivacyHandler}
-                onClick={() => termsAndPrivacyHandler()}
-                value="agree"
+                name="terms_agreement"
+                checked={values.terms_agreement || false}
+                onChange={termsAndPrivacyHandler}
+                value={values.terms_agreement || false}
               />
             }
             className={classes.checkbox}
@@ -233,6 +242,9 @@ const AddContact = ({
             {checkboxLabel}
           </FormHelperText>
         </Grid>
+        <FormHelperText className={classes.formHelperText}>
+          {errors.termsAgreement_error || null}
+        </FormHelperText>
       </Grid>
     </form>
   );
@@ -379,7 +391,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     margin: '0 17px 0 0',
-    fontSize: '15px',
+    fontSize: '14px',
   },
 });
 
