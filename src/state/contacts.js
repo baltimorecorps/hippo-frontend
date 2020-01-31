@@ -28,6 +28,18 @@ export const createSession = authToken =>
     },
   );
 
+export const DELETE_SESSION_API = fetchActionTypes('DELETE_SESSION');
+export const deleteSession = () =>
+  makeFetchActions(
+    'DELETE_SESSION',
+    `${API_URL}/api/session/`,
+    {
+      method: 'DELETE',
+      credentials: 'include',
+    },
+  );
+
+
 export const ALL_CONTACTS = 'ALL_CONTACTS';
 export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
 const apiGetAllContacts = () =>

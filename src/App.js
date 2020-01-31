@@ -27,8 +27,19 @@ import TalentHome from 'components/TalentHome/TalentHome';
 
 import NavBarIcons from './components/NavigationBar/NavBarIcons';
 
-const App = ({hasSession, getSession, createSession, classes}) => {
-  const {isAuthenticated, getTokenSilently, loginWithRedirect, logout} = useAuth0();
+const App = ({
+  hasSession,
+  getSession,
+  createSession,
+  deleteSession,
+  classes,
+}) => {
+  const {
+    isAuthenticated,
+    getTokenSilently,
+    loginWithRedirect,
+    logout,
+  } = useAuth0();
   const loadingSession = useRef(false);
   const creatingSession = useRef(false);
 
@@ -48,30 +59,22 @@ const App = ({hasSession, getSession, createSession, classes}) => {
       }
     };
     loadSession();
-  },
-  [hasSession, getSession]);
+  }, [hasSession, getSession]);
 
   // Tries to create a new session if we land from authentication
   useEffect(() => {
     const getNewSession = async () => {
-      console.log('getNewSession start');
       if (hasSession || !isAuthenticated) {
         return;
       }
 
       if (!creatingSession.current) {
-        console.log('getNewSession inside');
         creatingSession.current = true;
 
         try {
-          console.log('getNewSession before create');
           const result = await createSession(getTokenSilently);
-          console.log(result)
         } catch (error) {
-          console.log('getNewSession fail');
-          console.log('moo', error)
-          console.error(error)
-          // We land here if we don't have a contact yet
+          console.error(error);
         }
         creatingSession.current = false;
       }
@@ -84,7 +87,6 @@ const App = ({hasSession, getSession, createSession, classes}) => {
     createSession,
     getTokenSilently,
   ]);
-
 
   useEffect(() => {
     ReactGA.initialize('UA-156685867-1');
@@ -107,6 +109,7 @@ const App = ({hasSession, getSession, createSession, classes}) => {
       'Click Log Out',
       'Click Log Out Button'
     );
+    deleteSession();
     logout({
       returnTo: window.location.origin,
     });

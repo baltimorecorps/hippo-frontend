@@ -13,6 +13,8 @@ import {
   getSession,
   CREATE_SESSION_API,
   createSession,
+  DELETE_SESSION_API,
+  deleteSession,
   contactsReducer, 
   accountsReducer,
 } from './contacts';
@@ -269,6 +271,18 @@ describe('accounts state', () => {
       contact: null,
     });
   });
+  test('Delete session', () => {
+    const contact = {id: 123, account_id: 'auth|myid'};
+    const newState = accountsReducer(undefined, {
+      type: DELETE_SESSION_API.RESOLVE,
+      body: {status: 'success'},
+    });
+    expect(newState).toEqual({
+      has_session: false,
+      contact: null,
+    });
+  });
+
 
   test('Create session', () => {
     const contact = {info: 'me'}
@@ -321,4 +335,5 @@ describe('accounts state', () => {
       'auth|myid': contact,
     });
   });
+
 });

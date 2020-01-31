@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {getSession, createSession} from 'state/contacts';
+import {getSession, createSession, deleteSession} from 'state/contacts';
 import App from './App';
 
 export const mapStateToProps = state => {
@@ -13,6 +13,7 @@ export const mapStateToProps = state => {
 export const mapDispatchToProps = dispatch => ({
   getSession: () => getSession()(dispatch),
   createSession: fetchToken => createSession(fetchToken)(dispatch),
+  deleteSession: () => deleteSession()(dispatch),
 });
 
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
