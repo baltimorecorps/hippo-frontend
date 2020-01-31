@@ -253,9 +253,14 @@ export const accountsReducer = createReducer(
       state.has_session = false;
       state.contact = null;
     },
+    [DELETE_SESSION_API.RESOLVE]: (state, action) => {
+      state.has_session = false;
+      state.contact = null;
+    },
     [ADD_CONTACT_API.RESOLVE]: (state, action) => {
       state.has_session = true
       state.contact = action.body.data;
     },
+
   }
 );
