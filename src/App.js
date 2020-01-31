@@ -109,10 +109,12 @@ const App = ({
       'Click Log Out',
       'Click Log Out Button'
     );
-    deleteSession();
-    logout({
-      returnTo: window.location.origin,
-    });
+    (async () => {
+      await deleteSession();
+      logout({
+        returnTo: window.location.origin,
+      });
+    })();
   };
 
   return (
