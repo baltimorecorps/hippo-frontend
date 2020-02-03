@@ -1,6 +1,8 @@
 import {format} from 'date-fns';
 import {API_URL} from 'app/constants';
-import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
+
+import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
+import {fetchActionTypes} from 'redux-fetch-wrapper';
 import {createReducer} from 'redux-starter-kit';
 
 export const START_RESUME_CREATION = 'START_RESUME_CREATION';
@@ -30,7 +32,7 @@ export const generateResume = (contactId, resume) =>
       },
     });
 
-    const response = await makeFetchActions(
+    const response = await makeApiFetchActions(
       GENERATE_RESUME,
       `${API_URL}/api/contacts/${contactId}/generate-resume/`,
       {
@@ -68,7 +70,7 @@ export const createResume = (contactId, name) =>
       resume,
     });
 
-    return await makeFetchActions(
+    return await makeApiFetchActions(
       CREATE_RESUME,
       `${API_URL}/api/contacts/${contactId}/resumes/`,
       {
@@ -81,12 +83,12 @@ export const createResume = (contactId, name) =>
 export const REFRESH_RESUME = 'REFRESH_RESUME';
 export const REFRESH_RESUME_API = fetchActionTypes(REFRESH_RESUME);
 export const refreshResume = resumeId =>
-  makeFetchActions(REFRESH_RESUME, `${API_URL}/api/resumes/${resumeId}/`);
+  makeApiFetchActions(REFRESH_RESUME, `${API_URL}/api/resumes/${resumeId}/`);
 
 export const REFRESH_RESUMES = 'REFRESH_RESUMES';
 export const REFRESH_RESUMES_API = fetchActionTypes(REFRESH_RESUMES);
 export const refreshResumes = contactId =>
-  makeFetchActions(
+  makeApiFetchActions(
     REFRESH_RESUMES,
     `${API_URL}/api/contacts/${contactId}/resumes/`,
     null,
@@ -110,7 +112,7 @@ export const updateResume = (resumeId, name) =>
       update,
     });
 
-    return await makeFetchActions(
+    return await makeApiFetchActions(
       UPDATE_RESUME,
       `${API_URL}/api/resumes/${resumeId}/`,
       {
@@ -129,7 +131,7 @@ export const deleteResume = (resumeId, contactId) =>
       resumeId,
     });
 
-    const result = await makeFetchActions(
+    const result = await makeApiFetchActions(
       DELETE_RESUME,
       `${API_URL}/api/resumes/${resumeId}/`,
       {
@@ -158,7 +160,7 @@ export const createResumeSection = section =>
       throw new Error('invalid section given to createResumeSection!');
     }
 
-    return await makeFetchActions(
+    return await makeApiFetchActions(
       CREATE_SECTION,
       `${API_URL}/api/resumes/${section.resume_id}/sections/`,
       {
@@ -171,7 +173,7 @@ export const createResumeSection = section =>
 export const REFRESH_SECTION = 'REFRESH_SECTION';
 export const REFRESH_SECTION_API = fetchActionTypes(REFRESH_SECTION);
 export const refreshResumeSection = (resumeId, sectionId) =>
-  makeFetchActions(
+  makeApiFetchActions(
     REFRESH_SECTION,
     `${API_URL}/api/resumes/${resumeId}/sections/${sectionId}/`
   );
@@ -179,7 +181,7 @@ export const refreshResumeSection = (resumeId, sectionId) =>
 export const UPDATE_SECTION = 'UPDATE_SECTION';
 export const UPDATE_SECTION_API = fetchActionTypes(UPDATE_SECTION);
 export const updateResumeSection = section =>
-  makeFetchActions(
+  makeApiFetchActions(
     UPDATE_SECTION,
     `${API_URL}/api/resumes/${section.resume_id}/sections/${section.id}/`,
     {
@@ -214,7 +216,7 @@ export const DELETE_SECTION = 'DELETE_SECTION';
 export const DELETE_SECTION_API = fetchActionTypes(DELETE_SECTION);
 export const deleteResumeSection = (resumeId, sectionId) =>
   async function(dispatch) {
-    const result = await makeFetchActions(
+    const result = await makeApiFetchActions(
       DELETE_SECTION,
       `${API_URL}/api/resumes/${resumeId}/sections/${sectionId}/`,
       {

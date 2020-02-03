@@ -1,5 +1,6 @@
 import {API_URL} from 'app/constants';
-import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
+import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
+import {fetchActionTypes} from 'redux-fetch-wrapper';
 import {createReducer} from 'redux-starter-kit';
 
 // Rules for action creators:
@@ -17,12 +18,14 @@ export const addExperience = experience =>
       experience,
     });
 
-    await makeFetchActions(
+    await makeApiFetchActions(
       ADD_EXPERIENCE,
       `${API_URL}/api/contacts/${experience.contact_id}/experiences/`,
       {
         body: JSON.stringify(experience),
         method: 'POST',
+        credentials: 'include',
+
       }
     )(dispatch);
   };
@@ -30,7 +33,7 @@ export const addExperience = experience =>
 export const GET_EXPERIENCE = 'GET_EXPERIENCE';
 export const GET_EXPERIENCE_API = fetchActionTypes(GET_EXPERIENCE);
 export const getExperience = expId =>
-  makeFetchActions(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
+  makeApiFetchActions(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
 
 export const UPDATE_EXPERIENCE = 'UPDATE_EXPERIENCE';
 export const UPDATE_EXPERIENCE_API = fetchActionTypes(UPDATE_EXPERIENCE);
@@ -41,7 +44,7 @@ export const updateExperience = experience =>
       experience,
     });
 
-    await makeFetchActions(
+    await makeApiFetchActions(
       UPDATE_EXPERIENCE,
       `${API_URL}/api/experiences/${experience.id}/`,
       {
@@ -55,7 +58,7 @@ export const updateExperience = experience =>
 export const REFRESH_EXPERIENCES = 'REFRESH_EXPERIENCES';
 export const REFRESH_EXPERIENCES_API = fetchActionTypes(REFRESH_EXPERIENCES);
 export const refreshExperiences = contactId =>
-  makeFetchActions(
+  makeApiFetchActions(
     REFRESH_EXPERIENCES,
     `${API_URL}/api/contacts/${contactId}/experiences/`
   );
@@ -66,7 +69,7 @@ export const REFRESH_EXPERIENCE_TYPE_API = fetchActionTypes(
 );
 export const refreshExperienceType = (contactId, expType) => {
   expType = expType.toLowerCase();
-  return makeFetchActions(
+  return makeApiFetchActions(
     REFRESH_EXPERIENCE_TYPE,
     `${API_URL}/api/contacts/${contactId}/experiences/?type=${expType}`,
     null,
@@ -88,7 +91,7 @@ export const deleteExperience = experience =>
       experience: experience,
     });
 
-    await makeFetchActions(
+    await makeApiFetchActions(
       DELETE_EXPERIENCE,
       `${API_URL}/api/experiences/${experience.id}/`,
       {
@@ -105,7 +108,7 @@ export const deleteExperience = experience =>
 export const ADD_TAG = 'ADD_TAG';
 export const ADD_TAG_API = fetchActionTypes(ADD_TAG);
 export const addTag = tag =>
-  makeFetchActions(ADD_TAG, `${API_URL}/api/tags/`, {
+  makeApiFetchActions(ADD_TAG, `${API_URL}/api/tags/`, {
     method: 'POST',
     body: JSON.stringify(tag),
   });
@@ -113,7 +116,7 @@ export const addTag = tag =>
 export const REFRESH_TAGS = 'REFRESH_TAGS';
 export const REFRESH_TAGS_API = fetchActionTypes(REFRESH_TAGS);
 export const refreshTags = () =>
-  makeFetchActions(REFRESH_TAGS, `${API_URL}/api/tags/`);
+  makeApiFetchActions(REFRESH_TAGS, `${API_URL}/api/tags/`);
 
 export const ADD_TAG_ITEM = 'ADD_TAG_ITEM';
 export const ADD_TAG_ITEM_API = fetchActionTypes(ADD_TAG_ITEM);
@@ -134,7 +137,7 @@ export const addTagItem = tagItem =>
       tagItem.tag_id = newTagAction.body.data.id;
     }
 
-    await makeFetchActions(
+    await makeApiFetchActions(
       ADD_TAG_ITEM,
       `${API_URL}/api/contacts/${tagItem.contact_id}/tags/`,
       {
@@ -153,7 +156,7 @@ export const updateTagItem = tagItem =>
       tag: tagItem,
     });
 
-    await makeFetchActions(
+    await makeApiFetchActions(
       UPDATE_TAG_ITEM,
       `${API_URL}/api/contacts/${tagItem.contact_id}/tags/${tagItem.tag_id}/`,
       {
@@ -172,7 +175,7 @@ export const deleteTagItem = tagItem =>
       tag: tagItem,
     });
 
-    await makeFetchActions(
+    await makeApiFetchActions(
       DELETE_TAG_ITEM,
       `${API_URL}/api/contacts/${tagItem.contact_id}/tags/${tagItem.tag_id}/`,
       {
@@ -188,7 +191,7 @@ export const REFRESH_TAG_ITEMS_API = fetchActionTypes(REFRESH_TAG_ITEMS);
 export const refreshTagItems = (contactId, tagType) =>
   async function(dispatch) {
     tagType = tagType.toLowerCase();
-    await makeFetchActions(
+    await makeApiFetchActions(
       REFRESH_TAG_ITEMS,
       `${API_URL}/api/contacts/${contactId}/tags/?type=${tagType}`,
       null,
