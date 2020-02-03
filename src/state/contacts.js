@@ -1,6 +1,8 @@
 import {createReducer} from 'redux-starter-kit';
-import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
+import {fetchActionTypes} from 'redux-fetch-wrapper';
+import {makeApiFetchActions} from '../lib/helpers';
 import {makeAuthFetchActions} from 'lib/auth0';
+
 
 import {API_URL} from '../constants';
 
@@ -10,7 +12,7 @@ import {API_URL} from '../constants';
 
 export const GET_SESSION_API = fetchActionTypes('GET_SESSION');
 export const getSession = () =>
-  makeFetchActions('GET_SESSION', 
+  makeApiFetchActions('GET_SESSION', 
     `${API_URL}/api/session/`,
     {
       credentials: 'include',
@@ -30,7 +32,7 @@ export const createSession = authToken =>
 
 export const DELETE_SESSION_API = fetchActionTypes('DELETE_SESSION');
 export const deleteSession = () =>
-  makeFetchActions(
+  makeApiFetchActions(
     'DELETE_SESSION',
     `${API_URL}/api/session/`,
     {
@@ -43,10 +45,10 @@ export const deleteSession = () =>
 export const ALL_CONTACTS = 'ALL_CONTACTS';
 export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
 const apiGetAllContacts = () =>
-  makeFetchActions(ALL_CONTACTS, `${API_URL}/api/contacts/`);
+  makeApiFetchActions(ALL_CONTACTS, `${API_URL}/api/contacts/`);
 
 // const apiGetContact = contactId =>
-//   makeFetchActions(CONTACT, `${API_URL}/api/contacts/${contactId}/`);
+//   makeApiFetchActions(CONTACT, `${API_URL}/api/contacts/${contactId}/`);
 
 const apiAddContact = (authToken, contact) =>
   makeAuthFetchActions(authToken, ADD_CONTACT, `${API_URL}/api/contacts/`, {
@@ -58,7 +60,7 @@ const apiAddContact = (authToken, contact) =>
 export const GET_CONTACT = 'GET_CONTACT';
 export const GET_CONTACT_API = fetchActionTypes(GET_CONTACT);
 export const apiGetContact = contactId =>
-  makeFetchActions(GET_CONTACT, `${API_URL}/api/contacts/${contactId}/`);
+  makeApiFetchActions(GET_CONTACT, `${API_URL}/api/contacts/${contactId}/`);
 
 // ## ACTION CREATORS ##
 
@@ -91,7 +93,7 @@ export const addContactSkill = (contactId, skill) =>
       payload,
     });
 
-    const result = await makeFetchActions(
+    const result = await makeApiFetchActions(
       ADD_CONTACT_SKILL,
       `${API_URL}/api/contacts/${contactId}/skills/`,
       {
@@ -119,7 +121,7 @@ export const deleteContactSkill = (contactId, skillId) =>
       },
     });
 
-    const result = await makeFetchActions(
+    const result = await makeApiFetchActions(
       DELETE_CONTACT_SKILL,
       `${API_URL}/api/contacts/${contactId}/skills/`,
       {
@@ -144,7 +146,7 @@ export const updateContact = contact =>
       contact,
     });
 
-    return await makeFetchActions(
+    return await makeApiFetchActions(
       UPDATE_CONTACT,
       `${API_URL}/api/contacts/${contact.id}/`,
       {
