@@ -11,6 +11,7 @@ test('New Profile Validator: no values ', () => {
     lastName_error: 'Required',
     email_error: 'Required',
     phonePrimary_error: 'Required',
+    termsAgreement_error: 'Required',
   };
 
   const {isError, err} = newProfileValidator(values);
@@ -26,6 +27,7 @@ describe('First and Last names Validators', () => {
       last_name: 'Grape-Baby',
       phone_primary: '9990001111',
       email: 'bay@gmail.com',
+      terms_agreement: true,
     };
     let expectedErr = {};
 
@@ -37,12 +39,13 @@ describe('First and Last names Validators', () => {
 });
 
 describe('Phone Number Validator', () => {
-  test('New Profile: string phone number ', () => {
+  test('New Profile: invalid phone number (string) ', () => {
     const values = {
       first_name: 'Bay',
       last_name: 'C',
       email: 'email@email.com',
       phone_primary: 'myphoneNumber',
+      terms_agreement: true,
     };
     let expectedErr = {
       phonePrimary_error: 'Required',
@@ -60,6 +63,7 @@ test('New Profile: invalid phone number (less than six digits)', () => {
     last_name: 'C',
     email: 'email@gmail.com',
     phone_primary: '00099',
+    terms_agreement: true,
   };
   const expectedErr = {
     phonePrimary_error: 'Required',
@@ -77,6 +81,7 @@ const values = {
   first_name: 'Bay',
   last_name: 'C',
   phone_primary: '9990001111',
+  terms_agreement: true,
 };
 
 const validEmails = [
@@ -137,6 +142,25 @@ describe('Email Validators', () => {
     invalidEmails.map(email => {
       values.email = email;
       const {isError, err} = newProfileValidator(values);
+
+      expect(isError).toBe(true);
+      expect(err).toEqual(expectedErr);
+    });
+  });
+
+  describe('Terms Agreement Validator', () => {
+    test('New Profile: unchecked checkbox (disagree)', () => {
+      const values = {
+        first_name: 'Bay',
+        last_name: 'C',
+        email: 'email@email.com',
+        phone_primary: '5555555555',
+        terms_agreement: false,
+      };
+      let expectedErr = {
+        termsAgreement_error: 'Required',
+      };
+      let {isError, err} = newProfileValidator(values);
 
       expect(isError).toBe(true);
       expect(err).toEqual(expectedErr);

@@ -137,7 +137,7 @@ const experienceValidator = values => {
 };
 
 const newProfileValidator = values => {
-  const {first_name, last_name, email, phone_primary} = values;
+  const {first_name, last_name, email, phone_primary, terms_agreement} = values;
 
   let isError = false;
   let err = {};
@@ -162,6 +162,11 @@ const newProfileValidator = values => {
   if (!phone_primary || phone_primary.replace(/\D/g, '').length < 6) {
     isError = true;
     err.phonePrimary_error = 'Required';
+  }
+
+  if (!terms_agreement) {
+    isError = true;
+    err.termsAgreement_error = 'Required';
   }
 
   return {isError, err};
