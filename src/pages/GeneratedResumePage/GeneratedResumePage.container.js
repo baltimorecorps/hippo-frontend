@@ -1,8 +1,8 @@
 import {connect} from 'react-redux';
 import GeneratedResumePage from './GeneratedResumePage';
 
-import {refreshResume} from 'actions/resume';
-import {refreshContacts} from 'actions/contacts';
+import {refreshResume} from 'state/resume';
+import {refreshContacts} from 'state/contacts';
 
 const mapStateToProps = (state, ownProps) => {
   const {contactId, resumeId} = ownProps.match

@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {RESUME_CREATION} from '../../../reducers/resume';
+import {RESUME_CREATION} from '../../../state/resume';
 import {
   selectResumeExperience,
   deselectResumeExperience,
-} from '../../../actions/resume';
+} from '../../../state/resume';
 import ExperiencesList from './ExperiencesList';
 
 import {
@@ -12,7 +12,7 @@ import {
   refreshExperienceType,
   updateExperience,
   deleteExperience,
-} from 'actions/profile';
+} from 'state/profile';
 
 const getExperiences = createSelector(
   ['experiences'],

@@ -9,7 +9,7 @@ const DEFAULT_REDIRECT_CALLBACK = () =>
   window.history.replaceState({}, document.title, window.location.pathname);
 
 export const makeAuthFetchActions = (
-  token,
+  fetchToken,
   action,
   url,
   init = null,
@@ -17,19 +17,21 @@ export const makeAuthFetchActions = (
   abortController = null,
   conditional = null
 ) => {
-  if (init === null) {
-    init = {headers: {}};
-  }
+  return async (dispatch) => {
+    init = Object.assign({headers: {}}, init);
 
-  init.headers['Authorization'] = `Bearer ${token}`;
-  return makeFetchActions(
-    action,
-    url,
-    init,
-    actions,
-    abortController,
-    conditional
-  );
+    const token = await fetchToken();
+    init.headers['Authorization'] = `Bearer ${token}`;
+    init.credentials = 'include';
+    return await makeFetchActions(
+      action,
+      url,
+      init,
+      actions,
+      abortController,
+      conditional
+    )(dispatch);
+  };
 };
 
 export const Auth0Context = React.createContext();

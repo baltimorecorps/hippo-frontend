@@ -1,6 +1,6 @@
-import {experiencesReducer, tagReducer, tagItemReducer} from './profile';
-import {programsReducer} from './programs';
+import fetchMock from 'fetch-mock';
 
+import {experiencesReducer, tagReducer, tagItemReducer} from './profile';
 import {
   ADD_NEW_PROGRAM,
   ADD_NEW_PROGRAM_API,
@@ -14,7 +14,59 @@ import {
   GET_PROGRAM_QUESTIONS,
   GET_PROGRAM_QUESTIONS_API,
   refreshQuestions,
-} from '../actions/programs';
+  programsReducer} from './programs';
+
+afterEach(() => {
+  fetchMock.restore();
+});
+
+
+describe('Programs', () => {
+  test('Create new program action - success', async function() {
+    const dispatch = jest.fn();
+    const contactId = 1234;
+    // const data = {
+    //   program_id: 1,
+    //   contact_id: contactId,
+    //   card_id: 'card',
+    //   is_approved: false,
+    //   is_active: true,
+    //   stage: 1,
+    //   responses: [
+    //     {
+    //       program_contact_id: 1,
+    //       question_id: 1,
+    //       response_text: 'Race and equity answer',
+    //     },
+    //     {
+    //       program_contact_id: 1,
+    //       question_id: 2,
+    //       response_text: 'Race and equity answer',
+    //     },
+    //   ],
+    // };
+
+    // const program = data;
+
+    // ---------------------------------------------------------------------
+    const program = {data: 'test', contact_id: contactId};
+    const response = {response: 'win'};
+
+    fetchMock.post(`path:/api/contacts/${contactId}/programs/`, response);
+
+    await addNewProgram(program)(dispatch);
+
+    expect(dispatch.mock.calls.length).toBe(3);
+    expect(dispatch.mock.calls[0][0].type).toBe(ADD_NEW_PROGRAM);
+    expect(dispatch.mock.calls[0][0].program).toEqual(program);
+    expect(dispatch.mock.calls[1][0].type).toBe(ADD_NEW_PROGRAM_API.REQUEST);
+    expect(dispatch.mock.calls[2][0].type).toBe(ADD_NEW_PROGRAM_API.RESOLVE);
+    expect(dispatch.mock.calls[2][0].body).toEqual(response);
+  });
+});
+
+
+
 
 describe('Program state', () => {
   let initialState = {};

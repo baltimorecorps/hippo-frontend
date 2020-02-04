@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import {refreshResumes} from 'actions/resume';
+import {refreshResumes} from 'state/resume';
 import ResumesList from './ResumesList';
 
 const mapStateToProps = (state, props) => {

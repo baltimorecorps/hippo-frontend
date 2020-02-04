@@ -8,7 +8,7 @@ import {
   deleteTagItem,
   updateTagItem,
   refreshTagItems,
-} from 'actions/profile';
+} from 'state/profile';
 
 const getTags = createSelector(
   ['tags'],

@@ -1,5 +1,6 @@
 import {API_URL} from '../constants';
 import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
+import {createReducer} from 'redux-starter-kit';
 
 // ## REDUX ACTION TYPES ##
 export const ADD_NEW_PROGRAM = 'ADD_NEW_PROGRAM';
@@ -92,3 +93,36 @@ export const updateProgram = program =>
 
     return await apiUpdateProgram(program)(dispatch);
   };
+
+
+
+export const programsReducer = createReducer(
+  {},
+  {
+    [ADD_NEW_PROGRAM_API.RESOLVE]: (state, action) => {
+      const program = action.body.data;
+      state[program.id] = program;
+    },
+    [GET_ALL_PROGRAMS_API.RESOLVE]: (state, action) => {
+      const newState = {};
+      // clear out all old entries
+      action.body.data.forEach(program => {
+        newState[program.id] = program;
+      });
+      return newState;
+    },
+    [GET_PROGRAM_QUESTIONS_API.RESOLVE]: (state, action) => {
+      const newState = {};
+      // clear out all old entries
+      action.body.data.forEach(program => {
+        newState[program.id] = program;
+      });
+      return newState;
+    },
+
+    [UPDATE_PROGRAM_API.RESOLVE]: (state, action) => {
+      const program = action.body.data;
+      state[program.id] = program;
+    },
+  }
+);

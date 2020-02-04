@@ -4,15 +4,15 @@ import {
   refreshContacts,
   updateContact,
   addContactSkill,
-} from 'actions/contacts';
-import {refreshPrograms, addNewProgram} from 'actions/programs';
+} from 'state/contacts';
+import {refreshPrograms, addNewProgram} from 'state/programs';
 import {
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
   generateResume,
-} from 'actions/resume';
-import {RESUME_CREATION} from 'reducers/resume';
+} from 'state/resume';
+import {RESUME_CREATION} from 'state/resume';
 import ProfilePage from './ProfilePage';
 
 // eslint-disable-next-line no-unused-vars
@@ -143,7 +143,7 @@ export const mapStateToProps = (state, props) => {
 };
 
 // Refreshes the state of all contacts (as shown above) from the API, via
-// the ALL_CONTACTS event (see reducers/contacts.js for details)
+// the ALL_CONTACTS event (see state/contacts.js for details)
 export const mapDispatchToProps = dispatch => ({
   updateContact: contact => updateContact(contact)(dispatch),
   refreshContacts: async () => {

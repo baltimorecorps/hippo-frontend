@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 
@@ -13,10 +14,10 @@ import {createClickTracking} from '../../lib/helpers';
 
 import {useAuth0} from 'lib/auth0';
 
-const Home = ({classes}) => {
+const Home = ({hasSession, classes}) => {
   const {isAuthenticated, loginWithRedirect} = useAuth0();
 
-  if (isAuthenticated) {
+  if (hasSession || isAuthenticated) {
     return <Redirect to="/profile" />;
   }
 
@@ -146,4 +147,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(Home);
+export const mapStateToProps = state => {
+  return {
+    hasSession: state.accounts.has_session || false,
+  };
+};
+
+export default withStyles(styles)(connect(mapStateToProps)(Home));
