@@ -127,12 +127,12 @@ const AddContact = ({
     values.phone_primary = value;
   };
 
-  const termsLink = createALink('Services Terms', terms, classes.link);
+  const termsLink = createALink('Terms of Use', terms, classes.link);
   const policyLink = createALink('Privacy Policy', policy, classes.link);
 
   const checkboxLabel = (
     <span>
-      Agree to Baltimore Corps {termsLink} and {policyLink}
+      I agree to the {termsLink} and {policyLink}
     </span>
   );
 
