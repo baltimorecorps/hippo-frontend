@@ -24,6 +24,8 @@ import Home from 'components/Other/Home.js';
 import Contacts from 'components/Contacts/Contacts.container';
 import SearchContact from 'components/SearchContact/SearchContact';
 import TalentHome from 'components/TalentHome/TalentHome';
+import OpportunitiesPage from 'components/OpportunitiesPage';
+import OpportunityForm from 'components/OpportunityForm';
 
 import NavBarIcons from './components/NavigationBar/NavBarIcons';
 
@@ -130,6 +132,9 @@ const App = ({
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
+                <Link to="/opportunities">
+                  Opportunities
+                </Link>
                 <div className={classes.grow} />
 
                 {(!hasSession && !isAuthenticated) && (
@@ -153,6 +158,8 @@ const App = ({
               <Route exact path="/talent-home" component={TalentHome} />
 
               <Route exact path="/profile/" component={ProfileAuth} />
+              <Route exact path="/opportunities/" component={OpportunitiesPage} />
+              <Route exact path="/new-opportunity/" component={OpportunityForm} />
               <Route
                 exact
                 path="/profile/:contactId"

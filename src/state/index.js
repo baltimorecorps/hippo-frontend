@@ -9,6 +9,9 @@ import {
   tagItemReducer as tagItems,
 } from './profile';
 import resume from './resume';
+import {
+  opportunitiesReducer as opportunities,
+}from './opportunity';
 
 import {programsReducer as programs} from './programs';
 
@@ -20,6 +23,7 @@ const rootReducer = combineReducers({
   resume,
   tags,
   tagItems,
+  opportunities,
 });
 
 export default rootReducer;

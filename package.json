@@ -19,6 +19,7 @@
     "airbnb-prop-types": "^2.15.0",
     "axios": "^0.18.1",
     "babel-plugin-rewire": "^1.2.0",
+    "cypress": "^3.8.3",
     "date-fns": "^2.8.0",
     "fetch-mock": "^7.7.3",
     "html2canvas": "^1.0.0-rc.5",
