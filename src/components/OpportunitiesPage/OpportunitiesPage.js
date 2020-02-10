@@ -14,11 +14,13 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
     history.push('/new-opportunity');
   };
 
+  const handleApply = opportunity_id => {
+    history.push(`/application/${opportunity_id}`);
+  };
+
   useEffect(() => {
     getAllOpportunities();
   }, [getAllOpportunities]);
-
-  console.log(opportunities);
 
   return (
     // TODO: Style this
@@ -50,11 +52,13 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
                 )}
               </Typography>
             </div>
-              <div  className={classes.applyButton}>
-                <Button variant="contained" color="primary">
-                  Apply
-                  </Button>
-              </div>
+            <div className={classes.applyButton}>
+              <Button 
+                onClick={() => handleApply(opportunity.id)}
+                variant="contained" color="primary">
+                Apply
+              </Button>
+            </div>
           </div>
         </Paper>
       ))}
@@ -103,7 +107,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'space-between',
     [breakpoints.down('sm')]: {
       flexDirection: 'column',
-    }
+    },
   },
   opportunityDescription: {
     marginRight: spacing(1),
@@ -112,7 +116,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
     [breakpoints.up('md')]: {
       marginRight: spacing(8),
-    }
+    },
   },
   headerContainer: {
     paddingBottom: spacing(2),
@@ -125,7 +129,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   link: {
     color: palette.primary.link,
-  }
+  },
 });
 
 export default withStyles(styles)(OpportunitiesPage);
