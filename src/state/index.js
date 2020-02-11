@@ -11,6 +11,7 @@ import {
 import resume from './resume';
 import {
   opportunitiesReducer as opportunities,
+  applicationsReducer as applications,
 }from './opportunity';
 
 import {programsReducer as programs} from './programs';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   tags,
   tagItems,
   opportunities,
+  applications,
 });
 
 export default rootReducer;

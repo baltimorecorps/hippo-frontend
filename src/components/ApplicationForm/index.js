@@ -1,3 +1,3 @@
-import ApplicationForm from './ApplicationForm';
+import ApplicationForm from './ApplicationForm.container';
 
 export default ApplicationForm;

@@ -78,8 +78,8 @@ describe('Opportunities actions', () => {
     const response = {response: 'win'};
     const application = {
       id: 'a1',
-      contact_id: 123,
-      opportunity_id: '123abc',
+      contact: { id: 123 },
+      opportunity: {id: '123abc' },
       other_data: 'stuff',
     }
 
@@ -100,8 +100,8 @@ describe('Opportunities actions', () => {
     const response = {response: 'win'};
     const application = {
       id: 'a1',
-      contact_id: 123,
-      opportunity_id: '123abc',
+      contact: { id: 123 },
+      opportunity: {id: '123abc' },
       other_data: 'stuff',
     }
 

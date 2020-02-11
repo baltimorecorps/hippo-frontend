@@ -1,12 +1,29 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
 import {createExternalLink} from 'lib/helpers';
 
-const Review = ({classes, application, next, back}) => {
+const Review = ({
+  classes,
+  application,
+  back,
+  submit,
+  toProfile,
+  toOpportunities,
+}) => {
+  const [submitted, setSubmitted] = useState(false);
+  const submitAndShowDialog = async () => {
+    const response = await submit();
+    if (response.statusCode == 200) {
+      setSubmitted(true);
+    }
+  };
   return (
     <div className={classes.container}>
       <Paper className={classes.paper}>
@@ -21,16 +38,29 @@ const Review = ({classes, application, next, back}) => {
             Statement of Interest
           </Typography>
         </div>
-          <Typography>
-            {application.interest}
-          </Typography>
-              <Button onClick={back}>Back</Button>
-              <Button
-                onClick={next}
-                color="primary"
-                variant="contained">Submit</Button>
-
+        <Typography>{application.interest_statement}</Typography>
+        <Button onClick={back}>Edit Application</Button>
+        {application.status === 'submitted' ? (
+          <Button 
+            onClick={toOpportunities}
+            variant="outlined">
+            Back to Opportunities
+          </Button>
+        ) : (
+          <Button
+            onClick={submitAndShowDialog}
+            color="primary"
+            variant="contained"
+          >
+            Submit
+          </Button>
+        )}
       </Paper>
+      <ConfirmDialog
+        open={submitted}
+        toProfile={toProfile}
+        toOpportunities={toOpportunities}
+      />
     </div>
   );
 };
@@ -67,5 +97,25 @@ const styles = ({breakpoints, palette, spacing}) => ({
     borderBottom: 'solid #e0e0e0 1px',
   },
 });
+
+const ConfirmDialog = withStyles(styles)(
+  ({classes, open, toProfile, toOpportunities}) => {
+    return (
+      <Dialog open={open}>
+        <DialogContent>
+          <Typography>Your application has been submitted</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={toProfile} variant="contained">
+            Back to Profile
+          </Button>
+          <Button onClick={toOpportunities} variant="contained">
+            View More Opportunities
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+);
 
 export default withStyles(styles)(Review);

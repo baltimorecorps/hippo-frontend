@@ -69,7 +69,7 @@ export const updateApplication = application =>
 
     return await makeApiFetchActions(
       UPDATE_APPLICATION,
-      `${API_URL}/api/contacts/${application.contact_id}/app/${application.opportunity_id}/`,
+      `${API_URL}/api/contacts/${application.contact.id}/app/${application.opportunity.id}/`,
       {
         body: JSON.stringify(application),
         method: 'PUT',
@@ -88,7 +88,7 @@ export const submitApplication = application =>
 
     return await makeApiFetchActions(
       SUBMIT_APPLICATION,
-      `${API_URL}/api/contacts/${application.contact_id}/app/${application.opportunity_id}/submit/`,
+      `${API_URL}/api/contacts/${application.contact.id}/app/${application.opportunity.id}/submit/`,
       {
         method: 'POST',
       }

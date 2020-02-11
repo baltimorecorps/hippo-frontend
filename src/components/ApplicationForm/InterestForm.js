@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import {createExternalLink} from 'lib/helpers';
 
-const InterestForm = ({classes, back, next}) => {
+const InterestForm = ({classes, startText, back, next}) => {
+  const [text, setText] = useState(startText);
   return (
     <div className={classes.container}>
       <Paper className={classes.paper}>
@@ -24,11 +25,13 @@ const InterestForm = ({classes, back, next}) => {
         </div>
           <TextField 
             variant="outlined"
+            value={text}
+            onChange={(ev) => {setText(ev.target.value);}}
             multiline
           />
               <Button onClick={back}>Back</Button>
               <Button
-                onClick={next}
+                onClick={() => next(text)}
                 color="primary"
                 variant="contained">Next</Button>
       </Paper>

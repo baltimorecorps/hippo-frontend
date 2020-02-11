@@ -161,9 +161,7 @@ const App = ({
               <Route exact path="/profile/" component={ProfileAuth} />
               <Route exact path="/opportunities/" component={OpportunitiesPage} />
               <Route exact path="/new-opportunity/" component={OpportunityForm} />
-                {/* TODO: for testing only, remove after testing complete*/}
-              <Route exact path="/application/" component={ApplicationForm} />
-              <Route exact path="/application/:opportunityId" component={ApplicationForm} />
+              <Route path="/application/:opportunityId" component={ApplicationForm} />
               <Route
                 exact
                 path="/profile/:contactId"
