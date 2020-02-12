@@ -9,7 +9,7 @@ import '@testing-library/jest-dom/extend-expect';
 import SkillSelect from './SkillSelect';
 
 import {MuiThemeProvider} from '@material-ui/core/styles';
-import theme from 'styles/theme';
+import theme from '../../../styles/theme';
 
 // https://github.com/mui-org/material-ui/issues/15726
 global.document.createRange = () => ({
@@ -21,19 +21,15 @@ global.document.createRange = () => ({
   },
 });
 
-const makeItem = (item) => ({
+const makeItem = item => ({
   value: item,
   label: item,
-})
+});
 
 const AUTOCOMPLETE = {
-  matches: [
-  makeItem('AAA'), 
-  makeItem('BBB'), 
-  makeItem('CCC')
-  ],
+  matches: [makeItem('AAA'), makeItem('BBB'), makeItem('CCC')],
   gotExact: true,
-}
+};
 
 describe('SkillSelect', () => {
   test('can load value', async () => {
@@ -49,7 +45,7 @@ describe('SkillSelect', () => {
       target: {value: 'test'},
     });
 
-    const elem = await findByText('AAA')
+    const elem = await findByText('AAA');
 
     expect(load.mock.calls.length).toBe(1);
     expect(load.mock.calls[0][0]).toEqual('test');
@@ -68,12 +64,11 @@ describe('SkillSelect', () => {
     fireEvent.change(getByLabelText(/add skill/i), {
       target: {value: 'test'},
     });
-    const elem = await findByText('AAA')
-    console.log(prettyDOM(elem))
-    fireEvent.click(elem)
+    const elem = await findByText('AAA');
+    console.log(prettyDOM(elem));
+    fireEvent.click(elem);
 
-    expect(onChange.mock.calls[0][0]).toEqual([{name: 'AAA'}])
+    expect(onChange.mock.calls[0][0]).toEqual([{name: 'AAA'}]);
     expect(elem).not.toBeInTheDocument();
   });
-
 });

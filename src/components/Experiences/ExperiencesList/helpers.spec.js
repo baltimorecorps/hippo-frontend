@@ -1,6 +1,6 @@
 import {cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import {getWorkLength, getMonthScore, sortExperiences} from './helpers.js.js';
+import {getWorkLength, getMonthScore, sortExperiences} from './helpers';
 
 afterEach(cleanup);
 
