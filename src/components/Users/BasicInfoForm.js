@@ -13,8 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 
 import MuiPhoneNumber from 'material-ui-phone-number';
 
-import {newProfileValidator} from '../../lib/formValidator';
-import useFormUpdate from 'lib/useFormUpdate';
+import {newProfileValidator} from '../../lib/formHelpers/formValidator';
+import useFormUpdate from '../../lib/formHelpers/useFormUpdate';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);

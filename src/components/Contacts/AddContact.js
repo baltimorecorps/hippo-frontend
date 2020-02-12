@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
-import {createClickTracking, createALink} from '../../lib/helpers';
+import {
+  createClickTracking,
+  createALink,
+} from '../../lib/helperFunctions/helpers';
 import terms from '../../lib/terms-and-policy/services-terms.pdf';
 import policy from '../../lib/terms-and-policy/privacy -policy.pdf';
 import PropTypes from 'prop-types';
@@ -19,7 +22,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MuiPhoneNumber from 'material-ui-phone-number';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import {newProfileValidator} from '../../lib/formValidator';
+import {newProfileValidator} from '../../lib/formHelpers/formValidator';
 
 // const RACES = [
 //   {

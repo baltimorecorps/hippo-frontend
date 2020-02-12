@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
-import {useAuth0} from 'lib/auth0';
+import {useAuth0} from 'lib/Auth0/auth0';
 import Grid from '@material-ui/core/Grid';
 
 import AddContact from '../Contacts/AddContact';

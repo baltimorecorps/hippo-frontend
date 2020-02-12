@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {createClickTracking} from '../../../lib/helpers';
+import {createClickTracking} from '../../../lib/helperFunctions/helpers';
 
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';

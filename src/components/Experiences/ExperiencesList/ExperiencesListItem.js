@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {createClickTracking} from '../../../lib/helpers';
+import {createClickTracking} from '../../../lib/helperFunctions/helpers';
 
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';

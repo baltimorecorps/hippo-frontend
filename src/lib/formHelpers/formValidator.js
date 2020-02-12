@@ -1,4 +1,4 @@
-import {monthFullNames} from '../components/Experiences/AddOrEditExperienceForm/staticData';
+import {monthFullNames} from '../../components/Experiences/AddOrEditExperienceForm/staticData';
 
 // Validate add new experience form (Work/Education/Accomplishment)
 const experienceValidator = values => {

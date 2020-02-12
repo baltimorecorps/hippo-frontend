@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PropTypes from '../lib/PropTypes';
-import logger from '../lib/logger';
+import PropTypes from './PropTypes';
+import logger from './logger';
 
 class ErrorBoundary extends React.Component {
   componentDidCatch(error, info) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {createClickTracking} from '../../../lib/helpers';
+import {createClickTracking} from '../../../lib/helperFunctions/helpers';
 
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -9,13 +9,13 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
-import useFormUpdate from 'lib/useFormUpdate';
+import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
 import AchievementInputsList from './AchievementInputsList';
 import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {experienceValidator} from 'lib/formValidator';
+import {experienceValidator} from '../../../lib/formHelpers/formValidator';
 import {configureForm} from '../ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';

@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {configureStore} from 'redux-starter-kit';
 import rootReducer from './state';
-import App from './App.container';
-import {Auth0Provider} from './lib/auth0';
-import config from './authConfig.json';
-import {API_URL} from './constants';
+import App from './app/App.container';
+import {Auth0Provider} from './lib/Auth0/auth0';
+import config from './app/authConfig.json';
+import {API_URL} from './app/constants';
 
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './app/serviceWorker';
 
 const store = configureStore({
   reducer: rootReducer,
