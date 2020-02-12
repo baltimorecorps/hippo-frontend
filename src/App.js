@@ -12,18 +12,15 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import HomeIcon from '@material-ui/icons/Home';
 
 import ErrorBoundary from 'atoms/ErrorBoundary';
-import Resume from 'modules/Resume';
-import CreateResumePage from 'pages/CreateResumePage';
-import {ProfileAuth, ProfileStaff} from 'pages/ProfilePage';
+import Resume from 'components/Resume/Resume';
+
+import {ProfileAuth, ProfileStaff} from 'components/ProfilePage';
 import theme from 'styles/theme';
 
 import {useAuth0} from 'lib/auth0';
 
-/* TODO remove these or move to pages folder */
-import Home from 'components/Other/Home.js';
+import Home from 'components/Home/Home.js';
 import Contacts from 'components/Contacts/Contacts.container';
-import SearchContact from 'components/SearchContact/SearchContact';
-import TalentHome from 'components/TalentHome/TalentHome';
 
 import NavBarIcons from './components/NavigationBar/NavBarIcons';
 
@@ -132,7 +129,7 @@ const App = ({
                 </Link>
                 <div className={classes.grow} />
 
-                {(!hasSession && !isAuthenticated) && (
+                {!hasSession && !isAuthenticated && (
                   <Button color="inherit" onClick={onClickLogInHandler}>
                     Log in / Sign up
                   </Button>
@@ -147,10 +144,8 @@ const App = ({
               <Route exact path="/" component={Home} />
 
               <Route exact path="/contacts" component={Contacts} />
-              <Route exact path="/search-contact" component={SearchContact} />
 
               <Route exact path="/resume/:gdocId" component={Resume} />
-              <Route exact path="/talent-home" component={TalentHome} />
 
               <Route exact path="/profile/" component={ProfileAuth} />
               <Route
@@ -168,16 +163,6 @@ const App = ({
                 exact
                 path="/contacts/:contactId/resume/:resumeId"
                 component={Resume}
-              />
-              <Route
-                exact
-                path="/contacts/:contactId/create-resume"
-                component={CreateResumePage}
-              />
-              <Route
-                exact
-                path="/contacts/:contactId/create-resume/:resumeId"
-                component={CreateResumePage}
               />
             </Switch>
           </div>
