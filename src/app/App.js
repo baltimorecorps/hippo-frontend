@@ -7,14 +7,14 @@ import {
   Switch,
   Link,
 } from '../../node_modules/react-router-dom';
-import {MuiThemeProvider} from '../../node_modules/@material-ui/core/styles';
-import AppBar from '../../node_modules/@material-ui/core/AppBar';
-import Button from '../../node_modules/@material-ui/core/Button';
-import MenuItem from '../../node_modules/@material-ui/core/MenuItem';
-import Toolbar from '../../node_modules/@material-ui/core/Toolbar';
-import withStyles from '../../node_modules/@material-ui/core/styles/withStyles';
+import {MuiThemeProvider} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import Toolbar from '@material-ui/core/Toolbar';
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import HomeIcon from '../../node_modules/@material-ui/icons/Home';
+import HomeIcon from '@material-ui/icons/Home';
 
 import ErrorBoundary from '../lib/atoms/ErrorBoundary';
 import Resume from '../components/Resume/Resume';
@@ -45,7 +45,7 @@ const App = ({
   const loadingSession = useRef(false);
   const creatingSession = useRef(false);
 
-  // Attempts to load the session if we don't currenlty have one
+  // Attempts to load the session if we don't currently have one
   useEffect(() => {
     const loadSession = async () => {
       if (hasSession) {

@@ -22,7 +22,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import LocationTextField from './LocationTextField';
-import SkillSelect from '../../Skill/SkillSelect';
+import SkillSelect from '../../Skills/SkillSelect';
 
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';

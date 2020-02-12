@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AchievementsList from 'components/Achievements/AchievementsList';
-import SkillsList from 'components/Skill/SkillsList';
+import SkillsList from 'components/Skills/SkillsList';
 import AddOrEditExperienceForm from 'components/Experiences/AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 

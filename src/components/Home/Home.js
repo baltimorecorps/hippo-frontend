@@ -12,7 +12,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {createClickTracking} from '../../lib/helperFunctions/helpers';
 
-import {useAuth0} from 'lib/Auth0/auth0';
+import {useAuth0} from '../../lib/Auth0/auth0';
 
 const Home = ({hasSession, classes}) => {
   const {isAuthenticated, loginWithRedirect} = useAuth0();
