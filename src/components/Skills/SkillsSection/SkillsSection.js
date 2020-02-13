@@ -1,5 +1,5 @@
 import React from 'react';
-import {createClickTracking} from '../../../lib/helperFunctions/helpers';
+import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
