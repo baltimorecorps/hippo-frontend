@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {addContact, getMyContact} from 'state/contacts';
 import Profile from './Profile';
-import {addNewProgram, refreshPrograms} from '../../state/programs';
+import {addNewProgram, refreshPrograms} from 'state/programs';
 
 export const mapStateToProps = state => {
   const keys = Object.keys(state.programs);
@@ -13,7 +13,8 @@ export const mapStateToProps = state => {
 };
 
 export const mapDispatchToProps = dispatch => ({
-  addContact: (fetchToken, contact) => addContact(fetchToken, contact)(dispatch),
+  addContact: (fetchToken, contact) =>
+    addContact(fetchToken, contact)(dispatch),
   addNewProgram: program => addNewProgram(program)(dispatch),
   refreshPrograms: id => refreshPrograms(id)(dispatch),
 });

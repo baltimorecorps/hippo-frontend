@@ -9,7 +9,7 @@ import '@testing-library/jest-dom/extend-expect';
 import SkillSelect from './SkillSelect';
 
 import {MuiThemeProvider} from '@material-ui/core/styles';
-import theme from '../../../styles/theme';
+import theme from 'styles/theme';
 
 // https://github.com/mui-org/material-ui/issues/15726
 global.document.createRange = () => ({

@@ -20,8 +20,8 @@ import BasicInfoForm from 'components/Users/BasicInfoForm';
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import SkillsSection from 'components/Skills/SkillsSection';
 
-import HelpDrawer from '../SideBarDrawer/HelpDrawer';
-import {createExternalLink} from '../../lib/helperFunctions/helpers';
+import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
+import {createExternalLink} from 'lib/helperFunctions/helpers';
 
 import CAPABILITIES from './capabilities.yml';
 

@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CapabilitySkills from './CapabilitySkills';
-import SkillSelect from '../SkillSelect';
+import SkillSelect from 'components/Skills/SkillSelect';
 
 import Link from '@material-ui/core/Link';
 

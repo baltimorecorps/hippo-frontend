@@ -6,7 +6,7 @@ import Icon from './Icon';
 import {
   createExternalLink,
   createClickTracking,
-} from '../../lib/helperFunctions/helpers';
+} from 'lib/helperFunctions/helpers';
 
 const NavBarIcons = ({logout, classes}) => {
   const [anchorEl, setAnchorEl] = useState(null);

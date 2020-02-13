@@ -1,12 +1,7 @@
-import React, {useEffect, useRef} from '../../node_modules/react';
-import ReactGA from '../../node_modules/react-ga';
-import {createClickTracking} from '../lib/helperFunctions/helpers';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-} from '../../node_modules/react-router-dom';
+import React, {useEffect, useRef} from 'react';
+import ReactGA from 'react-ga';
+import {createClickTracking} from 'lib/helperFunctions/helpers';
+import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
@@ -16,18 +11,18 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import HomeIcon from '@material-ui/icons/Home';
 
-import ErrorBoundary from '../lib/atoms/ErrorBoundary';
-import Resume from '../components/Resume/Resume';
+import ErrorBoundary from 'lib/atoms/ErrorBoundary';
+import Resume from 'components/Resume/Resume';
 
-import {ProfileAuth, ProfileStaff} from '../components/ProfilePage';
-import theme from '../styles/theme';
+import {ProfileAuth, ProfileStaff} from 'components/ProfilePage';
+import theme from 'styles/theme';
 
-import {useAuth0} from '../lib/Auth0/auth0';
+import {useAuth0} from 'lib/Auth0/auth0';
 
-import Home from '../components/Home/Home';
-import Contacts from '../components/Contacts/Contacts.container';
+import Home from 'components/Home/Home';
+import Contacts from 'components/Contacts/Contacts.container';
 
-import NavBarIcons from '../components/NavigationBar/NavBarIcons';
+import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
 const App = ({
   hasSession,

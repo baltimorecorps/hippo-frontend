@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {useAuth0} from 'lib/Auth0/auth0';
 import Grid from '@material-ui/core/Grid';
 
-import AddContact from '../Contacts/AddContact';
+import AddContact from 'components/Contacts/AddContact';
 import ProfilePage from './ProfilePage.container';
 
 const LOADING_STATE = {

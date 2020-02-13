@@ -9,7 +9,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 import {Provider} from 'react-redux';
 import {configureStore} from 'redux-starter-kit';
-import rootReducer from '../../state';
+import rootReducer from 'state';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 import ProfilePage from './ProfilePage';

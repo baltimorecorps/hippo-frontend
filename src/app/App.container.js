@@ -1,5 +1,5 @@
-import {connect} from '../../node_modules/react-redux';
-import {getSession, createSession, deleteSession} from '../state/contacts';
+import {connect} from 'react-redux';
+import {getSession, createSession, deleteSession} from 'state/contacts';
 import App from './App';
 
 export const mapStateToProps = state => {

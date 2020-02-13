@@ -2,7 +2,7 @@ import {createReducer} from 'redux-starter-kit';
 import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
 import {makeAuthFetchActions} from 'lib/Auth0/auth0';
 
-import {API_URL} from '../app/constants';
+import {API_URL} from 'app/constants';
 
 // ## API ACTION CREATORS ##
 // Note on naming convention here:

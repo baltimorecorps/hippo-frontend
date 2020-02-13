@@ -1,10 +1,7 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {RESUME_CREATION} from '../../../state/resume';
-import {
-  selectResumeExperience,
-  deselectResumeExperience,
-} from '../../../state/resume';
+import {RESUME_CREATION} from 'state/resume';
+import {selectResumeExperience, deselectResumeExperience} from 'state/resume';
 import ExperiencesList from './ExperiencesList';
 
 import {
@@ -14,9 +11,8 @@ import {
   deleteExperience,
 } from 'state/profile';
 
-const getExperiences = createSelector(
-  ['experiences'],
-  experiences => Object.keys(experiences).map(id => experiences[id])
+const getExperiences = createSelector(['experiences'], experiences =>
+  Object.keys(experiences).map(id => experiences[id])
 );
 
 const getContact = (state, props) => props.contactId;

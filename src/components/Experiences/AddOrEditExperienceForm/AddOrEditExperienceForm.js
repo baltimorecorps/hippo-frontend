@@ -1,5 +1,5 @@
 import React from 'react';
-import {createClickTracking} from '../../../lib/helperFunctions/helpers';
+import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
@@ -15,19 +15,19 @@ import AchievementInputsList from './AchievementInputsList';
 import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {experienceValidator} from '../../../lib/formHelpers/formValidator';
-import {configureForm} from '../ExperiencesList/helpers';
+import {experienceValidator} from 'lib/formHelpers/formValidator';
+import {configureForm} from 'components/Experiences/ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import LocationTextField from './LocationTextField';
-import SkillSelect from '../../Skills/SkillSelect';
+import SkillSelect from 'components/Skills/SkillSelect';
 
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
-import DeleteExperience from '../ExperiencesList/DeleteExperience';
+import DeleteExperience from 'components/Experiences/ExperiencesList/DeleteExperience';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);

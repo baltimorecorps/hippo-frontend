@@ -1,7 +1,7 @@
 import 'isomorphic-fetch';
 import React from 'react';
 
-import {API_URL} from '../../../app/constants';
+import {API_URL} from 'app/constants';
 import throttle from 'lodash/throttle';
 
 import SkillSelect from './SkillSelect';

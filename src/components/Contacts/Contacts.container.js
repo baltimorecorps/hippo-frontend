@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Contacts from './Contacts';
-import {addContact, refreshContacts} from '../../state/contacts';
+import {addContact, refreshContacts} from 'state/contacts';
 
 const addNewContact = dispatch =>
   async function(contact) {
@@ -20,9 +20,6 @@ const mapDispatchToProps = dispatch => ({
   refreshContacts: () => refreshContacts(dispatch),
 });
 
-const Container = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Contacts);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Contacts);
 
 export default Container;
