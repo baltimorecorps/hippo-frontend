@@ -1,6 +1,8 @@
-import {API_URL} from 'app/constants';
-import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
+import {fetchActionTypes} from 'redux-fetch-wrapper';
 import {createReducer} from 'redux-starter-kit';
+
+import {API_URL} from 'app/constants';
+import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
 
 // ## REDUX ACTION TYPES ##
 export const ADD_NEW_PROGRAM = 'ADD_NEW_PROGRAM';
@@ -23,7 +25,7 @@ export const GET_PROGRAM_QUESTIONS_API = fetchActionTypes(
 
 // Creates a new program_contact record, and related response records (if provided)
 const apiAddNewProgram = program =>
-  makeFetchActions(
+  makeApiFetchActions(
     ADD_NEW_PROGRAM,
     `${API_URL}/api/contacts/${program.contact_id}/programs/`,
     {
@@ -34,7 +36,7 @@ const apiAddNewProgram = program =>
 
 // Updates the program member record, including responses to the related questions
 const apiUpdateProgram = program =>
-  makeFetchActions(
+  makeApiFetchActions(
     UPDATE_PROGRAM,
     `${API_URL}/api/contacts/${program.contact_id}/programs/${program.program.id}/`,
     {
@@ -46,14 +48,14 @@ const apiUpdateProgram = program =>
 // Get a list of all of the programs the contact is being considered
 // for and the stage of their application for that program
 export const apiGetAllPrograms = contactId =>
-  makeFetchActions(
+  makeApiFetchActions(
     GET_ALL_PROGRAMS,
     `${API_URL}/api/contacts/${contactId}/programs/`
   );
 
 // Returns a list of all of the questions associated with a particular program
 export const apiGetProgramQuestions = program =>
-  makeFetchActions(
+  makeApiFetchActions(
     GET_PROGRAM_QUESTIONS,
     `${API_URL}/api/contacts/${program.contact_id}/programs/${program.id}/`
   );

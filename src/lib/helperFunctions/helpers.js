@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactGA from 'react-ga';
+import {makeFetchActions} from 'redux-fetch-wrapper';
 
 const createExternalLink = (content, url, className) => {
   return (
@@ -33,6 +34,27 @@ const createClickTracking = (category, action, label) => {
     action: action,
     label: label,
   });
+};
+
+export const makeApiFetchActions = (
+  action,
+  url,
+  init = null,
+  actions = null,
+  abortController = null,
+  conditional = null
+) => {
+  return async (dispatch) => {
+    init = Object.assign({credentials: 'include'}, init);
+    return await makeFetchActions(
+      action,
+      url,
+      init,
+      actions,
+      abortController,
+      conditional
+    )(dispatch);
+  };
 };
 
 export {createExternalLink, createClickTracking, createALink};
