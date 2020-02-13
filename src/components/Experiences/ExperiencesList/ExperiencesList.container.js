@@ -1,7 +1,10 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {RESUME_CREATION} from 'state/resume';
-import {selectResumeExperience, deselectResumeExperience} from 'state/resume';
+import {
+  RESUME_CREATION,
+  selectResumeExperience,
+  deselectResumeExperience,
+} from 'state/resume';
 import ExperiencesList from './ExperiencesList';
 
 import {
