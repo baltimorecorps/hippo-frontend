@@ -1,4 +1,4 @@
-import {API_URL} from '../constants';
+import {API_URL} from 'app/constants';
 import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
 import {createReducer} from 'redux-starter-kit';
 
@@ -93,8 +93,6 @@ export const updateProgram = program =>
 
     return await apiUpdateProgram(program)(dispatch);
   };
-
-
 
 export const programsReducer = createReducer(
   {},

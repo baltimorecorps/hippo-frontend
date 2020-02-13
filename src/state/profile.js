@@ -1,7 +1,6 @@
-import {API_URL} from '../constants';
+import {API_URL} from 'app/constants';
 import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
 import {createReducer} from 'redux-starter-kit';
-
 
 // Rules for action creators:
 //
@@ -97,9 +96,10 @@ export const deleteExperience = experience =>
       }
     )(dispatch);
 
-    await refreshExperienceType(experience.contact_id, experience.type)(
-      dispatch
-    );
+    await refreshExperienceType(
+      experience.contact_id,
+      experience.type
+    )(dispatch);
   };
 
 export const ADD_TAG = 'ADD_TAG';
@@ -201,7 +201,6 @@ export const refreshTagItems = (contactId, tagType) =>
       }
     )(dispatch);
   };
-
 
 //////////////
 // REDUCERS //

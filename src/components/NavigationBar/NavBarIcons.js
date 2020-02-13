@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from './Icon';
 
-import {createExternalLink, createClickTracking} from '../../lib/helpers';
+import {
+  createExternalLink,
+  createClickTracking,
+} from 'lib/helperFunctions/helpers';
 
 const NavBarIcons = ({logout, classes}) => {
   const [anchorEl, setAnchorEl] = useState(null);

@@ -1,8 +1,8 @@
 import {createReducer} from 'redux-starter-kit';
 import {makeFetchActions, fetchActionTypes} from 'redux-fetch-wrapper';
-import {makeAuthFetchActions} from 'lib/auth0';
+import {makeAuthFetchActions} from 'lib/Auth0/auth0';
 
-import {API_URL} from '../constants';
+import {API_URL} from 'app/constants';
 
 // ## API ACTION CREATORS ##
 // Note on naming convention here:
@@ -10,35 +10,22 @@ import {API_URL} from '../constants';
 
 export const GET_SESSION_API = fetchActionTypes('GET_SESSION');
 export const getSession = () =>
-  makeFetchActions('GET_SESSION', 
-    `${API_URL}/api/session/`,
-    {
-      credentials: 'include',
-    }
-  );
+  makeFetchActions('GET_SESSION', `${API_URL}/api/session/`, {
+    credentials: 'include',
+  });
 
 export const CREATE_SESSION_API = fetchActionTypes('CREATE_SESSION');
 export const createSession = authToken =>
-  makeAuthFetchActions(
-    authToken,
-    'CREATE_SESSION',
-    `${API_URL}/api/session/`,
-    {
-      method: 'POST',
-    },
-  );
+  makeAuthFetchActions(authToken, 'CREATE_SESSION', `${API_URL}/api/session/`, {
+    method: 'POST',
+  });
 
 export const DELETE_SESSION_API = fetchActionTypes('DELETE_SESSION');
 export const deleteSession = () =>
-  makeFetchActions(
-    'DELETE_SESSION',
-    `${API_URL}/api/session/`,
-    {
-      method: 'DELETE',
-      credentials: 'include',
-    },
-  );
-
+  makeFetchActions('DELETE_SESSION', `${API_URL}/api/session/`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
 
 export const ALL_CONTACTS = 'ALL_CONTACTS';
 export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
@@ -216,7 +203,6 @@ export const contactsReducer = createReducer(
       const contact = action.body.data.contact;
       state[contact.id] = contact;
     },
-
   }
 );
 
@@ -258,9 +244,8 @@ export const accountsReducer = createReducer(
       state.contact = null;
     },
     [ADD_CONTACT_API.RESOLVE]: (state, action) => {
-      state.has_session = true
+      state.has_session = true;
       state.contact = action.body.data;
     },
-
   }
 );
