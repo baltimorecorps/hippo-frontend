@@ -9,20 +9,27 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
 import SkillSelect from 'components/Skills/SkillSelect';
 
-const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
-  if (selected) {
-    return <Chip onDelete={() => onDelete(skill)} label={skill.name} />;
-  } else {
-    return (
-      <Chip
-        variant="outlined"
-        icon={<AddIcon />}
-        onClick={() => onClick(skill)}
-        label={skill.name}
-      />
-    );
+const BlankChip = withStyles({
+  root: {
+    backgroundColor: 'white'
+  },
+})(Chip);
+
+const SkillCheckbox = ( ({selected, skill, onClick, onDelete}) => {
+    if (selected) {
+      return <Chip onDelete={() => onDelete(skill)} label={skill.name} />;
+    } else {
+      return (
+        <BlankChip
+          variant="outlined"
+          icon={<AddIcon />}
+          onClick={() => onClick(skill)}
+          label={skill.name}
+        />
+      );
+    }
   }
-};
+);
 
 const CapabilitySkills = ({
   classes,
@@ -44,15 +51,18 @@ const CapabilitySkills = ({
     isRecommended[skill.id] = true;
   });
 
-  let additionalSkills = contactSkills.filter(skill =>
-    !isRecommended[skill.id])
+  let additionalSkills = contactSkills.filter(
+    skill => !isRecommended[skill.id]
+  );
 
   const updateSuggestedSkills = suggestedSkills => {
-    suggestedSkills.forEach(skill => addSkillSuggestion(skill))
-  }
+    suggestedSkills.forEach(skill => addSkillSuggestion(skill));
+  };
+
+  const highlightClass = contactSkills.length > 0 ? classes.highlight : null;
 
   return (
-    <Paper className={classes.paper}>
+    <Paper className={`${classes.paper} ${highlightClass}`}>
       <Grid container justify="space-between" direction="column">
         <Grid item xs={12}>
           <Typography variant="h5" component="h2" className={classes.header}>
@@ -79,11 +89,7 @@ const CapabilitySkills = ({
             />
           </Grid>
         ))}
-          <SkillSelect
-            id={id}
-            value={[]}
-            onChange={updateSuggestedSkills}
-          />
+        <SkillSelect id={id} value={[]} onChange={updateSuggestedSkills} />
       </Grid>
     </Paper>
   );
@@ -93,6 +99,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     margin: spacing(1),
     padding: spacing(2, 3, 3),
+  },
+  highlight: {
+    backgroundColor: 'aliceblue',
   },
   header: {
     //marginTop: spacing(1),
