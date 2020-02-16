@@ -34,8 +34,8 @@ const CapabilitySkills = ({classes, name, addSkill, deleteSkill, capSkills, cont
     <Paper className={classes.paper}>
       <Grid container justify="space-between" direction="column">
         <Grid item xs={12}>
-          <Typography variant="h5" component="h2" className={classes.name}>
-            {name}
+          <Typography variant="h5" component="h2" className={classes.header}>
+            <span className={classes.capability}>{name}</span>
           </Typography>
         </Grid>
         {capSkills.map(skill => (
@@ -58,8 +58,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
     margin: spacing(1),
     padding: spacing(2, 3, 3),
   },
-  name: {
-    marginBottom: spacing(1),
+  header: {
+    marginTop: spacing(1),
+    marginBottom: spacing(2),
+  },
+  capability: {
+    border: 'solid 1px rgba(0,0,0,0.23)',
+    borderRadius: '5px',
+    padding: spacing(1),
   },
   skill: {
     margin: spacing(0.25, 0),

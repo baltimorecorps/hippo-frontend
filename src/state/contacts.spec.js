@@ -2,7 +2,6 @@ import fetchMock from 'fetch-mock';
 import {
   ALL_CONTACTS,
   ALL_CONTACTS_API,
-  ADD_CONTACT_SKILL_API,
   GET_MY_CONTACT,
   GET_MY_CONTACT_API,
   getMyContact,
@@ -15,6 +14,14 @@ import {
   createSession,
   DELETE_SESSION_API,
   deleteSession,
+  GET_CONTACT_CAPABILITIES_API,
+  UPDATE_CONTACT_SKILL,
+  ADD_CONTACT_SKILL,
+  ADD_CONTACT_SKILL_API,
+  addContactSkill,
+  ADD_SKILL_SUGGESTION,
+  ADD_SKILL_SUGGESTION_API,
+  addSkillSuggestion,
   contactsReducer, 
   accountsReducer,
 } from './contacts';
@@ -123,6 +130,125 @@ test('Create Session', async function() {
   expect(dispatch.mock.calls[1][0].type).toBe(CREATE_SESSION_API.RESOLVE);
   expect(dispatch.mock.calls[1][0].body).toEqual(response);
 });
+
+test('Add contact skill', async function() {
+  const dispatch = jest.fn();
+  const contactId = 123;
+  const skill = 'Test Skill';
+  const response = {data: {info: 'stuff'}};
+
+  fetchMock.post(
+    `path:/api/contacts/${contactId}/skills/`,
+    {
+      status: 201,
+      body: response,
+    },
+  );
+
+  await addContactSkill(contactId, skill)(dispatch);
+
+  expect(dispatch.mock.calls.length).toBe(4);
+  expect(dispatch.mock.calls[0][0].type).toBe(ADD_CONTACT_SKILL);
+  expect(dispatch.mock.calls[0][0].payload).toEqual({
+    contact_id: contactId,
+    name: skill,
+  });
+  expect(dispatch.mock.calls[1][0].type).toBe(ADD_CONTACT_SKILL_API.REQUEST);
+  expect(dispatch.mock.calls[2][0].type).toBe(ADD_CONTACT_SKILL_API.RESOLVE);
+  expect(dispatch.mock.calls[2][0].body).toEqual(response);
+  expect(dispatch.mock.calls[3][0].type).toBe(UPDATE_CONTACT_SKILL);
+  expect(dispatch.mock.calls[3][0].contactId).toBe(contactId);
+  expect(dispatch.mock.calls[3][0].result).toEqual({info: 'stuff'});
+});
+
+test('Add contact skill - failure', async function() {
+  const dispatch = jest.fn();
+  const contactId = 123;
+  const skill = 'Test Skill';
+  const response = {data: {info: 'stuff'}};
+
+  fetchMock.post(
+    `path:/api/contacts/${contactId}/skills/`,
+    {
+      status: 401,
+      body: response,
+    },
+  );
+
+  await addContactSkill(contactId, skill)(dispatch);
+
+  expect(dispatch.mock.calls.length).toBe(3);
+  expect(dispatch.mock.calls[0][0].type).toBe(ADD_CONTACT_SKILL);
+  expect(dispatch.mock.calls[0][0].payload).toEqual({
+    contact_id: contactId,
+    name: skill,
+  });
+  expect(dispatch.mock.calls[1][0].type).toBe(ADD_CONTACT_SKILL_API.REQUEST);
+  expect(dispatch.mock.calls[2][0].type).toBe(ADD_CONTACT_SKILL_API.REJECT);
+});
+
+test('Add skill suggestion', async function() {
+  const dispatch = jest.fn();
+  const contactId = 123;
+  const capabilityId = 'cap1';
+  const skill = 'Test Skill';
+  const response = {data: {info: 'stuff'}};
+
+  fetchMock.post(
+    `path:/api/contacts/${contactId}/capabilities/${capabilityId}/suggestion/`,
+    {
+      status: 201,
+      body: response,
+    },
+  );
+
+  await addSkillSuggestion(contactId, capabilityId, skill)(dispatch);
+
+  expect(dispatch.mock.calls.length).toBe(4);
+  expect(dispatch.mock.calls[0][0].type).toBe(ADD_SKILL_SUGGESTION);
+  expect(dispatch.mock.calls[0][0].payload).toEqual({
+    contact_id: contactId,
+    capability_id: capabilityId,
+    name: skill,
+  });
+  expect(dispatch.mock.calls[1][0].type).toBe(ADD_SKILL_SUGGESTION_API.REQUEST);
+  expect(dispatch.mock.calls[2][0].type).toBe(ADD_SKILL_SUGGESTION_API.RESOLVE);
+  expect(dispatch.mock.calls[2][0].body).toEqual(response);
+  expect(dispatch.mock.calls[3][0].type).toBe(UPDATE_CONTACT_SKILL);
+  expect(dispatch.mock.calls[3][0].contactId).toBe(contactId);
+  expect(dispatch.mock.calls[3][0].result).toEqual({info: 'stuff'});
+});
+
+test('Add skill suggestion - failure', async function() {
+  const dispatch = jest.fn();
+  const contactId = 123;
+  const capabilityId = 'cap1';
+  const skill = 'Test Skill';
+  const response = {data: {info: 'stuff'}};
+
+  fetchMock.post(
+    `path:/api/contacts/${contactId}/capabilities/${capabilityId}/suggestion/`,
+    {
+      status: 401,
+      body: response,
+    },
+  );
+
+  await addSkillSuggestion(contactId, capabilityId, skill)(dispatch);
+
+  expect(dispatch.mock.calls.length).toBe(3);
+  expect(dispatch.mock.calls[0][0].type).toBe(ADD_SKILL_SUGGESTION);
+  expect(dispatch.mock.calls[0][0].payload).toEqual({
+    contact_id: contactId,
+    capability_id: capabilityId,
+    name: skill,
+  });
+  expect(dispatch.mock.calls[1][0].type).toBe(ADD_SKILL_SUGGESTION_API.REQUEST);
+  expect(dispatch.mock.calls[2][0].type).toBe(ADD_SKILL_SUGGESTION_API.REJECT);
+});
+
+
+
 
 
 
@@ -241,7 +367,328 @@ describe('Contacts state', () => {
       4: {id: 4},
     });
   });
+
+  test('Get contact capabilities', () => {
+    const result = {
+      contact_id: 5,
+      capabilities: [{id: 'cap1'}, {id: 'cap2'}],
+      otherSkills: [{name: 'skill1', name: 'skill2'}],
+    }
+
+    const newState = contactsReducer(
+      {
+        2: {id: 2},
+        3: {id: 3},
+        5: {id: 5},
+      },
+      {
+        type: GET_CONTACT_CAPABILITIES_API.RESOLVE,
+        body: {status: 'success', data: result},
+      }
+    );
+    expect(newState).toEqual({
+      2: {id: 2},
+      3: {id: 3},
+      5: {id: 5,
+        capabilities: {'cap1': {id: 'cap1'}, 'cap2': {id: 'cap2'}},
+        otherSkills: [{name: 'skill1', name: 'skill2'}],
+      },
+    });
+  });
+
+  test('Get contact capabilities - update', () => {
+    const result = {
+      contact_id: 5,
+      capabilities: [{id: 'cap1'}, {id: 'cap2'}],
+      otherSkills: [{name: 'skill1', name: 'skill2'}],
+    }
+
+    const newState = contactsReducer(
+      {
+        2: {id: 2},
+        3: {id: 3},
+        5: {id: 5,
+          capabilities: [{id: 'cap1'}, {id: 'cap3'}],
+          otherSkills: [{name: 'skill4', name: 'skill5'}],
+        },
+      },
+      {
+        type: GET_CONTACT_CAPABILITIES_API.RESOLVE,
+        body: {status: 'success', data: result},
+      }
+    );
+    expect(newState).toEqual({
+      2: {id: 2},
+      3: {id: 3},
+      5: {id: 5,
+        capabilities: {'cap1': {id: 'cap1'}, 'cap2': {id: 'cap2'}},
+        otherSkills: [{name: 'skill1', name: 'skill2'}],
+      },
+    });
+  });
+
+  test('Get contact capabilities - no contact', () => {
+    const result = {
+      contact_id: 5,
+      capabilities: [{id: 'cap1'}, {id: 'cap2'}],
+      otherSkills: [{name: 'skill1', name: 'skill2'}],
+    }
+
+    const newState = contactsReducer(
+      {
+        2: {id: 2},
+        3: {id: 3},
+      },
+      {
+        type: GET_CONTACT_CAPABILITIES_API.RESOLVE,
+        body: {status: 'success', data: result},
+      }
+    );
+    expect(newState).toEqual({
+      2: {id: 2},
+      3: {id: 3},
+      5: {id: 5,
+        capabilities: {'cap1': {id: 'cap1'}, 'cap2': {id: 'cap2'}},
+        otherSkills: [{name: 'skill1', name: 'skill2'}],
+      },
+    });
+  });
+
+  describe('Update contact skill', () => {
+    const startState = {
+      2: {id: 2},
+      5: {id: 5, 
+        capabilities: {
+          'cap1': {id: 'cap1', skills: [{id: 'aaa111==', name: 'A'}]},
+          'cap2': {id: 'cap2', skills: [{id: 'bbb222==', name: 'B'}]},
+        },
+        otherSkills: [{id: 'ccc333==', name: 'C'}],
+      },
+    };
+    test('smoke', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 5,
+          result: {
+            id: 'abc123==',
+            name: 'Test skill',
+            capabilities: [{id: 'cap1'}],
+            suggested_capabilities: [{id: 'cap2'}],
+          }
+        }
+      );
+      expect(newState[5].capabilities).toEqual({
+        'cap1': {id: 'cap1', skills: [
+          {id: 'aaa111==', name: 'A'},
+          {id: 'abc123==', name: 'Test skill'}
+        ]},
+        'cap2': {id: 'cap2', skills: [
+          {id: 'bbb222==', name: 'B'},
+          {id: 'abc123==', name: 'Test skill'}
+        ]},
+      });
+    });
+    test('New capability', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 5,
+          result: {
+            id: 'abc123==',
+            name: 'Test skill',
+            capabilities: [{id: 'cap3'}],
+            suggested_capabilities: [],
+          }
+        }
+      );
+      expect(newState[5].capabilities).toEqual({
+          'cap1': {id: 'cap1', skills: [
+            {id: 'aaa111==', name: 'A'},
+          ]},
+          'cap2': {id: 'cap2', skills: [
+            {id: 'bbb222==', name: 'B'},
+          ]},
+          'cap3': {id: 'cap3', skills: [
+            {id: 'abc123==', name: 'Test skill'},
+          ]},
+      });
+    });
+    test('No capability', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 5,
+          result: {
+            id: 'abc123==',
+            name: 'Test skill',
+            capabilities: [],
+            suggested_capabilities: [],
+          }
+        }
+      );
+      expect(newState[5].capabilities).toEqual(startState[5].capabilities);
+      expect(newState[5].otherSkills).toEqual([
+        {id: 'ccc333==', name: 'C'},
+        {id: 'abc123==', name: 'Test skill'},
+      ]);
+    });
+    test('Create capabilities', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 2,
+          result: {
+            id: 'abc123==',
+            name: 'Test skill',
+            capabilities: [{id: 'cap1', name: 'Capability 1'}],
+            suggested_capabilities: [],
+          }
+        }
+      );
+      expect(newState[2].capabilities).toEqual({
+        'cap1': {id: 'cap1', name: 'Capability 1', skills: [
+          {id: 'abc123==', name: 'Test skill'}
+        ]},
+      });
+    });
+    test('Create otherSkills', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 2,
+          result: {
+            id: 'abc123==',
+            name: 'Test skill',
+            capabilities: [],
+            suggested_capabilities: [],
+          }
+        }
+      );
+      expect(newState[2].otherSkills).toEqual([
+        {id: 'abc123==', name: 'Test skill'},
+      ]);
+    });
+    test('Add to additional capability', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 5,
+          result: {
+            id: 'aaa111==',
+            name: 'A',
+            capabilities: [{id: 'cap1'}],
+            suggested_capabilities: [{id: 'cap2'}],
+          }
+        }
+      );
+      expect(newState[5].capabilities).toEqual({
+        'cap1': {id: 'cap1', skills: [
+          {id: 'aaa111==', name: 'A'},
+        ]},
+        'cap2': {id: 'cap2', skills: [
+          {id: 'bbb222==', name: 'B'},
+          {id: 'aaa111==', name: 'A'},
+        ]},
+      });
+    });
+    test('Remove from capability', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 5,
+          result: {
+            id: 'aaa111==',
+            name: 'A',
+            capabilities: [{id: 'cap2'}],
+            suggested_capabilities: [],
+          }
+        }
+      );
+      expect(newState[5].capabilities).toEqual({
+        'cap1': {id: 'cap1', skills: [
+        ]},
+        'cap2': {id: 'cap2', skills: [
+          {id: 'bbb222==', name: 'B'},
+          {id: 'aaa111==', name: 'A'},
+        ]},
+      });
+    });
+    test('Remove all capabilities', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 5,
+          result: {
+            id: 'aaa111==',
+            name: 'A',
+            capabilities: [],
+            suggested_capabilities: [],
+          }
+        }
+      );
+      expect(newState[5].capabilities).toEqual({
+        'cap1': {id: 'cap1', skills: [
+        ]},
+        'cap2': {id: 'cap2', skills: [
+          {id: 'bbb222==', name: 'B'},
+        ]},
+      });
+      expect(newState[5].otherSkills).toEqual([
+        {id: 'ccc333==', name: 'C'},
+        {id: 'aaa111==', name: 'A'},
+      ])
+    });
+    test('Remove from otherSkills', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 5,
+          result: {
+            id: 'ccc333==',
+            name: 'C',
+            capabilities: [{id: 'cap2'}],
+            suggested_capabilities: [],
+          }
+        }
+      );
+      expect(newState[5].capabilities).toEqual({
+        'cap1': {id: 'cap1', skills: [
+          {id: 'aaa111==', name: 'A'},
+        ]},
+        'cap2': {id: 'cap2', skills: [
+          {id: 'bbb222==', name: 'B'},
+          {id: 'ccc333==', name: 'C'},
+        ]},
+      });
+      expect(newState[5].otherSkills).toEqual([])
+    });
+    test('duplicate capabilities', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 5,
+          result: {
+            id: 'abc123==',
+            name: 'Test skill',
+            capabilities: [{id: 'cap1'}],
+            suggested_capabilities: [{id: 'cap1'}],
+          }
+        }
+      );
+      expect(newState[5].capabilities).toEqual({
+        'cap1': {id: 'cap1', skills: [
+          {id: 'aaa111==', name: 'A'},
+          {id: 'abc123==', name: 'Test skill'}
+        ]},
+        'cap2': {id: 'cap2', skills: [
+          {id: 'bbb222==', name: 'B'},
+        ]},
+      });
+    });
+  });
 });
+
 describe('accounts state', () => {
   const initialState = {};
   test('inital state', () => {

@@ -11,12 +11,9 @@ import {API_URL} from 'app/constants';
 
 export const GET_SESSION_API = fetchActionTypes('GET_SESSION');
 export const getSession = () =>
-  makeApiFetchActions('GET_SESSION', 
-    `${API_URL}/api/session/`,
-    {
-      credentials: 'include',
-    }
-  );
+  makeApiFetchActions('GET_SESSION', `${API_URL}/api/session/`, {
+    credentials: 'include',
+  });
 
 export const CREATE_SESSION_API = fetchActionTypes('CREATE_SESSION');
 export const createSession = authToken =>
@@ -26,14 +23,10 @@ export const createSession = authToken =>
 
 export const DELETE_SESSION_API = fetchActionTypes('DELETE_SESSION');
 export const deleteSession = () =>
-  makeApiFetchActions(
-    'DELETE_SESSION',
-    `${API_URL}/api/session/`,
-    {
-      method: 'DELETE',
-      credentials: 'include',
-    },
-  );
+  makeApiFetchActions('DELETE_SESSION', `${API_URL}/api/session/`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
 
 export const ALL_CONTACTS = 'ALL_CONTACTS';
 export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
@@ -55,7 +48,15 @@ export const GET_CONTACT_API = fetchActionTypes(GET_CONTACT);
 export const apiGetContact = contactId =>
   makeApiFetchActions(GET_CONTACT, `${API_URL}/api/contacts/${contactId}/`);
 
-// ## ACTION CREATORS ##
+export const GET_CONTACT_CAPABILITIES = 'GET_CONTACT_CAPABILITIES';
+export const GET_CONTACT_CAPABILITIES_API = fetchActionTypes(
+  GET_CONTACT_CAPABILITIES
+);
+export const getContactCapabilities = contactId =>
+  makeApiFetchActions(
+    GET_CONTACT_CAPABILITIES,
+    `${API_URL}/api/contacts/${contactId}/capabilities/`
+  );
 
 export const refreshContacts = apiGetAllContacts();
 
@@ -72,6 +73,8 @@ const addContactLocal = contact => ({
   type: ADD_CONTACT,
   contact,
 });
+
+export const UPDATE_CONTACT_SKILL = 'UPDATE_CONTACT_SKILL';
 
 export const ADD_CONTACT_SKILL = 'ADD_CONTACT_SKILL';
 export const ADD_CONTACT_SKILL_API = fetchActionTypes(ADD_CONTACT_SKILL);
@@ -95,10 +98,13 @@ export const addContactSkill = (contactId, skill) =>
       }
     )(dispatch);
 
-    // TODO: make the ADD_CONTACT_SKILL_API.RESOLVE update the state and
-    // turn this into a conditional fetch if this contact isn't already in the
-    // state
-    await apiGetContact(contactId);
+    if (result.statusCode === 201 || result.statusCode === 200) {
+      dispatch({
+        type: UPDATE_CONTACT_SKILL,
+        contactId,
+        result: result.body.data,
+      });
+    }
     return result;
   };
 
@@ -128,6 +134,40 @@ export const deleteContactSkill = (contactId, skillId) =>
     await apiGetContact(contactId);
     return result;
   };
+
+export const ADD_SKILL_SUGGESTION = 'ADD_CAPABILITY_SKILL_SUGGESTION';
+export const ADD_SKILL_SUGGESTION_API = fetchActionTypes(ADD_SKILL_SUGGESTION);
+export const addSkillSuggestion = (contactId, capabilityId, skill) =>
+  async function(dispatch) {
+    const payload = {
+      contact_id: contactId,
+      capability_id: capabilityId,
+      name: skill,
+    };
+    dispatch({
+      type: ADD_SKILL_SUGGESTION,
+      payload,
+    });
+
+    const result = await makeApiFetchActions(
+      ADD_SKILL_SUGGESTION,
+      `${API_URL}/api/contacts/${contactId}/capabilities/${capabilityId}/suggestion/`,
+      {
+        body: JSON.stringify(payload),
+        method: 'POST',
+      }
+    )(dispatch);
+
+    if (result.statusCode === 201 || result.statusCode === 200) {
+      dispatch({
+        type: UPDATE_CONTACT_SKILL,
+        contactId,
+        result: result.body.data,
+      });
+    }
+    return result;
+  };
+
 
 // Update/Edit a contact
 export const UPDATE_CONTACT = 'UPDATE_CONTACT';
@@ -210,6 +250,79 @@ export const contactsReducer = createReducer(
     [CREATE_SESSION_API.RESOLVE]: (state, action) => {
       const contact = action.body.data.contact;
       state[contact.id] = contact;
+    },
+    [GET_CONTACT_CAPABILITIES_API.RESOLVE]: (state, action) => {
+      const result = action.body.data;
+      const contact_id = result.contact_id;
+      if (state[contact_id] === undefined) {
+        state[contact_id] = {id: contact_id};
+      }
+
+      state[contact_id].capabilities = {};
+      result.capabilities.forEach(capability => {
+        state[contact_id].capabilities[capability.id] = capability;
+      });
+      state[contact_id].otherSkills = result.otherSkills;
+    },
+    [UPDATE_CONTACT_SKILL]: (state, action) => {
+      const {result, contactId} = action;
+
+      // Make sure the contact has all the necessary properties
+      state[contactId] = Object.assign(
+        {
+          id: contactId,
+          capabilities: {},
+          otherSkills: [],
+        },
+        state[contactId]
+      );
+
+      const newSkill = result;
+      const contact = state[contactId];
+
+      // Clear skill out of everything first
+      Object.values(contact.capabilities).forEach(capability => {
+        contact.capabilities[capability.id].skills = capability.skills.filter(
+          skill => skill.id !== newSkill.id
+        );
+      });
+      contact.otherSkills = contact.otherSkills.filter(
+        skill => skill.id !== newSkill.id
+      );
+
+      // If this skill isn't associated with any capabilities, add it to the
+      // other skills
+      if (
+        newSkill.capabilities.length === 0 &&
+        newSkill.suggested_capabilities.length === 0
+      ) {
+        contact.otherSkills.push({id: newSkill.id, name: newSkill.name});
+      } else {
+        // Otherwise, add it to the relevant capabilities
+        const alreadyAdded = {};
+        const addSkill = capability => {
+          // Don't add this skill more than once to the same capability
+          if (alreadyAdded[capability.id]) {
+            return;
+          }
+
+          if (contact.capabilities[capability.id] === undefined) {
+            contact.capabilities[capability.id] = {
+              skills: [],
+              ...capability,
+            };
+          }
+
+          contact.capabilities[capability.id].skills.push({
+            id: newSkill.id,
+            name: newSkill.name,
+          });
+
+          alreadyAdded[capability.id] = true;
+        };
+        newSkill.capabilities.forEach(addSkill);
+        newSkill.suggested_capabilities.forEach(addSkill);
+      }
     },
   }
 );
