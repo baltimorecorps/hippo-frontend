@@ -10,23 +10,29 @@ import AddIcon from '@material-ui/icons/Add';
 
 const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
   if (selected) {
-    return <Chip
-      onDelete={() => onDelete(skill)}
-      label={skill}
-      />
+    return <Chip onDelete={() => onDelete(skill)} label={skill.name} />;
   } else {
-    return <Chip
-      variant="outlined"
-      icon={<AddIcon />}
+    return (
+      <Chip
+        variant="outlined"
+        icon={<AddIcon />}
         onClick={() => onClick(skill)}
-        label={skill}
+        label={skill.name}
       />
+    );
   }
-}
+};
 
-const CapabilitySkills = ({classes, name, addSkill, deleteSkill, capSkills, contactSkills}) => {
+const CapabilitySkills = ({
+  classes,
+  name,
+  addSkill,
+  deleteSkill,
+  recommendedSkills,
+  contactSkills,
+}) => {
   let contactSkillMap = {};
-  contactSkills.forEach((skill) => {
+  contactSkills.forEach(skill => {
     contactSkillMap[skill.name] = true;
   });
 
@@ -38,10 +44,10 @@ const CapabilitySkills = ({classes, name, addSkill, deleteSkill, capSkills, cont
             <span className={classes.capability}>{name}</span>
           </Typography>
         </Grid>
-        {capSkills.map(skill => (
-          <Grid item key={skill} className={classes.skill}>
+        {recommendedSkills.map(skill => (
+          <Grid item key={skill.id} className={classes.skill}>
             <SkillCheckbox
-              selected={contactSkillMap[skill] || false}
+              selected={contactSkillMap[skill.name] || false}
               skill={skill}
               onClick={addSkill}
               onDelete={deleteSkill}
@@ -59,17 +65,18 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(2, 3, 3),
   },
   header: {
-    marginTop: spacing(1),
-    marginBottom: spacing(2),
+    //marginTop: spacing(1),
+    marginBottom: spacing(1),
+    fontSize: '14pt',
   },
   capability: {
-    border: 'solid 1px rgba(0,0,0,0.23)',
-    borderRadius: '5px',
-    padding: spacing(1),
+    //border: 'solid 1px rgba(0,0,0,0.23)',
+    //borderRadius: '5px',
+    //padding: spacing(1),
   },
   skill: {
     margin: spacing(0.25, 0),
-  }
+  },
 });
 
 CapabilitySkills.propTypes = {

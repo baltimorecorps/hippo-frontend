@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import Typography from '@material-ui/core/Typography';
@@ -43,14 +43,36 @@ const CAPABILITIES = [
 
 const SkillsSection = ({
   classes,
-  header,
+  contact,
+  capabilities,
+  getCapabilities,
+  getContactCapabilities,
+  addContactSkill,
+  addSkillSuggestion,
+  deleteContactSkill,
   contactSkills,
   addSkill,
   deleteSkill,
   onChange,
   onClickMore,
-  openSidebar,
 }) => {
+  useEffect(() => {
+    if (!capabilities) {
+      getCapabilities();
+    }
+  }, [capabilities, getCapabilities]);
+
+  const contactCapabilities = contact ? contact.capabilities : null;
+
+  useEffect(() => {
+    if (contact && !contact.capabilities) {
+      getContactCapabilities(contact.id);
+    }
+  }, [contact, getContactCapabilities]);
+
+  console.log(capabilities);
+  console.log(contactCapabilities);
+
   let capSkillMap = {};
   CAPABILITIES.forEach(cap => {
     cap.skills.forEach(skill => {
@@ -99,7 +121,7 @@ const SkillsSection = ({
                   fontWeight: '700',
                 }}
               >
-                {header}
+                Tell us more to help your resume stand out
               </Typography>
             </Grid>
             <Grid container alignItems="center">
@@ -122,17 +144,27 @@ const SkillsSection = ({
           </Grid>
 
           <Grid container>
-            {CAPABILITIES.map(({name, skills}) => (
-              <Grid item xs={12} md={6} key={name}>
-                <CapabilitySkills
-                  name={name}
-                  capSkills={skills}
-                  contactSkills={contactSkills}
-                  addSkill={addSkillShim}
-                  deleteSkill={deleteSkillShim}
-                />
-              </Grid>
-            ))}
+            {capabilities.map(({id, name, recommended_skills}) => {
+              let contactSkills = [];
+              if (contactCapabilities && contactCapabilities[id]) {
+                contactSkills = contactCapabilities[id].skills;
+              }
+              return (
+                <Grid item xs={12} md={4} key={name}>
+                  <CapabilitySkills
+                    name={name}
+                    recommendedSkills={recommended_skills.map(obj => obj.skill)}
+                    contactSkills={contactSkills}
+                    addSkill={skill =>
+                      addContactSkill(contact.id, skill)
+                    }
+                    deleteSkill={skill =>
+                      deleteContactSkill(contact.id, skill)
+                    }
+                  />
+                </Grid>
+              );
+            })}
             <Grid item xs={12}>
               <Paper className={classes.element}>
                 <Typography variant="h5" component="h2">

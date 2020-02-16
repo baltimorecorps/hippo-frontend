@@ -19,6 +19,9 @@ import {
   ADD_CONTACT_SKILL,
   ADD_CONTACT_SKILL_API,
   addContactSkill,
+  DELETE_CONTACT_SKILL,
+  DELETE_CONTACT_SKILL_API,
+  deleteContactSkill,
   ADD_SKILL_SUGGESTION,
   ADD_SKILL_SUGGESTION_API,
   addSkillSuggestion,
@@ -134,7 +137,7 @@ test('Create Session', async function() {
 test('Add contact skill', async function() {
   const dispatch = jest.fn();
   const contactId = 123;
-  const skill = 'Test Skill';
+  const skill = {id: 'abc123==', name: 'Test Skill'};
   const response = {data: {info: 'stuff'}};
 
   fetchMock.post(
@@ -151,7 +154,8 @@ test('Add contact skill', async function() {
   expect(dispatch.mock.calls[0][0].type).toBe(ADD_CONTACT_SKILL);
   expect(dispatch.mock.calls[0][0].payload).toEqual({
     contact_id: contactId,
-    name: skill,
+    name: skill.name,
+    id: skill.id,
   });
   expect(dispatch.mock.calls[1][0].type).toBe(ADD_CONTACT_SKILL_API.REQUEST);
   expect(dispatch.mock.calls[2][0].type).toBe(ADD_CONTACT_SKILL_API.RESOLVE);
@@ -164,7 +168,7 @@ test('Add contact skill', async function() {
 test('Add contact skill - failure', async function() {
   const dispatch = jest.fn();
   const contactId = 123;
-  const skill = 'Test Skill';
+  const skill = {id: 'abc123==', name: 'Test Skill'};
   const response = {data: {info: 'stuff'}};
 
   fetchMock.post(
@@ -181,10 +185,38 @@ test('Add contact skill - failure', async function() {
   expect(dispatch.mock.calls[0][0].type).toBe(ADD_CONTACT_SKILL);
   expect(dispatch.mock.calls[0][0].payload).toEqual({
     contact_id: contactId,
-    name: skill,
+    name: skill.name,
+    id: skill.id,
   });
   expect(dispatch.mock.calls[1][0].type).toBe(ADD_CONTACT_SKILL_API.REQUEST);
   expect(dispatch.mock.calls[2][0].type).toBe(ADD_CONTACT_SKILL_API.REJECT);
+});
+
+test('Delete contact skill', async function() {
+  const dispatch = jest.fn();
+  const contactId = 123;
+  const skill = {id: 'abc123==', name: 'Test Skill'};
+  const response = {message: 'success'};
+
+  fetchMock.delete(
+    `path:/api/contacts/${contactId}/skills/${skill.id}/`,
+    {
+      status: 200,
+      body: response,
+    },
+  );
+
+  await deleteContactSkill(contactId, skill)(dispatch);
+
+  expect(dispatch.mock.calls.length).toBe(3);
+  expect(dispatch.mock.calls[0][0].type).toBe(DELETE_CONTACT_SKILL_API.REQUEST);
+  expect(dispatch.mock.calls[1][0].type).toBe(DELETE_CONTACT_SKILL_API.RESOLVE);
+  expect(dispatch.mock.calls[1][0].body).toEqual(response);
+  expect(dispatch.mock.calls[2][0].type).toBe(DELETE_CONTACT_SKILL);
+  expect(dispatch.mock.calls[2][0].payload).toEqual({
+    contactId: contactId,
+    skillId: skill.id,
+  });
 });
 
 test('Add skill suggestion', async function() {
@@ -246,11 +278,6 @@ test('Add skill suggestion - failure', async function() {
   expect(dispatch.mock.calls[1][0].type).toBe(ADD_SKILL_SUGGESTION_API.REQUEST);
   expect(dispatch.mock.calls[2][0].type).toBe(ADD_SKILL_SUGGESTION_API.REJECT);
 });
-
-
-
-
-
 
 describe('Contacts state', () => {
   const initialState = {};
@@ -457,6 +484,7 @@ describe('Contacts state', () => {
   describe('Update contact skill', () => {
     const startState = {
       2: {id: 2},
+      3: {id: 3, capabilities: undefined, otherSkills: undefined},
       5: {id: 5, 
         capabilities: {
           'cap1': {id: 'cap1', skills: [{id: 'aaa111==', name: 'A'}]},
@@ -566,6 +594,23 @@ describe('Contacts state', () => {
         }
       );
       expect(newState[2].otherSkills).toEqual([
+        {id: 'abc123==', name: 'Test skill'},
+      ]);
+    });
+    test('Overwrite undefined fields', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: UPDATE_CONTACT_SKILL,
+          contactId: 3,
+          result: {
+            id: 'abc123==',
+            name: 'Test skill',
+            capabilities: [],
+            suggested_capabilities: [],
+          }
+        }
+      );
+      expect(newState[3].otherSkills).toEqual([
         {id: 'abc123==', name: 'Test skill'},
       ]);
     });
@@ -686,6 +731,36 @@ describe('Contacts state', () => {
         ]},
       });
     });
+    test('remove skill', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: DELETE_CONTACT_SKILL,
+          payload: {
+            contactId: 5,
+            skillId: 'aaa111==',
+          },
+        }
+      );
+      expect(newState[5].capabilities).toEqual({
+        'cap1': {id: 'cap1', skills: []},
+        'cap2': {id: 'cap2', skills: [
+          {id: 'bbb222==', name: 'B'},
+        ]},
+      });
+    });
+    test('remove skill - otherSkills', () => {
+      const newState = contactsReducer(startState,
+        {
+          type: DELETE_CONTACT_SKILL,
+          payload: {
+            contactId: 5,
+            skillId: 'ccc333==',
+          },
+        }
+      );
+      expect(newState[5].otherSkills).toEqual([]);
+    });
+
   });
 });
 

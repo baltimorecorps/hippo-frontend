@@ -75,6 +75,11 @@ const addContactLocal = contact => ({
 });
 
 export const UPDATE_CONTACT_SKILL = 'UPDATE_CONTACT_SKILL';
+export const updateContactSkill = (contactId, result) => ({
+  type: UPDATE_CONTACT_SKILL,
+  contactId,
+  result: result.body.data,
+});
 
 export const ADD_CONTACT_SKILL = 'ADD_CONTACT_SKILL';
 export const ADD_CONTACT_SKILL_API = fetchActionTypes(ADD_CONTACT_SKILL);
@@ -82,7 +87,7 @@ export const addContactSkill = (contactId, skill) =>
   async function(dispatch) {
     const payload = {
       contact_id: contactId,
-      name: skill,
+      ...skill,
     };
     dispatch({
       type: ADD_CONTACT_SKILL,
@@ -99,39 +104,34 @@ export const addContactSkill = (contactId, skill) =>
     )(dispatch);
 
     if (result.statusCode === 201 || result.statusCode === 200) {
-      dispatch({
-        type: UPDATE_CONTACT_SKILL,
-        contactId,
-        result: result.body.data,
-      });
+      dispatch(updateContactSkill(contactId, result));
     }
     return result;
   };
 
 export const DELETE_CONTACT_SKILL = 'DELETE_CONTACT_SKILL';
 export const DELETE_CONTACT_SKILL_API = fetchActionTypes(DELETE_CONTACT_SKILL);
-export const deleteContactSkill = (contactId, skillId) =>
+export const deleteContactSkill = (contactId, skill) =>
   async function(dispatch) {
-    dispatch({
-      type: DELETE_CONTACT_SKILL,
-      payload: {
-        contact_id: contactId,
-        skill_id: skillId,
-      },
-    });
 
     const result = await makeApiFetchActions(
       DELETE_CONTACT_SKILL,
-      `${API_URL}/api/contacts/${contactId}/skills/`,
+      `${API_URL}/api/contacts/${contactId}/skills/${skill.id}/`,
       {
         method: 'DELETE',
       }
     )(dispatch);
 
-    // TODO: make the DELETE_CONTACT_SKILL_API.RESOLVE update the state and
-    // turn this into a conditional fetch if this contact isn't already in the
-    // state
-    await apiGetContact(contactId);
+    if (result.statusCode === 201 || result.statusCode === 200) {
+      dispatch({
+        type: DELETE_CONTACT_SKILL,
+        payload: {
+          contactId,
+          skillId: skill.id,
+        },
+      });
+    }
+
     return result;
   };
 
@@ -159,15 +159,10 @@ export const addSkillSuggestion = (contactId, capabilityId, skill) =>
     )(dispatch);
 
     if (result.statusCode === 201 || result.statusCode === 200) {
-      dispatch({
-        type: UPDATE_CONTACT_SKILL,
-        contactId,
-        result: result.body.data,
-      });
+      dispatch(updateContactSkill(contactId, result));
     }
     return result;
   };
-
 
 // Update/Edit a contact
 export const UPDATE_CONTACT = 'UPDATE_CONTACT';
@@ -264,21 +259,49 @@ export const contactsReducer = createReducer(
       });
       state[contact_id].otherSkills = result.otherSkills;
     },
+    [DELETE_CONTACT_SKILL]: (state, action) => {
+      const {skillId, contactId} = action.payload;
+      console.log('hi', action, contactId)
+
+      const contact = state[contactId];
+      if (!contact) { return state; }
+
+      console.log(action, contact)
+      if (contact.capabilities) {
+        // Clear skill out of everything 
+        Object.values(contact.capabilities).forEach(capability => {
+          contact.capabilities[capability.id].skills = capability.skills.filter(
+            skill => skill.id !== skillId
+          );
+        });
+      }
+      if (contact.otherSkills) {
+        contact.otherSkills = contact.otherSkills.filter(
+          skill => skill.id !== skillId
+        );
+      }
+      console.log(contact)
+    },
     [UPDATE_CONTACT_SKILL]: (state, action) => {
       const {result, contactId} = action;
 
       // Make sure the contact has all the necessary properties
-      state[contactId] = Object.assign(
-        {
-          id: contactId,
-          capabilities: {},
-          otherSkills: [],
-        },
-        state[contactId]
-      );
+      state[contactId] = {
+        id: contactId,
+        capabilities: {},
+        otherSkills: [],
+        ...state[contactId]
+      };
+
 
       const newSkill = result;
       const contact = state[contactId];
+      if (contact.capabilities === undefined) {
+        contact.capabilities = {};
+      }
+      if (contact.otherSkills === undefined) {
+        contact.otherSkills = [];
+      }
 
       // Clear skill out of everything first
       Object.values(contact.capabilities).forEach(capability => {
