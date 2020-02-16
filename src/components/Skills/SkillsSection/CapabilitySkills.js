@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
+import SkillSelect from 'components/Skills/SkillSelect';
 
 const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
   if (selected) {
@@ -25,16 +26,30 @@ const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
 
 const CapabilitySkills = ({
   classes,
+  id,
   name,
-  addSkill,
-  deleteSkill,
   recommendedSkills,
   contactSkills,
+  addSkill,
+  deleteSkill,
+  addSkillSuggestion,
 }) => {
-  let contactSkillMap = {};
+  let hasSkill = {};
   contactSkills.forEach(skill => {
-    contactSkillMap[skill.name] = true;
+    hasSkill[skill.id] = true;
   });
+
+  let isRecommended = {};
+  recommendedSkills.forEach(skill => {
+    isRecommended[skill.id] = true;
+  });
+
+  let additionalSkills = contactSkills.filter(skill =>
+    !isRecommended[skill.id])
+
+  const updateSuggestedSkills = suggestedSkills => {
+    suggestedSkills.forEach(skill => addSkillSuggestion(skill))
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -47,13 +62,28 @@ const CapabilitySkills = ({
         {recommendedSkills.map(skill => (
           <Grid item key={skill.id} className={classes.skill}>
             <SkillCheckbox
-              selected={contactSkillMap[skill.name] || false}
+              selected={hasSkill[skill.id] || false}
               skill={skill}
               onClick={addSkill}
               onDelete={deleteSkill}
             />
           </Grid>
         ))}
+        {additionalSkills.map(skill => (
+          <Grid item key={skill.id} className={classes.skill}>
+            <SkillCheckbox
+              selected={true}
+              skill={skill}
+              onClick={() => {}}
+              onDelete={deleteSkill}
+            />
+          </Grid>
+        ))}
+          <SkillSelect
+            id={id}
+            value={[]}
+            onChange={updateSuggestedSkills}
+          />
       </Grid>
     </Paper>
   );

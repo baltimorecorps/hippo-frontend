@@ -43,13 +43,18 @@ const CAPABILITIES = [
 
 const SkillsSection = ({
   classes,
-  contact,
+  contactId,
   capabilities,
+  contactCapabilities,
+  allSkills,
+  otherSkills,
   getCapabilities,
   getContactCapabilities,
   addContactSkill,
   addSkillSuggestion,
+  deleteSkillSuggestion,
   deleteContactSkill,
+  updateContactSkills,
   contactSkills,
   addSkill,
   deleteSkill,
@@ -62,42 +67,29 @@ const SkillsSection = ({
     }
   }, [capabilities, getCapabilities]);
 
-  const contactCapabilities = contact ? contact.capabilities : null;
-
   useEffect(() => {
-    if (contact && !contact.capabilities) {
-      getContactCapabilities(contact.id);
+    if (contactId && !contactCapabilities) {
+      getContactCapabilities(contactId);
     }
-  }, [contact, getContactCapabilities]);
+  }, [contactId, contactCapabilities, getContactCapabilities]);
 
-  console.log(capabilities);
-  console.log(contactCapabilities);
-
-  let capSkillMap = {};
-  CAPABILITIES.forEach(cap => {
-    cap.skills.forEach(skill => {
-      capSkillMap[skill] = true;
+  let isOtherSkill = {};
+  if (otherSkills) {
+    otherSkills.forEach(skill => {
+      isOtherSkill[skill.id] = true;
     });
-  });
+  }
 
-  const capSkills = contactSkills.filter(skill => capSkillMap[skill.name]);
+  let capabilitySkills = [];
+  if (allSkills) {
+    capabilitySkills = allSkills.filter(skill => !isOtherSkill[skill.id]);
+  }
 
-  const additionalSkills = contactSkills.filter(
-    skill => !capSkillMap[skill.name]
-  );
-
-  const deleteSkillShim = skill => {
-    const skills = contactSkills.filter(
-      contactSkill => contactSkill.name !== skill
+  const updateOtherSkills = newOtherSkills =>
+    updateContactSkills(
+      contactId,
+      capabilitySkills.concat(newOtherSkills || [])
     );
-    console.log(skill, skills, contactSkills);
-    onChange(skills);
-  };
-
-  const addSkillShim = skill => onChange(contactSkills.concat([{name: skill}]));
-
-  const updateAdditionalSkills = newAdditionalSkills =>
-    onChange(capSkills.concat(newAdditionalSkills || []));
 
   const onClickMoreHandler = () => {
     createClickTracking(
@@ -144,35 +136,43 @@ const SkillsSection = ({
           </Grid>
 
           <Grid container>
-            {capabilities.map(({id, name, recommended_skills}) => {
-              let contactSkills = [];
-              if (contactCapabilities && contactCapabilities[id]) {
-                contactSkills = contactCapabilities[id].skills;
-              }
-              return (
-                <Grid item xs={12} md={4} key={name}>
-                  <CapabilitySkills
-                    name={name}
-                    recommendedSkills={recommended_skills.map(obj => obj.skill)}
-                    contactSkills={contactSkills}
-                    addSkill={skill =>
-                      addContactSkill(contact.id, skill)
-                    }
-                    deleteSkill={skill =>
-                      deleteContactSkill(contact.id, skill)
-                    }
-                  />
-                </Grid>
-              );
-            })}
+            {capabilities &&
+              capabilities.map(({id, name, recommended_skills}) => {
+                let contactSkills = [];
+                if (contactCapabilities && contactCapabilities[id]) {
+                  contactSkills = contactCapabilities[id].skills.concat(
+                    contactCapabilities[id].suggested_skills || []
+                  );
+                }
+                return (
+                  <Grid item xs={12} md={4} key={name}>
+                    <CapabilitySkills
+                      id={id}
+                      name={name}
+                      recommendedSkills={recommended_skills.map(
+                        obj => obj.skill
+                      )}
+                      contactSkills={contactSkills}
+                      addSkill={skill => addContactSkill(contactId, skill)}
+                      deleteSkill={skill =>
+                        deleteSkillSuggestion(contactId, id, skill)
+                      }
+                      addSkillSuggestion={skill =>
+                        addSkillSuggestion(contactId, id, skill)
+                      }
+                    />
+                  </Grid>
+                );
+              })}
             <Grid item xs={12}>
               <Paper className={classes.element}>
                 <Typography variant="h5" component="h2">
                   Additional Skills
                 </Typography>
                 <SkillSelect
-                  value={additionalSkills}
-                  onChange={updateAdditionalSkills}
+                  id='other'
+                  value={otherSkills || []}
+                  onChange={updateOtherSkills}
                 />
               </Paper>
             </Grid>

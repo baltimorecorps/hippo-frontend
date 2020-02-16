@@ -73,7 +73,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
   );
 });
 
-const SkillSelect = ({classes, load, value, onChange}) => {
+const SkillSelect = ({id, classes, load, value, onChange}) => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -151,13 +151,14 @@ const SkillSelect = ({classes, load, value, onChange}) => {
     onChange(
       value.filter(item => !item.noAdd).map(item => ({name: getItemName(item)}))
     );
+    setInputValue('');
   };
 
   return (
     <React.Fragment>
       <Grid>
         <Autocomplete
-          id="add-skill"
+          id={`add-skill-${id}`}
           multiple
           autoComplete
           autoHighlight
