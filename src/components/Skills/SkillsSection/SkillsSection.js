@@ -56,6 +56,7 @@ const SkillsSection = ({
   updateContactSkills,
   contactSkills,
   onClickMore,
+  splitScreen,
 }) => {
   useEffect(() => {
     if (!capabilities) {
@@ -95,6 +96,19 @@ const SkillsSection = ({
     );
     onClickMore('skills');
   };
+
+  const splitSize = (size) => {
+    if (splitScreen) {
+      if (size <= 4) {
+        return 6;
+      } else {
+        return 12;
+      }
+    } else {
+      return size;
+    }
+  }
+  
 
   return (
     <Grid container>
@@ -141,7 +155,11 @@ const SkillsSection = ({
                   );
                 }
                 return (
-                  <Grid item xs={12} md={4} key={name}>
+                  <Grid item 
+                    xs={splitSize(12)} 
+                    md={splitSize(6)} 
+                    lg={splitSize(4)}
+                    key={name}>
                     <CapabilitySkills
                       id={id}
                       name={name}

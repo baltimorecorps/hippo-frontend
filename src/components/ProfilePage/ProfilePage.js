@@ -30,7 +30,7 @@ import CAPABILITIES from './capabilities.yml';
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
 // render
-const useScroll = (ref) => {
+const useScroll = ref => {
   const [scroll, setScroll] = useState(null);
 
   useEffect(() => {
@@ -80,12 +80,15 @@ const ProfilePage = ({
   const [loading, setLoading] = useState(false);
   const [editScores, setEditScores] = useState({});
 
-  const updateEditScore = useCallback((expId) => (scores) => {
-    setEditScores(existing => ({
-      ...existing,
-      [expId]: scores,
-    }));
-  }, [setEditScores])
+  const updateEditScore = useCallback(
+    expId => scores => {
+      setEditScores(existing => ({
+        ...existing,
+        [expId]: scores,
+      }));
+    },
+    [setEditScores]
+  );
 
   //const editScore = sumScores(Object.values(editScores));
 
@@ -168,17 +171,33 @@ const ProfilePage = ({
     classes.link
   );
 
-  const getContainerSize = (breakpoint) => {
-    if (inSelectMode) { return 6; }
-    
-    if (breakpoint === 'sm') { return openSidebar ? 7 : 12; }
-    if (breakpoint === 'md') { return openSidebar ? 8 : 12;}
-    if (breakpoint === 'lg') { return openSidebar ? 9 : 12;}
-    if (breakpoint === 'xl') { return openSidebar ? 10 : 12;}
+  const getContainerSize = breakpoint => {
+    if (inSelectMode) {
+      return 6;
+    }
+
+    if (breakpoint === 'sm') {
+      return openSidebar ? 7 : 12;
+    }
+    if (breakpoint === 'md') {
+      return openSidebar ? 8 : 12;
+    }
+    if (breakpoint === 'lg') {
+      return openSidebar ? 9 : 12;
+    }
+    if (breakpoint === 'xl') {
+      return openSidebar ? 10 : 12;
+    }
 
     return 12;
   };
 
+  let wrapperClass = classes.wrapper;
+  if (inSelectMode) {
+    wrapperClass = classes.wrapperDiv;
+  } else if (openSidebar) {
+    wrapperClass = classes.wrapperSmall;
+  }
   return (
     <React.Fragment>
       <ResumeDialog
@@ -222,12 +241,14 @@ const ProfilePage = ({
             ref={wrapperRef}
             container
             justify="center"
-            className={openSidebar ? classes.wrapperSmall : classes.wrapper}
+            className={wrapperClass}
           >
-              <CapabilityScores 
+            {!inSelectMode && (
+              <CapabilityScores
                 contactCapabilities={contactInfo.capabilities}
                 editScores={{}}
               />
+            )}
             <Grid item xs={12} sm={11}>
               <Grid container justify="center">
                 <Grid item xs={12} md={8} lg={6}>
@@ -295,7 +316,10 @@ const ProfilePage = ({
                   </Paper>
                 </Grid>
 
-                <SkillsSection onClickMore={onClickMoreDetails} />
+                <SkillsSection
+                  onClickMore={onClickMoreDetails}
+                  splitScreen={inSelectMode}
+                />
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Work"
@@ -342,7 +366,7 @@ const ProfilePage = ({
           </Grid>
         </Grid>
         {inSelectMode ? (
-          <Grid item xs={6} className={classes.wrapper}>
+          <Grid item xs={6} className={classes.wrapperDiv}>
             <ResumeCreator />
           </Grid>
         ) : null}
@@ -533,7 +557,7 @@ const SelectionDrawer = withStyles(drawerStyles)(
                 <Button onClick={onCancel}>Cancel</Button>
               </Grid>
               <Grid item xs={1}>
-                <Button variant="contained" color="primary" >
+                <Button variant="contained" color="primary">
                   Next
                 </Button>
               </Grid>
@@ -558,7 +582,6 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     paddingBottom: spacing(5),
     width: '100%',
     height: `calc(100vh - ${spacing(8)}px - 40px)`,
-    overflow: 'auto',
     paddingLeft: '18vw',
     paddingRight: '18vw',
   },
@@ -566,8 +589,13 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     marginBottom: spacing(5),
     width: '100%',
     height: `calc(100vh - ${spacing(8)}px - 40px)`,
-    overflow: 'auto',
     paddingLeft: '8vw',
+  },
+  wrapperDiv: {
+    marginBottom: spacing(5),
+    width: '100%',
+    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    overflow: 'auto',
   },
 
   paper: {
@@ -621,6 +649,7 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     '&:hover': {
       fontWeight: 'bold',
     },
+  },
   resumeButton: {
     marginTop: spacing(5),
   },

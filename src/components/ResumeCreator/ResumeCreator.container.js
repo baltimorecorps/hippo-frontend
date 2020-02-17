@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {moveResumeItem} from 'actions/resume';
+import {moveResumeItem} from 'state/resume';
 import ResumeCreator from './ResumeCreator';
 
 export const mapStateToProps = (state, props) => {
