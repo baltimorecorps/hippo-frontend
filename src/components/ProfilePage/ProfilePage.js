@@ -266,6 +266,7 @@ const ProfilePage = ({
                   </Paper>
                 </Grid>
 
+                <SkillsSection onClickMore={onClickMoreDetails} />
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Work"
@@ -281,17 +282,6 @@ const ProfilePage = ({
                   contactId={contactId}
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
-                />
-                <SkillsSection
-                  header="Tell us more to help your resume stand out"
-                  contactSkills={contactInfo.skills}
-                  onChange={handleUpdateSkills}
-                  addSkill={skill => addContactSkill(contactId, skill)}
-                  deleteSkill={skill => {
-                    console.log(skill);
-                  }}
-                  onClickMore={onClickMoreDetails}
-                  openSidebar={openSidebar}
                 />
 
                 {/*<ResumesList />*/}

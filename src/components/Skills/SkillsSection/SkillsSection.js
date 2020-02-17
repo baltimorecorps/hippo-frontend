@@ -4,7 +4,6 @@ import {createClickTracking} from 'lib/helperFunctions/helpers';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CapabilitySkills from './CapabilitySkills';
 import SkillSelect from 'components/Skills/SkillSelect';
@@ -56,9 +55,6 @@ const SkillsSection = ({
   deleteContactSkill,
   updateContactSkills,
   contactSkills,
-  addSkill,
-  deleteSkill,
-  onChange,
   onClickMore,
 }) => {
   useEffect(() => {
@@ -113,7 +109,7 @@ const SkillsSection = ({
                   fontWeight: '700',
                 }}
               >
-                Tell us more to help your resume stand out
+                Get started with skills 
               </Typography>
             </Grid>
             <Grid container alignItems="center">
@@ -189,6 +185,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.down('xs')]: {
       margin: spacing(0.2),
     },
+    marginBottom: spacing(5),
   },
   element: {
     padding: spacing(2, 3, 3),
@@ -212,13 +209,5 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
 });
-
-SkillsSection.propTypes = {
-  header: PropTypes.string.isRequired,
-  contactSkills: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired,
-  addSkill: PropTypes.func.isRequired,
-  deleteSkill: PropTypes.func.isRequired,
-};
 
 export default withStyles(styles)(SkillsSection);
