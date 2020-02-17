@@ -22,7 +22,6 @@ export const mapStateToProps = state => {
   if (contact && contact.skills) {
     allSkills = contact.skills;
   }
-  console.log(contact);
   if (contact && contact.other_skills) {
     otherSkills = contact.other_skills;
   }

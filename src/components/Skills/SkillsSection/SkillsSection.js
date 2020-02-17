@@ -78,15 +78,21 @@ const SkillsSection = ({
   }
 
   let capabilitySkills = [];
-  if (allSkills) {
-    capabilitySkills = allSkills.filter(skill => !isOtherSkill[skill.id]);
+  if (contactCapabilities) {
+    Object.values(contactCapabilities).forEach(capability => {
+      capabilitySkills = capabilitySkills
+        .concat(capability.skills)
+        .concat(capability.suggested_skills)
+        .filter(skill => !isOtherSkill[skill.id])
+    });
   }
 
-  const updateOtherSkills = newOtherSkills =>
+  const updateOtherSkills = newOtherSkills => {
     updateContactSkills(
       contactId,
       capabilitySkills.concat(newOtherSkills || [])
     );
+  }
 
   const onClickMoreHandler = () => {
     createClickTracking(
