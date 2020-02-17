@@ -11,7 +11,7 @@ const blankState = {
 
 test('test state mapping', () => {
   const state = Object.assign({}, blankState, {
-    contacts: [1, 2, 3, 4],
+    contacts: {1: {id: 1}, 2: {id: 2}, 3: {id: 3}, 4: {id: 4}},
     experiences: {
       10: {id: 10, data: 'exp 1', contact_id: 1, type: 'Work'},
       11: {id: 11, data: 'exp 2', contact_id: 2, type: 'Work'},

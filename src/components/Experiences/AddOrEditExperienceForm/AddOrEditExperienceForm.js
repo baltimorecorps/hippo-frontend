@@ -38,6 +38,7 @@ const useForm = (initialValues, onSubmit) => {
       update(event.target.name)(event.target.value);
     },
     handleSubmit: () => {
+      console.log('handleSubmit', values)
       onSubmit(values);
     },
 
@@ -64,6 +65,7 @@ const useForm = (initialValues, onSubmit) => {
 
 const AddOrEditExperienceForm = ({
   experience,
+  capabilities,
   onSubmit,
   handleCancel,
   classes,
@@ -405,6 +407,7 @@ const AddOrEditExperienceForm = ({
             errors={errors}
             contactId={experience.contact_id}
             achievements={achievements}
+            capabilities={capabilities}
             onChange={handleAchievements}
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}

@@ -11,6 +11,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 const AchievementInputsList = ({
   classes,
   achievements,
+  capabilities,
   contactId,
   onChange,
   label,
@@ -48,6 +49,15 @@ const AchievementInputsList = ({
     );
   };
 
+  const handleChangeSkills = selectedIndex => skills => {
+    onChange(
+      achievements.map((achievement, i) => {
+        if (selectedIndex !== i) return achievement;
+        return {...achievement, skills};
+      })
+    );
+  };
+
   const handleKeyPress = e => {
     if (e.key === 'Enter') {
       handleAdd();
@@ -63,12 +73,14 @@ const AchievementInputsList = ({
         <Typography className={classes.sublabel}>{sublabel}</Typography>
       </Grid>
       <Grid item xs={12}>
-        {achievements.map(({description}, index) => (
+        {achievements.map((achievement, index) => (
           <AchievementInput
             errors={errors}
             key={index}
             ref={index === achievements.length - 1 ? focusTarget : null}
-            value={description}
+            achievement={achievement}
+            capabilities={capabilities}
+            onSkillsChange={handleChangeSkills(index)}
             onTextChange={handleChangeDescription(index)}
             onIconClick={handleRemove(index)}
             onKeyPress={handleKeyPress}

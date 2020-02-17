@@ -22,6 +22,7 @@ const ExperiencesList = ({
   contactId,
   experienceType,
   experiences,
+  capabilities,
   addNewExperience,
   refreshExperiences,
   updateExperience,
@@ -157,6 +158,7 @@ const ExperiencesList = ({
             <Grid item xs={12} md={10}>
               <AddOrEditExperienceForm
                 experience={blankExperience}
+                capabilities={capabilities}
                 onSubmit={submitNewExperience}
                 handleCancel={() => setShowForm(false)}
                 onDelete={null}
@@ -173,6 +175,7 @@ const ExperiencesList = ({
               onSelect={makeSelectExperience(experience)}
               onSkillsMore={handleOnSkillsMore}
               experience={experience}
+              capabilities={capabilities}
               selectable={inSelectMode}
             />
           ))}

@@ -119,11 +119,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
 });
 
 CapabilitySkills.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  capSkills: PropTypes.array.isRequired,
+  recommendedSkills: PropTypes.array.isRequired,
   contactSkills: PropTypes.array.isRequired,
   addSkill: PropTypes.func.isRequired,
   deleteSkill: PropTypes.func.isRequired,
+  addSkillSuggestion: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(CapabilitySkills);
