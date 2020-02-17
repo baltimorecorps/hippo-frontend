@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -6,6 +6,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import {DragDropContext} from 'react-beautiful-dnd';
 import ResumeSection from './ResumeSection';
+import ExperienceItem from './ExperienceItem';
+import CapabilityItem from './CapabilityItem';
+import EducationItem from './EducationItem';
+import PortfolioItem from './PortfolioItem';
 
 /*
  * {sections:
@@ -15,7 +19,26 @@ import ResumeSection from './ResumeSection';
  *  }
  */
 
-const ResumeCreator = ({classes, sections, moveResumeItem}) => {
+const ResumeCreator = ({
+  classes,
+  sections,
+  contactId,
+  moveResumeItem,
+  refreshExperiences,
+  getContactCapabilities,
+}) => {
+  useEffect(() => {
+    if (sections.experience.length === 0) {
+      refreshExperiences();
+    }
+  }, [sections, refreshExperiences]);
+
+  useEffect(() => {
+    if (sections.capabilities.length === 0) {
+      getContactCapabilities();
+    }
+  }, [sections, getContactCapabilities]);
+
   const dragEndHandler = ({destination, source, draggableId}) => {
     if (!destination) {
       return;
@@ -59,33 +82,57 @@ const ResumeCreator = ({classes, sections, moveResumeItem}) => {
             </Grid>
             <Grid item xs={12} className={classes.body}>
               <Grid container>
-                <Grid item xs={9}>
+                <Grid item xs={8}>
                   <ResumeSection
-                    section={sections.experience}
                     sectionId={'experience'} // must match state key
                     sectionLabel="Relevant Experience"
-                  />
+                  >
+                    {sections.experience.map((experience, index) => (
+                      <ExperienceItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                      />
+                    ))}
+                  </ResumeSection>
                 </Grid>
-                <Grid item xs={3}>
-                  <div className={classes.section}>
-                    <div className={classes.sectionHeader}>
-                      Skills &amp; Abilities
-                    </div>
-                    <span className={classes.capability}>Data Science</span>
-                    <span className={classes.skill}>C</span>
-                    <span className={classes.skill}>C++</span>
-                    <span className={classes.skill}>Machine Learning</span>
-                    <span className={classes.skill}>Unix Systems</span>
-                    <span className={classes.skill}>Logic Programming</span>
-                    <span className={classes.skill}>GUI Graphics</span>
-                    <span className={classes.skill}>Windows Programming</span>
-                    <span className={classes.capability}>Data Management</span>
-                    <span className={classes.skill}>Microsoft Access</span>
-                    <span className={classes.skill}>Microsoft Excel</span>
-                    <span className={classes.skill}>Data Organizing</span>
-                    <span className={classes.skill}>Data Structures</span>
-                    <span className={classes.skill}>Process Management</span>
-                  </div>
+                <Grid item xs={4}>
+                  <ResumeSection
+                    sectionId={'capabilities'} // must match state key
+                    sectionLabel="Skills & Abilities"
+                  >
+                    {sections.capabilities.map((capability, index) => (
+                      <CapabilityItem
+                        key={capability.id}
+                        capability={capability}
+                        index={index}
+                      />
+                    ))}
+                  </ResumeSection>
+                  <ResumeSection
+                    sectionId={'portfolio'} // must match state key
+                    sectionLabel="Projects"
+                  >
+                    {sections.portfolio.map((experience, index) => (
+                      <PortfolioItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                      />
+                    ))}
+                  </ResumeSection>
+                  <ResumeSection
+                    sectionId={'education'} // must match state key
+                    sectionLabel="Education"
+                  >
+                    {sections.education.map((experience, index) => (
+                      <EducationItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                      />
+                    ))}
+                  </ResumeSection>
                 </Grid>
               </Grid>
             </Grid>
@@ -98,8 +145,9 @@ const ResumeCreator = ({classes, sections, moveResumeItem}) => {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
-    padding: `${spacing(3)}px ${spacing(1.5)}px`,
+    padding: `${spacing(3)}px ${spacing(4)}px`,
     fontFamily: 'Merriweather',
+    //height: '11.5in',
   },
   container: {
     margin: `${spacing(5)}px ${spacing(0)}px`,

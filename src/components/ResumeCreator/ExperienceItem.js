@@ -15,7 +15,7 @@ const ExperienceItem = ({classes, experience, index}) => {
     <Draggable draggableId={`${experience.id}`} index={index}>
       {provided => (
         <div 
-          className={classes.item}
+          className={`${classes.item}`}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -42,12 +42,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'inline-flex',
     width: '100%',
     flexDirection: 'column',
-    marginTop: spacing(1.5),
+    marginBottom: spacing(1.5),
     padding: spacing(1),
     borderLeft: 'solid 3px #93c47d',
     fontWeight: 400,
     fontSize: '9pt',
     fontFamily: 'Quicksand',
+  },
+  itemDrag: {
     borderRadius: '1px',
     backgroundColor: '#fbfbfb',
     boxShadow: '0 1px 1px rgba(9,30,66,.25)',
