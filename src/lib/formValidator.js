@@ -183,4 +183,76 @@ const validateEmail = input => {
   }
 };
 
-export {newProfileValidator, experienceValidator};
+const opportunityValidator = values => {
+  const {organization, title, short_description, gdoc_link} = values;
+
+  let isError = false;
+  let err = {};
+
+  // if (!organization) {
+  //   isError = true;
+  //   err.organization_error = 'Required';
+  // } else if (organization && organization.length > 200) {
+  //   isError = true;
+  //   err.organization_error =
+  //     'Organization name must be less than 200 characters';
+  // }
+
+  if (!title) {
+    isError = true;
+    err.title_error = 'Required';
+  } else if (title && title.length > 200) {
+    isError = true;
+    err.title_error = 'Job title must be less than 200 characters';
+  }
+
+  if (!short_description) {
+    isError = true;
+    err.shortDescription_error = 'Required';
+  } else if (short_description && short_description.length > 2000) {
+    isError = true;
+    err.shortDescription_error =
+      'Short description must be less than 2,000 characters';
+  }
+
+  if (!gdoc_link) {
+    isError = true;
+    err.link_error = 'Required';
+  } else if (
+    gdoc_link &&
+    !gdoc_link.startsWith('https://docs.google.com/document/d/')
+  ) {
+    isError = true;
+    err.link_error =
+      'Link must start with "https://docs.google.com/document/d/"';
+  }
+
+  if (gdoc_link && gdoc_link.length > 200) {
+    isError = true;
+    err.link_error = 'Link must be less than 200 characters';
+  }
+
+  return {isError, err};
+};
+
+const interestValidator = interestText => {
+  let isError = false;
+  let err = {};
+  if (!interestText) {
+    isError = true;
+    err.interestText_error = 'Required';
+  } else if (interestText && interestText.length > 2000) {
+    isError = true;
+    err.interestText_error =
+      'Interest statement must be less than 2,000 characters';
+  }
+
+  return {isError, err};
+};
+
+export {
+  newProfileValidator,
+  experienceValidator,
+  opportunityValidator,
+  interestValidator,
+};

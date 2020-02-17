@@ -14,9 +14,10 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MuiPhoneNumber from 'material-ui-phone-number';
 import Checkbox from '@material-ui/core/Checkbox';
-import { useHistory } from "react-router-dom";
+import {useHistory} from 'react-router-dom';
+import {opportunityValidator} from '../../lib/formValidator';
 
-const useForm = (submit) => {
+const useForm = submit => {
   const [values, setValues] = useState({});
   let history = useHistory();
 
@@ -24,7 +25,7 @@ const useForm = (submit) => {
     (async () => {
       const result = await submit(values);
       if (result && result.statusCode == 201) {
-        history.push("/opportunities");
+        history.push('/opportunities');
       }
     })();
   };
@@ -55,9 +56,9 @@ const OpportunityForm = ({classes, addOpportunity}) => {
   const inputProps = {classes: {input: classes.resize}, autoComplete: 'off'};
 
   const submit = () => {
-    //const {isError, err} = newProfileValidator(values);
-    const isError = false;
-    const err = {};
+    const {isError, err} = opportunityValidator(values);
+    // const isError = false;
+    // const err = {};
 
     if (isError) {
       setErrors(err);
@@ -78,10 +79,24 @@ const OpportunityForm = ({classes, addOpportunity}) => {
       </Typography>
       <form noValidate autoComplete="off">
         <Grid container direction="column">
+          {/* <TextField
+            required
+            id="organization"
+            label="Organization"
+            className={classes.textField}
+            name="organization"
+            value={values.organization || ''}
+            onChange={handleChange}
+            InputLabelProps={inputLabelProps}
+            InputProps={inputProps}
+          />
+          <FormHelperText className={classes.formHelperText}>
+            {errors.organization_error || null}
+          </FormHelperText> */}
           <TextField
             required
             id="title"
-            label="Title"
+            label="Job Title"
             className={classes.textField}
             name="title"
             value={values.title || ''}
@@ -98,6 +113,7 @@ const OpportunityForm = ({classes, addOpportunity}) => {
             label="Short Description"
             className={classes.textField}
             multiline
+            rows={4}
             name="short_description"
             value={values.short_description || ''}
             onChange={handleChange}
@@ -119,7 +135,7 @@ const OpportunityForm = ({classes, addOpportunity}) => {
             InputProps={inputProps}
           />
           <FormHelperText className={classes.formHelperText}>
-            {errors.email_error || null}
+            {errors.link_error || null}
           </FormHelperText>
         </Grid>
       </form>

@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
 
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -134,13 +135,13 @@ const App = ({
                   </MenuItem>
                 </Link>
                 <Link to="/opportunities">
-                  Opportunities
+                  <Typography>Opportunities</Typography>
                 </Link>
                 <div className={classes.grow} />
 
-                {(!hasSession && !isAuthenticated) && (
+                {!hasSession && !isAuthenticated && (
                   <Button color="inherit" onClick={onClickLogInHandler}>
-                    Log in / Sign up
+                    <Typography>Log in / Sign up</Typography>
                   </Button>
                 )}
                 {(hasSession || isAuthenticated) && (
@@ -159,9 +160,20 @@ const App = ({
               <Route exact path="/talent-home" component={TalentHome} />
 
               <Route exact path="/profile/" component={ProfileAuth} />
-              <Route exact path="/opportunities/" component={OpportunitiesPage} />
-              <Route exact path="/new-opportunity/" component={OpportunityForm} />
-              <Route path="/application/:opportunityId" component={ApplicationForm} />
+              <Route
+                exact
+                path="/opportunities/"
+                component={OpportunitiesPage}
+              />
+              <Route
+                exact
+                path="/new-opportunity/"
+                component={OpportunityForm}
+              />
+              <Route
+                path="/application/:opportunityId"
+                component={ApplicationForm}
+              />
               <Route
                 exact
                 path="/profile/:contactId"

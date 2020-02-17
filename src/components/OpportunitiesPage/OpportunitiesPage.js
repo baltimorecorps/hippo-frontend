@@ -28,19 +28,20 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
       {Object.values(opportunities).map(opportunity => (
         <Paper className={classes.opportunityPaper}>
           <div className={classes.headerContainer}>
+            <Typography variant="h5" component="h1" className={classes.title}>
+              {opportunity.title}
+            </Typography>
             <Typography
               variant="h5"
               component="h1"
-              style={{
-                fontWeight: '700',
-              }}
+              className={classes.organization}
             >
-              {opportunity.title}
+              {opportunity.organization || 'Organization Name'}
             </Typography>
           </div>
           <div className={classes.opportunityContent}>
             <div className={classes.opportunityDescription}>
-              <Typography>
+              <Typography className={classes.description}>
                 {opportunity.short_description}
                 <br />
               </Typography>
@@ -53,9 +54,11 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
               </Typography>
             </div>
             <div className={classes.applyButton}>
-              <Button 
+              <Button
                 onClick={() => handleApply(opportunity.id)}
-                variant="contained" color="primary">
+                variant="contained"
+                color="primary"
+              >
                 Apply
               </Button>
             </div>
@@ -107,21 +110,43 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'space-between',
     [breakpoints.down('sm')]: {
       flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   },
   opportunityDescription: {
-    marginRight: spacing(1),
+    width: '100%',
+
+    display: 'flex',
+    flexDirection: 'column',
     [breakpoints.down('sm')]: {
       marginBottom: spacing(2),
+      marginRight: spacing(0),
+      alignSelf: 'center',
+    },
+    [breakpoints.down('xs')]: {
+      marginBottom: spacing(1),
+      width: 'auto',
     },
     [breakpoints.up('md')]: {
-      marginRight: spacing(8),
+      marginRight: spacing(2),
     },
   },
   headerContainer: {
     paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    [breakpoints.down('xs')]: {
+      paddingBottom: spacing(1),
+      marginBottom: spacing(1),
+    },
+    [breakpoints.down('sm')]: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   },
   buttonContainer: {
     display: 'flex',
@@ -129,6 +154,38 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   link: {
     color: palette.primary.link,
+    textIndent: '25px',
+    alignSelf: 'flex-end',
+    marginTop: spacing(1),
+    [breakpoints.down('xs')]: {
+      alignSelf: 'center',
+      marginTop: spacing(0),
+      textIndent: '0px',
+    },
+  },
+  description: {
+    textAlign: 'justify',
+    textIndent: '25px',
+  },
+  applyButton: {
+    [breakpoints.down('sm')]: {
+      alignSelf: 'flex-end',
+    },
+    [breakpoints.down('xs')]: {
+      alignSelf: 'center',
+    },
+  },
+  title: {
+    fontWeight: 700,
+    fontSize: '22px',
+    [breakpoints.down('xs')]: {
+      fontSize: '20px',
+    },
+  },
+  organization: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
   },
 });
 

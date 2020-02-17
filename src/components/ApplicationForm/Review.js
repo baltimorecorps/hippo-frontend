@@ -16,6 +16,7 @@ const Review = ({
   submit,
   toProfile,
   toOpportunities,
+  opportunity,
 }) => {
   const [submitted, setSubmitted] = useState(false);
   const submitAndShowDialog = async () => {
@@ -28,33 +29,61 @@ const Review = ({
     <div className={classes.container}>
       <Paper className={classes.paper}>
         <div className={classes.headerContainer}>
+          <Typography variant="h5" component="h1" className={classes.header}>
+            {application.status === 'submitted'
+              ? 'This application is submitted'
+              : 'Review and Submit'}
+          </Typography>
+        </div>
+        <div>
+          <Typography variant="body2" component="h2" className={classes.title}>
+            <strong>Title:</strong> {opportunity.title}
+          </Typography>
+          <Typography variant="body2" component="h2" className={classes.title}>
+            <strong>Organization:</strong>{' '}
+            {opportunity.organization || 'Organization Name'}
+          </Typography>
+        </div>
+      </Paper>
+      <Paper className={classes.paper}>
+        <div>
           <Typography
-            variant="h5"
+            variant="h6"
             component="h1"
             style={{
               fontWeight: '700',
             }}
           >
-            Statement of Interest
+            Interest Statement
           </Typography>
         </div>
-        <Typography>{application.interest_statement}</Typography>
-        <Button onClick={back}>Edit Application</Button>
-        {application.status === 'submitted' ? (
-          <Button 
-            onClick={toOpportunities}
-            variant="outlined">
-            Back to Opportunities
+        <Typography className={classes.interestStatement}>
+          {application.interest_statement}
+        </Typography>
+      </Paper>
+      <Paper className={classes.stickyFooter}>
+        <div className={classes.buttonContainer}>
+          <Button onClick={back} color="secondary" variant="contained">
+            Back
           </Button>
-        ) : (
-          <Button
-            onClick={submitAndShowDialog}
-            color="primary"
-            variant="contained"
-          >
-            Submit
-          </Button>
-        )}
+          {application.status === 'submitted' ? (
+            <Button
+              onClick={toOpportunities}
+              variant="contained"
+              color="primary"
+            >
+              View More Opportunities
+            </Button>
+          ) : (
+            <Button
+              onClick={submitAndShowDialog}
+              color="primary"
+              variant="contained"
+            >
+              Submit
+            </Button>
+          )}
+        </div>
       </Paper>
       <ConfirmDialog
         open={submitted}
@@ -95,6 +124,47 @@ const styles = ({breakpoints, palette, spacing}) => ({
     paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+  },
+  header: {
+    fontWeight: 700,
+    textAlign: 'center',
+
+    [breakpoints.up('sm')]: {
+      // textAlign: 'left',
+    },
+  },
+  title: {
+    fontSize: '17px',
+  },
+  stickyFooter: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '100vw',
+    position: 'absolute',
+    bottom: 0,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    margin: '15px 0',
+    flexGrow: 1,
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '100%',
+  },
+  interestStatement: {
+    textIndent: '25px',
+    textAlign: 'justify',
   },
 });
 
