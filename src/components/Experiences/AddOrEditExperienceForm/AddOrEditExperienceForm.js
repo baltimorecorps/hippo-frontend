@@ -80,16 +80,15 @@ const AddOrEditExperienceForm = ({
     experience['end_month'] = 'none';
   }
 
+  /*
   const initialScore = useRef(0);
   useEffect(() => {
-    console.log('hi');
     initialScore.current = scoreAchievements(experience.achievements);
-    /*
     return (() => {
       updateEditScore({});
     })
-    */
   }, [experience]);
+  */
 
   const [
     values,
