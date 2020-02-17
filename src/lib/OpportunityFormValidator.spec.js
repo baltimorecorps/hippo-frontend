@@ -18,7 +18,7 @@ const validLinkButTooLong =
 
 const invalidLink = 'GoogleDoc.com';
 
-describe('Opportunity Validators', () => {
+describe('Opportunity Form Validators', () => {
   test('Empty values ', () => {
     const values = {};
     const expectedErr = {
@@ -120,7 +120,7 @@ describe('Opportunity Validators', () => {
   });
 });
 
-describe('Interest Validators', () => {
+describe('Interest Form Validators', () => {
   test('Empty values ', () => {
     const interestText = '';
     const expectedErr = {

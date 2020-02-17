@@ -25,8 +25,8 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
   return (
     // TODO: Style this
     <div className={classes.container}>
-      {Object.values(opportunities).map(opportunity => (
-        <Paper className={classes.opportunityPaper}>
+      {Object.values(opportunities).map((opportunity, index) => (
+        <Paper className={classes.opportunityPaper} key={index}>
           <div className={classes.headerContainer}>
             <Typography variant="h5" component="h1" className={classes.title}>
               {opportunity.title}
@@ -65,7 +65,7 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
           </div>
         </Paper>
       ))}
-      <Grid xs={12} md={8} className={classes.buttonContainer}>
+      <Grid className={classes.buttonContainer}>
         <Button
           onClick={handleClick}
           variant="contained"

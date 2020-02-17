@@ -63,7 +63,11 @@ const Review = ({
       </Paper>
       <Paper className={classes.stickyFooter}>
         <div className={classes.buttonContainer}>
-          <Button onClick={back} color="secondary" variant="contained">
+          <Button
+            onClick={back}
+            variant="contained"
+            className={classes.buttons}
+          >
             Back
           </Button>
           {application.status === 'submitted' ? (
@@ -71,6 +75,7 @@ const Review = ({
               onClick={toOpportunities}
               variant="contained"
               color="primary"
+              className={classes.buttons}
             >
               View More Opportunities
             </Button>
@@ -79,6 +84,7 @@ const Review = ({
               onClick={submitAndShowDialog}
               color="primary"
               variant="contained"
+              className={classes.buttons}
             >
               Submit
             </Button>
@@ -100,7 +106,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: spacing(1),
+    marginTop: spacing(2),
+    marginBottom: spacing(3),
   },
   paper: {
     flexGrow: 1,
@@ -140,8 +147,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'center',
     width: '100vw',
-    position: 'absolute',
+    position: 'fixed',
     bottom: 0,
+    backgroundColor: palette.primary.almostBlack,
   },
   buttonContainer: {
     display: 'flex',
@@ -161,6 +169,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
       maxWidth: '50%',
     },
     width: '100%',
+  },
+  buttons: {
+    margin: spacing(0, 2),
   },
   interestStatement: {
     textIndent: '25px',

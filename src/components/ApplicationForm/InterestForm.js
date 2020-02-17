@@ -103,7 +103,6 @@ const InterestForm = ({
           <Button
             onClick={back}
             className={classes.buttons}
-            color="secondary"
             variant="contained"
           >
             Back
@@ -129,7 +128,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: spacing(1),
+    marginTop: spacing(2),
+    marginBottom: spacing(3),
   },
   paper: {
     flexGrow: 1,
@@ -184,8 +184,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'center',
     width: '100vw',
-    position: 'absolute',
+    position: 'fixed',
     bottom: 0,
+    backgroundColor: palette.primary.almostBlack,
   },
   buttonContainer: {
     display: 'flex',
@@ -207,7 +208,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
   },
   buttons: {
-    marginLeft: spacing(1),
+    margin: spacing(0, 2),
   },
   link: {
     color: palette.primary.link,
@@ -233,6 +234,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
   interestStatement: {
     textIndent: '25px',
     textAlign: 'justify',
+    border: `${palette.primary.midGray} 1px solid`,
+    padding: '10px',
   },
 });
 
