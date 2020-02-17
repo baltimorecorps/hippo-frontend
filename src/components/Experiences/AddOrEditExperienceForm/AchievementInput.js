@@ -160,7 +160,7 @@ const AchievementInput = React.forwardRef(
           <FormHelperText className={classes.formHelperText}>
             {achievement.description.length > 750 && errors.achievements_error}
           </FormHelperText>
-          {capabilities.map(capability => {
+          {capabilities && capabilities.map(capability => {
             return (
               <CapabilitySelect
                 key={capability.id}

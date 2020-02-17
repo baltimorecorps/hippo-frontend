@@ -36,7 +36,7 @@ const AchievementInputsList = ({
   };
 
   const handleAdd = () => {
-    onChange([...achievements, {contact_id: contactId, description: ''}]);
+    onChange([...achievements, {contact_id: contactId, description: '', skills: []}]);
     setFocus(true);
   };
 

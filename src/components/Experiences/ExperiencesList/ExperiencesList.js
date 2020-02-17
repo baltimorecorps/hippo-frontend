@@ -29,6 +29,7 @@ const ExperiencesList = ({
   deleteExperience,
   selectExperience,
   deselectExperience,
+  updateEditScore,
   inSelectMode,
   classes,
 }) => {
@@ -163,6 +164,7 @@ const ExperiencesList = ({
                 handleCancel={() => setShowForm(false)}
                 onDelete={null}
                 onSkillsMore={handleOnSkillsMore}
+                updateEditScore={updateEditScore('new')}
               />
             </Grid>
           )}
@@ -177,6 +179,7 @@ const ExperiencesList = ({
               experience={experience}
               capabilities={capabilities}
               selectable={inSelectMode}
+              updateEditScore={updateEditScore(experience.id)}
             />
           ))}
         </Paper>

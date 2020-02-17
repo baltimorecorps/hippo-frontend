@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -19,9 +19,11 @@ import BasicInfoDisplay from 'components/Users/BasicInfoDisplay';
 import BasicInfoForm from 'components/Users/BasicInfoForm';
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import SkillsSection from 'components/Skills/SkillsSection';
+import CapabilityScores from 'components/CapabilityScores';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
+import {sumScores} from 'lib/helperFunctions/scoreAchievements';
 
 import CAPABILITIES from './capabilities.yml';
 
@@ -75,6 +77,16 @@ const ProfilePage = ({
   const [isOpenDrawer2, setOpenDrawer2] = React.useState(false);
   const [sidebarType, setSidebarType] = useState('work');
   const [loading, setLoading] = useState(false);
+  const [editScores, setEditScores] = useState({});
+
+  const updateEditScore = useCallback((expId) => (scores) => {
+    setEditScores(existing => ({
+      ...existing,
+      [expId]: scores,
+    }));
+  }, [setEditScores])
+
+  //const editScore = sumScores(Object.values(editScores));
 
   const handleUpdateContact = async values => {
     await updateContact(values);
@@ -197,8 +209,12 @@ const ProfilePage = ({
             id="divToPrint"
             container
             justify="center"
-            className={classes.wrapper}
+            className={openSidebar ? classes.wrapperSmall : classes.wrapper}
           >
+              <CapabilityScores 
+                contactCapabilities={contactInfo.capabilities}
+                editScores={{}}
+              />
             <Grid item xs={12} sm={11}>
               <Grid container justify="center">
                 <Grid item xs={12} md={8} lg={6}>
@@ -271,17 +287,20 @@ const ProfilePage = ({
                   contactId={contactId}
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
+                  updateEditScore={updateEditScore}
                 />
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
+                  updateEditScore={updateEditScore}
                 />
                 {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
+                  updateEditScore={updateEditScore}
                 />
 
                 {/*<ResumesList />*/}
@@ -538,6 +557,13 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   wrapper: {
     marginBottom: spacing(5),
     width: '100%',
+    paddingLeft: '18vw',
+    paddingRight: '18vw',
+  },
+  wrapperSmall: {
+    marginBottom: spacing(5),
+    width: '100%',
+    paddingLeft: '8vw',
   },
 
   paper: {

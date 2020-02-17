@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import PropTypes from 'prop-types';
@@ -16,6 +16,7 @@ import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {experienceValidator} from 'lib/formHelpers/formValidator';
+import {scoreAchievements, relativeScores} from 'lib/helperFunctions/scoreAchievements';
 import {configureForm} from 'components/Experiences/ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';
@@ -71,12 +72,24 @@ const AddOrEditExperienceForm = ({
   classes,
   onDelete,
   onSkillsMore,
+  updateEditScore,
 }) => {
   const config = configureForm(experience.type);
   if (!config.showEndDate) {
     experience['end_year'] = 0;
     experience['end_month'] = 'none';
   }
+
+  const initialScore = useRef(0);
+  useEffect(() => {
+    console.log('hi');
+    initialScore.current = scoreAchievements(experience.achievements);
+    /*
+    return (() => {
+      updateEditScore({});
+    })
+    */
+  }, [experience]);
 
   const [
     values,
@@ -89,15 +102,6 @@ const AddOrEditExperienceForm = ({
       handleIsCurrent,
     },
   ] = useForm(experience, onSubmit);
-
-  // eslint-disable-next-line no-unused-vars
-  const handleChangeDescription = idx => evt => {
-    const newAchievements = this.state.achievements.map((achievement, sidx) => {
-      if (idx !== sidx) return achievement;
-      return {...achievement, description: evt.target.value};
-    });
-    this.setState({achievements: newAchievements});
-  };
 
   if (typeof values.start_year === String) {
     values.start_year = null;
@@ -164,6 +168,17 @@ const AddOrEditExperienceForm = ({
     );
     handleFormSubmit();
   };
+
+  const handleAchievementsLocal = (achievements) => {
+    /* prohibitively expensive performance-wise right now
+     * need to optimize
+    updateEditScore(relativeScores(
+      scoreAchievements(achievements),
+      initialScore.current,
+    ));
+    */
+    handleAchievements(achievements);
+  }
 
   return (
     <Grid
@@ -408,7 +423,7 @@ const AddOrEditExperienceForm = ({
             contactId={experience.contact_id}
             achievements={achievements}
             capabilities={capabilities}
-            onChange={handleAchievements}
+            onChange={handleAchievementsLocal}
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
             label={

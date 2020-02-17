@@ -25,6 +25,7 @@ const ExperiencesListItem = ({
   onDelete,
   onSelect,
   onSkillsMore,
+  updateEditScore,
   selectable,
   classes,
 }) => {
@@ -182,6 +183,7 @@ const ExperiencesListItem = ({
               experience={experience}
               onDelete={onDelete}
               onSkillsMore={onSkillsMore}
+              updateEditScore={updateEditScore}
             />
           </Grid>
         )}
