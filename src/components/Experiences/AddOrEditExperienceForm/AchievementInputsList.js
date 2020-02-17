@@ -23,6 +23,9 @@ const AchievementInputsList = ({
 
   useEffect(() => {
     if (focusTarget.current && doFocus) {
+      focusTarget.current.setSelectionRange(
+        focusTarget.current.value.length,
+        focusTarget.current.value.length)
       focusTarget.current.focus();
       setFocus(false);
     }
@@ -35,18 +38,75 @@ const AchievementInputsList = ({
     onChange(achievements.filter((elem, i) => selectedIndex !== i));
   };
 
-  const handleAdd = () => {
-    onChange([...achievements, {contact_id: contactId, description: '', skills: []}]);
+  const handleAddMultiple = text => {
+    const descriptions = getMultilineDescriptions(text);
+    onChange([
+      ...achievements,
+      ...descriptions.map(desc => (
+        {
+          contact_id: contactId,
+          description: desc || '',
+          skills: [],
+        })),
+    ]);
+  };
+  const handleAdd = text => {
+    if (text.indexOf('\n') !== -1) {
+      handleAddMultiple(text);
+    } else {
+      onChange([
+        ...achievements,
+        {
+          contact_id: contactId,
+          description: text || '',
+          skills: [],
+        },
+      ]);
+    }
     setFocus(true);
   };
 
-  const handleChangeDescription = selectedIndex => event => {
-    onChange(
-      achievements.map((achievement, i) => {
-        if (selectedIndex !== i) return achievement;
-        return {...achievement, description: event.target.value};
+  const getMultilineDescriptions = (description) => {
+    return description
+      .split('\n')
+      .map(line => {
+        // Remove all non-word characters from the start of the string
+        // Strips off bullets, whitespace, etc.
+        const firstCharIdx = line.search(/\w/);
+        if (firstCharIdx === -1) {
+          return null;
+        } else {
+          return line.slice(firstCharIdx);
+        }
       })
-    );
+      .filter(line => line !== null);
+  }
+
+  const handleMultilineUpdate = (index, description) => {
+    const descriptions = getMultilineDescriptions(description);
+    return [
+      ...achievements.slice(0, index),
+      {...achievements[0], description: descriptions[0]},
+      ...descriptions.slice(1).map(desc => ({
+        contact_id: contactId,
+        description: desc,
+        skills: [],
+      })),
+      ...achievements.slice(index + 1),
+    ];
+  };
+
+  const handleChangeDescription = selectedIndex => event => {
+    if (event.target.value.indexOf('\n') !== -1) {
+      onChange(handleMultilineUpdate(selectedIndex, event.target.value));
+    } else {
+      onChange(
+        achievements.map((achievement, i) => {
+          if (selectedIndex !== i) return achievement;
+          return {...achievement, description: event.target.value};
+        })
+      );
+    }
   };
 
   const handleChangeSkills = selectedIndex => skills => {
@@ -86,6 +146,14 @@ const AchievementInputsList = ({
             onKeyPress={handleKeyPress}
           />
         ))}
+        <AchievementInput
+          achievement={{description: ''}}
+          capabilities={[]}
+          onSkillsChange={null}
+          onTextChange={ev => handleAdd(ev.target.value)}
+          onIconClick={null}
+          onKeyPress={() => {}}
+        />
       </Grid>
       <Grid item xs={11}>
         <Button

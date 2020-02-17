@@ -49,7 +49,7 @@ const getCapabilities = (state, props) => {
   });
   if (otherSkills && otherSkills.length > 0) {
     output.push({
-      id: 'other',
+      id: null,
       name: 'Other',
       skills: otherSkills,
     })
