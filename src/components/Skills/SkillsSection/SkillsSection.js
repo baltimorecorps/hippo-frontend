@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CapabilitySkills from './CapabilitySkills';
 import SkillSelect from 'components/Skills/SkillSelect';
@@ -43,39 +42,57 @@ const CAPABILITIES = [
 
 const SkillsSection = ({
   classes,
-  header,
+  contactId,
+  capabilities,
+  contactCapabilities,
+  allSkills,
+  otherSkills,
+  getCapabilities,
+  getContactCapabilities,
+  addContactSkill,
+  addSkillSuggestion,
+  deleteSkillSuggestion,
+  deleteContactSkill,
+  updateContactSkills,
   contactSkills,
-  addSkill,
-  deleteSkill,
-  onChange,
   onClickMore,
-  openSidebar,
+  splitScreen,
 }) => {
-  let capSkillMap = {};
-  CAPABILITIES.forEach(cap => {
-    cap.skills.forEach(skill => {
-      capSkillMap[skill] = true;
+  useEffect(() => {
+    if (!capabilities) {
+      getCapabilities();
+    }
+  }, [capabilities, getCapabilities]);
+
+  useEffect(() => {
+    if (contactId && !contactCapabilities) {
+      getContactCapabilities(contactId);
+    }
+  }, [contactId, contactCapabilities, getContactCapabilities]);
+
+  let isOtherSkill = {};
+  if (otherSkills) {
+    otherSkills.forEach(skill => {
+      isOtherSkill[skill.id] = true;
     });
-  });
+  }
 
-  const capSkills = contactSkills.filter(skill => capSkillMap[skill.name]);
+  let capabilitySkills = [];
+  if (contactCapabilities) {
+    Object.values(contactCapabilities).forEach(capability => {
+      capabilitySkills = capabilitySkills
+        .concat(capability.skills)
+        .concat(capability.suggested_skills)
+        .filter(skill => !isOtherSkill[skill.id])
+    });
+  }
 
-  const additionalSkills = contactSkills.filter(
-    skill => !capSkillMap[skill.name]
-  );
-
-  const deleteSkillShim = skill => {
-    const skills = contactSkills.filter(
-      contactSkill => contactSkill.name !== skill
+  const updateOtherSkills = newOtherSkills => {
+    updateContactSkills(
+      contactId,
+      capabilitySkills.concat(newOtherSkills || [])
     );
-    console.log(skill, skills, contactSkills);
-    onChange(skills);
-  };
-
-  const addSkillShim = skill => onChange(contactSkills.concat([{name: skill}]));
-
-  const updateAdditionalSkills = newAdditionalSkills =>
-    onChange(capSkills.concat(newAdditionalSkills || []));
+  }
 
   const onClickMoreHandler = () => {
     createClickTracking(
@@ -85,6 +102,19 @@ const SkillsSection = ({
     );
     onClickMore('skills');
   };
+
+  const splitSize = (size) => {
+    if (splitScreen) {
+      if (size <= 4) {
+        return 6;
+      } else {
+        return 12;
+      }
+    } else {
+      return size;
+    }
+  }
+  
 
   return (
     <Grid container>
@@ -99,7 +129,7 @@ const SkillsSection = ({
                   fontWeight: '700',
                 }}
               >
-                {header}
+                Get started with skills 
               </Typography>
             </Grid>
             <Grid container alignItems="center">
@@ -122,25 +152,47 @@ const SkillsSection = ({
           </Grid>
 
           <Grid container>
-            {CAPABILITIES.map(({name, skills}) => (
-              <Grid item xs={12} md={6} key={name}>
-                <CapabilitySkills
-                  name={name}
-                  capSkills={skills}
-                  contactSkills={contactSkills}
-                  addSkill={addSkillShim}
-                  deleteSkill={deleteSkillShim}
-                />
-              </Grid>
-            ))}
+            {capabilities &&
+              capabilities.map(({id, name, recommended_skills}) => {
+                let contactSkills = [];
+                if (contactCapabilities && contactCapabilities[id]) {
+                  contactSkills = contactCapabilities[id].skills.concat(
+                    contactCapabilities[id].suggested_skills || []
+                  );
+                }
+                return (
+                  <Grid item 
+                    xs={splitSize(12)} 
+                    md={splitSize(6)} 
+                    lg={splitSize(4)}
+                    key={name}>
+                    <CapabilitySkills
+                      id={id}
+                      name={name}
+                      recommendedSkills={recommended_skills.map(
+                        obj => obj.skill
+                      )}
+                      contactSkills={contactSkills}
+                      addSkill={skill => addContactSkill(contactId, skill)}
+                      deleteSkill={skill =>
+                        deleteSkillSuggestion(contactId, id, skill)
+                      }
+                      addSkillSuggestion={skill =>
+                        addSkillSuggestion(contactId, id, skill)
+                      }
+                    />
+                  </Grid>
+                );
+              })}
             <Grid item xs={12}>
               <Paper className={classes.element}>
                 <Typography variant="h5" component="h2">
                   Additional Skills
                 </Typography>
                 <SkillSelect
-                  value={additionalSkills}
-                  onChange={updateAdditionalSkills}
+                  id='other'
+                  value={otherSkills || []}
+                  onChange={updateOtherSkills}
                 />
               </Paper>
             </Grid>
@@ -157,6 +209,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.down('xs')]: {
       margin: spacing(0.2),
     },
+    marginBottom: spacing(5),
   },
   element: {
     padding: spacing(2, 3, 3),
@@ -180,13 +233,5 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
 });
-
-SkillsSection.propTypes = {
-  header: PropTypes.string.isRequired,
-  contactSkills: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired,
-  addSkill: PropTypes.func.isRequired,
-  deleteSkill: PropTypes.func.isRequired,
-};
 
 export default withStyles(styles)(SkillsSection);

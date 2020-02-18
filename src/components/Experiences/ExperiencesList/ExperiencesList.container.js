@@ -32,13 +32,41 @@ const makeGetRelevantExperiences = () => {
   return getRelevantExperiences;
 };
 
+const getCapabilities = (state, props) => {
+  const contact = state.contacts[props.contactId];
+  const capabilities = contact ? contact.capabilities : {};
+  const otherSkills = contact ? contact.other_skills : [];
+  let output = []
+  Object.values(capabilities || {}).forEach(capability => {
+    const allSkills = capability.skills.concat(capability.suggested_skills);
+    if (allSkills.length > 0) {
+      output.push({
+        id: capability.id,
+        name: capability.name,
+        skills: allSkills,
+      })
+    }
+  });
+  if (otherSkills && otherSkills.length > 0) {
+    output.push({
+      id: null,
+      name: 'Other',
+      skills: otherSkills,
+    })
+  }
+  return output;
+}
+
 export const makeMapStateToProps = () => {
   const getRelevantExperiences = makeGetRelevantExperiences();
-  const mapStateToProps = (state, ownProps) => ({
+  const mapStateToProps = (state, ownProps) => {
+    return ({
     experiences: getRelevantExperiences(state, ownProps),
+    capabilities: getCapabilities(state, ownProps),
     inSelectMode:
       state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
-  });
+    })
+  };
   return mapStateToProps;
 };
 

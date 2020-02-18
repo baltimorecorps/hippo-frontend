@@ -56,6 +56,14 @@ export const deselectResumeExperience = experience => ({
   experience,
 });
 
+export const MOVE_RESUME_ITEM = 'MOVE_RESUME_ITEM';
+export const moveResumeItem = (id, destination, source) => ({
+  type: MOVE_RESUME_ITEM,
+  id,
+  destination,
+  source,
+});
+
 export const CREATE_RESUME = 'CREATE_RESUME';
 export const CREATE_RESUME_API = fetchActionTypes(CREATE_RESUME);
 export const createResume = (contactId, name) =>
@@ -292,12 +300,20 @@ export const resumeReducer = createReducer(genInitState(), {
       id => id !== action.experience.id
     );
   },
-  [DESELECT_RESUME_EXPERIENCE]: (state, action) => {
-    const key = getExperienceKey(action.experience);
-    state.selected[key] = state.selected[key].filter(
-      id => id !== action.experience.id
-    );
+  [MOVE_RESUME_ITEM]: (state, action) => {
+    // Only allow moving items when we're in the right state for it
+    // Hopefully this should keep our state clean across oddly timed
+    // transitions, etc.
+    if (state.resumeCreationStep !== RESUME_CREATION.SELECT_HIGHLIGHTS) {
+      return;
+    }
+
+    const {id, source, destination} = action;
+
+    state.selected[source.section].splice(source.index, 1);
+    state.selected[destination.section].splice(destination.index, 0, id);
   },
+
   [GENERATE_RESUME_API.REQUEST]: (state, action) => {
     state.inProgress = true;
   },
