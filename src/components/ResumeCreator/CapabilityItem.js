@@ -1,26 +1,29 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {Draggable} from 'react-beautiful-dnd';
+import DragWrapper from './DragWrapper';
 
-const CapabilityItem = ({classes, capability, index}) => {
+const CapabilityItem = ({classes, capability, index, enableDrag}) => {
   const skills = capability.skills.concat(capability.suggested_skills);
-  return (
-    <Draggable draggableId={`${capability.id}`} index={index}>
-      {provided => (
-        <div
-          className={`${classes.item}`}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <span className={classes.capability}>{capability.name}</span>
-          {skills.map(skill => (
-            <span className={classes.skill}>{skill.name}</span>
-          ))}
-        </div>
-      )}
-    </Draggable>
+  const innerComponent = (
+    <div className={classes.item}>
+      <span className={classes.capability}>{capability.name}</span>
+      {skills.map(skill => (
+        <span key={skill.id} className={classes.skill}>
+          {skill.name}
+        </span>
+      ))}
+    </div>
   );
+
+  if (enableDrag) {
+    return (
+      <DragWrapper index={index} dragId={`${capability.id}`}>
+        {innerComponent}
+      </DragWrapper>
+    );
+  } else {
+    return innerComponent;
+  }
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
