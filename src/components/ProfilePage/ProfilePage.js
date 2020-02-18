@@ -365,11 +365,11 @@ const ProfilePage = ({
             </Grid>
           </Grid>
         </Grid>
-        {inSelectMode ? (
+        {/* {inSelectMode ? (
           <Grid item xs={6} className={classes.wrapperDiv}>
             <ResumeCreator />
           </Grid>
-        ) : null}
+        ) : null} */}
       </Grid>
       <Grid item>
         {openSidebar && (
