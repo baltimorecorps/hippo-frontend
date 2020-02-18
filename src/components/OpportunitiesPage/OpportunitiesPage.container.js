@@ -10,7 +10,4 @@ const mapDispatchToProps = dispatch => ({
   getAllOpportunities: () => getAllOpportunities(dispatch),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OpportunitiesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(OpportunitiesPage);

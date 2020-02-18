@@ -7,7 +7,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
-import {createExternalLink} from 'lib/helperFunctions/helpers';
+import StickyFooter from './StickyFooter';
 
 const Review = ({
   classes,
@@ -16,50 +16,68 @@ const Review = ({
   submit,
   toProfile,
   toOpportunities,
+  opportunity,
 }) => {
-  const [submitted, setSubmitted] = useState(false);
-  const submitAndShowDialog = async () => {
+  const [confirmed, setConfirmed] = useState(false);
+
+  let history = useHistory();
+
+  const toConfirmationPage = () => {
+    history.push('/confirmation-page');
+  };
+  const submitApplication = async () => {
     const response = await submit();
     if (response.statusCode == 200) {
-      setSubmitted(true);
+      toConfirmationPage();
     }
   };
+
   return (
     <div className={classes.container}>
       <Paper className={classes.paper}>
         <div className={classes.headerContainer}>
+          <Typography variant="h5" component="h1" className={classes.header}>
+            {application.status === 'submitted'
+              ? 'This application has already been submitted'
+              : 'Review and Submit'}
+          </Typography>
+        </div>
+        <div>
+          <Typography variant="body2" component="h2" className={classes.title}>
+            <strong>Title:</strong> {opportunity.title}
+          </Typography>
+          <Typography variant="body2" component="h2" className={classes.title}>
+            <strong>Organization:</strong> {opportunity.org_name || ''}
+          </Typography>
+        </div>
+      </Paper>
+      <Paper className={classes.paper}>
+        <div>
           <Typography
-            variant="h5"
+            variant="h6"
             component="h1"
             style={{
               fontWeight: '700',
             }}
           >
-            Statement of Interest
+            Interest Statement
           </Typography>
         </div>
-        <Typography>{application.interest_statement}</Typography>
-        <Button onClick={back}>Edit Application</Button>
-        {application.status === 'submitted' ? (
-          <Button 
-            onClick={toOpportunities}
-            variant="outlined">
-            Back to Opportunities
-          </Button>
-        ) : (
-          <Button
-            onClick={submitAndShowDialog}
-            color="primary"
-            variant="contained"
-          >
-            Submit
-          </Button>
-        )}
+        <Typography className={classes.interestStatement}>
+          {application.interest_statement}
+        </Typography>
       </Paper>
-      <ConfirmDialog
-        open={submitted}
-        toProfile={toProfile}
+      <StickyFooter
+        page="review"
+        back={back}
         toOpportunities={toOpportunities}
+        submit={() => setConfirmed(true)}
+        application={application}
+      />
+      <ConfirmDialog
+        open={confirmed}
+        closeDialog={() => setConfirmed(false)}
+        submit={submitApplication}
       />
     </div>
   );
@@ -71,7 +89,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: spacing(1),
+    marginTop: spacing(2),
+    marginBottom: spacing(3),
   },
   paper: {
     flexGrow: 1,
@@ -96,21 +115,34 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
   },
+  header: {
+    fontWeight: 700,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: '17px',
+  },
+  interestStatement: {
+    textIndent: '25px',
+    textAlign: 'justify',
+  },
 });
 
 const ConfirmDialog = withStyles(styles)(
-  ({classes, open, toProfile, toOpportunities}) => {
+  ({classes, open, closeDialog, submit}) => {
     return (
       <Dialog open={open}>
         <DialogContent>
-          <Typography>Your application has been submitted</Typography>
+          <Typography>
+            Are you sure you want to submit this application?
+          </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={toProfile} variant="contained">
-            Back to Profile
+          <Button onClick={closeDialog} variant="contained" color="secondary">
+            No
           </Button>
-          <Button onClick={toOpportunities} variant="contained">
-            View More Opportunities
+          <Button onClick={submit} variant="contained" color="primary">
+            Yes
           </Button>
         </DialogActions>
       </Dialog>

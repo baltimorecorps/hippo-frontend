@@ -92,6 +92,7 @@ const ApplicationForm = ({
     <Switch>
       <Route exact path={`${match.path}/review`}>
         <Review
+          opportunity={opportunity}
           application={application}
           submit={() => submitApplication(application)}
           back={() => history.push(`${match.url}`)}
@@ -99,8 +100,10 @@ const ApplicationForm = ({
           toOpportunities={backToOpportunities}
         />
       </Route>
-        <Route path={`${match.path}`}>
+      <Route path={`${match.path}`}>
         <InterestForm
+          application={application}
+          opportunity={opportunity}
           startText={application.interest_statement || ''}
           next={updateInterestStatement}
           back={backToOpportunities}
