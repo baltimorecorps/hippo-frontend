@@ -9,15 +9,52 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
 import SkillSelect from 'components/Skills/SkillSelect';
 
+const styles = ({breakpoints, palette, spacing}) => ({
+  paper: {
+    margin: spacing(1),
+  },
+  container: {
+    padding: spacing(1, 3, 3),
+  },
+  highlight: {
+    backgroundColor: palette.primary.light,
+  },
+  headerDiv: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing(2),
+    minHeight: '80px',
+    borderBottom: 'solid 1px rgba(0,0,0,0.23)',
+  },
+  header: {
+    fontSize: '14pt',
+    alignText: 'center',
+  },
+  capability: {
+    //border: 'solid 1px rgba(0,0,0,0.23)',
+    //borderRadius: '5px',
+    //padding: spacing(1),
+  },
+  skill: {
+    margin: spacing(0.25, 0),
+  },
+  chip: {
+    //backgroundColor: palette.primary.light,
+  },
+});
+
+
+
 const BlankChip = withStyles({
   root: {
     backgroundColor: 'white',
   },
 })(Chip);
 
-const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
+const SkillCheckbox = withStyles(styles)(({classes, selected, skill, onClick, onDelete}) => {
   if (selected) {
-    return <Chip onDelete={() => onDelete(skill)} label={skill.name} />;
+    return <Chip className={classes.chip} onDelete={() => onDelete(skill)} label={skill.name} />;
   } else {
     return (
       <BlankChip
@@ -28,7 +65,7 @@ const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
       />
     );
   }
-};
+});
 
 const CapabilitySkills = ({
   classes,
@@ -96,39 +133,6 @@ const CapabilitySkills = ({
     </Paper>
   );
 };
-
-const styles = ({breakpoints, palette, spacing}) => ({
-  paper: {
-    margin: spacing(1),
-  },
-  container: {
-    padding: spacing(1, 3, 3),
-  },
-  highlight: {
-    backgroundColor: '#ffedb5',
-  },
-  headerDiv: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: spacing(2),
-    minHeight: '80px',
-    borderBottom: 'solid 1px rgba(0,0,0,0.23)',
-  },
-  header: {
-    fontSize: '14pt',
-    alignText: 'center',
-  },
-  capability: {
-    //border: 'solid 1px rgba(0,0,0,0.23)',
-    //borderRadius: '5px',
-    //padding: spacing(1),
-  },
-  skill: {
-    margin: spacing(0.25, 0),
-  },
-});
-
 CapabilitySkills.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

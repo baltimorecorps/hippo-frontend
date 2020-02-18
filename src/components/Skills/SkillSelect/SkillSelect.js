@@ -73,7 +73,7 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
   );
 });
 
-const SkillSelect = ({id, classes, load, value, onChange}) => {
+const SkillSelect = ({classes, id, load, value, onChange}) => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -181,7 +181,13 @@ const SkillSelect = ({id, classes, load, value, onChange}) => {
           )}
           renderTags={(value, getTagProps) => {
             return value.map((option, index) => {
-              return <Chip label={option.name} {...getTagProps({index})} />;
+              return (
+                <Chip
+                  className={classes.chip}
+                  label={option.name}
+                  {...getTagProps({index})}
+                />
+              );
             });
           }}
         />
@@ -190,7 +196,11 @@ const SkillSelect = ({id, classes, load, value, onChange}) => {
   );
 };
 
-const styles = ({breakpoints, palette, spacing}) => ({});
+const styles = ({breakpoints, palette, spacing}) => ({
+  chip: {
+    backgroundColor: palette.primary.light,
+  }
+});
 
 SkillSelect.propTypes = {
   value: PropTypes.array.isRequired,
