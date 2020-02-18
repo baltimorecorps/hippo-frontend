@@ -20,10 +20,12 @@ import {formatMonthYearDate, getWorkLength, configureForm} from './helpers';
 
 const ExperiencesListItem = ({
   experience,
+  capabilities,
   onUpdate,
   onDelete,
   onSelect,
   onSkillsMore,
+  updateEditScore,
   selectable,
   classes,
 }) => {
@@ -176,10 +178,12 @@ const ExperiencesListItem = ({
             <AddOrEditExperienceForm
               handleCancel={() => setEditing(false)}
               labels={{}}
+              capabilities={capabilities}
               onSubmit={submitUpdate}
               experience={experience}
               onDelete={onDelete}
               onSkillsMore={onSkillsMore}
+              updateEditScore={updateEditScore}
             />
           </Grid>
         )}

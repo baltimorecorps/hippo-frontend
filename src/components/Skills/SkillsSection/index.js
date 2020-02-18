@@ -1,2 +1,2 @@
-import SkillsSection from './SkillsSection'
+import SkillsSection from './SkillsSection.container'
 export default SkillsSection;

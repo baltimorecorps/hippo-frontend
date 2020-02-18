@@ -38,6 +38,8 @@ import {
   refreshTagItems,
 } from './profile';
 
+import {GET_CONTACT_CAPABILITIES_API} from './contacts';
+
 afterEach(() => {
   fetchMock.restore();
 });
@@ -80,7 +82,7 @@ describe('Experiences', () => {
 
   test('Update experience action', async function() {
     const dispatch = jest.fn();
-    const experience = {id: 4321, new_data: 'update'};
+    const experience = {id: 4321, contact_id: 123, new_data: 'update'};
 
     fetchMock.put(`path:/api/experiences/${experience.id}/`, {
       body: {status: 'success'},
@@ -88,15 +90,25 @@ describe('Experiences', () => {
     fetchMock.get(`path:/api/experiences/${experience.id}/`, {
       body: {status: 'success', data: experience},
     });
+    fetchMock.get(`path:/api/contacts/${experience.contact_id}/capabilities/`, {
+      body: {status: 'success'},
+    });
 
     await updateExperience(experience)(dispatch);
 
-    expect(dispatch.mock.calls.length).toBe(5);
+    expect(dispatch.mock.calls.length).toBe(7);
     expect(dispatch.mock.calls[0][0].type).toBe(UPDATE_EXPERIENCE);
     expect(dispatch.mock.calls[1][0].type).toBe(UPDATE_EXPERIENCE_API.REQUEST);
     expect(dispatch.mock.calls[2][0].type).toBe(UPDATE_EXPERIENCE_API.RESOLVE);
     expect(dispatch.mock.calls[3][0].type).toBe(GET_EXPERIENCE_API.REQUEST);
-    expect(dispatch.mock.calls[4][0].type).toBe(GET_EXPERIENCE_API.RESOLVE);
+    expect(dispatch.mock.calls[4][0].type).toBe(
+      GET_CONTACT_CAPABILITIES_API.REQUEST
+    );
+    expect(dispatch.mock.calls[5][0].type).toBe(GET_EXPERIENCE_API.RESOLVE);
+    expect(dispatch.mock.calls[6][0].type).toBe(
+      GET_CONTACT_CAPABILITIES_API.RESOLVE
+    );
+
     expect(dispatch.mock.calls[0][0].experience).toBe(experience);
   });
 
@@ -464,7 +476,10 @@ describe('Tag state', () => {
   });
 
   test('Refresh all tags', () => {
-    const tags = [{id: 11, title: 'tag 1'}, {id: 15, title: 'tag 5'}];
+    const tags = [
+      {id: 11, title: 'tag 1'},
+      {id: 15, title: 'tag 5'},
+    ];
 
     initialState = {
       10: {id: 10, title: 'tag 0'},

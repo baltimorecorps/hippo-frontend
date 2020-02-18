@@ -1,6 +1,5 @@
 import React from 'react';
-
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
@@ -18,25 +17,28 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import BasicInfoDisplay from 'components/Users/BasicInfoDisplay';
 import BasicInfoForm from 'components/Users/BasicInfoForm';
 import ExperiencesList from 'components/Experiences/ExperiencesList';
+import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
+import CapabilityScores from 'components/CapabilityScores';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
+import {sumScores} from 'lib/helperFunctions/scoreAchievements';
 
 import CAPABILITIES from './capabilities.yml';
 
 // Scroll only works consistently if it happens after any renders that might be
 // happening concurrently, so this will wrap window.scrollTo for the latest
 // render
-const useScroll = () => {
+const useScroll = ref => {
   const [scroll, setScroll] = useState(null);
 
   useEffect(() => {
-    if (scroll !== null) {
-      window.scrollTo(scroll);
+    if (scroll !== null && ref.current) {
+      ref.current.scrollTo(scroll);
       setScroll(null);
     }
-  }, [scroll, setScroll]);
+  }, [ref, scroll, setScroll]);
 
   const scrollTo = (...args) => {
     if (args.length >= 2) {
@@ -66,7 +68,8 @@ const ProfilePage = ({
   showResumeSpinner,
   inSelectMode,
 }) => {
-  const scrollTo = useScroll();
+  const wrapperRef = useRef();
+  const scrollTo = useScroll(wrapperRef);
 
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
@@ -75,6 +78,19 @@ const ProfilePage = ({
   const [isOpenDrawer2, setOpenDrawer2] = React.useState(false);
   const [sidebarType, setSidebarType] = useState('work');
   const [loading, setLoading] = useState(false);
+  const [editScores, setEditScores] = useState({});
+
+  const updateEditScore = useCallback(
+    expId => scores => {
+      setEditScores(existing => ({
+        ...existing,
+        [expId]: scores,
+      }));
+    },
+    [setEditScores]
+  );
+
+  //const editScore = sumScores(Object.values(editScores));
 
   const handleUpdateContact = async values => {
     await updateContact(values);
@@ -155,6 +171,33 @@ const ProfilePage = ({
     classes.link
   );
 
+  const getContainerSize = breakpoint => {
+    if (inSelectMode) {
+      return 6;
+    }
+
+    if (breakpoint === 'sm') {
+      return openSidebar ? 7 : 12;
+    }
+    if (breakpoint === 'md') {
+      return openSidebar ? 8 : 12;
+    }
+    if (breakpoint === 'lg') {
+      return openSidebar ? 9 : 12;
+    }
+    if (breakpoint === 'xl') {
+      return openSidebar ? 10 : 12;
+    }
+
+    return 12;
+  };
+
+  let wrapperClass = classes.wrapper;
+  if (inSelectMode) {
+    wrapperClass = classes.wrapperDiv;
+  } else if (openSidebar) {
+    wrapperClass = classes.wrapperSmall;
+  }
   return (
     <React.Fragment>
       <ResumeDialog
@@ -188,17 +231,24 @@ const ProfilePage = ({
       >
         <Grid
           item
-          sm={openSidebar ? 7 : 12}
-          md={openSidebar ? 8 : 12}
-          lg={openSidebar ? 9 : 12}
-          xl={openSidebar ? 10 : 12}
+          sm={getContainerSize('sm')}
+          md={getContainerSize('md')}
+          lg={getContainerSize('lg')}
+          xl={getContainerSize('xl')}
         >
           <Grid
             id="divToPrint"
+            ref={wrapperRef}
             container
             justify="center"
-            className={classes.wrapper}
+            className={wrapperClass}
           >
+            {!inSelectMode && (
+              <CapabilityScores
+                contactCapabilities={contactInfo.capabilities}
+                editScores={{}}
+              />
+            )}
             <Grid item xs={12} sm={11}>
               <Grid container justify="center">
                 <Grid item xs={12} md={8} lg={6}>
@@ -266,58 +316,60 @@ const ProfilePage = ({
                   </Paper>
                 </Grid>
 
+                <SkillsSection
+                  onClickMore={onClickMoreDetails}
+                  splitScreen={inSelectMode}
+                />
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
+                  updateEditScore={updateEditScore}
                 />
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
+                  updateEditScore={updateEditScore}
                 />
                 {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
                 <ExperiencesList
                   contactId={contactId}
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
-                />
-                <SkillsSection
-                  header="Tell us more to help your resume stand out"
-                  contactSkills={contactInfo.skills}
-                  onChange={handleUpdateSkills}
-                  addSkill={skill => addContactSkill(contactId, skill)}
-                  deleteSkill={skill => {
-                    console.log(skill);
-                  }}
-                  onClickMore={onClickMoreDetails}
-                  openSidebar={openSidebar}
+                  updateEditScore={updateEditScore}
                 />
 
                 {/*<ResumesList />*/}
+                  {/*inSelectMode ? null : (
+                  <Grid
+                    item
+                    xs={openSidebar ? 8 : 11}
+                    md={openSidebar ? 9 : 11}
+                    xl={openSidebar ? 10 : 11}
+                    align="center"
+                  >
+                    <Grid container justify="center">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={startSelectLocal}
+                        className={classes.resumeButton}
+                      >
+                        Create Resume
+                      </Button>
+                    </Grid>
+                  </Grid>
+                )*/}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        {/* <Grid
-          item
-          xs={openSidebar ? 4 : 1}
-          md={openSidebar ? 3 : 1}
-          xl={openSidebar ? 2 : 1}
-        >
-          {openSidebar && (
-            <HelpDrawer
-              helpText={helpTextOptions[sidebarType]}
-              skillInfo={skillHelpTextInfo}
-              skillsOnly={sidebarType === 'skills'}
-              onClose={() => setOpenSidebar(false)}
-              isOpenDrawer1={isOpenDrawer1}
-              isOpenDrawer2={isOpenDrawer2}
-              doOpenDrawer1={doOpenDrawer1}
-              doOpenDrawer2={doOpenDrawer2}
-            />
-          )}
-        </Grid> */}
+          {/*inSelectMode ? (
+            <Grid item xs={6} className={classes.wrapperDiv}>
+              <ResumeCreator />
+            </Grid>
+          ) : null*/}
       </Grid>
       <Grid item>
         {openSidebar && (
@@ -333,26 +385,6 @@ const ProfilePage = ({
           />
         )}
       </Grid>
-
-      {/*inSelectMode ? null : (
-        <Grid
-          item
-          xs={openSidebar ? 8 : 11}
-          md={openSidebar ? 9 : 11}
-          xl={openSidebar ? 10 : 11}
-          align="center"
-        >
-          <Grid container justify="center">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={startResumeCreation}
-            >
-              Create Resume
-            </Button>
-          </Grid>
-        </Grid>
-      )*/}
     </React.Fragment>
   );
 };
@@ -491,6 +523,7 @@ const drawerStyles = ({breakpoints, palette, spacing, shadows}) => ({
     // because of the defaults for persistent drawers in Material-UI
     boxShadow: shadows[2],
     borderBottom: 0,
+    maxHeight: '64px',
   },
   container: {
     margin: spacing(2, 0, 3, 0),
@@ -513,18 +546,18 @@ const SelectionDrawer = withStyles(drawerStyles)(
       >
         <Grid container justify="center" className={classes.container}>
           <Grid item xs={8}>
-            <Grid item xs={12} className={classes.item}>
-              <Typography variant="body1" component="p">
-                Select the experiences you want to highlight at the top of your
-                resume.
-              </Typography>
-            </Grid>
             <Grid container justify="flex-end" className={classes.item}>
-              <Grid item>
+              <Grid item xs={10} className={classes.item}>
+                <Typography variant="body1" component="p">
+                  Select the experiences you want to highlight at the top of
+                  your resume.
+                </Typography>
+              </Grid>
+              <Grid item xs={1}>
                 <Button onClick={onCancel}>Cancel</Button>
               </Grid>
-              <Grid item>
-                <Button variant="contained" color="primary" onClick={onNext}>
+              <Grid item xs={1}>
+                <Button variant="contained" color="primary">
                   Next
                 </Button>
               </Grid>
@@ -546,13 +579,27 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     },
   },
   wrapper: {
+    paddingBottom: spacing(5),
+    width: '100%',
+    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    paddingLeft: '18vw',
+    paddingRight: '18vw',
+  },
+  wrapperSmall: {
     marginBottom: spacing(5),
     width: '100%',
+    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    paddingLeft: '8vw',
+  },
+  wrapperDiv: {
+    marginBottom: spacing(5),
+    width: '100%',
+    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    overflow: 'auto',
   },
 
   paper: {
     padding: spacing(2, 3, 3),
-    marginBottom: spacing(5),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -602,6 +649,9 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     '&:hover': {
       fontWeight: 'bold',
     },
+  },
+  resumeButton: {
+    marginTop: spacing(5),
   },
 });
 

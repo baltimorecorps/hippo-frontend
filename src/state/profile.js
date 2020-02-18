@@ -3,6 +3,8 @@ import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
 import {fetchActionTypes} from 'redux-fetch-wrapper';
 import {createReducer} from 'redux-starter-kit';
 
+import {getContactCapabilities} from './contacts';
+
 // Rules for action creators:
 //
 // Each action creator should make sure to include any actions necessary to
@@ -51,7 +53,10 @@ export const updateExperience = experience =>
         method: 'PUT',
       }
     )(dispatch);
-    await getExperience(experience.id)(dispatch);
+    await Promise.all([
+      getExperience(experience.id)(dispatch),
+      getContactCapabilities(experience.contact_id)(dispatch)
+    ]);
   };
 
 export const REFRESH_EXPERIENCES = 'REFRESH_EXPERIENCES';

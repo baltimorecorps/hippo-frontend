@@ -22,6 +22,7 @@ import {useAuth0} from 'lib/Auth0/auth0';
 
 import Home from 'components/Home/Home';
 import Contacts from 'components/Contacts/Contacts.container';
+import ResumeView from 'components/Resume/ResumeView';
 
 import OpportunitiesPage from 'components/OpportunitiesPage';
 import OpportunityForm from 'components/OpportunityForm';
@@ -154,6 +155,7 @@ const App = ({
 
               <Route exact path="/contacts" component={Contacts} />
 
+              <Route exact path="/resume/:contactId" component={ResumeView} />
               <Route exact path="/resume/:gdocId" component={Resume} />
 
               <Route exact path="/profile/" component={ProfileAuth} />

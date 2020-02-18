@@ -7,71 +7,140 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
+import SkillSelect from 'components/Skills/SkillSelect';
 
-const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
+const styles = ({breakpoints, palette, spacing}) => ({
+  paper: {
+    margin: spacing(1),
+  },
+  container: {
+    padding: spacing(1, 3, 3),
+  },
+  highlight: {
+    backgroundColor: palette.primary.light,
+  },
+  headerDiv: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing(2),
+    minHeight: '80px',
+    borderBottom: 'solid 1px rgba(0,0,0,0.23)',
+  },
+  header: {
+    fontSize: '14pt',
+    alignText: 'center',
+  },
+  capability: {
+    //border: 'solid 1px rgba(0,0,0,0.23)',
+    //borderRadius: '5px',
+    //padding: spacing(1),
+  },
+  skill: {
+    margin: spacing(0.25, 0),
+  },
+  chip: {
+    //backgroundColor: palette.primary.light,
+  },
+});
+
+
+
+const BlankChip = withStyles({
+  root: {
+    backgroundColor: 'white',
+  },
+})(Chip);
+
+const SkillCheckbox = withStyles(styles)(({classes, selected, skill, onClick, onDelete}) => {
   if (selected) {
-    return <Chip
-      onDelete={() => onDelete(skill)}
-      label={skill}
-      />
+    return <Chip className={classes.chip} onDelete={() => onDelete(skill)} label={skill.name} />;
   } else {
-    return <Chip
-      variant="outlined"
-      icon={<AddIcon />}
+    return (
+      <BlankChip
+        variant="outlined"
+        icon={<AddIcon />}
         onClick={() => onClick(skill)}
-        label={skill}
+        label={skill.name}
       />
+    );
   }
-}
+});
 
-const CapabilitySkills = ({classes, name, addSkill, deleteSkill, capSkills, contactSkills}) => {
-  let contactSkillMap = {};
-  contactSkills.forEach((skill) => {
-    contactSkillMap[skill.name] = true;
+const CapabilitySkills = ({
+  classes,
+  id,
+  name,
+  recommendedSkills,
+  contactSkills,
+  addSkill,
+  deleteSkill,
+  addSkillSuggestion,
+}) => {
+  let hasSkill = {};
+  contactSkills.forEach(skill => {
+    hasSkill[skill.id] = true;
   });
+
+  let isRecommended = {};
+  recommendedSkills.forEach(skill => {
+    isRecommended[skill.id] = true;
+  });
+
+  let additionalSkills = contactSkills.filter(
+    skill => !isRecommended[skill.id]
+  );
+
+  const updateSuggestedSkills = suggestedSkills => {
+    suggestedSkills.forEach(skill => addSkillSuggestion(skill));
+  };
+
+  const highlightClass = contactSkills.length > 0 ? classes.highlight : null;
 
   return (
     <Paper className={classes.paper}>
+      <div className={`${classes.headerDiv} ${highlightClass}`}>
+        <Typography variant="h5" component="h2" className={classes.header}>
+          <span className={classes.capability}>{name}</span>
+        </Typography>
+      </div>
+      <div className={classes.container}>
+
       <Grid container justify="space-between" direction="column">
-        <Grid item xs={12}>
-          <Typography variant="h5" component="h2" className={classes.name}>
-            {name}
-          </Typography>
-        </Grid>
-        {capSkills.map(skill => (
-          <Grid item key={skill} className={classes.skill}>
+        {recommendedSkills.map(skill => (
+          <Grid item key={skill.id} className={classes.skill}>
             <SkillCheckbox
-              selected={contactSkillMap[skill] || false}
+              selected={hasSkill[skill.id] || false}
               skill={skill}
               onClick={addSkill}
               onDelete={deleteSkill}
             />
           </Grid>
         ))}
+        {additionalSkills.map(skill => (
+          <Grid item key={skill.id} className={classes.skill}>
+            <SkillCheckbox
+              selected={true}
+              skill={skill}
+              onClick={() => {}}
+              onDelete={deleteSkill}
+            />
+          </Grid>
+        ))}
+        <SkillSelect id={id} value={[]} onChange={updateSuggestedSkills} />
       </Grid>
+        </div>
     </Paper>
   );
 };
-
-const styles = ({breakpoints, palette, spacing}) => ({
-  paper: {
-    margin: spacing(1),
-    padding: spacing(2, 3, 3),
-  },
-  name: {
-    marginBottom: spacing(1),
-  },
-  skill: {
-    margin: spacing(0.25, 0),
-  }
-});
-
 CapabilitySkills.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  capSkills: PropTypes.array.isRequired,
+  recommendedSkills: PropTypes.array.isRequired,
   contactSkills: PropTypes.array.isRequired,
   addSkill: PropTypes.func.isRequired,
   deleteSkill: PropTypes.func.isRequired,
+  addSkillSuggestion: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(CapabilitySkills);

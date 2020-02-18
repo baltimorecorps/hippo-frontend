@@ -5,12 +5,117 @@ import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Chip from '@material-ui/core/Chip';
+import Input from '@material-ui/core/Input';
 
 import CloseIcon from '@material-ui/icons/Close';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
+const capabilityStyles = ({breakpoints, palette, spacing}) => (
+  {
+    root: {
+      borderRadius: '20px',
+      height: '24px',
+      backgroundColor: 'white',
+      border: 'solid 1px rgba(0,0,0,0.23)',
+      margin: '2px',
+    },
+    highlighted: {
+      borderRadius: '20px',
+      height: '24px',
+      backgroundColor: palette.primary.main,
+      margin: '2px',
+    },
+    input: {
+      padding: '0px',
+      margin: '0px 12px',
+    },
+  });
+const CapabilityInput = withStyles(capabilityStyles)(({classes, highlight, ...props}) => (
+  <Input
+    classes={{
+      root: highlight ? classes.highlighted : classes.root,
+      input: classes.input,
+    }}
+    {...props}
+  />
+));
+
+const selectStyles = ({breakpoints, palette, spacing}) => ({
+  select: {
+    fontSize: '13px',
+    display: 'flex',
+    alignItems: 'center',
+    height: '32px',
+  },
+  iconHidden: {
+    display: 'none',
+  },
+});
+const CapabilitySelect = withStyles(selectStyles)(
+  ({classes, skills, capability, onSkillsChange}) => {
+    const capabilitySkills = skills
+      .filter(skill => skill.capability_id === capability.id)
+      .map(skill => skill.name);
+    const handleChange = event => {
+      const newSkills = event.target.value.map(name => ({
+        name,
+        capability_id: capability.id,
+      }));
+      onSkillsChange(
+        skills
+          .filter(skill => skill.capability_id !== capability.id)
+          .concat(newSkills)
+      );
+    };
+
+    return (
+      <FormControl key={capability.id}>
+        <Select
+          displayEmpty={true}
+          classes={{
+            root: classes.select,
+            icon: classes.iconHidden,
+          }}
+          disableUnderline
+          input={<CapabilityInput highlight={capabilitySkills.length > 0} />}
+          multiple
+          onChange={handleChange}
+          value={capabilitySkills}
+          renderValue={selected => capability.name}
+        >
+          <MenuItem disabled value="">
+            <b>{capability.name}</b>
+          </MenuItem>
+          {capability.skills.map(skill => (
+            <MenuItem key={skill.id} value={skill.name}>
+              {skill.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    );
+  }
+);
+
 const AchievementInput = React.forwardRef(
-  ({value, onTextChange, onIconClick, classes, onKeyPress, errors}, ref) => {
+  (
+    {
+      achievement,
+      capabilities,
+      onSkillsChange,
+      onTextChange,
+      onIconClick,
+      classes,
+      onKeyPress,
+      errors,
+    },
+    ref
+  ) => {
     const [isFocused, setFocused] = React.useState(false);
 
     let endAdornment;
@@ -41,7 +146,7 @@ const AchievementInput = React.forwardRef(
             className={classes.input}
             type="text"
             inputRef={ref}
-            value={value}
+            value={achievement.description}
             fullWidth
             multiline
             margin="normal"
@@ -53,10 +158,20 @@ const AchievementInput = React.forwardRef(
               endAdornment: endAdornment,
             }}
           />
-
+          {capabilities && capabilities.map(capability => {
+            return (
+              <CapabilitySelect
+                key={capability.id}
+                capability={capability}
+                skills={achievement.skills}
+                onSkillsChange={onSkillsChange}
+              />
+            );
+          })}
           <FormHelperText className={classes.formHelperText}>
-            {value.length > 750 && errors.achievements_error}
+            {achievement.description.length > 750 && errors.achievements_error}
           </FormHelperText>
+
         </Grid>
       </Grid>
     );
@@ -83,6 +198,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
       backgroundColor: palette.error.main,
       color: '#ffffff',
     },
+  },
+  iconHidden: {
+    display: 'none',
   },
   iconButton: {
     padding: 0,
