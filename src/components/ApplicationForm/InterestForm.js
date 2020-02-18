@@ -3,12 +3,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import {createExternalLink} from 'lib/helpers';
 import Grid from '@material-ui/core/Grid';
 import {interestValidator} from '../../lib/formValidator';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import StickyFooter from './StickyFooter';
 
 const InterestForm = ({
   classes,
@@ -21,7 +21,7 @@ const InterestForm = ({
   const [text, setText] = useState(startText);
   const [errors, setErrors] = useState({});
 
-  const submit = text => {
+  const handleNext = text => {
     const {isError, err} = interestValidator(text);
     // const isError = false;
     // const err = {};
@@ -98,25 +98,12 @@ const InterestForm = ({
           </Grid>
         )}
       </Paper>
-      <Paper className={classes.stickyFooter}>
-        <div className={classes.buttonContainer}>
-          <Button
-            onClick={back}
-            className={classes.buttons}
-            variant="contained"
-          >
-            Back
-          </Button>
-          <Button
-            onClick={() => submit(text)}
-            color="primary"
-            variant="contained"
-            className={classes.buttons}
-          >
-            Next
-          </Button>
-        </div>
-      </Paper>
+      <StickyFooter
+        page="interest"
+        back={back}
+        handleNext={() => handleNext(text)}
+        application={application}
+      />
     </div>
   );
 };
@@ -159,10 +146,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   header: {
     fontWeight: 700,
     textAlign: 'center',
-
-    [breakpoints.up('sm')]: {
-      // textAlign: 'left',
-    },
   },
   title: {
     marginBottom: spacing(1),
@@ -180,44 +163,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '15px',
     fontWeight: 'normal',
   },
-  stickyFooter: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100vw',
-    position: 'fixed',
-    bottom: 0,
-    backgroundColor: palette.primary.almostBlack,
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    margin: '15px 0 ',
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '100%',
-  },
-  buttons: {
-    margin: spacing(0, 2),
-  },
   link: {
     color: palette.primary.link,
-    textIndent: '25px',
-    alignSelf: 'flex-end',
     marginTop: spacing(1),
-    [breakpoints.down('xs')]: {
-      alignSelf: 'center',
-    },
   },
   description: {
     textAlign: 'justify',

@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
 import {createExternalLink} from 'lib/helpers';
+import StickyFooter from './StickyFooter';
 
 const Review = ({
   classes,
@@ -61,36 +62,12 @@ const Review = ({
           {application.interest_statement}
         </Typography>
       </Paper>
-      <Paper className={classes.stickyFooter}>
-        <div className={classes.buttonContainer}>
-          <Button
-            onClick={back}
-            variant="contained"
-            className={classes.buttons}
-          >
-            Back
-          </Button>
-          {application.status === 'submitted' ? (
-            <Button
-              onClick={toOpportunities}
-              variant="contained"
-              color="primary"
-              className={classes.buttons}
-            >
-              View More Opportunities
-            </Button>
-          ) : (
-            <Button
-              onClick={submitAndShowDialog}
-              color="primary"
-              variant="contained"
-              className={classes.buttons}
-            >
-              Submit
-            </Button>
-          )}
-        </div>
-      </Paper>
+      <StickyFooter
+        page="review"
+        back={back}
+        toOpportunities={toOpportunities}
+        submit={submitAndShowDialog}
+      />
       <ConfirmDialog
         open={submitted}
         toProfile={toProfile}
@@ -135,43 +112,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   header: {
     fontWeight: 700,
     textAlign: 'center',
-
-    [breakpoints.up('sm')]: {
-      // textAlign: 'left',
-    },
   },
   title: {
     fontSize: '17px',
-  },
-  stickyFooter: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100vw',
-    position: 'fixed',
-    bottom: 0,
-    backgroundColor: palette.primary.almostBlack,
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    margin: '15px 0',
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '100%',
-  },
-  buttons: {
-    margin: spacing(0, 2),
   },
   interestStatement: {
     textIndent: '25px',
