@@ -1,3 +1,4 @@
+import React from 'react';
 import {connect} from 'react-redux';
 import {moveResumeItem} from 'state/resume';
 import {refreshExperiences} from 'state/profile';

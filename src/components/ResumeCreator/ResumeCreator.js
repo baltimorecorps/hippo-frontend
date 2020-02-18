@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -19,8 +19,221 @@ import PortfolioItem from './PortfolioItem';
  *  }
  */
 
+const useOverflow = defaultLength => {
+  const [overflow, setOverflow] = useState(null);
+  const overflowRef = useRef();
+
+  let overflowIndex = defaultLength;
+  if (overflow !== null) {
+    overflowIndex = overflow;
+  }
+
+  useEffect(() => {
+    if (overflowRef.current) {
+      const el = overflowRef.current;
+      const isOverflowing = el.clientHeight < el.scrollHeight;
+      if (isOverflowing) {
+        setOverflow(over => {
+          if (over === null) {
+            over = defaultLength - 1;
+          } else {
+            over = over - 1;
+          }
+          return over;
+        });
+      }
+    }
+  }, [defaultLength]);
+
+  return [overflowIndex, overflowRef];
+};
+
+const PrintComponent = ({
+  classes,
+  printRef,
+  sections,
+  leftOverflowIndex,
+  capabilitiesOverflow,
+  capabilitiesBreakpoint,
+  showPortfolio,
+  portfolioBreakpoint,
+  showEducation,
+  educationBreakpoint,
+}) => {
+  return (
+    <div style={{display: 'none'}}>
+    <div ref={printRef} className={classes.printDiv}>
+      <div className={classes.paper}>
+        <Grid container className={classes.overflow}>
+          <Grid item xs={12} className={classes.header}>
+            <Grid container>
+              <Grid item xs={9} className={classes.vertical}>
+                <span className={classes.name}>David Koh</span>
+                <span className={classes.vocation}>Software Engineer</span>
+              </Grid>
+              <Grid item xs={3} className={classes.headerDetails}>
+                <span>Tuscaloosa, AL</span>
+                <span>(555) 123-4567</span>
+                <span>david@example.com</span>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} className={classes.body}>
+            <Grid container className={classes.overflow}>
+              <Grid item xs={8} className={classes.overflow}>
+                <ResumeSection
+                  sectionId={'experience'} // must match state key
+                  sectionLabel="Relevant Experience"
+                >
+                  {sections.experience
+                    .slice(0, leftOverflowIndex)
+                    .map((experience, index) => (
+                      <ExperienceItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                      />
+                    ))}
+                </ResumeSection>
+              </Grid>
+              <Grid item xs={4} className={classes.overflow}>
+                <ResumeSection
+                  sectionId={'capabilities'} // must match state key
+                  sectionLabel="Skills & Abilities"
+                >
+                  {sections.capabilities
+                    .slice(0, capabilitiesBreakpoint)
+                    .map((capability, index) => (
+                      <CapabilityItem
+                        key={capability.id}
+                        capability={capability}
+                        index={index}
+                      />
+                    ))}
+                </ResumeSection>
+                {showPortfolio && (
+                  <ResumeSection
+                    sectionId={'portfolio'} // must match state key
+                    sectionLabel="Projects"
+                  >
+                    {sections.portfolio
+
+                      .slice(0, portfolioBreakpoint)
+                      .map((experience, index) => (
+                        <PortfolioItem
+                          key={experience.id}
+                          experience={experience}
+                          index={index}
+                        />
+                      ))}
+                  </ResumeSection>
+                )}
+                {showEducation && (
+                  <ResumeSection
+                    sectionId={'education'} // must match state key
+                    sectionLabel="Education"
+                  >
+                    {sections.education
+                      .slice(0, educationBreakpoint)
+
+                      .map((experience, index) => (
+                        <EducationItem
+                          key={experience.id}
+                          experience={experience}
+                          index={index}
+                        />
+                      ))}
+                  </ResumeSection>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
+      <div className={classes.paperAdditional}>
+        <Grid container>
+          <Grid item xs={12}>
+            <Grid container>
+              <Grid item xs={8} className={classes.overflow}>
+                <ResumeSection
+                  sectionId={'experience'} // must match state key
+                  sectionLabel="Additional Experience"
+                >
+                  {sections.experience
+                    .slice(leftOverflowIndex)
+                    .map((experience, index) => (
+                      <ExperienceItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                      />
+                    ))}
+                </ResumeSection>
+              </Grid>
+              <Grid item xs={4} className={classes.overflow}>
+                {capabilitiesOverflow && (
+                  <ResumeSection
+                    sectionId={'capabilities'} // must match state key
+                    sectionLabel="Additional Skills"
+                  >
+                    {sections.capabilities
+                      .slice(capabilitiesBreakpoint)
+                      .map((capability, index) => (
+                        <CapabilityItem
+                          key={capability.id}
+                          capability={capability}
+                          index={index}
+                        />
+                      ))}
+                  </ResumeSection>
+                )}
+                {!showPortfolio && (
+                  <ResumeSection
+                    sectionId={'portfolio'} // must match state key
+                    sectionLabel="Projects"
+                  >
+                    {sections.portfolio
+
+                      .slice(portfolioBreakpoint)
+                      .map((experience, index) => (
+                        <PortfolioItem
+                          key={experience.id}
+                          experience={experience}
+                          index={index}
+                        />
+                      ))}
+                  </ResumeSection>
+                )}
+                {!showEducation && (
+                  <ResumeSection
+                    sectionId={'education'} // must match state key
+                    sectionLabel="Education"
+                  >
+                    {sections.education
+                      .slice(educationBreakpoint)
+
+                      .map((experience, index) => (
+                        <EducationItem
+                          key={experience.id}
+                          experience={experience}
+                          index={index}
+                        />
+                      ))}
+                  </ResumeSection>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
+    </div>
+    </div>
+  );
+};
+
 const ResumeCreator = ({
   classes,
+  printRef,
   sections,
   contactId,
   moveResumeItem,
@@ -38,6 +251,29 @@ const ResumeCreator = ({
       getContactCapabilities();
     }
   }, [sections, getContactCapabilities]);
+
+  const [leftOverflowIndex, leftOverflowRef] = useOverflow(
+    sections.experience.length
+  );
+
+  const [rightOverflowIndex, rightOverflowRef] = useOverflow(
+    sections.capabilities.length +
+      sections.portfolio.length +
+      sections.education.length
+  );
+
+  const capabilitiesOverflow =
+    rightOverflowIndex < sections.capabilities.length;
+  const capabilitiesBreakpoint = rightOverflowIndex;
+  const showPortfolio = rightOverflowIndex > sections.capabilities.length;
+  const portfolioBreakpoint = rightOverflowIndex - sections.capabilities.length;
+  const showEducation =
+    rightOverflowIndex >
+    sections.capabilities.length + sections.portfolio.length;
+  const educationBreakpoint =
+    rightOverflowIndex -
+    sections.capabilities.length -
+    sections.portfolio.length;
 
   const dragEndHandler = ({destination, source, draggableId}) => {
     if (!destination) {
@@ -66,7 +302,7 @@ const ResumeCreator = ({
     <DragDropContext onDragEnd={dragEndHandler}>
       <Grid container className={classes.container}>
         <Paper className={classes.paper}>
-          <Grid container>
+          <Grid container className={classes.overflow}>
             <Grid item xs={12} className={classes.header}>
               <Grid container>
                 <Grid item xs={9} className={classes.vertical}>
@@ -81,76 +317,206 @@ const ResumeCreator = ({
               </Grid>
             </Grid>
             <Grid item xs={12} className={classes.body}>
-              <Grid container>
-                <Grid item xs={8}>
+              <Grid container className={classes.overflow}>
+                <Grid
+                  item
+                  xs={8}
+                  className={classes.overflow}
+                  ref={leftOverflowRef}
+                >
                   <ResumeSection
                     sectionId={'experience'} // must match state key
                     sectionLabel="Relevant Experience"
                   >
-                    {sections.experience.map((experience, index) => (
-                      <ExperienceItem
-                        key={experience.id}
-                        experience={experience}
-                        index={index}
-                      />
-                    ))}
+                    {sections.experience
+                      .slice(0, leftOverflowIndex)
+                      .map((experience, index) => (
+                        <ExperienceItem
+                          key={experience.id}
+                          experience={experience}
+                          index={index}
+                        />
+                      ))}
                   </ResumeSection>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid
+                  item
+                  xs={4}
+                  className={classes.overflow}
+                  ref={rightOverflowRef}
+                >
                   <ResumeSection
                     sectionId={'capabilities'} // must match state key
                     sectionLabel="Skills & Abilities"
                   >
-                    {sections.capabilities.map((capability, index) => (
-                      <CapabilityItem
-                        key={capability.id}
-                        capability={capability}
-                        index={index}
-                      />
-                    ))}
+                    {sections.capabilities
+                      .slice(0, capabilitiesBreakpoint)
+                      .map((capability, index) => (
+                        <CapabilityItem
+                          key={capability.id}
+                          capability={capability}
+                          index={index}
+                        />
+                      ))}
                   </ResumeSection>
+                  {showPortfolio && (
+                    <ResumeSection
+                      sectionId={'portfolio'} // must match state key
+                      sectionLabel="Projects"
+                    >
+                      {sections.portfolio
+
+                        .slice(0, portfolioBreakpoint)
+                        .map((experience, index) => (
+                          <PortfolioItem
+                            key={experience.id}
+                            experience={experience}
+                            index={index}
+                          />
+                        ))}
+                    </ResumeSection>
+                  )}
+                  {showEducation && (
+                    <ResumeSection
+                      sectionId={'education'} // must match state key
+                      sectionLabel="Education"
+                    >
+                      {sections.education
+                        .slice(0, educationBreakpoint)
+
+                        .map((experience, index) => (
+                          <EducationItem
+                            key={experience.id}
+                            experience={experience}
+                            index={index}
+                          />
+                        ))}
+                    </ResumeSection>
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Paper>
+        <Paper className={classes.paperAdditional}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Grid container>
+                <Grid item xs={8} className={classes.overflow}>
                   <ResumeSection
-                    sectionId={'portfolio'} // must match state key
-                    sectionLabel="Projects"
+                    sectionId={'experience'} // must match state key
+                    sectionLabel="Additional Experience"
                   >
-                    {sections.portfolio.map((experience, index) => (
-                      <PortfolioItem
-                        key={experience.id}
-                        experience={experience}
-                        index={index}
-                      />
-                    ))}
+                    {sections.experience
+                      .slice(leftOverflowIndex)
+                      .map((experience, index) => (
+                        <ExperienceItem
+                          key={experience.id}
+                          experience={experience}
+                          index={index}
+                        />
+                      ))}
                   </ResumeSection>
-                  <ResumeSection
-                    sectionId={'education'} // must match state key
-                    sectionLabel="Education"
-                  >
-                    {sections.education.map((experience, index) => (
-                      <EducationItem
-                        key={experience.id}
-                        experience={experience}
-                        index={index}
-                      />
-                    ))}
-                  </ResumeSection>
+                </Grid>
+                <Grid item xs={4} className={classes.overflow}>
+                  {capabilitiesOverflow && (
+                    <ResumeSection
+                      sectionId={'capabilities'} // must match state key
+                      sectionLabel="Additional Skills"
+                    >
+                      {sections.capabilities
+                        .slice(capabilitiesBreakpoint)
+                        .map((capability, index) => (
+                          <CapabilityItem
+                            key={capability.id}
+                            capability={capability}
+                            index={index}
+                          />
+                        ))}
+                    </ResumeSection>
+                  )}
+                  {!showPortfolio && (
+                    <ResumeSection
+                      sectionId={'portfolio'} // must match state key
+                      sectionLabel="Projects"
+                    >
+                      {sections.portfolio
+
+                        .slice(portfolioBreakpoint)
+                        .map((experience, index) => (
+                          <PortfolioItem
+                            key={experience.id}
+                            experience={experience}
+                            index={index}
+                          />
+                        ))}
+                    </ResumeSection>
+                  )}
+                  {!showEducation && (
+                    <ResumeSection
+                      sectionId={'education'} // must match state key
+                      sectionLabel="Education"
+                    >
+                      {sections.education
+                        .slice(educationBreakpoint)
+
+                        .map((experience, index) => (
+                          <EducationItem
+                            key={experience.id}
+                            experience={experience}
+                            index={index}
+                          />
+                        ))}
+                    </ResumeSection>
+                  )}
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
         </Paper>
       </Grid>
+      <PrintComponent
+        classes={classes}
+        printRef={printRef}
+        sections={sections}
+        leftOverflowIndex={leftOverflowIndex}
+        capabilitiesOverflow={capabilitiesOverflow}
+        capabilitiesBreakpoint={capabilitiesBreakpoint}
+        showPortfolio={showPortfolio}
+        portfolioBreakpoint={portfolioBreakpoint}
+        showEducation={showEducation}
+        educationBreakpoint={educationBreakpoint}
+      />
     </DragDropContext>
   );
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
+    height: '11in',
     padding: `${spacing(3)}px ${spacing(4)}px`,
     fontFamily: 'Merriweather',
-    //height: '11.5in',
+  },
+  body: {
+    height: '908px',
+  },
+  overflow: {
+    height: '100%',
+    flexShrink: 1,
+    overflow: 'hidden',
   },
   container: {
-    margin: `${spacing(5)}px ${spacing(0)}px`,
+    height: '100%',
+  },
+  printDiv: {
+    height: '100%',
+    width: '8.5in',
+  },
+  paperAdditional: {
+    marginTop: spacing(2),
+    height: '11in',
+    padding: `${spacing(3)}px ${spacing(4)}px`,
+    fontFamily: 'Merriweather',
   },
   name: {
     fontWeight: 700,
@@ -164,6 +530,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     color: '#93c47d',
   },
   header: {
+    height: '100px',
     padding: spacing(1),
     backgroundColor: '#f4f0de',
   },
@@ -178,7 +545,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
   },
-  body: {},
   capability: {
     marginTop: spacing(1),
     fontWeight: 300,
