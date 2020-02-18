@@ -11,25 +11,24 @@ import SkillSelect from 'components/Skills/SkillSelect';
 
 const BlankChip = withStyles({
   root: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
 })(Chip);
 
-const SkillCheckbox = ( ({selected, skill, onClick, onDelete}) => {
-    if (selected) {
-      return <Chip onDelete={() => onDelete(skill)} label={skill.name} />;
-    } else {
-      return (
-        <BlankChip
-          variant="outlined"
-          icon={<AddIcon />}
-          onClick={() => onClick(skill)}
-          label={skill.name}
-        />
-      );
-    }
+const SkillCheckbox = ({selected, skill, onClick, onDelete}) => {
+  if (selected) {
+    return <Chip onDelete={() => onDelete(skill)} label={skill.name} />;
+  } else {
+    return (
+      <BlankChip
+        variant="outlined"
+        icon={<AddIcon />}
+        onClick={() => onClick(skill)}
+        label={skill.name}
+      />
+    );
   }
-);
+};
 
 const CapabilitySkills = ({
   classes,
@@ -62,13 +61,15 @@ const CapabilitySkills = ({
   const highlightClass = contactSkills.length > 0 ? classes.highlight : null;
 
   return (
-    <Paper className={`${classes.paper} ${highlightClass}`}>
+    <Paper className={classes.paper}>
+      <div className={`${classes.headerDiv} ${highlightClass}`}>
+        <Typography variant="h5" component="h2" className={classes.header}>
+          <span className={classes.capability}>{name}</span>
+        </Typography>
+      </div>
+      <div className={classes.container}>
+
       <Grid container justify="space-between" direction="column">
-        <Grid item xs={12}>
-          <Typography variant="h5" component="h2" className={classes.header}>
-            <span className={classes.capability}>{name}</span>
-          </Typography>
-        </Grid>
         {recommendedSkills.map(skill => (
           <Grid item key={skill.id} className={classes.skill}>
             <SkillCheckbox
@@ -91,6 +92,7 @@ const CapabilitySkills = ({
         ))}
         <SkillSelect id={id} value={[]} onChange={updateSuggestedSkills} />
       </Grid>
+        </div>
     </Paper>
   );
 };
@@ -98,15 +100,24 @@ const CapabilitySkills = ({
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     margin: spacing(1),
-    padding: spacing(2, 3, 3),
+  },
+  container: {
+    padding: spacing(1, 3, 3),
   },
   highlight: {
-    backgroundColor: 'aliceblue',
+    backgroundColor: '#ffedb5',
+  },
+  headerDiv: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing(2),
+    minHeight: '80px',
+    borderBottom: 'solid 1px rgba(0,0,0,0.23)',
   },
   header: {
-    //marginTop: spacing(1),
-    marginBottom: spacing(1),
     fontSize: '14pt',
+    alignText: 'center',
   },
   capability: {
     //border: 'solid 1px rgba(0,0,0,0.23)',
