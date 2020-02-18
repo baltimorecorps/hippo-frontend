@@ -63,6 +63,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     right: spacing(2),
     top: '20vh',
     padding: spacing(1),
+    [breakpoints.down('xs')]: {
+      display: 'none',
+    }
   },
   container: {
     padding: spacing(1),
