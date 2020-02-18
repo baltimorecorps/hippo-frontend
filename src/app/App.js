@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
 
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -21,6 +22,11 @@ import {useAuth0} from 'lib/Auth0/auth0';
 
 import Home from 'components/Home/Home';
 import Contacts from 'components/Contacts/Contacts.container';
+
+import OpportunitiesPage from 'components/OpportunitiesPage';
+import OpportunityForm from 'components/OpportunityForm';
+import ApplicationForm from 'components/ApplicationForm';
+import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -127,11 +133,14 @@ const App = ({
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
+                {/* <Link to="/opportunities">
+                  <Typography>Opportunities</Typography>
+                </Link> */}
                 <div className={classes.grow} />
 
                 {!hasSession && !isAuthenticated && (
                   <Button color="inherit" onClick={onClickLogInHandler}>
-                    Log in / Sign up
+                    <Typography>Log in / Sign up</Typography>
                   </Button>
                 )}
                 {(hasSession || isAuthenticated) && (
@@ -148,6 +157,21 @@ const App = ({
               <Route exact path="/resume/:gdocId" component={Resume} />
 
               <Route exact path="/profile/" component={ProfileAuth} />
+              <Route
+                exact
+                path="/opportunities/"
+                component={OpportunitiesPage}
+              />
+              <Route
+                exact
+                path="/new-opportunity/"
+                component={OpportunityForm}
+              />
+              <Route
+                path="/application/:opportunityId"
+                component={ApplicationForm}
+              />
+              <Route path="/confirmation-page" component={ConfirmationPage} />
               <Route
                 exact
                 path="/profile/:contactId"

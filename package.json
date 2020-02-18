@@ -19,6 +19,7 @@
     "airbnb-prop-types": "^2.15.0",
     "axios": "^0.18.1",
     "babel-plugin-rewire": "^1.2.0",
+    "cypress": "^3.8.3",
     "date-fns": "^2.8.0",
     "fetch-mock": "^7.7.3",
     "html2canvas": "^1.0.0-rc.5",
@@ -57,8 +58,16 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app"
-    ]
+      "react-app",
+      "plugin:cypress/recommended"
+    ],
+    "plugins": [
+      "chai-friendly"
+    ],
+    "rules": {
+      "no-unused-expressions": 0,
+      "chai-friendly/no-unused-expressions": 2
+    }
   },
   "eslintIgnore": [
     "build/"
@@ -88,6 +97,8 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-chai-friendly": "^0.5.0",
+    "eslint-plugin-cypress": "^2.9.0",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
     "husky": "^3.1.0",
