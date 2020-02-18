@@ -4,9 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from 'react-router-dom';
-import {createExternalLink} from 'lib/helpers';
+import {createExternalLink} from 'lib/helperFunctions/helpers';
 import Grid from '@material-ui/core/Grid';
-import {interestValidator} from '../../lib/formValidator';
+import {interestValidator} from 'lib/formHelpers/formValidator';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import StickyFooter from './StickyFooter';
 
