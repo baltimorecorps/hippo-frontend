@@ -57,8 +57,6 @@ const OpportunityForm = ({classes, addOpportunity}) => {
 
   const submit = () => {
     const {isError, err} = opportunityValidator(values);
-    // const isError = false;
-    // const err = {};
 
     if (isError) {
       setErrors(err);
@@ -79,7 +77,7 @@ const OpportunityForm = ({classes, addOpportunity}) => {
       </Typography>
       <form noValidate autoComplete="off">
         <Grid container direction="column">
-          {/* <TextField
+          <TextField
             required
             id="organization"
             label="Organization"
@@ -92,7 +90,7 @@ const OpportunityForm = ({classes, addOpportunity}) => {
           />
           <FormHelperText className={classes.formHelperText}>
             {errors.organization_error || null}
-          </FormHelperText> */}
+          </FormHelperText>
           <TextField
             required
             id="title"

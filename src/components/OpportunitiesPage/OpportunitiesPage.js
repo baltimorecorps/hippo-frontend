@@ -10,20 +10,24 @@ import {createExternalLink} from 'lib/helpers';
 const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
   let history = useHistory();
 
-  const handleClick = () => {
-    history.push('/new-opportunity');
-  };
+  // Commented out for Feature Flag
+  // const handleClick = () => {
+  //   history.push('/new-opportunity');
+  // };
 
-  const handleApply = opportunity_id => {
-    history.push(`/application/${opportunity_id}`);
-  };
+  // const handleApply = opportunity_id => {
+  //   history.push(`/application/${opportunity_id}`);
+  // };
 
   useEffect(() => {
     getAllOpportunities();
   }, [getAllOpportunities]);
 
+  const googleDocLinks = Object.values(opportunities).map(opportunity => {
+    return `https://docs.google.com/document/d/${opportunity.gdoc_id}`;
+  });
+
   return (
-    // TODO: Style this
     <div className={classes.container}>
       {Object.values(opportunities).map((opportunity, index) => (
         <Paper className={classes.opportunityPaper} key={index}>
@@ -36,7 +40,7 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
               component="h1"
               className={classes.organization}
             >
-              {opportunity.organization || 'Organization Name'}
+              {opportunity.org_name || ''}
             </Typography>
           </div>
           <div className={classes.opportunityContent}>
@@ -48,12 +52,12 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
               <Typography className={classes.link}>
                 {createExternalLink(
                   'View full description',
-                  opportunity.gdoc_link,
+                  googleDocLinks[index],
                   classes.link
                 )}
               </Typography>
             </div>
-            <div className={classes.applyButton}>
+            {/* <div className={classes.applyButton}>
               <Button
                 onClick={() => handleApply(opportunity.id)}
                 variant="contained"
@@ -61,11 +65,11 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
               >
                 Apply
               </Button>
-            </div>
+            </div> */}
           </div>
         </Paper>
       ))}
-      <Grid className={classes.buttonContainer}>
+      {/* <Grid className={classes.buttonContainer}>
         <Button
           onClick={handleClick}
           variant="contained"
@@ -74,7 +78,7 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
         >
           Add New Opportunity
         </Button>
-      </Grid>
+      </Grid> */}
     </div>
   );
 };

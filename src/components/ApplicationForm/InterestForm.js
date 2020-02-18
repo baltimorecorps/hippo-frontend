@@ -55,7 +55,7 @@ const InterestForm = ({
             <Typography className={classes.link}>
               {createExternalLink(
                 'View full description',
-                opportunity.gdoc_link,
+                `https://docs.google.com/document/d/${opportunity.gdoc_id}`,
                 classes.link
               )}
             </Typography>

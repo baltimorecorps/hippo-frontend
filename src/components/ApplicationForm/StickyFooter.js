@@ -1,10 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import {interestValidator} from '../../lib/formValidator';
 
 const StickyFooter = ({
   classes,
@@ -22,7 +19,7 @@ const StickyFooter = ({
       <Button
         onClick={handleClick}
         variant="contained"
-        color={isPrimary ? 'primary' : ''}
+        color={isPrimary ? 'primary' : 'default'}
         className={classes.buttons}
       >
         {content}
@@ -43,11 +40,11 @@ const StickyFooter = ({
     <Paper className={classes.stickyFooter}>
       <div className={classes.buttonContainer}>
         {backButton}
-        {page === 'review'
-          ? application && application.status === 'submitted'
-            ? toOpportunitiesButton
-            : submitButton
-          : nextButton}
+        {page === 'interest'
+          ? nextButton
+          : application.status === 'submitted'
+          ? toOpportunitiesButton
+          : submitButton}
       </div>
     </Paper>
   );

@@ -184,19 +184,18 @@ const validateEmail = input => {
 };
 
 const opportunityValidator = values => {
-  const {organization, title, short_description, gdoc_link} = values;
+  const {org_name, title, short_description, gdoc_link} = values;
 
   let isError = false;
   let err = {};
 
-  // if (!organization) {
-  //   isError = true;
-  //   err.organization_error = 'Required';
-  // } else if (organization && organization.length > 200) {
-  //   isError = true;
-  //   err.organization_error =
-  //     'Organization name must be less than 200 characters';
-  // }
+  if (!org_name) {
+    isError = true;
+    err.org_name_error = 'Required';
+  } else if (org_name && org_name.length > 200) {
+    isError = true;
+    err.org_name_error = 'Organization name must be less than 200 characters';
+  }
 
   if (!title) {
     isError = true;
@@ -215,17 +214,17 @@ const opportunityValidator = values => {
       'Short description must be less than 2,000 characters';
   }
 
-  if (!gdoc_link) {
-    isError = true;
-    err.link_error = 'Required';
-  } else if (
-    gdoc_link &&
-    !gdoc_link.startsWith('https://docs.google.com/document/d/')
-  ) {
-    isError = true;
-    err.link_error =
-      'Link must start with "https://docs.google.com/document/d/"';
-  }
+  // if (!gdoc_link) {
+  //   isError = true;
+  //   err.link_error = 'Required';
+  // } else if (
+  //   gdoc_link &&
+  //   !gdoc_link.startsWith('https://docs.google.com/document/d/')
+  // ) {
+  //   isError = true;
+  //   err.link_error =
+  //     'Link must start with "https://docs.google.com/document/d/"';
+  // }
 
   if (gdoc_link && gdoc_link.length > 200) {
     isError = true;

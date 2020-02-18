@@ -28,6 +28,7 @@ import TalentHome from 'components/TalentHome/TalentHome';
 import OpportunitiesPage from 'components/OpportunitiesPage';
 import OpportunityForm from 'components/OpportunityForm';
 import ApplicationForm from 'components/ApplicationForm';
+import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 
 import NavBarIcons from './components/NavigationBar/NavBarIcons';
 
@@ -134,9 +135,9 @@ const App = ({
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
-                <Link to="/opportunities">
+                {/* <Link to="/opportunities">
                   <Typography>Opportunities</Typography>
-                </Link>
+                </Link> */}
                 <div className={classes.grow} />
 
                 {!hasSession && !isAuthenticated && (
@@ -174,6 +175,7 @@ const App = ({
                 path="/application/:opportunityId"
                 component={ApplicationForm}
               />
+              <Route path="/confirmation-page" component={ConfirmationPage} />
               <Route
                 exact
                 path="/profile/:contactId"

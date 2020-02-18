@@ -7,7 +7,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
-import {createExternalLink} from 'lib/helpers';
 import StickyFooter from './StickyFooter';
 
 const Review = ({
@@ -19,20 +18,27 @@ const Review = ({
   toOpportunities,
   opportunity,
 }) => {
-  const [submitted, setSubmitted] = useState(false);
-  const submitAndShowDialog = async () => {
+  const [confirmed, setConfirmed] = useState(false);
+
+  let history = useHistory();
+
+  const toConfirmationPage = () => {
+    history.push('/confirmation-page');
+  };
+  const submitApplication = async () => {
     const response = await submit();
     if (response.statusCode == 200) {
-      setSubmitted(true);
+      toConfirmationPage();
     }
   };
+
   return (
     <div className={classes.container}>
       <Paper className={classes.paper}>
         <div className={classes.headerContainer}>
           <Typography variant="h5" component="h1" className={classes.header}>
             {application.status === 'submitted'
-              ? 'This application is submitted'
+              ? 'This application has already been submitted'
               : 'Review and Submit'}
           </Typography>
         </div>
@@ -41,8 +47,7 @@ const Review = ({
             <strong>Title:</strong> {opportunity.title}
           </Typography>
           <Typography variant="body2" component="h2" className={classes.title}>
-            <strong>Organization:</strong>{' '}
-            {opportunity.organization || 'Organization Name'}
+            <strong>Organization:</strong> {opportunity.org_name || ''}
           </Typography>
         </div>
       </Paper>
@@ -66,12 +71,13 @@ const Review = ({
         page="review"
         back={back}
         toOpportunities={toOpportunities}
-        submit={submitAndShowDialog}
+        submit={() => setConfirmed(true)}
+        application={application}
       />
       <ConfirmDialog
-        open={submitted}
-        toProfile={toProfile}
-        toOpportunities={toOpportunities}
+        open={confirmed}
+        closeDialog={() => setConfirmed(false)}
+        submit={submitApplication}
       />
     </div>
   );
@@ -123,18 +129,20 @@ const styles = ({breakpoints, palette, spacing}) => ({
 });
 
 const ConfirmDialog = withStyles(styles)(
-  ({classes, open, toProfile, toOpportunities}) => {
+  ({classes, open, closeDialog, submit}) => {
     return (
       <Dialog open={open}>
         <DialogContent>
-          <Typography>Your application has been submitted</Typography>
+          <Typography>
+            Are you sure you want to submit this application?
+          </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={toProfile} variant="contained">
-            Back to Profile
+          <Button onClick={closeDialog} variant="contained" color="secondary">
+            No
           </Button>
-          <Button onClick={toOpportunities} variant="contained">
-            View More Opportunities
+          <Button onClick={submit} variant="contained" color="primary">
+            Yes
           </Button>
         </DialogActions>
       </Dialog>
