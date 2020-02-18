@@ -22,6 +22,9 @@ import {useAuth0} from 'lib/Auth0/auth0';
 import Home from 'components/Home/Home';
 import Contacts from 'components/Contacts/Contacts.container';
 import ResumeView from 'components/Resume/ResumeView';
+import OpportunitiesPage from 'components/OpportunitiesPage';
+import OpportunityForm from 'components/OpportunityForm';
+import ApplicationForm from 'components/ApplicationForm';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -128,6 +131,9 @@ const App = ({
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
+                <Link to="/opportunities">
+                  Opportunities
+                </Link>
                 <div className={classes.grow} />
 
                 {!hasSession && !isAuthenticated && (
@@ -150,6 +156,9 @@ const App = ({
               <Route exact path="/resume/:gdocId" component={Resume} />
 
               <Route exact path="/profile/" component={ProfileAuth} />
+              <Route exact path="/opportunities/" component={OpportunitiesPage} />
+              <Route exact path="/new-opportunity/" component={OpportunityForm} />
+              <Route path="/application/:opportunityId" component={ApplicationForm} />
               <Route
                 exact
                 path="/profile/:contactId"

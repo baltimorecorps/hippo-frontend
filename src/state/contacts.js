@@ -11,9 +11,12 @@ import {API_URL} from 'app/constants';
 
 export const GET_SESSION_API = fetchActionTypes('GET_SESSION');
 export const getSession = () =>
-  makeApiFetchActions('GET_SESSION', `${API_URL}/api/session/`, {
-    credentials: 'include',
-  });
+  makeApiFetchActions('GET_SESSION', 
+    `${API_URL}/api/session/`,
+    {
+      credentials: 'include',
+    }
+  );
 
 export const CREATE_SESSION_API = fetchActionTypes('CREATE_SESSION');
 export const createSession = authToken =>
@@ -23,10 +26,14 @@ export const createSession = authToken =>
 
 export const DELETE_SESSION_API = fetchActionTypes('DELETE_SESSION');
 export const deleteSession = () =>
-  makeApiFetchActions('DELETE_SESSION', `${API_URL}/api/session/`, {
-    method: 'DELETE',
-    credentials: 'include',
-  });
+  makeApiFetchActions(
+    'DELETE_SESSION',
+    `${API_URL}/api/session/`,
+    {
+      method: 'DELETE',
+      credentials: 'include',
+    },
+  );
 
 export const ALL_CONTACTS = 'ALL_CONTACTS';
 export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
