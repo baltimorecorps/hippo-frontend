@@ -5,13 +5,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const AchievementsListItem = ({classes, text}) => {
-  const selectMode = false;
+const AchievementsListItem = ({classes, text, onSelect, selected}) => {
   return (
     <ListItem>
-      {selectMode ? (
+      {onSelect ? (
         <ListItemIcon className={classes.icon}>
-          <Checkbox className={classes.checkbox} />
+          <Checkbox onChange={onSelect} checked={selected} className={classes.checkbox} />
         </ListItemIcon>
       ) : null}
       <ListItemText
@@ -35,7 +34,7 @@ const AchievementsListItem = ({classes, text}) => {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   icon: {
-    'min-width': spacing(4),
+    minWidth: spacing(4),
   },
   checkbox: {
     padding: spacing(0.5),
