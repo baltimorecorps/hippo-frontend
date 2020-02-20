@@ -28,8 +28,7 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     width: `calc(100% - ${drawerWidth}px)`,
   },
   paper: {
-    width: '8.5in',
-    height: '11in',
+    marginTop: spacing(2),
     padding: `${spacing(3)}px ${spacing(4)}px`,
     fontFamily: 'Merriweather',
   },
@@ -62,7 +61,6 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   },
   printDiv: {
     height: '100%',
-    width: '8.5in',
   },
   paperAdditional: {
     marginTop: spacing(2),
@@ -151,18 +149,21 @@ const PageLayout = ({
   header,
   index,
   selected,
-  addRefs,
+  setRefs,
   enableDrag,
 }) => {
   const classes = useStyles();
 
-  const refs = {};
-  refs.left = useRef();
-  refs.right = useRef();
+  const refsSet = useRef(false);
+  const leftRef = useRef();
+  const rightRef = useRef();
 
   useEffect(() => {
-    addRefs(refs);
-  }, [addRefs, refs]);
+    if (!refsSet.current) {
+      setRefs({left: leftRef, right: rightRef});
+      refsSet.current = true;
+    }
+  }, [setRefs]);
   const bodyClass = header ? classes.body : classes.bodyNoHeader;
 
   const sectionLabels = header
@@ -198,57 +199,58 @@ const PageLayout = ({
       )}
       <Grid item xs={12} className={bodyClass}>
         <Grid container className={classes.overflow}>
-          <Grid item xs={8} className={classes.overflow} ref={refs.left}>
-            {sections.experience.length && <ResumeSection
-              classes={classes}
-              sectionId={`experience${index}`}
-              sectionLabel={sectionLabels.experience}
-            >
-              {sections.experience.map(
-                (experience, index) =>
-                  selected &&
-                  selected[experience.id].selected && (
-                    <ExperienceItem
-                      key={experience.id}
-                      experience={experience}
-                      index={index}
-                      achievements={selected[experience.id]}
-                    />
-                  )
-              )}
-            </ResumeSection>}
+          <Grid item xs={8} className={classes.overflow} ref={leftRef}>
+            {sections.experience.length && (
+              <ResumeSection
+                sectionId={`experience${index}`}
+                sectionLabel={sectionLabels.experience}
+              >
+                {sections.experience.map(
+                  (experience, index) =>
+                    selected &&
+                    selected[experience.id].selected && (
+                      <ExperienceItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                        achievements={selected[experience.id]}
+                      />
+                    )
+                )}
+              </ResumeSection>
+            )}
           </Grid>
-          <Grid item xs={4} className={classes.overflow} ref={refs.right}>
-            {sections.capabilities.length && <ResumeSection
-              sectionId={'capabilities'} // must match state key
-              sectionLabel={sectionLabels.capabilities}
-            >
-              {sections.capabilities
-                .map((capability, index) => (
+          <Grid item xs={4} className={classes.overflow} ref={rightRef}>
+            {sections.capabilities.length && (
+              <ResumeSection
+                sectionId={'capabilities'} // must match state key
+                sectionLabel={sectionLabels.capabilities}
+              >
+                {sections.capabilities.map((capability, index) => (
                   <CapabilityItem
                     key={capability.id}
                     capability={capability}
                     index={index}
                   />
                 ))}
-            </ResumeSection>}
+              </ResumeSection>
+            )}
             {sections.portfolio.length && (
               <ResumeSection
                 sectionId={'portfolio'} // must match state key
                 sectionLabel={sectionLabels.portfolio}
               >
-                {sections.portfolio
-                  .map(
-                    (experience, index) =>
-                      selected &&
-                      selected[experience.id].selected && (
-                        <PortfolioItem
-                          key={experience.id}
-                          experience={experience}
-                          index={index}
-                        />
-                      )
-                  )}
+                {sections.portfolio.map(
+                  (experience, index) =>
+                    selected &&
+                    selected[experience.id].selected && (
+                      <PortfolioItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                      />
+                    )
+                )}
               </ResumeSection>
             )}
             {sections.education.length && (
@@ -256,18 +258,17 @@ const PageLayout = ({
                 sectionId={'education'} // must match state key
                 sectionLabel={sectionLabels.education}
               >
-                {sections.education
-                  .map(
-                    (experience, index) =>
-                      selected &&
-                      selected[experience.id].selected && (
-                        <EducationItem
-                          key={experience.id}
-                          experience={experience}
-                          index={index}
-                        />
-                      )
-                  )}
+                {sections.education.map(
+                  (experience, index) =>
+                    selected &&
+                    selected[experience.id].selected && (
+                      <EducationItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                      />
+                    )
+                )}
               </ResumeSection>
             )}
           </Grid>
@@ -485,16 +486,19 @@ export const overflowReducer = (state, action) => {
   };
 
   switch (action.type) {
-    case 'add-refs':
+    case 'set-refs':
       return {
         ...state,
-        refs: [...state.refs, action.payload],
-        breakpoints: [...state.breakpoints, {left: 0, right: 0}],
+        refs: {
+          ...state.refs,
+          [action.index]: action.payload,
+        },
       };
     case 'set-totals':
+      console.log('set-totals', action);
       return {
         ...state,
-        totals: action.payload,
+        totals: {...action.payload},
         breakpoints: [{...action.payload}],
       };
     case 'reflow':
@@ -509,11 +513,70 @@ export const overflowReducer = (state, action) => {
   }
 };
 
+export const fillPageSections = (sections, breakpoints) => {
+  if (!sections || !breakpoints || breakpoints[0].left === 0) {
+    return [];
+  }
+
+  // Fill the page sections based the breakpoints
+  let leftIndex = 0;
+  let rightIndex = 0;
+  let pageSections = [...new Array(breakpoints.length)].map(() => ({
+    experience: [],
+    education: [],
+    portfolio: [],
+    capabilities: [],
+  }));
+
+  for (let i = 0; i < sections.experience.length; i++) {
+    while (pageSections[leftIndex].experience.length === breakpoints[leftIndex].left) {
+      leftIndex += 1;
+    }
+    const pageSection = pageSections[leftIndex];
+    pageSection.experience.push(sections.experience[i]);
+  }
+
+  for (
+    let i = 0;
+    i <
+    sections.capabilities.length +
+      sections.education.length +
+      sections.portfolio.length;
+    i++
+  ) {
+
+    while (
+      pageSections[rightIndex].education.length +
+        pageSections[rightIndex].portfolio.length +
+        pageSections[rightIndex].capabilities.length ===
+      breakpoints[rightIndex].right
+    ) {
+      rightIndex += 1;
+      console.log('rpi', rightIndex, pageSections[rightIndex], breakpoints);
+    }
+    const pageSection = pageSections[rightIndex];
+
+    let itemIndex = i;
+    if (itemIndex < sections.capabilities.length) {
+      pageSection.capabilities.push(sections.capabilities[itemIndex]);
+    } else {
+      itemIndex -= sections.capabilities.length;
+      if (itemIndex < sections.education.length) {
+        pageSection.education.push(sections.education[itemIndex]);
+      } else {
+        itemIndex -= sections.education.length;
+        pageSection.portfolio.push(sections.portfolio[itemIndex]);
+      }
+    }
+  }
+  return pageSections;
+};
+
 const useOverflowLayout = () => {
   const [state, dispatch] = useReducer(overflowReducer, {
     refs: [],
-    totals: {left: null, right: null},
-    breakpoints: [],
+    totals: {left: 0, right: 0},
+    breakpoints: [{left: 0, right: 0}],
   });
 
   const isOverflowing = el => {
@@ -532,7 +595,7 @@ const useOverflowLayout = () => {
     // If the breakpoint is 1 and we are still overflowing, that means we are
     // only laying out one item anyway and so we just give up on not
     // overflowing (the user has to fix this)
-    if (state.breakpoints[index][side] <= 1) {
+    if (state.breakpoints[index] && state.breakpoints[index][side] <= 1) {
       return true;
     }
     return false;
@@ -557,19 +620,18 @@ const useOverflowLayout = () => {
     }
 
     if (!isDone('left', index)) {
-      console.log('left');
-      //dispatch({type: 'push-left', index});
+      dispatch({type: 'push-left', index});
     }
     if (!isDone('right', index)) {
-      console.log('right');
       //dispatch({type: 'push-right', index});
     }
   });
 
-  const addRefs = refs => {
+  const setRefs = index => refs => {
     dispatch({
-      type: 'add-refs',
+      type: 'set-refs',
       payload: refs,
+      index,
     });
   };
 
@@ -586,7 +648,7 @@ const useOverflowLayout = () => {
     });
   };
 
-  return {breakpoints: state.breakpoints, addRefs, setTotals, reflow};
+  return {breakpoints: state.breakpoints, setRefs, setTotals, reflow};
 };
 
 const ResumeCreator = ({
@@ -597,7 +659,6 @@ const ResumeCreator = ({
   refreshExperiences,
   getContactCapabilities,
 }) => {
-  console.log('sections', sections);
   const classes = useStyles();
   const [selected, setSelected] = useState(null);
 
@@ -606,7 +667,7 @@ const ResumeCreator = ({
     sections.education.length +
     sections.portfolio.length +
     sections.capabilities.length;
-  const {breakpoints, addRefs, setTotals, reflow} = useOverflowLayout();
+  const {breakpoints, setRefs, setTotals, reflow} = useOverflowLayout();
   useEffect(() => {
     if (
       sections.experience.length +
@@ -614,79 +675,21 @@ const ResumeCreator = ({
         sections.portfolio.length ===
       0
     ) {
+      refreshExperiences();
     } else {
-      //setTotals({left: totalLeft, right: totalRight});
+      setTotals(totalLeft, totalRight);
     }
-  }, [sections, refreshExperiences]);
+  }, [sections, refreshExperiences, setTotals, totalLeft, totalRight]);
 
   useEffect(() => {
     if (sections.capabilities.length === 0) {
       getContactCapabilities();
     } else {
-      //setTotals({left: totalLeft, right: totalRight});
+      setTotals(totalLeft, totalRight);
     }
-  }, [sections, getContactCapabilities]);
+  }, [sections, getContactCapabilities, setTotals, totalLeft, totalRight]);
 
-
-  // Fill the page sections based the breakpoints
-  let leftIndex = 0;
-  let rightIndex = 0;
-  let pageSections = [...new Array(breakpoints.length)].map(() => ({
-    experience: [],
-    education: [],
-    portfolio: [],
-    capabilities: [],
-  }));
-
-  if (pageSections.length === 0) {
-    pageSections = [{
-      experience: [],
-      education: [],
-      portfolio: [],
-      capabilities: [],
-    }]
-  }
-
-  for (let i = 0; i < totalLeft; i++) {
-    const pageSection = pageSections[leftIndex];
-    while (pageSection.experience.length === breakpoints[leftIndex]) {
-      leftIndex += 1;
-    }
-    pageSection.experience.push(sections.experience[i]);
-  }
-
-  for (let i = 0; i < totalRight; i++) {
-    const pageSection = pageSections[rightIndex];
-    while (
-      pageSection.education.length +
-        pageSection.portfolio.length +
-        pageSection.capabilities.length ===
-      breakpoints[rightIndex]
-    ) {
-      rightIndex += 1;
-    }
-
-    let itemIndex = i;
-    if (sections.capabilities.length < itemIndex) {
-      pageSection.capabilities.push(sections.capabilities[i]);
-    } else {
-      itemIndex -= sections.capabilities.length;
-    }
-
-    if (sections.education.length < itemIndex) {
-      pageSection.education.push(sections.education[i]);
-    } else {
-      itemIndex -= sections.education.length;
-    }
-
-    if (sections.portfolio.length < itemIndex) {
-      pageSection.portfolio.push(sections.portfolio[i]);
-    } else {
-      itemIndex -= sections.portfolio.length;
-    }
-  }
-
-    /*
+  /*
   const capabilitiesOverflow =
     rightOverflowIndex < sections.capabilities.length;
   const capabilitiesBreakpoint = rightOverflowIndex;
@@ -756,15 +759,15 @@ const ResumeCreator = ({
     address: 'Tuscaloosa, AL',
     phone: '+1 (555) 123 1234',
     email: 'david@example.com',
-  }
+  };
 
   const updateSelected = newSelected => {
-    reflow();
+    //reflow();
     setSelected(newSelected);
   };
 
-  console.log(sections);
-  console.log(pageSections);
+  const pageSections = sections ? fillPageSections(sections, breakpoints) : [];
+  console.log('ps', pageSections);
   return (
     <DragDropContext onDragEnd={dragEndHandler}>
       <SelectDrawer
@@ -773,18 +776,18 @@ const ResumeCreator = ({
         setSelected={updateSelected}
         selected={selected}
       />
-          {/*pageSections.map((page, i) => (
+      {pageSections.map((page, i) => (
         <Paper>
           <PageLayout
             key={i}
             index={i}
             header={i === 0 ? header : null}
-            sections={sections}
+            sections={page}
             selected={selected}
-            addRefs={addRefs}
+            setRefs={setRefs(i)}
           />
-              </Paper>
-      ))*/}
+        </Paper>
+      ))}
       {/*
       <PrintComponent
         classes={classes}
