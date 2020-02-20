@@ -2,16 +2,17 @@ import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DragWrapper from './DragWrapper';
 
-const CapabilityItem = ({classes, capability, index, enableDrag}) => {
+const CapabilityItem = ({classes, capability, selected, index, enableDrag}) => {
   const skills = capability.skills.concat(capability.suggested_skills);
   const innerComponent = (
     <div className={classes.item}>
       <span className={classes.capability}>{capability.name}</span>
       {skills.map(skill => (
+        selected[skill.id] ? (
         <span key={skill.id} className={classes.skill}>
           {skill.name}
         </span>
-      ))}
+      ): null))}
     </div>
   );
 

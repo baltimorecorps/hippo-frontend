@@ -205,6 +205,7 @@ const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
                   <CapabilityItem
                     key={capability.id}
                     capability={capability}
+                    selected={selected[capability.id]}
                     index={index}
                   />
                 ))}
@@ -422,19 +423,27 @@ const ResumeCreator = ({
   }
 
   if (
-    selected === null &&
+    (selected === null || Object.keys(selected).length <
     sections.experience.length +
       sections.education.length +
-      sections.portfolio.length >
-      0
+      sections.portfolio.length +
+      sections.capabilities.length)
   ) {
     let newSelected = {};
-    Object.values(sections).forEach(section => {
-      section.forEach(experience => {
-        newSelected[experience.id] = {selected: true};
-        if (experience.achievements) {
-          experience.achievements.forEach(ach => {
-            newSelected[experience.id][ach.id] = true;
+    Object.entries(sections).forEach(([key, section]) => {
+      section.forEach(item => {
+        newSelected[item.id] = {selected: true};
+        if (item.achievements) {
+          item.achievements.forEach(ach => {
+            newSelected[item.id][ach.id] = true;
+          });
+        }
+        if (key === 'capabilities' && item.skills) {
+          item.skills.forEach(skill => {
+            newSelected[item.id][skill.id] = true;
+          });
+          item.suggested_skills.forEach(skill => {
+            newSelected[item.id][skill.id] = true;
           });
         }
       });
@@ -513,7 +522,7 @@ const ResumeCreator = ({
       </div>
 
       {pageSections.map((page, i) => (
-        <Paper className={classes.paper}>
+        <Paper key={i} className={classes.paper}>
           <PageLayout
             key={i}
             index={i}
