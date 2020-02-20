@@ -3,6 +3,7 @@ import {Switch, Route, useHistory, useRouteMatch} from 'react-router-dom';
 
 import InterestForm from './InterestForm';
 import Review from './Review';
+import AddResume from './AddResume';
 
 const ApplicationForm = ({
   contact,
@@ -78,9 +79,21 @@ const ApplicationForm = ({
     };
     const response = await updateApplication(newApplication);
     if (response.statusCode === 200) {
-      history.push(`${match.url}/review`);
+      history.push(`${match.url}/resume`);
     } else {
       console.error('Error updating application', response);
+    }
+  };
+
+  const updateAppResume = async resume => {
+    //TODO: connect to API
+    //const response = await updateApplication(newApplication);
+    const response = {statusCode: 200}
+    console.log('hi', response);
+    if (response.statusCode === 200) {
+      history.push(`${match.url}/review`);
+    } else {
+      console.error('Error updating application with resume', response);
     }
   };
 
@@ -95,6 +108,17 @@ const ApplicationForm = ({
           opportunity={opportunity}
           application={application}
           submit={() => submitApplication(application)}
+          back={() => history.push(`${match.url}/resume`)}
+          toProfile={backToProfile}
+          toOpportunities={backToOpportunities}
+        />
+      </Route>
+      <Route exact path={`${match.path}/resume`}>
+        <AddResume
+          opportunity={opportunity}
+          application={application}
+          contactId={contact.id}
+          next={updateAppResume}
           back={() => history.push(`${match.url}`)}
           toProfile={backToProfile}
           toOpportunities={backToOpportunities}

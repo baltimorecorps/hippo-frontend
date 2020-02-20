@@ -369,6 +369,8 @@ const ResumeCreator = ({
   getContact,
   getContactCapabilities,
   viewOnly,
+  hidePrint,
+  disableSpacer,
 }) => {
   const classes = useStyles();
   const [selected, setSelected] = useState(null);
@@ -423,11 +425,12 @@ const ResumeCreator = ({
   }
 
   if (
-    (selected === null || Object.keys(selected).length <
-    sections.experience.length +
-      sections.education.length +
-      sections.portfolio.length +
-      sections.capabilities.length)
+    selected === null ||
+    Object.keys(selected).length <
+      sections.experience.length +
+        sections.education.length +
+        sections.portfolio.length +
+        sections.capabilities.length
   ) {
     let newSelected = {};
     Object.entries(sections).forEach(([key, section]) => {
@@ -506,20 +509,22 @@ const ResumeCreator = ({
 
   const viewComponent = (
     <div className={classes.container}>
-      <div className={classes.buttonContainer}>
-        <ReactToPrint
-          trigger={() => (
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.printButton}
-            >
-              Print Resume
-            </Button>
-          )}
-          content={() => printTarget.current}
-        />
-      </div>
+      {!hidePrint ? (
+        <div className={classes.buttonContainer}>
+          <ReactToPrint
+            trigger={() => (
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.printButton}
+              >
+                Print Resume
+              </Button>
+            )}
+            content={() => printTarget.current}
+          />
+        </div>
+      ) : null}
 
       {pageSections.map((page, i) => (
         <Paper key={i} className={classes.paper}>
@@ -554,7 +559,7 @@ const ResumeCreator = ({
             setSelected={updateSelected}
             selected={selected}
           />
-          <div className={classes.spacer} />
+          {disableSpacer ? null : <div className={classes.spacer} />}
           <div className={classes.editContainer}>{viewComponent}</div>
         </div>
       </DragDropContext>

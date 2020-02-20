@@ -43,7 +43,7 @@ export const mapStateToProps = (state, props) => {
   });
 
   const contact = state.contacts[props.contactId];
-  const capabilities = contact ? contact.capabilities : {};
+  const capabilities = contact ? {...contact.capabilities} : {};
   const otherSkills = contact ? contact.other_skills : [];
 
   if (capabilities) {
