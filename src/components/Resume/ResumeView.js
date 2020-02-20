@@ -39,9 +39,10 @@ const ResumeView = ({classes, match}) => {
 
 const styles = ({breakpoints, palette, spacing, shadows}) => ({
   wrapper: {
+    width: '100%',
   },
   button: {
-    margin: `${spacing(2)}px 0`,
+    margin: `${spacing(2)}px 600px ${spacing(2)}px`,
   },
 });
 

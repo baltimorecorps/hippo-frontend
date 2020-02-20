@@ -24,12 +24,14 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     width: drawerWidth,
   },
   container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     height: '100%',
     width: `calc(100% - ${drawerWidth}px)`,
   },
   paper: {
     marginTop: spacing(2),
-    padding: `${spacing(3)}px ${spacing(4)}px`,
     fontFamily: 'Merriweather',
   },
   header: {
@@ -53,6 +55,7 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   page: {
     width: '8.5in',
     height: '11in',
+    padding: `${spacing(3)}px ${spacing(4)}px`,
   },
   overflow: {
     height: '100%',
@@ -115,57 +118,17 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   },
 }));
 
-/*
- * {sections:
- *  experience: [
- *    {id: 4}
- *  ]
- *  }
- */
-
-// Calculates whether or not the returned ref  is currently overflowing its
-// layout, and if so calls 'onOverflow'
-const useOverflow = onOverflow => {
-  const overflowRef = useRef();
-
-  // We need this effect to rerun on every update, since it actually depends on
-  // the layout of the page
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (overflowRef.current) {
-      const el = overflowRef.current;
-      const isOverflowing = el.clientHeight < el.scrollHeight;
-      if (isOverflowing) {
-        onOverflow();
-      }
-    }
-  });
-
-  return [overflowRef];
-};
-
-const PageLayout = ({
-  sections,
-  header,
-  index,
-  selected,
-  setRefs,
-  enableDrag,
-}) => {
+const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
   const classes = useStyles();
 
-  const refsSet = useRef(false);
-  const leftRef = useRef();
-  const rightRef = useRef();
+  let leftRef = null;
+  let rightRef = null;
+  if (refs) {
+    leftRef = refs[0];
+    rightRef = refs[1];
+  }
 
-  useEffect(() => {
-    if (!refsSet.current) {
-      setRefs({left: leftRef, right: rightRef});
-      refsSet.current = true;
-    }
-  }, [setRefs]);
   const bodyClass = header ? classes.body : classes.bodyNoHeader;
-
   const sectionLabels = header
     ? {
         experience: 'Relevant Experience',
@@ -200,7 +163,7 @@ const PageLayout = ({
       <Grid item xs={12} className={bodyClass}>
         <Grid container className={classes.overflow}>
           <Grid item xs={8} className={classes.overflow} ref={leftRef}>
-            {sections.experience.length && (
+            {sections.experience.length ? (
               <ResumeSection
                 sectionId={`experience${index}`}
                 sectionLabel={sectionLabels.experience}
@@ -218,10 +181,10 @@ const PageLayout = ({
                     )
                 )}
               </ResumeSection>
-            )}
+            ) : null}
           </Grid>
           <Grid item xs={4} className={classes.overflow} ref={rightRef}>
-            {sections.capabilities.length && (
+            {sections.capabilities.length ? (
               <ResumeSection
                 sectionId={'capabilities'} // must match state key
                 sectionLabel={sectionLabels.capabilities}
@@ -234,26 +197,8 @@ const PageLayout = ({
                   />
                 ))}
               </ResumeSection>
-            )}
-            {sections.portfolio.length && (
-              <ResumeSection
-                sectionId={'portfolio'} // must match state key
-                sectionLabel={sectionLabels.portfolio}
-              >
-                {sections.portfolio.map(
-                  (experience, index) =>
-                    selected &&
-                    selected[experience.id].selected && (
-                      <PortfolioItem
-                        key={experience.id}
-                        experience={experience}
-                        index={index}
-                      />
-                    )
-                )}
-              </ResumeSection>
-            )}
-            {sections.education.length && (
+            ) : null}
+            {sections.education.length ? (
               <ResumeSection
                 sectionId={'education'} // must match state key
                 sectionLabel={sectionLabels.education}
@@ -270,7 +215,25 @@ const PageLayout = ({
                     )
                 )}
               </ResumeSection>
-            )}
+            ) : null}
+            {sections.portfolio.length ? (
+              <ResumeSection
+                sectionId={'portfolio'} // must match state key
+                sectionLabel={sectionLabels.portfolio}
+              >
+                {sections.portfolio.map(
+                  (experience, index) =>
+                    selected &&
+                    selected[experience.id].selected && (
+                      <PortfolioItem
+                        key={experience.id}
+                        experience={experience}
+                        index={index}
+                      />
+                    )
+                )}
+              </ResumeSection>
+            ) : null}
           </Grid>
         </Grid>
       </Grid>
@@ -278,239 +241,39 @@ const PageLayout = ({
   );
 };
 
-const PrintComponent = ({
-  printRef,
-  sections,
-  leftOverflowIndex,
-  capabilitiesOverflow,
-  capabilitiesBreakpoint,
-  showPortfolio,
-  portfolioBreakpoint,
-  showEducation,
-  educationBreakpoint,
-}) => {
-  const classes = useStyles();
-  return (
-    <div style={{display: 'none'}}>
-      <div ref={printRef} className={classes.printDiv}>
-        <div className={classes.paper}>
-          <Grid container className={classes.overflow}>
-            <Grid item xs={12} className={classes.header}>
-              <Grid container>
-                <Grid item xs={9} className={classes.vertical}>
-                  <span className={classes.name}>David Koh</span>
-                  <span className={classes.vocation}>Software Engineer</span>
-                </Grid>
-                <Grid item xs={3} className={classes.headerDetails}>
-                  <span>Tuscaloosa, AL</span>
-                  <span>(555) 123-4567</span>
-                  <span>david@example.com</span>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} className={classes.body}>
-              <Grid container className={classes.overflow}>
-                <Grid item xs={8} className={classes.overflow}>
-                  <ResumeSection
-                    sectionId={'experience'} // must match state key
-                    sectionLabel="Relevant Experience"
-                  >
-                    {sections.experience
-                      .slice(0, leftOverflowIndex)
-                      .map((experience, index) => (
-                        <ExperienceItem
-                          key={experience.id}
-                          experience={experience}
-                          index={index}
-                        />
-                      ))}
-                  </ResumeSection>
-                </Grid>
-                <Grid item xs={4} className={classes.overflow}>
-                  <ResumeSection
-                    sectionId={'capabilities'} // must match state key
-                    sectionLabel="Skills & Abilities"
-                  >
-                    {sections.capabilities
-                      .slice(0, capabilitiesBreakpoint)
-                      .map((capability, index) => (
-                        <CapabilityItem
-                          key={capability.id}
-                          capability={capability}
-                          index={index}
-                        />
-                      ))}
-                  </ResumeSection>
-                  {showPortfolio && (
-                    <ResumeSection
-                      sectionId={'portfolio'} // must match state key
-                      sectionLabel="Projects"
-                    >
-                      {sections.portfolio
+const useOverflow = defaultLength => {
+  const [overflow, setOverflow] = useState(null);
+  const overflowRef = useRef();
 
-                        .slice(0, portfolioBreakpoint)
-                        .map((experience, index) => (
-                          <PortfolioItem
-                            key={experience.id}
-                            experience={experience}
-                            index={index}
-                          />
-                        ))}
-                    </ResumeSection>
-                  )}
-                  {showEducation && (
-                    <ResumeSection
-                      sectionId={'education'} // must match state key
-                      sectionLabel="Education"
-                    >
-                      {sections.education
-                        .slice(0, educationBreakpoint)
+  let overflowIndex = defaultLength;
+  if (overflow !== null) {
+    overflowIndex = overflow;
+  }
 
-                        .map((experience, index) => (
-                          <EducationItem
-                            key={experience.id}
-                            experience={experience}
-                            index={index}
-                          />
-                        ))}
-                    </ResumeSection>
-                  )}
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-        <div className={classes.paperAdditional}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Grid container>
-                <Grid item xs={8} className={classes.overflow}>
-                  <ResumeSection
-                    sectionId={'experience'} // must match state key
-                    sectionLabel="Additional Experience"
-                  >
-                    {sections.experience
-                      .slice(leftOverflowIndex)
-                      .map((experience, index) => (
-                        <ExperienceItem
-                          key={experience.id}
-                          experience={experience}
-                          index={index}
-                        />
-                      ))}
-                  </ResumeSection>
-                </Grid>
-                <Grid item xs={4} className={classes.overflow}>
-                  {capabilitiesOverflow && (
-                    <ResumeSection
-                      sectionId={'capabilities'} // must match state key
-                      sectionLabel="Additional Skills"
-                    >
-                      {sections.capabilities
-                        .slice(capabilitiesBreakpoint)
-                        .map((capability, index) => (
-                          <CapabilityItem
-                            key={capability.id}
-                            capability={capability}
-                            index={index}
-                          />
-                        ))}
-                    </ResumeSection>
-                  )}
-                  {!showPortfolio && (
-                    <ResumeSection
-                      sectionId={'portfolio'} // must match state key
-                      sectionLabel="Projects"
-                    >
-                      {sections.portfolio
-
-                        .slice(portfolioBreakpoint)
-                        .map((experience, index) => (
-                          <PortfolioItem
-                            key={experience.id}
-                            experience={experience}
-                            index={index}
-                          />
-                        ))}
-                    </ResumeSection>
-                  )}
-                  {!showEducation && (
-                    <ResumeSection
-                      sectionId={'education'} // must match state key
-                      sectionLabel="Education"
-                    >
-                      {sections.education
-                        .slice(educationBreakpoint)
-
-                        .map((experience, index) => (
-                          <EducationItem
-                            key={experience.id}
-                            experience={experience}
-                            index={index}
-                          />
-                        ))}
-                    </ResumeSection>
-                  )}
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const overflowReducer = (state, action) => {
-  // Push one item down from the page index given to the next page down
-  const push = (index, side) => {
-    const fromBreakpoint = state.breakpoints[index];
-    const toBreakpoint = state.breakpoints[index + 1] || {left: 0, right: 0};
-    const newBreakpoints = [...state.breakpoints];
-
-    // We should leave at least one item on each page, no matter what
-    if (fromBreakpoint[side] <= 1) {
-      return state;
+  // We need this effect to rerun on every update, since it actually depends on
+  // the layout of the page
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const el = overflowRef.current;
+    if (!el) {
+      return;
     }
 
-    const newFromBreakpoint = {...fromBreakpoint};
-    const newToBreakpoint = {...toBreakpoint};
-    newFromBreakpoint[side] -= 1;
-    newToBreakpoint[side] += 1;
-    newBreakpoints[index] = newFromBreakpoint;
-    newBreakpoints[index + 1] = newToBreakpoint;
-    return {
-      ...state,
-      breakpoints: newBreakpoints,
-    };
-  };
+    const isOverflowing = el.clientHeight < el.scrollHeight;
+    if (isOverflowing) {
+      setOverflow(over => {
+        if (over === null) {
+          over = defaultLength - 1;
+        } else {
+          over = over - 1;
+        }
+        return over;
+      });
+    }
+  });
 
-  switch (action.type) {
-    case 'set-refs':
-      return {
-        ...state,
-        refs: {
-          ...state.refs,
-          [action.index]: action.payload,
-        },
-      };
-    case 'set-totals':
-      console.log('set-totals', action);
-      return {
-        ...state,
-        totals: {...action.payload},
-        breakpoints: [{...action.payload}],
-      };
-    case 'reflow':
-      return {
-        ...state,
-        breakpoints: [{...state.totals}],
-      };
-    case 'push-left':
-      return push(action.index, 'left');
-    case 'push-right':
-      return push(action.index, 'right');
-  }
+  const reflow = () => setOverflow(null);
+  return [overflowIndex, overflowRef, reflow];
 };
 
 export const fillPageSections = (sections, breakpoints) => {
@@ -529,7 +292,9 @@ export const fillPageSections = (sections, breakpoints) => {
   }));
 
   for (let i = 0; i < sections.experience.length; i++) {
-    while (pageSections[leftIndex].experience.length === breakpoints[leftIndex].left) {
+    while (
+      pageSections[leftIndex].experience.length === breakpoints[leftIndex].left
+    ) {
       leftIndex += 1;
     }
     const pageSection = pageSections[leftIndex];
@@ -544,7 +309,6 @@ export const fillPageSections = (sections, breakpoints) => {
       sections.portfolio.length;
     i++
   ) {
-
     while (
       pageSections[rightIndex].education.length +
         pageSections[rightIndex].portfolio.length +
@@ -552,7 +316,6 @@ export const fillPageSections = (sections, breakpoints) => {
       breakpoints[rightIndex].right
     ) {
       rightIndex += 1;
-      console.log('rpi', rightIndex, pageSections[rightIndex], breakpoints);
     }
     const pageSection = pageSections[rightIndex];
 
@@ -572,83 +335,24 @@ export const fillPageSections = (sections, breakpoints) => {
   return pageSections;
 };
 
-const useOverflowLayout = () => {
-  const [state, dispatch] = useReducer(overflowReducer, {
-    refs: [],
-    totals: {left: 0, right: 0},
-    breakpoints: [{left: 0, right: 0}],
-  });
-
-  const isOverflowing = el => {
-    if (el.current) {
-      return el.current.clientHeight < el.current.scrollHeight;
-    } else {
-      return false;
-    }
-  };
-
-  const isDone = (side, index) => {
-    if (!isOverflowing(state.refs[index][side])) {
-      return true;
-    }
-
-    // If the breakpoint is 1 and we are still overflowing, that means we are
-    // only laying out one item anyway and so we just give up on not
-    // overflowing (the user has to fix this)
-    if (state.breakpoints[index] && state.breakpoints[index][side] <= 1) {
-      return true;
-    }
-    return false;
-  };
-
-  // We need this effect to rerun on every update, since it actually depends on
-  // the layout of the page
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    let index = 0;
-
-    // Find the index of the first page that is overflowing
-    while (
-      index < state.refs.length &&
-      isDone('left', index) &&
-      isDone('right', index)
-    ) {
-      index += 1;
-    }
-    if (index >= state.refs.length) {
-      return;
-    }
-
-    if (!isDone('left', index)) {
-      dispatch({type: 'push-left', index});
-    }
-    if (!isDone('right', index)) {
-      //dispatch({type: 'push-right', index});
-    }
-  });
-
-  const setRefs = index => refs => {
-    dispatch({
-      type: 'set-refs',
-      payload: refs,
-      index,
-    });
-  };
-
-  const setTotals = (totalLeft, totalRight) => {
-    dispatch({
-      type: 'set-totals',
-      payload: {left: totalLeft, right: totalRight},
-    });
-  };
-
-  const reflow = () => {
-    dispatch({
-      type: 'reflow',
-    });
-  };
-
-  return {breakpoints: state.breakpoints, setRefs, setTotals, reflow};
+const PrintComponent = ({printRef, header, pageSections, selected}) => {
+  const classes = useStyles();
+  return (
+    <div style={{display: 'none'}}>
+      <div ref={printRef} className={classes.printDiv}>
+        {pageSections.map((page, i) => (
+          <PageLayout
+            key={i}
+            index={i}
+            header={i === 0 ? header : null}
+            sections={page}
+            selected={selected}
+            refs={null}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 const ResumeCreator = ({
@@ -667,7 +371,14 @@ const ResumeCreator = ({
     sections.education.length +
     sections.portfolio.length +
     sections.capabilities.length;
-  const {breakpoints, setRefs, setTotals, reflow} = useOverflowLayout();
+
+  const [leftOverflowIndex, leftOverflowRef, reflowLeft] = useOverflow(
+    totalLeft
+  );
+  const [rightOverflowIndex, rightOverflowRef, reflowRight] = useOverflow(
+    totalRight
+  );
+
   useEffect(() => {
     if (
       sections.experience.length +
@@ -676,18 +387,26 @@ const ResumeCreator = ({
       0
     ) {
       refreshExperiences();
-    } else {
-      setTotals(totalLeft, totalRight);
     }
-  }, [sections, refreshExperiences, setTotals, totalLeft, totalRight]);
+  }, [sections, refreshExperiences]);
 
   useEffect(() => {
     if (sections.capabilities.length === 0) {
       getContactCapabilities();
-    } else {
-      setTotals(totalLeft, totalRight);
     }
-  }, [sections, getContactCapabilities, setTotals, totalLeft, totalRight]);
+  }, [sections, getContactCapabilities]);
+
+  let breakpoints = [{left: totalLeft, right: totalRight}];
+  if (leftOverflowIndex !== totalLeft || rightOverflowIndex !== totalRight) {
+    breakpoints = [
+      {left: leftOverflowIndex, right: rightOverflowIndex},
+      {
+        left: totalLeft - leftOverflowIndex,
+        right: totalRight - rightOverflowIndex,
+      },
+    ];
+  }
+  const pageSections = sections ? fillPageSections(sections, breakpoints) : [];
 
   /*
   const capabilitiesOverflow =
@@ -762,46 +481,43 @@ const ResumeCreator = ({
   };
 
   const updateSelected = newSelected => {
-    //reflow();
+    reflowLeft();
+    reflowRight();
     setSelected(newSelected);
   };
 
-  const pageSections = sections ? fillPageSections(sections, breakpoints) : [];
   console.log('ps', pageSections);
   return (
     <DragDropContext onDragEnd={dragEndHandler}>
-      <SelectDrawer
-        sections={sections}
-        drawerWidth={drawerWidth}
-        setSelected={updateSelected}
-        selected={selected}
-      />
-      {pageSections.map((page, i) => (
-        <Paper>
-          <PageLayout
-            key={i}
-            index={i}
-            header={i === 0 ? header : null}
-            sections={page}
-            selected={selected}
-            setRefs={setRefs(i)}
-          />
-        </Paper>
-      ))}
-      {/*
-      <PrintComponent
-        classes={classes}
-        printRef={printRef}
-        pageSections={
-        sections={sections}
-        leftOverflowIndex={leftOverflowIndex}
-        capabilitiesOverflow={capabilitiesOverflow}
-        capabilitiesBreakpoint={capabilitiesBreakpoint}
-        showPortfolio={showPortfolio}
-        portfolioBreakpoint={portfolioBreakpoint}
-        showEducation={showEducation}
-        educationBreakpoint={educationBreakpoint}
-      />*/}
+      <div className={classes.root}>
+        <SelectDrawer
+          sections={sections}
+          drawerWidth={drawerWidth}
+          setSelected={updateSelected}
+          selected={selected}
+        />
+        <div className={classes.spacer} />
+        <div className={classes.container}>
+          {pageSections.map((page, i) => (
+            <Paper className={classes.paper}>
+              <PageLayout
+                key={i}
+                index={i}
+                header={i === 0 ? header : null}
+                sections={page}
+                selected={selected}
+                refs={i === 0 ? [leftOverflowRef, rightOverflowRef] : null}
+              />
+            </Paper>
+          ))}
+        </div>
+        <PrintComponent
+          printRef={printRef}
+          pageSections={pageSections}
+          selected={selected}
+          header={header}
+        />
+      </div>
     </DragDropContext>
   );
 };
