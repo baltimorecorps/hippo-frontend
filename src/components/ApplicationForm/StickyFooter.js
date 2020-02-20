@@ -36,10 +36,17 @@ const StickyFooter = ({
   );
 
   return (
-    <Paper className={classes.stickyFooter}>
+    <Paper
+      className={classes.stickyFooter}
+      style={
+        page === 'addResume'
+          ? {width: 'calc(100vw+400px)', left: '400px'}
+          : {width: '100vw'}
+      }
+    >
       <div className={classes.buttonContainer}>
         {application.status === 'submitted' ? profileButton : backButton}
-        {page === 'interest'
+        {page !== 'review'
           ? nextButton
           : application.status === 'submitted'
           ? toOpportunitiesButton
@@ -53,8 +60,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   stickyFooter: {
     display: 'flex',
     justifyContent: 'center',
-    width: '100vw',
+
     position: 'fixed',
+    right: 0,
     bottom: 0,
     backgroundColor: palette.primary.almostBlack,
   },

@@ -37,47 +37,53 @@ const InterestForm = ({
 
   return (
     <div className={classes.root}>
-    <div className={classes.container}>
-      <div className={classes.spacer} />
-      <div className={classes.center}>
-      <Paper className={classes.paper}>
-        <div className={classes.opportunityContent}>
-          <div className={classes.headerContainer}>
-            <Typography variant="h5" component="h1" className={classes.header}>
-              Add Resume
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="h6" component="h2" className={classes.title}>
-              {opportunity.title}
-            </Typography>
-          </div>
-          <div className={classes.opportunityDescription}>
-            <Typography className={classes.description}>
-              {opportunity.short_description}
-              <br />
-            </Typography>
-            <Typography className={classes.link}>
-              {createExternalLink(
-                'View full description',
-                `https://docs.google.com/document/d/${opportunity.gdoc_id}`,
-                classes.link
-              )}
-            </Typography>
-          </div>
+      <div className={classes.container}>
+        <div className={classes.spacer} />
+        <div className={classes.center}>
+          <Paper className={classes.paper}>
+            <div className={classes.opportunityContent}>
+              <div className={classes.headerContainer}>
+                <Typography
+                  variant="h5"
+                  component="h1"
+                  className={classes.header}
+                >
+                  Add Resume
+                </Typography>
+              </div>
+              <div>
+                <Typography
+                  variant="h6"
+                  component="h2"
+                  className={classes.title}
+                >
+                  {opportunity.title}
+                </Typography>
+              </div>
+              <div className={classes.opportunityDescription}>
+                <Typography className={classes.description}>
+                  {opportunity.short_description}
+                  <br />
+                </Typography>
+                <Typography className={classes.link}>
+                  {createExternalLink(
+                    'View full description',
+                    `https://docs.google.com/document/d/${opportunity.gdoc_id}`,
+                    classes.link
+                  )}
+                </Typography>
+              </div>
+            </div>
+          </Paper>
         </div>
-      </Paper>
-        </div>
-
-    </div>
+      </div>
       <ResumeViewer hidePrint contactId={contactId} />
       <StickyFooter
-        page="interest"
+        page="addResume"
         back={back}
         handleNext={() => handleNext(text)}
         application={application}
       />
-
     </div>
   );
 };
