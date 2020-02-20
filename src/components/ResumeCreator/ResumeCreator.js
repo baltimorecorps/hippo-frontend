@@ -12,6 +12,7 @@ import CapabilityItem from './CapabilityItem';
 import EducationItem from './EducationItem';
 import PortfolioItem from './PortfolioItem';
 import SelectDrawer from './SelectDrawer';
+import ReactToPrint from 'react-to-print';
 
 const drawerWidth = 400;
 const headerHeight = 100;
@@ -116,6 +117,12 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(0.5),
     borderBottom: 'solid 2px #2079c7',
   },
+  buttonContainer: {
+    width: '8.5in',
+  },
+  printButton: {
+    margin: `${spacing(2)}px 0`,
+  },
 }));
 
 const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
@@ -168,18 +175,14 @@ const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
                 sectionId={`experience${index}`}
                 sectionLabel={sectionLabels.experience}
               >
-                {sections.experience.map(
-                  (experience, index) =>
-                    selected &&
-                    selected[experience.id].selected && (
-                      <ExperienceItem
-                        key={experience.id}
-                        experience={experience}
-                        index={index}
-                        achievements={selected[experience.id]}
-                      />
-                    )
-                )}
+                {sections.experience.map((experience, index) => (
+                  <ExperienceItem
+                    key={experience.id}
+                    experience={experience}
+                    index={index}
+                    achievements={selected[experience.id]}
+                  />
+                ))}
               </ResumeSection>
             ) : null}
           </Grid>
@@ -203,17 +206,13 @@ const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
                 sectionId={'education'} // must match state key
                 sectionLabel={sectionLabels.education}
               >
-                {sections.education.map(
-                  (experience, index) =>
-                    selected &&
-                    selected[experience.id].selected && (
-                      <EducationItem
-                        key={experience.id}
-                        experience={experience}
-                        index={index}
-                      />
-                    )
-                )}
+                {sections.education.map((experience, index) => (
+                  <EducationItem
+                    key={experience.id}
+                    experience={experience}
+                    index={index}
+                  />
+                ))}
               </ResumeSection>
             ) : null}
             {sections.portfolio.length ? (
@@ -221,17 +220,13 @@ const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
                 sectionId={'portfolio'} // must match state key
                 sectionLabel={sectionLabels.portfolio}
               >
-                {sections.portfolio.map(
-                  (experience, index) =>
-                    selected &&
-                    selected[experience.id].selected && (
-                      <PortfolioItem
-                        key={experience.id}
-                        experience={experience}
-                        index={index}
-                      />
-                    )
-                )}
+                {sections.portfolio.map((experience, index) => (
+                  <PortfolioItem
+                    key={experience.id}
+                    experience={experience}
+                    index={index}
+                  />
+                ))}
               </ResumeSection>
             ) : null}
           </Grid>
@@ -356,7 +351,6 @@ const PrintComponent = ({printRef, header, pageSections, selected}) => {
 };
 
 const ResumeCreator = ({
-  printRef,
   sections,
   contactId,
   moveResumeItem,
@@ -365,6 +359,8 @@ const ResumeCreator = ({
 }) => {
   const classes = useStyles();
   const [selected, setSelected] = useState(null);
+
+  const printTarget = useRef();
 
   const totalLeft = sections.experience.length;
   const totalRight =
@@ -406,26 +402,41 @@ const ResumeCreator = ({
       },
     ];
   }
-  const pageSections = sections ? fillPageSections(sections, breakpoints) : [];
 
-  /*
-  const capabilitiesOverflow =
-    rightOverflowIndex < sections.capabilities.length;
-  const capabilitiesBreakpoint = rightOverflowIndex;
+  if (
+    selected === null &&
+    sections.experience.length +
+      sections.education.length +
+      sections.portfolio.length >
+      0
+  ) {
+    let newSelected = {};
+    Object.values(sections).forEach(section => {
+      section.forEach(experience => {
+        newSelected[experience.id] = {selected: true};
+        if (experience.achievements) {
+          experience.achievements.forEach(ach => {
+            newSelected[experience.id][ach.id] = true;
+          });
+        }
+      });
+    });
+    setSelected(newSelected);
+  }
 
-  const showPortfolio = rightOverflowIndex > sections.capabilities.length;
-  const portfolioBreakpoint = rightOverflowIndex - sections.capabilities.length;
-  const portfolioOverflow = portfolioBreakpoint < sections.portfolio.length;
-
-  const showEducation =
-    rightOverflowIndex >
-    sections.capabilities.length + sections.portfolio.length;
-  const educationBreakpoint =
-    rightOverflowIndex -
-    sections.capabilities.length -
-    sections.portfolio.length;
-  const educationOverflow = educationBreakpoint < sections.education.length;
-  */
+  let pageSections = [];
+  if (sections) {
+    let filteredSections = sections;
+    if (selected) {
+      filteredSections = {};
+      Object.entries(sections).forEach(([key, section]) => {
+        filteredSections[key] = section.filter(item =>
+          selected[item.id] ? selected[item.id].selected : true
+        );
+      });
+    }
+    pageSections = fillPageSections(filteredSections, breakpoints);
+  }
 
   const dragEndHandler = ({destination, source, draggableId}) => {
     if (!destination) {
@@ -450,27 +461,6 @@ const ResumeCreator = ({
       }
     );
   };
-
-  if (
-    selected === null &&
-    sections.experience.length +
-      sections.education.length +
-      sections.portfolio.length >
-      0
-  ) {
-    let newSelected = {};
-    Object.values(sections).forEach(section => {
-      section.forEach(experience => {
-        newSelected[experience.id] = {selected: true};
-        if (experience.achievements) {
-          experience.achievements.forEach(ach => {
-            newSelected[experience.id][ach.id] = true;
-          });
-        }
-      });
-    });
-    setSelected(newSelected);
-  }
 
   const header = {
     name: 'David Koh',
@@ -498,6 +488,21 @@ const ResumeCreator = ({
         />
         <div className={classes.spacer} />
         <div className={classes.container}>
+          <div className={classes.buttonContainer}>
+            <ReactToPrint
+              trigger={() => (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.printButton}
+                >
+                  Print Resume
+                </Button>
+              )}
+              content={() => printTarget.current}
+            />
+          </div>
+
           {pageSections.map((page, i) => (
             <Paper className={classes.paper}>
               <PageLayout
@@ -512,7 +517,7 @@ const ResumeCreator = ({
           ))}
         </div>
         <PrintComponent
-          printRef={printRef}
+          printRef={printTarget}
           pageSections={pageSections}
           selected={selected}
           header={header}
