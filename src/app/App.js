@@ -28,6 +28,8 @@ import OpportunitiesPage from 'components/OpportunitiesPage';
 import OpportunityForm from 'components/OpportunityForm';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
+import InternalOpportunityBoard from 'components/InternalOpportunityBoard';
+import StaffReviewApplication from 'components/InternalOpportunityBoard/StaffReviewApplication.container';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -134,9 +136,21 @@ const App = ({
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
-                {/* <Link to="/opportunities">
+                <Link to="/opportunities">
                   <Typography>Opportunities</Typography>
-                </Link> */}
+                </Link>
+                <Link
+                  to="/opportunities/internal-board"
+                  className={classes.links}
+                >
+                  <Typography>Internal Board</Typography>
+                </Link>
+                <Link
+                  to="/opportunities/:opportunityId/contacts/:contactId/internal-review"
+                  className={classes.links}
+                >
+                  <Typography>Internal Review</Typography>
+                </Link>
                 <div className={classes.grow} />
 
                 {!hasSession && !isAuthenticated && (
@@ -173,6 +187,17 @@ const App = ({
                 path="/application/:opportunityId"
                 component={ApplicationForm}
               />
+              <Route
+                path="/opportunities/:opportunityId/contacts/:contactId/internal-review"
+                component={StaffReviewApplication}
+              />
+
+              <Route
+                exact
+                path="/opportunities/internal-board"
+                component={InternalOpportunityBoard}
+              />
+
               <Route path="/confirmation-page" component={ConfirmationPage} />
               <Route
                 exact
@@ -212,6 +237,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
   },
   homeIcon: {fontSize: '35px'},
+  links: {
+    marginLeft: spacing(2),
+  },
 });
 
 export default withStyles(styles)(App);
