@@ -47,6 +47,14 @@ export const mapStateToProps = (state, props) => {
   const otherSkills = contact ? contact.other_skills : [];
 
   if (capabilities) {
+    if (otherSkills) {
+      capabilities['cap:other'] = {
+        id: 'cap:other',
+        name: 'Other Skills',
+        skills: otherSkills,
+        suggested_skills: [],
+      }
+    }
     sections.capabilities = Object.values(capabilities);
   }
 
