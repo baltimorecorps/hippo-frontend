@@ -62,9 +62,9 @@ const InternalOpportunityBoard = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   container: {
-    width: '80%',
+    width: '90%',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginTop: spacing(1),
     [breakpoints.down('sm')]: {
       width: '100%',

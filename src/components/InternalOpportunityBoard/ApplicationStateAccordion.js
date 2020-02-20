@@ -90,7 +90,7 @@ const ApplicationStateAccordion = ({
 const styles = ({breakpoints, palette, spacing}) => ({
   categoryName: {
     fontWeight: '700',
-    fontSize: '18px',
+    fontSize: '16px',
     marginLeft: '10px',
   },
   name: {

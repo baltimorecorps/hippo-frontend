@@ -27,12 +27,12 @@ const RoleCards = ({
       <Paper className={classes.paper}>
         <div className={classes.headerContainer}>
           <div className={classes.titleAndOrgContainer}>
-            <Typography variant="h5" component="h1" className={classes.title}>
+            <Typography variant="h6" component="h1" className={classes.title}>
               {opportunity.title}
             </Typography>
             <Typography
-              variant="h5"
-              component="h1"
+              variant="h6"
+              component="h2"
               className={classes.organization}
             >
               {opportunity.org_name}
@@ -85,9 +85,20 @@ const RoleCards = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   container: {
-    width: '70%',
+    minWidth: '350px',
+    maxWidth: '90%',
+    [breakpoints.down('xs')]: {
+      minWidth: '200px',
+    },
+    [breakpoints.down('sm')]: {
+      minWidth: '250px',
+    },
+    [breakpoints.down('md')]: {
+      minWidth: '300px',
+    },
   },
   paper: {
+    // width: '90%',
     padding: spacing(2, 3, 3),
     margin: spacing(0, 1, 2, 1),
   },
@@ -95,21 +106,21 @@ const styles = ({breakpoints, palette, spacing}) => ({
   titleAndOrgContainer: {
     display: 'flex',
     flexDirection: 'column',
-    [breakpoints.down('sm')]: {
+    [breakpoints.down('md')]: {
       marginRight: spacing(0),
       alignSelf: 'center',
     },
   },
   headerContainer: {
     paddingBottom: spacing(2),
-
+    width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
 
     [breakpoints.down('xs')]: {
       paddingBottom: spacing(1),
     },
-    [breakpoints.down('sm')]: {
+    [breakpoints.down('md')]: {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
@@ -125,16 +136,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   title: {
     fontWeight: 700,
-    fontSize: '22px',
+    fontSize: '20px',
     [breakpoints.down('xs')]: {
-      fontSize: '20px',
+      fontSize: '18px',
     },
   },
   organization: {
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
-    [breakpoints.down('sm')]: {
+    [breakpoints.down('md')]: {
       textAlign: 'center',
     },
   },
