@@ -14,6 +14,7 @@ const OpportunitiesPage = ({
   getAllApplications,
   contactId,
   submittedIds,
+  contact,
 }) => {
   let history = useHistory();
 
@@ -42,12 +43,9 @@ const OpportunitiesPage = ({
     return `https://docs.google.com/document/d/${opportunity.gdoc_id}`;
   });
 
-  const isEligible = true;
-  // const isApplied = false;
-
   return (
     <div className={classes.container}>
-      {Object.values(opportunities).map((opportunity, index) => (
+      {opportunities.map((opportunity, index) => (
         <Paper className={classes.opportunityPaper} key={index}>
           <div className={classes.headerContainer}>
             <Typography variant="h5" component="h1" className={classes.title}>
@@ -76,25 +74,30 @@ const OpportunitiesPage = ({
               </Typography>
             </div>
             <div className={classes.applyButton}>
-              {isEligible ? (
-                submittedIds.includes(opportunity.id) ? (
-                  <Button
-                    onClick={() => toViewApplication(opportunity.id)}
-                    variant="contained"
-                    color="primary"
-                  >
-                    View Application
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => toApply(opportunity.id)}
-                    variant="contained"
-                    color="primary"
-                  >
-                    Apply
-                  </Button>
-                )
-              ) : null}
+              {contact
+                ? contact.programs.map(eachProgram =>
+                    eachProgram.program.id === opportunity.program_id &&
+                    eachProgram.is_approved === true ? (
+                      submittedIds.includes(opportunity.id) ? (
+                        <Button
+                          onClick={() => toViewApplication(opportunity.id)}
+                          variant="contained"
+                          color="primary"
+                        >
+                          View Application
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => toApply(opportunity.id)}
+                          variant="contained"
+                          color="primary"
+                        >
+                          Apply
+                        </Button>
+                      )
+                    ) : null
+                  )
+                : null}
             </div>
           </div>
         </Paper>
