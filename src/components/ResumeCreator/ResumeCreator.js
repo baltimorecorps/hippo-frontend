@@ -28,6 +28,11 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  editContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     height: '100%',
     width: `calc(100% - ${drawerWidth}px)`,
   },
@@ -362,6 +367,7 @@ const ResumeCreator = ({
   refreshExperiences,
   getContact,
   getContactCapabilities,
+  viewOnly,
 }) => {
   const classes = useStyles();
   const [selected, setSelected] = useState(null);
@@ -489,53 +495,61 @@ const ResumeCreator = ({
     setSelected(newSelected);
   };
 
-  return (
-    <DragDropContext onDragEnd={dragEndHandler}>
-      <div className={classes.root}>
-        <SelectDrawer
-          sections={sections}
-          drawerWidth={drawerWidth}
-          setSelected={updateSelected}
-          selected={selected}
-        />
-        <div className={classes.spacer} />
-        <div className={classes.container}>
-          <div className={classes.buttonContainer}>
-            <ReactToPrint
-              trigger={() => (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes.printButton}
-                >
-                  Print Resume
-                </Button>
-              )}
-              content={() => printTarget.current}
-            />
-          </div>
-
-          {pageSections.map((page, i) => (
-            <Paper className={classes.paper}>
-              <PageLayout
-                key={i}
-                index={i}
-                header={i === 0 ? header : null}
-                sections={page}
-                selected={selected}
-                refs={i === 0 ? [leftOverflowRef, rightOverflowRef] : null}
-              />
-            </Paper>
-          ))}
-        </div>
-        <PrintComponent
-          printRef={printTarget}
-          pageSections={pageSections}
-          selected={selected}
-          header={header}
+  const viewComponent = (
+    <div className={classes.container}>
+      <div className={classes.buttonContainer}>
+        <ReactToPrint
+          trigger={() => (
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.printButton}
+            >
+              Print Resume
+            </Button>
+          )}
+          content={() => printTarget.current}
         />
       </div>
-    </DragDropContext>
+
+      {pageSections.map((page, i) => (
+        <Paper className={classes.paper}>
+          <PageLayout
+            key={i}
+            index={i}
+            header={i === 0 ? header : null}
+            sections={page}
+            selected={selected}
+            refs={i === 0 ? [leftOverflowRef, rightOverflowRef] : null}
+          />
+        </Paper>
+      ))}
+      <PrintComponent
+        printRef={printTarget}
+        pageSections={pageSections}
+        selected={selected}
+        header={header}
+      />
+    </div>
   );
+
+  if (viewOnly) {
+    return viewComponent;
+  } else {
+    return (
+      <DragDropContext onDragEnd={dragEndHandler}>
+        <div className={classes.root}>
+          <SelectDrawer
+            sections={sections}
+            drawerWidth={drawerWidth}
+            setSelected={updateSelected}
+            selected={selected}
+          />
+          <div className={classes.spacer} />
+          <div className={classes.editContainer}>{viewComponent}</div>
+        </div>
+      </DragDropContext>
+    );
+  }
 };
 export default ResumeCreator;
