@@ -2,7 +2,6 @@ import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DragWrapper from './DragWrapper';
 
-
 const formatDate = experience => {
   return (
     `${experience.start_month} ${experience.start_year}` +
@@ -11,7 +10,13 @@ const formatDate = experience => {
   );
 };
 
-const ExperienceItem = ({classes, experience, index, enableDrag}) => {
+const ExperienceItem = ({
+  classes,
+  experience,
+  achievements,
+  index,
+  enableDrag,
+}) => {
   const innerComponent = (
     <div className={classes.item}>
       <div>
@@ -20,11 +25,13 @@ const ExperienceItem = ({classes, experience, index, enableDrag}) => {
       </div>
       <span className={classes.title}>{experience.title}</span>
       <span className={classes.dates}>{formatDate(experience)}</span>
-      {experience.achievements.map(achievement => (
-        <span key={achievement.id} className={classes.achievement}>
-          {achievement.description}
-        </span>
-      ))}
+      {experience.achievements.map(achievement =>
+        achievements[achievement.id] ? (
+          <span key={achievement.id} className={classes.achievement}>
+            {achievement.description}
+          </span>
+        ) : null
+      )}
     </div>
   );
 
@@ -32,7 +39,7 @@ const ExperienceItem = ({classes, experience, index, enableDrag}) => {
     return (
       <DragWrapper index={index} dragId={`${experience.id}`}>
         {innerComponent}
-        </DragWrapper>
+      </DragWrapper>
     );
   } else {
     return innerComponent;
