@@ -18,18 +18,13 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import {formatMonthYearDate, getWorkLength, configureForm} from './helpers';
 
-const ExperiencesListItem = ({
+export const DisplayExperience = ({
   experience,
-  capabilities,
-  onUpdate,
-  onDelete,
-  onSelect,
-  onSkillsMore,
-  updateEditScore,
-  selectable,
   classes,
+  hideSkills,
+  onSelectAchievement,
+  selectedAchievements,
 }) => {
-  const initial = experience.host ? experience.host[0] : experience.title[0];
   let title = experience.title;
   if (experience.type === 'Education') {
     if (experience.degree === 'Other') {
@@ -40,13 +35,6 @@ const ExperiencesListItem = ({
   }
 
   const config = configureForm(experience.type);
-
-  const [editing, setEditing] = useState(false);
-  const submitUpdate = async function(values) {
-    await onUpdate(values);
-    setEditing(false);
-  };
-
   let startDate = '';
   if (experience.start_month && experience.start_year) {
     startDate = formatMonthYearDate(
@@ -68,6 +56,111 @@ const ExperiencesListItem = ({
   );
 
   const location = ` - ${experience.location}`;
+
+  return (
+    <div>
+      <Typography
+        variant="h6"
+        component="h2"
+        style={{
+          fontWeight: '700',
+        }}
+      >
+        {experience.host || experience.title}
+
+        {experience.location ? (
+          <span
+            style={{
+              color: '#7d7d7d',
+              fontSize: '15px',
+              fontStyle: 'italic',
+              fontWeight: 'normal',
+            }}
+          >
+            {location}
+          </span>
+        ) : null}
+      </Typography>
+
+      <Typography
+        variant="subtitle1"
+        component="h3"
+        style={{
+          fontSize: '17px',
+          color: '#3b3b3b',
+          fontWeight: 'bold',
+          fontFamily: 'Lato',
+        }}
+      >
+        {experience.host && title}
+      </Typography>
+      {experience.link && (
+        <Button
+          target="_blank"
+          component="button"
+          href={experience.link}
+          variant="text"
+          className={classes.link}
+        >
+          {experience.link}
+        </Button>
+      )}
+      <Typography
+        gutterBottom
+        variant="subtitle1"
+        component="p"
+        style={{color: '#7d7d7d', fontSize: '15px'}}
+      >
+        {startDate}
+        {config.showEndDate && (
+          <React.Fragment> &ndash; {endDate}</React.Fragment>
+        )}
+        {config.showWorkLength && ` (${lengthWork})`}
+      </Typography>
+
+      {experience.description && (
+        <Typography gutterBottom variant="body1" component="p">
+          {experience.description}
+        </Typography>
+      )}
+
+      {experience.achievements.length
+        ? config.showAchievements && (
+            <AchievementsList
+              achievements={experience.achievements}
+              onSelect={onSelectAchievement}
+              selected={selectedAchievements}
+            />
+          )
+        : null}
+
+      {experience.skills.length
+        ? !hideSkills &&
+          config.showSkills && <SkillsList skills={experience.skills} />
+        : null}
+    </div>
+  );
+};
+
+const ExperiencesListItem = ({
+  experience,
+  capabilities,
+  onUpdate,
+  onDelete,
+  onSelect,
+  onSkillsMore,
+  updateEditScore,
+  selectable,
+  classes,
+}) => {
+  const config = configureForm(experience.type);
+  const initial = experience.host ? experience.host[0] : experience.title[0];
+
+  const [editing, setEditing] = useState(false);
+  const submitUpdate = async function(values) {
+    await onUpdate(values);
+    setEditing(false);
+  };
 
   const editExperienceHandler = () => {
     createClickTracking(
@@ -95,82 +188,7 @@ const ExperiencesListItem = ({
 
         <Grid item xs={10} sm={7} md={8}>
           {!editing && (
-            <React.Fragment>
-              <Typography
-                variant="h6"
-                component="h2"
-                style={{
-                  fontWeight: '700',
-                }}
-              >
-                {experience.host || experience.title}
-
-                {experience.location ? (
-                  <span
-                    style={{
-                      color: '#7d7d7d',
-                      fontSize: '15px',
-                      fontStyle: 'italic',
-                      fontWeight: 'normal',
-                    }}
-                  >
-                    {location}
-                  </span>
-                ) : null}
-              </Typography>
-
-              <Typography
-                variant="subtitle1"
-                component="h3"
-                style={{
-                  fontSize: '17px',
-                  color: '#3b3b3b',
-                  fontWeight: 'bold',
-                  fontFamily: 'Lato',
-                }}
-              >
-                {experience.host && title}
-              </Typography>
-              {experience.link && (
-                <Button
-                  target="_blank"
-                  component="button"
-                  href={experience.link}
-                  variant="text"
-                  className={classes.link}
-                >
-                  {experience.link}
-                </Button>
-              )}
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                component="p"
-                style={{color: '#7d7d7d', fontSize: '15px'}}
-              >
-                {startDate}
-                {config.showEndDate && (
-                  <React.Fragment> &ndash; {endDate}</React.Fragment>
-                )}
-                {config.showWorkLength && ` (${lengthWork})`}
-              </Typography>
-
-              {experience.description && (
-                <Typography gutterBottom variant="body1" component="p">
-                  {experience.description}
-                </Typography>
-              )}
-
-              {experience.achievements.length
-                ? config.showAchievements && (
-                    <AchievementsList achievements={experience.achievements} />
-                  )
-                : null}
-
-              {experience.skills.length
-                ? config.showSkills && <SkillsList skills={experience.skills} />
-                : null}
-            </React.Fragment>
+            <DisplayExperience experience={experience} classes={classes} />
           )}
         </Grid>
         {editing && (
@@ -271,6 +289,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       textDecoration: 'none',
     },
+  },
+  wrapper: {
   },
 });
 

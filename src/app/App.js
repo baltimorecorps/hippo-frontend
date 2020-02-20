@@ -127,7 +127,7 @@ const App = ({
       <MuiThemeProvider theme={theme}>
         <Router>
           <div className={classes.page}>
-            <AppBar position="fixed">
+            <AppBar position="fixed" className={classes.appBar} >
               <Toolbar>
                 <Link to="/">
                   <MenuItem>
@@ -198,9 +198,12 @@ const App = ({
   );
 };
 
-const styles = ({breakpoints, palette, spacing}) => ({
+const styles = ({breakpoints, palette, spacing, zIndex}) => ({
   grow: {
     flexGrow: 1,
+  },
+  appBar: {
+    zIndex: zIndex.drawer + 1,
   },
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',

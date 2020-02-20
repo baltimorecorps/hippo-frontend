@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {moveResumeItem} from 'state/resume';
 import {refreshExperiences} from 'state/profile';
-import {getContactCapabilities} from 'state/contacts';
+import {getContact, getContactCapabilities} from 'state/contacts';
 import ResumeCreator from './ResumeCreator';
 
 const getCapabilities = experience => {
@@ -47,11 +47,20 @@ export const mapStateToProps = (state, props) => {
   const otherSkills = contact ? contact.other_skills : [];
 
   if (capabilities) {
+    if (otherSkills) {
+      capabilities['cap:other'] = {
+        id: 'cap:other',
+        name: 'Other Skills',
+        skills: otherSkills,
+        suggested_skills: [],
+      }
+    }
     sections.capabilities = Object.values(capabilities);
   }
 
   return {
     sections,
+    contact,
   };
 };
 
@@ -59,6 +68,8 @@ export const mapDispatchToProps = (dispatch, props) => {
   return {
     moveResumeItem: (id, destination, source) => {},
     refreshExperiences: () => refreshExperiences(props.contactId)(dispatch),
+    getContact: () =>
+      getContact(props.contactId)(dispatch),
     getContactCapabilities: () =>
       getContactCapabilities(props.contactId)(dispatch),
   };
