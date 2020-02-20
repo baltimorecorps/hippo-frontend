@@ -134,9 +134,9 @@ const App = ({
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
-                {/* <Link to="/opportunities">
+                <Link to="/opportunities">
                   <Typography>Opportunities</Typography>
-                </Link> */}
+                </Link>
                 <div className={classes.grow} />
 
                 {!hasSession && !isAuthenticated && (

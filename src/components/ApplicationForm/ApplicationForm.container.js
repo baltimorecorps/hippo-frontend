@@ -5,8 +5,8 @@ import {
   getApplication,
   updateApplication,
   submitApplication,
-} from '../../state/opportunity';
-import {getAllOpportunities} from '../../state/opportunity';
+} from 'state/opportunity';
+import {getAllOpportunities} from 'state/opportunity';
 import {useParams} from 'react-router-dom';
 
 const mapStateToProps = (state, props) => {

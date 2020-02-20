@@ -1,7 +1,8 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import {createAButton} from 'lib/helperFunctions/helpers';
+import {useHistory} from 'react-router-dom';
 
 const StickyFooter = ({
   classes,
@@ -14,32 +15,30 @@ const StickyFooter = ({
   application,
   page,
 }) => {
-  const createAButton = (content, handleClick, isPrimary) => {
-    return (
-      <Button
-        onClick={handleClick}
-        variant="contained"
-        color={isPrimary ? 'primary' : 'default'}
-        className={classes.buttons}
-      >
-        {content}
-      </Button>
-    );
+  let history = useHistory();
+  const toProfile = opportunity_id => {
+    history.push('/profile');
   };
-
-  const backButton = createAButton('Back', back, false);
-  const nextButton = createAButton('Next', handleNext, true);
+  const backButton = createAButton('Back', back, false, classes.buttons);
+  const nextButton = createAButton('Next', handleNext, true, classes.buttons);
   const toOpportunitiesButton = createAButton(
     'View More Opportunities',
     toOpportunities,
-    true
+    true,
+    classes.buttons
   );
-  const submitButton = createAButton('Submit', submit, true);
+  const submitButton = createAButton('Submit', submit, true, classes.buttons);
+  const profileButton = createAButton(
+    'Edit Profile',
+    toProfile,
+    false,
+    classes.buttons
+  );
 
   return (
     <Paper className={classes.stickyFooter}>
       <div className={classes.buttonContainer}>
-        {backButton}
+        {application.status === 'submitted' ? profileButton : backButton}
         {page === 'interest'
           ? nextButton
           : application.status === 'submitted'

@@ -95,6 +95,16 @@ export const submitApplication = application =>
     )(dispatch);
   };
 
+export const GET_ALL_SUBMITTED_APPLICATIONS = 'GET_ALL_SUBMITTED_APPLICATIONS';
+export const GET_ALL_SUBMITTED_APPLICATIONS_API = fetchActionTypes(
+  GET_ALL_SUBMITTED_APPLICATIONS
+);
+export const getAllSubmittedApplications = (contactId, dispatch) =>
+  makeApiFetchActions(
+    GET_ALL_SUBMITTED_APPLICATIONS,
+    `${API_URL}/api/contacts/${contactId}/app/`
+  );
+
 export const opportunitiesReducer = createReducer(
   {},
   {
@@ -122,6 +132,11 @@ export const applicationsReducer = createReducer(
     [GET_APPLICATION_API.RESOLVE]: (state, action) => {
       const application = action.body.data;
       state[application.id] = application;
+    },
+    [GET_ALL_SUBMITTED_APPLICATIONS_API.RESOLVE]: (state, action) => {
+      action.body.data.forEach(app => {
+        state[app.id] = app;
+      });
     },
     [UPDATE_APPLICATION_API.RESOLVE]: (state, action) => {
       const application = action.body.data;
