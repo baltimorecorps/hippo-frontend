@@ -77,7 +77,7 @@ const OpportunitiesPage = ({
               {contact
                 ? contact.programs.map(eachProgram =>
                     eachProgram.program.id === opportunity.program_id &&
-                    eachProgram.is_approved === false ? (
+                    eachProgram.is_approved === true ? (
                       submittedIds.includes(opportunity.id) ? (
                         <Button
                           onClick={() => toViewApplication(opportunity.id)}
