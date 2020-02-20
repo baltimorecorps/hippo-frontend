@@ -53,7 +53,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     marginBottom: spacing(1.5),
     padding: spacing(1),
-    borderLeft: 'solid 3px #93c47d',
+    borderLeft: `solid 3px ${palette.resume.yellow}`,
     fontWeight: 400,
     fontSize: '9pt',
     fontFamily: 'Quicksand',

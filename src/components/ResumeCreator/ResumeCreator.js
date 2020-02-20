@@ -33,12 +33,11 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   },
   paper: {
     marginTop: spacing(2),
-    fontFamily: 'Merriweather',
   },
   header: {
     height: `${headerHeight}px`,
     padding: spacing(1),
-    backgroundColor: '#f4f0de',
+    backgroundColor: palette.resume.gray,
   },
   headerDetails: {
     display: 'flex',
@@ -46,6 +45,22 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     paddingTop: spacing(2.5),
     fontWeight: 300,
     fontSize: '9pt',
+  },
+  headerDetailText: {
+    paddingTop: spacing(1),
+    color: palette.resume.blue,
+  },
+  name: {
+    fontSize: '20pt',
+    color: palette.resume.blue,
+    marginTop: spacing(2),
+    marginLeft: spacing(1),
+    marginBottom: spacing(1),
+  },
+  vocation: {
+    fontWeight: 400,
+    fontSize: '12pt',
+    color: palette.resume.yellow,
   },
   body: {
     height: `calc(100% - ${headerHeight}px)`,
@@ -57,6 +72,7 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     width: '8.5in',
     height: '11in',
     padding: `${spacing(3)}px ${spacing(4)}px`,
+    fontFamily: 'Merriweather',
   },
   overflow: {
     height: '100%',
@@ -71,18 +87,6 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     width: '8.5in',
     height: '11in',
     padding: `${spacing(3)}px ${spacing(4)}px`,
-    fontFamily: 'Merriweather',
-  },
-  name: {
-    fontWeight: 700,
-    fontSize: '20pt',
-    paddingTop: spacing(2),
-    paddingBottom: spacing(1),
-  },
-  vocation: {
-    fontWeight: 400,
-    fontSize: '12pt',
-    color: '#93c47d',
   },
   vertical: {
     display: 'flex',
@@ -110,12 +114,12 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   sectionHeader: {
     fontWeight: 400,
     fontSize: '12pt',
-    color: '#2079c7',
+    color: palette.resume.blue,
     paddingTop: spacing(3),
     paddingBottom: spacing(0.5),
     paddingLeft: spacing(1),
     marginBottom: spacing(0.5),
-    borderBottom: 'solid 2px #2079c7',
+    borderBottom: 'solid 2px ${palette.resume.blue}',
   },
   buttonContainer: {
     width: '8.5in',
@@ -138,8 +142,8 @@ const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
   const bodyClass = header ? classes.body : classes.bodyNoHeader;
   const sectionLabels = header
     ? {
-        experience: 'Relevant Experience',
-        capabilities: 'Skills & Abilities',
+        experience: 'Experience',
+        capabilities: 'Skills and Abilities',
         portfolio: 'Projects',
         education: 'Education',
       }
@@ -157,12 +161,12 @@ const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
           <Grid container>
             <Grid item xs={9} className={classes.vertical}>
               <span className={classes.name}>{header.name}</span>
-              <span className={classes.vocation}>{header.vocation}</span>
+              {/*TODO: <span className={classes.vocation}>{header.vocation}</span>*/}
             </Grid>
             <Grid item xs={3} className={classes.headerDetails}>
-              <span>{header.address}</span>
-              <span>{header.phone}</span>
-              <span>{header.email}</span>
+              {/*TODO: <span className={classes.headerDetailText}>{header.address}</span>*/}
+              <span className={classes.headerDetailText}>{header.phone}</span>
+              <span className={classes.headerDetailText}>{header.email}</span>
             </Grid>
           </Grid>
         </Grid>
@@ -352,9 +356,11 @@ const PrintComponent = ({printRef, header, pageSections, selected}) => {
 
 const ResumeCreator = ({
   sections,
+  contact,
   contactId,
   moveResumeItem,
   refreshExperiences,
+  getContact,
   getContactCapabilities,
 }) => {
   const classes = useStyles();
@@ -374,6 +380,12 @@ const ResumeCreator = ({
   const [rightOverflowIndex, rightOverflowRef, reflowRight] = useOverflow(
     totalRight
   );
+
+  useEffect(() => {
+    if (!contact) {
+      getContact();
+    }
+  }, [sections, refreshExperiences, contact, getContact]);
 
   useEffect(() => {
     if (
@@ -463,11 +475,12 @@ const ResumeCreator = ({
   };
 
   const header = {
-    name: 'David Koh',
-    vocation: 'Software Engineer',
-    address: 'Tuscaloosa, AL',
-    phone: '+1 (555) 123 1234',
-    email: 'david@example.com',
+    name: contact ? `${contact.first_name} ${contact.last_name}` : '',
+    //TODO: re-add once we have these
+    //vocation: '',
+    //address: '',
+    phone: contact ? contact.phone_primary : '',
+    email: contact && contact.email_primary ? contact.email_primary.email : '',
   };
 
   const updateSelected = newSelected => {
@@ -476,7 +489,6 @@ const ResumeCreator = ({
     setSelected(newSelected);
   };
 
-  console.log('ps', pageSections);
   return (
     <DragDropContext onDragEnd={dragEndHandler}>
       <div className={classes.root}>
