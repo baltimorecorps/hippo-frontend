@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
 import StickyFooter from './StickyFooter';
+import {ResumeViewer} from 'components/ResumeCreator';
 
 const Review = ({
   classes,
@@ -17,6 +18,7 @@ const Review = ({
   toProfile,
   toOpportunities,
   opportunity,
+  contactId,
 }) => {
   const [confirmed, setConfirmed] = useState(false);
 
@@ -67,6 +69,8 @@ const Review = ({
           {application.interest_statement}
         </Typography>
       </Paper>
+      <ResumeViewer contactId={contactId} viewOnly={true} />
+
       <StickyFooter
         page="review"
         back={back}

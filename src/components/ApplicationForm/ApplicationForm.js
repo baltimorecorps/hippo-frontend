@@ -88,7 +88,7 @@ const ApplicationForm = ({
   const updateAppResume = async resume => {
     //TODO: connect to API
     //const response = await updateApplication(newApplication);
-    const response = {statusCode: 200}
+    const response = {statusCode: 200};
     console.log('hi', response);
     if (response.statusCode === 200) {
       history.push(`${match.url}/review`);
@@ -111,6 +111,7 @@ const ApplicationForm = ({
           back={() => history.push(`${match.url}/resume`)}
           toProfile={backToProfile}
           toOpportunities={backToOpportunities}
+          contactId={contact.id}
         />
       </Route>
       <Route exact path={`${match.path}/resume`}>

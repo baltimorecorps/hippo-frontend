@@ -131,6 +131,10 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   },
   printButton: {
     margin: `${spacing(2)}px 0`,
+    position: 'fixed',
+    bottom: 0,
+    zIndex: 1,
+    left: '42%',
   },
 }));
 

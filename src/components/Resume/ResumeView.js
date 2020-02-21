@@ -6,7 +6,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 const ResumeView = ({classes, match}) => {
   return (
     <div className={classes.wrapper}>
-      <ResumeViewer contactId={match.params.contactId} />
+      <ResumeViewer contactId={match.params.contactId} viewOnly />
     </div>
   );
 };
