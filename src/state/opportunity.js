@@ -22,6 +22,25 @@ export const addOpportunity = opportunity =>
     )(dispatch);
   };
 
+export const UPDATE_OPPORTUNITY = 'UPDATE_OPPORTUNITY';
+export const UPDATE_OPPORTUNITY_API = fetchActionTypes(UPDATE_OPPORTUNITY);
+export const updateOpportunity = opportunity =>
+  async function(dispatch) {
+    dispatch({
+      type: UPDATE_OPPORTUNITY,
+      opportunity,
+    });
+
+    return await makeApiFetchActions(
+      UPDATE_OPPORTUNITY,
+      `${API_URL}/api/opportunity/${opportunity.id}`,
+      {
+        body: JSON.stringify(opportunity),
+        method: 'PUT',
+      }
+    )(dispatch);
+  };
+
 export const GET_ALL_OPPORTUNITIES = 'GET_ALL_OPPORTUNITIES';
 export const GET_ALL_OPPORTUNITIES_API = fetchActionTypes(
   GET_ALL_OPPORTUNITIES
@@ -99,6 +118,10 @@ export const opportunitiesReducer = createReducer(
   {},
   {
     [ADD_OPPORTUNITY_API.RESOLVE]: (state, action) => {
+      const opportunity = action.body.data;
+      state[opportunity.id] = opportunity;
+    },
+    [UPDATE_OPPORTUNITY_API.RESOLVE]: (state, action) => {
       const opportunity = action.body.data;
       state[opportunity.id] = opportunity;
     },

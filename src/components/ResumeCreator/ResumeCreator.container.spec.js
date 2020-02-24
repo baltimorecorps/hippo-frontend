@@ -1,5 +1,5 @@
 import {mapStateToProps} from './ResumeCreator.container';
-import {RESUME_CREATION} from '../../state/resume';
+import {RESUME_CREATION} from 'state/resume';
 
 const blankState = {
   contacts: [],

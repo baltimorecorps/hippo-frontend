@@ -1,6 +1,7 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {Draggable} from 'react-beautiful-dnd';
+import DragWrapper from './DragWrapper';
+
 
 const formatDate = experience => {
   return (
@@ -10,31 +11,32 @@ const formatDate = experience => {
   );
 };
 
-const ExperienceItem = ({classes, experience, index}) => {
-  return (
-    <Draggable draggableId={`${experience.id}`} index={index}>
-      {provided => (
-        <div 
-          className={`${classes.item}`}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <div>
-            <span className={classes.org}>{experience.host} &mdash; </span>
-            <span className={classes.location}>{experience.location}</span>
-          </div>
-          <span className={classes.title}>{experience.title}</span>
-          <span className={classes.dates}>{formatDate(experience)}</span>
-          {experience.achievements.map(achievement => (
-            <span key={achievement.id} className={classes.achievement}>
-              {achievement.description}
-            </span>
-          ))}
-        </div>
-      )}
-    </Draggable>
+const ExperienceItem = ({classes, experience, index, enableDrag}) => {
+  const innerComponent = (
+    <div className={classes.item}>
+      <div>
+        <span className={classes.org}>{experience.host} &mdash; </span>
+        <span className={classes.location}>{experience.location}</span>
+      </div>
+      <span className={classes.title}>{experience.title}</span>
+      <span className={classes.dates}>{formatDate(experience)}</span>
+      {experience.achievements.map(achievement => (
+        <span key={achievement.id} className={classes.achievement}>
+          {achievement.description}
+        </span>
+      ))}
+    </div>
   );
+
+  if (enableDrag) {
+    return (
+      <DragWrapper index={index} dragId={`${experience.id}`}>
+        {innerComponent}
+        </DragWrapper>
+    );
+  } else {
+    return innerComponent;
+  }
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

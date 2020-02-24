@@ -1,8 +1,7 @@
-import {fetchActionTypes} from 'redux-fetch-wrapper';
-import {createReducer} from 'redux-starter-kit';
-
 import {API_URL} from 'app/constants';
 import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
+import {fetchActionTypes} from 'redux-fetch-wrapper';
+import {createReducer} from 'redux-starter-kit';
 
 // ## REDUX ACTION TYPES ##
 export const ADD_NEW_PROGRAM = 'ADD_NEW_PROGRAM';

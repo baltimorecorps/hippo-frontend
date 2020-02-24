@@ -37,6 +37,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.2.0",
     "react-select": "^2.4.4",
+    "react-to-print": "^2.5.1",
     "react-window": "^1.8.5",
     "redux": "^4.0.4",
     "redux-fetch-wrapper": "^1.0.0",

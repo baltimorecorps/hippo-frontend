@@ -341,7 +341,7 @@ const ProfilePage = ({
                 />
 
                 {/*<ResumesList />*/}
-                {inSelectMode ? null : (
+                {/*inSelectMode ? null : (
                   <Grid
                     item
                     xs={openSidebar ? 8 : 11}
@@ -360,16 +360,16 @@ const ProfilePage = ({
                       </Button>
                     </Grid>
                   </Grid>
-                )}
+                )*/}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-        {/* {inSelectMode ? (
-          <Grid item xs={6} className={classes.wrapperDiv}>
-            <ResumeCreator />
-          </Grid>
-        ) : null} */}
+        {/*inSelectMode ? (
+            <Grid item xs={6} className={classes.wrapperDiv}>
+              <ResumeCreator />
+            </Grid>
+          ) : null*/}
       </Grid>
       <Grid item>
         {openSidebar && (

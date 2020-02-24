@@ -27,7 +27,6 @@ export const addExperience = experience =>
         body: JSON.stringify(experience),
         method: 'POST',
         credentials: 'include',
-
       }
     )(dispatch);
   };

@@ -24,7 +24,8 @@ import Home from 'components/Home/Home';
 import Contacts from 'components/Contacts/Contacts.container';
 import ResumeView from 'components/Resume/ResumeView';
 import OpportunitiesPage from 'components/OpportunitiesPage';
-import OpportunityForm from 'components/OpportunityForm';
+import InternalOpportunitiesPage from 'components/Internal/OpportunitiesPage/';
+import AddOrEditOpportunityForm from 'components/Internal/OpportunitiesPage/AddOrEditOpportunityForm/AddOrEditOpportunityForm';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 
@@ -133,8 +134,11 @@ const App = ({
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
-                {/* <Link to="/opportunities">
+                {/* <Link to="/opportunities" className={classes.links}>
                   <Typography>Opportunities</Typography>
+                </Link>
+                <Link to="/internal-opportunities" className={classes.links}>
+                  <Typography>Internal Opportunities</Typography>
                 </Link> */}
                 <div className={classes.grow} />
 
@@ -165,8 +169,13 @@ const App = ({
               />
               <Route
                 exact
+                path="/internal-opportunities/"
+                component={InternalOpportunitiesPage}
+              />
+              <Route
+                exact
                 path="/new-opportunity/"
-                component={OpportunityForm}
+                component={AddOrEditOpportunityForm}
               />
               <Route
                 path="/application/:opportunityId"
@@ -211,6 +220,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
   },
   homeIcon: {fontSize: '35px'},
+  links: {
+    marginLeft: spacing(2),
+  },
 });
 
 export default withStyles(styles)(App);

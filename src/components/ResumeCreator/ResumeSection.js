@@ -2,18 +2,27 @@ import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {Droppable} from 'react-beautiful-dnd';
 
-
-const ResumeSection = ({classes, sectionId, sectionLabel, children}) => (
+const ResumeSection = ({
+  classes,
+  sectionId,
+  sectionLabel,
+  children,
+  enableDrag,
+}) => (
   <div className={classes.section}>
     <div className={classes.header}>{sectionLabel}</div>
-    <Droppable droppableId={sectionId}>
-      {provided => (
-        <div ref={provided.innerRef} {...provided.droppableProps}>
-          {children}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+    {enableDrag ? (
+      <Droppable droppableId={sectionId}>
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            {children}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    ) : (
+      children
+    )}
   </div>
 );
 

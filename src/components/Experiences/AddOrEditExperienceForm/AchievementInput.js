@@ -15,25 +15,27 @@ import Input from '@material-ui/core/Input';
 import CloseIcon from '@material-ui/icons/Close';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
-const CapabilityInput = withStyles(
+const capabilityStyles = ({breakpoints, palette, spacing}) => (
   {
     root: {
       borderRadius: '20px',
-      height: '32px',
-      backgroundColor: '#e0e0e0',
+      height: '24px',
+      backgroundColor: 'white',
+      border: 'solid 1px rgba(0,0,0,0.23)',
+      margin: '2px',
     },
     highlighted: {
       borderRadius: '20px',
-      height: '32px',
-      backgroundColor: 'skyblue',
+      height: '24px',
+      backgroundColor: palette.primary.main,
+      margin: '2px',
     },
     input: {
       padding: '0px',
       margin: '0px 12px',
     },
-  },
-  {name: 'CapabilityInput'}
-)(({classes, highlight, ...props}) => (
+  });
+const CapabilityInput = withStyles(capabilityStyles)(({classes, highlight, ...props}) => (
   <Input
     classes={{
       root: highlight ? classes.highlighted : classes.root,
@@ -156,10 +158,6 @@ const AchievementInput = React.forwardRef(
               endAdornment: endAdornment,
             }}
           />
-
-          <FormHelperText className={classes.formHelperText}>
-            {achievement.description.length > 750 && errors.achievements_error}
-          </FormHelperText>
           {capabilities && capabilities.map(capability => {
             return (
               <CapabilitySelect
@@ -170,6 +168,10 @@ const AchievementInput = React.forwardRef(
               />
             );
           })}
+          <FormHelperText className={classes.formHelperText}>
+            {achievement.description.length > 750 && errors.achievements_error}
+          </FormHelperText>
+
         </Grid>
       </Grid>
     );

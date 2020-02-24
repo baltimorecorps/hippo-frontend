@@ -1,6 +1,5 @@
 import {format} from 'date-fns';
 import {API_URL} from 'app/constants';
-
 import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
 import {fetchActionTypes} from 'redux-fetch-wrapper';
 import {createReducer} from 'redux-starter-kit';

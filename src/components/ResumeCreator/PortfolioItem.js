@@ -1,6 +1,6 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {Draggable} from 'react-beautiful-dnd';
+import DragWrapper from './DragWrapper';
 
 const formatDate = experience => {
   if (experience.start_month !== 'none') {
@@ -10,27 +10,28 @@ const formatDate = experience => {
   }
 };
 
-const PortfolioItem = ({classes, experience, index}) => {
-  return (
-    <Draggable draggableId={`${experience.id}`} index={index}>
-      {provided => (
-        <div
-          className={`${classes.item}`}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <div className={classes.dateCol}>
-            <span className={classes.date}>{formatDate(experience)}</span>
-          </div>
-          <div className={classes.contentCol}>
-            <span className={classes.title}>{experience.title}</span>
-            <span className={classes.description}>{experience.description}</span>
-          </div>
-        </div>
-      )}
-    </Draggable>
+const PortfolioItem = ({classes, experience, index, enableDrag}) => {
+  const innerComponent = (
+    <div className={classes.item}>
+      <div className={classes.dateCol}>
+        <span className={classes.date}>{formatDate(experience)}</span>
+      </div>
+      <div className={classes.contentCol}>
+        <span className={classes.title}>{experience.title}</span>
+        <span className={classes.description}>{experience.description}</span>
+      </div>
+    </div>
   );
+
+  if (enableDrag) {
+    return (
+      <DragWrapper index={index} dragId={`${experience.id}`}>
+        {innerComponent}
+      </DragWrapper>
+    );
+  } else {
+    return innerComponent;
+  }
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
