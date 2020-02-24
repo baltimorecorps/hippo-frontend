@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -6,26 +6,48 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
+import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
+import EachOpportunity from './EachOpportunity';
 
-const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
+const InternalOpportunitiesPage = ({
+  classes,
+  opportunities,
+  getAllOpportunities,
+  addOpportunity,
+  updateOpportunity,
+}) => {
   let history = useHistory();
 
-  // Commented out for Feature Flag
+  //Commented out for Feature Flag
   // const handleClick = () => {
   //   history.push('/new-opportunity');
   // };
 
-  const handleApply = opportunity_id => {
-    history.push(`/application/${opportunity_id}`);
-  };
+  // const handleEdit = opportunity_id => {
+  //   history.push('/edit-opportunity');
+  // };
 
   useEffect(() => {
     getAllOpportunities();
   }, [getAllOpportunities]);
 
-  const googleDocLinks = Object.values(opportunities).map(opportunity => {
-    return `https://docs.google.com/document/d/${opportunity.gdoc_id}`;
-  });
+  const [showForm, setShowForm] = useState(false);
+
+  // TODO: make dropdown selection for cycle_id and Program_id in the future
+  const blankOpportunity = {
+    gdoc_link: '',
+    title: '',
+    cycle_id: 1,
+    short_description: '',
+    org_name: '',
+  };
+
+  const addNewOpportunity = async values => {
+    const result = await addOpportunity(values);
+    if (result && result.statusCode == 201) {
+      history.push('/internal-opportunities');
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -36,59 +58,35 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
           align="left"
           className={classes.header}
         >
-          Place for Purpose Opportunities
+          Internal View Opportunities
         </Typography>
       </Paper>
+      {showForm ? (
+        <AddOrEditOpportunityForm
+          type="add"
+          opportunity={blankOpportunity}
+          onSubmit={addNewOpportunity}
+          closeForm={() => setShowForm(false)}
+        />
+      ) : (
+        <Grid className={classes.buttonContainer}>
+          <Button
+            onClick={() => setShowForm(true)}
+            variant="contained"
+            color="primary"
+            className={classes.createButton}
+          >
+            Add New Opportunity
+          </Button>
+        </Grid>
+      )}
       {Object.values(opportunities).map((opportunity, index) => (
-        <Paper className={classes.opportunityPaper} key={index}>
-          <div className={classes.headerContainer}>
-            <Typography variant="h5" component="h1" className={classes.title}>
-              {opportunity.title}
-            </Typography>
-            <Typography
-              variant="h5"
-              component="h1"
-              className={classes.organization}
-            >
-              {opportunity.org_name || ''}
-            </Typography>
-          </div>
-          <div className={classes.opportunityContent}>
-            <div className={classes.opportunityDescription}>
-              <Typography className={classes.description}>
-                {opportunity.short_description}
-                <br />
-              </Typography>
-              <Typography className={classes.link}>
-                {createExternalLink(
-                  'View full description',
-                  googleDocLinks[index],
-                  classes.link
-                )}
-              </Typography>
-            </div>
-            {/* <div className={classes.applyButton}>
-              <Button
-                onClick={() => handleApply(opportunity.id)}
-                variant="contained"
-                color="primary"
-              >
-                Apply
-              </Button>
-            </div> */}
-          </div>
-        </Paper>
+        <EachOpportunity
+          opportunity={opportunity}
+          index={index}
+          updateOpportunity={updateOpportunity}
+        />
       ))}
-      {/* <Grid className={classes.buttonContainer}>
-        <Button
-          onClick={handleClick}
-          variant="contained"
-          color="primary"
-          className={classes.createButton}
-        >
-          Add New Opportunity
-        </Button>
-      </Grid> */}
     </div>
   );
 };
@@ -186,6 +184,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
+    marginBottom: spacing(2),
   },
   link: {
     color: palette.primary.link,
@@ -224,4 +223,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(OpportunitiesPage);
+export default withStyles(styles)(InternalOpportunitiesPage);

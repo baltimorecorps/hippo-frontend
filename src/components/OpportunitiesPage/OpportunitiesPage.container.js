@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import OpportunitiesPage from './OpportunitiesPage';
-import {getAllOpportunities} from '../../state/opportunity';
+import {getAllOpportunities} from 'state/opportunity';
 
 const mapStateToProps = state => ({
   opportunities: state.opportunities,
