@@ -189,15 +189,15 @@ const opportunityValidator = values => {
   let isError = false;
   let err = {};
 
-  if (!org_name) {
+  if (!org_name || org_name.length === 0) {
     isError = true;
-    err.org_name_error = 'Required';
+    err.orgName_error = 'Required';
   } else if (org_name && org_name.length > 200) {
     isError = true;
-    err.org_name_error = 'Organization name must be less than 200 characters';
+    err.orgName_error = 'Organization name must be less than 200 characters';
   }
 
-  if (!title) {
+  if (!title || title.length === 0) {
     isError = true;
     err.title_error = 'Required';
   } else if (title && title.length > 200) {
@@ -205,7 +205,7 @@ const opportunityValidator = values => {
     err.title_error = 'Job title must be less than 200 characters';
   }
 
-  if (!short_description) {
+  if (!short_description || short_description.length === 0) {
     isError = true;
     err.shortDescription_error = 'Required';
   } else if (short_description && short_description.length > 2000) {
@@ -214,17 +214,17 @@ const opportunityValidator = values => {
       'Short description must be less than 2,000 characters';
   }
 
-  // if (!gdoc_link) {
-  //   isError = true;
-  //   err.link_error = 'Required';
-  // } else if (
-  //   gdoc_link &&
-  //   !gdoc_link.startsWith('https://docs.google.com/document/d/')
-  // ) {
-  //   isError = true;
-  //   err.link_error =
-  //     'Link must start with "https://docs.google.com/document/d/"';
-  // }
+  if (!gdoc_link || gdoc_link.length === 0) {
+    isError = true;
+    err.link_error = 'Required';
+  } else if (
+    gdoc_link &&
+    !gdoc_link.startsWith('https://docs.google.com/document/d/')
+  ) {
+    isError = true;
+    err.link_error =
+      'Link must start with "https://docs.google.com/document/d/"';
+  }
 
   if (gdoc_link && gdoc_link.length > 200) {
     isError = true;

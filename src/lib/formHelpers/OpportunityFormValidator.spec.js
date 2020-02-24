@@ -22,10 +22,10 @@ describe('Opportunity Form Validators', () => {
   test('Empty values ', () => {
     const values = {};
     const expectedErr = {
-      org_name_error: 'Required',
+      orgName_error: 'Required',
       title_error: 'Required',
       shortDescription_error: 'Required',
-      // link_error: 'Required',
+      link_error: 'Required',
     };
 
     const {isError, err} = opportunityValidator(values);
@@ -39,7 +39,7 @@ describe('Opportunity Form Validators', () => {
       org_name: 'Baltimore Corps',
       title: 'Web Developer',
       short_description: text897characters,
-      // gdoc_link: validLink,
+      gdoc_link: validLink,
     };
     let expectedErr = {};
 
@@ -49,39 +49,39 @@ describe('Opportunity Form Validators', () => {
     expect(err).toEqual(expectedErr);
   });
 
-  // test('Invalid Google Doc link', () => {
-  //   const values = {
-  //       org_name: 'Baltimore Corps',
-  //     title: 'Web Developer',
-  //     short_description: text897characters,
-  //     gdoc_link: invalidLink,
-  //   };
-  //   let expectedErr = {
-  //     link_error: 'Link must start with "https://docs.google.com/document/d/"',
-  //   };
+  test('Invalid Google Doc link', () => {
+    const values = {
+      org_name: 'Baltimore Corps',
+      title: 'Web Developer',
+      short_description: text897characters,
+      gdoc_link: invalidLink,
+    };
+    let expectedErr = {
+      link_error: 'Link must start with "https://docs.google.com/document/d/"',
+    };
 
-  //   const {isError, err} = opportunityValidator(values);
+    const {isError, err} = opportunityValidator(values);
 
-  //   expect(isError).toBe(true);
-  //   expect(err).toEqual(expectedErr);
-  // });
+    expect(isError).toBe(true);
+    expect(err).toEqual(expectedErr);
+  });
 
-  // test('Valid Google Doc link but too long', () => {
-  //   const values = {
-  //     org_name: 'Baltimore Corps',
-  //     title: 'Web Developer',
-  //     short_description: text897characters,
-  //     // gdoc_link: validLinkButTooLong,
-  //   };
-  //   let expectedErr = {
-  //     // link_error: 'Link must be less than 200 characters',
-  //   };
+  test('Valid Google Doc link but too long', () => {
+    const values = {
+      org_name: 'Baltimore Corps',
+      title: 'Web Developer',
+      short_description: text897characters,
+      gdoc_link: validLinkButTooLong,
+    };
+    let expectedErr = {
+      link_error: 'Link must be less than 200 characters',
+    };
 
-  //   const {isError, err} = opportunityValidator(values);
+    const {isError, err} = opportunityValidator(values);
 
-  //   expect(isError).toBe(true);
-  //   expect(err).toEqual(expectedErr);
-  // });
+    expect(isError).toBe(true);
+    expect(err).toEqual(expectedErr);
+  });
 
   test('Title/Organization with too many characters', () => {
     const values = {
@@ -91,7 +91,7 @@ describe('Opportunity Form Validators', () => {
       gdoc_link: validLink,
     };
     let expectedErr = {
-      org_name_error: 'Organization name must be less than 200 characters',
+      orgName_error: 'Organization name must be less than 200 characters',
       title_error: 'Job title must be less than 200 characters',
     };
 
