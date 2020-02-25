@@ -2,50 +2,48 @@
 
 ## Structure
 
-- actions
-- reducers
-- lib
-- atoms
-- modules
+- app
+- components
   - Achievements
+  - ApplicationForm
+  - CapabilityScores
+  - Contacts
   - Experiences
-  - Resumes
-  - Tags
+  - Home
+  - NavigationBar
+  - OpportunityPage
+  - Profile Page
+  - Resume
+  - ResumeCreator
+  - SideBarDrawer
+  - Skills
   - Users
-- pages
+- lib
+- state
 - styles
 
-### actions and reducers
 
-Redux related actions and reducers to manage application state belong here.
+### app
 
-Future considerations: placing these actions / reducers within their relevant modules.
+This is where we keep App.js 
 
-### lib
-
-Various utilities and globally (or semi-globally) used functions.
-
-### atoms
-
-Small custom components that are used in a variety of places with no specific module relation.
-
-### modules
+### components
 
 Large components that correspond to entities represented in the database.
 
 These are built with `atoms` and existing Material UI components.
 
-### pages
+### lib
 
-Page components built primarily with modules, some parts with `atoms`, and some with existing Material UI components.
+Various utilities and globally (or semi-globally) used functions.
+
+### state
+
+Redux related actions and reducers to manage application state belong here.
 
 ### styles
 
 Currently contains the theme for Material UI.
-
-### Other
-
-Both `components/` and `api/` are remnants of a previous structure. Code within these folders should be checked and moved to the appropriate place in the new structure.
 
 
 ## Packages used (with justification)
