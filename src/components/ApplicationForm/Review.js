@@ -9,10 +9,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
 import StickyFooter from './StickyFooter';
 import {ResumeViewer} from 'components/ResumeCreator';
+import {createExternalLink} from 'lib/helperFunctions/helpers';
 
 const Review = ({
   classes,
   application,
+  resume,
+  setResume,
   back,
   submit,
   toProfile,
@@ -52,6 +55,19 @@ const Review = ({
             <strong>Organization:</strong> {opportunity.org_name || ''}
           </Typography>
         </div>
+        <div className={classes.opportunityDescription}>
+          <Typography className={classes.description}>
+            {opportunity.short_description}
+            <br />
+          </Typography>
+          <Typography className={classes.link}>
+            {createExternalLink(
+              'View full description',
+              `https://docs.google.com/document/d/${opportunity.gdoc_id}`,
+              classes.link
+            )}
+          </Typography>
+        </div>
       </Paper>
       <Paper className={classes.paper}>
         <div>
@@ -69,7 +85,12 @@ const Review = ({
           {application.interest_statement}
         </Typography>
       </Paper>
-      <ResumeViewer contactId={contactId} viewOnly={true} />
+      <ResumeViewer
+        contactId={contactId}
+        resume={application.resume}
+        setResume={setResume}
+        viewOnly={true}
+      />
 
       <StickyFooter
         page="review"
@@ -125,6 +146,22 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   title: {
     fontSize: '17px',
+  },
+  organization: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
+  },
+  link: {
+    color: palette.primary.link,
+    marginTop: spacing(1),
+  },
+  description: {
+    textAlign: 'justify',
+    textIndent: '25px',
+  },
+  opportunityContent: {
+    marginBottom: spacing(2),
   },
   interestStatement: {
     textIndent: '25px',

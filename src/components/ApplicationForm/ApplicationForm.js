@@ -8,6 +8,7 @@ import AddResume from './AddResume';
 const ApplicationForm = ({
   contact,
   opportunity,
+  myResume,
   application,
   startApplication,
   getApplication,
@@ -64,6 +65,8 @@ const ApplicationForm = ({
     }
   }, [contact, opportunity, application, getApplication, startApplication]);
 
+  const [resume, setResume] = useState(application ? application.resume : null);
+
   let history = useHistory();
   const backToOpportunities = () => {
     history.push('/opportunities');
@@ -86,9 +89,14 @@ const ApplicationForm = ({
   };
 
   const updateAppResume = async resume => {
+    console.log('updateApp', resume);
     //TODO: connect to API
-    //const response = await updateApplication(newApplication);
-    const response = {statusCode: 200};
+    const newApplication = {
+      ...application,
+      resume,
+    };
+    const response = await updateApplication(newApplication);
+    // const response = {statusCode: 200};
     console.log('hi', response);
     if (response.statusCode === 200) {
       history.push(`${match.url}/review`);
@@ -112,12 +120,16 @@ const ApplicationForm = ({
           toProfile={backToProfile}
           toOpportunities={backToOpportunities}
           contactId={contact.id}
+          resume={resume}
+          setResume={setResume}
         />
       </Route>
       <Route exact path={`${match.path}/resume`}>
         <AddResume
           opportunity={opportunity}
           application={application}
+          resume={resume}
+          setResume={setResume}
           contactId={contact.id}
           next={updateAppResume}
           back={() => history.push(`${match.url}`)}

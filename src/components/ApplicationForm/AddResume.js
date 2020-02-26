@@ -19,21 +19,26 @@ const InterestForm = ({
   opportunity,
   application,
   contactId,
+  resume,
+  setResume,
 }) => {
   const [text, setText] = useState(startText);
+
   const [errors, setErrors] = useState({});
 
   const handleNext = () => {
-    //const {isError, err} = interestValidator(text);
+    // const {isError, err} = interestValidator(text);
     const isError = false;
     const err = {};
 
     if (isError) {
       setErrors(err);
     } else {
-      next(text);
+      next(resume);
     }
   };
+
+  console.log('AddResume', resume);
 
   return (
     <div className={classes.root}>
@@ -51,13 +56,20 @@ const InterestForm = ({
                   Add Resume
                 </Typography>
               </div>
-              <div>
+              <div className={classes.titleContainer}>
                 <Typography
                   variant="h6"
                   component="h2"
                   className={classes.title}
                 >
                   {opportunity.title}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  component="h1"
+                  className={classes.organization}
+                >
+                  {opportunity.org_name || ''}
                 </Typography>
               </div>
               <div className={classes.opportunityDescription}>
@@ -77,11 +89,16 @@ const InterestForm = ({
           </Paper>
         </div>
       </div>
-      <ResumeViewer hidePrint contactId={contactId} />
+      <ResumeViewer
+        hidePrint
+        contactId={contactId}
+        resume={resume}
+        setResume={setResume}
+      />
       <StickyFooter
         page="addResume"
         back={back}
-        handleNext={() => handleNext(text)}
+        handleNext={() => handleNext()}
         application={application}
       />
     </div>
@@ -109,6 +126,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'center',
   },
+
   paper: {
     [breakpoints.up('sm')]: {
       flexBasis: '83.333333%',
@@ -119,12 +137,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
       maxWidth: '66.666667%',
     },
     [breakpoints.up('lg')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
+      flexBasis: '100%',
+      maxWidth: '100%',
     },
     width: '8.5in',
     maxWidth: '1000px',
-
     padding: spacing(2, 3, 3),
     marginBottom: spacing(2),
   },
@@ -137,9 +154,19 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontWeight: 700,
     textAlign: 'center',
   },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   title: {
     marginBottom: spacing(1),
     fontWeight: 'bold',
+  },
+  organization: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
   },
   interest: {
     width: '100%',

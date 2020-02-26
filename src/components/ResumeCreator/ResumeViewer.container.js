@@ -28,6 +28,7 @@ export const mapStateToProps = (state, props) => {
     portfolio: [],
     capabilities: [],
   };
+
   Object.values(state.experiences).forEach(exp => {
     if (exp.contact_id.toString() !== props.contactId.toString()) {
       return;
@@ -53,7 +54,7 @@ export const mapStateToProps = (state, props) => {
         name: 'Other Skills',
         skills: otherSkills,
         suggested_skills: [],
-      }
+      };
     }
     sections.capabilities = Object.values(capabilities);
   }
@@ -68,8 +69,7 @@ export const mapDispatchToProps = (dispatch, props) => {
   return {
     moveResumeItem: (id, destination, source) => {},
     refreshExperiences: () => refreshExperiences(props.contactId)(dispatch),
-    getContact: () =>
-      getContact(props.contactId)(dispatch),
+    getContact: () => getContact(props.contactId)(dispatch),
     getContactCapabilities: () =>
       getContactCapabilities(props.contactId)(dispatch),
   };

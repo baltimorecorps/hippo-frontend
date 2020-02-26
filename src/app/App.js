@@ -127,16 +127,20 @@ const App = ({
       <MuiThemeProvider theme={theme}>
         <Router>
           <div className={classes.page}>
-            <AppBar position="fixed" className={classes.appBar} >
+            <AppBar position="fixed" className={classes.appBar}>
               <Toolbar>
                 <Link to="/">
                   <MenuItem>
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
-                <Link to="/opportunities">
-                  <Typography>Opportunities</Typography>
-                </Link>
+
+                {(hasSession || isAuthenticated) && (
+                  <Link to="/opportunities">
+                    <Typography>Opportunities</Typography>
+                  </Link>
+                )}
+
                 <div className={classes.grow} />
 
                 {!hasSession && !isAuthenticated && (

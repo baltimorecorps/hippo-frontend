@@ -138,7 +138,15 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   },
 }));
 
-const PageLayout = ({sections, header, index, selected, refs, enableDrag}) => {
+const PageLayout = ({
+  sections,
+
+  header,
+  index,
+  selected,
+  refs,
+  enableDrag,
+}) => {
   const classes = useStyles();
 
   let leftRef = null;
@@ -368,6 +376,8 @@ const ResumeCreator = ({
   sections,
   contact,
   contactId,
+  resume,
+  setResume,
   moveResumeItem,
   refreshExperiences,
   getContact,
@@ -377,7 +387,7 @@ const ResumeCreator = ({
   disableSpacer,
 }) => {
   const classes = useStyles();
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(resume);
 
   const printTarget = useRef();
 
@@ -456,9 +466,12 @@ const ResumeCreator = ({
       });
     });
     setSelected(newSelected);
+    setResume(newSelected);
   }
+  setResume(selected);
 
   let pageSections = [];
+
   if (sections) {
     let filteredSections = sections;
     if (selected) {

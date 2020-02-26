@@ -42,9 +42,16 @@ const InterestForm = ({
               Interest Statement
             </Typography>
           </div>
-          <div>
+          <div className={classes.titleContainer}>
             <Typography variant="h6" component="h2" className={classes.title}>
               {opportunity.title}
+            </Typography>
+            <Typography
+              variant="h5"
+              component="h1"
+              className={classes.organization}
+            >
+              {opportunity.org_name || ''}
             </Typography>
           </div>
           <div className={classes.opportunityDescription}>
@@ -118,6 +125,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: spacing(2),
     marginBottom: spacing(3),
   },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   paper: {
     flexGrow: 1,
     [breakpoints.up('sm')]: {
@@ -184,6 +196,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     textAlign: 'justify',
     border: `${palette.primary.midGray} 1px solid`,
     padding: '10px',
+  },
+  organization: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
   },
 });
 

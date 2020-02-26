@@ -24,10 +24,6 @@ const OpportunitiesPage = ({
     }
   }, [apps, getAllApplications, contactId]);
 
-  // const handleClick = () => {
-  //   history.push('/new-opportunity');
-  // };
-
   const toApply = opportunity_id => {
     history.push(`/application/${opportunity_id}`);
   };
@@ -77,7 +73,7 @@ const OpportunitiesPage = ({
               {contact
                 ? contact.programs.map(eachProgram =>
                     eachProgram.program.id === opportunity.program_id &&
-                    eachProgram.is_approved === false ? (
+                    eachProgram.is_approved === true ? (
                       submittedIds.includes(opportunity.id) ? (
                         <Button
                           onClick={() => toViewApplication(opportunity.id)}
@@ -102,16 +98,6 @@ const OpportunitiesPage = ({
           </div>
         </Paper>
       ))}
-      {/* <Grid className={classes.buttonContainer}>
-        <Button
-          onClick={handleClick}
-          variant="contained"
-          color="primary"
-          className={classes.createButton}
-        >
-          Add New Opportunity
-        </Button>
-      </Grid> */}
     </div>
   );
 };
@@ -145,6 +131,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   opportunityContent: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     [breakpoints.down('sm')]: {
       flexDirection: 'column',
       justifyContent: 'center',
