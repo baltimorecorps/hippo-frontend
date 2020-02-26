@@ -2,6 +2,7 @@ import fetchMock from 'fetch-mock';
 import {
   ALL_CONTACTS,
   ALL_CONTACTS_API,
+  GET_CONTACT_API,
   GET_MY_CONTACT,
   GET_MY_CONTACT_API,
   getMyContact,
@@ -352,6 +353,16 @@ describe('Contacts state', () => {
       2: {id: 2},
       3: {id: 3},
       4: {id: 4},
+    });
+  });
+  test('Get single contact', () => {
+    const contact = {id: 123};
+    const newState = contactsReducer(undefined, {
+      type: GET_CONTACT_API.RESOLVE,
+      body: {status: 'success', data: contact},
+    });
+    expect(newState).toEqual({
+      123: {id: 123},
     });
   });
   test('Add contact', () => {

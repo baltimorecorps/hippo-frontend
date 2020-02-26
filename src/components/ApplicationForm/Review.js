@@ -8,15 +8,21 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
 import StickyFooter from './StickyFooter';
+import {ResumeViewer} from 'components/ResumeCreator';
+import {
+  createExternalLink,
+  createClickTracking,
+} from 'lib/helperFunctions/helpers';
 
 const Review = ({
   classes,
   application,
+  setResume,
   back,
   submit,
-  toProfile,
   toOpportunities,
   opportunity,
+  contactId,
 }) => {
   const [confirmed, setConfirmed] = useState(false);
 
@@ -25,6 +31,7 @@ const Review = ({
   const toConfirmationPage = () => {
     history.push('/confirmation-page');
   };
+
   const submitApplication = async () => {
     const response = await submit();
     if (response.statusCode == 200) {
@@ -50,6 +57,19 @@ const Review = ({
             <strong>Organization:</strong> {opportunity.org_name || ''}
           </Typography>
         </div>
+        <div className={classes.opportunityDescription}>
+          <Typography className={classes.description}>
+            {opportunity.short_description}
+            <br />
+          </Typography>
+          <Typography className={classes.link}>
+            {createExternalLink(
+              'View full description',
+              opportunity.gdoc_link,
+              classes.link
+            )}
+          </Typography>
+        </div>
       </Paper>
       <Paper className={classes.paper}>
         <div>
@@ -67,6 +87,13 @@ const Review = ({
           {application.interest_statement}
         </Typography>
       </Paper>
+      <ResumeViewer
+        contactId={contactId}
+        resume={application.resume}
+        setResume={setResume}
+        viewOnly={true}
+      />
+
       <StickyFooter
         page="review"
         back={back}
@@ -77,7 +104,7 @@ const Review = ({
       <ConfirmDialog
         open={confirmed}
         closeDialog={() => setConfirmed(false)}
-        submit={submitApplication}
+        submitApplication={submitApplication}
       />
     </div>
   );
@@ -122,6 +149,22 @@ const styles = ({breakpoints, palette, spacing}) => ({
   title: {
     fontSize: '17px',
   },
+  organization: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
+  },
+  link: {
+    color: palette.primary.link,
+    marginTop: spacing(1),
+  },
+  description: {
+    textAlign: 'justify',
+    textIndent: '25px',
+  },
+  opportunityContent: {
+    marginBottom: spacing(2),
+  },
   interestStatement: {
     textIndent: '25px',
     textAlign: 'justify',
@@ -129,7 +172,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
 });
 
 const ConfirmDialog = withStyles(styles)(
-  ({classes, open, closeDialog, submit}) => {
+  ({classes, open, closeDialog, submitApplication}) => {
+    const onClickSubmit = () => {
+      createClickTracking(
+        'Submitting Application',
+        'Click Submit Application',
+        'Click Submit Application'
+      );
+      submitApplication();
+    };
     return (
       <Dialog open={open}>
         <DialogContent>
@@ -141,7 +192,7 @@ const ConfirmDialog = withStyles(styles)(
           <Button onClick={closeDialog} variant="contained" color="secondary">
             No
           </Button>
-          <Button onClick={submit} variant="contained" color="primary">
+          <Button onClick={onClickSubmit} variant="contained" color="primary">
             Yes
           </Button>
         </DialogActions>

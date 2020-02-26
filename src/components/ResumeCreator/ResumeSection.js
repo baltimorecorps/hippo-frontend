@@ -37,12 +37,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
   header: {
     fontWeight: 400,
     fontSize: '12pt',
-    color: '#2079c7',
+    color: palette.resume.blue,
     paddingTop: spacing(3),
     paddingBottom: spacing(0.5),
     paddingLeft: spacing(1),
     marginBottom: spacing(2),
-    borderBottom: 'solid 2px #2079c7',
+    borderBottom: `solid 3px ${palette.resume.blue}`,
   },
 });
 
