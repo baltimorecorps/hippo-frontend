@@ -1,7 +1,7 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
-import {createAButton} from 'lib/helperFunctions/helpers';
+import {createAButton, createClickTracking} from 'lib/helperFunctions/helpers';
 import {useHistory} from 'react-router-dom';
 
 const StickyFooter = ({
@@ -21,17 +21,35 @@ const StickyFooter = ({
   };
   const backButton = createAButton('Back', back, false, classes.buttons);
   const nextButton = createAButton('Next', handleNext, true, classes.buttons);
-  const toOpportunitiesButton = createAButton(
-    'View More Opportunities',
-    toOpportunities,
-    true,
-    classes.buttons
-  );
   const submitButton = createAButton('Submit', submit, true, classes.buttons);
+
+  const onClickEditProfile = () => {
+    createClickTracking(
+      'View Application',
+      'Click Edit Profile',
+      'Click Edit Profile'
+    );
+    toProfile();
+  };
+  const onClickViewMoreOpportunities = () => {
+    createClickTracking(
+      'View Application',
+      'Click View More Opportunities',
+      'Click View More Opportunities'
+    );
+    toOpportunities();
+  };
+
   const profileButton = createAButton(
     'Edit Profile',
-    toProfile,
+    onClickEditProfile,
     false,
+    classes.buttons
+  );
+  const toOpportunitiesButton = createAButton(
+    'View More Opportunities',
+    onClickViewMoreOpportunities,
+    true,
     classes.buttons
   );
 
