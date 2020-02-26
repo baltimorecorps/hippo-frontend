@@ -127,19 +127,20 @@ const App = ({
       <MuiThemeProvider theme={theme}>
         <Router>
           <div className={classes.page}>
-            <AppBar position="fixed">
+            <AppBar position="fixed" className={classes.appBar}>
               <Toolbar>
                 <Link to="/">
                   <MenuItem>
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
-                {/* <Link to="/opportunities" className={classes.links}>
-                  <Typography>Opportunities</Typography>
-                </Link>
-                <Link to="/internal-opportunities" className={classes.links}>
-                  <Typography>Internal Opportunities</Typography>
-                </Link> */}
+
+                {(hasSession || isAuthenticated) && (
+                  <Link to="/opportunities">
+                    <Typography>Opportunities</Typography>
+                  </Link>
+                )}
+
                 <div className={classes.grow} />
 
                 {!hasSession && !isAuthenticated && (
@@ -206,9 +207,12 @@ const App = ({
   );
 };
 
-const styles = ({breakpoints, palette, spacing}) => ({
+const styles = ({breakpoints, palette, spacing, zIndex}) => ({
   grow: {
     flexGrow: 1,
+  },
+  appBar: {
+    zIndex: zIndex.drawer + 1,
   },
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',

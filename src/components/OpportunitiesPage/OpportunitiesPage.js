@@ -1,22 +1,34 @@
 import React, {useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
 
-const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
+const OpportunitiesPage = ({
+  classes,
+  opportunities,
+  getAllOpportunities,
+  apps,
+  getAllApplications,
+  contactId,
+  submittedIds,
+  contact,
+}) => {
   let history = useHistory();
 
-  // Commented out for Feature Flag
-  // const handleClick = () => {
-  //   history.push('/new-opportunity');
-  // };
+  useEffect(() => {
+    if (!apps) {
+      getAllApplications(contactId);
+    }
+  }, [apps, getAllApplications, contactId]);
 
-  const handleApply = opportunity_id => {
+  const toApply = opportunity_id => {
     history.push(`/application/${opportunity_id}`);
+  };
+  const toViewApplication = opportunity_id => {
+    history.push(`/application/${opportunity_id}/review`);
   };
 
   useEffect(() => {
@@ -39,7 +51,7 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
           Place for Purpose Opportunities
         </Typography>
       </Paper>
-      {Object.values(opportunities).map((opportunity, index) => (
+      {opportunities.map((opportunity, index) => (
         <Paper className={classes.opportunityPaper} key={index}>
           <div className={classes.headerContainer}>
             <Typography variant="h5" component="h1" className={classes.title}>
@@ -67,28 +79,35 @@ const OpportunitiesPage = ({classes, opportunities, getAllOpportunities}) => {
                 )}
               </Typography>
             </div>
-            {/* <div className={classes.applyButton}>
-              <Button
-                onClick={() => handleApply(opportunity.id)}
-                variant="contained"
-                color="primary"
-              >
-                Apply
-              </Button>
-            </div> */}
+            <div className={classes.applyButton}>
+              {contact
+                ? contact.programs.map(eachProgram =>
+                    eachProgram.program.id === opportunity.program_id &&
+                    eachProgram.is_approved === true ? (
+                      submittedIds.includes(opportunity.id) ? (
+                        <Button
+                          onClick={() => toViewApplication(opportunity.id)}
+                          variant="contained"
+                          color="primary"
+                        >
+                          View Application
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() => toApply(opportunity.id)}
+                          variant="contained"
+                          color="primary"
+                        >
+                          Apply
+                        </Button>
+                      )
+                    ) : null
+                  )
+                : null}
+            </div>
           </div>
         </Paper>
       ))}
-      {/* <Grid className={classes.buttonContainer}>
-        <Button
-          onClick={handleClick}
-          variant="contained"
-          color="primary"
-          className={classes.createButton}
-        >
-          Add New Opportunity
-        </Button>
-      </Grid> */}
     </div>
   );
 };
@@ -143,6 +162,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   opportunityContent: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     [breakpoints.down('sm')]: {
       flexDirection: 'column',
       justifyContent: 'center',
@@ -150,21 +170,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   opportunityDescription: {
-    width: '100%',
-
+    marginRight: spacing(2),
     display: 'flex',
     flexDirection: 'column',
+    [breakpoints.down('xs')]: {
+      marginBottom: spacing(1),
+    },
     [breakpoints.down('sm')]: {
       marginBottom: spacing(2),
       marginRight: spacing(0),
       alignSelf: 'center',
-    },
-    [breakpoints.down('xs')]: {
-      marginBottom: spacing(1),
-      width: 'auto',
-    },
-    [breakpoints.up('md')]: {
-      marginRight: spacing(2),
     },
   },
   headerContainer: {
@@ -192,7 +207,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     textIndent: '25px',
     alignSelf: 'flex-end',
     marginTop: spacing(1),
-    [breakpoints.down('xs')]: {
+    [breakpoints.down('sm')]: {
       alignSelf: 'center',
       marginTop: spacing(0),
       textIndent: '0px',
@@ -203,12 +218,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     textIndent: '25px',
   },
   applyButton: {
-    [breakpoints.down('sm')]: {
-      alignSelf: 'flex-end',
-    },
-    [breakpoints.down('xs')]: {
-      alignSelf: 'center',
-    },
+    maxWidth: '100%',
   },
   title: {
     fontWeight: 700,
