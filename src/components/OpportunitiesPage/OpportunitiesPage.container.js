@@ -6,10 +6,10 @@ import {
 } from 'state/opportunity';
 
 const mapStateToProps = state => {
-  let contactId;
-  if (state.accounts.contact) {
-    contactId = state.accounts.contact.id;
-  }
+  // let contactId;
+  // // if (state.accounts.contact) {
+  // contactId = state.accounts.contact.id;
+  // // }
 
   const contact = Object.values(state.contacts);
 
@@ -21,7 +21,7 @@ const mapStateToProps = state => {
 
   return {
     opportunities,
-    contactId,
+    // contactId: contact[0].id,
     contact: contact[0],
     submittedIds: submittedIds,
   };

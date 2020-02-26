@@ -108,6 +108,7 @@ const App = ({
     );
     loginWithRedirect({});
   };
+
   const onClickLogOutHandler = () => {
     createClickTracking(
       'Navigation Bar',
@@ -120,6 +121,14 @@ const App = ({
         returnTo: window.location.origin,
       });
     })();
+  };
+
+  const onClickOpportunities = () => {
+    createClickTracking(
+      'Navigation Bar',
+      'Click Opportunities',
+      'Click Opportunities Link'
+    );
   };
 
   return (
@@ -136,7 +145,7 @@ const App = ({
                 </Link>
 
                 {(hasSession || isAuthenticated) && (
-                  <Link to="/opportunities">
+                  <Link to="/opportunities" onClick={onClickOpportunities}>
                     <Typography>Opportunities</Typography>
                   </Link>
                 )}

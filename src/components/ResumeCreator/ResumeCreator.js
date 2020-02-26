@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import {DragDropContext} from 'react-beautiful-dnd';
 import ResumeSection from './ResumeSection';
@@ -524,6 +525,14 @@ const ResumeCreator = ({
     setSelected(newSelected);
   };
 
+  const onClickPrintResume = () => {
+    createClickTracking(
+      'Submitting Application',
+      'Click Print Resume',
+      'Click Print Resume'
+    );
+  };
+
   const viewComponent = (
     <div className={classes.container}>
       {!hidePrint ? (
@@ -534,6 +543,7 @@ const ResumeCreator = ({
                 variant="contained"
                 color="primary"
                 className={classes.printButton}
+                onClick={onClickPrintResume}
               >
                 Print Resume
               </Button>
