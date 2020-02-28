@@ -25,7 +25,8 @@ import Contacts from 'components/Contacts/Contacts.container';
 import ResumeView from 'components/Resume/ResumeView';
 
 import OpportunitiesPage from 'components/OpportunitiesPage';
-import OpportunityForm from 'components/OpportunityForm';
+import InternalOpportunitiesPage from 'components/Internal/OpportunitiesPage/';
+import AddOrEditOpportunityForm from 'components/Internal/OpportunitiesPage/AddOrEditOpportunityForm/AddOrEditOpportunityForm';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunityBoard from 'components/InternalOpportunityBoard';
@@ -110,6 +111,7 @@ const App = ({
     );
     loginWithRedirect({});
   };
+
   const onClickLogOutHandler = () => {
     createClickTracking(
       'Navigation Bar',
@@ -124,21 +126,27 @@ const App = ({
     })();
   };
 
+  const onClickOpportunities = () => {
+    createClickTracking(
+      'Navigation Bar',
+      'Click Opportunities',
+      'Click Opportunities Link'
+    );
+  };
+
   return (
     <ErrorBoundary fileName="src/App.js">
       <MuiThemeProvider theme={theme}>
         <Router>
           <div className={classes.page}>
-            <AppBar position="fixed">
+            <AppBar position="fixed" className={classes.appBar}>
               <Toolbar>
                 <Link to="/">
                   <MenuItem>
                     <HomeIcon className={classes.homeIcon} />
                   </MenuItem>
                 </Link>
-                <Link to="/opportunities">
-                  <Typography>Opportunities</Typography>
-                </Link>
+
                 <Link
                   to="/opportunities/internal-board"
                   className={classes.links}
@@ -151,6 +159,21 @@ const App = ({
                 >
                   <Typography>Internal Review</Typography>
                 </Link>
+
+                {/* <Link to="/internal-opportunities" className={classes.links}>
+                  <Typography>Internal Opportunities</Typography>
+                </Link> */}
+
+                {(hasSession || isAuthenticated) && (
+                  <Link
+                    to="/opportunities"
+                    onClick={onClickOpportunities}
+                    className={classes.links}
+                  >
+                    <Typography>Opportunities</Typography>
+                  </Link>
+                )}
+
                 <div className={classes.grow} />
 
                 {!hasSession && !isAuthenticated && (
@@ -180,8 +203,13 @@ const App = ({
               />
               <Route
                 exact
+                path="/internal-opportunities/"
+                component={InternalOpportunitiesPage}
+              />
+              <Route
+                exact
                 path="/new-opportunity/"
-                component={OpportunityForm}
+                component={AddOrEditOpportunityForm}
               />
               <Route
                 path="/application/:opportunityId"
@@ -223,9 +251,12 @@ const App = ({
   );
 };
 
-const styles = ({breakpoints, palette, spacing}) => ({
+const styles = ({breakpoints, palette, spacing, zIndex}) => ({
   grow: {
     flexGrow: 1,
+  },
+  appBar: {
+    zIndex: zIndex.drawer + 1,
   },
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',

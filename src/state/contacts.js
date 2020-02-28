@@ -45,7 +45,7 @@ const apiAddContact = (authToken, contact) =>
 // Get a contact
 export const GET_CONTACT = 'GET_CONTACT';
 export const GET_CONTACT_API = fetchActionTypes(GET_CONTACT);
-export const apiGetContact = contactId =>
+export const getContact = contactId =>
   makeApiFetchActions(GET_CONTACT, `${API_URL}/api/contacts/${contactId}/`);
 
 export const GET_CONTACT_CAPABILITIES = 'GET_CONTACT_CAPABILITIES';

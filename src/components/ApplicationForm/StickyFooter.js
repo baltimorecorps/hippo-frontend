@@ -1,7 +1,8 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import {createAButton, createClickTracking} from 'lib/helperFunctions/helpers';
+import {useHistory} from 'react-router-dom';
 
 const StickyFooter = ({
   classes,
@@ -14,33 +15,56 @@ const StickyFooter = ({
   application,
   page,
 }) => {
-  const createAButton = (content, handleClick, isPrimary) => {
-    return (
-      <Button
-        onClick={handleClick}
-        variant="contained"
-        color={isPrimary ? 'primary' : 'default'}
-        className={classes.buttons}
-      >
-        {content}
-      </Button>
+  let history = useHistory();
+  const toProfile = opportunity_id => {
+    history.push('/profile');
+  };
+  const backButton = createAButton('Back', back, false, classes.buttons);
+  const nextButton = createAButton('Next', handleNext, true, classes.buttons);
+  const submitButton = createAButton('Submit', submit, true, classes.buttons);
+
+  const onClickEditProfile = () => {
+    createClickTracking(
+      'View Application',
+      'Click Edit Profile',
+      'Click Edit Profile'
     );
+    toProfile();
+  };
+  const onClickViewMoreOpportunities = () => {
+    createClickTracking(
+      'View Application',
+      'Click View More Opportunities',
+      'Click View More Opportunities'
+    );
+    toOpportunities();
   };
 
-  const backButton = createAButton('Back', back, false);
-  const nextButton = createAButton('Next', handleNext, true);
+  const profileButton = createAButton(
+    'Edit Profile',
+    onClickEditProfile,
+    false,
+    classes.buttons
+  );
   const toOpportunitiesButton = createAButton(
     'View More Opportunities',
-    toOpportunities,
-    true
+    onClickViewMoreOpportunities,
+    true,
+    classes.buttons
   );
-  const submitButton = createAButton('Submit', submit, true);
 
   return (
-    <Paper className={classes.stickyFooter}>
+    <Paper
+      className={classes.stickyFooter}
+      style={
+        page === 'addResume'
+          ? {width: 'calc(100vw+400px)', left: '400px'}
+          : {width: '100vw'}
+      }
+    >
       <div className={classes.buttonContainer}>
-        {backButton}
-        {page === 'interest'
+        {application.status === 'submitted' ? profileButton : backButton}
+        {page !== 'review'
           ? nextButton
           : application.status === 'submitted'
           ? toOpportunitiesButton
@@ -54,8 +78,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   stickyFooter: {
     display: 'flex',
     justifyContent: 'center',
-    width: '100vw',
+
     position: 'fixed',
+    right: 0,
     bottom: 0,
     backgroundColor: palette.primary.almostBlack,
   },

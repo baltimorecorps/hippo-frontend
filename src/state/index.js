@@ -13,7 +13,7 @@ import resume from './resume';
 import {
   opportunitiesReducer as opportunities,
   applicationsReducer as applications,
-}from './opportunity';
+} from './opportunity';
 
 import {programsReducer as programs} from './programs';
 

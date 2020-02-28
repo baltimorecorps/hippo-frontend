@@ -21,6 +21,11 @@ const theme = createMuiTheme({
       main: '#eb0000',
       dark: 'hsl(0, 89%, 40%)',
     },
+    resume: {
+      yellow: '#f3ba4d',
+      blue: '#1c4587',
+      gray: '#e7e6e6',
+    }
   },
   typography: {
     // useNextVariants: true,

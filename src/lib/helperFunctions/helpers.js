@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import {makeFetchActions} from 'redux-fetch-wrapper';
+import Button from '@material-ui/core/Button';
 
 const createExternalLink = (content, url, className) => {
   return (
@@ -44,7 +45,7 @@ export const makeApiFetchActions = (
   abortController = null,
   conditional = null
 ) => {
-  return async (dispatch) => {
+  return async dispatch => {
     init = Object.assign({credentials: 'include'}, init);
     return await makeFetchActions(
       action,
@@ -57,4 +58,17 @@ export const makeApiFetchActions = (
   };
 };
 
-export {createExternalLink, createClickTracking, createALink};
+const createAButton = (content, handleClick, isPrimary, className) => {
+  return (
+    <Button
+      onClick={handleClick}
+      variant="contained"
+      color={isPrimary ? 'primary' : 'default'}
+      className={className}
+    >
+      {content}
+    </Button>
+  );
+};
+
+export {createExternalLink, createClickTracking, createALink, createAButton};
