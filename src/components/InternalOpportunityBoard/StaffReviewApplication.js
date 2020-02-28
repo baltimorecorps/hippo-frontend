@@ -7,8 +7,12 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {Switch, Route, useHistory, useRouteMatch} from 'react-router-dom';
-// import StickyFooter from './StickyFooter';
+import StickyFooter from 'components/ApplicationForm/StickyFooter';
 import {ResumeViewer} from 'components/ResumeCreator';
+import {
+  createExternalLink,
+  createClickTracking,
+} from 'lib/helperFunctions/helpers';
 
 const StaffReviewApplication = ({
   classes,
@@ -28,6 +32,8 @@ const StaffReviewApplication = ({
   const opportunityId = match.params.opportunityId;
   const contactId = match.params.contactId;
   const [nothing, setNothing] = useState();
+  const [confirmed, setConfirmed] = useState(false);
+  const [decision, setDecision] = useState('');
 
   useEffect(() => {
     if (!application || application.length === 0) {
@@ -35,11 +41,21 @@ const StaffReviewApplication = ({
     }
   }, [application, getApplication, contactId, opportunityId]);
 
-  console.log(application);
-
   if (!application) {
     return <div>Loading...</div>;
   }
+
+  const handleClickApprove = () => {
+    setDecision('approve');
+    setConfirmed(true);
+  };
+  const handleClickNotAFit = () => {
+    setDecision('not a fit');
+    setConfirmed(true);
+  };
+
+  const approve = '';
+  const notAFit = '';
 
   return (
     <div className={classes.container}>
@@ -76,28 +92,28 @@ const StaffReviewApplication = ({
           {application && application.interest_statement}
         </Typography>
       </Paper>
-
       {application.resume && (
         <ResumeViewer
           contactId={contactId}
-          resume={application.resume}
+          resume={application && application.resume}
           setResume={setNothing}
           viewOnly={true}
         />
       )}
-      {/* 
       <StickyFooter
-        page="review"
+        page="staff-review-application"
         back={back}
-        toOpportunities={toOpportunities}
-        submit={() => setConfirmed(true)}
-        application={application}
+        approve={handleClickApprove}
+        notAFit={handleClickNotAFit}
+        applicantId={contactId}
       />
       <ConfirmDialog
         open={confirmed}
+        decision={decision}
         closeDialog={() => setConfirmed(false)}
-        submitApplication={submitApplication}
-      /> */}
+        approve={approve}
+        notAFit={notAFit}
+      />
     </div>
   );
 };
@@ -162,5 +178,57 @@ const styles = ({breakpoints, palette, spacing}) => ({
     textAlign: 'justify',
   },
 });
+
+const ConfirmDialog = withStyles(styles)(
+  ({
+    classes,
+    open,
+    decision,
+    closeDialog,
+    notAFitApplication,
+    approveApplication,
+  }) => {
+    const onClickConfirmDecision = () => {
+      if (decision === 'approve') {
+        createClickTracking(
+          'Staff Making Decision',
+          'Click Confirm Approve Application',
+          'Click Confirm Approve Application'
+        );
+        approveApplication();
+      } else {
+        createClickTracking(
+          'Staff Making Decision',
+          'Click Confirm Not a Fit Application',
+          'Click Confirm Not a Fit Application'
+        );
+        notAFitApplication();
+      }
+    };
+    return (
+      <Dialog open={open}>
+        <DialogContent>
+          <Typography>
+            {decision === 'approve'
+              ? `Are you sure you want to approve this application?`
+              : `Are you sure this application is not a fit?`}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} variant="contained" color="secondary">
+            No
+          </Button>
+          <Button
+            onClick={onClickConfirmDecision}
+            variant="contained"
+            color="primary"
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+);
 
 export default withStyles(styles)(StaffReviewApplication);

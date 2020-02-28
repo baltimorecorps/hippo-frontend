@@ -7,21 +7,44 @@ import {useHistory} from 'react-router-dom';
 const StickyFooter = ({
   classes,
   startText,
+  approve,
+  notAFit,
   back,
   handleNext,
   submit,
   toOpportunities,
+  toStaffOpportunities,
   opportunity,
   application,
+  applicantId,
   page,
 }) => {
   let history = useHistory();
-  const toProfile = opportunity_id => {
+  const toMyProfile = opportunity_id => {
     history.push('/profile');
+  };
+  const toApplicantProfile = contact_id => {
+    history.push(`/profile/${contact_id}`);
+  };
+
+  const toViewStaffOpportunities = () => {
+    history.push('/opportunities/internal-board');
   };
   const backButton = createAButton('Back', back, false, classes.buttons);
   const nextButton = createAButton('Next', handleNext, true, classes.buttons);
   const submitButton = createAButton('Submit', submit, true, classes.buttons);
+  const approveButton = createAButton(
+    'Approve',
+    approve,
+    true,
+    classes.greenButtons
+  );
+  const notAFitButton = createAButton(
+    'Not a Fit',
+    notAFit,
+    true,
+    classes.redButtons
+  );
 
   const onClickEditProfile = () => {
     createClickTracking(
@@ -29,7 +52,15 @@ const StickyFooter = ({
       'Click Edit Profile',
       'Click Edit Profile'
     );
-    toProfile();
+    toMyProfile();
+  };
+  const onClickSeeProfile = () => {
+    createClickTracking(
+      'Staff Review Application',
+      'Click to See Applicant Profile',
+      'Click to See Applicant Profile'
+    );
+    toApplicantProfile(applicantId);
   };
   const onClickViewMoreOpportunities = () => {
     createClickTracking(
@@ -39,12 +70,26 @@ const StickyFooter = ({
     );
     toOpportunities();
   };
+  const onClickViewStaffOpportunities = () => {
+    createClickTracking(
+      'Staff Review Application',
+      'Click View Staff Opportunities',
+      'Click View Staff Opportunities'
+    );
+    toViewStaffOpportunities();
+  };
 
-  const profileButton = createAButton(
+  const toMyProfileButton = createAButton(
     'Edit Profile',
     onClickEditProfile,
     false,
     classes.buttons
+  );
+  const toApplicantProfileButton = createAButton(
+    'See Profile',
+    onClickSeeProfile,
+    false,
+    classes.blueButtons
   );
   const toOpportunitiesButton = createAButton(
     'View More Opportunities',
@@ -52,6 +97,31 @@ const StickyFooter = ({
     true,
     classes.buttons
   );
+  const toStaffOpportunitiesButton = createAButton(
+    'Opportunities',
+    onClickViewStaffOpportunities,
+    false,
+    classes.buttons
+  );
+
+  let leftButton, rightButton, middleLeftButton, middleRightButton;
+  if (page === 'interest' || page === 'resume') {
+    leftButton = backButton;
+    rightButton = nextButton;
+  } else if (page === 'review') {
+    if (application.status === 'submitted') {
+      leftButton = toMyProfileButton;
+      rightButton = toOpportunitiesButton;
+    } else {
+      leftButton = backButton;
+      rightButton = submitButton;
+    }
+  } else if (page === 'staff-review-application') {
+    leftButton = toStaffOpportunitiesButton;
+    middleLeftButton = toApplicantProfileButton;
+    middleRightButton = notAFitButton;
+    rightButton = approveButton;
+  }
 
   return (
     <Paper
@@ -63,12 +133,11 @@ const StickyFooter = ({
       }
     >
       <div className={classes.buttonContainer}>
-        {application.status === 'submitted' ? profileButton : backButton}
-        {page !== 'review'
-          ? nextButton
-          : application.status === 'submitted'
-          ? toOpportunitiesButton
-          : submitButton}
+        {leftButton}
+        {middleLeftButton || null}
+        <div className={classes.printButton} />
+        {middleRightButton || null}
+        {rightButton}
       </div>
     </Paper>
   );
@@ -104,7 +173,20 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
   },
   buttons: {
-    margin: spacing(0, 2),
+    // margin: spacing(0, 2),
+  },
+  printButton: {
+    width: '132px',
+    // margin: spacing(0, 2),
+  },
+  greenButtons: {
+    backgroundColor: '#00bf1d',
+  },
+  redButtons: {
+    backgroundColor: '#ff3c26',
+  },
+  blueButtons: {
+    backgroundColor: '#59aaff',
   },
 });
 

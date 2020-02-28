@@ -135,7 +135,16 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     position: 'fixed',
     bottom: 0,
     zIndex: 1,
-    left: '42%',
+    left: '47%',
+    [breakpoints.down('md')]: {
+      left: '46%',
+    },
+    [breakpoints.down('sm')]: {
+      left: '45%',
+    },
+    [breakpoints.down('xs')]: {
+      left: '44%',
+    },
   },
 }));
 
