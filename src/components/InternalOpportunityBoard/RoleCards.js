@@ -15,115 +15,106 @@ const RoleCards = ({
   opportunity,
   getAllOpportunities,
   toViewApplication,
-  appLists,
+  applications,
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
-  return (
-    <div className={classes.container}>
-      <Paper className={classes.paper}>
-        <div className={classes.headerContainer}>
-          <div className={classes.titleAndOrgContainer}>
-            <Typography variant="h6" component="h1" className={classes.title}>
-              {opportunity.title}
-            </Typography>
-            <Typography
-              variant="h6"
-              component="h2"
-              className={classes.organization}
-            >
-              {opportunity.org_name}
-            </Typography>
-          </div>
+  let submittedApps = [];
+  let recommendedApps = [];
+  let interviewingApps = [];
 
-          <Typography className={classes.link}>
-            {createExternalLink(
-              'View full description',
-              `https://docs.google.com/document/d/${opportunity.gdoc_id}`,
-              classes.link
-            )}
+  if (applications) {
+    submittedApps = applications.filter(app => app.status === 'submitted');
+    recommendedApps = applications.filter(app => app.status === 'recommended');
+    interviewingApps = applications.filter(
+      app => app.status === 'interviewing'
+    );
+  }
+
+  return (
+    <Paper className={classes.paper}>
+      <div className={classes.headerContainer}>
+        <div className={classes.titleAndOrgContainer}>
+          <Typography variant="h6" component="h1" className={classes.title}>
+            {opportunity.title}
+          </Typography>
+          <Typography
+            variant="h6"
+            component="h2"
+            className={classes.organization}
+          >
+            {opportunity.org_name}
           </Typography>
         </div>
 
-        <ApplicationStateAccordion
-          toViewApplication={toViewApplication}
-          header="New Application"
-          apps={appLists[0]}
-          iconName="newApplication"
-          expanded={expanded}
-          handleChange={handleChange}
-          panelName="New_Application"
-          opportunityId={opportunity.id}
-        />
-        <ApplicationStateAccordion
-          toViewApplication={toViewApplication}
-          header="Recommended"
-          apps={appLists[1]}
-          iconName="recommended"
-          expanded={expanded}
-          handleChange={handleChange}
-          panelName="Recommended"
-          opportunityId={opportunity.id}
-        />
-        <ApplicationStateAccordion
-          toViewApplication={toViewApplication}
-          header="Interviewing"
-          apps={appLists[2]}
-          iconName="interviewing"
-          expanded={expanded}
-          handleChange={handleChange}
-          panelName="Interviewing"
-          opportunityId={opportunity.id}
-        />
-      </Paper>
-    </div>
+        <Typography className={classes.link}>
+          {createExternalLink(
+            'View full description',
+            opportunity.gdoc_link,
+            classes.link
+          )}
+        </Typography>
+      </div>
+
+      <ApplicationStateAccordion
+        toViewApplication={toViewApplication}
+        header="New Application"
+        applications={submittedApps}
+        totalApps={submittedApps.length}
+        iconName="newApplication"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="New_Application"
+        opportunityId={opportunity.id}
+      />
+
+      <ApplicationStateAccordion
+        toViewApplication={toViewApplication}
+        header="Recommended"
+        applications={recommendedApps}
+        iconName="recommended"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="Recommended"
+        opportunityId={opportunity.id}
+      />
+
+      <ApplicationStateAccordion
+        toViewApplication={toViewApplication}
+        header="Interviewing"
+        applications={interviewingApps}
+        iconName="interviewing"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="Interviewing"
+        opportunityId={opportunity.id}
+      />
+    </Paper>
   );
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
-  container: {
-    minWidth: '350px',
-    maxWidth: '90%',
-    [breakpoints.down('xs')]: {
-      minWidth: '200px',
-    },
-    [breakpoints.down('sm')]: {
-      minWidth: '250px',
-    },
-    [breakpoints.down('md')]: {
-      minWidth: '300px',
-    },
-  },
   paper: {
-    // width: '90%',
     padding: spacing(2, 3, 3),
     margin: spacing(0, 1, 2, 1),
   },
-
   titleAndOrgContainer: {
     display: 'flex',
     flexDirection: 'column',
-    [breakpoints.down('md')]: {
-      marginRight: spacing(0),
-      alignSelf: 'center',
-    },
+    alignSelf: 'center',
   },
   headerContainer: {
     paddingBottom: spacing(2),
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-between',
-
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     [breakpoints.down('xs')]: {
       paddingBottom: spacing(1),
-    },
-    [breakpoints.down('md')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
     },
   },
   buttonContainer: {
@@ -145,9 +136,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
-    [breakpoints.down('md')]: {
-      textAlign: 'center',
-    },
+    textAlign: 'center',
   },
 });
 

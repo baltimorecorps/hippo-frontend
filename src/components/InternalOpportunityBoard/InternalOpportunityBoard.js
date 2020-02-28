@@ -6,17 +6,12 @@ import RoleCards from './RoleCards';
 
 const InternalOpportunityBoard = ({
   classes,
-  contactId,
-  apps,
-  getAllApplications,
-  state,
-  submittedApp,
   opportunities,
-  getAllOpportunities,
+  getAllInternalOpportunities,
 }) => {
   useEffect(() => {
-    getAllOpportunities();
-  }, [getAllOpportunities]);
+    getAllInternalOpportunities();
+  }, [getAllInternalOpportunities]);
 
   let history = useHistory();
 
@@ -24,35 +19,12 @@ const InternalOpportunityBoard = ({
     history.push(`/application/${opportunityId}/review`);
   };
 
-  const appList1 = [
-    {name: 'Firstname Lastname', contactId: 78},
-    {name: 'Firstname Lastname', contactId: 78},
-    {name: 'Firstname Lastname', contactId: 78},
-    {name: 'Firstname Lastname', contactId: 78},
-  ];
-  const appList2 = [
-    {name: 'Firstname Lastname', contactId: 78},
-    {name: 'Firstname Lastname', contactId: 78},
-    {name: 'Firstname Lastname', contactId: 78},
-  ];
-  const appList3 = [
-    {name: 'Firstname Lastname', contactId: 78},
-    {name: 'Firstname Lastname', contactId: 78},
-  ];
-
-  const appLists = [appList1, appList2, appList3];
-
-  // need list of all opportunities with all applications with status
-  // submitted, recommended(approved), interviewing on each opportunities
-
-  console.log(opportunities);
-
   return (
     <div className={classes.container}>
       {opportunities.map(opportunity => (
         <RoleCards
           opportunity={opportunity}
-          appLists={appLists}
+          applications={opportunity.applications}
           toViewApplication={toViewApplication}
         />
       ))}
@@ -62,12 +34,13 @@ const InternalOpportunityBoard = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   container: {
-    width: '90%',
+    width: '100%',
     display: 'flex',
     justifyContent: 'center',
     marginTop: spacing(1),
+    flexWrap: 'wrap',
     [breakpoints.down('sm')]: {
-      width: '100%',
+      width: '90%',
       alignItems: 'center',
       justifyContent: 'center',
 

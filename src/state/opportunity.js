@@ -105,6 +105,15 @@ export const getAllSubmittedApplications = contactId =>
     `${API_URL}/api/contacts/${contactId}/app/`
   );
 
+export const GET_ALL_INTERNAL_OPPORTUNITIES = 'GET_ALL_INTERNAL_OPPORTUNITIES';
+export const GET_ALL_INTERNAL_OPPORTUNITIES_API = fetchActionTypes(
+  GET_ALL_INTERNAL_OPPORTUNITIES
+);
+export const getAllInternalOpportunities = makeApiFetchActions(
+  GET_ALL_INTERNAL_OPPORTUNITIES,
+  `${API_URL}/api/internal/opportunities/`
+);
+
 export const opportunitiesReducer = createReducer(
   {},
   {
@@ -113,6 +122,14 @@ export const opportunitiesReducer = createReducer(
       state[opportunity.id] = opportunity;
     },
     [GET_ALL_OPPORTUNITIES_API.RESOLVE]: (state, action) => {
+      const newState = {};
+      // clear out all old entries
+      action.body.data.forEach(opportunity => {
+        newState[opportunity.id] = opportunity;
+      });
+      return newState;
+    },
+    [GET_ALL_INTERNAL_OPPORTUNITIES_API.RESOLVE]: (state, action) => {
       const newState = {};
       // clear out all old entries
       action.body.data.forEach(opportunity => {

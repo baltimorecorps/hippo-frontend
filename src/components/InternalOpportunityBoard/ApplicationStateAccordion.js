@@ -15,9 +15,8 @@ import {useHistory} from 'react-router-dom';
 
 const ApplicationStateAccordion = ({
   classes,
-  toViewApplication,
   header,
-  apps,
+  applications,
   iconName,
   expanded,
   handleChange,
@@ -26,7 +25,7 @@ const ApplicationStateAccordion = ({
 }) => {
   let history = useHistory();
 
-  const toViewApplication2 = (contactId, opportunityId) => {
+  const toViewApplication = (contactId, opportunityId) => {
     history.push(
       `/opportunities/${opportunityId}/contacts/${contactId}/internal-review`
     );
@@ -45,6 +44,9 @@ const ApplicationStateAccordion = ({
     default:
       icon = <span></span>;
   }
+
+  const totalApps = applications.length || 0;
+
   return (
     <ExpansionPanel
       expanded={expanded === panelName}
@@ -58,10 +60,10 @@ const ApplicationStateAccordion = ({
         {icon}
         <Typography
           className={classes.categoryName}
-        >{`${header} (${apps.length})`}</Typography>
+        >{`${header} (${totalApps})`}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.applicationContainer}>
-        {apps.map(app => {
+        {applications.map(app => {
           return (
             <div className={classes.application}>
               <Typography
@@ -69,11 +71,11 @@ const ApplicationStateAccordion = ({
                 component="p"
                 className={classes.name}
               >
-                {app.name}
+                {`${app.contact.first_name} ${app.contact.last_name}`}
               </Typography>
               <Button
                 className={classes.viewAppButton}
-                onClick={() => toViewApplication2(app.contactId, opportunityId)}
+                onClick={() => toViewApplication(app.contact.id, opportunityId)}
                 variant="contained"
                 color="primary"
               >
@@ -95,6 +97,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   name: {
     fontSize: '16px',
+    verticalAlign: 'middle',
+    display: 'flex',
+    // flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   applicationContainer: {
     display: 'flex',
@@ -107,6 +114,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'space-between',
     marginBottom: spacing(1),
+  },
+  viewAppButton: {
+    padding: '5px',
   },
 });
 

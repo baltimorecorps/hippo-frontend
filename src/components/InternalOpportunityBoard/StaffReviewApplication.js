@@ -7,8 +7,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {Switch, Route, useHistory, useRouteMatch} from 'react-router-dom';
-
 // import StickyFooter from './StickyFooter';
+import {ResumeViewer} from 'components/ResumeCreator';
 
 const StaffReviewApplication = ({
   classes,
@@ -27,6 +27,7 @@ const StaffReviewApplication = ({
   const match = useRouteMatch();
   const opportunityId = match.params.opportunityId;
   const contactId = match.params.contactId;
+  const [nothing, setNothing] = useState();
 
   useEffect(() => {
     if (!application || application.length === 0) {
@@ -76,7 +77,16 @@ const StaffReviewApplication = ({
         </Typography>
       </Paper>
 
-      {/* <StickyFooter
+      {application.resume && (
+        <ResumeViewer
+          contactId={contactId}
+          resume={application.resume}
+          setResume={setNothing}
+          viewOnly={true}
+        />
+      )}
+      {/* 
+      <StickyFooter
         page="review"
         back={back}
         toOpportunities={toOpportunities}
@@ -86,7 +96,7 @@ const StaffReviewApplication = ({
       <ConfirmDialog
         open={confirmed}
         closeDialog={() => setConfirmed(false)}
-        submit={submitApplication}
+        submitApplication={submitApplication}
       /> */}
     </div>
   );
@@ -130,6 +140,22 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   title: {
     fontSize: '17px',
+  },
+  organization: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
+  },
+  link: {
+    color: palette.primary.link,
+    marginTop: spacing(1),
+  },
+  description: {
+    textAlign: 'justify',
+    textIndent: '25px',
+  },
+  opportunityContent: {
+    marginBottom: spacing(2),
   },
   interestStatement: {
     textIndent: '25px',
