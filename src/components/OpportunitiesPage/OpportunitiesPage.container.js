@@ -9,7 +9,7 @@ const mapStateToProps = state => {
   const contact = Object.values(state.contacts);
 
   const submittedIds = Object.values(state.applications)
-    .filter(app => app.status === 'submitted')
+    .filter(app => app.status !== 'draft')
     .map(app => app.opportunity.id);
 
   const opportunities = Object.values(state.opportunities);

@@ -7,21 +7,51 @@ import {useHistory} from 'react-router-dom';
 const StickyFooter = ({
   classes,
   startText,
+  recommend,
+  notAFit,
+  reopen,
   back,
   handleNext,
   submit,
   toOpportunities,
+  toStaffOpportunities,
   opportunity,
   application,
+  applicantId,
+  opportunityId,
   page,
+  applicationStatus,
 }) => {
   let history = useHistory();
-  const toProfile = opportunity_id => {
+  const toMyProfile = opportunity_id => {
     history.push('/profile');
+  };
+  const toApplicantProfile = contact_id => {
+    history.push(`/profile/${contact_id}`);
+  };
+
+  const toViewStaffOpportunities = () => {
+    history.push('/opportunities/internal-board');
   };
   const backButton = createAButton('Back', back, false, classes.buttons);
   const nextButton = createAButton('Next', handleNext, true, classes.buttons);
   const submitButton = createAButton('Submit', submit, true, classes.buttons);
+  const recommendButton = createAButton(
+    'Recommend',
+    recommend,
+    true,
+    classes.greenButtons
+  );
+  const notAFitButton = createAButton(
+    'Not a Fit',
+    notAFit,
+    true,
+    classes.redButtons
+  );
+  const reopenButton = createAButton('Reopen', reopen, false, classes.buttons);
+
+  //TODO: add GA trackings on decision buttons
+  // fix /profile error
 
   const onClickEditProfile = () => {
     createClickTracking(
@@ -29,8 +59,9 @@ const StickyFooter = ({
       'Click Edit Profile',
       'Click Edit Profile'
     );
-    toProfile();
+    toMyProfile();
   };
+
   const onClickViewMoreOpportunities = () => {
     createClickTracking(
       'View Application',
@@ -40,11 +71,42 @@ const StickyFooter = ({
     toOpportunities();
   };
 
-  const profileButton = createAButton(
+  const onClickSeeProfile = () => {
+    createClickTracking(
+      'Staff Review Application',
+      'Click to See Applicant Profile',
+      'Click to See Applicant Profile'
+    );
+    toApplicantProfile(applicantId);
+  };
+  const onClickViewStaffOpportunities = () => {
+    createClickTracking(
+      'Staff Review Application',
+      'Click View Staff Opportunities',
+      'Click View Staff Opportunities'
+    );
+    toViewStaffOpportunities();
+  };
+  // const onClickreopen = () => {
+  //   createClickTracking(
+  //     'Staff Review Application',
+  //     'Click View Staff Opportunities',
+  //     'Click View Staff Opportunities'
+  //   );
+  //   reopen(applicantId, opportunityId);
+  // };
+
+  const toMyProfileButton = createAButton(
     'Edit Profile',
     onClickEditProfile,
     false,
     classes.buttons
+  );
+  const toApplicantProfileButton = createAButton(
+    'See Profile',
+    onClickSeeProfile,
+    false,
+    classes.blueButtons
   );
   const toOpportunitiesButton = createAButton(
     'View More Opportunities',
@@ -52,23 +114,52 @@ const StickyFooter = ({
     true,
     classes.buttons
   );
+  const toStaffOpportunitiesButton = createAButton(
+    'Opportunities',
+    onClickViewStaffOpportunities,
+    false,
+    classes.buttons
+  );
+
+  let leftButton, rightButton, middleLeftButton, middleRightButton;
+  if (page === 'interest' || page === 'resume') {
+    leftButton = backButton;
+    rightButton = nextButton;
+  } else if (page === 'review') {
+    if (application.status === 'submitted') {
+      leftButton = toMyProfileButton;
+      rightButton = toOpportunitiesButton;
+    } else {
+      leftButton = backButton;
+      rightButton = submitButton;
+    }
+  } else if (page === 'staff-review-application') {
+    if (applicationStatus === 'recommended') {
+      leftButton = toStaffOpportunitiesButton;
+      rightButton = toApplicantProfileButton;
+    } else {
+      leftButton = reopenButton;
+      middleLeftButton = toApplicantProfileButton;
+      middleRightButton = notAFitButton;
+      rightButton = recommendButton;
+    }
+  }
 
   return (
     <Paper
       className={classes.stickyFooter}
       style={
-        page === 'addResume'
+        page === 'resume'
           ? {width: 'calc(100vw+400px)', left: '400px'}
           : {width: '100vw'}
       }
     >
       <div className={classes.buttonContainer}>
-        {application.status === 'submitted' ? profileButton : backButton}
-        {page !== 'review'
-          ? nextButton
-          : application.status === 'submitted'
-          ? toOpportunitiesButton
-          : submitButton}
+        {leftButton}
+        {middleLeftButton || null}
+        <div className={classes.printButton} />
+        {middleRightButton || null}
+        {rightButton}
       </div>
     </Paper>
   );
@@ -104,7 +195,20 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
   },
   buttons: {
-    margin: spacing(0, 2),
+    // margin: spacing(0, 2),
+  },
+  printButton: {
+    width: '132px',
+    // margin: spacing(0, 2),
+  },
+  greenButtons: {
+    backgroundColor: '#00bf1d',
+  },
+  redButtons: {
+    backgroundColor: '#ff3c26',
+  },
+  blueButtons: {
+    backgroundColor: '#59aaff',
   },
 });
 

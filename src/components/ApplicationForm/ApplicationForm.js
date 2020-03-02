@@ -89,7 +89,6 @@ const ApplicationForm = ({
   };
 
   const updateAppResume = async resume => {
-    console.log('updateApp', resume);
     //TODO: connect to API
     const newApplication = {
       ...application,

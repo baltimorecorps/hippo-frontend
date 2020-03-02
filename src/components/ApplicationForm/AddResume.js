@@ -106,7 +106,7 @@ const InterestForm = ({
         setResume={setResume}
       />
       <StickyFooter
-        page="addResume"
+        page="resume"
         back={back}
         handleNext={() => onClickNext(resume)}
         application={application}
