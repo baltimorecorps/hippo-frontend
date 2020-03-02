@@ -4,7 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from 'react-router-dom';
-import {createExternalLink} from 'lib/helperFunctions/helpers';
+import {
+  createExternalLink,
+  createClickTracking,
+} from 'lib/helperFunctions/helpers';
 import Grid from '@material-ui/core/Grid';
 import {interestValidator} from 'lib/formHelpers/formValidator';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -22,23 +25,30 @@ const InterestForm = ({
   resume,
   setResume,
 }) => {
-  const [text, setText] = useState(startText);
+  // const [text, setText] = useState(startText);
 
-  const [errors, setErrors] = useState({});
+  // const [errors, setErrors] = useState({});
 
-  const handleNext = () => {
-    // const {isError, err} = interestValidator(text);
-    const isError = false;
-    const err = {};
+  // const handleNext = () => {
+  //   // const {isError, err} = interestValidator(text);
+  //   const isError = false;
+  //   const err = {};
 
-    if (isError) {
-      setErrors(err);
-    } else {
-      next(resume);
-    }
+  //   if (isError) {
+  //     setErrors(err);
+  //   } else {
+  //     next(resume);
+  //   }
+  // };
+
+  const onClickNext = resume => {
+    createClickTracking(
+      'Submitting Application',
+      'Click Next on Customizing Resume Step',
+      'Click Next on Customizing Resume Step'
+    );
+    next(resume);
   };
-
-  console.log('AddResume', resume);
 
   return (
     <div className={classes.root}>
@@ -80,7 +90,7 @@ const InterestForm = ({
                 <Typography className={classes.link}>
                   {createExternalLink(
                     'View full description',
-                    `https://docs.google.com/document/d/${opportunity.gdoc_id}`,
+                    opportunity.gdoc_link,
                     classes.link
                   )}
                 </Typography>
@@ -96,9 +106,9 @@ const InterestForm = ({
         setResume={setResume}
       />
       <StickyFooter
-        page="addResume"
+        page="resume"
         back={back}
-        handleNext={() => handleNext()}
+        handleNext={() => onClickNext(resume)}
         application={application}
       />
     </div>

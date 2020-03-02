@@ -7,54 +7,51 @@ import {useHistory} from 'react-router-dom';
 import CheckCircleOutlineSharpIcon from '@material-ui/icons/CheckCircleOutlineSharp';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
-const ConfirmationPage = ({classes}) => {
+const StaffConfirmationPage = ({classes}) => {
   let history = useHistory();
 
-  const toProfile = () => {
-    history.push('/profile');
-  };
-  const toOpportunities = () => {
-    history.push('/opportunities');
+  const toOpportunitiesInternalBoard = () => {
+    history.push('opportunities/internal-board');
   };
 
-  const onClickBackToProfile = () => {
-    createClickTracking(
-      'Confirmation Page after Submit Application',
-      'Click Back to Profile',
-      'Click Back to Profile'
-    );
-    toProfile();
-  };
+  //   const onClickBackToProfile = () => {
+  //     createClickTracking(
+  //       'Confirmation Page after Submit Application',
+  //       'Click Back to Profile',
+  //       'Click Back to Profile'
+  //     );
+  //     toProfile();
+  //   };
   const onClickViewMoreOpportunities = () => {
     createClickTracking(
       'Confirmation Page after Submit Application',
       'Click View More Opportunities',
       'Click View More Opportunities'
     );
-    toOpportunities();
+    toOpportunitiesInternalBoard();
   };
 
   return (
     <Paper className={classes.paper}>
       <CheckCircleOutlineSharpIcon className={classes.icon} />
       <Typography variant="h4" component="h2" className={classes.header}>
-        Your application has been submitted.
+        Your decision has been made.
       </Typography>
-      <Typography variant="body1" component="h2" className={classes.content}>
+      {/* <Typography variant="body1" component="h2" className={classes.content}>
         Thank you for submitting your expression of interest for this position.
         We will be reviewing your submission and will be in touch soon with the
         status of this application. In the meantime feel free to reach out to us
         with any questions at
         <span className={classes.email}> partnerships@baltimorecorps.org</span>
-      </Typography>
+      </Typography> */}
       <div className={classes.buttonContainer}>
-        <Button
+        {/* <Button
           onClick={onClickBackToProfile}
           variant="contained"
           color="secondary"
         >
           Back to Profile
-        </Button>
+        </Button> */}
         <Button
           onClick={onClickViewMoreOpportunities}
           variant="contained"
@@ -118,4 +115,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(ConfirmationPage);
+export default withStyles(styles)(StaffConfirmationPage);

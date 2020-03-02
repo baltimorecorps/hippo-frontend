@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import {DragDropContext} from 'react-beautiful-dnd';
 import ResumeSection from './ResumeSection';
@@ -134,7 +135,47 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     position: 'fixed',
     bottom: 0,
     zIndex: 1,
-    left: '42%',
+    left: '45%',
+    // [breakpoints.down('lg')]: {
+    //   left: '45%',
+    // },
+    [breakpoints.down('md')]: {
+      left: '43%',
+    },
+    [breakpoints.down('sm')]: {
+      left: '41%',
+    },
+    [breakpoints.down('xs')]: {
+      left: '38%',
+    },
+  },
+  staffPrintButton: {
+    margin: `${spacing(2)}px 0`,
+    position: 'fixed',
+    bottom: 0,
+    zIndex: 1,
+    left: '47%',
+    [breakpoints.down('lg')]: {
+      left: '45%',
+    },
+    [breakpoints.down('md')]: {
+      left: '43%',
+    },
+    [breakpoints.down('1050')]: {
+      left: '41.5%',
+    },
+    [breakpoints.down('sm')]: {
+      left: '41%',
+    },
+    [breakpoints.down('865')]: {
+      left: '39.5%',
+    },
+    [breakpoints.down('750')]: {
+      left: '38.5%',
+    },
+    [breakpoints.down('xs')]: {
+      left: '32%',
+    },
   },
 }));
 
@@ -373,6 +414,7 @@ const PrintComponent = ({printRef, header, pageSections, selected}) => {
 };
 
 const ResumeCreator = ({
+  page,
   sections,
   contact,
   contactId,
@@ -524,6 +566,14 @@ const ResumeCreator = ({
     setSelected(newSelected);
   };
 
+  const onClickPrintResume = () => {
+    createClickTracking(
+      'Submitting Application',
+      'Click Print Resume',
+      'Click Print Resume'
+    );
+  };
+
   const viewComponent = (
     <div className={classes.container}>
       {!hidePrint ? (
@@ -533,7 +583,12 @@ const ResumeCreator = ({
               <Button
                 variant="contained"
                 color="primary"
-                className={classes.printButton}
+                className={
+                  page && page === 'staff'
+                    ? classes.staffPrintButton
+                    : classes.printButton
+                }
+                onClick={onClickPrintResume}
               >
                 Print Resume
               </Button>

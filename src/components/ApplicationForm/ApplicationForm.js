@@ -89,15 +89,13 @@ const ApplicationForm = ({
   };
 
   const updateAppResume = async resume => {
-    console.log('updateApp', resume);
     //TODO: connect to API
     const newApplication = {
       ...application,
       resume,
     };
     const response = await updateApplication(newApplication);
-    // const response = {statusCode: 200};
-    console.log('hi', response);
+
     if (response.statusCode === 200) {
       history.push(`${match.url}/review`);
     } else {

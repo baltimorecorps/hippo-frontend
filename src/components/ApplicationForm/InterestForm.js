@@ -4,7 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from 'react-router-dom';
-import {createExternalLink} from 'lib/helperFunctions/helpers';
+import {
+  createExternalLink,
+  createClickTracking,
+} from 'lib/helperFunctions/helpers';
 import Grid from '@material-ui/core/Grid';
 import {interestValidator} from 'lib/formHelpers/formValidator';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -23,14 +26,21 @@ const InterestForm = ({
 
   const handleNext = text => {
     const {isError, err} = interestValidator(text);
-    // const isError = false;
-    // const err = {};
 
     if (isError) {
       setErrors(err);
     } else {
       next(text);
     }
+  };
+
+  const onClickNext = text => {
+    createClickTracking(
+      'Submitting Application',
+      'Click Next on Interest Statement Form',
+      'Click Next on Interest Statement Form'
+    );
+    handleNext(text);
   };
 
   return (
@@ -62,7 +72,7 @@ const InterestForm = ({
             <Typography className={classes.link}>
               {createExternalLink(
                 'View full description',
-                `https://docs.google.com/document/d/${opportunity.gdoc_id}`,
+                opportunity.gdoc_link,
                 classes.link
               )}
             </Typography>
@@ -108,7 +118,7 @@ const InterestForm = ({
       <StickyFooter
         page="interest"
         back={back}
-        handleNext={() => handleNext(text)}
+        handleNext={() => onClickNext(text)}
         application={application}
       />
     </div>

@@ -9,16 +9,17 @@ import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
 import StickyFooter from './StickyFooter';
 import {ResumeViewer} from 'components/ResumeCreator';
-import {createExternalLink} from 'lib/helperFunctions/helpers';
+import {
+  createExternalLink,
+  createClickTracking,
+} from 'lib/helperFunctions/helpers';
 
 const Review = ({
   classes,
   application,
-  resume,
   setResume,
   back,
   submit,
-  toProfile,
   toOpportunities,
   opportunity,
   contactId,
@@ -30,6 +31,7 @@ const Review = ({
   const toConfirmationPage = () => {
     history.push('/confirmation-page');
   };
+
   const submitApplication = async () => {
     const response = await submit();
     if (response.statusCode == 200) {
@@ -63,7 +65,7 @@ const Review = ({
           <Typography className={classes.link}>
             {createExternalLink(
               'View full description',
-              `https://docs.google.com/document/d/${opportunity.gdoc_id}`,
+              opportunity.gdoc_link,
               classes.link
             )}
           </Typography>
@@ -102,7 +104,7 @@ const Review = ({
       <ConfirmDialog
         open={confirmed}
         closeDialog={() => setConfirmed(false)}
-        submit={submitApplication}
+        submitApplication={submitApplication}
       />
     </div>
   );
@@ -170,7 +172,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
 });
 
 const ConfirmDialog = withStyles(styles)(
-  ({classes, open, closeDialog, submit}) => {
+  ({classes, open, closeDialog, submitApplication}) => {
+    const onClickSubmit = () => {
+      createClickTracking(
+        'Submitting Application',
+        'Click Submit Application',
+        'Click Submit Application'
+      );
+      submitApplication();
+    };
     return (
       <Dialog open={open}>
         <DialogContent>
@@ -182,7 +192,7 @@ const ConfirmDialog = withStyles(styles)(
           <Button onClick={closeDialog} variant="contained" color="secondary">
             No
           </Button>
-          <Button onClick={submit} variant="contained" color="primary">
+          <Button onClick={onClickSubmit} variant="contained" color="primary">
             Yes
           </Button>
         </DialogActions>

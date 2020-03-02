@@ -28,6 +28,9 @@ import InternalOpportunitiesPage from 'components/Internal/OpportunitiesPage/';
 import AddOrEditOpportunityForm from 'components/Internal/OpportunitiesPage/AddOrEditOpportunityForm/AddOrEditOpportunityForm';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
+import InternalOpportunityBoard from 'components/InternalOpportunityBoard';
+import StaffReviewApplication from 'components/InternalOpportunityBoard/StaffReviewApplication.container';
+import StaffConfirmationPage from 'components/InternalOpportunityBoard/StaffConfirmationPage';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -108,6 +111,7 @@ const App = ({
     );
     loginWithRedirect({});
   };
+
   const onClickLogOutHandler = () => {
     createClickTracking(
       'Navigation Bar',
@@ -120,6 +124,14 @@ const App = ({
         returnTo: window.location.origin,
       });
     })();
+  };
+
+  const onClickOpportunities = () => {
+    createClickTracking(
+      'Navigation Bar',
+      'Click Opportunities',
+      'Click Opportunities Link'
+    );
   };
 
   return (
@@ -135,8 +147,29 @@ const App = ({
                   </MenuItem>
                 </Link>
 
+                {/* <Link
+                  to="/opportunities/internal-board"
+                  className={classes.links}
+                >
+                  <Typography>Internal Board</Typography>
+                </Link> */}
+                {/* <Link
+                  to="/opportunities/:opportunityId/contacts/:contactId/internal-review"
+                  className={classes.links}
+                >
+                  <Typography>Internal Review</Typography>
+                </Link> */}
+
+                {/* <Link to="/internal-opportunities" className={classes.links}>
+                  <Typography>Internal Opportunities</Typography>
+                </Link> */}
+
                 {(hasSession || isAuthenticated) && (
-                  <Link to="/opportunities">
+                  <Link
+                    to="/opportunities"
+                    onClick={onClickOpportunities}
+                    className={classes.links}
+                  >
                     <Typography>Opportunities</Typography>
                   </Link>
                 )}
@@ -182,7 +215,22 @@ const App = ({
                 path="/application/:opportunityId"
                 component={ApplicationForm}
               />
+              <Route
+                path="/opportunities/:opportunityId/contacts/:contactId/internal-review"
+                component={StaffReviewApplication}
+              />
+
+              <Route
+                exact
+                path="/opportunities/internal-board"
+                component={InternalOpportunityBoard}
+              />
+
               <Route path="/confirmation-page" component={ConfirmationPage} />
+              <Route
+                path="/staff-confirmation-page"
+                component={StaffConfirmationPage}
+              />
               <Route
                 exact
                 path="/profile/:contactId"

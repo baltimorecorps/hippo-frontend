@@ -118,11 +118,83 @@ export const GET_ALL_SUBMITTED_APPLICATIONS = 'GET_ALL_SUBMITTED_APPLICATIONS';
 export const GET_ALL_SUBMITTED_APPLICATIONS_API = fetchActionTypes(
   GET_ALL_SUBMITTED_APPLICATIONS
 );
-export const getAllSubmittedApplications = (contactId, dispatch) =>
+export const getAllSubmittedApplications = contactId =>
   makeApiFetchActions(
     GET_ALL_SUBMITTED_APPLICATIONS,
     `${API_URL}/api/contacts/${contactId}/app/`
   );
+
+export const GET_ALL_INTERNAL_OPPORTUNITIES = 'GET_ALL_INTERNAL_OPPORTUNITIES';
+export const GET_ALL_INTERNAL_OPPORTUNITIES_API = fetchActionTypes(
+  GET_ALL_INTERNAL_OPPORTUNITIES
+);
+export const getAllInternalOpportunities = makeApiFetchActions(
+  GET_ALL_INTERNAL_OPPORTUNITIES,
+  `${API_URL}/api/internal/opportunities/`
+);
+
+// ---------------------------------------------------------------------------
+
+export const STAFF_RECOMMEND_APPLICATION = 'STAFF_RECOMMEND_APPLICATION';
+export const STAFF_RECOMMEND_APPLICATION_API = fetchActionTypes(
+  STAFF_RECOMMEND_APPLICATION
+);
+export const staffRecommendApplication = (contactId, opportunityId) =>
+  async function(dispatch) {
+    dispatch({
+      type: STAFF_RECOMMEND_APPLICATION,
+    });
+
+    return await makeApiFetchActions(
+      STAFF_RECOMMEND_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/recommend/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
+// ---------------------------------------------------------------------------
+
+export const STAFF_NOT_A_FIT_APPLICATION = 'STAFF_NOT_A_FIT_APPLICATION';
+export const STAFF_NOT_A_FIT_APPLICATION_API = fetchActionTypes(
+  STAFF_NOT_A_FIT_APPLICATION
+);
+export const staffNotAFitApplication = (contactId, opportunityId) =>
+  async function(dispatch) {
+    dispatch({
+      type: STAFF_NOT_A_FIT_APPLICATION,
+    });
+
+    return await makeApiFetchActions(
+      STAFF_NOT_A_FIT_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/not-a-fit/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
+// ---------------------------------------------------------------------------
+
+export const STAFF_REOPEN_APPLICATION = 'STAFF_REOPEN_APPLICATION';
+export const STAFF_REOPEN_APPLICATION_API = fetchActionTypes(
+  STAFF_REOPEN_APPLICATION
+);
+export const staffReopenApplication = (contactId, opportunityId) =>
+  async function(dispatch) {
+    dispatch({
+      type: STAFF_REOPEN_APPLICATION,
+    });
+
+    return await makeApiFetchActions(
+      STAFF_REOPEN_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/reopen/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
 
 export const opportunitiesReducer = createReducer(
   {},
@@ -136,6 +208,14 @@ export const opportunitiesReducer = createReducer(
       state[opportunity.id] = opportunity;
     },
     [GET_ALL_OPPORTUNITIES_API.RESOLVE]: (state, action) => {
+      const newState = {};
+      // clear out all old entries
+      action.body.data.forEach(opportunity => {
+        newState[opportunity.id] = opportunity;
+      });
+      return newState;
+    },
+    [GET_ALL_INTERNAL_OPPORTUNITIES_API.RESOLVE]: (state, action) => {
       const newState = {};
       // clear out all old entries
       action.body.data.forEach(opportunity => {

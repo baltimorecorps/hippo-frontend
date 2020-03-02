@@ -4,7 +4,10 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
-import {createExternalLink} from 'lib/helperFunctions/helpers';
+import {
+  createExternalLink,
+  createClickTracking,
+} from 'lib/helperFunctions/helpers';
 
 const OpportunitiesPage = ({
   classes,
@@ -19,10 +22,10 @@ const OpportunitiesPage = ({
   let history = useHistory();
 
   useEffect(() => {
-    if (!apps) {
-      getAllApplications(contactId);
+    if (!apps && contact) {
+      getAllApplications(contact.id);
     }
-  }, [apps, getAllApplications, contactId]);
+  }, [apps, getAllApplications, contact]);
 
   const toApply = opportunity_id => {
     history.push(`/application/${opportunity_id}`);
@@ -35,9 +38,22 @@ const OpportunitiesPage = ({
     getAllOpportunities();
   }, [getAllOpportunities]);
 
-  const googleDocLinks = Object.values(opportunities).map(opportunity => {
-    return `https://docs.google.com/document/d/${opportunity.gdoc_id}`;
-  });
+  const onClickApplyButton = opportunityId => {
+    createClickTracking(
+      'Opportunity',
+      'Click Apply Button',
+      'Click Apply Button'
+    );
+    toApply(opportunityId);
+  };
+  const onClickViewAppButton = opportunityId => {
+    createClickTracking(
+      'Opportunity',
+      'Click Apply Button',
+      'Click Apply Button'
+    );
+    toViewApplication(opportunityId);
+  };
 
   return (
     <div className={classes.container}>
@@ -74,29 +90,31 @@ const OpportunitiesPage = ({
               <Typography className={classes.link}>
                 {createExternalLink(
                   'View full description',
-                  googleDocLinks[index],
+                  opportunity.gdoc_link,
                   classes.link
                 )}
               </Typography>
             </div>
             <div className={classes.applyButton}>
               {contact
-                ? contact.programs.map(eachProgram =>
+                ? contact.programs.map((eachProgram, index) =>
                     eachProgram.program.id === opportunity.program_id &&
                     eachProgram.is_approved === true ? (
                       submittedIds.includes(opportunity.id) ? (
                         <Button
-                          onClick={() => toViewApplication(opportunity.id)}
+                          onClick={() => onClickViewAppButton(opportunity.id)}
                           variant="contained"
                           color="primary"
+                          key={index}
                         >
                           View Application
                         </Button>
                       ) : (
                         <Button
-                          onClick={() => toApply(opportunity.id)}
+                          onClick={() => onClickApplyButton(opportunity.id)}
                           variant="contained"
                           color="primary"
+                          key={index}
                         >
                           Apply
                         </Button>
