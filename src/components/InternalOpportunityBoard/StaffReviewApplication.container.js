@@ -4,31 +4,27 @@ import {
   getAllSubmittedApplications,
   getAllOpportunities,
   getApplication,
+  staffRecommendApplication,
+  staffNotAFitApplication,
+  staffReopenApplication,
 } from 'state/opportunity';
 
-const mapStateToProps = state => {
-  // console.log(applications);
-  let contactId;
-  if (state.accounts.contact) {
-    contactId = state.accounts.contact.id;
-  }
-  //   console.log(state.applications);
-  const application = Object.values(state.applications);
-  // .filter(
-  //   app => app.status === 'submitted'
-  // );
-  // .map(app => app.opportunity.id);
-  // console.log(state.opportunities);
+import {useParams} from 'react-router-dom';
+
+const mapStateToProps = (state, props) => {
+  const {opportunityId, contactId} = props.match.params;
 
   const opportunities = Object.values(state.opportunities);
-  // console.log(opportunities);
+
+  const matchingApplications = Object.values(state.applications).filter(
+    app => app.contact.id == contactId && app.opportunity.id === opportunityId
+  );
+
   return {
     contactId,
+    opportunityId,
     opportunities,
-    // applications,
-    application: application[0],
-
-    // application: application,
+    application: matchingApplications[0],
   };
 };
 
@@ -39,6 +35,12 @@ const mapDispatchToProps = dispatch => ({
     getAllSubmittedApplications(contactId)(dispatch),
   getApplication: (contactId, opportunityId) =>
     getApplication(contactId, opportunityId)(dispatch),
+  staffRecommendApplication: (contactId, opportunityId) =>
+    staffRecommendApplication(contactId, opportunityId)(dispatch),
+  staffNotAFitApplication: (contactId, opportunityId) =>
+    staffNotAFitApplication(contactId, opportunityId)(dispatch),
+  staffReopenApplication: (contactId, opportunityId) =>
+    staffReopenApplication(contactId, opportunityId)(dispatch),
 });
 
 export default connect(

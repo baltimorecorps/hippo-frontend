@@ -63,9 +63,9 @@ const ApplicationStateAccordion = ({
         >{`${header} (${totalApps})`}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.applicationContainer}>
-        {applications.map(app => {
+        {applications.map((app, index) => {
           return (
-            <div className={classes.application}>
+            <div className={classes.application} key={index}>
               <Typography
                 variant="body1"
                 component="p"

@@ -133,6 +133,69 @@ export const getAllInternalOpportunities = makeApiFetchActions(
   `${API_URL}/api/internal/opportunities/`
 );
 
+// ---------------------------------------------------------------------------
+
+export const STAFF_RECOMMEND_APPLICATION = 'STAFF_RECOMMEND_APPLICATION';
+export const STAFF_RECOMMEND_APPLICATION_API = fetchActionTypes(
+  STAFF_RECOMMEND_APPLICATION
+);
+export const staffRecommendApplication = (contactId, opportunityId) =>
+  async function(dispatch) {
+    dispatch({
+      type: STAFF_RECOMMEND_APPLICATION,
+    });
+
+    return await makeApiFetchActions(
+      STAFF_RECOMMEND_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/recommend/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
+// ---------------------------------------------------------------------------
+
+export const STAFF_NOT_A_FIT_APPLICATION = 'STAFF_NOT_A_FIT_APPLICATION';
+export const STAFF_NOT_A_FIT_APPLICATION_API = fetchActionTypes(
+  STAFF_NOT_A_FIT_APPLICATION
+);
+export const staffNotAFitApplication = (contactId, opportunityId) =>
+  async function(dispatch) {
+    dispatch({
+      type: STAFF_NOT_A_FIT_APPLICATION,
+    });
+
+    return await makeApiFetchActions(
+      STAFF_NOT_A_FIT_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/not-a-fit/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
+// ---------------------------------------------------------------------------
+
+export const STAFF_REOPEN_APPLICATION = 'STAFF_REOPEN_APPLICATION';
+export const STAFF_REOPEN_APPLICATION_API = fetchActionTypes(
+  STAFF_REOPEN_APPLICATION
+);
+export const staffReopenApplication = (contactId, opportunityId) =>
+  async function(dispatch) {
+    dispatch({
+      type: STAFF_REOPEN_APPLICATION,
+    });
+
+    return await makeApiFetchActions(
+      STAFF_REOPEN_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/reopen/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
 export const opportunitiesReducer = createReducer(
   {},
   {

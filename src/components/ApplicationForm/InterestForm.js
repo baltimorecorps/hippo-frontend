@@ -43,8 +43,6 @@ const InterestForm = ({
     handleNext(text);
   };
 
-  console.log(opportunity);
-
   return (
     <div className={classes.container}>
       <Paper className={classes.paper}>

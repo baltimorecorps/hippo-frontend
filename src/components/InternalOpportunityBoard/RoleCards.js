@@ -26,11 +26,17 @@ const RoleCards = ({
   let recommendedApps = [];
   let interviewingApps = [];
 
+  // console.log(applications);
+
   if (applications) {
-    submittedApps = applications.filter(app => app.status === 'submitted');
-    recommendedApps = applications.filter(app => app.status === 'recommended');
+    submittedApps = applications.filter(
+      app => app.status === 'submitted' && app.is_active === true
+    );
+    recommendedApps = applications.filter(
+      app => app.status === 'recommended' && app.is_active === true
+    );
     interviewingApps = applications.filter(
-      app => app.status === 'interviewing'
+      app => app.status === 'interviewing' && app.is_active === true
     );
   }
 

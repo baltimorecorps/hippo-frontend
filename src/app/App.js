@@ -31,6 +31,7 @@ import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunityBoard from 'components/InternalOpportunityBoard';
 import StaffReviewApplication from 'components/InternalOpportunityBoard/StaffReviewApplication.container';
+import StaffConfirmationPage from 'components/InternalOpportunityBoard/StaffConfirmationPage';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -227,6 +228,10 @@ const App = ({
               />
 
               <Route path="/confirmation-page" component={ConfirmationPage} />
+              <Route
+                path="/staff-confirmation-page"
+                component={StaffConfirmationPage}
+              />
               <Route
                 exact
                 path="/profile/:contactId"

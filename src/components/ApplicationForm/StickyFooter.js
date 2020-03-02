@@ -7,8 +7,9 @@ import {useHistory} from 'react-router-dom';
 const StickyFooter = ({
   classes,
   startText,
-  approve,
+  recommend,
   notAFit,
+  reopen,
   back,
   handleNext,
   submit,
@@ -17,7 +18,9 @@ const StickyFooter = ({
   opportunity,
   application,
   applicantId,
+  opportunityId,
   page,
+  applicationStatus,
 }) => {
   let history = useHistory();
   const toMyProfile = opportunity_id => {
@@ -33,9 +36,9 @@ const StickyFooter = ({
   const backButton = createAButton('Back', back, false, classes.buttons);
   const nextButton = createAButton('Next', handleNext, true, classes.buttons);
   const submitButton = createAButton('Submit', submit, true, classes.buttons);
-  const approveButton = createAButton(
-    'Approve',
-    approve,
+  const recommendButton = createAButton(
+    'Recommend',
+    recommend,
     true,
     classes.greenButtons
   );
@@ -45,6 +48,10 @@ const StickyFooter = ({
     true,
     classes.redButtons
   );
+  const reopenButton = createAButton('Reopen', reopen, false, classes.buttons);
+
+  //TODO: add GA trackings on decision buttons
+  // fix /profile error
 
   const onClickEditProfile = () => {
     createClickTracking(
@@ -54,14 +61,7 @@ const StickyFooter = ({
     );
     toMyProfile();
   };
-  const onClickSeeProfile = () => {
-    createClickTracking(
-      'Staff Review Application',
-      'Click to See Applicant Profile',
-      'Click to See Applicant Profile'
-    );
-    toApplicantProfile(applicantId);
-  };
+
   const onClickViewMoreOpportunities = () => {
     createClickTracking(
       'View Application',
@@ -69,6 +69,15 @@ const StickyFooter = ({
       'Click View More Opportunities'
     );
     toOpportunities();
+  };
+
+  const onClickSeeProfile = () => {
+    createClickTracking(
+      'Staff Review Application',
+      'Click to See Applicant Profile',
+      'Click to See Applicant Profile'
+    );
+    toApplicantProfile(applicantId);
   };
   const onClickViewStaffOpportunities = () => {
     createClickTracking(
@@ -78,6 +87,14 @@ const StickyFooter = ({
     );
     toViewStaffOpportunities();
   };
+  // const onClickreopen = () => {
+  //   createClickTracking(
+  //     'Staff Review Application',
+  //     'Click View Staff Opportunities',
+  //     'Click View Staff Opportunities'
+  //   );
+  //   reopen(applicantId, opportunityId);
+  // };
 
   const toMyProfileButton = createAButton(
     'Edit Profile',
@@ -117,17 +134,22 @@ const StickyFooter = ({
       rightButton = submitButton;
     }
   } else if (page === 'staff-review-application') {
-    leftButton = toStaffOpportunitiesButton;
-    middleLeftButton = toApplicantProfileButton;
-    middleRightButton = notAFitButton;
-    rightButton = approveButton;
+    if (applicationStatus === 'recommended') {
+      leftButton = toStaffOpportunitiesButton;
+      rightButton = toApplicantProfileButton;
+    } else {
+      leftButton = reopenButton;
+      middleLeftButton = toApplicantProfileButton;
+      middleRightButton = notAFitButton;
+      rightButton = recommendButton;
+    }
   }
 
   return (
     <Paper
       className={classes.stickyFooter}
       style={
-        page === 'addResume'
+        page === 'resume'
           ? {width: 'calc(100vw+400px)', left: '400px'}
           : {width: '100vw'}
       }

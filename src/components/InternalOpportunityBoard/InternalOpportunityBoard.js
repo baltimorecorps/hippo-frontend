@@ -21,8 +21,9 @@ const InternalOpportunityBoard = ({
 
   return (
     <div className={classes.container}>
-      {opportunities.map(opportunity => (
+      {opportunities.map((opportunity, index) => (
         <RoleCards
+          key={index}
           opportunity={opportunity}
           applications={opportunity.applications}
           toViewApplication={toViewApplication}

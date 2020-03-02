@@ -19,6 +19,8 @@ const StaffReviewApplication = ({
   applications,
   application,
   opportunities,
+  contactId,
+  opportunityId,
   getAllOpportunities,
   back,
   submit,
@@ -27,13 +29,18 @@ const StaffReviewApplication = ({
   applicant,
   getAllSubmittedApplications,
   getApplication,
+  staffRecommendApplication,
+  staffNotAFitApplication,
+  staffReopenApplication,
 }) => {
   const match = useRouteMatch();
-  const opportunityId = match.params.opportunityId;
-  const contactId = match.params.contactId;
+  // const opportunityId = match.params.opportunityId;
+  // const contactId = match.params.contactId;
   const [nothing, setNothing] = useState();
   const [confirmed, setConfirmed] = useState(false);
   const [decision, setDecision] = useState('');
+
+  let history = useHistory();
 
   useEffect(() => {
     if (!application || application.length === 0) {
@@ -45,17 +52,45 @@ const StaffReviewApplication = ({
     return <div>Loading...</div>;
   }
 
-  const handleClickApprove = () => {
-    setDecision('approve');
+  // const toConfirmationPage = () => {
+  //   history.push('/staff-confirmation-page');
+  // };
+  const toInternalBoard = () => {
+    history.push('/opportunities/internal-board');
+  };
+
+  const handleClickRecommend = () => {
+    setDecision('recommend');
     setConfirmed(true);
   };
   const handleClickNotAFit = () => {
     setDecision('not a fit');
     setConfirmed(true);
   };
+  const handleClickReopen = () => {
+    setDecision('reopen');
+    setConfirmed(true);
+  };
 
-  const approve = '';
-  const notAFit = '';
+  const recommendApplication = async () => {
+    const response = await staffRecommendApplication(contactId, opportunityId);
+    if (response.statusCode == 200) {
+      toInternalBoard();
+    }
+  };
+  const notAFitApplication = async () => {
+    const response = await staffNotAFitApplication(contactId, opportunityId);
+    if (response.statusCode == 200) {
+      toInternalBoard();
+    }
+  };
+  const reopenApplication = async () => {
+    const response = await staffReopenApplication(contactId, opportunityId);
+    if (response.statusCode == 200) {
+      // toConfirmationPage();
+      toInternalBoard();
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -67,12 +102,25 @@ const StaffReviewApplication = ({
         </div>
         <div>
           <Typography variant="body2" component="h2" className={classes.title}>
-            <strong>Title:</strong>{' '}
+            <strong>Title:</strong>
             {(application && application.opportunity.title) || ''}
           </Typography>
           <Typography variant="body2" component="h2" className={classes.title}>
             <strong>Organization:</strong>{' '}
             {(application && application.opportunity.org_name) || ''}
+          </Typography>
+        </div>
+        <div className={classes.opportunityDescription}>
+          <Typography className={classes.description}>
+            {application && application.opportunity.short_description}
+            <br />
+          </Typography>
+          <Typography className={classes.link}>
+            {createExternalLink(
+              'View full description',
+              application && application.opportunity.gdoc_link,
+              classes.link
+            )}
           </Typography>
         </div>
       </Paper>
@@ -92,27 +140,32 @@ const StaffReviewApplication = ({
           {application && application.interest_statement}
         </Typography>
       </Paper>
-      {application.resume && (
+      {application && application.resume && (
         <ResumeViewer
-          contactId={contactId}
+          contactId={application && application.contact.id}
           resume={application && application.resume}
           setResume={setNothing}
           viewOnly={true}
+          page="staff"
         />
       )}
       <StickyFooter
+        applicationStatus={application.status}
         page="staff-review-application"
         back={back}
-        approve={handleClickApprove}
+        recommend={handleClickRecommend}
         notAFit={handleClickNotAFit}
-        applicantId={contactId}
+        reopen={handleClickReopen}
+        applicantId={application && application.contact.id}
+        opportunityId={opportunityId}
       />
       <ConfirmDialog
         open={confirmed}
         decision={decision}
         closeDialog={() => setConfirmed(false)}
-        approve={approve}
-        notAFit={notAFit}
+        recommendApplication={recommendApplication}
+        notAFitApplication={notAFitApplication}
+        reopenApplication={reopenApplication}
       />
     </div>
   );
@@ -186,17 +239,18 @@ const ConfirmDialog = withStyles(styles)(
     decision,
     closeDialog,
     notAFitApplication,
-    approveApplication,
+    reopenApplication,
+    recommendApplication,
   }) => {
     const onClickConfirmDecision = () => {
-      if (decision === 'approve') {
+      if (decision === 'recommend') {
         createClickTracking(
           'Staff Making Decision',
-          'Click Confirm Approve Application',
-          'Click Confirm Approve Application'
+          'Click Confirm Recommend Application',
+          'Click Confirm Recommend Application'
         );
-        approveApplication();
-      } else {
+        recommendApplication();
+      } else if (decision === 'not a fit') {
         createClickTracking(
           'Staff Making Decision',
           'Click Confirm Not a Fit Application',
@@ -204,14 +258,24 @@ const ConfirmDialog = withStyles(styles)(
         );
         notAFitApplication();
       }
+      if (decision === 'reopen') {
+        createClickTracking(
+          'Staff Making Decision',
+          'Click Confirm Reopen Application',
+          'Click Confirm Reopen Application'
+        );
+        reopenApplication();
+      }
     };
     return (
       <Dialog open={open}>
         <DialogContent>
           <Typography>
-            {decision === 'approve'
-              ? `Are you sure you want to approve this application?`
-              : `Are you sure this application is not a fit?`}
+            {decision === 'recommend'
+              ? `Are you sure you want to recommend this application?`
+              : decision === 'not a fit'
+              ? `Are you sure this application is not a fit?`
+              : `Are you sure you want to reopen this application?`}
           </Typography>
         </DialogContent>
         <DialogActions>
