@@ -12,6 +12,7 @@ import {ResumeViewer} from 'components/ResumeCreator';
 import {
   createExternalLink,
   createClickTracking,
+  createAButton,
 } from 'lib/helperFunctions/helpers';
 
 const StaffReviewApplication = ({
@@ -91,9 +92,17 @@ const StaffReviewApplication = ({
       toInternalBoard();
     }
   };
+  const toStaffOpportunitiesButton = createAButton(
+    'Back to Internal Opportunities Board',
+    toInternalBoard,
+    true,
+    classes.buttons
+  );
 
   return (
     <div className={classes.container}>
+      {toStaffOpportunitiesButton}
+
       <Paper className={classes.paper}>
         <div className={classes.headerContainer}>
           <Typography variant="h5" component="h1" className={classes.header}>
@@ -229,6 +238,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   interestStatement: {
     textIndent: '25px',
     textAlign: 'justify',
+  },
+  buttons: {
+    marginBottom: spacing(1.5),
   },
 });
 

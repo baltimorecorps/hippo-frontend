@@ -148,12 +148,12 @@ const App = ({
                   </MenuItem>
                 </Link>
 
-                <Link
+                {/* <Link
                   to="/opportunities/internal-board"
                   className={classes.links}
                 >
                   <Typography>Internal Board</Typography>
-                </Link>
+                </Link> */}
                 {/* <Link
                   to="/opportunities/:opportunityId/contacts/:contactId/internal-review"
                   className={classes.links}
