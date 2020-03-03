@@ -56,10 +56,15 @@ const ApplicationStateAccordion = ({
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${panelName}-content`}
         id={`${panelName}-header`}
+        className={totalApps > 0 ? classes.hightLight : null}
       >
         {icon}
         <Typography
-          className={classes.categoryName}
+          className={
+            totalApps > 0
+              ? `${classes.categoryName} ${classes.hightLight}`
+              : classes.categoryName
+          }
         >{`${header} (${totalApps})`}</Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.applicationContainer}>
@@ -95,11 +100,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '16px',
     marginLeft: '10px',
   },
+
+  hightLight: {
+    backgroundColor: '#e0eaff',
+  },
   name: {
     fontSize: '16px',
     verticalAlign: 'middle',
     display: 'flex',
-    // flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -108,6 +116,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f2f7ff',
+    padding: '10px 15px 8px',
   },
   application: {
     width: '100%',
@@ -117,6 +127,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   viewAppButton: {
     padding: '5px',
+    alignSelf: 'center',
   },
 });
 
