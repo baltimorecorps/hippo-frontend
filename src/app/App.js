@@ -29,9 +29,10 @@ import InternalOpportunitiesPage from 'components/Internal/OpportunitiesPage/';
 import AddOrEditOpportunityForm from 'components/Internal/OpportunitiesPage/AddOrEditOpportunityForm/AddOrEditOpportunityForm';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
-import InternalOpportunityBoard from 'components/InternalOpportunityBoard';
-import StaffReviewApplication from 'components/InternalOpportunityBoard/StaffReviewApplication.container';
-import StaffConfirmationPage from 'components/InternalOpportunityBoard/StaffConfirmationPage';
+import InternalOpportunityBoard from 'components/Internal/OpportunitiesBoard';
+import InternalApplicationsBoard from 'components/Internal/ApplicationsBoard';
+import StaffReviewApplication from 'components/Internal/OpportunitiesBoard/StaffReviewApplication.container';
+import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -149,12 +150,6 @@ const App = ({
                 </Link>
 
                 {/* <Link
-                  to="/opportunities/internal-board"
-                  className={classes.links}
-                >
-                  <Typography>Internal Board</Typography>
-                </Link> */}
-                {/* <Link
                   to="/opportunities/:opportunityId/contacts/:contactId/internal-review"
                   className={classes.links}
                 >
@@ -174,6 +169,13 @@ const App = ({
                     <Typography>Opportunities</Typography>
                   </Link>
                 )}
+
+                <Link
+                  to="/opportunities/internal-opportunities-board"
+                  className={classes.links}
+                >
+                  <Typography>Internal Board</Typography>
+                </Link>
 
                 <div className={classes.grow} />
 
@@ -223,7 +225,12 @@ const App = ({
 
               <Route
                 exact
-                path="/opportunities/internal-board"
+                path="/opportunities/internal-opportunities-board"
+                component={InternalOpportunityBoard}
+              />
+              <Route
+                exact
+                path="/opportunities/internal-applications-board"
                 component={InternalOpportunityBoard}
               />
 

@@ -57,7 +57,7 @@ const StaffReviewApplication = ({
   //   history.push('/staff-confirmation-page');
   // };
   const toInternalBoard = () => {
-    history.push('/opportunities/internal-board');
+    history.push('/opportunities/internal-opportunities-board');
   };
 
   const handleClickRecommend = () => {
