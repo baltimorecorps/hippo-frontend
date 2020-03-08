@@ -4,6 +4,9 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
 import ApplicationStateAccordion from '../OpportunitiesBoard/ApplicationStateAccordion';
+import Button from '@material-ui/core/Button';
+import {useHistory} from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 const RoleCards = ({
   classes,
@@ -22,6 +25,11 @@ const RoleCards = ({
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+  let history = useHistory();
+
+  const toProfile = () => {
+    history.push(`/profile/${contactId}`);
+  };
 
   let submittedApps = [];
   let recommendedApps = [];
@@ -34,6 +42,7 @@ const RoleCards = ({
       app => app.status === 'interviewing'
     );
   }
+  const preventDefault = event => event.preventDefault();
 
   return (
     <Paper className={classes.paper}>
@@ -52,13 +61,11 @@ const RoleCards = ({
           </Typography>
         </div>
 
-        {/* <Typography className={classes.link}>
-          {createExternalLink(
-            'View full description',
-            applicant.gdoc_link,
-            classes.link
-          )}
-        </Typography> */}
+        <Link href="#" onClick={() => toProfile()} className={classes.link}>
+          <Typography variant="body1" component="h1">
+            See Profile
+          </Typography>
+        </Link>
       </div>
 
       <ApplicationStateAccordion
@@ -70,7 +77,7 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Submitted"
-        opportunityId={1}
+        opportunityId={'67c93a98-f5ca-421f-93ea-680d05af9e38'}
         contactId={78}
       />
 
@@ -82,7 +89,7 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Recommended"
-        opportunityId={1}
+        opportunityId={'94a6103c-c985-4db1-bd4e-e9e815c4cdda'}
         contactId={78}
       />
 
@@ -103,8 +110,13 @@ const RoleCards = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
+    width: '360px',
     padding: spacing(2, 3, 3),
     margin: spacing(0, 1, 2, 1),
+    [breakpoints.down('xs')]: {
+      margin: spacing(0, 0, 1, 0),
+      width: '95%',
+    },
   },
   titleAndOrgContainer: {
     display: 'flex',
@@ -113,7 +125,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
   },
   headerContainer: {
-    paddingBottom: spacing(2),
+    paddingBottom: spacing(1.5),
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -129,11 +141,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   link: {
     color: palette.primary.link,
+    padding: '2px 5px',
   },
 
   title: {
     fontWeight: 700,
     fontSize: '20px',
+    textAlign: 'center',
     [breakpoints.down('xs')]: {
       fontSize: '18px',
     },

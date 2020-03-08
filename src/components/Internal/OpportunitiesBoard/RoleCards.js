@@ -38,6 +38,8 @@ const RoleCards = ({
     );
   }
 
+  // console.log(applications);
+
   return (
     <Paper className={classes.paper}>
       <div className={classes.headerContainer}>
@@ -73,7 +75,6 @@ const RoleCards = ({
         handleChange={handleChange}
         panelName="Submitted"
         opportunityId={opportunity.id}
-        contactId={applications.contact.id}
       />
 
       <ApplicationStateAccordion
@@ -85,7 +86,6 @@ const RoleCards = ({
         handleChange={handleChange}
         panelName="Recommended"
         opportunityId={opportunity.id}
-        contactId={applications.contact.id}
       />
 
       <ApplicationStateAccordion
@@ -97,7 +97,6 @@ const RoleCards = ({
         handleChange={handleChange}
         panelName="Interviewing"
         opportunityId={opportunity.id}
-        contactId={applications.contact.id}
       />
     </Paper>
   );

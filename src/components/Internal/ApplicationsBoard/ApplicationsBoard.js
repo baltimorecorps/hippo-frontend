@@ -27,6 +27,155 @@ const ApplicationsBoard = ({
     chosenApplicants.push(applicant);
   };
 
+  const apps = [
+    {
+      id: 1,
+      is_approved: true,
+      stage: 2,
+      contact: {
+        id: 78,
+        first_name: 'Bay',
+        last_name: 'Chai',
+        email: 'bay@baltimorecorps.org',
+      },
+      applications: [
+        {
+          id: 1,
+          status: 'submitted',
+          opportunity: {
+            id: '94a6103c-c985-4db1-bd4e-e9e815c4cdda',
+            title: 'Test2',
+            org_name: 'Test2',
+          },
+        },
+        {
+          id: 1,
+          status: 'submitted',
+          opportunity: {
+            id: '94a6103c-c985-4db1-bd4e-e9e815c4cdda',
+            title: 'Test2',
+            org_name: 'Test2',
+          },
+        },
+        {
+          id: 1,
+          status: 'submitted',
+          opportunity: {
+            id: '94a6103c-c985-4db1-bd4e-e9e815c4cdda',
+            title: 'Test2',
+            org_name: 'Test2',
+          },
+        },
+      ],
+    },
+    {
+      id: 1,
+      is_approved: true,
+      stage: 2,
+      contact: {
+        id: 78,
+        first_name: 'RachadaBay Bangkok',
+        last_name: 'ChairangsarisThailand',
+        email: 'bay2@baltimorecorps.org',
+      },
+      applications: [
+        {
+          id: 1,
+          status: 'recommended',
+          opportunity: {
+            id: '67c93a98-f5ca-421f-93ea-680d05af9e38',
+            title: 'Web Developer1',
+            org_name: 'Test Org1',
+          },
+        },
+      ],
+    },
+    {
+      id: 1,
+      is_approved: true,
+      stage: 2,
+      contact: {
+        id: 78,
+        first_name: 'Taylor Alison',
+        last_name: 'Swift',
+        email: 'bay2@baltimorecorps.org',
+      },
+      applications: [
+        {
+          id: 1,
+          status: 'recommended',
+          opportunity: {
+            id: '67c93a98-f5ca-421f-93ea-680d05af9e38',
+            title: 'Web Developer1',
+            org_name: 'Test Org1',
+          },
+        },
+        {
+          id: 1,
+          status: 'interviewing',
+          opportunity: {
+            id: '67c93a98-f5ca-421f-93ea-680d05af9e38',
+            title: 'Web Developer1',
+            org_name: 'Test Org1',
+          },
+        },
+        {
+          id: 1,
+          status: 'interviewing',
+          opportunity: {
+            id: '67c93a98-f5ca-421f-93ea-680d05af9e38',
+            title: 'Web Developer1',
+            org_name: 'Test Org1',
+          },
+        },
+      ],
+    },
+    {
+      id: 1,
+      is_approved: true,
+      stage: 2,
+      contact: {
+        id: 78,
+        first_name: 'RachadaBay Bangkok',
+        last_name: 'ChairangsarisThailand',
+        email: 'bay2@baltimorecorps.org',
+      },
+      applications: [
+        {
+          id: 1,
+          status: 'recommended',
+          opportunity: {
+            id: '67c93a98-f5ca-421f-93ea-680d05af9e38',
+            title: 'Web Developer1',
+            org_name: 'Test Org1',
+          },
+        },
+      ],
+    },
+    {
+      id: 1,
+      is_approved: true,
+      stage: 2,
+      contact: {
+        id: 78,
+        first_name: 'RachadaBay Bangkok',
+        last_name: 'ChairangsarisThailand',
+        email: 'bay2@baltimorecorps.org',
+      },
+      applications: [
+        {
+          id: 1,
+          status: 'recommended',
+          opportunity: {
+            id: '67c93a98-f5ca-421f-93ea-680d05af9e38',
+            title: 'Web Developer1',
+            org_name: 'Test Org1',
+          },
+        },
+      ],
+    },
+  ];
+
   const applications = [
     {
       id: 1,
@@ -113,8 +262,6 @@ const ApplicationsBoard = ({
     };
   });
 
-  const approve = contactIds => {};
-
   return (
     <div className={classes.container}>
       <ApproveNewApplicantForm
@@ -122,9 +269,10 @@ const ApplicationsBoard = ({
         approveNewApplicants={approveNewApplicants}
       />
       <div className={classes.cardContainer}>
-        {applications.map((applicant, index) => (
+        {apps.map((applicant, index) => (
           <ApplicationCards
             key={index}
+            contactId={applicant.contact.id}
             applicant={applicant}
             applications={applicant.applications}
             toViewApplication={toViewApplication}
@@ -152,7 +300,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: spacing(2),
     flexWrap: 'wrap',
     [breakpoints.down('sm')]: {
-      width: '90%',
+      //   width: '100%',
       alignItems: 'center',
       justifyContent: 'center',
 
