@@ -29,7 +29,7 @@ import InternalOpportunitiesPage from 'components/Internal/OpportunitiesPage/';
 import AddOrEditOpportunityForm from 'components/Internal/OpportunitiesPage/AddOrEditOpportunityForm/AddOrEditOpportunityForm';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
-import InternalOpportunityBoard from 'components/Internal/OpportunitiesBoard';
+import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';
 import InternalApplicationsBoard from 'components/Internal/ApplicationsBoard';
 import StaffReviewApplication from 'components/Internal/OpportunitiesBoard/StaffReviewApplication.container';
 import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
@@ -174,7 +174,13 @@ const App = ({
                   to="/opportunities/internal-opportunities-board"
                   className={classes.links}
                 >
-                  <Typography>Internal Board</Typography>
+                  <Typography>Opportunities Board</Typography>
+                </Link>
+                <Link
+                  to="/opportunities/internal-applications-board"
+                  className={classes.links}
+                >
+                  <Typography>Applications Board</Typography>
                 </Link>
 
                 <div className={classes.grow} />
@@ -226,12 +232,12 @@ const App = ({
               <Route
                 exact
                 path="/opportunities/internal-opportunities-board"
-                component={InternalOpportunityBoard}
+                component={InternalOpportunitiesBoard}
               />
               <Route
                 exact
                 path="/opportunities/internal-applications-board"
-                component={InternalOpportunityBoard}
+                component={InternalApplicationsBoard}
               />
 
               <Route path="/confirmation-page" component={ConfirmationPage} />

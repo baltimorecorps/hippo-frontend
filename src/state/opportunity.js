@@ -196,6 +196,28 @@ export const staffReopenApplication = (contactId, opportunityId) =>
     )(dispatch);
   };
 
+// ---------------------------------------------------------------------------
+
+export const APPROVE_NEW_APPLICANTS = 'APPROVE_NEW_APPLICANTS';
+export const APPROVE_NEW_APPLICANTS_API = fetchActionTypes(
+  APPROVE_NEW_APPLICANTS
+);
+export const approveNewApplicants = (programId, applications) =>
+  async function(dispatch) {
+    dispatch({
+      type: APPROVE_NEW_APPLICANTS,
+      applications,
+    });
+
+    return await makeApiFetchActions(
+      APPROVE_NEW_APPLICANTS,
+      `${API_URL}/api/programs/${programId}/contacts/approve-many/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
 export const opportunitiesReducer = createReducer(
   {},
   {
@@ -246,6 +268,10 @@ export const applicationsReducer = createReducer(
       state[application.id] = application;
     },
     [SUBMIT_APPLICATION_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
+    [APPROVE_NEW_APPLICANTS_API.RESOLVE]: (state, action) => {
       const application = action.body.data;
       state[application.id] = application;
     },

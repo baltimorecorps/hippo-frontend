@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
-import ApplicationStateAccordion from './ApplicationStateAccordion';
+import ApplicationStateAccordion from '../OpportunitiesBoard/ApplicationStateAccordion';
 
 const RoleCards = ({
   classes,
@@ -16,6 +16,7 @@ const RoleCards = ({
   getAllOpportunities,
   toViewApplication,
   applications,
+  applicant,
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = panel => (event, isExpanded) => {
@@ -27,14 +28,10 @@ const RoleCards = ({
   let interviewingApps = [];
 
   if (applications) {
-    submittedApps = applications.filter(
-      app => app.status === 'submitted' && app.is_active === true
-    );
-    recommendedApps = applications.filter(
-      app => app.status === 'recommended' && app.is_active === true
-    );
+    submittedApps = applications.filter(app => app.status === 'submitted');
+    recommendedApps = applications.filter(app => app.status === 'recommended');
     interviewingApps = applications.filter(
-      app => app.status === 'interviewing' && app.is_active === true
+      app => app.status === 'interviewing'
     );
   }
 
@@ -43,24 +40,25 @@ const RoleCards = ({
       <div className={classes.headerContainer}>
         <div className={classes.titleAndOrgContainer}>
           <Typography variant="h6" component="h1" className={classes.title}>
-            {opportunity.title}
+            {`${applicant && applicant.contact.first_name} ${applicant &&
+              applicant.contact.last_name}`}
           </Typography>
           <Typography
             variant="h6"
             component="h2"
             className={classes.organization}
           >
-            {opportunity.org_name}
+            {applicant && applicant.contact.email}
           </Typography>
         </div>
 
-        <Typography className={classes.link}>
+        {/* <Typography className={classes.link}>
           {createExternalLink(
             'View full description',
-            opportunity.gdoc_link,
+            applicant.gdoc_link,
             classes.link
           )}
-        </Typography>
+        </Typography> */}
       </div>
 
       <ApplicationStateAccordion
@@ -72,8 +70,8 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Submitted"
-        opportunityId={opportunity.id}
-        contactId={applications.contact.id}
+        opportunityId={1}
+        contactId={78}
       />
 
       <ApplicationStateAccordion
@@ -84,8 +82,8 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Recommended"
-        opportunityId={opportunity.id}
-        contactId={applications.contact.id}
+        opportunityId={1}
+        contactId={78}
       />
 
       <ApplicationStateAccordion
@@ -96,8 +94,8 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Interviewing"
-        opportunityId={opportunity.id}
-        contactId={applications.contact.id}
+        opportunityId={1}
+        contactId={78}
       />
     </Paper>
   );
@@ -112,6 +110,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
     alignSelf: 'center',
+    alignItems: 'center',
   },
   headerContainer: {
     paddingBottom: spacing(2),

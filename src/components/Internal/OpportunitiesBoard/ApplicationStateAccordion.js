@@ -22,6 +22,7 @@ const ApplicationStateAccordion = ({
   handleChange,
   panelName,
   opportunityId,
+  contactId,
 }) => {
   let history = useHistory();
 
@@ -32,7 +33,7 @@ const ApplicationStateAccordion = ({
   };
   let icon;
   switch (iconName) {
-    case 'newApplication':
+    case 'submitted':
       icon = <PeopleIcon />;
       break;
     case 'recommended':
@@ -71,16 +72,35 @@ const ApplicationStateAccordion = ({
         {applications.map((app, index) => {
           return (
             <div className={classes.application} key={index}>
-              <Typography
-                variant="body1"
-                component="p"
-                className={classes.name}
-              >
-                {`${app.contact.first_name} ${app.contact.last_name}`}
-              </Typography>
+              {app.contact ? (
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={classes.name}
+                >
+                  {`${app.contact.first_name} ${app.contact.last_name}`}
+                </Typography>
+              ) : (
+                <div>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    className={classes.name}
+                  >
+                    {app.title}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    component="p"
+                    className={classes.organization}
+                  >
+                    {app.org_name}
+                  </Typography>
+                </div>
+              )}
               <Button
                 className={classes.viewAppButton}
-                onClick={() => toViewApplication(app.contact.id, opportunityId)}
+                onClick={() => toViewApplication(contactId, opportunityId)}
                 variant="contained"
                 color="primary"
               >
@@ -128,6 +148,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
   viewAppButton: {
     padding: '5px',
     alignSelf: 'center',
+  },
+  organization: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
+    // textAlign: 'center',
   },
 });
 
