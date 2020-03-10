@@ -13,6 +13,7 @@ import resume from './resume';
 import {
   opportunitiesReducer as opportunities,
   applicationsReducer as applications,
+  applicantsReducer as applicants,
 } from './opportunity';
 
 import {programsReducer as programs} from './programs';
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   tagItems,
   opportunities,
   applications,
+  applicants,
 });
 
 export default rootReducer;

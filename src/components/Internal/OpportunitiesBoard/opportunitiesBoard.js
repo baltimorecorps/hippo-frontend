@@ -19,18 +19,22 @@ const InternalOpportunityBoard = ({
     history.push(`/application/${opportunityId}/review`);
   };
 
-  return (
-    <div className={classes.container}>
-      {opportunities.map((opportunity, index) => (
-        <RoleCards
-          key={index}
-          opportunity={opportunity}
-          applications={opportunity.applications}
-          toViewApplication={toViewApplication}
-        />
-      ))}
-    </div>
-  );
+  if (!opportunities) {
+    return <div>...Loading</div>;
+  } else {
+    return (
+      <div className={classes.container}>
+        {opportunities.map((opportunity, index) => (
+          <RoleCards
+            key={index}
+            opportunity={opportunity}
+            applications={opportunity.applications}
+            toViewApplication={toViewApplication}
+          />
+        ))}
+      </div>
+    );
+  }
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

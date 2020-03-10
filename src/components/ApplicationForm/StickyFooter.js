@@ -31,7 +31,7 @@ const StickyFooter = ({
   };
 
   const toViewStaffOpportunities = () => {
-    history.push('/opportunities/internal-board');
+    history.push('/opportunities/internal-opportunities-board');
   };
   const backButton = createAButton('Back', back, false, classes.buttons);
   const nextButton = createAButton('Next', handleNext, true, classes.buttons);
