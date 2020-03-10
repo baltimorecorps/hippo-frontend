@@ -244,12 +244,35 @@ export const apiGetMyContact = authToken =>
     `${API_URL}/api/contacts/me/`
   );
 
+// ---------------------------------------------------------------------------
+
+export const GET_ALL_CONTACTS_SHORT = 'GET_ALL_CONTACTS_SHORT';
+export const GET_ALL_CONTACTS_SHORT_API = fetchActionTypes(
+  GET_ALL_CONTACTS_SHORT
+);
+export const getAllContactsShort = makeApiFetchActions(
+  GET_ALL_CONTACTS_SHORT,
+  `${API_URL}/api/contacts/short/`
+);
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
   {},
   {
     [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
+      if (!action.body) {
+        return {};
+      } else {
+        let newState = {};
+        action.body.data.forEach(contact => {
+          newState[contact.id] = contact;
+        });
+        return newState;
+      }
+    },
+
+    [GET_ALL_CONTACTS_SHORT_API.RESOLVE]: (state, action) => {
       if (!action.body) {
         return {};
       } else {
@@ -268,6 +291,7 @@ export const contactsReducer = createReducer(
         ...contact,
       };
     },
+
     [GET_MY_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id] = {

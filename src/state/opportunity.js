@@ -196,6 +196,40 @@ export const staffReopenApplication = (contactId, opportunityId) =>
     )(dispatch);
   };
 
+// ---------------------------------------------------------------------------
+
+export const APPROVE_NEW_APPLICANTS = 'APPROVE_NEW_APPLICANTS';
+export const APPROVE_NEW_APPLICANTS_API = fetchActionTypes(
+  APPROVE_NEW_APPLICANTS
+);
+export const approveNewApplicants = (programId, applicants) =>
+  async function(dispatch) {
+    dispatch({
+      type: APPROVE_NEW_APPLICANTS,
+      applicants,
+    });
+
+    return await makeApiFetchActions(
+      APPROVE_NEW_APPLICANTS,
+      `${API_URL}/api/programs/${programId}/contacts/approve-many/`,
+      {
+        body: JSON.stringify(applicants),
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
+// ---------------------------------------------------------------------------
+
+export const GET_ALL_INTERNAL_APPLICANTS = 'GET_ALL_INTERNAL_APPLICANTS';
+export const GET_ALL_INTERNAL_APPLICANTS_API = fetchActionTypes(
+  GET_ALL_INTERNAL_APPLICANTS
+);
+export const getAllInternalApplicants = makeApiFetchActions(
+  GET_ALL_INTERNAL_APPLICANTS,
+  `${API_URL}/api/internal/applications/`
+);
+
 export const opportunitiesReducer = createReducer(
   {},
   {
@@ -234,6 +268,7 @@ export const applicationsReducer = createReducer(
     },
     [GET_APPLICATION_API.RESOLVE]: (state, action) => {
       const application = action.body.data;
+
       state[application.id] = application;
     },
     [GET_ALL_SUBMITTED_APPLICATIONS_API.RESOLVE]: (state, action) => {
@@ -248,6 +283,24 @@ export const applicationsReducer = createReducer(
     [SUBMIT_APPLICATION_API.RESOLVE]: (state, action) => {
       const application = action.body.data;
       state[application.id] = application;
+    },
+  }
+);
+
+export const applicantsReducer = createReducer(
+  {},
+  {
+    [APPROVE_NEW_APPLICANTS_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
+    [GET_ALL_INTERNAL_APPLICANTS_API.RESOLVE]: (state, action) => {
+      const newState = {};
+      // clear out all old entries
+      action.body.data.forEach(applicant => {
+        newState[applicant.id] = applicant;
+      });
+      return newState;
     },
   }
 );
