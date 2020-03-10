@@ -48,8 +48,6 @@ const ApplicationStateAccordion = ({
 
   const totalApps = applications.length || 0;
 
-  console.log(applications);
-
   return (
     <ExpansionPanel
       expanded={expanded === panelName}
@@ -103,7 +101,10 @@ const ApplicationStateAccordion = ({
               <Button
                 className={classes.viewAppButton}
                 onClick={() =>
-                  toViewApplication(contactId || app.contact.id, opportunityId)
+                  toViewApplication(
+                    contactId || app.contact.id,
+                    opportunityId || app.opportunity.id
+                  )
                 }
                 variant="contained"
                 color="primary"

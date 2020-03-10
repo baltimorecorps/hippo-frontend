@@ -4,7 +4,6 @@ import {getAllInternalOpportunities} from 'state/opportunity';
 
 const mapStateToProps = state => {
   const opportunities = Object.values(state.opportunities);
-  // console.log(opportunities);
 
   return {
     opportunities,

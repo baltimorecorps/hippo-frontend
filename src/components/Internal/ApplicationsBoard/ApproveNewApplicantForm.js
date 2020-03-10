@@ -18,7 +18,8 @@ const ApproveNewApplicantForm = ({classes, options, approveNewApplicants}) => {
   const approve = () => {
     console.log('approve value', selectedApplicants);
     const programId = 1;
-    // approveNewApplicants(programId, selectedApplicants);
+    approveNewApplicants(programId, selectedApplicants);
+    window.location.reload(false);
   };
 
   const inputLabelProps = {

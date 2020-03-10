@@ -27,7 +27,7 @@ const RoleCards = ({
   };
   let history = useHistory();
 
-  const toProfile = () => {
+  const toProfile = contactId => {
     history.push(`/profile/${contactId}`);
   };
 
@@ -42,15 +42,14 @@ const RoleCards = ({
       app => app.status === 'interviewing'
     );
   }
-  const preventDefault = event => event.preventDefault();
 
   return (
     <Paper className={classes.paper}>
       <div className={classes.headerContainer}>
         <div className={classes.titleAndOrgContainer}>
           <Typography variant="h6" component="h1" className={classes.title}>
-            {`${applicant && applicant.contact.first_name} ${applicant &&
-              applicant.contact.last_name}`}
+            {`${(applicant && applicant.contact.first_name) ||
+              null} ${applicant && applicant.contact.last_name}`}
           </Typography>
           <Typography
             variant="h6"
@@ -61,7 +60,10 @@ const RoleCards = ({
           </Typography>
         </div>
 
-        <Link href="#" onClick={() => toProfile()} className={classes.link}>
+        <Link
+          onClick={() => toProfile(applicant.contact.id)}
+          className={classes.link}
+        >
           <Typography variant="body1" component="h1">
             See Profile
           </Typography>
@@ -77,8 +79,8 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Submitted"
-        opportunityId={'67c93a98-f5ca-421f-93ea-680d05af9e38'}
-        contactId={78}
+        // opportunityId={applicant.opportunity.id}
+        contactId={applicant.contact.id}
       />
 
       <ApplicationStateAccordion
@@ -89,8 +91,8 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Recommended"
-        opportunityId={'94a6103c-c985-4db1-bd4e-e9e815c4cdda'}
-        contactId={78}
+        // opportunityId={applicant.opportunity.id}
+        contactId={applicant.contact.id}
       />
 
       <ApplicationStateAccordion
@@ -101,8 +103,8 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Interviewing"
-        opportunityId={1}
-        contactId={78}
+        // opportunityId={applicant.opportunity.id}
+        contactId={applicant.contact.id}
       />
     </Paper>
   );

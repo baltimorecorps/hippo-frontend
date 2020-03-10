@@ -276,7 +276,6 @@ export const contactsReducer = createReducer(
       if (!action.body) {
         return {};
       } else {
-        console.log(action.body.data);
         let newState = {};
         action.body.data.forEach(contact => {
           newState[contact.id] = contact;
