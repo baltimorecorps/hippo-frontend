@@ -79,20 +79,19 @@ const StaffReviewApplication = ({
   const recommendApplication = async () => {
     const response = await staffRecommendApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
-      window.location.reload(false);
+      toInternalOpportunitiesBoard();
     }
   };
   const notAFitApplication = async () => {
     const response = await staffNotAFitApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
-      window.location.reload(false);
+      toInternalOpportunitiesBoard();
     }
   };
   const reopenApplication = async () => {
     const response = await staffReopenApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
-      // toConfirmationPage();
-      window.location.reload(false);
+      toInternalOpportunitiesBoard();
     }
   };
   const toInternalOpportunitiesButton = createAButton(
