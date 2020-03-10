@@ -32,7 +32,7 @@ const ApproveNewApplicantForm = ({classes, options, approveNewApplicants}) => {
   return (
     <Paper className={classes.paper}>
       <Typography variant="h5" component="h1" className={classes.formHeader}>
-        Approve New Applicant
+        Approve New Applicants
       </Typography>
       <div className={classes.searchBarContainer}>
         <Autocomplete

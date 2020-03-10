@@ -169,7 +169,7 @@ const App = ({
                     <Typography>Opportunities</Typography>
                   </Link>
                 )}
-
+                {/* 
                 <Link
                   to="/opportunities/internal-opportunities-board"
                   className={classes.links}
@@ -181,7 +181,7 @@ const App = ({
                   className={classes.links}
                 >
                   <Typography>Applications Board</Typography>
-                </Link>
+                </Link> */}
 
                 <div className={classes.grow} />
 
