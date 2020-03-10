@@ -34,7 +34,6 @@ const RoleCards = ({
   let submittedApps = [];
   let recommendedApps = [];
   let interviewingApps = [];
-  console.log(applications);
 
   if (applications) {
     submittedApps = applications.filter(
