@@ -67,7 +67,6 @@ const AddOrEditOpportunityForm = ({
     } else {
       handleSubmit();
       closeForm();
-      window.location.reload(false);
     }
   };
 
