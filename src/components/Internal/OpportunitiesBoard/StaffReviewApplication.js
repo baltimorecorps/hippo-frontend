@@ -56,8 +56,11 @@ const StaffReviewApplication = ({
   // const toConfirmationPage = () => {
   //   history.push('/staff-confirmation-page');
   // };
-  const toInternalBoard = () => {
+  const toInternalOpportunitiesBoard = () => {
     history.push('/opportunities/internal-opportunities-board');
+  };
+  const toInternalApplicationsBoard = () => {
+    history.push('/opportunities/internal-applications-board');
   };
 
   const handleClickRecommend = () => {
@@ -76,32 +79,41 @@ const StaffReviewApplication = ({
   const recommendApplication = async () => {
     const response = await staffRecommendApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
-      toInternalBoard();
+      window.location.reload(false);
     }
   };
   const notAFitApplication = async () => {
     const response = await staffNotAFitApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
-      toInternalBoard();
+      window.location.reload(false);
     }
   };
   const reopenApplication = async () => {
     const response = await staffReopenApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
       // toConfirmationPage();
-      toInternalBoard();
+      window.location.reload(false);
     }
   };
-  const toStaffOpportunitiesButton = createAButton(
-    'Back to Internal Opportunities Board',
-    toInternalBoard,
+  const toInternalOpportunitiesButton = createAButton(
+    '< To Opportunities Board',
+    toInternalOpportunitiesBoard,
+    true,
+    classes.buttons
+  );
+  const toInternalApplicationsButton = createAButton(
+    'To Applications Board >',
+    toInternalApplicationsBoard,
     true,
     classes.buttons
   );
 
   return (
     <div className={classes.container}>
-      {toStaffOpportunitiesButton}
+      <div className={classes.headerButtonContainer}>
+        {toInternalOpportunitiesButton}
+        {toInternalApplicationsButton}
+      </div>
 
       <Paper className={classes.paper}>
         <div className={classes.headerContainer}>
@@ -188,6 +200,31 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
     marginTop: spacing(2),
     marginBottom: spacing(3),
+  },
+  headerButtonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexGrow: 1,
+
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.down('xs')]: {
+      flexDirection: 'column',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '100%',
+    padding: spacing(2, 3, 3),
+    marginBottom: spacing(2),
   },
   paper: {
     flexGrow: 1,
