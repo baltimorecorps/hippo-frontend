@@ -7,8 +7,9 @@ import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 import EachOpportunity from './EachOpportunity';
+import PartnershipsNavBar from '../PartnershipsNavBar';
 
-const InternalOpportunitiesPage = ({
+const AddOrEditOpportunitiesPage = ({
   classes,
   opportunities,
   getAllOpportunities,
@@ -16,15 +17,6 @@ const InternalOpportunitiesPage = ({
   updateOpportunity,
 }) => {
   let history = useHistory();
-
-  //Commented out for Feature Flag
-  // const handleClick = () => {
-  //   history.push('/new-opportunity');
-  // };
-
-  // const handleEdit = opportunity_id => {
-  //   history.push('/edit-opportunity');
-  // };
 
   useEffect(() => {
     getAllOpportunities();
@@ -44,20 +36,21 @@ const InternalOpportunitiesPage = ({
   const addNewOpportunity = async values => {
     const result = await addOpportunity(values);
     if (result && result.statusCode == 201) {
-      history.push('/internal-opportunities');
+      history.push('/internal/add-or-edit-opportunities');
     }
   };
 
   return (
     <div className={classes.container}>
+      <PartnershipsNavBar />
       <Paper className={classes.headerPaper}>
         <Typography
           component="h1"
           variant="h5"
-          align="left"
+          align="center"
           className={classes.header}
         >
-          Internal View Opportunities
+          Add or Edit Opportunities
         </Typography>
       </Paper>
       {showForm ? (
@@ -73,7 +66,6 @@ const InternalOpportunitiesPage = ({
             onClick={() => setShowForm(true)}
             variant="contained"
             color="primary"
-            className={classes.createButton}
           >
             Add New Opportunity
           </Button>
@@ -98,9 +90,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
     marginTop: spacing(1),
   },
-  header: {
-    textAlign: 'center',
-  },
+
   headerPaper: {
     flexGrow: 1,
     [breakpoints.up('sm')]: {
@@ -115,9 +105,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
       flexBasis: '50%',
       maxWidth: '50%',
     },
-    width: '100%',
+    width: '95%',
     padding: spacing(2, 3, 3),
-    marginBottom: spacing(2),
+    margin: spacing(2),
+  },
+  header: {
+    [breakpoints.up('sm')]: {
+      fontSize: '24px',
+    },
+    fontSize: '20px',
   },
   opportunityPaper: {
     flexGrow: 1,
@@ -222,4 +218,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(InternalOpportunitiesPage);
+export default withStyles(styles)(AddOrEditOpportunitiesPage);

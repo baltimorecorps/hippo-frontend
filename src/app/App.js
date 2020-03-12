@@ -24,14 +24,14 @@ import Home from 'components/Home/Home';
 import Contacts from 'components/Contacts/Contacts.container';
 import ResumeView from 'components/Resume/ResumeView';
 import OpportunitiesPage from 'components/OpportunitiesPage';
-import InternalOpportunitiesPage from 'components/Internal/OpportunitiesPage/';
-import AddOrEditOpportunityForm from 'components/Internal/OpportunitiesPage/AddOrEditOpportunityForm/AddOrEditOpportunityForm';
+import InternalOpportunitiesPage from 'components/Internal/AddOrEditOpportunitiesPage';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';
 import InternalApplicationsBoard from 'components/Internal/ApplicationsBoard';
 import StaffReviewApplication from 'components/Internal/OpportunitiesBoard/StaffReviewApplication.container';
 import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
+import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -155,8 +155,11 @@ const App = ({
                   <Typography>Internal Review</Typography>
                 </Link> */}
 
-                {/* <Link to="/internal-opportunities" className={classes.links}>
-                  <Typography>Internal Opportunities</Typography>
+                {/* <Link
+                  to="/internal/add-or-edit-opportunities/"
+                  className={classes.links}
+                >
+                  <Typography>Add/Edit Opportunities</Typography>
                 </Link> */}
 
                 {(hasSession || isAuthenticated) && (
@@ -180,6 +183,9 @@ const App = ({
                   className={classes.links}
                 >
                   <Typography>Applications Board</Typography>
+                </Link> */}
+                {/* <Link to="/internal/partnerships" className={classes.links}>
+                  <Typography>Partnerships</Typography>
                 </Link> */}
 
                 <div className={classes.grow} />
@@ -210,36 +216,36 @@ const App = ({
                 component={OpportunitiesPage}
               />
               <Route
+                path="/application/:opportunityId"
+                component={ApplicationForm}
+              />
+              <Route path="/confirmation-page" component={ConfirmationPage} />
+
+              {/* Internal Pages */}
+              <Route
+                path="/internal/partnerships"
+                component={PartnershipsPage}
+              />
+              <Route
                 exact
-                path="/internal-opportunities/"
+                path="/internal/add-or-edit-opportunities/"
                 component={InternalOpportunitiesPage}
               />
               <Route
                 exact
-                path="/new-opportunity/"
-                component={AddOrEditOpportunityForm}
+                path="/internal/opportunities-board"
+                component={InternalOpportunitiesBoard}
               />
               <Route
-                path="/application/:opportunityId"
-                component={ApplicationForm}
+                exact
+                path="/internal/applications-board"
+                component={InternalApplicationsBoard}
               />
               <Route
                 path="/opportunities/:opportunityId/contacts/:contactId/internal-review"
                 component={StaffReviewApplication}
               />
 
-              <Route
-                exact
-                path="/opportunities/internal-opportunities-board"
-                component={InternalOpportunitiesBoard}
-              />
-              <Route
-                exact
-                path="/opportunities/internal-applications-board"
-                component={InternalApplicationsBoard}
-              />
-
-              <Route path="/confirmation-page" component={ConfirmationPage} />
               <Route
                 path="/staff-confirmation-page"
                 component={StaffConfirmationPage}
@@ -249,7 +255,6 @@ const App = ({
                 path="/profile/:contactId"
                 component={ProfileStaff}
               />
-
               <Route
                 exact
                 path="/profile/:contactId/resume/:resumeId"
