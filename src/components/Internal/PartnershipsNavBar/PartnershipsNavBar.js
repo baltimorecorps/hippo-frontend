@@ -15,7 +15,7 @@ const PartnershipsNavBar = ({classes}) => {
       name: 'Partnerships',
       url: 'partnerships',
     },
-    {name: 'Add or Edit Opportunity', url: 'add-or-edit-opportunities'},
+    {name: 'Add or Edit Opportunities', url: 'add-or-edit-opportunities'},
     {
       name: 'Internal Opportunities Board',
       url: 'opportunities-board',
