@@ -57,10 +57,10 @@ const StaffReviewApplication = ({
   //   history.push('/staff-confirmation-page');
   // };
   const toInternalOpportunitiesBoard = () => {
-    history.push('/opportunities/internal-opportunities-board');
+    history.push('/internal/opportunities-board');
   };
   const toInternalApplicationsBoard = () => {
-    history.push('/opportunities/internal-applications-board');
+    history.push('/internal/applications-board');
   };
 
   const handleClickRecommend = () => {
