@@ -1,13 +1,20 @@
 import React, {useState} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
 
-const ApproveNewApplicantForm = ({classes, options, approveNewApplicants}) => {
+const ApproveNewApplicantForm = ({
+  classes,
+  options,
+  approveNewApplicants,
+  closeForm,
+}) => {
   let selectedApplicants = [];
 
   const onChange = (event, values) => {
@@ -15,10 +22,11 @@ const ApproveNewApplicantForm = ({classes, options, approveNewApplicants}) => {
     console.log(selectedApplicants);
   };
 
-  const approve = () => {
+  const approve = async () => {
     console.log('approve value', selectedApplicants);
     const programId = 1;
-    approveNewApplicants(programId, selectedApplicants);
+    await approveNewApplicants(programId, selectedApplicants);
+    closeForm();
     window.location.reload(false);
   };
 
@@ -31,9 +39,24 @@ const ApproveNewApplicantForm = ({classes, options, approveNewApplicants}) => {
 
   return (
     <Paper className={classes.paper}>
-      <Typography variant="h5" component="h1" className={classes.formHeader}>
-        Approve New Applicants
-      </Typography>
+      <Grid
+        container
+        xs={11}
+        justify="space-between"
+        className={classes.formHeader}
+      >
+        <Typography variant="h5" component="h1">
+          Approve New Applicants
+        </Typography>
+        <IconButton
+          edge="end"
+          aria-label="cancel form"
+          onMouseDown={closeForm}
+          className={classes.iconButton}
+        >
+          <CloseIcon />
+        </IconButton>
+      </Grid>
       <div className={classes.searchBarContainer}>
         <Autocomplete
           multiple
@@ -90,14 +113,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+
     [breakpoints.down('lg')]: {
-      width: '50%',
+      width: '65%',
     },
     [breakpoints.down('md')]: {
-      width: '60%',
+      width: '70%',
     },
     [breakpoints.down('sm')]: {
-      width: '70%',
+      width: '85%',
       padding: spacing(2, 1),
     },
     [breakpoints.down('xs')]: {
@@ -106,7 +130,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   searchBarContainer: {
-    // backgroundColor: 'sss',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -125,7 +148,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   formHeader: {
-    marginBottom: spacing(3),
+    marginBottom: spacing(2.5),
   },
   searchBar: {
     width: '95%',
@@ -135,6 +158,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   approveButton: {
     marginTop: spacing(2),
+  },
+  iconButton: {
+    flexBasis: '50px',
+    padding: spacing(0.2),
+    '&:hover': {
+      color: 'black',
+    },
   },
 });
 

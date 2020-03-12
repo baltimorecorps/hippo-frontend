@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import InternalOpportunitiesPage from './InternalOpportunitiesPage';
+import AddOrEditOpportunitiesPage from './AddOrEditOpportunitiesPage';
 import {
   getAllOpportunities,
   addOpportunity,
@@ -20,4 +20,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InternalOpportunitiesPage);
+)(AddOrEditOpportunitiesPage);

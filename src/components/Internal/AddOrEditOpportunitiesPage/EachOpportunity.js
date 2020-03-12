@@ -1,24 +1,21 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
-import AddOrEditOpportunityForm from './AddOrEditOpportunityForm/';
+import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 
 const EachOpportunity = ({classes, opportunity, index, updateOpportunity}) => {
-  // const handleEdit = opportunity_id => {
-  //   history.push('/edit-opportunity');
-  // };
   let history = useHistory();
 
   const [showForm, setShowForm] = useState(false);
   const updateExistingOpportunity = async values => {
     const result = await updateOpportunity(values);
     if (result && result.statusCode == 200) {
-      history.push('/internal-opportunities');
+      history.push('/internal/add-or-edit-opportunities');
     }
   };
 
@@ -93,7 +90,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
       flexBasis: '50%',
       maxWidth: '50%',
     },
-    width: '100%',
+    width: '95%',
     padding: spacing(2, 3, 3),
     marginBottom: spacing(2),
   },
