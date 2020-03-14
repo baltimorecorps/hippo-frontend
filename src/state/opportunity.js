@@ -230,6 +230,16 @@ export const getAllInternalApplicants = makeApiFetchActions(
   `${API_URL}/api/internal/applications/`
 );
 
+// ---------------------------------------------------------------------------
+
+export const GET_ORG_OPPORTUNITY = 'GET_ORG_OPPORTUNITY';
+export const GET_ORG_OPPORTUNITY_API = fetchActionTypes(GET_ORG_OPPORTUNITY);
+export const getOrgOpportunity = opportunityId =>
+  makeApiFetchActions(
+    GET_ORG_OPPORTUNITY,
+    `${API_URL}/api/org/opportunities/${opportunityId}/`
+  );
+
 export const opportunitiesReducer = createReducer(
   {},
   {
@@ -256,6 +266,10 @@ export const opportunitiesReducer = createReducer(
         newState[opportunity.id] = opportunity;
       });
       return newState;
+    },
+    [GET_ORG_OPPORTUNITY_API.RESOLVE]: (state, action) => {
+      const opportunity = action.body.data;
+      state[opportunity.id] = opportunity;
     },
   }
 );

@@ -33,6 +33,7 @@ import InternalApplicationsBoard from 'components/Internal/ApplicationsBoard';
 import StaffReviewApplication from 'components/Internal/OpportunitiesBoard/StaffReviewApplication.container';
 import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
 import PartnershipsPage from 'components/Internal/PartnershipsPage/';
+import EmployerPage from 'components/Internal/EmployerPage/';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -265,6 +266,11 @@ const App = ({
                 exact
                 path="/contacts/:contactId/resume/:resumeId"
                 component={Resume}
+              />
+              {/* Employer Pages */}
+              <Route
+                path="/org/opportunity/:opportunityId/"
+                component={EmployerPage}
               />
             </Switch>
           </div>

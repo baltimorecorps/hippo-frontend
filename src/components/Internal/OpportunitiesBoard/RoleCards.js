@@ -4,22 +4,26 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
 import ApplicationStateAccordion from './ApplicationStateAccordion';
+import Link from '@material-ui/core/Link';
+import {useHistory} from 'react-router-dom';
 
 const RoleCards = ({
   classes,
-  contactId,
-  apps,
-  getAllApplications,
-  state,
-  submittedApp,
+
   opportunity,
   getAllOpportunities,
-  toViewApplication,
+
   applications,
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+  };
+
+  let history = useHistory();
+
+  const toEmployerPage = opportunityId => {
+    history.push(`/org/opportunity/${opportunityId}`);
   };
 
   let submittedApps = [];
@@ -38,7 +42,7 @@ const RoleCards = ({
     );
   }
 
-  // console.log(applications);
+  // console.log(opportunity);
 
   return (
     <Paper className={classes.paper}>
@@ -63,10 +67,18 @@ const RoleCards = ({
             classes.link
           )}
         </Typography>
+        <Link
+          component="button"
+          variant="body1"
+          color="none"
+          onClick={() => toEmployerPage(opportunity.id)}
+          className={classes.linkText}
+        >
+          Employer Page
+        </Link>
       </div>
 
       <ApplicationStateAccordion
-        toViewApplication={toViewApplication}
         header="Submitted"
         applications={submittedApps}
         totalApps={submittedApps.length}
@@ -78,7 +90,6 @@ const RoleCards = ({
       />
 
       <ApplicationStateAccordion
-        toViewApplication={toViewApplication}
         header="Recommended"
         applications={recommendedApps}
         iconName="recommended"
@@ -89,7 +100,6 @@ const RoleCards = ({
       />
 
       <ApplicationStateAccordion
-        toViewApplication={toViewApplication}
         header="Interviewing"
         applications={interviewingApps}
         iconName="interviewing"

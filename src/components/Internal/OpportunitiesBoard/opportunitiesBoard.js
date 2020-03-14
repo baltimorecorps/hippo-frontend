@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import RoleCards from './RoleCards';
@@ -15,11 +14,7 @@ const InternalOpportunityBoard = ({
     getAllInternalOpportunities();
   }, [getAllInternalOpportunities]);
 
-  let history = useHistory();
-
-  const toViewApplication = opportunityId => {
-    history.push(`/application/${opportunityId}/review`);
-  };
+  console.log(opportunities);
 
   if (!opportunities) {
     return <div>...Loading</div>;
@@ -43,7 +38,6 @@ const InternalOpportunityBoard = ({
               key={index}
               opportunity={opportunity}
               applications={opportunity.applications}
-              toViewApplication={toViewApplication}
             />
           ))}
         </div>
