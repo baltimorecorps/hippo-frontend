@@ -1,0 +1,273 @@
+import React, {useState, useEffect} from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import {Switch, Route, useHistory, useRouteMatch} from 'react-router-dom';
+import StickyFooter from 'components/ApplicationForm/StickyFooter';
+import {
+  createExternalLink,
+  createClickTracking,
+  createAButton,
+} from 'lib/helperFunctions/helpers';
+import ViewFullApplication from '../../Internal/ViewFullApplication';
+
+const EmployerViewApplication = ({
+  classes,
+  application,
+  contactId,
+  opportunityId,
+  back,
+  getApplication,
+  staffRecommendApplication,
+  staffNotAFitApplication,
+  staffReopenApplication,
+}) => {
+  const match = useRouteMatch();
+  // const opportunityId = match.params.opportunityId;
+  // const contactId = match.params.contactId;
+  const [nothing, setNothing] = useState();
+  const [confirmed, setConfirmed] = useState(false);
+  const [decision, setDecision] = useState('');
+
+  let history = useHistory();
+
+  useEffect(() => {
+    if (!application || application.length === 0) {
+      getApplication(contactId, opportunityId);
+    }
+  }, [application, getApplication, contactId, opportunityId]);
+
+  if (!application) {
+    return <div>Loading...</div>;
+  }
+
+  // const toConfirmationPage = () => {
+  //   history.push('/staff-confirmation-page');
+  // };
+
+  const toEmployerBoard = () => {
+    history.push(`/org/opportunity/${opportunityId}/`);
+  };
+
+  const handleClickRecommend = () => {
+    setDecision('recommend');
+    setConfirmed(true);
+  };
+  const handleClickNotAFit = () => {
+    setDecision('not a fit');
+    setConfirmed(true);
+  };
+  const handleClickReopen = () => {
+    setDecision('reopen');
+    setConfirmed(true);
+  };
+
+  const recommendApplication = async () => {
+    const response = await staffRecommendApplication(contactId, opportunityId);
+    if (response.statusCode == 200) {
+      toEmployerBoard();
+    }
+  };
+  const notAFitApplication = async () => {
+    const response = await staffNotAFitApplication(contactId, opportunityId);
+    if (response.statusCode == 200) {
+      toEmployerBoard();
+    }
+  };
+  const reopenApplication = async () => {
+    const response = await staffReopenApplication(contactId, opportunityId);
+    if (response.statusCode == 200) {
+      toEmployerBoard();
+    }
+  };
+  const toEmployerBoardButton = createAButton(
+    "To Employer's Opportunity Board",
+    toEmployerBoard,
+    true,
+    classes.buttons
+  );
+
+  return (
+    <div className={classes.container}>
+      {/* <div className={classes.headerButtonContainer}>
+        {toEmployerBoardButton}
+      </div> */}
+      <ViewFullApplication application={application} />
+      <StickyFooter
+        applicationStatus={application.status}
+        page="employer-review-application"
+        back={toEmployerBoard}
+        recommend={handleClickRecommend}
+        notAFit={handleClickNotAFit}
+        reopen={handleClickReopen}
+        applicantId={application && application.contact.id}
+        opportunityId={opportunityId}
+      />
+      <ConfirmDialog
+        open={confirmed}
+        decision={decision}
+        closeDialog={() => setConfirmed(false)}
+        recommendApplication={recommendApplication}
+        notAFitApplication={notAFitApplication}
+        reopenApplication={reopenApplication}
+      />
+    </div>
+  );
+};
+
+const styles = ({breakpoints, palette, spacing}) => ({
+  container: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: spacing(2),
+    marginBottom: spacing(3),
+  },
+  headerButtonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexGrow: 1,
+
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.down('xs')]: {
+      flexDirection: 'column',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '100%',
+    padding: spacing(2, 3, 3),
+    marginBottom: spacing(2),
+  },
+  paper: {
+    flexGrow: 1,
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '100%',
+    padding: spacing(2, 3, 3),
+    marginBottom: spacing(2),
+  },
+  headerContainer: {
+    paddingBottom: spacing(2),
+    marginBottom: spacing(2),
+    borderBottom: 'solid #e0e0e0 1px',
+  },
+  header: {
+    fontWeight: 700,
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: '17px',
+  },
+  organization: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
+  },
+  link: {
+    color: palette.primary.link,
+    marginTop: spacing(1),
+  },
+  description: {
+    textAlign: 'justify',
+    textIndent: '25px',
+  },
+  opportunityContent: {
+    marginBottom: spacing(2),
+  },
+  interestStatement: {
+    textIndent: '25px',
+    textAlign: 'justify',
+  },
+  buttons: {
+    marginBottom: spacing(1.5),
+  },
+});
+
+const ConfirmDialog = withStyles(styles)(
+  ({
+    classes,
+    open,
+    decision,
+    closeDialog,
+    notAFitApplication,
+    reopenApplication,
+    recommendApplication,
+  }) => {
+    const onClickConfirmDecision = () => {
+      if (decision === 'recommend') {
+        createClickTracking(
+          'Staff Making Decision',
+          'Click Confirm Recommend Application',
+          'Click Confirm Recommend Application'
+        );
+        recommendApplication();
+      } else if (decision === 'not a fit') {
+        createClickTracking(
+          'Staff Making Decision',
+          'Click Confirm Not a Fit Application',
+          'Click Confirm Not a Fit Application'
+        );
+        notAFitApplication();
+      }
+      if (decision === 'reopen') {
+        createClickTracking(
+          'Staff Making Decision',
+          'Click Confirm Reopen Application',
+          'Click Confirm Reopen Application'
+        );
+        reopenApplication();
+      }
+    };
+    return (
+      <Dialog open={open}>
+        <DialogContent>
+          <Typography>
+            {decision === 'recommend'
+              ? `Are you sure you want to recommend this application?`
+              : decision === 'not a fit'
+              ? `Are you sure this application is not a fit?`
+              : `Are you sure you want to reopen this application?`}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialog} variant="contained" color="secondary">
+            No
+          </Button>
+          <Button
+            onClick={onClickConfirmDecision}
+            variant="contained"
+            color="primary"
+          >
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+);
+
+export default withStyles(styles)(EmployerViewApplication);

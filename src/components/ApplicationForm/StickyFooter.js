@@ -143,6 +143,18 @@ const StickyFooter = ({
       middleRightButton = notAFitButton;
       rightButton = recommendButton;
     }
+  } else if (page === 'employer-review-application') {
+    if (applicationStatus === 'recommended') {
+      leftButton = backButton;
+      // rightButton = toApplicantProfileButton;
+    } else {
+      leftButton = backButton;
+
+      // leftButton = reopenButton;
+      // middleLeftButton = toApplicantProfileButton;
+      // middleRightButton = notAFitButton;
+      // rightButton = recommendButton;
+    }
   }
 
   return (

@@ -30,10 +30,24 @@ const ApplicationStateAccordion = ({
 }) => {
   let history = useHistory();
 
-  const toViewApplication = (contactId, opportunityId) => {
+  const toStaffViewApplication = (contactId, opportunityId) => {
     history.push(
       `/opportunities/${opportunityId}/contacts/${contactId}/internal-review`
     );
+  };
+  const toEmployerViewApplication = (contactId, opportunityId) => {
+    history.push(
+      `/opportunities/${opportunityId}/contacts/${contactId}/employer-review`
+    );
+  };
+
+  const handleClickViewApplication = (page, contactId, opportunityId) => {
+    if (page === 'employer') {
+      return toEmployerViewApplication(contactId, opportunityId);
+    }
+    if (page === 'internal') {
+      return toStaffViewApplication(contactId, opportunityId);
+    }
   };
   let icon;
   switch (iconName) {
@@ -158,7 +172,8 @@ const ApplicationStateAccordion = ({
               <Button
                 className={classes.viewAppButton}
                 onClick={() =>
-                  toViewApplication(
+                  handleClickViewApplication(
+                    page,
                     contactId || app.contact.id,
                     opportunityId || app.opportunity.id
                   )
@@ -218,6 +233,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   status: {
     color: '#0047c9',
+    marginLeft: '4px',
   },
   applicationContainer: {
     display: 'flex',

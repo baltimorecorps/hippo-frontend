@@ -34,7 +34,7 @@ import StaffViewApplication from 'components/Internal/StaffViewApplication/Staff
 import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
 import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
-// import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
+import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -248,10 +248,10 @@ const App = ({
                 path="/opportunities/:opportunityId/contacts/:contactId/internal-review"
                 component={StaffViewApplication}
               />
-              {/* <Route
+              <Route
                 path="/opportunities/:opportunityId/contacts/:contactId/employer-review"
                 component={EmployerViewApplication}
-              /> */}
+              />
 
               <Route
                 path="/staff-confirmation-page"
