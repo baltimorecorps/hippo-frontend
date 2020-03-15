@@ -9,7 +9,7 @@ import {useHistory} from 'react-router-dom';
 
 const RoleCards = ({
   classes,
-
+  page,
   opportunity,
   getAllOpportunities,
 
@@ -29,6 +29,7 @@ const RoleCards = ({
   let submittedApps = [];
   let recommendedApps = [];
   let interviewingApps = [];
+  let notAFitApps = [];
 
   if (applications) {
     submittedApps = applications.filter(
@@ -40,12 +41,14 @@ const RoleCards = ({
     interviewingApps = applications.filter(
       app => app.status === 'interviewing' && app.is_active === true
     );
+    notAFitApps = applications.filter(app => app.is_active === false);
   }
 
-  // console.log(opportunity);
-
+  console.log(notAFitApps);
   return (
-    <Paper className={classes.paper}>
+    <Paper
+      className={page === 'employer' ? classes.employerPaper : classes.paper}
+    >
       <div className={classes.headerContainer}>
         <div className={classes.titleAndOrgContainer}>
           <Typography variant="h6" component="h1" className={classes.title}>
@@ -58,6 +61,15 @@ const RoleCards = ({
           >
             {opportunity.org_name}
           </Typography>
+          {page === 'employer' && (
+            <Typography
+              variant="h6"
+              component="h2"
+              className={classes.shortDescription}
+            >
+              {opportunity.short_description}
+            </Typography>
+          )}
         </div>
 
         <Typography className={classes.link}>
@@ -74,20 +86,22 @@ const RoleCards = ({
           onClick={() => toEmployerPage(opportunity.id)}
           className={classes.linkText}
         >
-          Employer Page
+          {page === 'internal' && 'Employer View'}
         </Link>
       </div>
-
-      <ApplicationStateAccordion
-        header="Submitted"
-        applications={submittedApps}
-        totalApps={submittedApps.length}
-        iconName="submitted"
-        expanded={expanded}
-        handleChange={handleChange}
-        panelName="Submitted"
-        opportunityId={opportunity.id}
-      />
+      {page === 'internal' && (
+        <ApplicationStateAccordion
+          header="Submitted"
+          applications={submittedApps}
+          totalApps={submittedApps.length}
+          iconName="submitted"
+          expanded={expanded}
+          handleChange={handleChange}
+          panelName="Submitted"
+          opportunityId={opportunity.id}
+          page={page}
+        />
+      )}
 
       <ApplicationStateAccordion
         header="Recommended"
@@ -97,6 +111,7 @@ const RoleCards = ({
         handleChange={handleChange}
         panelName="Recommended"
         opportunityId={opportunity.id}
+        page={page}
       />
 
       <ApplicationStateAccordion
@@ -107,6 +122,18 @@ const RoleCards = ({
         handleChange={handleChange}
         panelName="Interviewing"
         opportunityId={opportunity.id}
+        page={page}
+      />
+
+      <ApplicationStateAccordion
+        header="Not a Fit"
+        applications={notAFitApps}
+        iconName="notAFit"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="notAFit"
+        opportunityId={opportunity.id}
+        page={page}
       />
     </Paper>
   );
@@ -116,6 +143,26 @@ const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     padding: spacing(2, 3, 3),
     margin: spacing(0, 1, 2, 1),
+    width: '360px',
+  },
+  employerPaper: {
+    flexGrow: 1,
+
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '95%',
+    padding: spacing(2, 3, 3),
+    margin: spacing(1.5),
   },
   titleAndOrgContainer: {
     display: 'flex',
@@ -144,6 +191,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   title: {
     fontWeight: 700,
     fontSize: '20px',
+    textAlign: 'center',
     [breakpoints.down('xs')]: {
       fontSize: '18px',
     },
@@ -153,6 +201,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
     textAlign: 'center',
+  },
+  shortDescription: {
+    fontSize: '16px',
+    padding: '0 5% 3px 0',
+    textIndent: '25px',
+    textAlign: 'justify',
   },
 });
 

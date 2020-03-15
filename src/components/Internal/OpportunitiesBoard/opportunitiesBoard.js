@@ -14,8 +14,6 @@ const InternalOpportunityBoard = ({
     getAllInternalOpportunities();
   }, [getAllInternalOpportunities]);
 
-  console.log(opportunities);
-
   if (!opportunities) {
     return <div>...Loading</div>;
   } else {
@@ -38,6 +36,7 @@ const InternalOpportunityBoard = ({
               key={index}
               opportunity={opportunity}
               applications={opportunity.applications}
+              page="internal"
             />
           ))}
         </div>

@@ -10,6 +10,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PeopleIcon from '@material-ui/icons/People';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import ClearIcon from '@material-ui/icons/Clear';
 
 import {useHistory} from 'react-router-dom';
 
@@ -23,6 +26,7 @@ const ApplicationStateAccordion = ({
   panelName,
   opportunityId,
   contactId,
+  page,
 }) => {
   let history = useHistory();
 
@@ -42,6 +46,9 @@ const ApplicationStateAccordion = ({
     case 'interviewing':
       icon = <QuestionAnswerIcon />;
       break;
+    case 'notAFit':
+      icon = <ClearIcon />;
+      break;
     default:
       icon = <span></span>;
   }
@@ -57,29 +64,69 @@ const ApplicationStateAccordion = ({
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${panelName}-content`}
         id={`${panelName}-header`}
-        className={totalApps > 0 ? classes.hightLight : null}
+        className={
+          totalApps > 0
+            ? header === 'Not a Fit'
+              ? classes.notAFitHighLightHead
+              : classes.highLightHead
+            : null
+        }
       >
         {icon}
         <Typography
           className={
             totalApps > 0
-              ? `${classes.categoryName} ${classes.hightLight}`
+              ? header === 'Not a Fit'
+                ? `${classes.categoryName} ${classes.notAFitHighLightHead}`
+                : `${classes.categoryName} ${classes.highLightHead}`
               : classes.categoryName
           }
         >{`${header} (${totalApps})`}</Typography>
       </ExpansionPanelSummary>
-      <ExpansionPanelDetails className={classes.applicationContainer}>
+      <ExpansionPanelDetails
+        className={
+          header === 'Not a Fit'
+            ? `${classes.applicationContainer} ${classes.notAFitHighLightBody}`
+            : `${classes.applicationContainer} ${classes.highLightBody}`
+        }
+      >
         {applications.map((app, index) => {
           return (
             <div className={classes.application} key={index}>
               {app.contact ? (
-                <Typography
-                  variant="body1"
-                  component="p"
-                  className={classes.name}
-                >
-                  {`${app.contact.first_name} ${app.contact.last_name}`}
-                </Typography>
+                <div className={classes.container}>
+                  <div
+                    className={
+                      page === 'employer'
+                        ? classes.employerApplicant
+                        : classes.internalApplicant
+                    }
+                  >
+                    <Typography
+                      variant="body1"
+                      component="p"
+                      className={classes.name}
+                    >
+                      {`${app.contact.first_name} ${app.contact.last_name}`}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      component="p"
+                      className={classes.email}
+                    >
+                      {`(${app.contact.email})`}
+                    </Typography>
+                  </div>
+                  {header === 'Not a Fit' && (
+                    <Typography
+                      variant="body1"
+                      component="p"
+                      className={classes.notAFit}
+                    >
+                      From :<span className={classes.status}>{app.status}</span>
+                    </Typography>
+                  )}
+                </div>
               ) : (
                 <div>
                   <Typography
@@ -96,6 +143,16 @@ const ApplicationStateAccordion = ({
                   >
                     {app.opportunity.org_name}
                   </Typography>
+                  {header === 'Not a Fit' && (
+                    <Typography
+                      variant="body1"
+                      component="p"
+                      className={classes.notAFit}
+                    >
+                      From :{' '}
+                      <span className={classes.status}>{app.status}</span>
+                    </Typography>
+                  )}
                 </div>
               )}
               <Button
@@ -120,35 +177,82 @@ const ApplicationStateAccordion = ({
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
   categoryName: {
     fontWeight: '700',
     fontSize: '16px',
     marginLeft: '10px',
   },
 
-  hightLight: {
+  highLightHead: {
     backgroundColor: '#e0eaff',
+  },
+  highLightBody: {
+    backgroundColor: '#f2f7ff',
+  },
+  notAFitHighLightHead: {
+    backgroundColor: '#ebebeb',
+  },
+  notAFitHighLightBody: {
+    backgroundColor: '#f7f7f7',
   },
   name: {
     fontSize: '16px',
     verticalAlign: 'middle',
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
+    marginRight: spacing(1),
+  },
+  email: {
+    fontSize: '15px',
+    color: 'grey',
+  },
+  notAFit: {
+    display: 'block',
+    fontSize: '15px',
+  },
+  status: {
+    color: '#0047c9',
   },
   applicationContainer: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f2f7ff',
-    padding: '10px 15px 8px',
+    width: '100%',
+    padding: '0',
+  },
+  employerApplicant: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    [breakpoints.down('sm')]: {
+      alignItems: 'flex-start',
+      flexDirection: 'column',
+    },
+  },
+  internalApplicant: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
   },
   application: {
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: spacing(1),
+    // alignItems: 'flex-start',
+    // margin: spacing(1),
+    padding: '8px 15px 8px',
+    borderBottom: 'solid #ebebeb 1px',
+    '&:hover': {
+      backgroundColor: '#e1e8f5',
+    },
   },
   viewAppButton: {
     padding: '5px',
@@ -158,7 +262,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
-    // textAlign: 'center',
   },
 });
 

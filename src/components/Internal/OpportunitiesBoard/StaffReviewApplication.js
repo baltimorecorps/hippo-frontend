@@ -17,18 +17,10 @@ import {
 
 const StaffReviewApplication = ({
   classes,
-  applications,
   application,
-  opportunities,
   contactId,
   opportunityId,
-  getAllOpportunities,
   back,
-  submit,
-  toProfile,
-  toOpportunities,
-  applicant,
-  getAllSubmittedApplications,
   getApplication,
   staffRecommendApplication,
   staffNotAFitApplication,

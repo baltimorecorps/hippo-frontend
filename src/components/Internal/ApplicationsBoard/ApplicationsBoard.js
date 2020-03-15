@@ -85,7 +85,7 @@ const ApplicationsBoard = ({
               contactId={applicant.contact.id}
               applicant={applicant}
               applications={applicant.applications}
-              toViewApplication={toViewApplication}
+              page="internal"
             />
           ))}
       </div>
