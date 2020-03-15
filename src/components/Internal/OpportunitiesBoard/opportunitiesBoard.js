@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import RoleCards from './RoleCards';
-import PartnershipsNavBar from '../PartnershipsNavBar';
+import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 
 const InternalOpportunityBoard = ({
   classes,

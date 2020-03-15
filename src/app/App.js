@@ -30,10 +30,11 @@ import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';
 import InternalApplicationsBoard from 'components/Internal/ApplicationsBoard';
-import StaffReviewApplication from 'components/Internal/OpportunitiesBoard/StaffReviewApplication.container';
+import StaffViewApplication from 'components/Internal/StaffViewApplication/StaffViewApplication.container';
 import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
 import PartnershipsPage from 'components/Internal/PartnershipsPage/';
-import EmployerPage from 'components/Internal/EmployerPage/';
+import EmployerPage from 'components/Employer/EmployerPage';
+// import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
@@ -245,8 +246,12 @@ const App = ({
               />
               <Route
                 path="/opportunities/:opportunityId/contacts/:contactId/internal-review"
-                component={StaffReviewApplication}
+                component={StaffViewApplication}
               />
+              {/* <Route
+                path="/opportunities/:opportunityId/contacts/:contactId/employer-review"
+                component={EmployerViewApplication}
+              /> */}
 
               <Route
                 path="/staff-confirmation-page"
