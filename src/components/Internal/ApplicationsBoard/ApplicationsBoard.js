@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ApproveNewApplicantForm from './ApproveNewApplicantForm';
 import ApplicationCards from './ApplicationCards';
-import PartnershipsNavBar from '../PartnershipsNavBar';
+import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 
 const ApplicationsBoard = ({
   classes,
@@ -85,7 +85,7 @@ const ApplicationsBoard = ({
               contactId={applicant.contact.id}
               applicant={applicant}
               applications={applicant.applications}
-              toViewApplication={toViewApplication}
+              page="internal"
             />
           ))}
       </div>

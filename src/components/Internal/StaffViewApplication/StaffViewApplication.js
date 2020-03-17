@@ -14,21 +14,14 @@ import {
   createClickTracking,
   createAButton,
 } from 'lib/helperFunctions/helpers';
+import ViewFullApplication from '../ViewFullApplication';
 
-const StaffReviewApplication = ({
+const StaffViewApplication = ({
   classes,
-  applications,
   application,
-  opportunities,
   contactId,
   opportunityId,
-  getAllOpportunities,
   back,
-  submit,
-  toProfile,
-  toOpportunities,
-  applicant,
-  getAllSubmittedApplications,
   getApplication,
   staffRecommendApplication,
   staffNotAFitApplication,
@@ -68,7 +61,7 @@ const StaffReviewApplication = ({
     setConfirmed(true);
   };
   const handleClickNotAFit = () => {
-    setDecision('not a fit');
+    setDecision('staff: not a fit');
     setConfirmed(true);
   };
   const handleClickReopen = () => {
@@ -113,62 +106,7 @@ const StaffReviewApplication = ({
         {toInternalOpportunitiesButton}
         {toInternalApplicationsButton}
       </div>
-
-      <Paper className={classes.paper}>
-        <div className={classes.headerContainer}>
-          <Typography variant="h5" component="h1" className={classes.header}>
-            Internal Review Application
-          </Typography>
-        </div>
-        <div>
-          <Typography variant="body2" component="h2" className={classes.title}>
-            <strong>Title:</strong>
-            {(application && application.opportunity.title) || ''}
-          </Typography>
-          <Typography variant="body2" component="h2" className={classes.title}>
-            <strong>Organization:</strong>{' '}
-            {(application && application.opportunity.org_name) || ''}
-          </Typography>
-        </div>
-        <div className={classes.opportunityDescription}>
-          <Typography className={classes.description}>
-            {application && application.opportunity.short_description}
-            <br />
-          </Typography>
-          <Typography className={classes.link}>
-            {createExternalLink(
-              'View full description',
-              application && application.opportunity.gdoc_link,
-              classes.link
-            )}
-          </Typography>
-        </div>
-      </Paper>
-      <Paper className={classes.paper}>
-        <div>
-          <Typography
-            variant="h6"
-            component="h1"
-            style={{
-              fontWeight: '700',
-            }}
-          >
-            Interest Statement
-          </Typography>
-        </div>
-        <Typography className={classes.interestStatement}>
-          {application && application.interest_statement}
-        </Typography>
-      </Paper>
-      {application && application.resume && (
-        <ResumeViewer
-          contactId={application && application.contact.id}
-          resume={application && application.resume}
-          setResume={setNothing}
-          viewOnly={true}
-          page="staff"
-        />
-      )}
+      <ViewFullApplication application={application} />
       <StickyFooter
         applicationStatus={application.status}
         page="staff-review-application"
@@ -298,7 +236,7 @@ const ConfirmDialog = withStyles(styles)(
           'Click Confirm Recommend Application'
         );
         recommendApplication();
-      } else if (decision === 'not a fit') {
+      } else if (decision === 'staff: not a fit') {
         createClickTracking(
           'Staff Making Decision',
           'Click Confirm Not a Fit Application',
@@ -321,7 +259,7 @@ const ConfirmDialog = withStyles(styles)(
           <Typography>
             {decision === 'recommend'
               ? `Are you sure you want to recommend this application?`
-              : decision === 'not a fit'
+              : decision === 'staff: not a fit'
               ? `Are you sure this application is not a fit?`
               : `Are you sure you want to reopen this application?`}
           </Typography>
@@ -343,4 +281,4 @@ const ConfirmDialog = withStyles(styles)(
   }
 );
 
-export default withStyles(styles)(StaffReviewApplication);
+export default withStyles(styles)(StaffViewApplication);

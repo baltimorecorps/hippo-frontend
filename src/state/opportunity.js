@@ -230,6 +230,83 @@ export const getAllInternalApplicants = makeApiFetchActions(
   `${API_URL}/api/internal/applications/`
 );
 
+// ---------------------------------------------------------------------------
+
+export const GET_ORG_OPPORTUNITY = 'GET_ORG_OPPORTUNITY';
+export const GET_ORG_OPPORTUNITY_API = fetchActionTypes(GET_ORG_OPPORTUNITY);
+export const getOrgOpportunity = opportunityId =>
+  makeApiFetchActions(
+    GET_ORG_OPPORTUNITY,
+    `${API_URL}/api/org/opportunities/${opportunityId}/`
+  );
+
+// ---------------------------------------------------------------------------
+
+export const EMPLOYER_INTERVIEW_APPLICATION = 'EMPLOYER_INTERVIEW_APPLICATION';
+export const EMPLOYER_INTERVIEW_APPLICATION_API = fetchActionTypes(
+  EMPLOYER_INTERVIEW_APPLICATION
+);
+export const employerInterviewApplication = (
+  contactId,
+  opportunityId,
+  interviewDateTime
+) =>
+  async function(dispatch) {
+    dispatch({
+      type: EMPLOYER_INTERVIEW_APPLICATION,
+      interviewDateTime,
+    });
+
+    return await makeApiFetchActions(
+      EMPLOYER_INTERVIEW_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/interview/`,
+      {
+        body: JSON.stringify(interviewDateTime),
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
+
+export const EMPLOYER_CONSIDER_APPLICATION = 'EMPLOYER_CONSIDER_APPLICATION';
+export const EMPLOYER_CONSIDER_APPLICATION_API = fetchActionTypes(
+  EMPLOYER_CONSIDER_APPLICATION
+);
+export const employerConsiderApplication = (contactId, opportunityId) =>
+  async function(dispatch) {
+    dispatch({
+      type: EMPLOYER_CONSIDER_APPLICATION,
+    });
+
+    return await makeApiFetchActions(
+      EMPLOYER_CONSIDER_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/consider/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
+
+export const EMPLOYER_NOT_A_FIT_APPLICATION = 'EMPLOYER_NOT_A_FIT_APPLICATION';
+export const EMPLOYER_NOT_A_FIT_APPLICATION_API = fetchActionTypes(
+  EMPLOYER_NOT_A_FIT_APPLICATION
+);
+export const employerNotAFitApplication = (contactId, opportunityId) =>
+  async function(dispatch) {
+    dispatch({
+      type: EMPLOYER_NOT_A_FIT_APPLICATION,
+    });
+
+    return await makeApiFetchActions(
+      EMPLOYER_NOT_A_FIT_APPLICATION,
+      `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/not-a-fit/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
 export const opportunitiesReducer = createReducer(
   {},
   {
@@ -257,6 +334,10 @@ export const opportunitiesReducer = createReducer(
       });
       return newState;
     },
+    [GET_ORG_OPPORTUNITY_API.RESOLVE]: (state, action) => {
+      const opportunity = action.body.data;
+      state[opportunity.id] = opportunity;
+    },
   }
 );
 export const applicationsReducer = createReducer(
@@ -281,6 +362,10 @@ export const applicationsReducer = createReducer(
       state[application.id] = application;
     },
     [SUBMIT_APPLICATION_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
+    [EMPLOYER_INTERVIEW_APPLICATION_API.RESOLVE]: (state, action) => {
       const application = action.body.data;
       state[application.id] = application;
     },

@@ -10,6 +10,9 @@ const StickyFooter = ({
   recommend,
   notAFit,
   reopen,
+  interviewScheduled,
+  interviewCompleted,
+  makeOffer,
   back,
   handleNext,
   submit,
@@ -50,6 +53,31 @@ const StickyFooter = ({
   );
   const reopenButton = createAButton('Reopen', reopen, false, classes.buttons);
 
+  const interviewScheduledButton = createAButton(
+    'Interview Scheduled',
+    interviewScheduled,
+    true,
+    classes.blueButtons
+  );
+  const interviewRescheduledButton = createAButton(
+    'Interview Rescheduled',
+    interviewScheduled,
+    true,
+    classes.purpleButtons
+  );
+  // const consideredForRoleButton = createAButton(
+  //   'Considered for role',
+  //   makeOffer,
+  //   true,
+  //   classes.greenButtons
+  // );
+  const interviewCompletedButton = createAButton(
+    'Interview Completed',
+    interviewCompleted,
+    true,
+    classes.blueButtons
+  );
+
   //TODO: add GA trackings on decision buttons
   // fix /profile error
 
@@ -87,14 +115,6 @@ const StickyFooter = ({
     );
     toViewStaffOpportunities();
   };
-  // const onClickreopen = () => {
-  //   createClickTracking(
-  //     'Staff Review Application',
-  //     'Click View Staff Opportunities',
-  //     'Click View Staff Opportunities'
-  //   );
-  //   reopen(applicantId, opportunityId);
-  // };
 
   const toMyProfileButton = createAButton(
     'Edit Profile',
@@ -134,7 +154,11 @@ const StickyFooter = ({
       rightButton = submitButton;
     }
   } else if (page === 'staff-review-application') {
-    if (applicationStatus === 'recommended') {
+    if (
+      applicationStatus === 'recommended' ||
+      applicationStatus === 'interviewed' ||
+      applicationStatus === 'considered_for_role'
+    ) {
       leftButton = toStaffOpportunitiesButton;
       rightButton = toApplicantProfileButton;
     } else {
@@ -142,6 +166,22 @@ const StickyFooter = ({
       middleLeftButton = toApplicantProfileButton;
       middleRightButton = notAFitButton;
       rightButton = recommendButton;
+    }
+  } else if (page === 'employer-review-application') {
+    if (
+      applicationStatus === 'recommended' ||
+      (applicationStatus === 'submitted' && application.is_active === false)
+    ) {
+      leftButton = backButton;
+      rightButton = interviewScheduledButton;
+    } else if (
+      applicationStatus === 'interviewed' &&
+      application.is_active === true
+    ) {
+      leftButton = interviewRescheduledButton;
+      rightButton = interviewCompletedButton;
+    } else {
+      leftButton = backButton;
     }
   }
 
@@ -194,12 +234,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
     width: '100%',
   },
-  buttons: {
-    // margin: spacing(0, 2),
-  },
+  buttons: {},
   printButton: {
     width: '132px',
-    // margin: spacing(0, 2),
   },
   greenButtons: {
     backgroundColor: '#00bf1d',
@@ -209,6 +246,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   blueButtons: {
     backgroundColor: '#59aaff',
+  },
+  purpleButtons: {
+    backgroundColor: '#cb78ff',
   },
 });
 

@@ -17,9 +17,10 @@ const RoleCards = ({
   submittedApp,
   opportunity,
   getAllOpportunities,
-  toViewApplication,
+
   applications,
   applicant,
+  page,
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = panel => (event, isExpanded) => {
@@ -34,6 +35,8 @@ const RoleCards = ({
   let submittedApps = [];
   let recommendedApps = [];
   let interviewingApps = [];
+  let notAFitApps = [];
+  let consideredApps = [];
 
   if (applications) {
     submittedApps = applications.filter(
@@ -43,7 +46,11 @@ const RoleCards = ({
       app => app.status === 'recommended' && app.is_active === true
     );
     interviewingApps = applications.filter(
-      app => app.status === 'interviewing' && app.is_active === true
+      app => app.status === 'interviewed' && app.is_active === true
+    );
+    notAFitApps = applications.filter(app => app.is_active === false);
+    consideredApps = applications.filter(
+      app => app.status === 'considered_for_role' && app.is_active === true
     );
   }
 
@@ -75,7 +82,6 @@ const RoleCards = ({
       </div>
 
       <ApplicationStateAccordion
-        toViewApplication={toViewApplication}
         header="Submitted"
         applications={submittedApps}
         totalApps={submittedApps.length}
@@ -83,32 +89,50 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Submitted"
-        // opportunityId={applicant.opportunity.id}
         contactId={applicant.contact.id}
+        page={page}
       />
 
       <ApplicationStateAccordion
-        toViewApplication={toViewApplication}
         header="Recommended"
         applications={recommendedApps}
         iconName="recommended"
         expanded={expanded}
         handleChange={handleChange}
         panelName="Recommended"
-        // opportunityId={applicant.opportunity.id}
         contactId={applicant.contact.id}
+        page={page}
       />
 
       <ApplicationStateAccordion
-        toViewApplication={toViewApplication}
         header="Interviewing"
         applications={interviewingApps}
         iconName="interviewing"
         expanded={expanded}
         handleChange={handleChange}
         panelName="Interviewing"
-        // opportunityId={applicant.opportunity.id}
         contactId={applicant.contact.id}
+        page={page}
+      />
+      <ApplicationStateAccordion
+        header="Considered for Role"
+        applications={consideredApps}
+        iconName="consideredForRole"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="consideredForRole"
+        contactId={applicant.contact.id}
+        page={page}
+      />
+      <ApplicationStateAccordion
+        header="Not a Fit"
+        applications={notAFitApps}
+        iconName="notAFit"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="notAFit"
+        contactId={applicant.contact.id}
+        page={page}
       />
     </Paper>
   );

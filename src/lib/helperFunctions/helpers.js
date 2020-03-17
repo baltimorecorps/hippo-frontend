@@ -71,4 +71,31 @@ const createAButton = (content, handleClick, isPrimary, className) => {
   );
 };
 
-export {createExternalLink, createClickTracking, createALink, createAButton};
+const formatDate = date => {
+  const year = date.substring(0, 4);
+  const month = date.substring(5, 7);
+  const day = date.substring(8, 10);
+  const formatedDate = `${month}/${day}/${year}`;
+  return formatedDate;
+};
+
+const formatTime = time => {
+  let hours = parseInt(time.substring(0, 2));
+  const minutes = time.substring(3, 5);
+  let suffix = 'am';
+  if (hours > 12) {
+    hours = hours - 12;
+    suffix = 'pm';
+  }
+  const formatedTime = `${hours}:${minutes} ${suffix}`;
+  return formatedTime;
+};
+
+export {
+  createExternalLink,
+  createClickTracking,
+  createALink,
+  createAButton,
+  formatDate,
+  formatTime,
+};
