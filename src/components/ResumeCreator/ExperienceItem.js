@@ -3,11 +3,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import DragWrapper from './DragWrapper';
 
 const formatDate = experience => {
-  return (
-    `${experience.start_month} ${experience.start_year}` +
-    ' - ' +
-    `${experience.end_month} ${experience.end_year}`
-  );
+  let startDate = `${experience.start_month} ${experience.start_year}`;
+  let endDate = `${experience.end_month} ${experience.end_year}`;
+  if (experience.end_month === 'none' && experience.end_year === 0) {
+    endDate = 'Present';
+  }
+  const formatedDate = `${startDate} - ${endDate}`;
+  return formatedDate;
 };
 
 const ExperienceItem = ({
