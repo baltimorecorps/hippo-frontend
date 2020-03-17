@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import StaffReviewApplication from './StaffReviewApplication';
+import StaffReviewApplication from './StaffViewApplication';
 import {
   getAllSubmittedApplications,
   getAllOpportunities,

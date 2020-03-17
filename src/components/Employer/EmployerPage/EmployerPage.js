@@ -1,25 +1,24 @@
 import React, {useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {useHistory} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import RoleCards from './RoleCards';
-import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 
-const InternalOpportunityBoard = ({
-  classes,
-  opportunities,
-  getAllInternalOpportunities,
-}) => {
+import RoleCards from '../../Internal/OpportunitiesBoard/RoleCards';
+
+const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {
+  let {opportunityId} = useParams();
+
   useEffect(() => {
-    getAllInternalOpportunities();
-  }, [getAllInternalOpportunities]);
+    getOrgOpportunity(opportunityId);
+  }, [getOrgOpportunity, opportunityId]);
 
-  if (!opportunities) {
-    return <div>...Loading</div>;
+  if (!opportunity) {
+    return <div>...Loading Employer Page</div>;
   } else {
     return (
       <div className={classes.container}>
-        <PartnershipsNavBar />
         <Paper className={classes.paper}>
           <Typography
             component="h1"
@@ -27,19 +26,14 @@ const InternalOpportunityBoard = ({
             align="center"
             className={classes.header}
           >
-            Internal Opportunities Board
+            {opportunity.org_name}
           </Typography>
         </Paper>
-        <div className={classes.cardContainer}>
-          {opportunities.map((opportunity, index) => (
-            <RoleCards
-              key={index}
-              opportunity={opportunity}
-              applications={opportunity.applications}
-              page="internal"
-            />
-          ))}
-        </div>
+        <RoleCards
+          opportunity={opportunity}
+          applications={opportunity.applications}
+          page="employer"
+        />
       </div>
     );
   }
@@ -79,22 +73,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
     fontSize: '20px',
   },
-  cardContainer: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: spacing(1),
-    flexWrap: 'wrap',
-    [breakpoints.down('sm')]: {
-      width: '90%',
-      alignItems: 'center',
-      justifyContent: 'center',
-
-      flexDirection: 'column',
-    },
-    [breakpoints.down('md')]: {},
-    [breakpoints.down('xl')]: {},
-  },
 });
 
-export default withStyles(styles)(InternalOpportunityBoard);
+export default withStyles(styles)(EmployerPage);

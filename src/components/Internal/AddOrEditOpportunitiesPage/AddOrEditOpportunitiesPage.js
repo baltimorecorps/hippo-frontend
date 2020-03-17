@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 import EachOpportunity from './EachOpportunity';
-import PartnershipsNavBar from '../PartnershipsNavBar';
+import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 
 const AddOrEditOpportunitiesPage = ({
   classes,
