@@ -9,19 +9,10 @@ import RoleCards from '../../Internal/OpportunitiesBoard/RoleCards';
 
 const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {
   let {opportunityId} = useParams();
-  //   console.log(opportunityId);
 
   useEffect(() => {
     getOrgOpportunity(opportunityId);
   }, [getOrgOpportunity, opportunityId]);
-
-  let history = useHistory();
-
-  const toViewApplication = opportunityId => {
-    history.push(`/application/${opportunityId}/review`);
-  };
-
-  console.log(opportunity);
 
   if (!opportunity) {
     return <div>...Loading Employer Page</div>;

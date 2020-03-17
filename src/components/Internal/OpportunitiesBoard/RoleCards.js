@@ -30,6 +30,7 @@ const RoleCards = ({
   let recommendedApps = [];
   let interviewingApps = [];
   let notAFitApps = [];
+  let consideredApps = [];
 
   if (applications) {
     submittedApps = applications.filter(
@@ -39,12 +40,14 @@ const RoleCards = ({
       app => app.status === 'recommended' && app.is_active === true
     );
     interviewingApps = applications.filter(
-      app => app.status === 'interviewing' && app.is_active === true
+      app => app.status === 'interviewed' && app.is_active === true
     );
     notAFitApps = applications.filter(app => app.is_active === false);
+    consideredApps = applications.filter(
+      app => app.status === 'considered_for_role' && app.is_active === true
+    );
   }
 
-  console.log(notAFitApps);
   return (
     <Paper
       className={page === 'employer' ? classes.employerPaper : classes.paper}
@@ -121,6 +124,16 @@ const RoleCards = ({
         expanded={expanded}
         handleChange={handleChange}
         panelName="Interviewing"
+        opportunityId={opportunity.id}
+        page={page}
+      />
+      <ApplicationStateAccordion
+        header="Considered for Role"
+        applications={consideredApps}
+        iconName="consideredForRole"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="consideredForRole"
         opportunityId={opportunity.id}
         page={page}
       />

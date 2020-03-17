@@ -61,7 +61,7 @@ const StaffViewApplication = ({
     setConfirmed(true);
   };
   const handleClickNotAFit = () => {
-    setDecision('not a fit');
+    setDecision('staff: not a fit');
     setConfirmed(true);
   };
   const handleClickReopen = () => {
@@ -236,7 +236,7 @@ const ConfirmDialog = withStyles(styles)(
           'Click Confirm Recommend Application'
         );
         recommendApplication();
-      } else if (decision === 'not a fit') {
+      } else if (decision === 'staff: not a fit') {
         createClickTracking(
           'Staff Making Decision',
           'Click Confirm Not a Fit Application',
@@ -259,7 +259,7 @@ const ConfirmDialog = withStyles(styles)(
           <Typography>
             {decision === 'recommend'
               ? `Are you sure you want to recommend this application?`
-              : decision === 'not a fit'
+              : decision === 'staff: not a fit'
               ? `Are you sure this application is not a fit?`
               : `Are you sure you want to reopen this application?`}
           </Typography>

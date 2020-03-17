@@ -10,9 +10,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PeopleIcon from '@material-ui/icons/People';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import ClearIcon from '@material-ui/icons/Clear';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import {formatDate, formatTime} from '../../../lib/helperFunctions/helpers';
 
 import {useHistory} from 'react-router-dom';
 
@@ -63,11 +63,18 @@ const ApplicationStateAccordion = ({
     case 'notAFit':
       icon = <ClearIcon />;
       break;
+    case 'consideredForRole':
+      icon = <FavoriteIcon />;
+      break;
     default:
       icon = <span></span>;
   }
 
   const totalApps = applications.length || 0;
+
+  // if (header === 'Interviewing') {
+  //   console.log(applications);
+  // }
 
   return (
     <ExpansionPanel
@@ -137,9 +144,51 @@ const ApplicationStateAccordion = ({
                       component="p"
                       className={classes.notAFit}
                     >
-                      From :<span className={classes.status}>{app.status}</span>
+                      From:<span className={classes.status}>{app.status}</span>
                     </Typography>
                   )}
+                  {header === 'Interviewing' ||
+                  header === 'Considered for Role' ? (
+                    <React.Fragment>
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        className={classes.notAFit}
+                      >
+                        Interview Date:
+                        <span className={classes.status}>
+                          {formatDate(app.interview_date)}
+                        </span>
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        className={classes.notAFit}
+                      >
+                        Interview Time:
+                        <span className={classes.status}>
+                          {formatTime(app.interview_time)}
+                        </span>
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        className={classes.notAFit}
+                      >
+                        Interview Status:
+                        <span
+                          className={classes.isCompleted}
+                          style={
+                            app.interview_completed
+                              ? {color: '#159611'}
+                              : {color: '#0047c9'}
+                          }
+                        >
+                          {app.interview_completed ? 'Completed' : 'Scheduled'}
+                        </span>
+                      </Typography>
+                    </React.Fragment>
+                  ) : null}
                 </div>
               ) : (
                 <div>
@@ -262,8 +311,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
-    // alignItems: 'flex-start',
-    // margin: spacing(1),
     padding: '8px 15px 8px',
     borderBottom: 'solid #ebebeb 1px',
     '&:hover': {
@@ -278,6 +325,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
+  },
+  isCompleted: {
+    fontWeight: 'bold',
+    marginLeft: '4px',
   },
 });
 

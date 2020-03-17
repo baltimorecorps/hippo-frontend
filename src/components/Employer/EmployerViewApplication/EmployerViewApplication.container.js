@@ -4,9 +4,9 @@ import {
   getAllSubmittedApplications,
   getAllOpportunities,
   getApplication,
-  staffRecommendApplication,
-  staffNotAFitApplication,
-  staffReopenApplication,
+  employerInterviewApplication,
+  employerNotAFitApplication,
+  employerConsiderApplication,
 } from 'state/opportunity';
 
 import {useParams} from 'react-router-dom';
@@ -34,12 +34,16 @@ const mapDispatchToProps = dispatch => ({
     getAllSubmittedApplications(contactId)(dispatch),
   getApplication: (contactId, opportunityId) =>
     getApplication(contactId, opportunityId)(dispatch),
-  staffRecommendApplication: (contactId, opportunityId) =>
-    staffRecommendApplication(contactId, opportunityId)(dispatch),
-  staffNotAFitApplication: (contactId, opportunityId) =>
-    staffNotAFitApplication(contactId, opportunityId)(dispatch),
-  staffReopenApplication: (contactId, opportunityId) =>
-    staffReopenApplication(contactId, opportunityId)(dispatch),
+  employerInterviewApplication: (contactId, opportunityId, interviewDateTime) =>
+    employerInterviewApplication(
+      contactId,
+      opportunityId,
+      interviewDateTime
+    )(dispatch),
+  employerNotAFitApplication: (contactId, opportunityId) =>
+    employerNotAFitApplication(contactId, opportunityId)(dispatch),
+  employerConsiderApplication: (contactId, opportunityId) =>
+    employerConsiderApplication(contactId, opportunityId)(dispatch),
 });
 
 export default connect(
