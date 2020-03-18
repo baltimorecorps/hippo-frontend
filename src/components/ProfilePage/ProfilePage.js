@@ -341,7 +341,7 @@ const ProfilePage = ({
                 />
 
                 {/*<ResumesList />*/}
-                  {/*inSelectMode ? null : (
+                {/*inSelectMode ? null : (
                   <Grid
                     item
                     xs={openSidebar ? 8 : 11}
@@ -365,7 +365,7 @@ const ProfilePage = ({
             </Grid>
           </Grid>
         </Grid>
-          {/*inSelectMode ? (
+        {/*inSelectMode ? (
             <Grid item xs={6} className={classes.wrapperDiv}>
               <ResumeCreator />
             </Grid>
@@ -581,9 +581,17 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   wrapper: {
     paddingBottom: spacing(5),
     width: '100%',
+
     height: `calc(100vh - ${spacing(8)}px - 40px)`,
-    paddingLeft: '18vw',
-    paddingRight: '18vw',
+    paddingLeft: '2vw',
+    paddingRight: '2vw',
+    [breakpoints.up('sm')]: {
+      paddingLeft: '0vw',
+      paddingRight: '18vw',
+    },
+    [breakpoints.up('lg')]: {
+      paddingLeft: '18vw',
+    },
   },
   wrapperSmall: {
     marginBottom: spacing(5),
