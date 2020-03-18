@@ -581,9 +581,17 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   wrapper: {
     paddingBottom: spacing(5),
     width: '100%',
+
     height: `calc(100vh - ${spacing(8)}px - 40px)`,
-    paddingLeft: '18vw',
-    paddingRight: '18vw',
+    paddingLeft: '2vw',
+    paddingRight: '2vw',
+    [breakpoints.up('sm')]: {
+      paddingLeft: '0vw',
+      paddingRight: '18vw',
+    },
+    [breakpoints.up('lg')]: {
+      paddingLeft: '18vw',
+    },
   },
   wrapperSmall: {
     marginBottom: spacing(5),
