@@ -5,9 +5,20 @@ import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+const BorderLinearProgress = withStyles({
+  root: {
+    height: 10,
+    backgroundColor: '#f0f2ff',
+  },
+  bar: {
+    borderRadius: 20,
+    backgroundColor: '#7083ff',
+  },
+})(LinearProgress);
+
 const CapabilityScores = ({classes, contactCapabilities, editScores}) => {
   if (!contactCapabilities) {
-    return <div />
+    return <div />;
   }
 
   let capabilityScores = Object.values(contactCapabilities)
@@ -34,7 +45,7 @@ const CapabilityScores = ({classes, contactCapabilities, editScores}) => {
     });
 
   if (capabilityScores.length === 0) {
-    return <div />
+    return <div />;
   }
 
   return (
@@ -42,11 +53,11 @@ const CapabilityScores = ({classes, contactCapabilities, editScores}) => {
       {capabilityScores.map(capability => (
         <div key={capability.id} className={classes.container}>
           <Typography>{capability.name}</Typography>
-          <LinearProgress
+          <BorderLinearProgress
             classes={{
               root: classes.bar,
             }}
-            color="primary"
+            color="secondary"
             value={capability.score > 5 ? 100 : capability.score * 20}
             variant="determinate"
           />
@@ -65,7 +76,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(1),
     [breakpoints.down('xs')]: {
       display: 'none',
-    }
+    },
   },
   container: {
     padding: spacing(1),
@@ -74,9 +85,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     height: '15px',
     borderRadius: '10px',
     margin: '4px 0',
-    backgroundColor: 'white',
-    border: 'solid 1px lightgrey'
-  }
+    backgroundColor: '#f0f2ff',
+    border: 'solid 1px lightgrey',
+  },
 });
 
 export default withStyles(styles)(CapabilityScores);

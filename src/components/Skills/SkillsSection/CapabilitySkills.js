@@ -17,7 +17,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(1, 3, 3),
   },
   highlight: {
-    backgroundColor: palette.primary.light,
+    backgroundImage: 'linear-gradient(#8caeff,#cfdeff,#f2f6ff)',
   },
   headerDiv: {
     display: 'flex',
@@ -25,26 +25,20 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
     padding: spacing(2),
     minHeight: '80px',
-    borderBottom: 'solid 1px rgba(0,0,0,0.23)',
+    borderBottom: 'solid 0.1px rgba(219, 219, 219,.03)',
   },
   header: {
     fontSize: '14pt',
     alignText: 'center',
   },
-  capability: {
-    //border: 'solid 1px rgba(0,0,0,0.23)',
-    //borderRadius: '5px',
-    //padding: spacing(1),
-  },
+  capability: {},
   skill: {
     margin: spacing(0.25, 0),
   },
   chip: {
-    //backgroundColor: palette.primary.light,
+    backgroundColor: '#e0eaff',
   },
 });
-
-
 
 const BlankChip = withStyles({
   root: {
@@ -52,20 +46,28 @@ const BlankChip = withStyles({
   },
 })(Chip);
 
-const SkillCheckbox = withStyles(styles)(({classes, selected, skill, onClick, onDelete}) => {
-  if (selected) {
-    return <Chip className={classes.chip} onDelete={() => onDelete(skill)} label={skill.name} />;
-  } else {
-    return (
-      <BlankChip
-        variant="outlined"
-        icon={<AddIcon />}
-        onClick={() => onClick(skill)}
-        label={skill.name}
-      />
-    );
+const SkillCheckbox = withStyles(styles)(
+  ({classes, selected, skill, onClick, onDelete}) => {
+    if (selected) {
+      return (
+        <Chip
+          className={classes.chip}
+          onDelete={() => onDelete(skill)}
+          label={skill.name}
+        />
+      );
+    } else {
+      return (
+        <BlankChip
+          variant="outlined"
+          icon={<AddIcon />}
+          onClick={() => onClick(skill)}
+          label={skill.name}
+        />
+      );
+    }
   }
-});
+);
 
 const CapabilitySkills = ({
   classes,
@@ -105,31 +107,30 @@ const CapabilitySkills = ({
         </Typography>
       </div>
       <div className={classes.container}>
-
-      <Grid container justify="space-between" direction="column">
-        {recommendedSkills.map(skill => (
-          <Grid item key={skill.id} className={classes.skill}>
-            <SkillCheckbox
-              selected={hasSkill[skill.id] || false}
-              skill={skill}
-              onClick={addSkill}
-              onDelete={deleteSkill}
-            />
-          </Grid>
-        ))}
-        {additionalSkills.map(skill => (
-          <Grid item key={skill.id} className={classes.skill}>
-            <SkillCheckbox
-              selected={true}
-              skill={skill}
-              onClick={() => {}}
-              onDelete={deleteSkill}
-            />
-          </Grid>
-        ))}
-        <SkillSelect id={id} value={[]} onChange={updateSuggestedSkills} />
-      </Grid>
-        </div>
+        <Grid container justify="space-between" direction="column">
+          {recommendedSkills.map(skill => (
+            <Grid item key={skill.id} className={classes.skill}>
+              <SkillCheckbox
+                selected={hasSkill[skill.id] || false}
+                skill={skill}
+                onClick={addSkill}
+                onDelete={deleteSkill}
+              />
+            </Grid>
+          ))}
+          {additionalSkills.map(skill => (
+            <Grid item key={skill.id} className={classes.skill}>
+              <SkillCheckbox
+                selected={true}
+                skill={skill}
+                onClick={() => {}}
+                onDelete={deleteSkill}
+              />
+            </Grid>
+          ))}
+          <SkillSelect id={id} value={[]} onChange={updateSuggestedSkills} />
+        </Grid>
+      </div>
     </Paper>
   );
 };

@@ -154,6 +154,11 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
     setInputValue('');
   };
 
+  const NewChip = withStyles({
+    root: {
+      backgroundColor: '#e0eaff',
+    },
+  })(Chip);
   return (
     <React.Fragment>
       <Grid>
@@ -182,7 +187,7 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
           renderTags={(value, getTagProps) => {
             return value.map((option, index) => {
               return (
-                <Chip
+                <NewChip
                   className={classes.chip}
                   label={option.name}
                   {...getTagProps({index})}
@@ -198,8 +203,8 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   chip: {
-    backgroundColor: palette.primary.light,
-  }
+    backgroundColor: '#e0eaff',
+  },
 });
 
 SkillSelect.propTypes = {
