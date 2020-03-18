@@ -156,7 +156,7 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
 
   const NewChip = withStyles({
     root: {
-      backgroundColor: '#e0eaff',
+      backgroundColor: '#ffe9a1',
     },
   })(Chip);
   return (
@@ -203,7 +203,7 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   chip: {
-    backgroundColor: '#e0eaff',
+    backgroundColor: '#fff7de',
   },
 });
 

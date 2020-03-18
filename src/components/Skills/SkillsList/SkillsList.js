@@ -17,7 +17,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   grid: {},
   skill: {
     margin: '2px',
-    backgroundColor: '#e0eaff',
+    backgroundColor: '#ffe9a1',
   },
 });
 

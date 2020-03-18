@@ -17,7 +17,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(1, 3, 3),
   },
   highlight: {
-    backgroundImage: 'linear-gradient(#8caeff,#cfdeff,#f2f6ff)',
+    backgroundImage: 'linear-gradient(#ffcc33,#ffe085,#fff0c4)',
   },
   headerDiv: {
     display: 'flex',
@@ -25,7 +25,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
     padding: spacing(2),
     minHeight: '80px',
-    borderBottom: 'solid 0.1px rgba(219, 219, 219,.03)',
+    borderBottom: 'solid 1px rgba(219, 219, 219,.53)',
   },
   header: {
     fontSize: '14pt',
@@ -36,7 +36,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     margin: spacing(0.25, 0),
   },
   chip: {
-    backgroundColor: '#e0eaff',
+    backgroundColor: '#ffe9a1',
   },
 });
 

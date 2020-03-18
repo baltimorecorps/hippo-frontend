@@ -53,11 +53,11 @@ const CapabilityScores = ({classes, contactCapabilities, editScores}) => {
       {capabilityScores.map(capability => (
         <div key={capability.id} className={classes.container}>
           <Typography>{capability.name}</Typography>
-          <BorderLinearProgress
+          <LinearProgress
             classes={{
               root: classes.bar,
             }}
-            color="secondary"
+            color="primary"
             value={capability.score > 5 ? 100 : capability.score * 20}
             variant="determinate"
           />
@@ -85,7 +85,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     height: '15px',
     borderRadius: '10px',
     margin: '4px 0',
-    backgroundColor: '#f0f2ff',
+    backgroundColor: palette.primary.offWhite,
     border: 'solid 1px lightgrey',
   },
 });
