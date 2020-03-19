@@ -86,6 +86,10 @@ const formatTime = time => {
   if (hours > 12) {
     hours = hours - 12;
     suffix = 'pm';
+  } else if (hours === 12) {
+    suffix = 'pm';
+  } else if (hours === 0) {
+    hours = 12;
   }
   const formatedTime = `${hours}:${minutes} ${suffix}`;
   return formatedTime;
