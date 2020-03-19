@@ -365,7 +365,27 @@ export const applicationsReducer = createReducer(
       const application = action.body.data;
       state[application.id] = application;
     },
+    [STAFF_RECOMMEND_APPLICATION_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
+    [STAFF_REOPEN_APPLICATION_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
+    [STAFF_NOT_A_FIT_APPLICATION_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
     [EMPLOYER_INTERVIEW_APPLICATION_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
+    [EMPLOYER_CONSIDER_APPLICATION_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
+    [EMPLOYER_NOT_A_FIT_APPLICATION_API.RESOLVE]: (state, action) => {
       const application = action.body.data;
       state[application.id] = application;
     },
