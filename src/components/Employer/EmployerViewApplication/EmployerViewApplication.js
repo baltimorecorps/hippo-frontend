@@ -62,14 +62,22 @@ const EmployerViewApplication = ({
     setDecision('interview completed');
     setConfirmed(true);
   };
+  const handleClickReconsider = () => {
+    setDecision('reconsider');
+    setConfirmed(true);
+  };
   const handleClickNotAFit = () => {
     setDecision('employer: not a fit');
     setConfirmed(true);
   };
-  const handleClickConsider = () => {
-    setDecision('consider');
-    setConfirmed(true);
-  };
+  // const handleClickNotAFit = () => {
+  //   setDecision('employer: not a fit');
+  //   setConfirmed(true);
+  // };
+  // const handleClickConsider = () => {
+  //   setDecision('consider');
+  //   setConfirmed(true);
+  // };
 
   const notAFitApplication = async () => {
     const response = await employerNotAFitApplication(contactId, opportunityId);
@@ -104,8 +112,9 @@ const EmployerViewApplication = ({
         back={toEmployerBoard}
         interviewScheduled={handleClickInterViewScheduled}
         interviewCompleted={handleClickInterViewCompleted}
-        notAFit={handleClickNotAFit}
-        consider={handleClickConsider}
+        employerNotAFit={handleClickNotAFit}
+        // employerConsider={handleClickConsider}
+        employerReconsider={handleClickReconsider}
         applicantId={application && application.contact.id}
         opportunityId={opportunityId}
       />
@@ -214,7 +223,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0 24px 15px',
-    marginBottom: spacing(2),
+    marginBottom: spacing(1),
+    marginTop: spacing(1),
   },
   greenButtons: {
     backgroundColor: '#00bf1d',
@@ -346,7 +356,13 @@ const ConfirmDialog = withStyles(styles)(
         confirmText = 'Are you sure this application is not a fit?';
         break;
       case 'consider':
-        confirmText = `Are you sure you want to consider ${application.contact.first_name} ${application.contact.first_name} for the role?`;
+        confirmText = `Are you sure you want to consider ${application.contact.first_name} ${application.contact.last_name} for the role?`;
+        break;
+      case 'interview completed':
+        confirmText = `Would ${application.contact.first_name} ${application.contact.last_name} be a finalist for this role?`;
+        break;
+      case 'reconsider':
+        confirmText = `Do you want to reconsider ${application.contact.first_name} ${application.contact.last_name} as a finalist?`;
         break;
       default:
         confirmText = <span></span>;
@@ -355,14 +371,19 @@ const ConfirmDialog = withStyles(styles)(
     const consideredForRoleButton = createAButton(
       'Yes',
       considerApplication,
-      true,
-      classes.greenButtons
+      true
+      // classes.greenButtons
     );
     const notAFitButton = createAButton(
       'No',
       notAFitApplication,
       true,
       classes.redButtons
+    );
+    const noCancelButton = (
+      <Button onClick={closeDialog} variant="outlined" color="secondary">
+        Cancel
+      </Button>
     );
 
     return (
@@ -425,7 +446,7 @@ const ConfirmDialog = withStyles(styles)(
               </React.Fragment>
             </DialogActions>
           </React.Fragment>
-        ) : decision === 'interview completed' ? (
+        ) : decision === 'interview completed' || decision === 'reconsider' ? (
           <React.Fragment>
             <DialogContent className={classes.dialogContent}>
               <div className={classes.dialogHeaderContainer}>
@@ -451,12 +472,14 @@ const ConfirmDialog = withStyles(styles)(
                 align="center"
                 className={classes.dialogContentText}
               >
-                {`Are you still considering ${application.contact.first_name} ${application.contact.last_name} for the role?`}
+                {confirmText}
               </Typography>
             </DialogContent>
             <DialogActions className={classes.buttonsContainer}>
               <React.Fragment>
-                {notAFitButton}
+                {decision === 'interview completed'
+                  ? notAFitButton
+                  : noCancelButton}
 
                 {consideredForRoleButton}
               </React.Fragment>
@@ -468,13 +491,14 @@ const ConfirmDialog = withStyles(styles)(
               <Typography>{confirmText}</Typography>
             </DialogContent>
             <DialogActions className={classes.buttonsContainer}>
-              <Button
+              {/* <Button
                 onClick={closeDialog}
                 variant="contained"
                 color="secondary"
               >
                 No
-              </Button>
+              </Button> */}
+              {noCancelButton}
               <Button
                 onClick={onClickConfirmDecision}
                 variant="contained"
