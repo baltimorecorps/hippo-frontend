@@ -42,7 +42,13 @@ const RoleCards = ({
     interviewingApps = applications.filter(
       app => app.status === 'interviewed' && app.is_active === true
     );
-    notAFitApps = applications.filter(app => app.is_active === false);
+    if (page === 'employer') {
+      notAFitApps = applications.filter(
+        app => app.is_active === false && app.status !== 'submitted'
+      );
+    } else {
+      notAFitApps = applications.filter(app => app.is_active === false);
+    }
     consideredApps = applications.filter(
       app => app.status === 'considered_for_role' && app.is_active === true
     );
@@ -128,7 +134,7 @@ const RoleCards = ({
         page={page}
       />
       <ApplicationStateAccordion
-        header="Considered for Role"
+        header="Finalists for Role"
         applications={consideredApps}
         iconName="consideredForRole"
         expanded={expanded}
