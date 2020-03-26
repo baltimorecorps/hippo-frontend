@@ -16,7 +16,10 @@ import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {experienceValidator} from 'lib/formHelpers/formValidator';
-import {scoreAchievements, relativeScores} from 'lib/helperFunctions/scoreAchievements';
+import {
+  scoreAchievements,
+  relativeScores,
+} from 'lib/helperFunctions/scoreAchievements';
 import {configureForm} from 'components/Experiences/ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';
@@ -39,7 +42,6 @@ const useForm = (initialValues, onSubmit) => {
       update(event.target.name)(event.target.value);
     },
     handleSubmit: () => {
-      console.log('handleSubmit', values)
       onSubmit(values);
     },
 
@@ -168,7 +170,7 @@ const AddOrEditExperienceForm = ({
     handleFormSubmit();
   };
 
-  const handleAchievementsLocal = (achievements) => {
+  const handleAchievementsLocal = achievements => {
     /* prohibitively expensive performance-wise right now
      * need to optimize
     updateEditScore(relativeScores(
@@ -177,7 +179,7 @@ const AddOrEditExperienceForm = ({
     ));
     */
     handleAchievements(achievements);
-  }
+  };
 
   return (
     <Grid

@@ -7,6 +7,7 @@ const formatDate = experience => {
 };
 
 const EducationItem = ({classes, experience, index, enableDrag}) => {
+  console.log(experience);
   const innerComponent = (
     <div className={classes.item}>
       <div className={classes.dateCol}>
@@ -14,7 +15,9 @@ const EducationItem = ({classes, experience, index, enableDrag}) => {
       </div>
       <div className={classes.contentCol}>
         <span className={classes.org}>{experience.host}</span>
-        <span className={classes.degree}>{experience.title}</span>
+        <span
+          className={classes.degree}
+        >{`${experience.degree} in ${experience.title}`}</span>
       </div>
     </div>
   );
@@ -23,7 +26,7 @@ const EducationItem = ({classes, experience, index, enableDrag}) => {
     return (
       <DragWrapper index={index} dragId={`${experience.id}`}>
         {innerComponent}
-        </DragWrapper>
+      </DragWrapper>
     );
   } else {
     return innerComponent;
