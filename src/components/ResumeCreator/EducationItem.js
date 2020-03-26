@@ -7,7 +7,6 @@ const formatDate = experience => {
 };
 
 const EducationItem = ({classes, experience, index, enableDrag}) => {
-  console.log(experience);
   const innerComponent = (
     <div className={classes.item}>
       <div className={classes.dateCol}>
