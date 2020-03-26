@@ -249,9 +249,33 @@ const interestValidator = interestText => {
   return {isError, err};
 };
 
+const interviewScheduledValidator = values => {
+  const {interview_date, interview_time} = values;
+
+  let isError = false;
+  let err = {};
+
+  if (!interview_date || interview_date.length === 0) {
+    isError = true;
+    err.interviewDate_error = 'Required';
+  } else if (interview_date.toString() === 'Invalid Date') {
+    isError = true;
+  }
+
+  if (!interview_time || interview_time.length === 0) {
+    isError = true;
+    err.interviewTime_error = 'Required';
+  } else if (interview_time.toString() === 'Invalid Date') {
+    isError = true;
+  }
+
+  return {isError, err};
+};
+
 export {
   newProfileValidator,
   experienceValidator,
   opportunityValidator,
   interestValidator,
+  interviewScheduledValidator,
 };
