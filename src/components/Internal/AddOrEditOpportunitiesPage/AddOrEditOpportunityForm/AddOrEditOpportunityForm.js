@@ -47,8 +47,6 @@ const AddOrEditOpportunityForm = ({
   const [values, handleChange, handleSubmit] = useForm(opportunity, onSubmit);
   const [errors, setErrors] = useState({});
 
-  console.log(opportunity);
-
   const inputLabelProps = {
     classes: {
       root: classes.labelRoot,

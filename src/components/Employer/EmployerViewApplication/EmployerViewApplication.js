@@ -19,6 +19,8 @@ import {
 } from '@material-ui/pickers';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import CloseIcon from '@material-ui/icons/Close';
+import {interviewScheduledValidator} from '../../../lib/formHelpers/formValidator';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const EmployerViewApplication = ({
   classes,
@@ -46,10 +48,6 @@ const EmployerViewApplication = ({
     return <div>Loading...</div>;
   }
 
-  // const toConfirmationPage = () => {
-  //   history.push('/staff-confirmation-page');
-  // };
-
   const toEmployerBoard = () => {
     history.push(`/org/opportunity/${opportunityId}/`);
   };
@@ -70,14 +68,6 @@ const EmployerViewApplication = ({
     setDecision('employer: not a fit');
     setConfirmed(true);
   };
-  // const handleClickNotAFit = () => {
-  //   setDecision('employer: not a fit');
-  //   setConfirmed(true);
-  // };
-  // const handleClickConsider = () => {
-  //   setDecision('consider');
-  //   setConfirmed(true);
-  // };
 
   const notAFitApplication = async () => {
     const response = await employerNotAFitApplication(contactId, opportunityId);
@@ -113,7 +103,6 @@ const EmployerViewApplication = ({
         interviewScheduled={handleClickInterViewScheduled}
         interviewCompleted={handleClickInterViewCompleted}
         employerNotAFit={handleClickNotAFit}
-        // employerConsider={handleClickConsider}
         employerReconsider={handleClickReconsider}
         applicantId={application && application.contact.id}
         opportunityId={opportunityId}
@@ -235,8 +224,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   dialogHeaderContainer: {
     width: '100%',
     display: 'flex',
-    // justifyContent: 'space-between',
-
     flexDirection: 'column',
   },
   dialogHeader: {
@@ -245,8 +232,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     position: 'relative',
   },
   dialogContentText: {
-    // display: 'flex',
-    // justifyContent: 'space-between',
     marginBottom: spacing(1.5),
   },
   dialogContent: {
@@ -259,6 +244,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       color: 'black',
     },
+  },
+  formHelperText: {
+    color: palette.error.main,
+    marginTop: '2px',
+    width: '95%',
+    marginBottom: spacing(1),
   },
 });
 
@@ -332,6 +323,17 @@ const ConfirmDialog = withStyles(styles)(
       toEmployerBoard
     );
 
+    const [errors, setErrors] = useState({});
+
+    const submit = () => {
+      const {isError, err} = interviewScheduledValidator(values);
+      if (isError) {
+        setErrors(err);
+      } else {
+        handleSubmit(values);
+      }
+    };
+
     const onClickConfirmDecision = () => {
       if (decision === 'consider') {
         createClickTracking(
@@ -372,7 +374,6 @@ const ConfirmDialog = withStyles(styles)(
       'Yes',
       considerApplication,
       true
-      // classes.greenButtons
     );
     const notAFitButton = createAButton(
       'No',
@@ -411,6 +412,9 @@ const ConfirmDialog = withStyles(styles)(
                         'aria-label': 'change date',
                       }}
                     />
+                    <FormHelperText className={classes.formHelperText}>
+                      {errors.interviewDate_error || null}
+                    </FormHelperText>
                     <KeyboardTimePicker
                       margin="normal"
                       id="interview_time"
@@ -423,6 +427,9 @@ const ConfirmDialog = withStyles(styles)(
                         'aria-label': 'change time',
                       }}
                     />
+                    <FormHelperText className={classes.formHelperText}>
+                      {errors.interviewTime_error || null}
+                    </FormHelperText>
                   </Grid>
                 </MuiPickersUtilsProvider>
               </Typography>
@@ -436,11 +443,7 @@ const ConfirmDialog = withStyles(styles)(
                 >
                   Cancel
                 </Button>
-                <Button
-                  onClick={handleSubmit}
-                  variant="contained"
-                  color="primary"
-                >
+                <Button onClick={submit} variant="contained" color="primary">
                   Submit
                 </Button>
               </React.Fragment>
@@ -457,13 +460,6 @@ const ConfirmDialog = withStyles(styles)(
                 >
                   <CloseIcon />
                 </IconButton>
-                {/* <Typography
-                  variant="h5"
-                  component="h2"
-                  className={classes.dialogHeader}
-                >
-                  
-                </Typography> */}
               </div>
 
               <Typography
@@ -491,13 +487,6 @@ const ConfirmDialog = withStyles(styles)(
               <Typography>{confirmText}</Typography>
             </DialogContent>
             <DialogActions className={classes.buttonsContainer}>
-              {/* <Button
-                onClick={closeDialog}
-                variant="contained"
-                color="secondary"
-              >
-                No
-              </Button> */}
               {noCancelButton}
               <Button
                 onClick={onClickConfirmDecision}

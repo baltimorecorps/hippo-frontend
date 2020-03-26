@@ -181,12 +181,12 @@ const StickyFooter = ({
     leftButton = backButton;
     rightButton = nextButton;
   } else if (page === 'review') {
-    if (application.status === 'submitted') {
-      leftButton = toMyProfileButton;
-      rightButton = toOpportunitiesButton;
-    } else {
+    if (application.status === 'draft') {
       leftButton = backButton;
       rightButton = submitButton;
+    } else {
+      leftButton = toMyProfileButton;
+      rightButton = toOpportunitiesButton;
     }
   } else if (page === 'staff-review-application') {
     if (applicationStatus === 'submitted' && application.is_active === true) {
