@@ -373,7 +373,8 @@ const ConfirmDialog = withStyles(styles)(
     const consideredForRoleButton = createAButton(
       'Yes',
       considerApplication,
-      true
+      true,
+      classes.greenButtons
     );
     const notAFitButton = createAButton(
       'No',
