@@ -148,7 +148,7 @@ const ApplicationStateAccordion = ({
                     </Typography>
                   )}
                   {header === 'Interviewing' ||
-                  header === 'Considered for Role' ? (
+                  header === 'Finalists for Role' ? (
                     <React.Fragment>
                       <Typography
                         variant="body1"

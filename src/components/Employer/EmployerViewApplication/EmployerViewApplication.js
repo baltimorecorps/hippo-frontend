@@ -19,6 +19,8 @@ import {
 } from '@material-ui/pickers';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import CloseIcon from '@material-ui/icons/Close';
+import {interviewScheduledValidator} from '../../../lib/formHelpers/formValidator';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const EmployerViewApplication = ({
   classes,
@@ -46,10 +48,6 @@ const EmployerViewApplication = ({
     return <div>Loading...</div>;
   }
 
-  // const toConfirmationPage = () => {
-  //   history.push('/staff-confirmation-page');
-  // };
-
   const toEmployerBoard = () => {
     history.push(`/org/opportunity/${opportunityId}/`);
   };
@@ -62,12 +60,12 @@ const EmployerViewApplication = ({
     setDecision('interview completed');
     setConfirmed(true);
   };
-  const handleClickNotAFit = () => {
-    setDecision('employer: not a fit');
+  const handleClickReconsider = () => {
+    setDecision('reconsider');
     setConfirmed(true);
   };
-  const handleClickConsider = () => {
-    setDecision('consider');
+  const handleClickNotAFit = () => {
+    setDecision('employer: not a fit');
     setConfirmed(true);
   };
 
@@ -104,8 +102,8 @@ const EmployerViewApplication = ({
         back={toEmployerBoard}
         interviewScheduled={handleClickInterViewScheduled}
         interviewCompleted={handleClickInterViewCompleted}
-        notAFit={handleClickNotAFit}
-        consider={handleClickConsider}
+        employerNotAFit={handleClickNotAFit}
+        employerReconsider={handleClickReconsider}
         applicantId={application && application.contact.id}
         opportunityId={opportunityId}
       />
@@ -214,7 +212,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'space-between',
     padding: '0 24px 15px',
-    marginBottom: spacing(2),
+    marginBottom: spacing(1),
+    marginTop: spacing(1),
   },
   greenButtons: {
     backgroundColor: '#00bf1d',
@@ -225,8 +224,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   dialogHeaderContainer: {
     width: '100%',
     display: 'flex',
-    // justifyContent: 'space-between',
-
     flexDirection: 'column',
   },
   dialogHeader: {
@@ -235,8 +232,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     position: 'relative',
   },
   dialogContentText: {
-    // display: 'flex',
-    // justifyContent: 'space-between',
     marginBottom: spacing(1.5),
   },
   dialogContent: {
@@ -249,6 +244,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       color: 'black',
     },
+  },
+  formHelperText: {
+    color: palette.error.main,
+    marginTop: '2px',
+    width: '95%',
+    marginBottom: spacing(1),
   },
 });
 
@@ -322,6 +323,17 @@ const ConfirmDialog = withStyles(styles)(
       toEmployerBoard
     );
 
+    const [errors, setErrors] = useState({});
+
+    const submit = () => {
+      const {isError, err} = interviewScheduledValidator(values);
+      if (isError) {
+        setErrors(err);
+      } else {
+        handleSubmit(values);
+      }
+    };
+
     const onClickConfirmDecision = () => {
       if (decision === 'consider') {
         createClickTracking(
@@ -346,7 +358,13 @@ const ConfirmDialog = withStyles(styles)(
         confirmText = 'Are you sure this application is not a fit?';
         break;
       case 'consider':
-        confirmText = `Are you sure you want to consider ${application.contact.first_name} ${application.contact.first_name} for the role?`;
+        confirmText = `Are you sure you want to consider ${application.contact.first_name} ${application.contact.last_name} for the role?`;
+        break;
+      case 'interview completed':
+        confirmText = `Would ${application.contact.first_name} ${application.contact.last_name} be a finalist for this role?`;
+        break;
+      case 'reconsider':
+        confirmText = `Do you want to reconsider ${application.contact.first_name} ${application.contact.last_name} as a finalist?`;
         break;
       default:
         confirmText = <span></span>;
@@ -363,6 +381,11 @@ const ConfirmDialog = withStyles(styles)(
       notAFitApplication,
       true,
       classes.redButtons
+    );
+    const noCancelButton = (
+      <Button onClick={closeDialog} variant="outlined" color="secondary">
+        Cancel
+      </Button>
     );
 
     return (
@@ -390,6 +413,9 @@ const ConfirmDialog = withStyles(styles)(
                         'aria-label': 'change date',
                       }}
                     />
+                    <FormHelperText className={classes.formHelperText}>
+                      {errors.interviewDate_error || null}
+                    </FormHelperText>
                     <KeyboardTimePicker
                       margin="normal"
                       id="interview_time"
@@ -402,6 +428,9 @@ const ConfirmDialog = withStyles(styles)(
                         'aria-label': 'change time',
                       }}
                     />
+                    <FormHelperText className={classes.formHelperText}>
+                      {errors.interviewTime_error || null}
+                    </FormHelperText>
                   </Grid>
                 </MuiPickersUtilsProvider>
               </Typography>
@@ -415,17 +444,13 @@ const ConfirmDialog = withStyles(styles)(
                 >
                   Cancel
                 </Button>
-                <Button
-                  onClick={handleSubmit}
-                  variant="contained"
-                  color="primary"
-                >
+                <Button onClick={submit} variant="contained" color="primary">
                   Submit
                 </Button>
               </React.Fragment>
             </DialogActions>
           </React.Fragment>
-        ) : decision === 'interview completed' ? (
+        ) : decision === 'interview completed' || decision === 'reconsider' ? (
           <React.Fragment>
             <DialogContent className={classes.dialogContent}>
               <div className={classes.dialogHeaderContainer}>
@@ -436,13 +461,6 @@ const ConfirmDialog = withStyles(styles)(
                 >
                   <CloseIcon />
                 </IconButton>
-                {/* <Typography
-                  variant="h5"
-                  component="h2"
-                  className={classes.dialogHeader}
-                >
-                  
-                </Typography> */}
               </div>
 
               <Typography
@@ -451,12 +469,14 @@ const ConfirmDialog = withStyles(styles)(
                 align="center"
                 className={classes.dialogContentText}
               >
-                {`Are you still considering ${application.contact.first_name} ${application.contact.last_name} for the role?`}
+                {confirmText}
               </Typography>
             </DialogContent>
             <DialogActions className={classes.buttonsContainer}>
               <React.Fragment>
-                {notAFitButton}
+                {decision === 'interview completed'
+                  ? notAFitButton
+                  : noCancelButton}
 
                 {consideredForRoleButton}
               </React.Fragment>
@@ -468,13 +488,7 @@ const ConfirmDialog = withStyles(styles)(
               <Typography>{confirmText}</Typography>
             </DialogContent>
             <DialogActions className={classes.buttonsContainer}>
-              <Button
-                onClick={closeDialog}
-                variant="contained"
-                color="secondary"
-              >
-                No
-              </Button>
+              {noCancelButton}
               <Button
                 onClick={onClickConfirmDecision}
                 variant="contained"

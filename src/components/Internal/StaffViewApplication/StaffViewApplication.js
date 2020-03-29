@@ -114,6 +114,7 @@ const StaffViewApplication = ({
         recommend={handleClickRecommend}
         notAFit={handleClickNotAFit}
         reopen={handleClickReopen}
+        application={application}
         applicantId={application && application.contact.id}
         opportunityId={opportunityId}
       />

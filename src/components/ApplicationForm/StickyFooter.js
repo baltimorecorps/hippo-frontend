@@ -9,6 +9,8 @@ const StickyFooter = ({
   startText,
   recommend,
   notAFit,
+  employerNotAFit,
+  employerReconsider,
   reopen,
   interviewScheduled,
   interviewCompleted,
@@ -36,6 +38,10 @@ const StickyFooter = ({
   const toViewStaffOpportunities = () => {
     history.push('/internal/opportunities-board');
   };
+
+  const toEmployerBoard = () => {
+    history.push(`/org/opportunity/${opportunityId}/`);
+  };
   const backButton = createAButton('Back', back, false, classes.buttons);
   const nextButton = createAButton('Next', handleNext, true, classes.buttons);
   const submitButton = createAButton('Submit', submit, true, classes.buttons);
@@ -51,6 +57,7 @@ const StickyFooter = ({
     true,
     classes.redButtons
   );
+
   const reopenButton = createAButton('Reopen', reopen, false, classes.buttons);
 
   const interviewScheduledButton = createAButton(
@@ -64,6 +71,12 @@ const StickyFooter = ({
     interviewScheduled,
     true,
     classes.purpleButtons
+  );
+  const reconsiderButton = createAButton(
+    'Reconsider for Role',
+    employerReconsider,
+    true,
+    classes.greenButtons
   );
   // const consideredForRoleButton = createAButton(
   //   'Considered for role',
@@ -80,6 +93,22 @@ const StickyFooter = ({
 
   //TODO: add GA trackings on decision buttons
   // fix /profile error
+
+  // const employerNotAFitApplication = async () => {
+  //   const response = await employerNotAFit(applicantId, opportunityId);
+  //   if (response.statusCode == 200) {
+  //     toEmployerBoard();
+  //   }
+  // };
+
+  // const onClickEmployerNotAFit = () => {
+  //   createClickTracking(
+  //     'Employer Making Decision',
+  //     'Click Confirm Not a Fit Application',
+  //     'Click Confirm Not a Fit Application'
+  //   );
+  //   employerNotAFitApplication();
+  // };
 
   const onClickEditProfile = () => {
     createClickTracking(
@@ -140,39 +169,38 @@ const StickyFooter = ({
     false,
     classes.buttons
   );
+  const employerNotAFitButton = createAButton(
+    'Not a Fit',
+    employerNotAFit,
+    true,
+    classes.redButtons
+  );
 
   let leftButton, rightButton, middleLeftButton, middleRightButton;
   if (page === 'interest' || page === 'resume') {
     leftButton = backButton;
     rightButton = nextButton;
   } else if (page === 'review') {
-    if (application.status === 'submitted') {
-      leftButton = toMyProfileButton;
-      rightButton = toOpportunitiesButton;
-    } else {
+    if (application.status === 'draft') {
       leftButton = backButton;
       rightButton = submitButton;
+    } else {
+      leftButton = toMyProfileButton;
+      rightButton = toOpportunitiesButton;
     }
   } else if (page === 'staff-review-application') {
-    if (
-      applicationStatus === 'recommended' ||
-      applicationStatus === 'interviewed' ||
-      applicationStatus === 'considered_for_role'
-    ) {
-      leftButton = toStaffOpportunitiesButton;
-      rightButton = toApplicantProfileButton;
-    } else {
+    if (applicationStatus === 'submitted' && application.is_active === true) {
       leftButton = reopenButton;
       middleLeftButton = toApplicantProfileButton;
       middleRightButton = notAFitButton;
       rightButton = recommendButton;
+    } else {
+      leftButton = toStaffOpportunitiesButton;
+      rightButton = toApplicantProfileButton;
     }
   } else if (page === 'employer-review-application') {
-    if (
-      applicationStatus === 'recommended' ||
-      (applicationStatus === 'submitted' && application.is_active === false)
-    ) {
-      leftButton = backButton;
+    if (applicationStatus === 'recommended' && application.is_active === true) {
+      leftButton = employerNotAFitButton;
       rightButton = interviewScheduledButton;
     } else if (
       applicationStatus === 'interviewed' &&
@@ -180,6 +208,19 @@ const StickyFooter = ({
     ) {
       leftButton = interviewRescheduledButton;
       rightButton = interviewCompletedButton;
+    } else if (
+      applicationStatus === 'recommended' &&
+      application.is_active === false
+    ) {
+      leftButton = backButton;
+
+      rightButton = interviewScheduledButton;
+    } else if (
+      applicationStatus === 'interviewed' &&
+      application.is_active === false
+    ) {
+      leftButton = interviewRescheduledButton;
+      rightButton = reconsiderButton;
     } else {
       leftButton = backButton;
     }
