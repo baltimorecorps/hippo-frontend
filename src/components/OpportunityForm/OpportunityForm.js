@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -216,6 +217,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-OpportunityForm.propTypes = {};
+OpportunityForm.propTypes = {
+  addOpportunity: PropTypes.func.isRequired,
+};
 
 export default withStyles(styles)(OpportunityForm);
