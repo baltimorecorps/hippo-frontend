@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -123,6 +124,48 @@ const InterestForm = ({
       />
     </div>
   );
+};
+
+InterestForm.propTypes = {
+  startText: PropTypes.string.isRequired,
+  back: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  opportunity: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    program_id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    short_description: PropTypes.string.isRequired,
+    cycle_id: PropTypes.number.isRequired,
+    gdoc_link: PropTypes.string.isRequired,
+    org_name: PropTypes.string.isRequired,
+  }),
+  application: PropTypes.shape({
+    interview_date: PropTypes.string,
+    interview_time: PropTypes.string,
+    resume: PropTypes.object,
+    status: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    interview_completed: PropTypes.bool.isRequired,
+    interest_statement: PropTypes.string,
+    contact: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      first_name: PropTypes.string.isRequired,
+      last_name: PropTypes.string.isRequired,
+    }),
+    is_active: PropTypes.bool.isRequired,
+    opportunity: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      program_id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
+      short_description: PropTypes.string.isRequired,
+      cycle_id: PropTypes.number.isRequired,
+      gdoc_link: PropTypes.string.isRequired,
+      org_name: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
