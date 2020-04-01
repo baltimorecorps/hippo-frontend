@@ -71,9 +71,9 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  accounts: PropTypes.object.isRequired,
+  // accounts: PropTypes.object.isRequired,
   addContact: PropTypes.func.isRequired,
-  getMyContact: PropTypes.func.isRequired,
+  // getMyContact: PropTypes.func.isRequired,
 };
 
 export default Profile;

@@ -96,7 +96,6 @@ const EmployerViewApplication = ({
       {toEmployerBoardButton}
       <ViewFullApplication application={application} />
       <StickyFooter
-        applicationStatus={application.status}
         application={application}
         page="employer-review-application"
         back={toEmployerBoard}

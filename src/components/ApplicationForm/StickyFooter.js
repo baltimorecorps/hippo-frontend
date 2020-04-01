@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import {createAButton, createClickTracking} from 'lib/helperFunctions/helpers';
@@ -6,7 +7,6 @@ import {useHistory} from 'react-router-dom';
 
 const StickyFooter = ({
   classes,
-  startText,
   recommend,
   notAFit,
   employerNotAFit,
@@ -14,18 +14,12 @@ const StickyFooter = ({
   reopen,
   interviewScheduled,
   interviewCompleted,
-  makeOffer,
   back,
   handleNext,
   submit,
   toOpportunities,
-  toStaffOpportunities,
-  opportunity,
   application,
-  applicantId,
-  opportunityId,
   page,
-  applicationStatus,
 }) => {
   let history = useHistory();
   const toMyProfile = opportunity_id => {
@@ -39,9 +33,6 @@ const StickyFooter = ({
     history.push('/internal/opportunities-board');
   };
 
-  const toEmployerBoard = () => {
-    history.push(`/org/opportunity/${opportunityId}/`);
-  };
   const backButton = createAButton('Back', back, false, classes.buttons);
   const nextButton = createAButton('Next', handleNext, true, classes.buttons);
   const submitButton = createAButton('Submit', submit, true, classes.buttons);
@@ -78,12 +69,6 @@ const StickyFooter = ({
     true,
     classes.greenButtons
   );
-  // const consideredForRoleButton = createAButton(
-  //   'Considered for role',
-  //   makeOffer,
-  //   true,
-  //   classes.greenButtons
-  // );
   const interviewCompletedButton = createAButton(
     'Interview Completed',
     interviewCompleted,
@@ -93,22 +78,6 @@ const StickyFooter = ({
 
   //TODO: add GA trackings on decision buttons
   // fix /profile error
-
-  // const employerNotAFitApplication = async () => {
-  //   const response = await employerNotAFit(applicantId, opportunityId);
-  //   if (response.statusCode == 200) {
-  //     toEmployerBoard();
-  //   }
-  // };
-
-  // const onClickEmployerNotAFit = () => {
-  //   createClickTracking(
-  //     'Employer Making Decision',
-  //     'Click Confirm Not a Fit Application',
-  //     'Click Confirm Not a Fit Application'
-  //   );
-  //   employerNotAFitApplication();
-  // };
 
   const onClickEditProfile = () => {
     createClickTracking(
@@ -134,7 +103,7 @@ const StickyFooter = ({
       'Click to See Applicant Profile',
       'Click to See Applicant Profile'
     );
-    toApplicantProfile(applicantId);
+    toApplicantProfile(application.contact.id);
   };
   const onClickViewStaffOpportunities = () => {
     createClickTracking(
@@ -189,7 +158,7 @@ const StickyFooter = ({
       rightButton = toOpportunitiesButton;
     }
   } else if (page === 'staff-review-application') {
-    if (applicationStatus === 'submitted' && application.is_active === true) {
+    if (application.status === 'submitted' && application.is_active === true) {
       leftButton = reopenButton;
       middleLeftButton = toApplicantProfileButton;
       middleRightButton = notAFitButton;
@@ -199,24 +168,27 @@ const StickyFooter = ({
       rightButton = toApplicantProfileButton;
     }
   } else if (page === 'employer-review-application') {
-    if (applicationStatus === 'recommended' && application.is_active === true) {
+    if (
+      application.status === 'recommended' &&
+      application.is_active === true
+    ) {
       leftButton = employerNotAFitButton;
       rightButton = interviewScheduledButton;
     } else if (
-      applicationStatus === 'interviewed' &&
+      application.status === 'interviewed' &&
       application.is_active === true
     ) {
       leftButton = interviewRescheduledButton;
       rightButton = interviewCompletedButton;
     } else if (
-      applicationStatus === 'recommended' &&
+      application.status === 'recommended' &&
       application.is_active === false
     ) {
       leftButton = backButton;
 
       rightButton = interviewScheduledButton;
     } else if (
-      applicationStatus === 'interviewed' &&
+      application.status === 'interviewed' &&
       application.is_active === false
     ) {
       leftButton = interviewRescheduledButton;
@@ -244,6 +216,47 @@ const StickyFooter = ({
       </div>
     </Paper>
   );
+};
+
+StickyFooter.propTypes = {
+  recommend: PropTypes.func,
+  notAFit: PropTypes.func,
+  employerNotAFit: PropTypes.func,
+  employerReconsider: PropTypes.func,
+  reopen: PropTypes.func,
+  interviewScheduled: PropTypes.func,
+  interviewCompleted: PropTypes.func,
+  back: PropTypes.func,
+  handleNext: PropTypes.func,
+  submit: PropTypes.func,
+  toOpportunities: PropTypes.func,
+  page: PropTypes.string.isRequired,
+  application: PropTypes.shape({
+    interview_date: PropTypes.string,
+    interview_time: PropTypes.string,
+    resume: PropTypes.object,
+    status: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    interview_completed: PropTypes.bool.isRequired,
+    interest_statement: PropTypes.string,
+    contact: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      first_name: PropTypes.string.isRequired,
+      last_name: PropTypes.string.isRequired,
+    }),
+    is_active: PropTypes.bool.isRequired,
+    opportunity: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      program_id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
+      short_description: PropTypes.string.isRequired,
+      cycle_id: PropTypes.number.isRequired,
+      gdoc_link: PropTypes.string.isRequired,
+      org_name: PropTypes.string.isRequired,
+    }),
+  }),
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
