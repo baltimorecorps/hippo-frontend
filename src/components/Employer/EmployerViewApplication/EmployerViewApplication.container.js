@@ -12,12 +12,12 @@ import {
 import {useParams} from 'react-router-dom';
 
 const mapStateToProps = (state, props) => {
-  const {opportunityId, contactId} = props.match.params;
-
+  let {opportunityId, contactId} = props.match.params;
+  contactId = parseInt(contactId);
   const opportunities = Object.values(state.opportunities);
 
   const matchingApplications = Object.values(state.applications).filter(
-    app => app.contact.id == contactId && app.opportunity.id === opportunityId
+    app => app.contact.id === contactId && app.opportunity.id === opportunityId
   );
 
   return {
