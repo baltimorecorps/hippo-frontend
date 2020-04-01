@@ -91,9 +91,8 @@ const RoleCards = ({
         <Link
           component="button"
           variant="body1"
-          color="none"
           onClick={() => toEmployerPage(opportunity.id)}
-          className={classes.linkText}
+          className={classes.employerLink}
         >
           {page === 'internal' && 'Employer View'}
         </Link>
@@ -205,6 +204,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   link: {
     color: palette.primary.link,
+  },
+  employerLink: {
+    color: '#000000',
+    textDecoration: 'underline',
   },
 
   title: {

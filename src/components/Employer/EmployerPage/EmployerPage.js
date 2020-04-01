@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {useHistory} from 'react-router-dom';
 import {useParams} from 'react-router-dom';
@@ -37,6 +38,21 @@ const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {
       </div>
     );
   }
+};
+
+EmployerPage.propTypes = {
+  opportunity: PropTypes.shape({
+    status: PropTypes.string.isRequired,
+    application: PropTypes.array,
+    program_id: PropTypes.number.isRequired,
+    short_description: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    gdoc_link: PropTypes.string.isRequired,
+    org_name: PropTypes.string.isRequired,
+    cycle_id: PropTypes.number.isRequired,
+  }),
+  getOrgOpportunity: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
