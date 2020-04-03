@@ -153,7 +153,7 @@ InterestForm.propTypes = {
       id: PropTypes.number.isRequired,
       first_name: PropTypes.string.isRequired,
       last_name: PropTypes.string.isRequired,
-    }),
+    }).isRequired,
     is_active: PropTypes.bool.isRequired,
     opportunity: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -164,7 +164,7 @@ InterestForm.propTypes = {
       cycle_id: PropTypes.number.isRequired,
       gdoc_link: PropTypes.string.isRequired,
       org_name: PropTypes.string.isRequired,
-    }),
+    }).isRequired,
   }),
 };
 

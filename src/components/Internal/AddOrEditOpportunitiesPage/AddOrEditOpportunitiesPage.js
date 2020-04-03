@@ -73,6 +73,7 @@ const AddOrEditOpportunitiesPage = ({
       )}
       {Object.values(opportunities).map((opportunity, index) => (
         <EachOpportunity
+          key={index}
           opportunity={opportunity}
           index={index}
           updateOpportunity={updateOpportunity}
