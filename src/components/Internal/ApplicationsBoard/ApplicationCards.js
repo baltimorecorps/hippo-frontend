@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -11,13 +12,12 @@ import Link from '@material-ui/core/Link';
 const RoleCards = ({
   classes,
   contactId,
-  apps,
-  getAllApplications,
-  state,
-  submittedApp,
-  opportunity,
-  getAllOpportunities,
-
+  // apps,
+  // getAllApplications,
+  // state,
+  // submittedApp,
+  // opportunity,
+  // getAllOpportunities,
   applications,
   applicant,
   page,
