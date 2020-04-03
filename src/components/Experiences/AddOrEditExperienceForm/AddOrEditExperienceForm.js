@@ -42,6 +42,8 @@ const useForm = (initialValues, onSubmit) => {
       update(event.target.name)(event.target.value);
     },
     handleSubmit: () => {
+      values.start_year = parseInt(values.start_year);
+      values.end_year = parseInt(values.end_year);
       onSubmit(values);
     },
 
