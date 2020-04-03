@@ -2,7 +2,7 @@ import React from 'react';
 import DateFns from '@date-io/date-fns';
 import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import withStyles from '@material-ui/core/styles/withStyles';
-
+import PropTypes from 'prop-types';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -67,6 +67,17 @@ const SelectorForm = ({
       </FormControl>
     </MuiPickersUtilsProvider>
   );
+};
+
+SelectorForm.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onChange: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  helperText: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
