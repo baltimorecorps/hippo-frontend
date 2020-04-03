@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -66,6 +66,22 @@ const EachOpportunity = ({classes, opportunity, index, updateOpportunity}) => {
       closeForm={() => setShowForm(false)}
     />
   );
+};
+
+EachOpportunity.propTypes = {
+  classes: PropTypes.object.isRequired,
+  opportunity: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    program_id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    short_description: PropTypes.string.isRequired,
+    cycle_id: PropTypes.number.isRequired,
+    gdoc_link: PropTypes.string.isRequired,
+    org_name: PropTypes.string.isRequired,
+  }).isRequired,
+  index: PropTypes.number.isRequired,
+  updateOpportunity: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
