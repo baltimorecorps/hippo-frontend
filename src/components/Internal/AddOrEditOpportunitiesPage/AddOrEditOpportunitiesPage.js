@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -81,6 +82,14 @@ const AddOrEditOpportunitiesPage = ({
       ))}
     </div>
   );
+};
+
+AddOrEditOpportunitiesPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+  opportunities: PropTypes.object.isRequired,
+  getAllOpportunities: PropTypes.func.isRequired,
+  addOpportunity: PropTypes.func.isRequired,
+  updateOpportunity: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
