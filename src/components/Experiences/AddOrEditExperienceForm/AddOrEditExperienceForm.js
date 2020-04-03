@@ -539,7 +539,7 @@ AddOrEditExperienceForm.propTypes = {
     id: PropTypes.number,
     description: PropTypes.string,
     host: PropTypes.string,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     degree: PropTypes.oneOf([
       '',
       'Completes Classes',
@@ -553,13 +553,13 @@ AddOrEditExperienceForm.propTypes = {
       'Doctoral',
       'Other',
     ]),
-    start_month: PropTypes.string.isRequired,
-    start_year: PropTypes.string.isRequired,
+    start_month: PropTypes.string,
+    start_year: PropTypes.number,
     end_month: PropTypes.string,
-    end_year: PropTypes.string,
+    end_year: PropTypes.number,
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
       .isRequired,
-    contact_id: PropTypes.number,
+    contact_id: PropTypes.number.isRequired,
     achievements: PropTypes.array,
   }).isRequired,
 };

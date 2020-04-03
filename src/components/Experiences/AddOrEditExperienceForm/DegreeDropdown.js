@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -55,6 +56,15 @@ DegreeDropdown.options = [
 
   {key: 'other', text: 'Other', value: 'Other'},
 ];
+
+DegreeDropdown.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  errors: PropTypes.string,
+};
 
 const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {

@@ -29,8 +29,6 @@ const AddResume = ({
     next(resume);
   };
 
-  console.log(resume);
-
   return (
     <div className={classes.root}>
       <div className={classes.container}>
