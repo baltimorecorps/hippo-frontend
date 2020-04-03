@@ -9,8 +9,6 @@ import {
   employerConsiderApplication,
 } from 'state/opportunity';
 
-import {useParams} from 'react-router-dom';
-
 const mapStateToProps = (state, props) => {
   let {opportunityId, contactId} = props.match.params;
   contactId = parseInt(contactId);
