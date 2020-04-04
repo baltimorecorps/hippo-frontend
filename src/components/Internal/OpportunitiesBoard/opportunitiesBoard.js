@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -43,6 +44,24 @@ const InternalOpportunityBoard = ({
       </div>
     );
   }
+};
+
+InternalOpportunityBoard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  opportunities: PropTypes.arrayOf(
+    PropTypes.shape({
+      short_description: PropTypes.string.isRequired,
+      applications: PropTypes.arrayOf(PropTypes.object).isRequired,
+      org_name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      program_id: PropTypes.number.isRequired,
+      gdoc_link: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      cycle_id: PropTypes.number.isRequired,
+      status: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  getAllInternalOpportunities: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
