@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
@@ -91,6 +92,36 @@ const ApplicationsBoard = ({
       </div>
     </div>
   );
+};
+
+ApplicationsBoard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  getAllContactsShort: PropTypes.func.isRequired,
+  approveNewApplicants: PropTypes.func.isRequired,
+  getAllInternalApplicants: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      first_name: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      last_name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  applicants: PropTypes.arrayOf(
+    PropTypes.shape({
+      is_active: PropTypes.bool.Required,
+      applications: PropTypes.array,
+      contact: PropTypes.shape({
+        email: PropTypes.string.Required,
+        first_name: PropTypes.string.Required,
+        id: PropTypes.number.Required,
+        last_name: PropTypes.string.Required,
+      }).Required,
+      id: PropTypes.number.Required,
+      program_id: PropTypes.number.Required,
+      is_approved: PropTypes.bool.Required,
+    })
+  ).isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
