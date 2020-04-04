@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
+import PropTypes from 'prop-types';
 import {Switch, Route, useHistory, useRouteMatch} from 'react-router-dom';
 
 import InterestForm from './InterestForm';
@@ -8,14 +9,12 @@ import AddResume from './AddResume';
 const ApplicationForm = ({
   contact,
   opportunity,
-  myResume,
   application,
   startApplication,
   getApplication,
   updateApplication,
   submitApplication,
   getAllOpportunities,
-  classes,
 }) => {
   const loadingApp = useRef(false);
 
@@ -146,6 +145,26 @@ const ApplicationForm = ({
       </Route>
     </Switch>
   );
+};
+
+ApplicationForm.propTypes = {
+  contact: PropTypes.object.isRequired,
+  opportunity: PropTypes.shape({
+    short_description: PropTypes.string.isRequired,
+    org_name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    program_id: PropTypes.number.isRequired,
+    gdoc_link: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    cycle_id: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired,
+  }).isRequired,
+  application: PropTypes.object,
+  startApplication: PropTypes.func.isRequired,
+  getApplication: PropTypes.func.isRequired,
+  updateApplication: PropTypes.func.isRequired,
+  submitApplication: PropTypes.func.isRequired,
+  getAllOpportunities: PropTypes.func.isRequired,
 };
 
 export default ApplicationForm;
