@@ -9,15 +9,9 @@ import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 
-const RoleCards = ({
+const ApplicationCards = ({
   classes,
   contactId,
-  // apps,
-  // getAllApplications,
-  // state,
-  // submittedApp,
-  // opportunity,
-  // getAllOpportunities,
   applications,
   applicant,
   page,
@@ -138,6 +132,25 @@ const RoleCards = ({
   );
 };
 
+ApplicationCards.propTypes = {
+  classes: PropTypes.object.isRequired,
+  contactId: PropTypes.number.isRequired,
+  applications: PropTypes.arrayOf(PropTypes.object).isRequired,
+  applicant: PropTypes.shape({
+    is_active: PropTypes.bool.isRequired,
+    applications: PropTypes.arrayOf(PropTypes.object).isRequired,
+    contact: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      first_name: PropTypes.string.isRequired,
+      last_name: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+    }).isRequired,
+    program_id: PropTypes.number.isRequired,
+    is_approved: PropTypes.bool.isRequired,
+  }).isRequired,
+  page: PropTypes.string.isRequired,
+};
+
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     width: '360px',
@@ -190,4 +203,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(RoleCards);
+export default withStyles(styles)(ApplicationCards);
