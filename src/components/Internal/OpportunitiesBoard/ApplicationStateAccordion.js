@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -238,6 +239,19 @@ const ApplicationStateAccordion = ({
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
+};
+
+ApplicationStateAccordion.propTypes = {
+  classes: PropTypes.object.isRequired,
+  header: PropTypes.string.isRequired,
+  applications: PropTypes.array.isRequired,
+  iconName: PropTypes.string.isRequired,
+  expanded: PropTypes.bool.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  panelName: PropTypes.string.isRequired,
+  opportunityId: PropTypes.string,
+  contactId: PropTypes.number,
+  page: PropTypes.string.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
