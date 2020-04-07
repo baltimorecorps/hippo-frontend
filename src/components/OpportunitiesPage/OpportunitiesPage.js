@@ -54,7 +54,6 @@ const OpportunitiesPage = ({
     );
     toViewApplication(opportunityId);
   };
-  console.log(opportunities);
 
   return (
     <div className={classes.container}>
