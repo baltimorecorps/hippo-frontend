@@ -44,6 +44,7 @@ const Profile = ({
   //     },
   //   ],
   // };
+  console.log(contact);
 
   const addContactLocal = contact => addContact(getTokenSilently, contact);
   if (contact) {
@@ -60,7 +61,7 @@ const Profile = ({
   }
 
   return (
-    <Grid xs={12} container justify="center">
+    <Grid container justify="center">
       <AddContact
         addNewContact={addContactLocal}
         accountId={user.sub}
@@ -71,9 +72,8 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  // accounts: PropTypes.object.isRequired,
   addContact: PropTypes.func.isRequired,
-  // getMyContact: PropTypes.func.isRequired,
+  contact: PropTypes.object,
 };
 
 export default Profile;
