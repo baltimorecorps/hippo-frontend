@@ -2,6 +2,7 @@ import React from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
+import PropTypes from 'prop-types';
 
 const LocationTextField = ({
   value,
@@ -89,6 +90,15 @@ const LocationTextField = ({
       )}
     </PlacesAutocomplete>
   );
+};
+
+LocationTextField.propTypes = {
+  value: PropTypes.string.isRequired,
+  handleLocationChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  classes: PropTypes.object.isRequired,
+  className: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

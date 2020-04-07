@@ -1,22 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {useHistory} from 'react-router-dom';
 import {
   createExternalLink,
   createClickTracking,
 } from 'lib/helperFunctions/helpers';
-import Grid from '@material-ui/core/Grid';
-import {interestValidator} from 'lib/formHelpers/formValidator';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import StickyFooter from './StickyFooter';
 import {ResumeViewer} from 'components/ResumeCreator';
 
-const InterestForm = ({
+const AddResume = ({
   classes,
-  startText,
   back,
   next,
   opportunity,
@@ -25,22 +20,6 @@ const InterestForm = ({
   resume,
   setResume,
 }) => {
-  // const [text, setText] = useState(startText);
-
-  // const [errors, setErrors] = useState({});
-
-  // const handleNext = () => {
-  //   // const {isError, err} = interestValidator(text);
-  //   const isError = false;
-  //   const err = {};
-
-  //   if (isError) {
-  //     setErrors(err);
-  //   } else {
-  //     next(resume);
-  //   }
-  // };
-
   const onClickNext = resume => {
     createClickTracking(
       'Submitting Application',
@@ -113,6 +92,16 @@ const InterestForm = ({
       />
     </div>
   );
+};
+
+AddResume.propTypes = {
+  back: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
+  opportunity: PropTypes.object.isRequired,
+  application: PropTypes.object.isRequired,
+  contactId: PropTypes.number.isRequired,
+  resume: PropTypes.object,
+  setResume: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -214,4 +203,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(InterestForm);
+export default withStyles(styles)(AddResume);

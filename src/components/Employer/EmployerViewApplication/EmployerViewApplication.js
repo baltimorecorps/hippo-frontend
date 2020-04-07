@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -27,7 +28,6 @@ const EmployerViewApplication = ({
   application,
   contactId,
   opportunityId,
-  back,
   getApplication,
   employerInterviewApplication,
   employerNotAFitApplication,
@@ -96,7 +96,6 @@ const EmployerViewApplication = ({
       {toEmployerBoardButton}
       <ViewFullApplication application={application} />
       <StickyFooter
-        applicationStatus={application.status}
         application={application}
         page="employer-review-application"
         back={toEmployerBoard}
@@ -119,6 +118,41 @@ const EmployerViewApplication = ({
       />
     </div>
   );
+};
+
+EmployerViewApplication.propTypes = {
+  application: PropTypes.shape({
+    interview_date: PropTypes.string,
+    interview_time: PropTypes.string,
+    resume: PropTypes.object,
+    status: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    interview_completed: PropTypes.bool.isRequired,
+    interest_statement: PropTypes.string,
+    contact: PropTypes.shape({
+      email: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
+      first_name: PropTypes.string.isRequired,
+      last_name: PropTypes.string.isRequired,
+    }),
+    is_active: PropTypes.bool.isRequired,
+    opportunity: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      program_id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
+      short_description: PropTypes.string.isRequired,
+      cycle_id: PropTypes.number.isRequired,
+      gdoc_link: PropTypes.string.isRequired,
+      org_name: PropTypes.string.isRequired,
+    }),
+  }),
+  contactId: PropTypes.number.isRequired,
+  opportunityId: PropTypes.string.isRequired,
+  getApplication: PropTypes.func.isRequired,
+  employerInterviewApplication: PropTypes.func.isRequired,
+  employerNotAFitApplication: PropTypes.func.isRequired,
+  employerConsiderApplication: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

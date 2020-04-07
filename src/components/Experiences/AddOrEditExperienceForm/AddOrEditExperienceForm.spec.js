@@ -62,9 +62,9 @@ const experience = {
   title: 'Test Title',
   location: 'Baltimore, MD, USA',
   start_month: 'January',
-  start_year: '2015',
+  start_year: 2015,
   end_month: 'August',
-  end_year: '2017',
+  end_year: 2017,
   is_current: false,
   type: 'Work',
   contact_id: 1234,
@@ -182,7 +182,7 @@ describe('AddOrEditExperienceForm', () => {
 
     expect(submit.mock.calls.length).toBe(1);
     expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
-    expect(submit.mock.calls[0][0].end_year).toBe('2019');
+    expect(submit.mock.calls[0][0].end_year).toBe(2019);
   });
 
   test('Work Experience: Is Current is true (checkbox)  ', () => {
@@ -211,14 +211,14 @@ describe('AddOrEditExperienceForm', () => {
     expect(submit.mock.calls[0][0]).toHaveProperty('end_month');
     expect(submit.mock.calls[0][0].end_month).toBe('none');
     expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
-    expect(submit.mock.calls[0][0].end_year).toBe('0');
+    expect(submit.mock.calls[0][0].end_year).toBe(0);
   });
 
   test('Test Accomplishment Form', () => {
     const experience = {
       title: 'Test Title',
       start_month: 'January',
-      start_year: '2015',
+      start_year: 2015,
       type: 'Accomplishment',
       description: 'Test description',
       contact_id: 1234,
@@ -229,7 +229,7 @@ describe('AddOrEditExperienceForm', () => {
       contact_id: 1234,
       description: 'Test description',
       start_month: 'January',
-      start_year: '2015',
+      start_year: 2015,
       end_month: 'none',
       end_year: 0,
       title: 'New Title',
