@@ -25,27 +25,6 @@ const Profile = ({
   const {getTokenSilently, loading, user, isAuthenticated} = useAuth0();
   const loadingSession = useRef(false);
 
-  // const PFPProgram = {
-  //   program_id: 1,
-  //   card_id: 'card',
-  //   is_approved: false,
-  //   is_active: true,
-  //   stage: 1,
-  //   responses: [
-  //     {
-  //       program_contact_id: 1,
-  //       question_id: 1,
-  //       response_text: '',
-  //     },
-  //     {
-  //       program_contact_id: 1,
-  //       question_id: 2,
-  //       response_text: '',
-  //     },
-  //   ],
-  // };
-  console.log(contact);
-
   const addContactLocal = contact => addContact(getTokenSilently, contact);
   if (contact) {
     return <ProfilePage contactId={contact.id} />;
