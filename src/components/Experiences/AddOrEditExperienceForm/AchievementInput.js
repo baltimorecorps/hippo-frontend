@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
@@ -15,35 +16,36 @@ import Input from '@material-ui/core/Input';
 import CloseIcon from '@material-ui/icons/Close';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
-const capabilityStyles = ({breakpoints, palette, spacing}) => (
-  {
-    root: {
-      borderRadius: '20px',
-      height: '24px',
-      backgroundColor: 'white',
-      border: 'solid 1px rgba(0,0,0,0.23)',
-      margin: '2px',
-    },
-    highlighted: {
-      borderRadius: '20px',
-      height: '24px',
-      backgroundColor: palette.primary.main,
-      margin: '2px',
-    },
-    input: {
-      padding: '0px',
-      margin: '0px 12px',
-    },
-  });
-const CapabilityInput = withStyles(capabilityStyles)(({classes, highlight, ...props}) => (
-  <Input
-    classes={{
-      root: highlight ? classes.highlighted : classes.root,
-      input: classes.input,
-    }}
-    {...props}
-  />
-));
+const capabilityStyles = ({breakpoints, palette, spacing}) => ({
+  root: {
+    borderRadius: '20px',
+    height: '24px',
+    backgroundColor: 'white',
+    border: 'solid 1px rgba(0,0,0,0.23)',
+    margin: '2px',
+  },
+  highlighted: {
+    borderRadius: '20px',
+    height: '24px',
+    backgroundColor: palette.primary.main,
+    margin: '2px',
+  },
+  input: {
+    padding: '0px',
+    margin: '0px 12px',
+  },
+});
+const CapabilityInput = withStyles(capabilityStyles)(
+  ({classes, highlight, ...props}) => (
+    <Input
+      classes={{
+        root: highlight ? classes.highlighted : classes.root,
+        input: classes.input,
+      }}
+      {...props}
+    />
+  )
+);
 
 const selectStyles = ({breakpoints, palette, spacing}) => ({
   select: {
@@ -133,6 +135,7 @@ const AchievementInput = React.forwardRef(
         </InputAdornment>
       );
     }
+
     return (
       <Grid container>
         <Grid item xs={1} align="end">
@@ -158,25 +161,36 @@ const AchievementInput = React.forwardRef(
               endAdornment: endAdornment,
             }}
           />
-          {capabilities && capabilities.map(capability => {
-            return (
-              <CapabilitySelect
-                key={capability.id}
-                capability={capability}
-                skills={achievement.skills}
-                onSkillsChange={onSkillsChange}
-              />
-            );
-          })}
+          {capabilities &&
+            capabilities.map(capability => {
+              return (
+                <CapabilitySelect
+                  key={capability.id}
+                  capability={capability}
+                  skills={achievement.skills}
+                  onSkillsChange={onSkillsChange}
+                />
+              );
+            })}
           <FormHelperText className={classes.formHelperText}>
             {achievement.description.length > 750 && errors.achievements_error}
           </FormHelperText>
-
         </Grid>
       </Grid>
     );
   }
 );
+
+AchievementInput.propTypes = {
+  achievement: PropTypes.object.isRequired,
+  capabilities: PropTypes.arrayOf(PropTypes.object),
+  onSkillsChange: PropTypes.func,
+  onTextChange: PropTypes.func.isRequired,
+  onIconClick: PropTypes.func,
+  classes: PropTypes.object.isRequired,
+  onKeyPress: PropTypes.func.isRequired,
+  errors: PropTypes.object,
+};
 
 const styles = ({breakpoints, palette, spacing}) => ({
   input: {

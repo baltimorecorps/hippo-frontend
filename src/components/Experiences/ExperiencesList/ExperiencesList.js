@@ -51,7 +51,7 @@ const ExperiencesList = ({
     start_month: 'none',
     start_year: 0,
     end_month: '',
-    end_year: '',
+    end_year: 0,
     is_current: false,
     type: experienceType,
     contact_id: contactId,

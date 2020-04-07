@@ -25,26 +25,6 @@ const Profile = ({
   const {getTokenSilently, loading, user, isAuthenticated} = useAuth0();
   const loadingSession = useRef(false);
 
-  // const PFPProgram = {
-  //   program_id: 1,
-  //   card_id: 'card',
-  //   is_approved: false,
-  //   is_active: true,
-  //   stage: 1,
-  //   responses: [
-  //     {
-  //       program_contact_id: 1,
-  //       question_id: 1,
-  //       response_text: '',
-  //     },
-  //     {
-  //       program_contact_id: 1,
-  //       question_id: 2,
-  //       response_text: '',
-  //     },
-  //   ],
-  // };
-
   const addContactLocal = contact => addContact(getTokenSilently, contact);
   if (contact) {
     return <ProfilePage contactId={contact.id} />;
@@ -60,7 +40,7 @@ const Profile = ({
   }
 
   return (
-    <Grid xs={12} container justify="center">
+    <Grid container justify="center">
       <AddContact
         addNewContact={addContactLocal}
         accountId={user.sub}
@@ -71,9 +51,8 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  accounts: PropTypes.object.isRequired,
   addContact: PropTypes.func.isRequired,
-  getMyContact: PropTypes.func.isRequired,
+  contact: PropTypes.object,
 };
 
 export default Profile;

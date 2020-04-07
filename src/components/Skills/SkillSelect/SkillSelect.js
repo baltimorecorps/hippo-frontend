@@ -208,7 +208,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
 });
 
 SkillSelect.propTypes = {
-  value: PropTypes.array.isRequired,
+  value: PropTypes.array,
   load: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
 };

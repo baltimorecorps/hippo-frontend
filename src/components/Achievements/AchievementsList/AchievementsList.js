@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
 import AchievementsListItem from './AchievementsListItem';
 
@@ -17,6 +18,16 @@ const AchievementsList = ({achievements, onSelect, selected}) => {
         ))}
     </List>
   );
+};
+
+AchievementsList.propTypes = {
+  achievements: PropTypes.arrayOf(
+    PropTypes.shape({
+      description: PropTypes.string,
+      skills: PropTypes.array,
+      id: PropTypes.number.isRequired,
+    })
+  ),
 };
 
 export default AchievementsList;

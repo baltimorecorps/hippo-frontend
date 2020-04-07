@@ -28,8 +28,9 @@ const PartnershipsNavBar = ({classes}) => {
 
   return (
     <div className={classes.linkContainer}>
-      {links.map(link => (
+      {links.map((link, index) => (
         <Typography
+          key={index}
           component="button"
           variant="body1"
           align="center"

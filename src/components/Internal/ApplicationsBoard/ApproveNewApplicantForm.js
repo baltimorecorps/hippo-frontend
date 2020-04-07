@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -19,11 +20,9 @@ const ApproveNewApplicantForm = ({
 
   const onChange = (event, values) => {
     selectedApplicants = values.map(value => value.contact);
-    console.log(selectedApplicants);
   };
 
   const approve = async () => {
-    console.log('approve value', selectedApplicants);
     const programId = 1;
     await approveNewApplicants(programId, selectedApplicants);
     closeForm();
@@ -39,12 +38,7 @@ const ApproveNewApplicantForm = ({
 
   return (
     <Paper className={classes.paper}>
-      <Grid
-        container
-        xs={11}
-        justify="space-between"
-        className={classes.formHeader}
-      >
+      <Grid container justify="space-between" className={classes.formHeader}>
         <Typography variant="h5" component="h1">
           Approve New Applicants
         </Typography>
@@ -86,6 +80,24 @@ const ApproveNewApplicantForm = ({
       </div>
     </Paper>
   );
+};
+
+ApproveNewApplicantForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      contact_id: PropTypes.number.isRequired,
+      contact: PropTypes.shape({
+        email: PropTypes.string.isRequired,
+        first_name: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
+        last_name: PropTypes.string.isRequired,
+      }),
+    })
+  ).isRequired,
+  approveNewApplicants: PropTypes.func.isRequired,
+  closeForm: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

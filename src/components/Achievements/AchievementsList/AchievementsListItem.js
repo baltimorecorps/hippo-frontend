@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Checkbox from '@material-ui/core/Checkbox';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -10,7 +11,11 @@ const AchievementsListItem = ({classes, text, onSelect, selected}) => {
     <ListItem>
       {onSelect ? (
         <ListItemIcon className={classes.icon}>
-          <Checkbox onChange={onSelect} checked={selected} className={classes.checkbox} />
+          <Checkbox
+            onChange={onSelect}
+            checked={selected}
+            className={classes.checkbox}
+          />
         </ListItemIcon>
       ) : null}
       <ListItemText
@@ -30,6 +35,10 @@ const AchievementsListItem = ({classes, text, onSelect, selected}) => {
       />
     </ListItem>
   );
+};
+
+AchievementsListItem.propTypes = {
+  text: PropTypes.string.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

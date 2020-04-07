@@ -125,7 +125,7 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     paddingBottom: spacing(0.5),
     paddingLeft: spacing(1),
     marginBottom: spacing(0.5),
-    borderBottom: 'solid 2px ${palette.resume.blue}',
+    borderBottom: `solid 2px ${palette.resume.blue}`,
   },
   buttonContainer: {
     width: '8.5in',

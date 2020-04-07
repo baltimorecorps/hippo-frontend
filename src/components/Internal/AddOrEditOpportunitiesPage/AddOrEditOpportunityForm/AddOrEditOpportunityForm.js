@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import {createClickTracking, createALink} from 'lib/helperFunctions/helpers';
 import terms from 'lib/pdf_files/services-terms.pdf';
 import policy from 'lib/pdf_files/privacy -policy.pdf';
-import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -25,7 +25,6 @@ const useForm = (initialValues, onSubmit, closeForm) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handleSubmit = () => {
-    console.log('handleSubmit', values);
     onSubmit(values);
   };
 
@@ -70,7 +69,7 @@ const AddOrEditOpportunityForm = ({
 
   return (
     <Paper className={classes.paper}>
-      <Grid container xs={12} justify="space-between">
+      <Grid container justify="space-between">
         <Typography
           component="h1"
           variant="h5"
@@ -151,7 +150,7 @@ const AddOrEditOpportunityForm = ({
           </FormHelperText>
         </Grid>
       </form>
-      <Grid container xs={12} justify="flex-end">
+      <Grid container justify="flex-end">
         <Button
           onClick={submit}
           variant="contained"
@@ -163,6 +162,20 @@ const AddOrEditOpportunityForm = ({
       </Grid>
     </Paper>
   );
+};
+
+AddOrEditOpportunityForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+  opportunity: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    short_description: PropTypes.string.isRequired,
+    cycle_id: PropTypes.number.isRequired,
+    gdoc_link: PropTypes.string.isRequired,
+    org_name: PropTypes.string.isRequired,
+  }),
+  onSubmit: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  closeForm: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -250,7 +263,5 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
 });
-
-AddOrEditOpportunityForm.propTypes = {};
 
 export default withStyles(styles)(AddOrEditOpportunityForm);

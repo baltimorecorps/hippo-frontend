@@ -42,7 +42,6 @@ const PartnershipsPage = ({classes}) => {
           <Link
             component="button"
             variant="body1"
-            color="none"
             onClick={() => handleClickLink(link.url)}
             className={classes.linkText}
           >
