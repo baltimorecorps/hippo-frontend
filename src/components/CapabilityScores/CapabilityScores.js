@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {useState, useEffect} from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -65,6 +66,12 @@ const CapabilityScores = ({classes, contactCapabilities, editScores}) => {
       ))}
     </Paper>
   );
+};
+
+CapabilityScores.propTypes = {
+  classes: PropTypes.object.isRequired,
+  contactCapabilities: PropTypes.object,
+  editScores: PropTypes.object.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
