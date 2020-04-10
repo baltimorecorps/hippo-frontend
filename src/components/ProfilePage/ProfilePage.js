@@ -317,24 +317,25 @@ const ProfilePage = ({
                 </Grid>
 
                 <SkillsSection
+                  contactId={contactInfo.id}
                   onClickMore={onClickMoreDetails}
                   splitScreen={inSelectMode}
                 />
                 <ExperiencesList
-                  contactId={contactId}
+                  contactId={contactInfo.id}
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
                 />
                 <ExperiencesList
-                  contactId={contactId}
+                  contactId={contactInfo.id}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
                 />
-                {/*<ExperiencesList contactId={contactId} experienceType="Service" />*/}
+
                 <ExperiencesList
-                  contactId={contactId}
+                  contactId={contactInfo.id}
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
