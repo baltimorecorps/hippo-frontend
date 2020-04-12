@@ -10,8 +10,14 @@ import {
 import {getCapabilities} from 'state/capabilities';
 import SkillsSection from './SkillsSection';
 
-export const mapStateToProps = state => {
-  const contactId = state.accounts.contact ? state.accounts.contact.id : null;
+export const mapStateToProps = (state, props) => {
+  let contactId = null;
+  if (props.contactId) {
+    contactId = props.contactId;
+  } else if (!props.contactId && state.accounts.contact) {
+    contactId = state.accounts.contact.id;
+  }
+
   const contact = contactId ? state.contacts[contactId] : null;
   let contactCapabilities = null;
   let allSkills = null;
@@ -49,7 +55,6 @@ export const mapDispatchToProps = dispatch => ({
     addSkillSuggestion(contactId, capabilityId, skill)(dispatch),
   deleteSkillSuggestion: (contactId, capabilityId, skill) =>
     deleteSkillSuggestion(contactId, capabilityId, skill)(dispatch),
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SkillsSection);

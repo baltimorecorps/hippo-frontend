@@ -91,7 +91,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    // marginTop: spacing(0.5),
+    color: '#000000',
     padding: spacing(1.5, 2),
     '&:hover': {
       textDecoration: 'none',
