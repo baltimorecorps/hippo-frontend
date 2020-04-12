@@ -1,11 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {createExternalLink} from 'lib/helperFunctions/helpers';
 import ApplicationStateAccordion from '../OpportunitiesBoard/ApplicationStateAccordion';
-import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 

@@ -7,15 +7,12 @@ import {ResumeViewer} from 'components/ResumeCreator';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
 
 const ReviewApplication = ({
-  page,
   classes,
   application,
   contactId,
   opportunityId,
   getApplication,
 }) => {
-  const [nothing, setNothing] = useState();
-
   useEffect(() => {
     if (!application || application.length === 0) {
       getApplication(contactId, opportunityId);
@@ -78,7 +75,6 @@ const ReviewApplication = ({
         <ResumeViewer
           contactId={application && application.contact.id}
           resume={application && application.resume}
-          setResume={setNothing}
           viewOnly={true}
           page="staff"
         />
