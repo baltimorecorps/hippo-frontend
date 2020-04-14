@@ -6,7 +6,7 @@ const formatDate = experience => {
   if (experience.start_month !== 'none') {
     return `${experience.start_month.slice(0, 3)} ${experience.start_year}`;
   } else {
-    return `${experience.start_year}`;
+    return '';
   }
 };
 
