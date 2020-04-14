@@ -1,10 +1,16 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {useAuth0} from 'lib/Auth0/auth0';
 import Grid from '@material-ui/core/Grid';
 
 import AddContact from 'components/Contacts/AddContact';
 import ProfilePage from './ProfilePage.container';
+
+const LOADING_STATE = {
+  notLoaded: 0,
+  loading: 1,
+  loadedAll: 2,
+};
 
 const Profile = ({
   programs,
@@ -16,7 +22,8 @@ const Profile = ({
   addNewProgram,
   refreshPrograms,
 }) => {
-  const {getTokenSilently, loading, user} = useAuth0();
+  const {getTokenSilently, loading, user, isAuthenticated} = useAuth0();
+  const loadingSession = useRef(false);
 
   const addContactLocal = contact => addContact(getTokenSilently, contact);
   if (contact) {

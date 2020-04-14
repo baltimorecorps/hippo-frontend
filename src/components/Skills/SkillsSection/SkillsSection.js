@@ -10,6 +10,36 @@ import SkillSelect from 'components/Skills/SkillSelect';
 
 import Link from '@material-ui/core/Link';
 
+// TODO: Eventually this info will need to find a home on the backend
+const CAPABILITIES = [
+  {
+    name: 'Project Management',
+    skills: ['Budgeting', 'Scheduling', 'Project Planning', 'Leadership'],
+  },
+  {
+    name: 'Communication',
+    skills: [
+      'Report Writing',
+      'Presenting',
+      'Documentation',
+      'Technical Requirements',
+    ],
+  },
+  {
+    name: 'Data Analysis',
+    skills: ['Metrics', 'Statistics', 'Microsoft Excel', 'SQL', 'R'],
+  },
+  {
+    name: 'Software Development',
+    skills: [
+      'Scripting',
+      'Web Development',
+      'Python',
+      'Database Administration',
+    ],
+  },
+];
+
 const SkillsSection = ({
   classes,
   contactId,
@@ -53,7 +83,7 @@ const SkillsSection = ({
       capabilitySkills = capabilitySkills
         .concat(capability.skills)
         .concat(capability.suggested_skills)
-        .filter(skill => !isOtherSkill[skill.id]);
+        .filter(skill => !isOtherSkill[skill.id])
     });
   }
 
@@ -62,7 +92,7 @@ const SkillsSection = ({
       contactId,
       capabilitySkills.concat(newOtherSkills || [])
     );
-  };
+  }
 
   const onClickMoreHandler = () => {
     createClickTracking(
@@ -73,7 +103,7 @@ const SkillsSection = ({
     onClickMore('skills');
   };
 
-  const splitSize = size => {
+  const splitSize = (size) => {
     if (splitScreen) {
       if (size <= 4) {
         return 6;
@@ -83,7 +113,8 @@ const SkillsSection = ({
     } else {
       return size;
     }
-  };
+  }
+  
 
   return (
     <Grid container>
@@ -98,7 +129,7 @@ const SkillsSection = ({
                   fontWeight: '700',
                 }}
               >
-                Get started with skills
+                Get started with skills 
               </Typography>
             </Grid>
             <Grid container alignItems="center">
@@ -130,13 +161,11 @@ const SkillsSection = ({
                   );
                 }
                 return (
-                  <Grid
-                    item
-                    xs={splitSize(12)}
-                    md={splitSize(6)}
+                  <Grid item 
+                    xs={splitSize(12)} 
+                    md={splitSize(6)} 
                     lg={splitSize(4)}
-                    key={name}
-                  >
+                    key={name}>
                     <CapabilitySkills
                       id={id}
                       name={name}
@@ -161,7 +190,7 @@ const SkillsSection = ({
                   Additional Skills
                 </Typography>
                 <SkillSelect
-                  id="other"
+                  id='other'
                   value={otherSkills || []}
                   onChange={updateOtherSkills}
                 />

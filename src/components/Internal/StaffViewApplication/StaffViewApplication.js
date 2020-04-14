@@ -1,13 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import {useHistory} from 'react-router-dom';
+import {Switch, Route, useHistory, useRouteMatch} from 'react-router-dom';
 import StickyFooter from 'components/ApplicationForm/StickyFooter';
-import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
+import {ResumeViewer} from 'components/ResumeCreator';
+import {
+  createExternalLink,
+  createClickTracking,
+  createAButton,
+} from 'lib/helperFunctions/helpers';
 import ViewFullApplication from '../ViewFullApplication';
 
 const StaffViewApplication = ({
@@ -21,6 +27,10 @@ const StaffViewApplication = ({
   staffNotAFitApplication,
   staffReopenApplication,
 }) => {
+  const match = useRouteMatch();
+  // const opportunityId = match.params.opportunityId;
+  // const contactId = match.params.contactId;
+  const [nothing, setNothing] = useState();
   const [confirmed, setConfirmed] = useState(false);
   const [decision, setDecision] = useState('');
 
@@ -61,19 +71,19 @@ const StaffViewApplication = ({
 
   const recommendApplication = async () => {
     const response = await staffRecommendApplication(contactId, opportunityId);
-    if (response.statusCode === 200) {
+    if (response.statusCode == 200) {
       toInternalOpportunitiesBoard();
     }
   };
   const notAFitApplication = async () => {
     const response = await staffNotAFitApplication(contactId, opportunityId);
-    if (response.statusCode === 200) {
+    if (response.statusCode == 200) {
       toInternalOpportunitiesBoard();
     }
   };
   const reopenApplication = async () => {
     const response = await staffReopenApplication(contactId, opportunityId);
-    if (response.statusCode === 200) {
+    if (response.statusCode == 200) {
       toInternalOpportunitiesBoard();
     }
   };

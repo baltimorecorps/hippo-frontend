@@ -7,6 +7,7 @@ import {
   submitApplication,
 } from 'state/opportunity';
 import {getAllOpportunities} from 'state/opportunity';
+import {useParams} from 'react-router-dom';
 
 const mapStateToProps = (state, props) => {
   const {opportunityId} = props.match.params;

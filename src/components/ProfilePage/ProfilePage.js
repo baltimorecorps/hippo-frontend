@@ -17,12 +17,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import BasicInfoDisplay from 'components/Users/BasicInfoDisplay';
 import BasicInfoForm from 'components/Users/BasicInfoForm';
 import ExperiencesList from 'components/Experiences/ExperiencesList';
-
+import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
 import CapabilityScores from 'components/CapabilityScores';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
+import {sumScores} from 'lib/helperFunctions/scoreAchievements';
 
 import CAPABILITIES from './capabilities.yml';
 
@@ -96,12 +97,12 @@ const ProfilePage = ({
     setOpenForm(false);
   };
 
-  // const handleUpdateSkills = skills => {
-  //   updateContact({
-  //     id: contactId,
-  //     skills: skills,
-  //   });
-  // };
+  const handleUpdateSkills = skills => {
+    updateContact({
+      id: contactId,
+      skills: skills,
+    });
+  };
 
   useEffect(() => {
     if (
@@ -316,25 +317,25 @@ const ProfilePage = ({
                 </Grid>
 
                 <SkillsSection
-                  contactId={contactInfo.id || contactId}
+                  contactId={contactInfo.id}
                   onClickMore={onClickMoreDetails}
                   splitScreen={inSelectMode}
                 />
                 <ExperiencesList
-                  contactId={contactInfo.id || contactId}
+                  contactId={contactInfo.id}
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
                 />
                 <ExperiencesList
-                  contactId={contactInfo.id || contactId}
+                  contactId={contactInfo.id}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
                 />
 
                 <ExperiencesList
-                  contactId={contactInfo.id || contactId}
+                  contactId={contactInfo.id}
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
@@ -480,7 +481,7 @@ const ResumeDialog = withStyles(dialogStyles)(
                 <Grid item xs={6} className={classes.resumeContainer}>
                   <img
                     src="/images/resume.svg"
-                    alt="example resume"
+                    alt="picture of a resume"
                     className={classes.resume}
                   />
                 </Grid>

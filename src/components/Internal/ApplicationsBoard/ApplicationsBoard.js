@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
+import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -25,6 +26,12 @@ const ApplicationsBoard = ({
   }, [getAllInternalApplicants]);
 
   const [showForm, setShowForm] = useState(false);
+
+  let history = useHistory();
+
+  const toViewApplication = opportunityId => {
+    history.push(`/application/${opportunityId}/review`);
+  };
 
   if (!applicants) {
     return <div>...Loading</div>;
