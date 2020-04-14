@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';

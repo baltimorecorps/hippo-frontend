@@ -9,8 +9,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Chip from '@material-ui/core/Chip';
 import Input from '@material-ui/core/Input';
 
 import CloseIcon from '@material-ui/icons/Close';
