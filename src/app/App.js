@@ -82,7 +82,7 @@ const App = ({
         creatingSession.current = true;
 
         try {
-          await createSession(getTokenSilently);
+          const result = await createSession(getTokenSilently);
         } catch (error) {
           console.error(error);
         }

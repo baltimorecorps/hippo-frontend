@@ -1,23 +1,25 @@
+import React from 'react';
 import {connect} from 'react-redux';
+import {moveResumeItem} from 'state/resume';
 import {refreshExperiences} from 'state/profile';
 import {getContact, getContactCapabilities} from 'state/contacts';
 import ResumeCreator from './ResumeCreator';
 
-// const getCapabilities = experience => {
-//   let capabilities = {};
-//   experience.achievements.forEach(achievement => {
-//     achievement.skills.forEach(skill => {
-//       if (skill.capability_id) {
-//         if (capabilities[skill.capability_id] === undefined) {
-//           capabilities[skill.capability_id] = [];
-//         }
+const getCapabilities = experience => {
+  let capabilities = {};
+  experience.achievements.forEach(achievement => {
+    achievement.skills.forEach(skill => {
+      if (skill.capability_id) {
+        if (capabilities[skill.capability_id] === undefined) {
+          capabilities[skill.capability_id] = [];
+        }
 
-//         capabilities[skill.capability_id].push(skill.name);
-//       }
-//     });
-//   });
-//   return capabilities;
-// };
+        capabilities[skill.capability_id].push(skill.name);
+      }
+    });
+  });
+  return capabilities;
+};
 
 export const mapStateToProps = (state, props) => {
   let sections = {

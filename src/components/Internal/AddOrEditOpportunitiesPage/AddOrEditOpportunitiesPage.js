@@ -36,7 +36,7 @@ const AddOrEditOpportunitiesPage = ({
 
   const addNewOpportunity = async values => {
     const result = await addOpportunity(values);
-    if (result && result.statusCode === 201) {
+    if (result && result.statusCode == 201) {
       history.push('/internal/add-or-edit-opportunities');
     }
   };

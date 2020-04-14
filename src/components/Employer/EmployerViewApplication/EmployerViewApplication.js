@@ -71,7 +71,7 @@ const EmployerViewApplication = ({
 
   const notAFitApplication = async () => {
     const response = await employerNotAFitApplication(contactId, opportunityId);
-    if (response.statusCode === 200) {
+    if (response.statusCode == 200) {
       toEmployerBoard();
     }
   };
@@ -80,7 +80,7 @@ const EmployerViewApplication = ({
       contactId,
       opportunityId
     );
-    if (response.statusCode === 200) {
+    if (response.statusCode == 200) {
       toEmployerBoard();
     }
   };
@@ -309,7 +309,7 @@ const useForm = (initialValues, onSubmit, toEmployerBoard) => {
       values.opportunity_id,
       interviewDetails
     );
-    if (response.statusCode === 200) {
+    if (response.statusCode == 200) {
       toEmployerBoard();
     }
   };

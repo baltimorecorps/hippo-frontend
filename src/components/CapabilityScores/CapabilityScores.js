@@ -1,9 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {useState, useEffect} from 'react';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import withStyles from '@material-ui/core/styles/withStyles';
+
+const BorderLinearProgress = withStyles({
+  root: {
+    height: 10,
+    backgroundColor: '#f0f2ff',
+  },
+  bar: {
+    borderRadius: 20,
+    backgroundColor: '#7083ff',
+  },
+})(LinearProgress);
 
 const CapabilityScores = ({classes, contactCapabilities, editScores}) => {
   if (!contactCapabilities) {
