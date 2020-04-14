@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import PropTypes from 'prop-types';
@@ -16,6 +16,10 @@ import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {experienceValidator} from 'lib/formHelpers/formValidator';
+import {
+  scoreAchievements,
+  relativeScores,
+} from 'lib/helperFunctions/scoreAchievements';
 import {configureForm} from 'components/Experiences/ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';

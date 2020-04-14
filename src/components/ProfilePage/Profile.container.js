@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {addContact} from 'state/contacts';
+import {addContact, getMyContact} from 'state/contacts';
 import Profile from './Profile';
 import {addNewProgram, refreshPrograms} from 'state/programs';
 

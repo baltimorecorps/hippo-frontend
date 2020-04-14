@@ -4,6 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import {useHistory} from 'react-router-dom';
 import {
   createExternalLink,
   createClickTracking,

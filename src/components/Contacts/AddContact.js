@@ -237,7 +237,7 @@ const AddContact = ({
             className={classes.checkbox}
           />
           <Typography
-            component="p"
+            component="body2"
             variant="body2"
             className={classes.checkboxLabel}
           >
