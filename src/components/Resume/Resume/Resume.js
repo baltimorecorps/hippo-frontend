@@ -14,6 +14,7 @@ const Resume = ({match, classes}) => {
         </Button>
         <Paper className={classes.paper}>
           <iframe
+            title="resume"
             className={classes.frame}
             src={`https://docs.google.com/document/d/${gdocId}/pub?embedded=true`}
           ></iframe>

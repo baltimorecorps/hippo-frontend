@@ -153,7 +153,6 @@ const ExperiencesListItem = ({
   selectable,
   classes,
 }) => {
-  const config = configureForm(experience.type);
   const initial = experience.host ? experience.host[0] : experience.title[0];
 
   const [editing, setEditing] = useState(false);
@@ -290,8 +289,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
       textDecoration: 'none',
     },
   },
-  wrapper: {
-  },
+  wrapper: {},
 });
 
 export default withStyles(styles)(ExperiencesListItem);

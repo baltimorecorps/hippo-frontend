@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -108,22 +108,25 @@ const SelectCapabilities = ({capabilities, setSelected, selected}) => {
   return capabilities.map(capability => {
     const isSelected =
       selected && selected[capability.id] && selected[capability.id].selected;
-    const skillsSelected = selected && selected[capability.id]
+    const skillsSelected = selected && selected[capability.id];
     const renderSkill = skill => (
       <ListItem key={skill.id}>
         <ListItemIcon>
-          {isSelected && <Checkbox
-            checked={skillsSelected[skill.id]}
-            onChange={setSkillSelected(capability.id, skill.id)}
-            className={classes.checkbox}
-          />}
+          {isSelected && (
+            <Checkbox
+              checked={skillsSelected[skill.id]}
+              onChange={setSkillSelected(capability.id, skill.id)}
+              className={classes.checkbox}
+            />
+          )}
         </ListItemIcon>
-          <ListItemText primary={skill.name} 
-            primaryTypographyProps={{
-              variant: "subtitle1",
-              component:"h3",
-            }}
-          />
+        <ListItemText
+          primary={skill.name}
+          primaryTypographyProps={{
+            variant: 'subtitle1',
+            component: 'h3',
+          }}
+        />
       </ListItem>
     );
     return (

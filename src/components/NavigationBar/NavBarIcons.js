@@ -11,7 +11,7 @@ import {
 const NavBarIcons = ({logout, classes}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openIcon, setOpenIcon] = useState(0);
-  const [isWarning, setIsWarning] = useState(false);
+  // const [isWarning, setIsWarning] = useState(false);
   const wrapperRef = useRef(null);
 
   const contactSupportLink = createExternalLink(
@@ -59,9 +59,17 @@ const NavBarIcons = ({logout, classes}) => {
   const handleClickIcon = (event, type) => {
     setAnchorEl(event.currentTarget);
     if (type === 'user') {
-      openIcon === 1 ? setOpenIcon(0) : setOpenIcon(1);
+      if (openIcon === 1) {
+        setOpenIcon(0);
+      } else {
+        setOpenIcon(1);
+      }
     } else if (type === 'notifications') {
-      openIcon === 2 ? setOpenIcon(0) : setOpenIcon(2);
+      if (openIcon === 2) {
+        setOpenIcon(0);
+      } else {
+        setOpenIcon(2);
+      }
     }
   };
 
