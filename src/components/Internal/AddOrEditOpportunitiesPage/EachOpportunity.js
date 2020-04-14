@@ -14,7 +14,7 @@ const EachOpportunity = ({classes, opportunity, index, updateOpportunity}) => {
   const [showForm, setShowForm] = useState(false);
   const updateExistingOpportunity = async values => {
     const result = await updateOpportunity(values);
-    if (result && result.statusCode === 200) {
+    if (result && result.statusCode == 200) {
       history.push('/internal/add-or-edit-opportunities');
     }
   };
