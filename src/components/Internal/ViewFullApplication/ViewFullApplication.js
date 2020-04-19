@@ -77,6 +77,7 @@ const ReviewApplication = ({
           resume={application && application.resume}
           viewOnly={true}
           page="staff"
+          setResume={() => {}}
         />
       )}
     </React.Fragment>
