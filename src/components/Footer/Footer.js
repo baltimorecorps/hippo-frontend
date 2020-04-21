@@ -1,28 +1,28 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import {createALink} from 'lib/helperFunctions/helpers';
+import terms from 'lib/pdf_files/services-terms.pdf';
+import policy from 'lib/pdf_files/privacy -policy.pdf';
+import Typography from '@material-ui/core/Typography';
 
 const Footer = ({classes}) => {
-  const [value, setValue] = React.useState(0);
+  const termsLink = createALink('Terms', terms, classes.link);
+  const policyLink = createALink('Privacy', policy, classes.link);
+
   return (
-    <div className={classes.footerContainer}>Footer</div>
-    // <BottomNavigation
-    //   value={value}
-    //   onChange={(event, newValue) => {
-    //     setValue(newValue);
-    //   }}
-    //   showLabels
-    //   className={classes.footerContainer}
-    // >
-    //   <BottomNavigationAction label="Privacy" />
-    //   <BottomNavigationAction label="Policy" />
-    //   <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-    // </BottomNavigation>
+    <div className={classes.footerContainer}>
+      <Typography
+        component="body2"
+        variant="body2"
+        className={classes.footerLinksContainer}
+      >
+        <span className={classes.copyright}>&#169; 2020 Baltimore Corps</span>
+        <span className={classes.termsAndPolicy}>
+          {termsLink} {policyLink}
+        </span>
+      </Typography>
+    </div>
   );
 };
 
@@ -34,56 +34,63 @@ const styles = ({breakpoints, palette, spacing}) => ({
   footerContainer: {
     position: 'absolute',
     bottom: 0,
+    left: 0,
     width: '100%',
-    backgroundColor: '#000000',
-    color: '#ffffff',
-    padding: '10px',
+    backgroundColor: '#303030',
+    padding: '10px 0px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
+    [breakpoints.up('sm')]: {
+      padding: '15px 0px',
+    },
   },
-
-  paper: {
-    flexGrow: 1,
+  footerLinksContainer: {
+    width: '95%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    color: '#ebebeb',
+    flexDirection: 'column',
 
     [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
+      width: '90%',
+      flexDirection: 'row',
     },
     [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
+      width: '75%',
     },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
+    [breakpoints.up('lg')]: {
+      width: '60%',
     },
-    width: '95%',
-    padding: spacing(2, 3, 3),
-    margin: spacing(1.5),
   },
-  header: {
+  terms: {
+    marginRight: '20px',
+  },
+
+  link: {
+    '&:hover': {
+      color: palette.primary.main,
+    },
+    margin: '8px 8px 0px 8px',
+    marginLeft: 0,
     [breakpoints.up('sm')]: {
-      fontSize: '24px',
+      marginLeft: spacing(2.5),
+      margin: 'auto',
     },
-    fontSize: '20px',
   },
-  cardContainer: {
-    width: '100%',
+  copyright: {
+    color: '#bdbdbd',
+  },
+  termsAndPolicy: {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: spacing(2),
-    flexWrap: 'wrap',
-    [breakpoints.down('sm')]: {
-      //   width: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-
-      flexDirection: 'column',
+    width: '80%',
+    alignItems: 'center',
+    [breakpoints.up('sm')]: {
+      justifyContent: 'flex-end',
+      width: 'auto',
     },
-    [breakpoints.down('md')]: {},
-    [breakpoints.down('xl')]: {},
   },
 });
 

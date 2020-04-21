@@ -602,7 +602,9 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
 
     marginBottom: spacing(5),
     width: '100%',
-    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    // height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    height: 'auto',
+
     paddingLeft: '8vw',
   },
   wrapperDiv: {
@@ -610,7 +612,9 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
 
     marginBottom: spacing(5),
     width: '100%',
-    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    // height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    height: 'auto',
+
     overflow: 'auto',
   },
 

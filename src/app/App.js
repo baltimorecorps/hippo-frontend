@@ -310,12 +310,13 @@ const styles = ({breakpoints, palette, spacing, zIndex}) => ({
   // },
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
-    // paddingBottom: spacing(5),
+    paddingBottom: spacing(5),
     width: '100%',
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
-    minHeight: '100vh',
+    minHeight: `100vh`,
+    position: 'relative',
   },
   homeIcon: {fontSize: '35px'},
   links: {
