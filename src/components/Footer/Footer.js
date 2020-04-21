@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {createALink} from 'lib/helperFunctions/helpers';
 import terms from 'lib/pdf_files/services-terms.pdf';
-import policy from 'lib/pdf_files/privacy -policy.pdf';
+import policy from 'lib/pdf_files/privacy-policy.pdf';
 import Typography from '@material-ui/core/Typography';
 
 const Footer = ({classes}) => {
@@ -11,9 +11,9 @@ const Footer = ({classes}) => {
   const policyLink = createALink('Privacy', policy, classes.link);
 
   return (
-    <div className={classes.footerContainer}>
+    <div className={classes.footerContainer} data-testid="footer">
       <Typography
-        component="body2"
+        component="body"
         variant="body2"
         className={classes.footerLinksContainer}
       >
