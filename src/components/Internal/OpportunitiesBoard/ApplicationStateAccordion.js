@@ -73,10 +73,6 @@ const ApplicationStateAccordion = ({
 
   const totalApps = applications.length || 0;
 
-  // if (header === 'Interviewing') {
-  //   console.log(applications);
-  // }
-
   return (
     <ExpansionPanel
       expanded={expanded === panelName}
@@ -246,7 +242,7 @@ ApplicationStateAccordion.propTypes = {
   header: PropTypes.string.isRequired,
   applications: PropTypes.array.isRequired,
   iconName: PropTypes.string.isRequired,
-  expanded: PropTypes.bool.isRequired,
+  expanded: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   handleChange: PropTypes.func.isRequired,
   panelName: PropTypes.string.isRequired,
   opportunityId: PropTypes.string,
