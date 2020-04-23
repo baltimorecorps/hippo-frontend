@@ -281,7 +281,7 @@ const ProfilePage = ({
                       className={classes.steps}
                     >
                       <span className={classes.stepNum}>Step 2:</span> Complete
-                      your profile by filing out the sections below.
+                      your profile by filling out the sections below.
                     </Typography>
                   </Paper>
                 </Grid>
