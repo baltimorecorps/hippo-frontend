@@ -226,6 +226,7 @@ const ProfilePage = ({
       ) : null}
       <Grid
         container
+        style={{flex: 1}}
         justify="flex-start"
         className={openSidebar ? classes.container : null}
       >
@@ -237,6 +238,7 @@ const ProfilePage = ({
           xl={getContainerSize('xl')}
         >
           <Grid
+            style={{flex: 1}}
             id="divToPrint"
             ref={wrapperRef}
             container
@@ -582,8 +584,9 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   wrapper: {
     paddingBottom: spacing(5),
     width: '100%',
-
-    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    flex: 1,
+    // height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    height: 'auto',
     paddingLeft: '2vw',
     paddingRight: '2vw',
     [breakpoints.up('sm')]: {
@@ -595,15 +598,23 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     },
   },
   wrapperSmall: {
+    flex: 1,
+
     marginBottom: spacing(5),
     width: '100%',
-    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    // height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    height: 'auto',
+
     paddingLeft: '8vw',
   },
   wrapperDiv: {
+    flex: 1,
+
     marginBottom: spacing(5),
     width: '100%',
-    height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    // height: `calc(100vh - ${spacing(8)}px - 40px)`,
+    height: 'auto',
+
     overflow: 'auto',
   },
 

@@ -34,7 +34,7 @@ import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffC
 import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
-
+import Footer from 'components/Footer';
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 
 const App = ({
@@ -277,7 +277,10 @@ const App = ({
                 component={EmployerPage}
               />
             </Switch>
+            <Footer />
           </div>
+          {/* <div className={classes.footerContainer}> */}
+          {/* </div> */}
         </Router>
       </MuiThemeProvider>
     </ErrorBoundary>
@@ -291,14 +294,28 @@ const styles = ({breakpoints, palette, spacing, zIndex}) => ({
   appBar: {
     zIndex: zIndex.drawer + 1,
   },
+  // footerContainer: {
+  //   // position: 'absolute',
+  //   // left: 0,
+  //   // // right: 0,
+
+  //   // bottom: 0,
+  //   width: '100%',
+  //   zIndex: 100,
+  //   // display: 'flex',
+  //   // justifyContent: 'center',
+  //   // alignItems: 'center',
+  //   // flexDirection: 'column',
+  // },
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
     paddingBottom: spacing(5),
     width: '100%',
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    minHeight: `100vh`,
+    position: 'relative',
   },
   homeIcon: {fontSize: '35px'},
   links: {
