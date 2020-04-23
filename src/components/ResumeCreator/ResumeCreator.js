@@ -133,12 +133,9 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   printButton: {
     margin: `${spacing(2)}px 0`,
     position: 'fixed',
-    bottom: 0,
+    bottom: -1,
     zIndex: 1,
     left: '45%',
-    // [breakpoints.down('lg')]: {
-    //   left: '45%',
-    // },
     [breakpoints.down('md')]: {
       left: '43%',
     },
@@ -152,7 +149,7 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   staffPrintButton: {
     margin: `${spacing(2)}px 0`,
     position: 'fixed',
-    bottom: 0,
+    bottom: -1,
     zIndex: 1,
     left: '47%',
     [breakpoints.down('lg')]: {
