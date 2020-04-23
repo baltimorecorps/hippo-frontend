@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {createClickTracking, createALink} from 'lib/helperFunctions/helpers';
-import terms from 'lib/pdf_files/services-terms.pdf';
-import policy from 'lib/pdf_files/privacy -policy.pdf';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
