@@ -189,7 +189,7 @@ const ExperiencesList = ({
 };
 
 ExperiencesList.propTypes = {
-  contactId: PropTypes.number.isRequired,
+  contactId: PropTypes.number,
   experienceType: PropTypes.oneOf([
     'Work',
     'Service',

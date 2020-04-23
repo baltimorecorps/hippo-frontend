@@ -81,7 +81,6 @@ const ReviewApplication = ({
           setResume={setNothing}
           viewOnly={true}
           page="staff"
-          setResume={() => {}}
         />
       )}
     </React.Fragment>
