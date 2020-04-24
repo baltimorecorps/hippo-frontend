@@ -5,25 +5,44 @@ import {createALink} from 'lib/helperFunctions/helpers';
 import terms from 'lib/pdf_files/services-terms.pdf';
 import policy from 'lib/pdf_files/privacy-policy.pdf';
 import Typography from '@material-ui/core/Typography';
+import {useRouteMatch} from 'react-router-dom';
 
-const Footer = ({classes}) => {
+const Footer = ({classes, page}) => {
   const termsLink = createALink('Terms', terms, classes.link);
   const policyLink = createALink('Privacy', policy, classes.link);
 
-  return (
-    <div className={classes.footerContainer} data-testid="footer">
-      <Typography
-        component="body"
-        variant="body2"
-        className={classes.footerLinksContainer}
-      >
-        <span className={classes.copyright}>&#169; 2020 Baltimore Corps</span>
-        <span className={classes.termsAndPolicy}>
-          {termsLink} {policyLink}
-        </span>
-      </Typography>
-    </div>
+  let staffViewAppMatch = useRouteMatch(
+    '/opportunities/:opportunityId/contacts/:contactId/internal-review'
   );
+  let employerViewAppMatch = useRouteMatch(
+    '/opportunities/:opportunityId/contacts/:contactId/employer-review'
+  );
+  let candidateViewAppMatch = useRouteMatch(
+    '/application/:opportunityId/review'
+  );
+
+  if (
+    (candidateViewAppMatch && candidateViewAppMatch.isExact) ||
+    (staffViewAppMatch && staffViewAppMatch.isExact) ||
+    (employerViewAppMatch && employerViewAppMatch.isExact)
+  ) {
+    return null;
+  } else {
+    return (
+      <div className={classes.footerContainer} data-testid="footer">
+        <Typography
+          component="p"
+          variant="body2"
+          className={classes.footerLinksContainer}
+        >
+          <span className={classes.copyright}>&#169; 2020 Baltimore Corps</span>
+          <span className={classes.termsAndPolicy}>
+            {termsLink} {policyLink}
+          </span>
+        </Typography>
+      </div>
+    );
+  }
 };
 
 Footer.propTypes = {
