@@ -102,7 +102,7 @@ export const DisplayExperience = ({
           variant="text"
           className={classes.link}
         >
-          {experience.link}
+          {experience.link_name}
         </Button>
       )}
       <Typography
@@ -257,8 +257,6 @@ ExperiencesListItem.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   gridContainer: {
-    // width: '100%',
-    // display: 'flex',
     justifyContent: 'center',
     marginBottom: '10px',
   },
@@ -285,7 +283,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     color: palette.primary.link,
     padding: '0 5px',
     fontSize: '15px',
-    textTransform: 'lowercase',
+    textTransform: 'none',
     '&:hover': {
       textDecoration: 'none',
     },

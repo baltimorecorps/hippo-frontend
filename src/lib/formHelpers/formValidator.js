@@ -22,6 +22,7 @@ const experienceValidator = values => {
     degree,
     degree_other,
     link,
+    link_name,
     description,
     achievements,
   } = values;
@@ -56,9 +57,17 @@ const experienceValidator = values => {
     err.title_error = 'Required';
   }
 
+  if ((link && !link.startsWith("https://"))) {
+    isError = true;
+    err.link_error = 'Link must start with "https://"';
+  }
   if (link && link.length > 255) {
     isError = true;
     err.link_error = 'Link must be less than 255 characters';
+  }
+  if((link && !link_name ) || (link && (link_name && link_name.length < 1))) {
+    isError = true;
+    err.linkName_error = 'Link name is required when you enter URL';
   }
 
   // check if start_month is null, invalid month name, or 'none'
