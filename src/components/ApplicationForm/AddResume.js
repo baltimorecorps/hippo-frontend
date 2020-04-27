@@ -108,6 +108,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
+    paddingBottom: spacing(3)
   },
   spacer: {
     minWidth: '400px',
@@ -119,7 +120,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: spacing(2),
-    marginBottom: spacing(3),
   },
   center: {
     display: 'flex',
