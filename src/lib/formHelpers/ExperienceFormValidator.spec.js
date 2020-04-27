@@ -215,7 +215,7 @@ describe('Experience Form Validations', () => {
     expect(err).toEqual(expectedErr);
   });
 
-  test('Accomplishments: valid values', () => {
+  test('Accomplishments: valid values without link', () => {
     const values = {
       host: '',
       title: 'Computer Science',
@@ -233,12 +233,58 @@ describe('Experience Form Validations', () => {
     expect(isError).toBe(false);
     expect(err).toEqual(expectedErr);
   });
-  test('Accomplishments: invalid values', () => {
+
+  test('Accomplishments: valid values with link but without link_name', () => {
+    const values = {
+      host: '',
+      title: 'Computer Science',
+      degree: 'Associates',
+      location: 'Baltimore, MD ,USA',
+      end_month: 'none',
+      end_year: '0',
+      link: 'https://www.google.com',
+      is_current: true,
+      type: 'Accomplishment',
+    };
+
+
+    const expectedErr = {linkName_error: 'Link name is required when you enter URL'};
+    const {isError, err} = experienceValidator(values);
+
+    expect(isError).toBe(true);
+    expect(err).toEqual(expectedErr);
+  });
+
+  test('Accomplishments: valid values with link and link_name', () => {
+    const values = {
+      host: '',
+      title: 'Computer Science',
+      degree: 'Associates',
+      location: 'Baltimore, MD ,USA',
+      end_month: 'none',
+      end_year: '0',
+      link: 'https://www.google.com',
+      link_name: "Google",
+      is_current: true,
+      type: 'Accomplishment',
+    };
+
+
+    const expectedErr = {};
+    const {isError, err} = experienceValidator(values);
+
+    expect(isError).toBe(false);
+    expect(err).toEqual(expectedErr);
+  });
+
+  test('Accomplishments: empty values', () => {
     const values = {
       host: '',
       title: '',
       degree: '',
       location: '',
+      link: "",
+      link_name: "",
       start_month: 'none',
       start_year: '0',
       end_month: 'none',

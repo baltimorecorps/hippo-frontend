@@ -214,7 +214,7 @@ describe('AddOrEditExperienceForm', () => {
     expect(submit.mock.calls[0][0].end_year).toBe(0);
   });
 
-  test('Test Accomplishment Form', () => {
+  test('Test Accomplishment Form: without link', () => {
     const experience = {
       title: 'Test Title',
       start_month: 'January',
@@ -256,6 +256,49 @@ describe('AddOrEditExperienceForm', () => {
     expect(submit.mock.calls.length).toBe(1);
     expect(submit.mock.calls[0][0]).toHaveProperty('title');
     expect(submit.mock.calls[0][0].title).toBe('New Title');
+    expect(submit.mock.calls[0][0]).toEqual(result);
+  });
+  test('Test Accomplishment Form: with link', () => {
+    const experience = {
+      title: 'Test Title',
+      start_month: 'January',
+      start_year: 2015,
+      link: 'https://www.google.com',
+      link_name: 'Google',
+      type: 'Accomplishment',
+      description: 'Test description',
+      contact_id: 1234,
+      is_current: true,
+    };
+
+    const result = {
+      contact_id: 1234,
+      description: 'Test description',
+      start_month: 'January',
+      start_year: 2015,
+      link: 'https://www.google.com',
+      link_name: 'Google',
+      end_month: 'none',
+      end_year: 0,
+      title: 'Test Title',
+      type: 'Accomplishment',
+      is_current: true,
+    };
+
+    const cancel = jest.fn();
+    const submit = jest.fn();
+    const { getByText} = render(
+      <AddOrEditExperienceForm
+        handleCancel={cancel}
+        labels={{}}
+        onSubmit={submit}
+        experience={experience}
+      />
+    );
+
+    fireEvent.click(getByText(/save/i));
+
+    expect(submit.mock.calls.length).toBe(1);
     expect(submit.mock.calls[0][0]).toEqual(result);
   });
 });
