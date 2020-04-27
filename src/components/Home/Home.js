@@ -69,7 +69,7 @@ const Home = ({hasSession, classes}) => {
                     gutterBottom
                     variant="body1"
                     component="p"
-                    align="flex-start"
+                    align="left"
                   >
                     {description}
                   </Typography>

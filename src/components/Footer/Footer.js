@@ -20,11 +20,19 @@ const Footer = ({classes, page}) => {
   let candidateViewAppMatch = useRouteMatch(
     '/application/:opportunityId/review'
   );
+  let candidateInterestForm = useRouteMatch(
+    '/application/:opportunityId'
+  );
+  let candidateCustomizeResume = useRouteMatch(
+    '/application/:opportunityId/resume'
+  );
 
   if (
     (candidateViewAppMatch && candidateViewAppMatch.isExact) ||
     (staffViewAppMatch && staffViewAppMatch.isExact) ||
-    (employerViewAppMatch && employerViewAppMatch.isExact)
+    (employerViewAppMatch && employerViewAppMatch.isExact) ||
+    (candidateInterestForm && candidateInterestForm.isExact) ||
+    (candidateCustomizeResume && candidateCustomizeResume.isExact)
   ) {
     return null;
   } else {
