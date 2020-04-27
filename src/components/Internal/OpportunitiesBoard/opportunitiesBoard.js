@@ -60,7 +60,7 @@ InternalOpportunityBoard.propTypes = {
       cycle_id: PropTypes.number.isRequired,
       status: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
   getAllInternalOpportunities: PropTypes.func.isRequired,
 };
 
