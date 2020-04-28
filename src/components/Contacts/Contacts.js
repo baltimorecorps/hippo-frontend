@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ContactList from './ContactList';
-import AddContact from './AddContact';
+// import AddContact from './AddContact';
 
 const Contacts = props => {
   const classes = props.classes;
@@ -17,9 +17,9 @@ const Contacts = props => {
         <React.Fragment>
           <ContactList
             contacts={props.contacts}
-            refreshContacts={props.refreshContacts}
+            getAllContactsShort={props.getAllContactsShort}
           />
-          <AddContact addNewContact={props.addNewContact} dialog />
+          {/* <AddContact addNewContact={props.addNewContact} dialog /> */}
         </React.Fragment>
       </Paper>
     </main>
@@ -29,7 +29,7 @@ const Contacts = props => {
 Contacts.propTypes = {
   classes: PropTypes.object.isRequired,
   contacts: PropTypes.array.isRequired,
-  refreshContacts: PropTypes.func.isRequired,
+  getAllContactsShort: PropTypes.func.isRequired,
   addNewContact: PropTypes.func.isRequired,
 };
 

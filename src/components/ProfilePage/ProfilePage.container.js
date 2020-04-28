@@ -1,10 +1,6 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {
-  refreshContacts,
-  updateContact,
-  addContactSkill,
-} from 'state/contacts';
+import {getContact, updateContact, addContactSkill} from 'state/contacts';
 import {refreshPrograms, addNewProgram} from 'state/programs';
 import {
   startResumeCreation,
@@ -15,12 +11,6 @@ import {
 import {RESUME_CREATION} from 'state/resume';
 import ProfilePage from './ProfilePage';
 
-// eslint-disable-next-line no-unused-vars
-const addNewContact = dispatch =>
-  async function(contact) {
-    await refreshContacts(dispatch);
-  };
-
 // TODO: refactor to use generic selectors, merge with ExperiencesList.container
 const getExperiences = createSelector(['experiences'], experiences =>
   Object.keys(experiences).map(id => experiences[id])
@@ -29,11 +19,11 @@ const getExperiences = createSelector(['experiences'], experiences =>
 const getSelection = createSelector(['resume.selected']);
 const getResumeCreationStep = createSelector(['resume.resumeCreationStep']);
 
-const getContact = (state, props) =>
+const getContactId = (state, props) =>
   props.contactId || props.match.params.contactId;
 
 const getResumeAll = createSelector(
-  [getExperiences, getSelection, getContact],
+  [getExperiences, getSelection, getContactId],
   (exps, selection, contactId) => {
     let resume = {
       relevant_exp: [],
@@ -66,7 +56,7 @@ const getResumeAll = createSelector(
 );
 
 const getResumeSelected = createSelector(
-  [getExperiences, getSelection, getContact],
+  [getExperiences, getSelection, getContactId],
   (exps, selection, contactId) => {
     let resume = {
       relevant_exp: [],
@@ -146,11 +136,12 @@ export const mapStateToProps = (state, props) => {
 // the ALL_CONTACTS event (see state/contacts.js for details)
 export const mapDispatchToProps = dispatch => ({
   updateContact: contact => updateContact(contact)(dispatch),
-  refreshContacts: async () => {
-    await refreshContacts(dispatch);
-  },
+
   refreshPrograms: async contactId => {
     await refreshPrograms(contactId)(dispatch);
+  },
+  getContact: async contactId => {
+    await getContact(contactId)(dispatch);
   },
   addNewProgram: async program => {
     await addNewProgram(program)(dispatch);

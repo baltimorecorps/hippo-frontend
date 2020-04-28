@@ -6,14 +6,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-const ContactList = ({contacts, refreshContacts}) => {
+const ContactList = ({contacts, getAllContactsShort}) => {
   let [loaded, setLoaded] = useState(false);
   useEffect(() => {
     if (!loaded) {
-      refreshContacts();
+      getAllContactsShort();
     }
     setLoaded(true);
-  }, [loaded, contacts, refreshContacts]);
+  }, [loaded, contacts, getAllContactsShort]);
 
   return (
     <List>
@@ -34,7 +34,7 @@ ContactList.propTypes = {
       last_name: PropTypes.string.isRequired,
     })
   ),
-  refreshContacts: PropTypes.func.isRequired,
+  getAllContactsShort: PropTypes.func.isRequired,
 };
 
 export default ContactList;

@@ -64,8 +64,8 @@ const BasicInfoDisplay = ({
 BasicInfoDisplay.propTypes = {
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
+  email: PropTypes.string,
+  phone: PropTypes.string,
   onClickEdit: PropTypes.func.isRequired,
 };
 

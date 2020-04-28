@@ -139,12 +139,7 @@ ApplicationCards.propTypes = {
   applicant: PropTypes.shape({
     is_active: PropTypes.bool.isRequired,
     applications: PropTypes.arrayOf(PropTypes.object).isRequired,
-    contact: PropTypes.shape({
-      email: PropTypes.string.isRequired,
-      first_name: PropTypes.string.isRequired,
-      last_name: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-    }).isRequired,
+    contact: PropTypes.object.isRequired,
     program_id: PropTypes.number.isRequired,
     is_approved: PropTypes.bool.isRequired,
   }).isRequired,

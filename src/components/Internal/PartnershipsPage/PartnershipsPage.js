@@ -38,8 +38,9 @@ const PartnershipsPage = ({classes}) => {
           Partnerships Team Page
         </Typography>
         <Divider className={classes.divider} />
-        {links.map(link => (
+        {links.map((link, index) => (
           <Link
+            key={index}
             component="button"
             variant="body1"
             onClick={() => handleClickLink(link.url)}
