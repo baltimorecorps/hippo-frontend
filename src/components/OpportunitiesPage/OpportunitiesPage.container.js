@@ -6,8 +6,6 @@ import {
 } from 'state/opportunity';
 
 const mapStateToProps = state => {
-  const contact = Object.values(state.contacts);
-
   const submittedIds = Object.values(state.applications)
     .filter(app => app.status !== 'draft')
     .map(app => app.opportunity.id);
@@ -16,7 +14,7 @@ const mapStateToProps = state => {
 
   return {
     opportunities,
-    contact: contact[0],
+    contact: state.accounts.contact,
     submittedIds: submittedIds,
   };
 };
