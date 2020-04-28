@@ -55,88 +55,94 @@ const OpportunitiesPage = ({
     toViewApplication(opportunityId);
   };
 
-  return (
-    <div className={classes.container}>
-      <Paper className={classes.headerPaper}>
-        <Typography
-          component="h1"
-          variant="h5"
-          align="left"
-          className={classes.header}
-        >
-          Place for Purpose Opportunities
-        </Typography>
-      </Paper>
-      {opportunities.map(
-        (opportunity, index) =>
-          opportunity.is_active === true && (
-            <Paper className={classes.opportunityPaper} key={index}>
-              <div className={classes.headerContainer}>
-                <Typography
-                  variant="h5"
-                  component="h1"
-                  className={classes.title}
-                >
-                  {opportunity.title}
-                </Typography>
-                <Typography
-                  variant="h5"
-                  component="h1"
-                  className={classes.organization}
-                >
-                  {opportunity.org_name || ''}
-                </Typography>
-              </div>
-              <div className={classes.opportunityContent}>
-                <div className={classes.opportunityDescription}>
-                  <Typography className={classes.description}>
-                    {opportunity.short_description}
-                    <br />
+  if (!contact || !opportunities) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className={classes.container}>
+        <Paper className={classes.headerPaper}>
+          <Typography
+            component="h1"
+            variant="h5"
+            align="left"
+            className={classes.header}
+          >
+            Place for Purpose Opportunities
+          </Typography>
+        </Paper>
+        {opportunities.map(
+          (opportunity, index) =>
+            opportunity.is_active === true && (
+              <Paper className={classes.opportunityPaper} key={index}>
+                <div className={classes.headerContainer}>
+                  <Typography
+                    variant="h5"
+                    component="h1"
+                    className={classes.title}
+                  >
+                    {opportunity.title}
                   </Typography>
-                  <Typography className={classes.link}>
-                    {createExternalLink(
-                      'View full description',
-                      opportunity.gdoc_link,
-                      classes.link
-                    )}
+                  <Typography
+                    variant="h5"
+                    component="h1"
+                    className={classes.organization}
+                  >
+                    {opportunity.org_name || ''}
                   </Typography>
                 </div>
-                <div className={classes.applyButton}>
-                  {contact
-                    ? contact.programs.map((eachProgram, index) =>
-                        eachProgram.program.id === opportunity.program_id &&
-                        eachProgram.is_approved === true ? (
-                          submittedIds.includes(opportunity.id) ? (
-                            <Button
-                              onClick={() =>
-                                onClickViewAppButton(opportunity.id)
-                              }
-                              variant="contained"
-                              color="primary"
-                              key={index}
-                            >
-                              View Application
-                            </Button>
-                          ) : (
-                            <Button
-                              onClick={() => onClickApplyButton(opportunity.id)}
-                              variant="contained"
-                              color="primary"
-                              key={index}
-                            >
-                              Apply
-                            </Button>
-                          )
-                        ) : null
-                      )
-                    : null}
+                <div className={classes.opportunityContent}>
+                  <div className={classes.opportunityDescription}>
+                    <Typography className={classes.description}>
+                      {opportunity.short_description}
+                      <br />
+                    </Typography>
+                    <Typography className={classes.link}>
+                      {createExternalLink(
+                        'View full description',
+                        opportunity.gdoc_link,
+                        classes.link
+                      )}
+                    </Typography>
+                  </div>
+                  <div className={classes.applyButton}>
+                    {contact
+                      ? contact.programs.map((eachProgram, index) =>
+                          eachProgram.program.id === opportunity.program_id &&
+                          eachProgram.is_approved === true ? (
+                            submittedIds.includes(opportunity.id) ? (
+                              <Button
+                                onClick={() =>
+                                  onClickViewAppButton(opportunity.id)
+                                }
+                                variant="contained"
+                                color="primary"
+                                key={index}
+                              >
+                                View Application
+                              </Button>
+                            ) : (
+                              <Button
+                                onClick={() =>
+                                  onClickApplyButton(opportunity.id)
+                                }
+                                variant="contained"
+                                color="primary"
+                                key={index}
+                              >
+                                Apply
+                              </Button>
+                            )
+                          ) : null
+                        )
+                      : null}
+                  </div>
                 </div>
-              </div>
-            </Paper>
-          )
-      )}
-    </div>
-  );
+              </Paper>
+            )
+        )}
+      </div>
+    );
+  }
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
