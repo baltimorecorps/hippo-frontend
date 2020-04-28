@@ -57,7 +57,7 @@ const ProfilePage = ({
   contactInfo,
   programs,
   resume,
-  refreshContacts,
+  getContact,
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
@@ -106,17 +106,18 @@ const ProfilePage = ({
 
   useEffect(() => {
     if (
-      !loading &&
-      typeof contactInfo == 'undefined' &&
-      contactId !== 'undefined'
+      (!loading &&
+        typeof contactInfo == 'undefined' &&
+        contactId !== 'undefined') ||
+      (contactInfo && !contactInfo.email_primary)
     ) {
       setLoading(true);
       (async () => {
-        await refreshContacts();
+        await getContact(contactId);
         setLoading(false);
       })();
     }
-  }, [loading, setLoading, contactId, contactInfo, refreshContacts]);
+  }, [loading, setLoading, contactId, contactInfo, getContact]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -198,6 +199,7 @@ const ProfilePage = ({
   } else if (openSidebar) {
     wrapperClass = classes.wrapperSmall;
   }
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -423,12 +425,12 @@ const helpTextOptions = {
 ProfilePage.propTypes = {
   contactId: PropTypes.any.isRequired,
   contactInfo: PropTypes.shape({
-    first_name: PropTypes.string.isRequired,
-    last_name: PropTypes.string.isRequired,
-    email_primary: PropTypes.object.isRequired,
-    phone_primary: PropTypes.string.isRequired,
+    first_name: PropTypes.string,
+    last_name: PropTypes.string,
+    email_primary: PropTypes.object,
+    phone_primary: PropTypes.string,
   }),
-  refreshContacts: PropTypes.func.isRequired,
+  getContact: PropTypes.func.isRequired,
 };
 
 const dialogStyles = ({breakpoints, palette, spacing, shadows}) => ({
