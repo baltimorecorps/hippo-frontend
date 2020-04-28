@@ -102,7 +102,7 @@ export const DisplayExperience = ({
           variant="text"
           className={classes.link}
         >
-          {experience.link_name}
+          {experience.link_name || experience.link}
         </Button>
       )}
       <Typography
