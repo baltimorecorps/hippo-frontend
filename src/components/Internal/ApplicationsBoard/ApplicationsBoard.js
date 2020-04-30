@@ -101,22 +101,17 @@ ApplicationsBoard.propTypes = {
   getAllInternalApplicants: PropTypes.func.isRequired,
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
-      email: PropTypes.string.isRequired,
-      first_name: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-      last_name: PropTypes.string.isRequired,
+      email: PropTypes.string,
+      first_name: PropTypes.string,
+      id: PropTypes.number,
+      last_name: PropTypes.string,
     })
   ).isRequired,
   applicants: PropTypes.arrayOf(
     PropTypes.shape({
       is_active: PropTypes.bool.Required,
       applications: PropTypes.array,
-      contact: PropTypes.shape({
-        email: PropTypes.string.Required,
-        first_name: PropTypes.string.Required,
-        id: PropTypes.number.Required,
-        last_name: PropTypes.string.Required,
-      }).Required,
+      contact: PropTypes.object.isRequired,
       id: PropTypes.number.Required,
       program_id: PropTypes.number.Required,
       is_approved: PropTypes.bool.Required,
