@@ -240,6 +240,7 @@ const PageLayout = ({
                     experience={experience}
                     index={index}
                     achievements={selected[experience.id]}
+                    selected={selected}
                   />
                 ))}
               </ResumeSection>
@@ -261,34 +262,20 @@ const PageLayout = ({
                 ))}
               </ResumeSection>
             ) : null}
-            {sections.education.length ? (
-              <ResumeSection
-                sectionId={'education'} // must match state key
-                sectionLabel={sectionLabels.education}
-              >
-                {sections.education.map((experience, index) => (
-                  <EducationItem
-                    key={experience.id}
-                    experience={experience}
-                    index={index}
-                  />
-                ))}
-              </ResumeSection>
-            ) : null}
-            {sections.portfolio.length ? (
-              <ResumeSection
-                sectionId={'portfolio'} // must match state key
-                sectionLabel={sectionLabels.portfolio}
-              >
-                {sections.portfolio.map((experience, index) => (
-                  <PortfolioItem
-                    key={experience.id}
-                    experience={experience}
-                    index={index}
-                  />
-                ))}
-              </ResumeSection>
-            ) : null}
+            <EducationItem
+              sectionId={'education'} // must match state key
+              sectionLabel={sectionLabels.education}
+              index={index}
+              selected={selected}
+              education={sections.education}
+            />
+            <PortfolioItem
+              sectionId={'portfolio'} // must match state key
+              sectionLabel={sectionLabels.portfolio}
+              index={index}
+              selected={selected}
+              portfolio={sections.portfolio}
+            />
           </Grid>
         </Grid>
       </Grid>
@@ -478,12 +465,13 @@ const ResumeCreator = ({
   }
 
   if (
-    selected === null ||
-    Object.keys(selected).length <
-      sections.experience.length +
-        sections.education.length +
-        sections.portfolio.length +
-        sections.capabilities.length
+    selected === null
+    // commented out to stop adding new experience/skills/education/portfolio to selected list of each section
+    // Object.keys(selected).length <
+    //   sections.experience.length +
+    //     sections.education.length +
+    //     sections.portfolio.length +
+    //     sections.capabilities.length
   ) {
     let newSelected = {};
     Object.entries(sections).forEach(([key, section]) => {
@@ -504,6 +492,7 @@ const ResumeCreator = ({
         }
       });
     });
+
     setSelected(newSelected);
     setResume(newSelected);
   }
