@@ -16,6 +16,7 @@ const ExperienceItem = ({
   classes,
   experience,
   achievements,
+  selected,
   index,
   enableDrag,
 }) => {
@@ -28,7 +29,7 @@ const ExperienceItem = ({
       <span className={classes.title}>{experience.title}</span>
       <span className={classes.dates}>{formatDate(experience)}</span>
       {experience.achievements.map(achievement =>
-        achievements[achievement.id] ? (
+        achievements && achievements[achievement.id] ? (
           <span key={achievement.id} className={classes.achievement}>
             {achievement.description}
           </span>
@@ -44,7 +45,11 @@ const ExperienceItem = ({
       </DragWrapper>
     );
   } else {
-    return innerComponent;
+    if (selected && selected[experience.id]) {
+      return innerComponent;
+    } else {
+      return null;
+    }
   }
 };
 
