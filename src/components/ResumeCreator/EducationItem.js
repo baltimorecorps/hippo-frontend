@@ -1,24 +1,39 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DragWrapper from './DragWrapper';
+import ResumeSection from './ResumeSection';
 
 const formatDate = experience => {
   return `${experience.start_month.slice(0, 3)} ${experience.start_year}`;
 };
 
-const EducationItem = ({classes, experience, index, enableDrag}) => {
+const EducationItem = ({
+  classes,
+  sectionId,
+  sectionLabel,
+  experience,
+  education,
+  selected,
+  index,
+  enableDrag,
+}) => {
+  const hasExperience = education.filter(exp => selected && selected[exp.id]);
   const innerComponent = (
-    <div className={classes.item}>
-      <div className={classes.dateCol}>
-        <span className={classes.date}>{formatDate(experience)}</span>
-      </div>
-      <div className={classes.contentCol}>
-        <span className={classes.org}>{experience.host}</span>
-        <span
-          className={classes.degree}
-        >{`${experience.degree} in ${experience.title}`}</span>
-      </div>
-    </div>
+    <ResumeSection sectionId={sectionId} sectionLabel={sectionLabel}>
+      {hasExperience.map((experience, index) => (
+        <div className={classes.item} key={index}>
+          <div className={classes.dateCol}>
+            <span className={classes.date}>{formatDate(experience)}</span>
+          </div>
+          <div className={classes.contentCol}>
+            <span className={classes.org}>{experience.host}</span>
+            <span
+              className={classes.degree}
+            >{`${experience.degree} in ${experience.title}`}</span>
+          </div>
+        </div>
+      ))}
+    </ResumeSection>
   );
 
   if (enableDrag) {
@@ -28,7 +43,11 @@ const EducationItem = ({classes, experience, index, enableDrag}) => {
       </DragWrapper>
     );
   } else {
-    return innerComponent;
+    if (hasExperience.length > 0) {
+      return innerComponent;
+    } else {
+      return null;
+    }
   }
 };
 

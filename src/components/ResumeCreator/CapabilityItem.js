@@ -4,15 +4,19 @@ import DragWrapper from './DragWrapper';
 
 const CapabilityItem = ({classes, capability, selected, index, enableDrag}) => {
   const skills = capability.skills.concat(capability.suggested_skills);
+  const hasSelectedSkills = skills.filter(
+    skill => selected && selected[skill.id]
+  );
   const innerComponent = (
     <div className={classes.item}>
       <span className={classes.capability}>{capability.name}</span>
-      {skills.map(skill => (
-        selected[skill.id] ? (
-        <span key={skill.id} className={classes.skill}>
-          {skill.name}
-        </span>
-      ): null))}
+      {hasSelectedSkills.map(skill =>
+        selected && selected[skill.id] ? (
+          <span key={skill.id} className={classes.skill}>
+            {skill.name}
+          </span>
+        ) : null
+      )}
     </div>
   );
 
@@ -23,7 +27,11 @@ const CapabilityItem = ({classes, capability, selected, index, enableDrag}) => {
       </DragWrapper>
     );
   } else {
-    return innerComponent;
+    if (hasSelectedSkills.length > 0) {
+      return innerComponent;
+    } else {
+      return null;
+    }
   }
 };
 
