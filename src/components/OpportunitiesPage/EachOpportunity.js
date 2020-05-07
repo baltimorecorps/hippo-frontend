@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
+import AddOrEditOpportunityForm from '../Internal/AddOrEditOpportunitiesPage/AddOrEditOpportunityForm/';
 
 const EachOpportunity = ({
   classes,
@@ -14,8 +15,12 @@ const EachOpportunity = ({
   index,
   onClickViewAppButton,
   onClickApplyButton,
+  audience,
+  updateExistingOpportunity,
 }) => {
-  return (
+  const [showForm, setShowForm] = useState(false);
+
+  return !showForm ? (
     <Paper className={classes.opportunityPaper} key={index}>
       <div className={classes.oppHeaderContainer}>
         <div className={classes.titleAndOrg}>
@@ -34,7 +39,11 @@ const EachOpportunity = ({
           <Typography
             variant="h5"
             component="p"
-            className={classes.programName}
+            className={
+              opportunity.program_name === 'Mayoral Fellowship'
+                ? classes.mayoral
+                : classes.programName
+            }
           >
             {opportunity.program_name || 'Place for Purpose'}
           </Typography>
@@ -54,36 +63,56 @@ const EachOpportunity = ({
             )}
           </Typography>
         </div>
-        <div className={classes.applyButton}>
-          {contact
-            ? contact.programs.map((eachProgram, index) =>
-                eachProgram.program.id === opportunity.program_id &&
-                eachProgram.is_approved === true ? (
-                  submittedIds.includes(opportunity.id) ? (
-                    <Button
-                      onClick={() => onClickViewAppButton(opportunity.id)}
-                      variant="contained"
-                      color="primary"
-                      key={index}
-                    >
-                      View Application
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => onClickApplyButton(opportunity.id)}
-                      variant="contained"
-                      color="primary"
-                      key={index}
-                    >
-                      Apply
-                    </Button>
-                  )
-                ) : null
-              )
-            : null}
-        </div>
+        {audience === 'candidates' ? (
+          <div className={classes.applyButton}>
+            {contact
+              ? contact.programs.map((eachProgram, index) =>
+                  eachProgram.program.id === opportunity.program_id &&
+                  eachProgram.is_approved === true ? (
+                    submittedIds.includes(opportunity.id) ? (
+                      <Button
+                        onClick={() => onClickViewAppButton(opportunity.id)}
+                        variant="contained"
+                        color="primary"
+                        key={index}
+                      >
+                        View Application
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => onClickApplyButton(opportunity.id)}
+                        variant="contained"
+                        color="primary"
+                        key={index}
+                      >
+                        Apply
+                      </Button>
+                    )
+                  ) : null
+                )
+              : null}
+          </div>
+        ) : (
+          // audience === "internal"
+          <div className={classes.applyButton}>
+            <Button
+              onClick={() => setShowForm(true)}
+              variant="contained"
+              color="primary"
+            >
+              Edit
+            </Button>
+          </div>
+        )}
       </div>
     </Paper>
+  ) : (
+    <AddOrEditOpportunityForm
+      type="edit"
+      opportunity={opportunity}
+      onSubmit={updateExistingOpportunity}
+      closeForm={() => setShowForm(false)}
+    />
   );
 };
 
@@ -98,12 +127,14 @@ EachOpportunity.propTypes = {
     cycle_id: PropTypes.number.isRequired,
     gdoc_link: PropTypes.string.isRequired,
     org_name: PropTypes.string.isRequired,
-  }).isRequired,
-  index: PropTypes.number.isRequired,
-  contact: PropTypes.object.isRequired,
-  submittedIds: PropTypes.array.isRequired,
-  onClickViewAppButton: PropTypes.func.isRequired,
-  onClickApplyButton: PropTypes.func.isRequired,
+  }),
+  index: PropTypes.number,
+  contact: PropTypes.object,
+  submittedIds: PropTypes.array,
+  onClickViewAppButton: PropTypes.func,
+  onClickApplyButton: PropTypes.func,
+  audience: PropTypes.string,
+  updateExistingOpportunity: PropTypes.func,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -154,7 +185,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     borderBottom: 'solid #e0e0e0 1px',
     display: 'flex',
     justifyContent: 'space-between',
-    // flexDirection: 'column',
     [breakpoints.down('xs')]: {
       paddingBottom: spacing(1),
       marginBottom: spacing(1),
@@ -173,6 +203,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
+  },
+  mayoral: {
+    fontSize: '13px',
+    verticalAlign: 'text-bottom',
+    color: '#c200d4',
+    fontWeight: 'bold',
   },
   buttonContainer: {
     display: 'flex',

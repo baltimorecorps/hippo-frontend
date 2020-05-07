@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
-import EachOpportunity from './EachOpportunity';
+import EachOpportunity from '../../OpportunitiesPage/EachOpportunity';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 
 const AddOrEditOpportunitiesPage = ({
@@ -41,6 +41,26 @@ const AddOrEditOpportunitiesPage = ({
     }
   };
 
+  const updateExistingOpportunity = async values => {
+    const result = await updateOpportunity(values);
+    if (result && result.statusCode == 200) {
+      history.push('/internal/add-or-edit-opportunities');
+    }
+  };
+
+  const placeForPurposeOpportunities = opportunities.filter(
+    opp => opp.program_name === 'Place for Purpose'
+  );
+
+  const mayoralOpportunities = opportunities.filter(
+    opp => opp.program_name === 'Mayoral Fellowship'
+  );
+
+  const sortedOpportunities = [
+    ...mayoralOpportunities,
+    ...placeForPurposeOpportunities,
+  ];
+
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
@@ -72,12 +92,14 @@ const AddOrEditOpportunitiesPage = ({
           </Button>
         </Grid>
       )}
-      {Object.values(opportunities).map((opportunity, index) => (
+      {sortedOpportunities.map((opportunity, index) => (
         <EachOpportunity
           key={index}
           opportunity={opportunity}
           index={index}
           updateOpportunity={updateOpportunity}
+          audience="internal"
+          updateExistingOpportunity={updateExistingOpportunity}
         />
       ))}
     </div>

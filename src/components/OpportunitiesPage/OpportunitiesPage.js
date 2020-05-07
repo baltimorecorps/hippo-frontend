@@ -57,24 +57,36 @@ const OpportunitiesPage = ({
     toViewApplication(opportunityId);
   };
 
+  const placeForPurposeOpportunities = opportunities.filter(
+    opp => opp.program_name === 'Place for Purpose'
+  );
+
+  const mayoralOpportunities = opportunities.filter(
+    opp => opp.program_name === 'Mayoral Fellowship'
+  );
+
+  const sortedOpportunities = [
+    ...mayoralOpportunities,
+    ...placeForPurposeOpportunities,
+  ];
+
   let header = '';
-  let filteredOpportunities = [];
+
+  let renderedOpportunities = [];
   switch (page) {
     case 'Mayoral Fellowship':
       header = 'Mayoral Fellowship';
-      filteredOpportunities = opportunities.filter(
-        opp => opp.program_name === 'Mayoral Fellowship'
-      );
+      renderedOpportunities = mayoralOpportunities;
+
       break;
     case 'Place for Purpose':
       header = 'Place for Purpose';
-      filteredOpportunities = opportunities.filter(
-        opp => opp.program_name === 'Place for Purpose'
-      );
+      renderedOpportunities = placeForPurposeOpportunities;
+
       break;
     default:
       header = 'All';
-      filteredOpportunities = opportunities;
+      renderedOpportunities = sortedOpportunities;
   }
 
   return (
@@ -89,7 +101,7 @@ const OpportunitiesPage = ({
           {`${header} Opportunities`}
         </Typography>
       </Paper>
-      {filteredOpportunities.map(
+      {renderedOpportunities.map(
         (opportunity, index) =>
           opportunity.is_active === true && (
             <EachOpportunity
@@ -99,6 +111,7 @@ const OpportunitiesPage = ({
               index={index}
               onClickViewAppButton={onClickViewAppButton}
               onClickApplyButton={onClickApplyButton}
+              audience="candidates"
             />
           )
       )}
