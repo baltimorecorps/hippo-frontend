@@ -9,6 +9,7 @@ import {
   createClickTracking,
 } from 'lib/helperFunctions/helpers';
 import EachOpportunity from './EachOpportunity';
+import {sortOpportunitiesByProgramName} from '../../lib/helperFunctions/helpers';
 
 const OpportunitiesPage = ({
   classes,
@@ -57,36 +58,30 @@ const OpportunitiesPage = ({
     toViewApplication(opportunityId);
   };
 
-  const placeForPurposeOpportunities = opportunities.filter(
-    opp => opp.program_name === 'Place for Purpose'
-  );
-
-  const mayoralOpportunities = opportunities.filter(
-    opp => opp.program_name === 'Mayoral Fellowship'
-  );
-
-  const sortedOpportunities = [
-    ...mayoralOpportunities,
-    ...placeForPurposeOpportunities,
-  ];
-
   let header = '';
-
   let renderedOpportunities = [];
+
   switch (page) {
     case 'Mayoral Fellowship':
       header = 'Mayoral Fellowship';
-      renderedOpportunities = mayoralOpportunities;
+      renderedOpportunities = opportunities.filter(
+        opp => opp.program_name === 'Mayoral Fellowship'
+      );
 
       break;
     case 'Place for Purpose':
       header = 'Place for Purpose';
-      renderedOpportunities = placeForPurposeOpportunities;
+      renderedOpportunities = opportunities.filter(
+        opp => opp.program_name === 'Place for Purpose'
+      );
 
       break;
     default:
       header = 'All';
-      renderedOpportunities = sortedOpportunities;
+      renderedOpportunities = sortOpportunitiesByProgramName(opportunities, [
+        'Mayoral Fellowship',
+        'Place for Purpose',
+      ]);
   }
 
   return (
@@ -108,6 +103,7 @@ const OpportunitiesPage = ({
               opportunity={opportunity}
               contact={contact}
               submittedIds={submittedIds}
+              key={index}
               index={index}
               onClickViewAppButton={onClickViewAppButton}
               onClickApplyButton={onClickApplyButton}

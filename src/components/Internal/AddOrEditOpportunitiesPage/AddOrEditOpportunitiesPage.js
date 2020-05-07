@@ -9,6 +9,7 @@ import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 import EachOpportunity from '../../OpportunitiesPage/EachOpportunity';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
+import {sortOpportunitiesByProgramName} from '../../../lib/helperFunctions/helpers';
 
 const AddOrEditOpportunitiesPage = ({
   classes,
@@ -48,18 +49,10 @@ const AddOrEditOpportunitiesPage = ({
     }
   };
 
-  const placeForPurposeOpportunities = opportunities.filter(
-    opp => opp.program_name === 'Place for Purpose'
-  );
-
-  const mayoralOpportunities = opportunities.filter(
-    opp => opp.program_name === 'Mayoral Fellowship'
-  );
-
-  const sortedOpportunities = [
-    ...mayoralOpportunities,
-    ...placeForPurposeOpportunities,
-  ];
+  const sortedOpportunities = sortOpportunitiesByProgramName(opportunities, [
+    'Mayoral Fellowship',
+    'Place for Purpose',
+  ]);
 
   return (
     <div className={classes.container}>
@@ -96,7 +89,6 @@ const AddOrEditOpportunitiesPage = ({
         <EachOpportunity
           key={index}
           opportunity={opportunity}
-          index={index}
           updateOpportunity={updateOpportunity}
           audience="internal"
           updateExistingOpportunity={updateExistingOpportunity}
@@ -108,7 +100,7 @@ const AddOrEditOpportunitiesPage = ({
 
 AddOrEditOpportunitiesPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  opportunities: PropTypes.object.isRequired,
+  opportunities: PropTypes.array.isRequired,
   getAllOpportunities: PropTypes.func.isRequired,
   addOpportunity: PropTypes.func.isRequired,
   updateOpportunity: PropTypes.func.isRequired,
