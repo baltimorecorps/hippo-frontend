@@ -103,9 +103,6 @@ const sortOpportunitiesByProgramName = (opportunities, programNames) => {
       opp => opp.program_name === programNames[i]
     );
     sortedOpportunities = [...sortedOpportunities, ...filteredOpportunities];
-
-    console.log('filter', filteredOpportunities);
-    console.log('sort', sortedOpportunities);
   }
   return sortedOpportunities;
 };

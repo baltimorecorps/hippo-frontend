@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {createClickTracking, createALink} from 'lib/helperFunctions/helpers';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -9,10 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import MuiPhoneNumber from 'material-ui-phone-number';
-import Checkbox from '@material-ui/core/Checkbox';
-import {useHistory} from 'react-router-dom';
 import {opportunityValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import CloseIcon from '@material-ui/icons/Close';
@@ -22,7 +17,9 @@ const useForm = (initialValues, onSubmit, closeForm) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handleSubmit = () => {
-    values.program_name = 'Place for Purpose';
+    if (!values.program_name) {
+      values.program_name = 'Place for Purpose';
+    }
     onSubmit(values);
   };
 
