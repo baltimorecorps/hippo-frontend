@@ -12,7 +12,6 @@ const EachOpportunity = ({
   opportunity,
   contact,
   submittedIds,
-  index,
   onClickViewAppButton,
   onClickApplyButton,
   audience,
@@ -21,7 +20,7 @@ const EachOpportunity = ({
   const [showForm, setShowForm] = useState(false);
 
   return !showForm ? (
-    <Paper className={classes.opportunityPaper} key={index}>
+    <Paper className={classes.opportunityPaper}>
       <div className={classes.oppHeaderContainer}>
         <div className={classes.titleAndOrg}>
           <Typography variant="h5" component="p" className={classes.title}>
