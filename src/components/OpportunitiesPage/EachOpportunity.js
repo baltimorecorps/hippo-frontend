@@ -4,34 +4,50 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import {useHistory} from 'react-router-dom';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
-import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
+import AddOrEditOpportunityForm from '../Internal/AddOrEditOpportunitiesPage/AddOrEditOpportunityForm/';
 
-const EachOpportunity = ({classes, opportunity, index, updateOpportunity}) => {
-  let history = useHistory();
-
+const EachOpportunity = ({
+  classes,
+  opportunity,
+  contact,
+  submittedIds,
+  index,
+  onClickViewAppButton,
+  onClickApplyButton,
+  audience,
+  updateExistingOpportunity,
+}) => {
   const [showForm, setShowForm] = useState(false);
-  const updateExistingOpportunity = async values => {
-    const result = await updateOpportunity(values);
-    if (result && result.statusCode == 200) {
-      history.push('/internal/add-or-edit-opportunities');
-    }
-  };
 
   return !showForm ? (
     <Paper className={classes.opportunityPaper} key={index}>
-      <div className={classes.headerContainer}>
-        <Typography variant="h5" component="h1" className={classes.title}>
-          {opportunity.title}
-        </Typography>
-        <Typography
-          variant="h5"
-          component="h1"
-          className={classes.organization}
-        >
-          {opportunity.org_name || ''}
-        </Typography>
+      <div className={classes.oppHeaderContainer}>
+        <div className={classes.titleAndOrg}>
+          <Typography variant="h5" component="p" className={classes.title}>
+            {opportunity.title}
+          </Typography>
+          <Typography
+            variant="h5"
+            component="p"
+            className={classes.organization}
+          >
+            {opportunity.org_name || ''}
+          </Typography>
+        </div>
+        <div className={classes.programName}>
+          <Typography
+            variant="h5"
+            component="p"
+            className={
+              opportunity.program_name === 'Mayoral Fellowship'
+                ? classes.mayoral
+                : classes.programName
+            }
+          >
+            {opportunity.program_name || 'Place for Purpose'}
+          </Typography>
+        </div>
       </div>
       <div className={classes.opportunityContent}>
         <div className={classes.opportunityDescription}>
@@ -47,15 +63,47 @@ const EachOpportunity = ({classes, opportunity, index, updateOpportunity}) => {
             )}
           </Typography>
         </div>
-        <div className={classes.applyButton}>
-          <Button
-            onClick={() => setShowForm(true)}
-            variant="contained"
-            color="primary"
-          >
-            Edit
-          </Button>
-        </div>
+        {audience === 'candidates' ? (
+          <div className={classes.applyButton}>
+            {contact
+              ? contact.programs.map((eachProgram, index) =>
+                  eachProgram.program.id === opportunity.program_id &&
+                  eachProgram.is_approved === true ? (
+                    submittedIds.includes(opportunity.id) ? (
+                      <Button
+                        onClick={() => onClickViewAppButton(opportunity.id)}
+                        variant="contained"
+                        color="primary"
+                        key={index}
+                      >
+                        View Application
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => onClickApplyButton(opportunity.id)}
+                        variant="contained"
+                        color="primary"
+                        key={index}
+                      >
+                        Apply
+                      </Button>
+                    )
+                  ) : null
+                )
+              : null}
+          </div>
+        ) : (
+          // audience === "internal"
+          <div className={classes.applyButton}>
+            <Button
+              onClick={() => setShowForm(true)}
+              variant="contained"
+              color="primary"
+            >
+              Edit
+            </Button>
+          </div>
+        )}
       </div>
     </Paper>
   ) : (
@@ -79,19 +127,17 @@ EachOpportunity.propTypes = {
     cycle_id: PropTypes.number.isRequired,
     gdoc_link: PropTypes.string.isRequired,
     org_name: PropTypes.string.isRequired,
-  }).isRequired,
-  index: PropTypes.number.isRequired,
-  updateOpportunity: PropTypes.func.isRequired,
+  }),
+  index: PropTypes.number,
+  contact: PropTypes.object,
+  submittedIds: PropTypes.array,
+  onClickViewAppButton: PropTypes.func,
+  onClickApplyButton: PropTypes.func,
+  audience: PropTypes.string,
+  updateExistingOpportunity: PropTypes.func,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
-  container: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: spacing(1),
-  },
   opportunityPaper: {
     flexGrow: 1,
     [breakpoints.up('sm')]: {
@@ -106,13 +152,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
       flexBasis: '50%',
       maxWidth: '50%',
     },
-    width: '95%',
+    width: '100%',
     padding: spacing(2, 3, 3),
     marginBottom: spacing(2),
   },
   opportunityContent: {
     display: 'flex',
     justifyContent: 'space-between',
+    alignItems: 'center',
     [breakpoints.down('sm')]: {
       flexDirection: 'column',
       justifyContent: 'center',
@@ -120,24 +167,19 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   opportunityDescription: {
-    width: '100%',
-
+    marginRight: spacing(2),
     display: 'flex',
     flexDirection: 'column',
+    [breakpoints.down('xs')]: {
+      marginBottom: spacing(1),
+    },
     [breakpoints.down('sm')]: {
       marginBottom: spacing(2),
       marginRight: spacing(0),
       alignSelf: 'center',
     },
-    [breakpoints.down('xs')]: {
-      marginBottom: spacing(1),
-      width: 'auto',
-    },
-    [breakpoints.up('md')]: {
-      marginRight: spacing(2),
-    },
   },
-  headerContainer: {
+  oppHeaderContainer: {
     paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
@@ -153,16 +195,29 @@ const styles = ({breakpoints, palette, spacing}) => ({
       alignItems: 'center',
     },
   },
+  titleAndOrg: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  programName: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
+  },
+  mayoral: {
+    fontSize: '13px',
+    verticalAlign: 'text-bottom',
+    color: '#c200d4',
+    fontWeight: 'bold',
+  },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
   },
   link: {
     color: palette.primary.link,
-    textIndent: '25px',
-    alignSelf: 'flex-end',
     marginTop: spacing(1),
-    [breakpoints.down('xs')]: {
+    [breakpoints.down('sm')]: {
       alignSelf: 'center',
       marginTop: spacing(0),
       textIndent: '0px',
@@ -173,12 +228,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     textIndent: '25px',
   },
   applyButton: {
-    [breakpoints.down('sm')]: {
-      alignSelf: 'flex-end',
-    },
-    [breakpoints.down('xs')]: {
-      alignSelf: 'center',
-    },
+    maxWidth: '100%',
   },
   title: {
     fontWeight: 700,

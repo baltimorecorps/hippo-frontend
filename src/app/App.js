@@ -215,7 +215,14 @@ const App = ({
               <Route
                 exact
                 path="/opportunities/"
-                component={OpportunitiesPage}
+                component={() => <OpportunitiesPage page="Place for Purpose" />}
+              />
+              <Route
+                exact
+                path="/opportunities/mayoral-fellowship"
+                component={() => (
+                  <OpportunitiesPage page="Mayoral Fellowship" />
+                )}
               />
               <Route
                 path="/application/:opportunityId"

@@ -19,10 +19,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
 const useForm = (initialValues, onSubmit, closeForm) => {
-  // const [values, setValues] = useState({});
   const [update, values] = useFormUpdate(initialValues);
 
   const handleSubmit = () => {
+    values.program_name = 'Place for Purpose';
     onSubmit(values);
   };
 
