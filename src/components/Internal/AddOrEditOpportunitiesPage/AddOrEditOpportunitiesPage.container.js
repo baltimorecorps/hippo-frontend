@@ -6,9 +6,10 @@ import {
   updateOpportunity,
 } from 'state/opportunity';
 
-const mapStateToProps = state => ({
-  opportunities: state.opportunities,
-});
+const mapStateToProps = state => {
+  const opportunities = Object.values(state.opportunities);
+  return {opportunities};
+};
 
 const mapDispatchToProps = dispatch => ({
   getAllOpportunities: () => getAllOpportunities(dispatch),

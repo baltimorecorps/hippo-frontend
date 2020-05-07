@@ -95,6 +95,21 @@ const formatTime = time => {
   return formatedTime;
 };
 
+const sortOpportunitiesByProgramName = (opportunities, programNames) => {
+  let sortedOpportunities = [];
+  for (let i = 0; i < programNames.length; i++) {
+    let filteredOpportunities = [];
+    filteredOpportunities = opportunities.filter(
+      opp => opp.program_name === programNames[i]
+    );
+    sortedOpportunities = [...sortedOpportunities, ...filteredOpportunities];
+
+    console.log('filter', filteredOpportunities);
+    console.log('sort', sortedOpportunities);
+  }
+  return sortedOpportunities;
+};
+
 export {
   createExternalLink,
   createClickTracking,
@@ -102,4 +117,5 @@ export {
   createAButton,
   formatDate,
   formatTime,
+  sortOpportunitiesByProgramName,
 };

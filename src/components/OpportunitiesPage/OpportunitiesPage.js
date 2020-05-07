@@ -8,6 +8,8 @@ import {
   createExternalLink,
   createClickTracking,
 } from 'lib/helperFunctions/helpers';
+import EachOpportunity from './EachOpportunity';
+import {sortOpportunitiesByProgramName} from '../../lib/helperFunctions/helpers';
 
 const OpportunitiesPage = ({
   classes,
@@ -18,6 +20,7 @@ const OpportunitiesPage = ({
   contactId,
   submittedIds,
   contact,
+  page,
 }) => {
   let history = useHistory();
 
@@ -55,94 +58,61 @@ const OpportunitiesPage = ({
     toViewApplication(opportunityId);
   };
 
-  if (!contact || !opportunities) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <div className={classes.container}>
-        <Paper className={classes.headerPaper}>
-          <Typography
-            component="h1"
-            variant="h5"
-            align="left"
-            className={classes.header}
-          >
-            Place for Purpose Opportunities
-          </Typography>
-        </Paper>
-        {opportunities.map(
-          (opportunity, index) =>
-            opportunity.is_active === true && (
-              <Paper className={classes.opportunityPaper} key={index}>
-                <div className={classes.headerContainer}>
-                  <Typography
-                    variant="h5"
-                    component="h1"
-                    className={classes.title}
-                  >
-                    {opportunity.title}
-                  </Typography>
-                  <Typography
-                    variant="h5"
-                    component="h1"
-                    className={classes.organization}
-                  >
-                    {opportunity.org_name || ''}
-                  </Typography>
-                </div>
-                <div className={classes.opportunityContent}>
-                  <div className={classes.opportunityDescription}>
-                    <Typography className={classes.description}>
-                      {opportunity.short_description}
-                      <br />
-                    </Typography>
-                    <Typography className={classes.link}>
-                      {createExternalLink(
-                        'View full description',
-                        opportunity.gdoc_link,
-                        classes.link
-                      )}
-                    </Typography>
-                  </div>
-                  <div className={classes.applyButton}>
-                    {contact
-                      ? contact.programs.map((eachProgram, index) =>
-                          eachProgram.program.id === opportunity.program_id &&
-                          eachProgram.is_approved === true ? (
-                            submittedIds.includes(opportunity.id) ? (
-                              <Button
-                                onClick={() =>
-                                  onClickViewAppButton(opportunity.id)
-                                }
-                                variant="contained"
-                                color="primary"
-                                key={index}
-                              >
-                                View Application
-                              </Button>
-                            ) : (
-                              <Button
-                                onClick={() =>
-                                  onClickApplyButton(opportunity.id)
-                                }
-                                variant="contained"
-                                color="primary"
-                                key={index}
-                              >
-                                Apply
-                              </Button>
-                            )
-                          ) : null
-                        )
-                      : null}
-                  </div>
-                </div>
-              </Paper>
-            )
-        )}
-      </div>
-    );
+  let header = '';
+  let renderedOpportunities = [];
+
+  switch (page) {
+    case 'Mayoral Fellowship':
+      header = 'Mayoral Fellowship';
+      renderedOpportunities = opportunities.filter(
+        opp => opp.program_name === 'Mayoral Fellowship'
+      );
+
+      break;
+    case 'Place for Purpose':
+      header = 'Place for Purpose';
+      renderedOpportunities = opportunities.filter(
+        opp => opp.program_name === 'Place for Purpose'
+      );
+
+      break;
+    default:
+      header = 'All';
+      renderedOpportunities = sortOpportunitiesByProgramName(opportunities, [
+        'Mayoral Fellowship',
+        'Place for Purpose',
+      ]);
   }
+
+  return (
+    <div className={classes.container}>
+      <Paper className={classes.headerPaper}>
+        <Typography
+          component="h1"
+          variant="h5"
+          align="left"
+          className={classes.header}
+        >
+          {`${header} Opportunities`}
+        </Typography>
+      </Paper>
+      {renderedOpportunities.map(
+        (opportunity, index) =>
+          opportunity.is_active === true && (
+            <EachOpportunity
+              opportunity={opportunity}
+              contact={contact}
+              submittedIds={submittedIds}
+              key={index}
+              index={index}
+              onClickViewAppButton={onClickViewAppButton}
+              onClickApplyButton={onClickApplyButton}
+              audience="candidates"
+            />
+          )
+      )}
+    </div>
+  );
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -173,97 +143,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     padding: spacing(2, 3, 3),
     marginBottom: spacing(2),
-  },
-  opportunityPaper: {
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '100%',
-    padding: spacing(2, 3, 3),
-    marginBottom: spacing(2),
-  },
-  opportunityContent: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    [breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  },
-  opportunityDescription: {
-    marginRight: spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    [breakpoints.down('xs')]: {
-      marginBottom: spacing(1),
-    },
-    [breakpoints.down('sm')]: {
-      marginBottom: spacing(2),
-      marginRight: spacing(0),
-      alignSelf: 'center',
-    },
-  },
-  headerContainer: {
-    paddingBottom: spacing(2),
-    marginBottom: spacing(2),
-    borderBottom: 'solid #e0e0e0 1px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    [breakpoints.down('xs')]: {
-      paddingBottom: spacing(1),
-      marginBottom: spacing(1),
-    },
-    [breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  link: {
-    color: palette.primary.link,
-    textIndent: '25px',
-    alignSelf: 'flex-end',
-    marginTop: spacing(1),
-    [breakpoints.down('sm')]: {
-      alignSelf: 'center',
-      marginTop: spacing(0),
-      textIndent: '0px',
-    },
-  },
-  description: {
-    textAlign: 'justify',
-    textIndent: '25px',
-  },
-  applyButton: {
-    maxWidth: '100%',
-  },
-  title: {
-    fontWeight: 700,
-    fontSize: '22px',
-    [breakpoints.down('xs')]: {
-      fontSize: '20px',
-    },
-  },
-  organization: {
-    fontSize: '14px',
-    verticalAlign: 'text-bottom',
-    color: palette.primary.midGray,
   },
 });
 
