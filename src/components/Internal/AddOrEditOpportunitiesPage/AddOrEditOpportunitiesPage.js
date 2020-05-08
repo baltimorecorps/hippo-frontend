@@ -9,7 +9,7 @@ import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 import EachOpportunity from '../../OpportunitiesPage/EachOpportunity';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
-import {sortOpportunitiesByProgramName} from '../../../lib/helperFunctions/helpers';
+import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
 
 const AddOrEditOpportunitiesPage = ({
   classes,
@@ -49,10 +49,10 @@ const AddOrEditOpportunitiesPage = ({
     }
   };
 
-  const sortedOpportunities = sortOpportunitiesByProgramName(opportunities, [
-    'Mayoral Fellowship',
-    'Place for Purpose',
-  ]);
+  const sortedOpportunities = sortAllOpportunitiesByCategory(
+    opportunities,
+    'org_name'
+  );
 
   return (
     <div className={classes.container}>

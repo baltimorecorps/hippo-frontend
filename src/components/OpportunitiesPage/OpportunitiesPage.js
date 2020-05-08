@@ -9,7 +9,10 @@ import {
   createClickTracking,
 } from 'lib/helperFunctions/helpers';
 import EachOpportunity from './EachOpportunity';
-import {sortOpportunitiesByProgramName} from '../../lib/helperFunctions/helpers';
+import {
+  sortAllOpportunitiesByCategory,
+  sortByCategory,
+} from '../../lib/helperFunctions/helpers';
 
 const OpportunitiesPage = ({
   classes,
@@ -64,24 +67,26 @@ const OpportunitiesPage = ({
   switch (page) {
     case 'Mayoral Fellowship':
       header = 'Mayoral Fellowship';
-      renderedOpportunities = opportunities.filter(
+      const MF_opportunities = opportunities.filter(
         opp => opp.program_name === 'Mayoral Fellowship'
       );
-
+      renderedOpportunities = sortByCategory(MF_opportunities, 'title');
       break;
+
     case 'Place for Purpose':
       header = 'Place for Purpose';
-      renderedOpportunities = opportunities.filter(
+      const PFP_opportunities = opportunities.filter(
         opp => opp.program_name === 'Place for Purpose'
       );
-
+      renderedOpportunities = sortByCategory(PFP_opportunities, 'title');
       break;
+
     default:
       header = 'All';
-      renderedOpportunities = sortOpportunitiesByProgramName(opportunities, [
-        'Mayoral Fellowship',
-        'Place for Purpose',
-      ]);
+      renderedOpportunities = sortAllOpportunitiesByCategory(
+        opportunities,
+        'title'
+      );
   }
 
   return (

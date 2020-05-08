@@ -22,7 +22,9 @@ const useForm = (initialValues, onSubmit, closeForm) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handleSubmit = () => {
-    values.program_name = 'Place for Purpose';
+    if (!values.program_name) {
+      values.program_name = 'Place for Purpose';
+    }
     onSubmit(values);
   };
 
