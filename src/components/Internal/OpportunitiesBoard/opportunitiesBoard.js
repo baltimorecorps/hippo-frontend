@@ -4,7 +4,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import RoleCards from './RoleCards';
-import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
+import PartnershipsNavBar from 'components/Internal/PartnershipsPage/PartnershipsNavBar';
+import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
 
 const InternalOpportunityBoard = ({
   classes,
@@ -14,6 +15,11 @@ const InternalOpportunityBoard = ({
   useEffect(() => {
     getAllInternalOpportunities();
   }, [getAllInternalOpportunities]);
+
+  const sortedOpportunities = sortAllOpportunitiesByCategory(
+    opportunities,
+    'org_name'
+  );
 
   if (!opportunities) {
     return <div>...Loading</div>;
@@ -32,7 +38,7 @@ const InternalOpportunityBoard = ({
           </Typography>
         </Paper>
         <div className={classes.cardContainer}>
-          {opportunities.map((opportunity, index) => (
+          {sortedOpportunities.map((opportunity, index) => (
             <RoleCards
               key={index}
               opportunity={opportunity}

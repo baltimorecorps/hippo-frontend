@@ -44,7 +44,7 @@ const EachOpportunity = ({
                 : classes.programName
             }
           >
-            {opportunity.program_name || 'Place for Purpose'}
+            {opportunity.program_name || ''}
           </Typography>
         </div>
       </div>
