@@ -6,6 +6,7 @@ import {createExternalLink} from 'lib/helperFunctions/helpers';
 import ApplicationStateAccordion from './ApplicationStateAccordion';
 import Link from '@material-ui/core/Link';
 import {useHistory} from 'react-router-dom';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 const RoleCards = ({
   classes,
@@ -56,7 +57,13 @@ const RoleCards = ({
 
   return (
     <Paper
-      className={page === 'employer' ? classes.employerPaper : classes.paper}
+      className={
+        page === 'employer'
+          ? classes.employerPaper
+          : opportunity.program_name === 'Mayoral Fellowship'
+          ? classes.mayoralContainer
+          : classes.paper
+      }
     >
       <div className={classes.headerContainer}>
         <div className={classes.titleAndOrgContainer}>
@@ -80,22 +87,34 @@ const RoleCards = ({
             </Typography>
           )}
         </div>
-
-        <Typography className={classes.link}>
+        <div className={classes.headerBottomContainer}>
           {createExternalLink(
-            'View full description',
+            <DescriptionIcon className={classes.gDocIcon} />,
             opportunity.gdoc_link,
-            classes.link
+            classes.gDocLink
           )}
-        </Typography>
-        <Link
-          component="button"
-          variant="body1"
-          onClick={() => toEmployerPage(opportunity.id)}
-          className={classes.employerLink}
-        >
-          {page === 'internal' && 'Employer View'}
-        </Link>
+          <div className={classes.employerViewAndProgramName}>
+            <Link
+              component="button"
+              variant="body1"
+              onClick={() => toEmployerPage(opportunity.id)}
+              className={classes.employerLink}
+            >
+              {page === 'internal' && 'Employer View'}
+            </Link>
+            <Typography
+              variant="h5"
+              component="p"
+              className={
+                opportunity.program_name === 'Mayoral Fellowship'
+                  ? classes.mayoral
+                  : classes.programName
+              }
+            >
+              {opportunity.program_name || ''}
+            </Typography>
+          </div>
+        </div>
       </div>
       {page === 'internal' && (
         <ApplicationStateAccordion
@@ -163,6 +182,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
     margin: spacing(0, 1, 2, 1),
     width: '360px',
   },
+  mayoralContainer: {
+    padding: spacing(2, 3, 3),
+    margin: spacing(0, 1, 2, 1),
+    width: '360px',
+    borderTop: '4px solid #ef4aff',
+    // backgroundColor: '#fffcf2',
+  },
   employerPaper: {
     flexGrow: 1,
 
@@ -198,12 +224,31 @@ const styles = ({breakpoints, palette, spacing}) => ({
       paddingBottom: spacing(1),
     },
   },
+  headerBottomContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  employerViewAndProgramName: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
   },
-  link: {
-    color: palette.primary.link,
+  gDocLink: {
+    marginRight: '8px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  gDocIcon: {
+    color: '#527aff',
+    fontSize: '25px',
   },
   employerLink: {
     color: '#000000',
@@ -229,6 +274,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: '0 5% 3px 0',
     textIndent: '25px',
     textAlign: 'justify',
+  },
+  programName: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: palette.primary.midGray,
+  },
+  mayoral: {
+    fontSize: '13px',
+    verticalAlign: 'text-bottom',
+    color: '#c200d4',
+    fontWeight: 'bold',
   },
 });
 
