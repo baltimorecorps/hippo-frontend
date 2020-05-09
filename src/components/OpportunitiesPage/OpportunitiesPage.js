@@ -63,6 +63,9 @@ const OpportunitiesPage = ({
 
   let header = '';
   let renderedOpportunities = [];
+  const noMayoralOpportunities = opportunities.filter(
+    opp => opp.program_name !== 'Mayoral Fellowship'
+  );
 
   switch (page) {
     case 'Mayoral Fellowship':
@@ -81,12 +84,29 @@ const OpportunitiesPage = ({
       renderedOpportunities = sortByCategory(PFP_opportunities, 'title');
       break;
 
-    default:
-      header = 'All';
+    case 'Fellowship':
+      header = 'Fellowship';
+      const fellowship_opportunities = opportunities.filter(
+        opp => opp.program_name === 'Place for Purpose'
+      );
+      renderedOpportunities = sortByCategory(fellowship_opportunities, 'title');
+      break;
+
+    case 'main':
+      header = '';
       renderedOpportunities = sortAllOpportunitiesByCategory(
-        opportunities,
+        noMayoralOpportunities,
         'title'
       );
+      break;
+
+    default:
+      header = '';
+      renderedOpportunities = sortAllOpportunitiesByCategory(
+        noMayoralOpportunities,
+        'title'
+      );
+      break;
   }
 
   return (

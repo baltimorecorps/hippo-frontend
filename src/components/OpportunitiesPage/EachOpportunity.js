@@ -201,7 +201,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   programName: {
     fontSize: '14px',
     verticalAlign: 'text-bottom',
-    color: palette.primary.midGray,
+    color: '#999999',
   },
   mayoral: {
     fontSize: '13px',
@@ -240,6 +240,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
+    textAlign: 'center',
+    [breakpoints.up('md')]: {
+      textAlign: 'left',
+    },
   },
 });
 

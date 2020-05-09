@@ -216,7 +216,7 @@ const App = ({
               <Route
                 exact
                 path="/opportunities/"
-                component={() => <OpportunitiesPage page="Place for Purpose" />}
+                component={() => <OpportunitiesPage page="main" />}
               />
               <Route
                 exact

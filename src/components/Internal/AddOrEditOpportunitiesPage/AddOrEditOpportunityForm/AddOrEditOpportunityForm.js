@@ -12,6 +12,10 @@ import {opportunityValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useForm = (initialValues, onSubmit, closeForm) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -85,6 +89,26 @@ const AddOrEditOpportunityForm = ({
 
       <form noValidate autoComplete="off">
         <Grid container direction="column">
+          <FormControl required className={classes.formControl}>
+            <InputLabel id="demo-simple-select-required-label">
+              Program Name
+            </InputLabel>
+            <Select
+              id="program_name"
+              name="program_name"
+              value={values.program_name || ''}
+              onChange={handleChange}
+              className={classes.textField}
+            >
+              <MenuItem value="Place for Purpose">Place for Purpose</MenuItem>
+              <MenuItem value="Mayoral Fellowship">Mayoral Fellowship</MenuItem>
+              <MenuItem value="Fellowship">Fellowship</MenuItem>
+            </Select>
+            <FormHelperText className={classes.formHelperText}>
+              {errors.orgName_error || null}
+            </FormHelperText>
+          </FormControl>
+
           <TextField
             required
             id="organization"
