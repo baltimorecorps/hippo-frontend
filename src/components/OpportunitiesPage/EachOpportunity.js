@@ -19,8 +19,22 @@ const EachOpportunity = ({
 }) => {
   const [showForm, setShowForm] = useState(false);
 
+  let highlightColor = null;
+  if (audience === 'internal') {
+    switch (opportunity.program_name) {
+      case 'Fellowship':
+        highlightColor = {borderTop: '4px solid #ffcc33'};
+        break;
+      case 'Mayoral Fellowship':
+        highlightColor = {borderTop: '4px solid #ef4aff'};
+        break;
+      default:
+        highlightColor = {borderTop: '4px solid #262626'};
+    }
+  }
+
   return !showForm ? (
-    <Paper className={classes.opportunityPaper}>
+    <Paper className={classes.opportunityPaper} style={highlightColor}>
       <div className={classes.oppHeaderContainer}>
         <div className={classes.titleAndOrg}>
           <Typography variant="h5" component="p" className={classes.title}>
@@ -38,11 +52,7 @@ const EachOpportunity = ({
           <Typography
             variant="h5"
             component="p"
-            className={
-              opportunity.program_name === 'Mayoral Fellowship'
-                ? classes.mayoral
-                : classes.programName
-            }
+            className={classes.programName}
           >
             {opportunity.program_name || ''}
           </Typography>
@@ -201,13 +211,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   programName: {
     fontSize: '14px',
     verticalAlign: 'text-bottom',
-    color: palette.primary.midGray,
-  },
-  mayoral: {
-    fontSize: '13px',
-    verticalAlign: 'text-bottom',
-    color: '#c200d4',
-    fontWeight: 'bold',
+    color: '#999999',
   },
   buttonContainer: {
     display: 'flex',
@@ -240,6 +244,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
+    textAlign: 'center',
+    [breakpoints.up('md')]: {
+      textAlign: 'left',
+    },
   },
 });
 
