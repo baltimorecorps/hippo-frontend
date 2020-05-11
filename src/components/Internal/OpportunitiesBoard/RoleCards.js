@@ -62,6 +62,8 @@ const RoleCards = ({
           ? classes.employerPaper
           : opportunity.program_name === 'Mayoral Fellowship'
           ? classes.mayoralContainer
+          : opportunity.program_name === 'Fellowship'
+          ? classes.fellowshipContainer
           : classes.paper
       }
     >
@@ -105,11 +107,7 @@ const RoleCards = ({
             <Typography
               variant="h5"
               component="p"
-              className={
-                opportunity.program_name === 'Mayoral Fellowship'
-                  ? classes.mayoral
-                  : classes.programName
-              }
+              className={classes.programName}
             >
               {opportunity.program_name || ''}
             </Typography>
@@ -181,13 +179,19 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(2, 3, 3),
     margin: spacing(0, 1, 2, 1),
     width: '360px',
+    borderTop: '4px solid #262626',
   },
   mayoralContainer: {
     padding: spacing(2, 3, 3),
     margin: spacing(0, 1, 2, 1),
     width: '360px',
     borderTop: '4px solid #ef4aff',
-    // backgroundColor: '#fffcf2',
+  },
+  fellowshipContainer: {
+    padding: spacing(2, 3, 3),
+    margin: spacing(0, 1, 2, 1),
+    width: '360px',
+    borderTop: '4px solid #ffcc33',
   },
   employerPaper: {
     flexGrow: 1,
@@ -279,12 +283,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
-  },
-  mayoral: {
-    fontSize: '13px',
-    verticalAlign: 'text-bottom',
-    color: '#c200d4',
-    fontWeight: 'bold',
   },
 });
 
