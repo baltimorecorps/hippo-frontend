@@ -50,10 +50,12 @@ const AddOrEditOpportunityForm = ({
       root: classes.labelRoot,
       focused: classes.labelFocused,
     },
-    shrink: true,
   };
 
-  const inputProps = {classes: {input: classes.resize}, autoComplete: 'off'};
+  const inputProps = {
+    classes: {input: classes.resize},
+    autoComplete: 'off',
+  };
 
   const submit = () => {
     const {isError, err} = opportunityValidator(values);
@@ -90,10 +92,15 @@ const AddOrEditOpportunityForm = ({
       <form noValidate autoComplete="off">
         <Grid container direction="column">
           <FormControl required className={classes.formControl}>
-            <InputLabel id="demo-simple-select-required-label">
+            <InputLabel
+              id="program_name_label"
+              InputLabelProps={inputLabelProps}
+              InputProps={inputProps}
+            >
               Program Name
             </InputLabel>
             <Select
+              required
               id="program_name"
               name="program_name"
               value={values.program_name || ''}
@@ -215,7 +222,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: 16,
   },
   labelRoot: {
-    fontSize: 18,
+    fontSize: 16,
   },
   labelFocused: {
     fontSize: 19,
