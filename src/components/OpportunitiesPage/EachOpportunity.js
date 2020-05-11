@@ -20,15 +20,17 @@ const EachOpportunity = ({
   const [showForm, setShowForm] = useState(false);
 
   let highlightColor = null;
-  switch (opportunity.program_name) {
-    case 'Fellowship':
-      highlightColor = {borderTop: '4px solid #ffcc33'};
-      break;
-    case 'Mayoral Fellowship':
-      highlightColor = {borderTop: '4px solid #ef4aff'};
-      break;
-    default:
-      highlightColor = {borderTop: '4px solid #262626'};
+  if (audience === 'internal') {
+    switch (opportunity.program_name) {
+      case 'Fellowship':
+        highlightColor = {borderTop: '4px solid #ffcc33'};
+        break;
+      case 'Mayoral Fellowship':
+        highlightColor = {borderTop: '4px solid #ef4aff'};
+        break;
+      default:
+        highlightColor = {borderTop: '4px solid #262626'};
+    }
   }
 
   return !showForm ? (
