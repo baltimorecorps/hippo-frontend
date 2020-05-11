@@ -70,12 +70,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     left: 0,
     width: '100%',
     backgroundColor: '#303030',
-    padding: '10px 0px',
+    height: '60px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     [breakpoints.up('sm')]: {
-      padding: '12px 0px',
+      height: '50px',
     },
   },
   footerLinksContainer: {
@@ -98,6 +98,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   terms: {
+    marginTop: '0',
     marginRight: '20px',
   },
 
@@ -105,8 +106,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       color: palette.primary.main,
     },
-    margin: '8px 8px 0px 8px',
-    marginLeft: 0,
+    marginRight: '8px',
     [breakpoints.up('sm')]: {
       marginLeft: spacing(2.5),
       margin: 'auto',
