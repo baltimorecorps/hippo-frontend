@@ -6,6 +6,7 @@ import terms from 'lib/pdf_files/services-terms.pdf';
 import policy from 'lib/pdf_files/privacy-policy.pdf';
 import Typography from '@material-ui/core/Typography';
 import {useRouteMatch} from 'react-router-dom';
+import Logo from './img/logo_square.png';
 
 const Footer = ({classes, page}) => {
   const termsLink = createALink('Terms', terms, classes.link);
@@ -20,9 +21,7 @@ const Footer = ({classes, page}) => {
   let candidateViewAppMatch = useRouteMatch(
     '/application/:opportunityId/review'
   );
-  let candidateInterestForm = useRouteMatch(
-    '/application/:opportunityId'
-  );
+  let candidateInterestForm = useRouteMatch('/application/:opportunityId');
   let candidateCustomizeResume = useRouteMatch(
     '/application/:opportunityId/resume'
   );
@@ -43,7 +42,14 @@ const Footer = ({classes, page}) => {
           variant="body2"
           className={classes.footerLinksContainer}
         >
-          <span className={classes.copyright}>&#169; 2020 Baltimore Corps</span>
+          <span className={classes.copyright}>
+            <img
+              src={Logo}
+              className={classes.logo}
+              alt="Baltimore Corps Logo"
+            />
+            &#169; 2020 Baltimore Corps
+          </span>
           <span className={classes.termsAndPolicy}>
             {termsLink} {policyLink}
           </span>
@@ -69,7 +75,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
     alignItems: 'center',
     [breakpoints.up('sm')]: {
-      padding: '15px 0px',
+      padding: '12px 0px',
     },
   },
   footerLinksContainer: {
@@ -108,6 +114,18 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   copyright: {
     color: '#bdbdbd',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    marginRight: '5px',
+    height: '24px',
+    width: '24px',
+    [breakpoints.up('sm')]: {
+      height: '30px',
+      width: '30px',
+    },
   },
   termsAndPolicy: {
     display: 'flex',
