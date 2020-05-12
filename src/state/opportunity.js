@@ -306,6 +306,45 @@ export const employerNotAFitApplication = (contactId, opportunityId) =>
       }
     )(dispatch);
   };
+// ---------------------------------------------------------------------------
+
+export const INTERNAL_DEACTIVATE_ROLE = 'INTERNAL_DEACTIVATE_ROLE';
+export const INTERNAL_DEACTIVATE_ROLE_API = fetchActionTypes(
+  INTERNAL_DEACTIVATE_ROLE
+);
+export const internalDeactivateRole = opportunityId =>
+  async function(dispatch) {
+    dispatch({
+      type: INTERNAL_DEACTIVATE_ROLE,
+    });
+
+    return await makeApiFetchActions(
+      INTERNAL_DEACTIVATE_ROLE,
+      `${API_URL}/api/opportunity/${opportunityId}/deactivate/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
+export const INTERNAL_ACTIVATE_ROLE = 'INTERNAL_ACTIVATE_ROLE';
+export const INTERNAL_ACTIVATE_ROLE_API = fetchActionTypes(
+  INTERNAL_ACTIVATE_ROLE
+);
+export const internalActivateRole = opportunityId =>
+  async function(dispatch) {
+    dispatch({
+      type: INTERNAL_ACTIVATE_ROLE,
+    });
+
+    return await makeApiFetchActions(
+      INTERNAL_ACTIVATE_ROLE,
+      `${API_URL}/api/opportunity/${opportunityId}/activate/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
 
 export const opportunitiesReducer = createReducer(
   {},
@@ -335,6 +374,14 @@ export const opportunitiesReducer = createReducer(
       return newState;
     },
     [GET_ORG_OPPORTUNITY_API.RESOLVE]: (state, action) => {
+      const opportunity = action.body.data;
+      state[opportunity.id] = opportunity;
+    },
+    [INTERNAL_ACTIVATE_ROLE_API.RESOLVE]: (state, action) => {
+      const opportunity = action.body.data;
+      state[opportunity.id] = opportunity;
+    },
+    [INTERNAL_DEACTIVATE_ROLE_API.RESOLVE]: (state, action) => {
       const opportunity = action.body.data;
       state[opportunity.id] = opportunity;
     },

@@ -4,6 +4,8 @@ import {
   getAllOpportunities,
   addOpportunity,
   updateOpportunity,
+  internalDeactivateRole,
+  internalActivateRole,
 } from 'state/opportunity';
 
 const mapStateToProps = state => {
@@ -16,6 +18,9 @@ const mapDispatchToProps = dispatch => ({
   addOpportunity: opportunity => addOpportunity(opportunity)(dispatch),
   updateOpportunity: (opportunity, opportunityId) =>
     updateOpportunity(opportunity, opportunityId)(dispatch),
+  deactivateRole: opportunityId =>
+    internalDeactivateRole(opportunityId)(dispatch),
+  activateRole: opportunityId => internalActivateRole(opportunityId)(dispatch),
 });
 
 export default connect(
