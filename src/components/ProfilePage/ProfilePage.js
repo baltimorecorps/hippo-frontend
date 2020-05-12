@@ -25,6 +25,10 @@ import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
 import {sumScores} from 'lib/helperFunctions/scoreAchievements';
 
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+
 import CAPABILITIES from './capabilities.yml';
 
 // Scroll only works consistently if it happens after any renders that might be
@@ -79,6 +83,7 @@ const ProfilePage = ({
   const [sidebarType, setSidebarType] = useState('work');
   const [loading, setLoading] = useState(false);
   const [editScores, setEditScores] = useState({});
+  const [viewResume, setViewResume] = useState(false);
 
   const updateEditScore = useCallback(
     expId => scores => {
@@ -200,6 +205,10 @@ const ProfilePage = ({
     wrapperClass = classes.wrapperSmall;
   }
 
+  const handleChange = event => {
+    setViewResume(event.target.checked);
+  };
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -256,6 +265,21 @@ const ProfilePage = ({
             <Grid item xs={12} sm={11}>
               <Grid container justify="center">
                 <Grid item xs={12} md={8} lg={6}>
+                  <FormGroup row>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={viewResume}
+                          onChange={handleChange}
+                          name="preview"
+                          color="secondary"
+                        />
+                      }
+                      label="Preview Resume"
+                    />
+                  </FormGroup>
+                  {viewResume && <p>Resume Displays!!!</p>}
+
                   <Paper className={classes.instructions}>
                     <div className={classes.headerContainer}>
                       <Typography
