@@ -308,7 +308,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   inactive: {
     fontSize: '16px',
-    color: '#999999',
+    color: '#555555',
     fontWeight: 'normal',
   },
   programName: {
