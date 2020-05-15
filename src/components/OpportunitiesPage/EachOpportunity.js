@@ -26,22 +26,23 @@ const EachOpportunity = ({
 }) => {
   const [showForm, setShowForm] = useState(false);
 
-  let highlightColor = null;
+  let highlightColor = {};
   if (opportunity.is_active === false) {
     highlightColor = {
-      border: '8px solid #f5f5f5',
-      backgroundColor: '#dbdbdb',
+      backgroundColor: '#d2d2d6',
     };
-  } else if (audience === 'internal') {
+  }
+  if (audience === 'internal') {
     switch (opportunity.program_name) {
       case 'Fellowship':
-        highlightColor = {borderTop: '4px solid #ffcc33'};
+        highlightColor['borderTop'] = '4px solid #ffcc33';
         break;
       case 'Mayoral Fellowship':
-        highlightColor = {borderTop: '4px solid #ef4aff'};
+        highlightColor['borderTop'] = '4px solid #ef4aff';
+
         break;
       default:
-        highlightColor = {borderTop: '4px solid #262626'};
+        highlightColor['borderTop'] = '4px solid #262626';
     }
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -83,11 +84,13 @@ const EachOpportunity = ({
         <div className={classes.titleAndOrg}>
           <Typography variant="h5" component="p" className={classes.title}>
             {opportunity.title}{' '}
-            {opportunity.is_active ? (
-              <span className={classes.active}>(Active)</span>
-            ) : (
-              <span className={classes.inactive}>(Inactive)</span>
-            )}
+            {audience === 'internal' ? (
+              opportunity.is_active ? (
+                <span className={classes.active}>(Active)</span>
+              ) : (
+                <span className={classes.inactive}>(Inactive)</span>
+              )
+            ) : null}
           </Typography>
           <Typography
             variant="h5"

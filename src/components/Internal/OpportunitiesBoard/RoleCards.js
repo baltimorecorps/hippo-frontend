@@ -90,11 +90,9 @@ const RoleCards = ({
           )}
         </div>
         <div className={classes.headerBottomContainer}>
-          {createExternalLink(
-            <DescriptionIcon className={classes.gDocIcon} />,
-            opportunity.gdoc_link,
-            classes.gDocLink
-          )}
+          <a href={opportunity.gdoc_link} className={classes.gDocLink}>
+            <DescriptionIcon className={classes.gDocIcon} />
+          </a>
           <div className={classes.employerViewAndProgramName}>
             <Link
               component="button"
