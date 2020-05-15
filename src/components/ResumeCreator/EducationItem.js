@@ -4,7 +4,9 @@ import DragWrapper from './DragWrapper';
 import ResumeSection from './ResumeSection';
 
 const formatDate = experience => {
-  return `${experience.start_month.slice(0, 3)} ${experience.start_year}`;
+  let result = `${experience.end_month.slice(0, 3)} ${experience.end_year}`;
+  if (experience.end_year === 0) result = 'Present';
+  return result;
 };
 
 const EducationItem = ({
