@@ -27,8 +27,11 @@ const EachOpportunity = ({
   const [showForm, setShowForm] = useState(false);
 
   let highlightColor = null;
-  if (!opportunity.is_active) {
-    highlightColor = {borderTop: '4px solid grey'};
+  if (opportunity.is_active === false) {
+    highlightColor = {
+      border: '8px solid #f5f5f5',
+      backgroundColor: '#dbdbdb',
+    };
   } else if (audience === 'internal') {
     switch (opportunity.program_name) {
       case 'Fellowship':
@@ -43,10 +46,9 @@ const EachOpportunity = ({
   }
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const [isActivated, setIsActivated] = useState(opportunity.is_active);
 
   const options = [];
-  if (isActivated) {
+  if (opportunity.is_active) {
     options[0] = 'Deactivate';
   } else {
     options[0] = 'Activate';
@@ -71,7 +73,6 @@ const EachOpportunity = ({
     }
 
     if (response.statusCode == 200) {
-      setIsActivated(!isActivated);
       setAnchorEl(null);
     }
   };
@@ -81,7 +82,12 @@ const EachOpportunity = ({
       <div className={classes.oppHeaderContainer}>
         <div className={classes.titleAndOrg}>
           <Typography variant="h5" component="p" className={classes.title}>
-            {opportunity.title}
+            {opportunity.title}{' '}
+            {opportunity.is_active ? (
+              <span className={classes.active}>(Active)</span>
+            ) : (
+              <span className={classes.inactive}>(Inactive)</span>
+            )}
           </Typography>
           <Typography
             variant="h5"
@@ -106,6 +112,7 @@ const EachOpportunity = ({
                 aria-controls="long-menu"
                 aria-haspopup="true"
                 onClick={handleClickMore}
+                className={classes.moreIconContainer}
               >
                 <MoreVertIcon className={classes.moreIcon} />
               </IconButton>
@@ -294,6 +301,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  active: {
+    fontSize: '16px',
+    color: '#0ac70c',
+    fontWeight: 'normal',
+  },
+  inactive: {
+    fontSize: '16px',
+    color: '#999999',
+    fontWeight: 'normal',
+  },
   programName: {
     fontSize: '14px',
     verticalAlign: 'text-bottom',
@@ -301,6 +318,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   moreIcon: {
     cursor: 'pointer',
+    padding: '0',
+  },
+  moreIconContainer: {
+    cursor: 'pointer',
+    padding: '3px 0px',
+    marginLeft: '5px',
+    borderRadius: '3px',
   },
   buttonContainer: {
     display: 'flex',
