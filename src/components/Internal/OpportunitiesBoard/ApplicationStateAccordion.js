@@ -28,6 +28,7 @@ const ApplicationStateAccordion = ({
   opportunityId,
   contactId,
   page,
+  isActive,
 }) => {
   let history = useHistory();
 
@@ -73,6 +74,15 @@ const ApplicationStateAccordion = ({
 
   const totalApps = applications.length || 0;
 
+  let highlightHead = '';
+  if (totalApps > 0) {
+    if (header === 'Not a Fit') highlightHead = classes.notAFitHighlightHead;
+    else highlightHead = classes.highlightHead;
+  }
+
+  if (page === 'internal' && isActive === false)
+    highlightHead = `${classes.inactive} ${highlightHead}`;
+
   return (
     <ExpansionPanel
       expanded={expanded === panelName}
@@ -83,11 +93,12 @@ const ApplicationStateAccordion = ({
         aria-controls={`${panelName}-content`}
         id={`${panelName}-header`}
         className={
-          totalApps > 0
-            ? header === 'Not a Fit'
-              ? classes.notAFitHighLightHead
-              : classes.highLightHead
-            : null
+          // totalApps > 0
+          //   ? header === 'Not a Fit'
+          //     ? classes.notAFitHighLightHead
+          //     : classes.highLightHead
+          //   : null
+          highlightHead
         }
       >
         {icon}
@@ -262,14 +273,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '16px',
     marginLeft: '10px',
   },
+  inactive: {
+    backgroundColor: '#d2d2d6',
+  },
 
-  highLightHead: {
+  highlightHead: {
     backgroundColor: '#e0eaff',
   },
   highLightBody: {
     backgroundColor: '#f2f7ff',
   },
-  notAFitHighLightHead: {
+  notAFitHighlightHead: {
     backgroundColor: '#ebebeb',
   },
   notAFitHighLightBody: {
