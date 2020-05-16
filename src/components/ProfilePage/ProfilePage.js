@@ -267,7 +267,7 @@ const ProfilePage = ({
             <Grid item xs={12} sm={11}>
               <Grid container justify="center">
                 <Grid item xs={12} md={8} lg={6}>
-                  <FormGroup row>
+                  <FormGroup row className={classes.previewResumeSwitch}>
                     <FormControlLabel
                       control={
                         <Switch
@@ -520,7 +520,7 @@ const ResumeDialog = withStyles(dialogStyles)(
                 <Grid item xs={6} className={classes.resumeContainer}>
                   <img
                     src="/images/resume.svg"
-                    alt="picture of a resume"
+                    alt="a resume"
                     className={classes.resume}
                   />
                 </Grid>
@@ -709,6 +709,11 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   },
   resumeButton: {
     marginTop: spacing(5),
+  },
+  previewResumeSwitch: {
+    position: 'fixed',
+    top: '100px',
+    right: '40px',
   },
 });
 

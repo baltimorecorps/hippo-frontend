@@ -174,6 +174,12 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
       left: '32%',
     },
   },
+
+  profilePrintButton: {
+    position: 'fixed',
+    top: '150px',
+    right: '70px',
+  },
 }));
 
 const PageLayout = ({
@@ -573,6 +579,8 @@ const ResumeCreator = ({
                 className={
                   page && page === 'staff'
                     ? classes.staffPrintButton
+                    : page && page === 'profile'
+                    ? classes.profilePrintButton
                     : classes.printButton
                 }
                 onClick={onClickPrintResume}
