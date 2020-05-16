@@ -93,7 +93,6 @@ const AddOrEditOpportunitiesPage = ({
       break;
   }
 
-  console.log(theOpportunities);
   if (theOpportunities.length === 0) return <div>loading...</div>;
 
   return (
@@ -350,13 +349,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     backgroundColor: palette.secondary.main,
     color: '#ffffff',
     fontWeight: 'bold',
-  },
-  overrides: {
-    MuiTabsFlexContainer: {
-      root: {
-        fontSize: '90px',
-      },
-    },
   },
 });
 
