@@ -465,13 +465,14 @@ const ResumeCreator = ({
   }
 
   if (
-    selected === null
-    // commented out to stop adding new experience/skills/education/portfolio to selected list of each section
-    // Object.keys(selected).length <
-    //   sections.experience.length +
-    //     sections.education.length +
-    //     sections.portfolio.length +
-    //     sections.capabilities.length
+    // if has some selected, stop adding new experience/skills/education/portfolio to selected list of each section
+    (page !== 'profile' && selected === null) ||
+    (page === 'profile' &&
+      Object.keys(selected).length <
+        sections.experience.length +
+          sections.education.length +
+          sections.portfolio.length +
+          sections.capabilities.length)
   ) {
     let newSelected = {};
     Object.entries(sections).forEach(([key, section]) => {

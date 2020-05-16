@@ -28,6 +28,7 @@ import {sumScores} from 'lib/helperFunctions/scoreAchievements';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import {ResumeViewer} from 'components/ResumeCreator';
 
 import CAPABILITIES from './capabilities.yml';
 
@@ -60,7 +61,7 @@ const ProfilePage = ({
   contactId,
   contactInfo,
   programs,
-  resume,
+  myResume,
   getContact,
   startResumeCreation,
   startResumeSelect,
@@ -84,6 +85,7 @@ const ProfilePage = ({
   const [loading, setLoading] = useState(false);
   const [editScores, setEditScores] = useState({});
   const [viewResume, setViewResume] = useState(false);
+  const [resume, setResume] = useState((myResume: null));
 
   const updateEditScore = useCallback(
     expId => scores => {
@@ -141,7 +143,7 @@ const ProfilePage = ({
     const resumeName = `${contactInfo.first_name}_${
       contactInfo.last_name
     }_${new Date().getTime()}`;
-    const response = await generateResume(contactId, resumeName, resume);
+    const response = await generateResume(contactId, resumeName, myResume);
     setResumeLink(`/resume/${response.body.data.gdoc_id}`);
   };
 
@@ -278,7 +280,16 @@ const ProfilePage = ({
                       label="Preview Resume"
                     />
                   </FormGroup>
-                  {viewResume && <p>Resume Displays!!!</p>}
+                  {viewResume && (
+                    <ResumeViewer
+                      contactId={contactId}
+                      resume={resume}
+                      setResume={setResume}
+                      viewOnly={true}
+                      selected={null}
+                      page="profile"
+                    />
+                  )}
 
                   <Paper className={classes.instructions}>
                     <div className={classes.headerContainer}>
