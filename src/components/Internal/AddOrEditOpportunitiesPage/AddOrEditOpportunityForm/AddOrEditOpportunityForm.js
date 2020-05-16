@@ -205,6 +205,28 @@ AddOrEditOpportunityForm.propTypes = {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
+  paper: {
+    flexGrow: 1,
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '100%',
+    padding: spacing(2, 3, 3),
+    marginBottom: spacing(2),
+    marginTop: spacing(2),
+  },
+  paperHeader: {
+    margin: spacing(0, 0, 2),
+  },
   header: {
     padding: spacing(2, 3, 0),
   },
@@ -232,27 +254,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: '2px',
     marginBottom: '4px',
   },
-  paper: {
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '100%',
-    padding: spacing(2, 3, 3),
-    marginBottom: spacing(2),
-  },
-  paperHeader: {
-    margin: spacing(0, 0, 2),
-  },
+
   createButton: {
     fontWeight: 600,
     margin: spacing(2, 0, 0, 0),

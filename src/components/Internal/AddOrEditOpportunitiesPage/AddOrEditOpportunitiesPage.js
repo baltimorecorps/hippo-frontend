@@ -10,6 +10,8 @@ import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 import EachOpportunity from '../../OpportunitiesPage/EachOpportunity';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const AddOrEditOpportunitiesPage = ({
   classes,
@@ -19,6 +21,9 @@ const AddOrEditOpportunitiesPage = ({
   updateOpportunity,
   deactivateRole,
   activateRole,
+  fellowshipOpps,
+  mayoralOpps,
+  placeForPurposeOpps,
 }) => {
   let history = useHistory();
 
@@ -56,6 +61,41 @@ const AddOrEditOpportunitiesPage = ({
     'org_name'
   );
 
+  let theOpportunities = [];
+
+  const [value, setValue] = React.useState(1);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  switch (value) {
+    case 0:
+      theOpportunities = sortedOpportunities;
+      break;
+    case 1:
+      theOpportunities = sortAllOpportunitiesByCategory(
+        fellowshipOpps,
+        'title'
+      );
+      break;
+    case 2:
+      theOpportunities = sortAllOpportunitiesByCategory(mayoralOpps, 'title');
+      break;
+    case 3:
+      theOpportunities = sortAllOpportunitiesByCategory(
+        placeForPurposeOpps,
+        'title'
+      );
+      break;
+    default:
+      theOpportunities = sortedOpportunities;
+      break;
+  }
+
+  console.log(theOpportunities);
+  if (theOpportunities.length === 0) return <div>loading...</div>;
+
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
@@ -69,25 +109,48 @@ const AddOrEditOpportunitiesPage = ({
           Add or Edit Opportunities
         </Typography>
       </Paper>
-      {showForm ? (
-        <AddOrEditOpportunityForm
-          type="add"
-          opportunity={blankOpportunity}
-          onSubmit={addNewOpportunity}
-          closeForm={() => setShowForm(false)}
-        />
-      ) : (
-        <Grid className={classes.buttonContainer}>
-          <Button
-            onClick={() => setShowForm(true)}
-            variant="contained"
-            color="primary"
+
+      <div
+        className={classes.filterAndFormContainer}
+        style={showForm ? {flexDirection: 'column'} : null}
+      >
+        <Paper square className={classes.tabsContainer}>
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={handleChange}
+            aria-label="disabled tabs example"
+            className={classes.tabs}
           >
-            Add New Opportunity
-          </Button>
-        </Grid>
-      )}
-      {sortedOpportunities.map((opportunity, index) => (
+            <Tab label="All" className={classes.tab} />
+            <Tab label="Fellowship" className={classes.tab} />
+            <Tab label="Mayoral Fellowship" className={classes.tab} />
+            <Tab label="Place for Purpose" className={classes.tab} />
+          </Tabs>
+        </Paper>
+        {showForm ? (
+          <AddOrEditOpportunityForm
+            type="add"
+            opportunity={blankOpportunity}
+            onSubmit={addNewOpportunity}
+            closeForm={() => setShowForm(false)}
+          />
+        ) : (
+          <Grid className={classes.buttonContainer}>
+            <Button
+              onClick={() => setShowForm(true)}
+              variant="contained"
+              color="primary"
+              className={classes.addNewOppButton}
+            >
+              + Add New Opportunity
+            </Button>
+          </Grid>
+        )}
+      </div>
+
+      {theOpportunities.map((opportunity, index) => (
         <EachOpportunity
           key={index}
           opportunity={opportunity}
@@ -207,7 +270,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: spacing(2),
+  },
+  addNewOppButton: {
+    padding: '11px',
   },
   link: {
     color: palette.primary.link,
@@ -243,6 +308,55 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
+  },
+  filterAndFormContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginBottom: spacing(2),
+    flexGrow: 1,
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up(1340)]: {
+      flexDirection: 'row',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '100%',
+  },
+  tabsContainer: {
+    marginRight: '10px',
+    marginBottom: '10px',
+
+    [breakpoints.up(1340)]: {
+      marginBottom: '0px',
+    },
+  },
+  tabs: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  tab: {
+    backgroundColor: palette.secondary.main,
+    color: '#ffffff',
+    fontWeight: 'bold',
+  },
+  overrides: {
+    MuiTabsFlexContainer: {
+      root: {
+        fontSize: '90px',
+      },
+    },
   },
 });
 
