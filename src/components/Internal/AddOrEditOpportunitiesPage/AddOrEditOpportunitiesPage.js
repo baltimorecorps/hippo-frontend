@@ -17,6 +17,8 @@ const AddOrEditOpportunitiesPage = ({
   getAllOpportunities,
   addOpportunity,
   updateOpportunity,
+  deactivateRole,
+  activateRole,
 }) => {
   let history = useHistory();
 
@@ -92,6 +94,8 @@ const AddOrEditOpportunitiesPage = ({
           updateOpportunity={updateOpportunity}
           audience="internal"
           updateExistingOpportunity={updateExistingOpportunity}
+          deactivateRole={deactivateRole}
+          activateRole={activateRole}
         />
       ))}
     </div>
