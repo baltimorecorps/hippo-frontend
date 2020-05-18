@@ -274,7 +274,7 @@ const ProfilePage = ({
                           checked={viewResume}
                           onChange={handleChange}
                           name="preview"
-                          color="secondary"
+                          color="primary"
                         />
                       }
                       label="Preview Resume"
