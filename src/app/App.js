@@ -24,7 +24,7 @@ import Home from 'components/Home/Home';
 import Contacts from 'components/Contacts/Contacts.container';
 import ResumeView from 'components/Resume/ResumeView';
 
-import OpportunitiesPage from 'components/OpportunitiesPage';
+import CandidateOpportunitiesPage from 'components/CandidateOpportunitiesPage';
 import InternalOpportunitiesPage from 'components/Internal/AddOrEditOpportunitiesPage';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
@@ -216,13 +216,13 @@ const App = ({
               <Route
                 exact
                 path="/opportunities/"
-                component={() => <OpportunitiesPage page="main" />}
+                component={() => <CandidateOpportunitiesPage page="main" />}
               />
               <Route
                 exact
                 path="/opportunities/mayoral-fellowship"
                 component={() => (
-                  <OpportunitiesPage page="Mayoral Fellowship" />
+                  <CandidateOpportunitiesPage page="Mayoral Fellowship" />
                 )}
               />
               <Route

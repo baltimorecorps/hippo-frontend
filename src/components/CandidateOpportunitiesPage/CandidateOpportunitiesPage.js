@@ -14,7 +14,7 @@ import {
   sortByCategory,
 } from '../../lib/helperFunctions/helpers';
 
-const OpportunitiesPage = ({
+const CandidateOpportunitiesPage = ({
   classes,
   opportunities,
   getAllOpportunities,
@@ -172,4 +172,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(OpportunitiesPage);
+export default withStyles(styles)(CandidateOpportunitiesPage);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import OpportunitiesPage from './OpportunitiesPage';
+import CandidateOpportunitiesPage from './CandidateOpportunitiesPage';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
@@ -43,7 +43,7 @@ describe('Opportunities Page', () => {
   test('Page render correctly', () => {
     const {getAllByTestId, getByTestId, getByText, getAllByText} = render(
       <Router history={history}>
-        <OpportunitiesPage
+        <CandidateOpportunitiesPage
           opportunities={opportunityArray}
           getAllOpportunities={mockFunction}
           getAllApplications={mockFunction}
@@ -83,7 +83,7 @@ describe('Opportunities Page', () => {
   test('Click View Application button on an opportunity', () => {
     const {getByTestId} = render(
       <Router history={history}>
-        <OpportunitiesPage
+        <CandidateOpportunitiesPage
           opportunities={opportunityArray}
           getAllOpportunities={mockFunction}
           getAllApplications={mockFunction}
@@ -101,7 +101,7 @@ describe('Opportunities Page', () => {
   test('Click Apply button on an opportunity', () => {
     const {getByTestId} = render(
       <Router history={history}>
-        <OpportunitiesPage
+        <CandidateOpportunitiesPage
           opportunities={opportunityArray}
           getAllOpportunities={mockFunction}
           getAllApplications={mockFunction}

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
-import EachOpportunity from '../../OpportunitiesPage/EachOpportunity';
+import EachOpportunity from '../../CandidateOpportunitiesPage/EachOpportunity';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
 import Tabs from '@material-ui/core/Tabs';
