@@ -82,7 +82,12 @@ const EachOpportunity = ({
     <Paper className={classes.opportunityPaper} style={highlightColor}>
       <div className={classes.oppHeaderContainer}>
         <div className={classes.titleAndOrg}>
-          <Typography variant="h5" component="p" className={classes.title}>
+          <Typography
+            variant="h5"
+            component="p"
+            className={classes.title}
+            data-testid="title"
+          >
             {opportunity.title}{' '}
             {audience === 'internal' ? (
               opportunity.is_active ? (
@@ -96,6 +101,7 @@ const EachOpportunity = ({
             variant="h5"
             component="p"
             className={classes.organization}
+            data-testid="org-name"
           >
             {opportunity.org_name || ''}
           </Typography>
@@ -105,6 +111,7 @@ const EachOpportunity = ({
             variant="h5"
             component="p"
             className={classes.programName}
+            data-testid="program-name"
           >
             {opportunity.program_name || ''}
           </Typography>
@@ -172,6 +179,7 @@ const EachOpportunity = ({
                         variant="contained"
                         color="primary"
                         key={index}
+                        data-testid="view-app-btn"
                       >
                         View Application
                       </Button>
@@ -181,6 +189,7 @@ const EachOpportunity = ({
                         variant="contained"
                         color="primary"
                         key={index}
+                        data-testid="apply-btn"
                       >
                         Apply
                       </Button>
