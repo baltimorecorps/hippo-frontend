@@ -117,6 +117,7 @@ const OpportunitiesPage = ({
           variant="h5"
           align="left"
           className={classes.header}
+          data-testid="page-header"
         >
           {`${header} Opportunities`}
         </Typography>

@@ -79,7 +79,11 @@ const EachOpportunity = ({
   };
 
   return !showForm ? (
-    <Paper className={classes.opportunityPaper} style={highlightColor}>
+    <Paper
+      className={classes.opportunityPaper}
+      style={highlightColor}
+      data-testid="opportunity"
+    >
       <div className={classes.oppHeaderContainer}>
         <div className={classes.titleAndOrg}>
           <Typography
