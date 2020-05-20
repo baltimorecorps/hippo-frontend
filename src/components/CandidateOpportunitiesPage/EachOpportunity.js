@@ -159,7 +159,7 @@ const EachOpportunity = ({
       </div>
       <div className={classes.opportunityContent}>
         <div className={classes.opportunityDescription}>
-          <Typography className={classes.description}>
+          <Typography className={classes.description} data-testid="description">
             {opportunity.short_description}
             <br />
           </Typography>
