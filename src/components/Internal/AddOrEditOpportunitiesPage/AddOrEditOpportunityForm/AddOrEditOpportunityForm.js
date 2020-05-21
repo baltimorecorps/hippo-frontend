@@ -68,6 +68,8 @@ const AddOrEditOpportunityForm = ({
     }
   };
 
+  const programs = ['Place for Purpose', 'Fellowship', 'Mayoral Fellowship'];
+
   return (
     <Paper className={classes.paper}>
       <Grid container justify="space-between">
@@ -95,7 +97,7 @@ const AddOrEditOpportunityForm = ({
             <InputLabel
               id="program_name_label"
               InputLabelProps={inputLabelProps}
-              InputProps={inputProps}
+              Inputprops={inputProps}
             >
               Program Name
             </InputLabel>
@@ -106,10 +108,15 @@ const AddOrEditOpportunityForm = ({
               value={values.program_name || ''}
               onChange={handleChange}
               className={classes.textField}
+              inputProps={{
+                'data-testid': 'program-name',
+              }}
             >
-              <MenuItem value="Place for Purpose">Place for Purpose</MenuItem>
-              <MenuItem value="Mayoral Fellowship">Mayoral Fellowship</MenuItem>
-              <MenuItem value="Fellowship">Fellowship</MenuItem>
+              {programs.map(program => (
+                <MenuItem data-testid={program} value={program}>
+                  {program}
+                </MenuItem>
+              ))}
             </Select>
             <FormHelperText className={classes.formHelperText}>
               {errors.orgName_error || null}
@@ -169,7 +176,12 @@ const AddOrEditOpportunityForm = ({
             onChange={handleChange}
             className={classes.textField}
             InputLabelProps={inputLabelProps}
-            InputProps={inputProps}
+            // InputProps={inputProps}
+            inputProps={{
+              classes: {input: classes.resize},
+              autoComplete: 'off',
+              'data-testid': 'gdoc-link',
+            }}
           />
           <FormHelperText className={classes.formHelperText}>
             {errors.link_error || null}
@@ -182,6 +194,10 @@ const AddOrEditOpportunityForm = ({
           variant="contained"
           color="primary"
           className={classes.createButton}
+          inputProps={{
+            'data-testid': 'submit-button',
+          }}
+          data-testid="submit-button"
         >
           {type === 'add' ? 'Add New Opportunity' : 'Update'}
         </Button>

@@ -153,7 +153,6 @@ const AddOrEditOpportunitiesPage = ({
         <EachOpportunity
           key={index}
           opportunity={opportunity}
-          updateOpportunity={updateOpportunity}
           audience="internal"
           updateExistingOpportunity={updateExistingOpportunity}
           deactivateRole={deactivateRole}
