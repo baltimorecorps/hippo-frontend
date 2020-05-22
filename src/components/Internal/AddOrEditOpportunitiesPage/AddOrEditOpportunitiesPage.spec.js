@@ -326,4 +326,54 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
     fireEvent.click(filterAllPrograms);
     expect(getAllByTestId('opportunity').length).toBe(4);
   });
+
+  test('Sorting Opportunities', () => {
+    const history = createMemoryHistory();
+    const addOpp = jest.fn();
+    const updateOpp = jest.fn();
+    const {getByTestId, getAllByTestId} = render(
+      <Router history={history}>
+        <AddOrEditOpportunitiesPage
+          opportunities={opportunitiesArray}
+          getAllOpportunities={jest.fn()}
+          addOpportunity={addOpp}
+          updateOpportunity={updateOpp}
+          deactivateRole={jest.fn()}
+          activateRole={jest.fn()}
+          fellowshipOpps={fellowshipOpps}
+          mayoralOpps={mayoralOpps}
+          placeForPurposeOpps={placeForPurposeOpps}
+        />
+      </Router>
+    );
+
+    // default only show opportunities from fellowship program
+    expect(getAllByTestId('opportunity').length).toBe(1);
+
+    const filterAllPrograms = getByTestId('filter-all');
+
+    // Filter all opportunities in all program
+    fireEvent.click(filterAllPrograms);
+    expect(getAllByTestId('opportunity').length).toBe(4);
+
+    const titles = getAllByTestId('title');
+    const orgNames = getAllByTestId('org-name');
+    const isActives = getAllByTestId('is-active');
+
+    expect(titles[0]).toHaveTextContent('FS Title');
+    expect(orgNames[0]).toHaveTextContent('FS Org');
+    expect(isActives[0]).toHaveTextContent('Active');
+
+    expect(titles[1]).toHaveTextContent('MF Title');
+    expect(orgNames[1]).toHaveTextContent('MF Org');
+    expect(isActives[1]).toHaveTextContent('Active');
+
+    expect(titles[2]).toHaveTextContent('PFP Title 1');
+    expect(orgNames[2]).toHaveTextContent('PFP Org 1');
+    expect(isActives[2]).toHaveTextContent('Active');
+
+    expect(titles[3]).toHaveTextContent('PFP Title 2');
+    expect(orgNames[3]).toHaveTextContent('PFP Org 2');
+    expect(isActives[3]).toHaveTextContent('Inactive');
+  });
 });
