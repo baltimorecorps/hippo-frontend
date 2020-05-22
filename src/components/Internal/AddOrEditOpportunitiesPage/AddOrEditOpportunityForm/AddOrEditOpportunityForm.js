@@ -78,6 +78,7 @@ const AddOrEditOpportunityForm = ({
           variant="h5"
           align="left"
           className={classes.paperHeader}
+          data-testid="form-header"
         >
           {type === 'add' ? 'Add New Opportunity' : 'Update Opportunity'}
         </Typography>
@@ -109,7 +110,7 @@ const AddOrEditOpportunityForm = ({
               onChange={handleChange}
               className={classes.textField}
               inputProps={{
-                'data-testid': 'program-name',
+                'data-testid': 'form-program-name',
               }}
             >
               {programs.map(program => (
@@ -120,7 +121,7 @@ const AddOrEditOpportunityForm = ({
             </Select>
             <FormHelperText
               className={classes.formHelperText}
-              data-testid="warning"
+              data-testid="form-warning"
             >
               {errors.orgName_error || null}
             </FormHelperText>
@@ -139,7 +140,7 @@ const AddOrEditOpportunityForm = ({
           />
           <FormHelperText
             className={classes.formHelperText}
-            data-testid="warning"
+            data-testid="form-warning"
           >
             {errors.orgName_error || null}
           </FormHelperText>
@@ -156,7 +157,7 @@ const AddOrEditOpportunityForm = ({
           />
           <FormHelperText
             className={classes.formHelperText}
-            data-testid="warning"
+            data-testid="form-warning"
           >
             {errors.title_error || null}
           </FormHelperText>
@@ -175,7 +176,7 @@ const AddOrEditOpportunityForm = ({
           />
           <FormHelperText
             className={classes.formHelperText}
-            data-testid="warning"
+            data-testid="form-warning"
           >
             {errors.shortDescription_error || null}
           </FormHelperText>
@@ -192,12 +193,12 @@ const AddOrEditOpportunityForm = ({
             inputProps={{
               classes: {input: classes.resize},
               autoComplete: 'off',
-              'data-testid': 'gdoc-link',
+              'data-testid': 'form-gdoc-link',
             }}
           />
           <FormHelperText
             className={classes.formHelperText}
-            data-testid="warning"
+            data-testid="form-warning"
           >
             {errors.link_error || null}
           </FormHelperText>
@@ -209,10 +210,10 @@ const AddOrEditOpportunityForm = ({
           variant="contained"
           color="primary"
           className={classes.createButton}
-          inputProps={{
-            'data-testid': 'submit-button',
-          }}
-          data-testid="submit-button"
+          // inputProps={{
+          //   'data-testid': 'form-submit-button',
+          // }}
+          data-testid="form-submit-button"
         >
           {type === 'add' ? 'Add New Opportunity' : 'Update'}
         </Button>

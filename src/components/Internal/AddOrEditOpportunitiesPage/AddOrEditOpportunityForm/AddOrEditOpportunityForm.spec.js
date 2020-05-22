@@ -11,14 +11,6 @@ afterEach(() => {
   cleanup();
 });
 
-const opportunityValid = {
-  id: '1a',
-  org_name: 'Test Org',
-  title: 'Test Title',
-  program_name: 'Fellowship',
-  short_description: 'Short description',
-  gdoc_link: 'www.google.com',
-};
 const blankOpportunity = {
   id: '',
   org_name: '',
@@ -40,7 +32,7 @@ describe('AddOrEditOpportunityForm', () => {
         closeForm={closeForm}
       />
     );
-    const select = getByTestId('program-name');
+    const select = getByTestId('form-program-name');
     expect(select).toBeInTheDocument();
 
     fireEvent.click(select);
@@ -59,14 +51,13 @@ describe('AddOrEditOpportunityForm', () => {
     fireEvent.change(getByLabelText(/short description/i), {
       target: {value: 'Test description'},
     });
-    fireEvent.change(getByTestId('gdoc-link'), {
+    fireEvent.change(getByTestId('form-gdoc-link'), {
       target: {value: 'https://docs.google.com/document/d/test'},
     });
 
-    fireEvent.click(getByTestId('submit-button'));
+    fireEvent.click(getByTestId('form-submit-button'));
 
     expect(submit.mock.calls.length).toBe(1);
-    console.log(submit.mock.calls[0]);
     expect(submit.mock.calls[0][0]).toHaveProperty('org_name');
     expect(submit.mock.calls[0][0].org_name).toBe('Test Org');
     expect(submit.mock.calls[0][0]).toHaveProperty('program_name');
@@ -92,14 +83,19 @@ describe('AddOrEditOpportunityForm', () => {
         closeForm={closeForm}
       />
     );
-    const select = getByTestId('program-name');
-    const warnings = getAllByTestId('warning');
+    const select = getByTestId('form-program-name');
+    const warnings = getAllByTestId('form-warning');
+    const submitButton = getByTestId('form-submit-button');
+    const gDocLink = getByTestId('form-gdoc-link');
+    const orgName = getByLabelText(/organization/i);
+    const title = getByLabelText(/job title/i);
+    const shortDescription = getByLabelText(/short description/i);
+
     expect(select).toBeInTheDocument();
 
-    fireEvent.click(getByTestId('submit-button'));
+    fireEvent.click(submitButton);
 
     expect(submit.mock.calls.length).toBe(0);
-
     expect(warnings.length).toBe(5);
     expect(warnings[0]).toHaveTextContent('Required');
     expect(warnings[1]).toHaveTextContent('Required');
@@ -112,35 +108,38 @@ describe('AddOrEditOpportunityForm', () => {
     fireEvent.change(select, {target: {value: 'Place for Purpose'}});
     expect(select.value).toBe('Place for Purpose');
 
-    fireEvent.change(getByLabelText(/organization/i), {
+    fireEvent.change(orgName, {
       target: {value: 'Test Org'},
     });
 
-    fireEvent.change(getByLabelText(/job title/i), {
+    fireEvent.change(title, {
       target: {value: 'Test Title'},
     });
 
-    fireEvent.change(getByLabelText(/short description/i), {
+    fireEvent.change(shortDescription, {
       target: {value: 'Test description'},
     });
-    fireEvent.change(getByTestId('gdoc-link'), {
-      target: {value: 'https:www.google.com'},
+    fireEvent.change(gDocLink, {
+      target: {value: 'https://www.google.com'},
     });
 
-    fireEvent.click(getByTestId('submit-button'));
+    expect(orgName.value).toBe('Test Org');
+    expect(title.value).toBe('Test Title');
+    expect(shortDescription.value).toBe('Test description');
+    expect(gDocLink.value).toBe('https://www.google.com');
 
+    fireEvent.click(submitButton);
     expect(submit.mock.calls.length).toBe(0);
 
     expect(warnings[4]).toHaveTextContent(
       'Link must start with "https://docs.google.com/document/d/"'
     );
-
-    fireEvent.change(getByTestId('gdoc-link'), {
+    fireEvent.change(gDocLink, {
       target: {value: 'https://docs.google.com/document/d/test'},
     });
+    expect(gDocLink.value).toBe('https://docs.google.com/document/d/test');
 
-    fireEvent.click(getByTestId('submit-button'));
-
+    fireEvent.click(submitButton);
     expect(submit.mock.calls.length).toBe(1);
   });
 });
