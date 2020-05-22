@@ -65,30 +65,32 @@ const AddOrEditOpportunitiesPage = ({
 
   const [value, setValue] = React.useState(1);
 
-  const handleChange = (event, newValue) => {
+  const handleChangeFilter = (event, newValue) => {
     setValue(newValue);
   };
 
+  // Each value represent each program to filter by program
   switch (value) {
-    case 0:
+    case 0: // All
       theOpportunities = sortedOpportunities;
       break;
-    case 1:
+    case 1: // Fellowship
       theOpportunities = sortAllOpportunitiesByCategory(
         fellowshipOpps,
         'title'
       );
       break;
-    case 2:
+    case 2: // Mayoral Fellowship
       theOpportunities = sortAllOpportunitiesByCategory(mayoralOpps, 'title');
       break;
-    case 3:
+    case 3: //Place for Purpose
       theOpportunities = sortAllOpportunitiesByCategory(
         placeForPurposeOpps,
         'title'
       );
       break;
     default:
+      // All
       theOpportunities = sortedOpportunities;
       break;
   }
@@ -104,6 +106,7 @@ const AddOrEditOpportunitiesPage = ({
           variant="h5"
           align="center"
           className={classes.header}
+          data-testid="page-header"
         >
           Add or Edit Opportunities
         </Typography>
@@ -118,7 +121,7 @@ const AddOrEditOpportunitiesPage = ({
             value={value}
             indicatorColor="primary"
             textColor="primary"
-            onChange={handleChange}
+            onChange={handleChangeFilter}
             aria-label="disabled tabs example"
             className={classes.tabs}
           >
@@ -142,6 +145,7 @@ const AddOrEditOpportunitiesPage = ({
               variant="contained"
               color="primary"
               className={classes.addNewOppButton}
+              data-testid="open-add-new-opp-form-btn"
             >
               + Add New Opportunity
             </Button>

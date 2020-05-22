@@ -209,6 +209,7 @@ const EachOpportunity = ({
               onClick={() => setShowForm(true)}
               variant="contained"
               color="primary"
+              data-testid="open-edit-opp-form-btn"
             >
               Edit
             </Button>
