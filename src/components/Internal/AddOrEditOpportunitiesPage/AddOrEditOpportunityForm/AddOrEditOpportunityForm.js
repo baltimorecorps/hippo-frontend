@@ -118,7 +118,10 @@ const AddOrEditOpportunityForm = ({
                 </MenuItem>
               ))}
             </Select>
-            <FormHelperText className={classes.formHelperText}>
+            <FormHelperText
+              className={classes.formHelperText}
+              data-testid="warning"
+            >
               {errors.orgName_error || null}
             </FormHelperText>
           </FormControl>
@@ -134,7 +137,10 @@ const AddOrEditOpportunityForm = ({
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
           />
-          <FormHelperText className={classes.formHelperText}>
+          <FormHelperText
+            className={classes.formHelperText}
+            data-testid="warning"
+          >
             {errors.orgName_error || null}
           </FormHelperText>
           <TextField
@@ -148,7 +154,10 @@ const AddOrEditOpportunityForm = ({
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
           />
-          <FormHelperText className={classes.formHelperText}>
+          <FormHelperText
+            className={classes.formHelperText}
+            data-testid="warning"
+          >
             {errors.title_error || null}
           </FormHelperText>
           <TextField
@@ -164,7 +173,10 @@ const AddOrEditOpportunityForm = ({
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
           />
-          <FormHelperText className={classes.formHelperText}>
+          <FormHelperText
+            className={classes.formHelperText}
+            data-testid="warning"
+          >
             {errors.shortDescription_error || null}
           </FormHelperText>
           <TextField
@@ -183,7 +195,10 @@ const AddOrEditOpportunityForm = ({
               'data-testid': 'gdoc-link',
             }}
           />
-          <FormHelperText className={classes.formHelperText}>
+          <FormHelperText
+            className={classes.formHelperText}
+            data-testid="warning"
+          >
             {errors.link_error || null}
           </FormHelperText>
         </Grid>

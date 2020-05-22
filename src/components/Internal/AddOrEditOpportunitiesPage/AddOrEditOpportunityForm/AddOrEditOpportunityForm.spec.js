@@ -29,7 +29,7 @@ const blankOpportunity = {
 };
 
 describe('AddOrEditOpportunityForm', () => {
-  test('Add new opportunity: valid value', async () => {
+  test('Add new opportunity: valid value', () => {
     const submit = jest.fn();
     const closeForm = jest.fn();
     const {getByTestId, getByLabelText} = render(
@@ -79,5 +79,68 @@ describe('AddOrEditOpportunityForm', () => {
     expect(submit.mock.calls[0][0].gdoc_link).toBe(
       'https://docs.google.com/document/d/test'
     );
+  });
+
+  test('Add new opportunity: empty/invalid value (test form validation)', () => {
+    const submit = jest.fn();
+    const closeForm = jest.fn();
+    const {getByTestId, getAllByTestId, getByLabelText} = render(
+      <AddOrEditOpportunityForm
+        opportunity={blankOpportunity}
+        type="add"
+        onSubmit={submit}
+        closeForm={closeForm}
+      />
+    );
+    const select = getByTestId('program-name');
+    const warnings = getAllByTestId('warning');
+    expect(select).toBeInTheDocument();
+
+    fireEvent.click(getByTestId('submit-button'));
+
+    expect(submit.mock.calls.length).toBe(0);
+
+    expect(warnings.length).toBe(5);
+    expect(warnings[0]).toHaveTextContent('Required');
+    expect(warnings[1]).toHaveTextContent('Required');
+    expect(warnings[2]).toHaveTextContent('Required');
+    expect(warnings[3]).toHaveTextContent('Required');
+    expect(warnings[4]).toHaveTextContent('Required');
+
+    fireEvent.click(select);
+
+    fireEvent.change(select, {target: {value: 'Place for Purpose'}});
+    expect(select.value).toBe('Place for Purpose');
+
+    fireEvent.change(getByLabelText(/organization/i), {
+      target: {value: 'Test Org'},
+    });
+
+    fireEvent.change(getByLabelText(/job title/i), {
+      target: {value: 'Test Title'},
+    });
+
+    fireEvent.change(getByLabelText(/short description/i), {
+      target: {value: 'Test description'},
+    });
+    fireEvent.change(getByTestId('gdoc-link'), {
+      target: {value: 'https:www.google.com'},
+    });
+
+    fireEvent.click(getByTestId('submit-button'));
+
+    expect(submit.mock.calls.length).toBe(0);
+
+    expect(warnings[4]).toHaveTextContent(
+      'Link must start with "https://docs.google.com/document/d/"'
+    );
+
+    fireEvent.change(getByTestId('gdoc-link'), {
+      target: {value: 'https://docs.google.com/document/d/test'},
+    });
+
+    fireEvent.click(getByTestId('submit-button'));
+
+    expect(submit.mock.calls.length).toBe(1);
   });
 });
