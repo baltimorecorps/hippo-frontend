@@ -95,9 +95,13 @@ const EachOpportunity = ({
             {opportunity.title}{' '}
             {audience === 'internal' ? (
               opportunity.is_active ? (
-                <span className={classes.active}>(Active)</span>
+                <span data-testid="is-active" className={classes.active}>
+                  (Active)
+                </span>
               ) : (
-                <span className={classes.inactive}>(Inactive)</span>
+                <span data-testid="is-active" className={classes.inactive}>
+                  (Inactive)
+                </span>
               )
             ) : null}
           </Typography>

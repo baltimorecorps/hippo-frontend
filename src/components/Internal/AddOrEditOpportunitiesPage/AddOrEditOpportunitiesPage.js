@@ -124,11 +124,24 @@ const AddOrEditOpportunitiesPage = ({
             onChange={handleChangeFilter}
             aria-label="disabled tabs example"
             className={classes.tabs}
+            data-testid="filter-options"
           >
-            <Tab label="All" className={classes.tab} />
-            <Tab label="Fellowship" className={classes.tab} />
-            <Tab label="Mayoral Fellowship" className={classes.tab} />
-            <Tab label="Place for Purpose" className={classes.tab} />
+            <Tab data-testid="filter-all" label="All" className={classes.tab} />
+            <Tab
+              data-testid="filter-fellowship"
+              label="Fellowship"
+              className={classes.tab}
+            />
+            <Tab
+              data-testid="filter-mayoral"
+              label="Mayoral Fellowship"
+              className={classes.tab}
+            />
+            <Tab
+              data-testid="filter-place-for-purpose"
+              label="Place for Purpose"
+              className={classes.tab}
+            />
           </Tabs>
         </Paper>
         {showForm ? (

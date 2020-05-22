@@ -20,7 +20,7 @@ const opportunitiesArray = [
     title: 'FS Title',
     program_name: 'Fellowship',
     short_description: 'FS Short description',
-    gdoc_link: 'https://docs.google.com/document/d/test',
+    gdoc_link: 'https://docs.google.com/document/d/FS',
     cycle_id: 1,
     program_id: 1,
     is_active: true,
@@ -32,7 +32,7 @@ const opportunitiesArray = [
     title: 'PFP Title 1',
     program_name: 'Place for Purpose',
     short_description: 'PFP Short description 1',
-    gdoc_link: 'https://docs.google.com/document/d/test1',
+    gdoc_link: 'https://docs.google.com/document/d/PFP1',
     cycle_id: 1,
     program_id: 1,
     is_active: true,
@@ -44,7 +44,7 @@ const opportunitiesArray = [
     title: 'PFP Title 2',
     program_name: 'Place for Purpose',
     short_description: 'PFP Short description 2',
-    gdoc_link: 'https://docs.google.com/document/d/test2',
+    gdoc_link: 'https://docs.google.com/document/d/PFP2',
     cycle_id: 1,
     program_id: 1,
     is_active: false,
@@ -56,7 +56,7 @@ const opportunitiesArray = [
     title: 'MF Title',
     program_name: 'Mayoral Fellowship',
     short_description: 'MF Short description',
-    gdoc_link: 'https://docs.google.com/document/d/test',
+    gdoc_link: 'https://docs.google.com/document/d/MF',
     cycle_id: 1,
     program_id: 1,
     is_active: true,
@@ -64,9 +64,15 @@ const opportunitiesArray = [
   },
 ];
 
-const fellowshipOpps = [opportunitiesArray[0]];
-const placeForPurposeOpps = [opportunitiesArray[1]];
-const mayoralOpps = [opportunitiesArray[2]];
+const fellowshipOpps = opportunitiesArray.filter(
+  opp => opp.program_name === 'Fellowship'
+);
+const placeForPurposeOpps = opportunitiesArray.filter(
+  opp => opp.program_name === 'Place for Purpose'
+);
+const mayoralOpps = opportunitiesArray.filter(
+  opp => opp.program_name === 'Mayoral Fellowship'
+);
 
 describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
   test('Add New Opportunity', () => {
@@ -169,9 +175,6 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
         />
       </Router>
     );
-    const pageHeader = getByTestId('page-header');
-    expect(pageHeader).toBeInTheDocument();
-    expect(pageHeader).toHaveTextContent('Add or Edit Opportunities');
 
     // default only show opportunities from fellowship program
     const opportunities = getAllByTestId('opportunity');
@@ -197,7 +200,7 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
     expect(orgName.value).toBe('FS Org');
     expect(title.value).toBe('FS Title');
     expect(shortDescription.value).toBe('FS Short description');
-    expect(gDocLink.value).toBe('https://docs.google.com/document/d/test');
+    expect(gDocLink.value).toBe('https://docs.google.com/document/d/FS');
 
     fireEvent.change(orgName, {
       target: {value: 'Edit Org'},
@@ -222,5 +225,105 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
     expect(title.value).toBe('Edit Title');
     expect(shortDescription.value).toBe('Edit Short description');
     expect(gDocLink.value).toBe('https://docs.google.com/document/d/edit');
+  });
+
+  test('Filter Opportunities', () => {
+    const history = createMemoryHistory();
+    const addOpp = jest.fn();
+    const updateOpp = jest.fn();
+    const {getByTestId, getAllByTestId, getByText, getAllByText} = render(
+      <Router history={history}>
+        <AddOrEditOpportunitiesPage
+          opportunities={opportunitiesArray}
+          getAllOpportunities={jest.fn()}
+          addOpportunity={addOpp}
+          updateOpportunity={updateOpp}
+          deactivateRole={jest.fn()}
+          activateRole={jest.fn()}
+          fellowshipOpps={fellowshipOpps}
+          mayoralOpps={mayoralOpps}
+          placeForPurposeOpps={placeForPurposeOpps}
+        />
+      </Router>
+    );
+
+    // default only show opportunities from fellowship program
+    expect(getAllByTestId('opportunity').length).toBe(1);
+
+    const title = getByTestId('title');
+    const orgName = getByTestId('org-name');
+    const programName = getByTestId('program-name');
+    const shortDescription = getByTestId('description');
+    const gdocLink = getByText('View full description');
+
+    expect(title).toHaveTextContent('FS Title');
+    expect(orgName).toHaveTextContent('FS Org');
+    expect(programName).toHaveTextContent('Fellowship');
+    expect(shortDescription).toHaveTextContent('FS Short description');
+    expect(gdocLink).toHaveAttribute(
+      'href',
+      'https://docs.google.com/document/d/FS'
+    );
+
+    const filterOptions = getByTestId('filter-options');
+    expect(filterOptions).toBeInTheDocument();
+
+    const filterAllPrograms = getByTestId('filter-all');
+    const filterFellowshipPrograms = getByTestId('filter-fellowship');
+    const filterMayoralPrograms = getByTestId('filter-mayoral');
+    const filterPlaceForPurposePrograms = getByTestId(
+      'filter-place-for-purpose'
+    );
+    expect(filterAllPrograms).toBeInTheDocument();
+    expect(filterFellowshipPrograms).toBeInTheDocument();
+    expect(filterMayoralPrograms).toBeInTheDocument();
+    expect(filterPlaceForPurposePrograms).toBeInTheDocument();
+
+    // Test filter only opportunities in Mayoral Fellowship program
+    fireEvent.click(filterMayoralPrograms);
+
+    expect(getAllByTestId('opportunity').length).toBe(1);
+    expect(title).toHaveTextContent('MF Title');
+    expect(orgName).toHaveTextContent('MF Org');
+    expect(programName).toHaveTextContent('Mayoral Fellowship');
+    expect(shortDescription).toHaveTextContent('MF Short description');
+
+    expect(gdocLink).toHaveAttribute(
+      'href',
+      'https://docs.google.com/document/d/MF'
+    );
+
+    // Test filter only opportunities in Place for Purpose program
+    fireEvent.click(filterPlaceForPurposePrograms);
+    expect(getAllByTestId('opportunity').length).toBe(2);
+
+    const titles = getAllByTestId('title');
+    const orgNames = getAllByTestId('org-name');
+    const programNames = getAllByTestId('program-name');
+    const shortDescriptions = getAllByTestId('description');
+    const gdocLinks = getAllByText('View full description');
+
+    expect(titles[0]).toHaveTextContent('PFP Title 1');
+    expect(orgNames[0]).toHaveTextContent('PFP Org 1');
+    expect(programNames[0]).toHaveTextContent('Place for Purpose');
+    expect(shortDescriptions[0]).toHaveTextContent('PFP Short description 1');
+
+    expect(gdocLinks[0]).toHaveAttribute(
+      'href',
+      'https://docs.google.com/document/d/PFP1'
+    );
+    expect(titles[1]).toHaveTextContent('PFP Title 2');
+    expect(orgNames[1]).toHaveTextContent('PFP Org 2');
+    expect(programNames[1]).toHaveTextContent('Place for Purpose');
+    expect(shortDescriptions[1]).toHaveTextContent('PFP Short description 2');
+
+    expect(gdocLinks[1]).toHaveAttribute(
+      'href',
+      'https://docs.google.com/document/d/PFP2'
+    );
+
+    // Test filter all opportunities in all program
+    fireEvent.click(filterAllPrograms);
+    expect(getAllByTestId('opportunity').length).toBe(4);
   });
 });
