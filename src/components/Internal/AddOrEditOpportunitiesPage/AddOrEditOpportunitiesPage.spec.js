@@ -376,4 +376,68 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
     expect(orgNames[3]).toHaveTextContent('PFP Org 2');
     expect(isActives[3]).toHaveTextContent('Inactive');
   });
+
+  test('Activate/Deactivate Opportunities', async () => {
+    const history = createMemoryHistory();
+    const addOpp = jest.fn();
+    const updateOpp = jest.fn();
+    const deactivateOpp = jest.fn();
+    const activateOpp = jest.fn();
+    const {getByTestId, getAllByTestId, getByText, getAllByText} = render(
+      <Router history={history}>
+        <AddOrEditOpportunitiesPage
+          opportunities={opportunitiesArray}
+          getAllOpportunities={jest.fn()}
+          addOpportunity={addOpp}
+          updateOpportunity={updateOpp}
+          deactivateRole={deactivateOpp}
+          activateRole={activateOpp}
+          fellowshipOpps={fellowshipOpps}
+          mayoralOpps={mayoralOpps}
+          placeForPurposeOpps={placeForPurposeOpps}
+        />
+      </Router>
+    );
+
+    // default only show opportunities from fellowship program
+    expect(getAllByTestId('opportunity').length).toBe(1);
+
+    const filterAllPrograms = getByTestId('filter-all');
+
+    // Test filter all opportunities in all program
+    fireEvent.click(filterAllPrograms);
+    expect(getAllByTestId('opportunity').length).toBe(4);
+
+    expect(getAllByTestId('title')[0]).toHaveTextContent('FS Title');
+    expect(getAllByTestId('org-name')[0]).toHaveTextContent('FS Org');
+    expect(getAllByTestId('is-active')[0]).toHaveTextContent('Active');
+
+    expect(getAllByTestId('title')[1]).toHaveTextContent('MF Title');
+    expect(getAllByTestId('org-name')[1]).toHaveTextContent('MF Org');
+    expect(getAllByTestId('is-active')[1]).toHaveTextContent('Active');
+
+    expect(getAllByTestId('title')[2]).toHaveTextContent('PFP Title 1');
+    expect(getAllByTestId('org-name')[2]).toHaveTextContent('PFP Org 1');
+    expect(getAllByTestId('is-active')[2]).toHaveTextContent('Active');
+
+    expect(getAllByTestId('title')[3]).toHaveTextContent('PFP Title 2');
+    expect(getAllByTestId('org-name')[3]).toHaveTextContent('PFP Org 2');
+    expect(getAllByTestId('is-active')[3]).toHaveTextContent('Inactive');
+
+    const moreIcons = getAllByTestId('more-icon');
+    const moreIconMenus = getAllByTestId('more-icon-menu');
+
+    expect(moreIcons.length).toBe(4);
+    fireEvent.click(moreIcons[3]);
+    expect(moreIconMenus[3]).toHaveTextContent('Activate');
+    fireEvent.click(moreIconMenus[3]);
+    expect(activateOpp.mock.calls.length).toBe(1);
+    expect(activateOpp.mock.calls[0]).toEqual(['1c']);
+
+    fireEvent.click(moreIcons[1]);
+    expect(moreIconMenus[1]).toHaveTextContent('Deactivate');
+    fireEvent.click(moreIconMenus[1]);
+    expect(deactivateOpp.mock.calls.length).toBe(1);
+    expect(deactivateOpp.mock.calls[0]).toEqual(['1d']);
+  });
 });

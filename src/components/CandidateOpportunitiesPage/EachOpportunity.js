@@ -65,15 +65,19 @@ const EachOpportunity = ({
     setAnchorEl(null);
   };
 
+  const [isActive, setIsActive] = useState(opportunity.is_active);
+
   const handleClickActions = async opportunityId => {
     let response;
     if (opportunity.is_active) {
       response = await deactivateRole(opportunityId);
+      setIsActive(false);
     } else {
       response = await activateRole(opportunityId);
+      setIsActive(true);
     }
 
-    if (response.statusCode == 200) {
+    if (response && response.statusCode == 200) {
       setAnchorEl(null);
     }
   };
@@ -94,7 +98,7 @@ const EachOpportunity = ({
           >
             {opportunity.title}{' '}
             {audience === 'internal' ? (
-              opportunity.is_active ? (
+              isActive ? (
                 <span data-testid="is-active" className={classes.active}>
                   (Active)
                 </span>
@@ -131,6 +135,7 @@ const EachOpportunity = ({
                 aria-haspopup="true"
                 onClick={handleClickMore}
                 className={classes.moreIconContainer}
+                data-testid="more-icon"
               >
                 <MoreVertIcon className={classes.moreIcon} />
               </IconButton>
@@ -152,6 +157,7 @@ const EachOpportunity = ({
                     key={option}
                     selected={option === 'Pyxis'}
                     onClick={() => handleClickActions(opportunity.id)}
+                    data-testid="more-icon-menu"
                   >
                     {option}
                   </MenuItem>
