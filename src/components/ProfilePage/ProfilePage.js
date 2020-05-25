@@ -25,6 +25,11 @@ import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
 import {sumScores} from 'lib/helperFunctions/scoreAchievements';
 
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import {ResumeViewer} from 'components/ResumeCreator';
+
 import CAPABILITIES from './capabilities.yml';
 
 // Scroll only works consistently if it happens after any renders that might be
@@ -56,7 +61,7 @@ const ProfilePage = ({
   contactId,
   contactInfo,
   programs,
-  resume,
+  myResume,
   getContact,
   startResumeCreation,
   startResumeSelect,
@@ -79,6 +84,8 @@ const ProfilePage = ({
   const [sidebarType, setSidebarType] = useState('work');
   const [loading, setLoading] = useState(false);
   const [editScores, setEditScores] = useState({});
+  const [viewResume, setViewResume] = useState(false);
+  const [resume, setResume] = useState((myResume: null));
 
   const updateEditScore = useCallback(
     expId => scores => {
@@ -136,7 +143,7 @@ const ProfilePage = ({
     const resumeName = `${contactInfo.first_name}_${
       contactInfo.last_name
     }_${new Date().getTime()}`;
-    const response = await generateResume(contactId, resumeName, resume);
+    const response = await generateResume(contactId, resumeName, myResume);
     setResumeLink(`/resume/${response.body.data.gdoc_id}`);
   };
 
@@ -200,6 +207,10 @@ const ProfilePage = ({
     wrapperClass = classes.wrapperSmall;
   }
 
+  const handleChange = event => {
+    setViewResume(event.target.checked);
+  };
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -247,15 +258,49 @@ const ProfilePage = ({
             justify="center"
             className={wrapperClass}
           >
-            {!inSelectMode && (
-              <CapabilityScores
-                contactCapabilities={contactInfo.capabilities}
-                editScores={{}}
-              />
-            )}
             <Grid item xs={12} sm={11}>
               <Grid container justify="center">
                 <Grid item xs={12} md={8} lg={6}>
+                  <div
+                    className={
+                      viewResume
+                        ? `${classes.flexStart} ${classes.fixedContainer}`
+                        : `${classes.fixedContainer}`
+                    }
+                  >
+                    <FormGroup row className={classes.previewResumeSwitch}>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={viewResume}
+                            onChange={handleChange}
+                            name="preview"
+                            color="primary"
+                            data-testid="preview-resume-switch"
+                          />
+                        }
+                        label="Preview Resume"
+                      />
+                    </FormGroup>
+                    {!inSelectMode && (
+                      <CapabilityScores
+                        contactCapabilities={contactInfo.capabilities}
+                        editScores={{}}
+                      />
+                    )}
+                  </div>
+
+                  {viewResume && (
+                    <ResumeViewer
+                      contactId={contactId}
+                      resume={resume}
+                      setResume={setResume}
+                      viewOnly={true}
+                      selected={null}
+                      page="profile"
+                    />
+                  )}
+
                   <Paper className={classes.instructions}>
                     <div className={classes.headerContainer}>
                       <Typography
@@ -485,7 +530,7 @@ const ResumeDialog = withStyles(dialogStyles)(
                 <Grid item xs={6} className={classes.resumeContainer}>
                   <img
                     src="/images/resume.svg"
-                    alt="picture of a resume"
+                    alt="a resume"
                     className={classes.resume}
                   />
                 </Grid>
@@ -591,7 +636,7 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     height: 'auto',
     paddingLeft: '2vw',
     paddingRight: '2vw',
-    [breakpoints.up('sm')]: {
+    [breakpoints.up('md')]: {
       paddingLeft: '0vw',
       paddingRight: '18vw',
     },
@@ -654,7 +699,7 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     padding: spacing(2, 3, 3),
     paddingBottom: spacing(3),
     marginTop: spacing(5),
-    [breakpoints.down('xs')]: {
+    [breakpoints.down('sm')]: {
       margin: spacing(0.2),
     },
   },
@@ -674,6 +719,44 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   },
   resumeButton: {
     marginTop: spacing(5),
+  },
+  fixedContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '25px 0 10px 0',
+    width: '100%',
+
+    [breakpoints.up('md')]: {
+      width: 'auto',
+      position: 'fixed',
+      display: 'block',
+      margin: '0',
+      top: '150px',
+      right: '15px',
+    },
+  },
+  flexStart: {
+    margin: '35px 0 0px 3vw',
+    justifyContent: 'start',
+    [breakpoints.up('sm')]: {
+      margin: '25px 0 5px 0px',
+    },
+    [breakpoints.up('md')]: {
+      justifyContent: 'center',
+      margin: '0px',
+    },
+  },
+
+  previewResumeSwitch: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    [breakpoints.up('md')]: {
+      width: '100%',
+
+      marginBottom: '20px',
+    },
   },
 });
 
