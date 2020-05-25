@@ -40,17 +40,17 @@ test('test resume state mapping', () => {
   };
 
   const props = mapStateToProps(state, ownProps);
-  expect(props).toHaveProperty('resume');
+  expect(props).toHaveProperty('myResume');
   ['exp', 'edu', 'achieve', 'skills'].forEach(suffix => {
-    expect(props.resume).toHaveProperty(`relevant_${suffix}`);
-    expect(props.resume).toHaveProperty(`other_${suffix}`);
+    expect(props.myResume).toHaveProperty(`relevant_${suffix}`);
+    expect(props.myResume).toHaveProperty(`other_${suffix}`);
   });
-  expect(props.resume.relevant_exp.sort()).toEqual([10, 13]);
-  expect(props.resume.other_exp.sort()).toEqual([14, 17]);
-  expect(props.resume.relevant_edu).toEqual([15]);
-  expect(props.resume.other_edu).toEqual([16]);
-  expect(props.resume.relevant_achieve).toEqual([12]);
-  expect(props.resume.other_achieve).toEqual([]);
+  expect(props.myResume.relevant_exp.sort()).toEqual([10, 13]);
+  expect(props.myResume.other_exp.sort()).toEqual([14, 17]);
+  expect(props.myResume.relevant_edu).toEqual([15]);
+  expect(props.myResume.other_edu).toEqual([16]);
+  expect(props.myResume.relevant_achieve).toEqual([12]);
+  expect(props.myResume.other_achieve).toEqual([]);
 });
 
 test('test resume state mapping - non-select', () => {
@@ -84,15 +84,15 @@ test('test resume state mapping - non-select', () => {
   };
 
   const props = mapStateToProps(state, ownProps);
-  expect(props).toHaveProperty('resume');
+  expect(props).toHaveProperty('myResume');
   ['exp', 'edu', 'achieve', 'skills'].forEach(suffix => {
-    expect(props.resume).toHaveProperty(`relevant_${suffix}`);
-    expect(props.resume).toHaveProperty(`other_${suffix}`);
+    expect(props.myResume).toHaveProperty(`relevant_${suffix}`);
+    expect(props.myResume).toHaveProperty(`other_${suffix}`);
   });
-  expect(props.resume.relevant_exp.sort()).toEqual([10, 13, 14, 17]);
-  expect(props.resume.other_exp).toEqual([]);
-  expect(props.resume.relevant_edu.sort()).toEqual([15, 16]);
-  expect(props.resume.other_edu).toEqual([]);
-  expect(props.resume.relevant_achieve.sort()).toEqual([12]);
-  expect(props.resume.other_achieve).toEqual([]);
+  expect(props.myResume.relevant_exp.sort()).toEqual([10, 13, 14, 17]);
+  expect(props.myResume.other_exp).toEqual([]);
+  expect(props.myResume.relevant_edu.sort()).toEqual([15, 16]);
+  expect(props.myResume.other_edu).toEqual([]);
+  expect(props.myResume.relevant_achieve.sort()).toEqual([12]);
+  expect(props.myResume.other_achieve).toEqual([]);
 });
