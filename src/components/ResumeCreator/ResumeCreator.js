@@ -176,9 +176,18 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
   },
 
   profilePrintButton: {
-    position: 'fixed',
-    top: '150px',
-    right: '70px',
+    position: 'absolute',
+    top: '90px',
+    right: '6vw',
+    [breakpoints.up('md')]: {
+      position: 'fixed',
+      top: '100px',
+      right: '4vw',
+    },
+
+    [breakpoints.up('1140')]: {
+      right: '5vw',
+    },
   },
 }));
 
