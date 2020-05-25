@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import OpportunitiesPage from './OpportunitiesPage';
+import CandidateOpportunitiesPage from './CandidateOpportunitiesPage';
 import {
   getAllOpportunities,
   getAllSubmittedApplications,
@@ -25,4 +25,7 @@ const mapDispatchToProps = dispatch => ({
     getAllSubmittedApplications(contactId)(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(OpportunitiesPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CandidateOpportunitiesPage);

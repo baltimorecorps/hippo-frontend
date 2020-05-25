@@ -1,3 +1,3 @@
-import AddOrEditOpportunityForm from './AddOrEditOpportunityForm.container';
+import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 
 export default AddOrEditOpportunityForm;

@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
-import AddOrEditOpportunityForm from '../Internal/AddOrEditOpportunitiesPage/AddOrEditOpportunityForm/';
+import AddOrEditOpportunityForm from '../Internal/AddOrEditOpportunitiesPage/AddOrEditOpportunityForm';
 
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -73,22 +73,35 @@ const EachOpportunity = ({
       response = await activateRole(opportunityId);
     }
 
-    if (response.statusCode == 200) {
+    if (response && response.statusCode == 200) {
       setAnchorEl(null);
     }
   };
 
   return !showForm ? (
-    <Paper className={classes.opportunityPaper} style={highlightColor}>
+    <Paper
+      className={classes.opportunityPaper}
+      style={highlightColor}
+      data-testid="opportunity"
+    >
       <div className={classes.oppHeaderContainer}>
         <div className={classes.titleAndOrg}>
-          <Typography variant="h5" component="p" className={classes.title}>
+          <Typography
+            variant="h5"
+            component="p"
+            className={classes.title}
+            data-testid="title"
+          >
             {opportunity.title}{' '}
             {audience === 'internal' ? (
               opportunity.is_active ? (
-                <span className={classes.active}>(Active)</span>
+                <span data-testid="is-active" className={classes.active}>
+                  (Active)
+                </span>
               ) : (
-                <span className={classes.inactive}>(Inactive)</span>
+                <span data-testid="is-active" className={classes.inactive}>
+                  (Inactive)
+                </span>
               )
             ) : null}
           </Typography>
@@ -96,6 +109,7 @@ const EachOpportunity = ({
             variant="h5"
             component="p"
             className={classes.organization}
+            data-testid="org-name"
           >
             {opportunity.org_name || ''}
           </Typography>
@@ -105,6 +119,7 @@ const EachOpportunity = ({
             variant="h5"
             component="p"
             className={classes.programName}
+            data-testid="program-name"
           >
             {opportunity.program_name || ''}
           </Typography>
@@ -116,6 +131,7 @@ const EachOpportunity = ({
                 aria-haspopup="true"
                 onClick={handleClickMore}
                 className={classes.moreIconContainer}
+                data-testid="more-icon"
               >
                 <MoreVertIcon className={classes.moreIcon} />
               </IconButton>
@@ -137,6 +153,7 @@ const EachOpportunity = ({
                     key={option}
                     selected={option === 'Pyxis'}
                     onClick={() => handleClickActions(opportunity.id)}
+                    data-testid="more-icon-menu"
                   >
                     {option}
                   </MenuItem>
@@ -148,7 +165,7 @@ const EachOpportunity = ({
       </div>
       <div className={classes.opportunityContent}>
         <div className={classes.opportunityDescription}>
-          <Typography className={classes.description}>
+          <Typography className={classes.description} data-testid="description">
             {opportunity.short_description}
             <br />
           </Typography>
@@ -172,6 +189,7 @@ const EachOpportunity = ({
                         variant="contained"
                         color="primary"
                         key={index}
+                        data-testid="view-app-btn"
                       >
                         View Application
                       </Button>
@@ -181,6 +199,7 @@ const EachOpportunity = ({
                         variant="contained"
                         color="primary"
                         key={index}
+                        data-testid="apply-btn"
                       >
                         Apply
                       </Button>
@@ -196,6 +215,7 @@ const EachOpportunity = ({
               onClick={() => setShowForm(true)}
               variant="contained"
               color="primary"
+              data-testid="open-edit-opp-form-btn"
             >
               Edit
             </Button>
