@@ -76,13 +76,16 @@ CapabilityScores.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
-    width: '18vw',
-    position: 'fixed',
-    right: spacing(2),
-    top: '20vh',
-    padding: spacing(1),
-    [breakpoints.down('xs')]: {
-      display: 'none',
+    display: 'none',
+
+    [breakpoints.up('md')]: {
+      display: 'block',
+      width: '18vw',
+      right: spacing(2),
+      padding: spacing(1),
+    },
+    [breakpoints.up('lg')]: {
+      width: '16vw',
     },
   },
   container: {

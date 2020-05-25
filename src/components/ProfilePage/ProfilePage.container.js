@@ -128,7 +128,7 @@ export const mapStateToProps = (state, props) => {
     inSelectMode:
       state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
     showResumeSpinner: state.resume.inProgress,
-    resume: getResume(state, props),
+    myResume: getResume(state, props),
   };
 };
 
