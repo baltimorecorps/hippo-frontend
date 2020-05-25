@@ -95,12 +95,16 @@ const formatTime = time => {
   return formatedTime;
 };
 
-const groupOpportunitiesByProgramName = (opportunities, programNames) => {
+const groupOpportunitiesByProgramName = (
+  opportunities,
+  programNames,
+  isActive
+) => {
   let groupedOpportunities = [];
   for (let i = 0; i < programNames.length; i++) {
     let filteredOpportunities = [];
     filteredOpportunities = opportunities.filter(
-      opp => opp.program_name === programNames[i]
+      opp => opp.program_name === programNames[i] && opp.is_active === isActive
     );
     groupedOpportunities.push(filteredOpportunities);
   }
@@ -142,14 +146,27 @@ const sortAllOpportunitiesByCategory = (opportunities, category) => {
   let sortedOpportunities = [];
 
   // group by program name
-  const opportunitiesGroups = groupOpportunitiesByProgramName(
+  const activeOpportunitiesGroups = groupOpportunitiesByProgramName(
     opportunities,
-    allPrograms
+    allPrograms,
+    true
+  );
+  const inactiveOpportunitiesGroups = groupOpportunitiesByProgramName(
+    opportunities,
+    allPrograms,
+    false
   );
 
   // sorted each group by category (e.g. title, org_name)
-  for (let i = 0; i < opportunitiesGroups.length; i++) {
-    const sortedGroup = sortByCategory(opportunitiesGroups[i], category);
+  for (let i = 0; i < activeOpportunitiesGroups.length; i++) {
+    const sortedGroup = sortByCategory(activeOpportunitiesGroups[i], category);
+    sortedOpportunities = [...sortedOpportunities, ...sortedGroup];
+  }
+  for (let i = 0; i < inactiveOpportunitiesGroups.length; i++) {
+    const sortedGroup = sortByCategory(
+      inactiveOpportunitiesGroups[i],
+      category
+    );
     sortedOpportunities = [...sortedOpportunities, ...sortedGroup];
   }
 

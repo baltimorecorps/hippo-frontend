@@ -7,9 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
-import EachOpportunity from '../../OpportunitiesPage/EachOpportunity';
+import EachOpportunity from '../../CandidateOpportunitiesPage/EachOpportunity';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const AddOrEditOpportunitiesPage = ({
   classes,
@@ -17,6 +19,11 @@ const AddOrEditOpportunitiesPage = ({
   getAllOpportunities,
   addOpportunity,
   updateOpportunity,
+  deactivateRole,
+  activateRole,
+  fellowshipOpps,
+  mayoralOpps,
+  placeForPurposeOpps,
 }) => {
   let history = useHistory();
 
@@ -54,6 +61,42 @@ const AddOrEditOpportunitiesPage = ({
     'org_name'
   );
 
+  let theOpportunities = [];
+
+  const [value, setValue] = React.useState(1);
+
+  const handleChangeFilter = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  // Each value represent each program to filter by program
+  switch (value) {
+    case 0: // All
+      theOpportunities = sortedOpportunities;
+      break;
+    case 1: // Fellowship
+      theOpportunities = sortAllOpportunitiesByCategory(
+        fellowshipOpps,
+        'title'
+      );
+      break;
+    case 2: // Mayoral Fellowship
+      theOpportunities = sortAllOpportunitiesByCategory(mayoralOpps, 'title');
+      break;
+    case 3: //Place for Purpose
+      theOpportunities = sortAllOpportunitiesByCategory(
+        placeForPurposeOpps,
+        'title'
+      );
+      break;
+    default:
+      // All
+      theOpportunities = sortedOpportunities;
+      break;
+  }
+
+  if (theOpportunities.length === 0) return <div>loading...</div>;
+
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
@@ -63,35 +106,74 @@ const AddOrEditOpportunitiesPage = ({
           variant="h5"
           align="center"
           className={classes.header}
+          data-testid="page-header"
         >
           Add or Edit Opportunities
         </Typography>
       </Paper>
-      {showForm ? (
-        <AddOrEditOpportunityForm
-          type="add"
-          opportunity={blankOpportunity}
-          onSubmit={addNewOpportunity}
-          closeForm={() => setShowForm(false)}
-        />
-      ) : (
-        <Grid className={classes.buttonContainer}>
-          <Button
-            onClick={() => setShowForm(true)}
-            variant="contained"
-            color="primary"
+
+      <div
+        className={classes.filterAndFormContainer}
+        style={showForm ? {flexDirection: 'column'} : null}
+      >
+        <Paper square className={classes.tabsContainer}>
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={handleChangeFilter}
+            aria-label="disabled tabs example"
+            className={classes.tabs}
+            data-testid="filter-options"
           >
-            Add New Opportunity
-          </Button>
-        </Grid>
-      )}
-      {sortedOpportunities.map((opportunity, index) => (
+            <Tab data-testid="filter-all" label="All" className={classes.tab} />
+            <Tab
+              data-testid="filter-fellowship"
+              label="Fellowship"
+              className={classes.tab}
+            />
+            <Tab
+              data-testid="filter-mayoral"
+              label="Mayoral Fellowship"
+              className={classes.tab}
+            />
+            <Tab
+              data-testid="filter-place-for-purpose"
+              label="Place for Purpose"
+              className={classes.tab}
+            />
+          </Tabs>
+        </Paper>
+        {showForm ? (
+          <AddOrEditOpportunityForm
+            type="add"
+            opportunity={blankOpportunity}
+            onSubmit={addNewOpportunity}
+            closeForm={() => setShowForm(false)}
+          />
+        ) : (
+          <Grid className={classes.buttonContainer}>
+            <Button
+              onClick={() => setShowForm(true)}
+              variant="contained"
+              color="primary"
+              className={classes.addNewOppButton}
+              data-testid="open-add-new-opp-form-btn"
+            >
+              + Add New Opportunity
+            </Button>
+          </Grid>
+        )}
+      </div>
+
+      {theOpportunities.map((opportunity, index) => (
         <EachOpportunity
           key={index}
           opportunity={opportunity}
-          updateOpportunity={updateOpportunity}
           audience="internal"
           updateExistingOpportunity={updateExistingOpportunity}
+          deactivateRole={deactivateRole}
+          activateRole={activateRole}
         />
       ))}
     </div>
@@ -203,7 +285,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: spacing(2),
+  },
+  addNewOppButton: {
+    padding: '11px',
   },
   link: {
     color: palette.primary.link,
@@ -239,6 +323,48 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: palette.primary.midGray,
+  },
+  filterAndFormContainer: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    marginBottom: spacing(2),
+    flexGrow: 1,
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up(1340)]: {
+      flexDirection: 'row',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '100%',
+  },
+  tabsContainer: {
+    marginRight: '10px',
+    marginBottom: '10px',
+
+    [breakpoints.up(1340)]: {
+      marginBottom: '0px',
+    },
+  },
+  tabs: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  tab: {
+    backgroundColor: palette.secondary.main,
+    color: '#ffffff',
+    fontWeight: 'bold',
   },
 });
 

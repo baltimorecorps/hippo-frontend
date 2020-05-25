@@ -1,12 +1,13 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import {createExternalLink} from 'lib/helperFunctions/helpers';
 import ApplicationStateAccordion from './ApplicationStateAccordion';
 import Link from '@material-ui/core/Link';
 import {useHistory} from 'react-router-dom';
 import DescriptionIcon from '@material-ui/icons/Description';
+import Tooltip from '@material-ui/core/Tooltip';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const RoleCards = ({
   classes,
@@ -55,30 +56,45 @@ const RoleCards = ({
     );
   }
 
+  let paperStyles = '';
+
+  if (page === 'internal') {
+    switch (opportunity.program_name) {
+      case 'Fellowship':
+        paperStyles = `${classes.paper} + ${classes.fellowshipContainerTop}`;
+        break;
+      case 'Mayoral Fellowship':
+        paperStyles = `${classes.paper} + ${classes.mayoralContainerTop}`;
+        break;
+      default:
+        paperStyles = classes.paper;
+    }
+  }
+
+  if (opportunity.is_active === false) {
+    paperStyles = `${paperStyles} + ${classes.inactive}`;
+  }
+  if (page === 'employer') {
+    paperStyles = classes.employerPaper;
+  }
+
   return (
-    <Paper
-      className={
-        page === 'employer'
-          ? classes.employerPaper
-          : opportunity.program_name === 'Mayoral Fellowship'
-          ? classes.mayoralContainer
-          : opportunity.program_name === 'Fellowship'
-          ? classes.fellowshipContainer
-          : classes.paper
-      }
-    >
+    <Paper className={paperStyles}>
       <div className={classes.headerContainer}>
         <div className={classes.titleAndOrgContainer}>
           <Typography variant="h6" component="h1" className={classes.title}>
             {opportunity.title}
           </Typography>
-          <Typography
-            variant="h6"
-            component="h2"
-            className={classes.organization}
-          >
-            {opportunity.org_name}
-          </Typography>
+          {page !== 'employer' && (
+            <Typography
+              variant="h6"
+              component="h2"
+              className={classes.organization}
+            >
+              {opportunity.org_name}
+            </Typography>
+          )}
+
           {page === 'employer' && (
             <Typography
               variant="h6"
@@ -90,28 +106,31 @@ const RoleCards = ({
           )}
         </div>
         <div className={classes.headerBottomContainer}>
-          {createExternalLink(
-            <DescriptionIcon className={classes.gDocIcon} />,
-            opportunity.gdoc_link,
-            classes.gDocLink
-          )}
-          <div className={classes.employerViewAndProgramName}>
-            <Link
-              component="button"
-              variant="body1"
-              onClick={() => toEmployerPage(opportunity.id)}
-              className={classes.employerLink}
-            >
-              {page === 'internal' && 'Employer View'}
-            </Link>
-            <Typography
-              variant="h5"
-              component="p"
-              className={classes.programName}
-            >
-              {opportunity.program_name || ''}
-            </Typography>
-          </div>
+          <Tooltip title="Job Description">
+            <a href={opportunity.gdoc_link} className={classes.linkContainer}>
+              <DescriptionIcon className={classes.gDocIcon} />
+            </a>
+          </Tooltip>
+
+          <Typography
+            variant="h5"
+            component="p"
+            className={classes.programName}
+          >
+            {opportunity.program_name || ''}
+          </Typography>
+          <Link
+            component="button"
+            variant="body1"
+            onClick={() => toEmployerPage(opportunity.id)}
+            className={classes.linkContainer}
+          >
+            {page === 'internal' && (
+              <Tooltip title="Employer's View">
+                <VisibilityIcon className={classes.employerViewIcon} />
+              </Tooltip>
+            )}
+          </Link>
         </div>
       </div>
       {page === 'internal' && (
@@ -125,6 +144,7 @@ const RoleCards = ({
           panelName="Submitted"
           opportunityId={opportunity.id}
           page={page}
+          isActive={opportunity.is_active}
         />
       )}
 
@@ -137,6 +157,7 @@ const RoleCards = ({
         panelName="Recommended"
         opportunityId={opportunity.id}
         page={page}
+        isActive={opportunity.is_active}
       />
 
       <ApplicationStateAccordion
@@ -148,6 +169,7 @@ const RoleCards = ({
         panelName="Interviewing"
         opportunityId={opportunity.id}
         page={page}
+        isActive={opportunity.is_active}
       />
       <ApplicationStateAccordion
         header="Finalists for Role"
@@ -158,6 +180,7 @@ const RoleCards = ({
         panelName="consideredForRole"
         opportunityId={opportunity.id}
         page={page}
+        isActive={opportunity.is_active}
       />
 
       <ApplicationStateAccordion
@@ -169,6 +192,7 @@ const RoleCards = ({
         panelName="notAFit"
         opportunityId={opportunity.id}
         page={page}
+        isActive={opportunity.is_active}
       />
     </Paper>
   );
@@ -181,17 +205,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '360px',
     borderTop: '4px solid #262626',
   },
-  mayoralContainer: {
-    padding: spacing(2, 3, 3),
-    margin: spacing(0, 1, 2, 1),
-    width: '360px',
+  mayoralContainerTop: {
     borderTop: '4px solid #ef4aff',
   },
-  fellowshipContainer: {
-    padding: spacing(2, 3, 3),
-    margin: spacing(0, 1, 2, 1),
-    width: '360px',
+  fellowshipContainerTop: {
     borderTop: '4px solid #ffcc33',
+  },
+  inactive: {
+    backgroundColor: '#d2d2d6',
   },
   employerPaper: {
     flexGrow: 1,
@@ -218,7 +239,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignSelf: 'center',
   },
   headerContainer: {
-    paddingBottom: spacing(2),
+    paddingBottom: spacing(1),
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -231,32 +252,35 @@ const styles = ({breakpoints, palette, spacing}) => ({
   headerBottomContainer: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'flex-end',
-  },
-  employerViewAndProgramName: {
-    display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'column',
   },
-
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
   },
-  gDocLink: {
-    marginRight: '8px',
+
+  gDocIcon: {
+    color: '#527aff',
+    fontSize: '40px',
+    padding: '8px',
+    borderRadius: '50%',
+    '&:hover': {
+      backgroundColor: '#ededed',
+    },
+  },
+  linkContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  gDocIcon: {
-    color: '#527aff',
-    fontSize: '25px',
-  },
-  employerLink: {
-    color: '#000000',
-    textDecoration: 'underline',
+  employerViewIcon: {
+    color: '#424242',
+    fontSize: '42px',
+    padding: '8px',
+    borderRadius: '50%',
+    '&:hover': {
+      backgroundColor: '#ededed',
+    },
   },
 
   title: {
@@ -281,8 +305,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   programName: {
     fontSize: '14px',
-    verticalAlign: 'text-bottom',
+    verticalAlign: 'center',
     color: palette.primary.midGray,
+    margin: '0 5px',
   },
 });
 

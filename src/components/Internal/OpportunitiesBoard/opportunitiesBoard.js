@@ -6,11 +6,16 @@ import Paper from '@material-ui/core/Paper';
 import RoleCards from './RoleCards';
 import PartnershipsNavBar from 'components/Internal/PartnershipsPage/PartnershipsNavBar';
 import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const InternalOpportunityBoard = ({
   classes,
   opportunities,
   getAllInternalOpportunities,
+  fellowshipOpps,
+  mayoralOpps,
+  placeForPurposeOpps,
 }) => {
   useEffect(() => {
     getAllInternalOpportunities();
@@ -21,7 +26,44 @@ const InternalOpportunityBoard = ({
     'org_name'
   );
 
-  if (!opportunities) {
+  let theOpportunities = [];
+
+  const [value, setValue] = React.useState(1);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  switch (value) {
+    case 0:
+      theOpportunities = sortedOpportunities;
+      break;
+    case 1:
+      theOpportunities = sortAllOpportunitiesByCategory(
+        fellowshipOpps,
+        'org_name'
+      );
+      break;
+    case 2:
+      theOpportunities = sortAllOpportunitiesByCategory(
+        mayoralOpps,
+        'org_name'
+      );
+      break;
+    case 3:
+      theOpportunities = sortAllOpportunitiesByCategory(
+        placeForPurposeOpps,
+        'org_name'
+      );
+      break;
+    default:
+      theOpportunities = sortedOpportunities;
+      break;
+  }
+
+  if (theOpportunities.length === 0) return <div>loading...</div>;
+
+  if (!theOpportunities) {
     return <div>...Loading</div>;
   } else {
     return (
@@ -37,8 +79,25 @@ const InternalOpportunityBoard = ({
             Internal Opportunities Board
           </Typography>
         </Paper>
+        <div className={classes.filterAndFormContainer}>
+          <Paper square className={classes.tabsContainer}>
+            <Tabs
+              value={value}
+              indicatorColor="primary"
+              textColor="primary"
+              onChange={handleChange}
+              aria-label="disabled tabs example"
+              className={classes.tabs}
+            >
+              <Tab label="All" className={classes.tab} />
+              <Tab label="Fellowship" className={classes.tab} />
+              <Tab label="Mayoral Fellowship" className={classes.tab} />
+              <Tab label="Place for Purpose" className={classes.tab} />
+            </Tabs>
+          </Paper>
+        </div>
         <div className={classes.cardContainer}>
-          {sortedOpportunities.map((opportunity, index) => (
+          {theOpportunities.map((opportunity, index) => (
             <RoleCards
               key={index}
               opportunity={opportunity}
@@ -119,6 +178,24 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
     [breakpoints.down('md')]: {},
     [breakpoints.down('xl')]: {},
+  },
+
+  tabsContainer: {
+    marginRight: '10px',
+    marginBottom: '10px',
+
+    [breakpoints.up(1340)]: {
+      marginBottom: '0px',
+    },
+  },
+  tabs: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  tab: {
+    backgroundColor: palette.secondary.main,
+    color: '#ffffff',
+    fontWeight: 'bold',
   },
 });
 

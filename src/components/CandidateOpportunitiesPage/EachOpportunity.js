@@ -5,7 +5,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
-import AddOrEditOpportunityForm from '../Internal/AddOrEditOpportunitiesPage/AddOrEditOpportunityForm/';
+import AddOrEditOpportunityForm from '../Internal/AddOrEditOpportunitiesPage/AddOrEditOpportunityForm';
+
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const EachOpportunity = ({
   classes,
@@ -16,51 +21,151 @@ const EachOpportunity = ({
   onClickApplyButton,
   audience,
   updateExistingOpportunity,
+  deactivateRole,
+  activateRole,
 }) => {
   const [showForm, setShowForm] = useState(false);
 
-  let highlightColor = null;
+  let highlightColor = {};
+  if (opportunity.is_active === false) {
+    highlightColor = {
+      backgroundColor: '#d2d2d6',
+    };
+  }
   if (audience === 'internal') {
     switch (opportunity.program_name) {
       case 'Fellowship':
-        highlightColor = {borderTop: '4px solid #ffcc33'};
+        highlightColor['borderTop'] = '4px solid #ffcc33';
         break;
       case 'Mayoral Fellowship':
-        highlightColor = {borderTop: '4px solid #ef4aff'};
+        highlightColor['borderTop'] = '4px solid #ef4aff';
+
         break;
       default:
-        highlightColor = {borderTop: '4px solid #262626'};
+        highlightColor['borderTop'] = '4px solid #262626';
     }
   }
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const options = [];
+  if (opportunity.is_active) {
+    options[0] = 'Deactivate';
+  } else {
+    options[0] = 'Activate';
+  }
+
+  const ITEM_HEIGHT = 48;
+
+  const handleClickMore = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleClickActions = async opportunityId => {
+    let response;
+    if (opportunity.is_active) {
+      response = await deactivateRole(opportunityId);
+    } else {
+      response = await activateRole(opportunityId);
+    }
+
+    if (response && response.statusCode == 200) {
+      setAnchorEl(null);
+    }
+  };
 
   return !showForm ? (
-    <Paper className={classes.opportunityPaper} style={highlightColor}>
+    <Paper
+      className={classes.opportunityPaper}
+      style={highlightColor}
+      data-testid="opportunity"
+    >
       <div className={classes.oppHeaderContainer}>
         <div className={classes.titleAndOrg}>
-          <Typography variant="h5" component="p" className={classes.title}>
-            {opportunity.title}
+          <Typography
+            variant="h5"
+            component="p"
+            className={classes.title}
+            data-testid="title"
+          >
+            {opportunity.title}{' '}
+            {audience === 'internal' ? (
+              opportunity.is_active ? (
+                <span data-testid="is-active" className={classes.active}>
+                  (Active)
+                </span>
+              ) : (
+                <span data-testid="is-active" className={classes.inactive}>
+                  (Inactive)
+                </span>
+              )
+            ) : null}
           </Typography>
           <Typography
             variant="h5"
             component="p"
             className={classes.organization}
+            data-testid="org-name"
           >
             {opportunity.org_name || ''}
           </Typography>
         </div>
-        <div className={classes.programName}>
+        <div className={classes.programAndMoreContainer}>
           <Typography
             variant="h5"
             component="p"
             className={classes.programName}
+            data-testid="program-name"
           >
             {opportunity.program_name || ''}
           </Typography>
+          {audience === 'internal' && (
+            <div>
+              <IconButton
+                aria-label="more"
+                aria-controls="long-menu"
+                aria-haspopup="true"
+                onClick={handleClickMore}
+                className={classes.moreIconContainer}
+                data-testid="more-icon"
+              >
+                <MoreVertIcon className={classes.moreIcon} />
+              </IconButton>
+              <Menu
+                id="long-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: '20ch',
+                  },
+                }}
+              >
+                {options.map(option => (
+                  <MenuItem
+                    key={option}
+                    selected={option === 'Pyxis'}
+                    onClick={() => handleClickActions(opportunity.id)}
+                    data-testid="more-icon-menu"
+                  >
+                    {option}
+                  </MenuItem>
+                ))}
+              </Menu>
+            </div>
+          )}
         </div>
       </div>
       <div className={classes.opportunityContent}>
         <div className={classes.opportunityDescription}>
-          <Typography className={classes.description}>
+          <Typography className={classes.description} data-testid="description">
             {opportunity.short_description}
             <br />
           </Typography>
@@ -84,6 +189,7 @@ const EachOpportunity = ({
                         variant="contained"
                         color="primary"
                         key={index}
+                        data-testid="view-app-btn"
                       >
                         View Application
                       </Button>
@@ -93,6 +199,7 @@ const EachOpportunity = ({
                         variant="contained"
                         color="primary"
                         key={index}
+                        data-testid="apply-btn"
                       >
                         Apply
                       </Button>
@@ -108,6 +215,7 @@ const EachOpportunity = ({
               onClick={() => setShowForm(true)}
               variant="contained"
               color="primary"
+              data-testid="open-edit-opp-form-btn"
             >
               Edit
             </Button>
@@ -175,6 +283,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
       alignItems: 'center',
     },
   },
+  programAndMoreContainer: {
+    fontSize: '14px',
+    verticalAlign: 'text-bottom',
+    color: '#999999',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   opportunityDescription: {
     marginRight: spacing(2),
     display: 'flex',
@@ -208,10 +324,30 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  active: {
+    fontSize: '16px',
+    color: '#0ac70c',
+    fontWeight: 'normal',
+  },
+  inactive: {
+    fontSize: '16px',
+    color: '#555555',
+    fontWeight: 'normal',
+  },
   programName: {
     fontSize: '14px',
     verticalAlign: 'text-bottom',
     color: '#999999',
+  },
+  moreIcon: {
+    cursor: 'pointer',
+    padding: '0',
+  },
+  moreIconContainer: {
+    cursor: 'pointer',
+    padding: '3px 0px',
+    marginLeft: '5px',
+    borderRadius: '3px',
   },
   buttonContainer: {
     display: 'flex',

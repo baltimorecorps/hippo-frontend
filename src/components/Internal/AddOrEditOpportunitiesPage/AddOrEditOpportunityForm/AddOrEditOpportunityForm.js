@@ -68,6 +68,8 @@ const AddOrEditOpportunityForm = ({
     }
   };
 
+  const programs = ['Place for Purpose', 'Fellowship', 'Mayoral Fellowship'];
+
   return (
     <Paper className={classes.paper}>
       <Grid container justify="space-between">
@@ -76,6 +78,7 @@ const AddOrEditOpportunityForm = ({
           variant="h5"
           align="left"
           className={classes.paperHeader}
+          data-testid="form-header"
         >
           {type === 'add' ? 'Add New Opportunity' : 'Update Opportunity'}
         </Typography>
@@ -95,7 +98,7 @@ const AddOrEditOpportunityForm = ({
             <InputLabel
               id="program_name_label"
               InputLabelProps={inputLabelProps}
-              InputProps={inputProps}
+              Inputprops={inputProps}
             >
               Program Name
             </InputLabel>
@@ -106,12 +109,20 @@ const AddOrEditOpportunityForm = ({
               value={values.program_name || ''}
               onChange={handleChange}
               className={classes.textField}
+              inputProps={{
+                'data-testid': 'form-program-name',
+              }}
             >
-              <MenuItem value="Place for Purpose">Place for Purpose</MenuItem>
-              <MenuItem value="Mayoral Fellowship">Mayoral Fellowship</MenuItem>
-              <MenuItem value="Fellowship">Fellowship</MenuItem>
+              {programs.map(program => (
+                <MenuItem data-testid={program} value={program}>
+                  {program}
+                </MenuItem>
+              ))}
             </Select>
-            <FormHelperText className={classes.formHelperText}>
+            <FormHelperText
+              className={classes.formHelperText}
+              data-testid="form-warning"
+            >
               {errors.orgName_error || null}
             </FormHelperText>
           </FormControl>
@@ -127,7 +138,10 @@ const AddOrEditOpportunityForm = ({
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
           />
-          <FormHelperText className={classes.formHelperText}>
+          <FormHelperText
+            className={classes.formHelperText}
+            data-testid="form-warning"
+          >
             {errors.orgName_error || null}
           </FormHelperText>
           <TextField
@@ -141,7 +155,10 @@ const AddOrEditOpportunityForm = ({
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
           />
-          <FormHelperText className={classes.formHelperText}>
+          <FormHelperText
+            className={classes.formHelperText}
+            data-testid="form-warning"
+          >
             {errors.title_error || null}
           </FormHelperText>
           <TextField
@@ -157,7 +174,10 @@ const AddOrEditOpportunityForm = ({
             InputLabelProps={inputLabelProps}
             InputProps={inputProps}
           />
-          <FormHelperText className={classes.formHelperText}>
+          <FormHelperText
+            className={classes.formHelperText}
+            data-testid="form-warning"
+          >
             {errors.shortDescription_error || null}
           </FormHelperText>
           <TextField
@@ -169,9 +189,17 @@ const AddOrEditOpportunityForm = ({
             onChange={handleChange}
             className={classes.textField}
             InputLabelProps={inputLabelProps}
-            InputProps={inputProps}
+            // InputProps={inputProps}
+            inputProps={{
+              classes: {input: classes.resize},
+              autoComplete: 'off',
+              'data-testid': 'form-gdoc-link',
+            }}
           />
-          <FormHelperText className={classes.formHelperText}>
+          <FormHelperText
+            className={classes.formHelperText}
+            data-testid="form-warning"
+          >
             {errors.link_error || null}
           </FormHelperText>
         </Grid>
@@ -182,6 +210,10 @@ const AddOrEditOpportunityForm = ({
           variant="contained"
           color="primary"
           className={classes.createButton}
+          // inputProps={{
+          //   'data-testid': 'form-submit-button',
+          // }}
+          data-testid="form-submit-button"
         >
           {type === 'add' ? 'Add New Opportunity' : 'Update'}
         </Button>
@@ -205,6 +237,28 @@ AddOrEditOpportunityForm.propTypes = {
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
+  paper: {
+    flexGrow: 1,
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '100%',
+    padding: spacing(2, 3, 3),
+    marginBottom: spacing(2),
+    marginTop: spacing(2),
+  },
+  paperHeader: {
+    margin: spacing(0, 0, 2),
+  },
   header: {
     padding: spacing(2, 3, 0),
   },
@@ -232,27 +286,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: '2px',
     marginBottom: '4px',
   },
-  paper: {
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '100%',
-    padding: spacing(2, 3, 3),
-    marginBottom: spacing(2),
-  },
-  paperHeader: {
-    margin: spacing(0, 0, 2),
-  },
+
   createButton: {
     fontWeight: 600,
     margin: spacing(2, 0, 0, 0),
