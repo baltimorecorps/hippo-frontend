@@ -65,16 +65,12 @@ const EachOpportunity = ({
     setAnchorEl(null);
   };
 
-  const [isActive, setIsActive] = useState(opportunity.is_active);
-
   const handleClickActions = async opportunityId => {
     let response;
     if (opportunity.is_active) {
       response = await deactivateRole(opportunityId);
-      setIsActive(false);
     } else {
       response = await activateRole(opportunityId);
-      setIsActive(true);
     }
 
     if (response && response.statusCode == 200) {
@@ -98,7 +94,7 @@ const EachOpportunity = ({
           >
             {opportunity.title}{' '}
             {audience === 'internal' ? (
-              isActive ? (
+              opportunity.is_active ? (
                 <span data-testid="is-active" className={classes.active}>
                   (Active)
                 </span>
