@@ -1,17 +1,13 @@
 import React from 'react';
-import {
-  render,
-  fireEvent,
-  prettyDOM,
-  waitForElement,
-} from '@testing-library/react';
+import {render, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import {Provider} from 'react-redux';
 import {configureStore} from 'redux-starter-kit';
 import rootReducer from 'state';
 import {BrowserRouter as Router} from 'react-router-dom';
-
+import {ThemeProvider} from '@material-ui/core/styles';
+import theme from '../../styles/theme';
 import ProfilePage from './ProfilePage';
 
 describe('ProfilePage', () => {
@@ -166,5 +162,49 @@ describe('ProfilePage', () => {
     expect(queryByText('Experience')).not.toBeNull();
     expect(queryByText(/education/i)).not.toBeNull();
     expect(queryByText('Portfolio and Work Products')).not.toBeNull();
+  });
+
+  test('preview resume on profile', async () => {
+    const start = jest.fn();
+
+    const {getByTestId, getByText} = render(
+      <Provider store={store}>
+        <Router>
+          <ThemeProvider theme={theme}>
+            <ProfilePage
+              contactId={contactInfo.contactId}
+              contactInfo={contactInfo}
+              refreshContacts={jest.fn()}
+              startResumeCreation={start}
+              startResumeSelect={jest.fn()}
+              cancelResumeSelect={jest.fn()}
+              showResumeDialog={false}
+              showResumeSpinner={false}
+              inSelectMode={false}
+            />
+          </ThemeProvider>
+        </Router>
+      </Provider>
+    );
+    const previewResumeSwitch = getByTestId(
+      'preview-resume-switch'
+    ).querySelector('input[type="checkbox"]');
+
+    expect(previewResumeSwitch).toBeInTheDocument();
+    expect(previewResumeSwitch).toHaveProperty('checked', false);
+
+    fireEvent.click(previewResumeSwitch);
+    expect(previewResumeSwitch).toHaveProperty('checked', true);
+
+    const resume = getByTestId('resume-view');
+    const printResumeButton = getByText(/print resume/i);
+
+    expect(resume).toBeInTheDocument();
+    expect(printResumeButton).toBeInTheDocument();
+
+    fireEvent.click(previewResumeSwitch);
+    expect(previewResumeSwitch).toHaveProperty('checked', false);
+    expect(resume).not.toBeInTheDocument();
+    expect(printResumeButton).not.toBeInTheDocument();
   });
 });

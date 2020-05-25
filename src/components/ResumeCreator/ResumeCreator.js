@@ -1,5 +1,4 @@
-import React, {useState, useEffect, useRef, useReducer} from 'react';
-import Typography from '@material-ui/core/Typography';
+import React, {useState, useEffect, useRef} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -121,6 +120,7 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
     fontWeight: 400,
     fontSize: '12pt',
     color: palette.resume.blue,
+
     paddingTop: spacing(3),
     paddingBottom: spacing(0.5),
     paddingLeft: spacing(1),
@@ -396,7 +396,11 @@ const PrintComponent = ({printRef, header, pageSections, selected}) => {
   const classes = useStyles();
   return (
     <div style={{display: 'none'}}>
-      <div ref={printRef} className={classes.printDiv}>
+      <div
+        ref={printRef}
+        className={classes.printDiv}
+        data-testid="resume-view"
+      >
         {pageSections.map((page, i) => (
           <PageLayout
             key={i}
@@ -483,6 +487,7 @@ const ResumeCreator = ({
     // if has some selected, stop adding new experience/skills/education/portfolio to selected list of each section
     (page !== 'profile' && selected === null) ||
     (page === 'profile' &&
+      selected != null &&
       Object.keys(selected).length <
         sections.experience.length +
           sections.education.length +

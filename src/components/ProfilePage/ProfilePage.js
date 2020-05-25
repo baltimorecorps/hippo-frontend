@@ -276,6 +276,7 @@ const ProfilePage = ({
                             onChange={handleChange}
                             name="preview"
                             color="primary"
+                            data-testid="preview-resume-switch"
                           />
                         }
                         label="Preview Resume"
