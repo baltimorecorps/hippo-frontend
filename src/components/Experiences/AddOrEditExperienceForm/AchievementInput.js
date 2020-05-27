@@ -143,7 +143,7 @@ const AchievementInput = React.forwardRef(
         </Grid>
         <Grid item xs={10}>
           <TextField
-            placeholder="Add Responsibilities/Achievements"
+            placeholder="+ Add Responsibilities/Achievements"
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             className={classes.input}

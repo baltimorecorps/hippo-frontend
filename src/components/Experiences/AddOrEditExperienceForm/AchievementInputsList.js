@@ -25,7 +25,8 @@ const AchievementInputsList = ({
     if (focusTarget.current && doFocus) {
       focusTarget.current.setSelectionRange(
         focusTarget.current.value.length,
-        focusTarget.current.value.length)
+        focusTarget.current.value.length
+      );
       focusTarget.current.focus();
       setFocus(false);
     }
@@ -42,12 +43,11 @@ const AchievementInputsList = ({
     const descriptions = getMultilineDescriptions(text);
     onChange([
       ...achievements,
-      ...descriptions.map(desc => (
-        {
-          contact_id: contactId,
-          description: desc || '',
-          skills: [],
-        })),
+      ...descriptions.map(desc => ({
+        contact_id: contactId,
+        description: desc || '',
+        skills: [],
+      })),
     ]);
   };
   const handleAdd = text => {
@@ -66,7 +66,7 @@ const AchievementInputsList = ({
     setFocus(true);
   };
 
-  const getMultilineDescriptions = (description) => {
+  const getMultilineDescriptions = description => {
     return description
       .split('\n')
       .map(line => {
@@ -80,7 +80,7 @@ const AchievementInputsList = ({
         }
       })
       .filter(line => line !== null);
-  }
+  };
 
   const handleMultilineUpdate = (index, description) => {
     const descriptions = getMultilineDescriptions(description);
@@ -154,21 +154,6 @@ const AchievementInputsList = ({
           onIconClick={null}
           onKeyPress={() => {}}
         />
-      </Grid>
-      <Grid item xs={11}>
-        <Button
-          type="button"
-          onClick={handleAdd}
-          variant="text"
-          style={{
-            fontWeight: '700',
-            fontSize: '13px',
-            padding: '6px 23px',
-            margin: '3px 0px',
-          }}
-        >
-          + Add
-        </Button>
       </Grid>
     </Grid>
   );
