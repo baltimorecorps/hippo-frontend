@@ -13,7 +13,7 @@ const FilterByProgramsTabs = ({classes, handleChangeFilter, value}) => {
         indicatorColor="primary"
         textColor="primary"
         onChange={handleChangeFilter}
-        aria-label="disabled tabs example"
+        aria-label="filter-opportunities-by-program-name"
         className={classes.tabs}
         data-testid="filter-options"
       >
