@@ -2,17 +2,13 @@ import React, {useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
-import {
-  createExternalLink,
-  createClickTracking,
-} from 'lib/helperFunctions/helpers';
+import {createClickTracking} from 'lib/helperFunctions/helpers';
 import EachOpportunity from './EachOpportunity';
 import {
   sortAllOpportunitiesByCategory,
   sortByCategory,
-} from '../../lib/helperFunctions/helpers';
+} from 'lib/helperFunctions/opportunitiesHelpers';
 
 const CandidateOpportunitiesPage = ({
   classes,

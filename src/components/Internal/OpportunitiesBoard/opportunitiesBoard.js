@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import RoleCards from './RoleCards';
 import PartnershipsNavBar from 'components/Internal/PartnershipsPage/PartnershipsNavBar';
-import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
+import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/opportunitiesHelpers';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
@@ -30,7 +30,7 @@ const InternalOpportunityBoard = ({
 
   const [value, setValue] = React.useState(1);
 
-  const handleChange = (event, newValue) => {
+  const handleChangeFilter = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -85,7 +85,7 @@ const InternalOpportunityBoard = ({
               value={value}
               indicatorColor="primary"
               textColor="primary"
-              onChange={handleChange}
+              onChange={handleChangeFilter}
               aria-label="disabled tabs example"
               className={classes.tabs}
             >
