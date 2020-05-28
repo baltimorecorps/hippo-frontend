@@ -475,7 +475,7 @@ ProfilePage.propTypes = {
     email_primary: PropTypes.object,
     phone_primary: PropTypes.string,
   }),
-  getContact: PropTypes.func.isRequired,
+  getContact: PropTypes.func,
 };
 
 const dialogStyles = ({breakpoints, palette, spacing, shadows}) => ({

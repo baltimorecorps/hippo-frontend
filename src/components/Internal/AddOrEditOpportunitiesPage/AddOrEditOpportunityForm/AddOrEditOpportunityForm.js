@@ -97,8 +97,8 @@ const AddOrEditOpportunityForm = ({
           <FormControl required className={classes.formControl}>
             <InputLabel
               id="program_name_label"
-              InputLabelProps={inputLabelProps}
-              Inputprops={inputProps}
+              inputlabelprops={inputLabelProps}
+              inputprops={inputProps}
             >
               Program Name
             </InputLabel>
@@ -113,8 +113,8 @@ const AddOrEditOpportunityForm = ({
                 'data-testid': 'form-program-name',
               }}
             >
-              {programs.map(program => (
-                <MenuItem data-testid={program} value={program}>
+              {programs.map((program, index) => (
+                <MenuItem data-testid={program} value={program} key={index}>
                   {program}
                 </MenuItem>
               ))}
@@ -227,7 +227,6 @@ AddOrEditOpportunityForm.propTypes = {
   opportunity: PropTypes.shape({
     title: PropTypes.string.isRequired,
     short_description: PropTypes.string.isRequired,
-    cycle_id: PropTypes.number.isRequired,
     gdoc_link: PropTypes.string.isRequired,
     org_name: PropTypes.string.isRequired,
   }),
