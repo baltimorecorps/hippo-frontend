@@ -85,7 +85,7 @@ const ProfilePage = ({
   const [loading, setLoading] = useState(false);
   const [editScores, setEditScores] = useState({});
   const [viewResume, setViewResume] = useState(false);
-  const [resume, setResume] = useState((myResume: null));
+  const [resume, setResume] = useState({myResume: null});
 
   const updateEditScore = useCallback(
     expId => scores => {
