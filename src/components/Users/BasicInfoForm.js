@@ -33,9 +33,11 @@ const useForm = (initialValues, onSubmit) => {
     handleEmailChange: event => {
       const updatedEmail = {
         ...values.email_primary,
+        type: 'Personal',
         email: event.target.value,
       };
       update('email_primary')(updatedEmail);
+      update('emails')([updatedEmail]);
     },
   };
 
