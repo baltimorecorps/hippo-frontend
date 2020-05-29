@@ -99,13 +99,15 @@ const CandidateOpportunitiesPage = ({
         </Typography>
       </Paper>
       {page !== 'Mayoral Fellowship' && (
-        <FilterByProgramsTabs
-          handleChangeFilter={handleChangeFilter}
-          value={value}
-          programs={programs}
-        />
+        <React.Fragment>
+          <FilterByProgramsTabs
+            handleChangeFilter={handleChangeFilter}
+            value={value}
+            programs={programs}
+          />
+          <br className={classes.spacer} />
+        </React.Fragment>
       )}
-
       {renderedOpportunities.map(
         (opportunity, index) =>
           opportunity.is_active === true && (
@@ -153,6 +155,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     padding: spacing(2, 3, 3),
     marginBottom: spacing(2),
+  },
+  spacer: {
+    display: 'none',
+
+    [breakpoints.up(1340)]: {
+      width: '100%',
+      display: 'block',
+
+      marginBottom: spacing(2),
+      marginTop: spacing(2),
+    },
   },
 });
 
