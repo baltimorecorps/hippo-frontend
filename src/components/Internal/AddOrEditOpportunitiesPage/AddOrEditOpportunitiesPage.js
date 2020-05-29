@@ -9,9 +9,8 @@ import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 import EachOpportunity from '../../CandidateOpportunitiesPage/EachOpportunity';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
-import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import {filterOpportunitiesByPrograms} from 'lib/helperFunctions/opportunitiesHelpers';
+import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsTabs';
 
 const AddOrEditOpportunitiesPage = ({
   classes,
@@ -21,9 +20,6 @@ const AddOrEditOpportunitiesPage = ({
   updateOpportunity,
   deactivateRole,
   activateRole,
-  fellowshipOpps,
-  mayoralOpps,
-  placeForPurposeOpps,
 }) => {
   let history = useHistory();
 
@@ -55,47 +51,21 @@ const AddOrEditOpportunitiesPage = ({
       history.push('/internal/add-or-edit-opportunities');
     }
   };
-
-  const sortedOpportunities = sortAllOpportunitiesByCategory(
-    opportunities,
-    'org_name'
-  );
-
-  let theOpportunities = [];
-
   const [value, setValue] = React.useState(1);
+  const programs = ['Fellowship', 'Mayoral Fellowship', 'Place for Purpose'];
+
+  let theOpportunities = filterOpportunitiesByPrograms(
+    opportunities,
+    value,
+    programs
+  );
 
   const handleChangeFilter = (event, newValue) => {
     setValue(newValue);
   };
 
-  // Each value represent each program to filter by program
-  switch (value) {
-    case 0: // All
-      theOpportunities = sortedOpportunities;
-      break;
-    case 1: // Fellowship
-      theOpportunities = sortAllOpportunitiesByCategory(
-        fellowshipOpps,
-        'title'
-      );
-      break;
-    case 2: // Mayoral Fellowship
-      theOpportunities = sortAllOpportunitiesByCategory(mayoralOpps, 'title');
-      break;
-    case 3: //Place for Purpose
-      theOpportunities = sortAllOpportunitiesByCategory(
-        placeForPurposeOpps,
-        'title'
-      );
-      break;
-    default:
-      // All
-      theOpportunities = sortedOpportunities;
-      break;
-  }
-
-  if (theOpportunities.length === 0) return <div>loading...</div>;
+  if (!theOpportunities || theOpportunities.length === 0)
+    return <div>loading...</div>;
 
   return (
     <div className={classes.container}>
@@ -116,34 +86,11 @@ const AddOrEditOpportunitiesPage = ({
         className={classes.filterAndFormContainer}
         style={showForm ? {flexDirection: 'column'} : null}
       >
-        <Paper square className={classes.tabsContainer}>
-          <Tabs
-            value={value}
-            indicatorColor="primary"
-            textColor="primary"
-            onChange={handleChangeFilter}
-            aria-label="disabled tabs example"
-            className={classes.tabs}
-            data-testid="filter-options"
-          >
-            <Tab data-testid="filter-all" label="All" className={classes.tab} />
-            <Tab
-              data-testid="filter-fellowship"
-              label="Fellowship"
-              className={classes.tab}
-            />
-            <Tab
-              data-testid="filter-mayoral"
-              label="Mayoral Fellowship"
-              className={classes.tab}
-            />
-            <Tab
-              data-testid="filter-place-for-purpose"
-              label="Place for Purpose"
-              className={classes.tab}
-            />
-          </Tabs>
-        </Paper>
+        <FilterByProgramsTabs
+          handleChangeFilter={handleChangeFilter}
+          value={value}
+          programs={programs}
+        />
         {showForm ? (
           <AddOrEditOpportunityForm
             type="add"
@@ -348,23 +295,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
       maxWidth: '50%',
     },
     width: '100%',
-  },
-  tabsContainer: {
-    marginRight: '10px',
-    marginBottom: '10px',
-
-    [breakpoints.up(1340)]: {
-      marginBottom: '0px',
-    },
-  },
-  tabs: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  tab: {
-    backgroundColor: palette.secondary.main,
-    color: '#ffffff',
-    fontWeight: 'bold',
   },
 });
 

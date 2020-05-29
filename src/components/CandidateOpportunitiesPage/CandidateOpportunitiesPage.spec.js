@@ -12,7 +12,7 @@ const opportunityArray = [
     id: '1a',
     title: 'Test Title',
     cycle_id: 1,
-    gdoc_link: 'https://www.googleDocLink.com',
+    gdoc_link: 'https://docs.google.com/document/d/FS',
     program_id: 1,
     short_description: 'Test short description',
     status: 'submitted',
@@ -24,7 +24,7 @@ const opportunityArray = [
     id: '2f',
     title: 'Test Title 2',
     cycle_id: 1,
-    gdoc_link: 'https://www.googleDocLink2.com',
+    gdoc_link: 'https://docs.google.com/document/d/PFP',
     program_id: 1,
     short_description: 'Test short description 2',
     status: 'submitted',
@@ -36,7 +36,7 @@ const opportunityArray = [
     id: '2f',
     title: 'Test Title 3',
     cycle_id: 1,
-    gdoc_link: 'https://www.googleDocLink3.com',
+    gdoc_link: 'https://docs.google.com/document/d/MF',
     program_id: 1,
     short_description: 'Test short description 3',
     status: 'submitted',
@@ -92,11 +92,11 @@ describe('Opportunities Page', () => {
     expect(descriptions[1]).toHaveTextContent('Test short description 2');
     expect(gdocLinks[0]).toHaveAttribute(
       'href',
-      'https://www.googleDocLink.com'
+      'https://docs.google.com/document/d/FS'
     );
     expect(gdocLinks[1]).toHaveAttribute(
       'href',
-      'https://www.googleDocLink2.com'
+      'https://docs.google.com/document/d/PFP'
     );
   });
 
@@ -175,7 +175,94 @@ describe('Opportunities Page', () => {
 
     expect(gdocLink[0]).toHaveAttribute(
       'href',
-      'https://www.googleDocLink3.com'
+      'https://docs.google.com/document/d/MF'
     );
+  });
+
+  test('Filter Opportunities', () => {
+    const history = createMemoryHistory();
+
+    const {getByTestId, getAllByTestId, getByText, getAllByText} = render(
+      <Router history={history}>
+        <CandidateOpportunitiesPage
+          opportunities={opportunityArray}
+          getAllOpportunities={mockFunction}
+          getAllApplications={mockFunction}
+          submittedIds={submittedIds}
+          contact={contact}
+        />
+      </Router>
+    );
+
+    // default show opportunities from Place for Purpose and Fellowship programs
+    expect(getAllByTestId('opportunity').length).toBe(2);
+
+    const titles = getAllByTestId('title');
+    const orgNames = getAllByTestId('org-name');
+    const programNames = getAllByTestId('program-name');
+    const shortDescriptions = getAllByTestId('description');
+    const gdocLinks = getAllByText('View full description');
+
+    expect(titles[0]).toHaveTextContent('Test Title');
+    expect(orgNames[0]).toHaveTextContent('Test Org');
+    expect(programNames[0]).toHaveTextContent('Fellowship');
+    expect(shortDescriptions[0]).toHaveTextContent('Test short description');
+    expect(gdocLinks[0]).toHaveAttribute(
+      'href',
+      'https://docs.google.com/document/d/FS'
+    );
+
+    expect(titles[1]).toHaveTextContent('Test Title 2');
+    expect(orgNames[1]).toHaveTextContent('Test Org 2');
+    expect(programNames[1]).toHaveTextContent('Place for Purpose');
+    expect(shortDescriptions[1]).toHaveTextContent('Test short description 2');
+    expect(gdocLinks[1]).toHaveAttribute(
+      'href',
+      'https://docs.google.com/document/d/PFP'
+    );
+
+    const filterOptions = getByTestId('filter-options');
+    expect(filterOptions).toBeInTheDocument();
+
+    const filterAllPrograms = getByTestId('filter-all');
+    const filterFellowshipPrograms = getByTestId('filter-Fellowship');
+    const filterPlaceForPurposePrograms = getByTestId(
+      'filter-Place for Purpose'
+    );
+    expect(filterAllPrograms).toBeInTheDocument();
+    expect(filterFellowshipPrograms).toBeInTheDocument();
+    expect(filterPlaceForPurposePrograms).toBeInTheDocument();
+
+    // Test filter only opportunities in Place for Purpose program
+    fireEvent.click(filterPlaceForPurposePrograms);
+
+    expect(getAllByTestId('opportunity').length).toBe(1);
+    expect(titles[0]).toHaveTextContent('Test Title 2');
+    expect(orgNames[0]).toHaveTextContent('Test Org 2');
+    expect(programNames[0]).toHaveTextContent('Place for Purpose');
+    expect(shortDescriptions[0]).toHaveTextContent('Test short description 2');
+
+    expect(gdocLinks[0]).toHaveAttribute(
+      'href',
+      'https://docs.google.com/document/d/PFP'
+    );
+
+    // Test filter only opportunities in Place for Purpose program
+    fireEvent.click(filterFellowshipPrograms);
+    expect(getAllByTestId('opportunity').length).toBe(1);
+
+    expect(titles[0]).toHaveTextContent('Test Title');
+    expect(orgNames[0]).toHaveTextContent('Test Org');
+    expect(programNames[0]).toHaveTextContent('Fellowship');
+    expect(shortDescriptions[0]).toHaveTextContent('Test short description');
+
+    expect(gdocLinks[0]).toHaveAttribute(
+      'href',
+      'https://docs.google.com/document/d/FS'
+    );
+
+    // Test filter all opportunities in PFP and FS program
+    fireEvent.click(filterAllPrograms);
+    expect(getAllByTestId('opportunity').length).toBe(2);
   });
 });

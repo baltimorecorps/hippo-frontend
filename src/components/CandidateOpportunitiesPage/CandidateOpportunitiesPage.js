@@ -2,17 +2,14 @@ import React, {useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
-import {
-  createExternalLink,
-  createClickTracking,
-} from 'lib/helperFunctions/helpers';
+import {createClickTracking} from 'lib/helperFunctions/helpers';
 import EachOpportunity from './EachOpportunity';
 import {
-  sortAllOpportunitiesByCategory,
+  filterOpportunitiesByPrograms,
   sortByCategory,
-} from '../../lib/helperFunctions/helpers';
+} from 'lib/helperFunctions/opportunitiesHelpers';
+import FilterByProgramsTabs from '../CandidateOpportunitiesPage/FilterByProgramsTabs';
 
 const CandidateOpportunitiesPage = ({
   classes,
@@ -63,51 +60,30 @@ const CandidateOpportunitiesPage = ({
 
   let header = '';
   let renderedOpportunities = [];
-  const noMayoralOpportunities = opportunities.filter(
-    opp => opp.program_name !== 'Mayoral Fellowship'
+
+  const [value, setValue] = React.useState(0);
+  const programs = ['Place for Purpose', 'Fellowship'];
+
+  renderedOpportunities = filterOpportunitiesByPrograms(
+    opportunities,
+    value,
+    programs
   );
 
-  switch (page) {
-    case 'Mayoral Fellowship':
-      header = 'Mayoral Fellowship';
-      const MF_opportunities = opportunities.filter(
-        opp => opp.program_name === 'Mayoral Fellowship'
-      );
-      renderedOpportunities = sortByCategory(MF_opportunities, 'title');
-      break;
-
-    case 'Place for Purpose':
-      header = 'Place for Purpose';
-      const PFP_opportunities = opportunities.filter(
-        opp => opp.program_name === 'Place for Purpose'
-      );
-      renderedOpportunities = sortByCategory(PFP_opportunities, 'title');
-      break;
-
-    case 'Fellowship':
-      header = 'Fellowship';
-      const fellowship_opportunities = opportunities.filter(
-        opp => opp.program_name === 'Place for Purpose'
-      );
-      renderedOpportunities = sortByCategory(fellowship_opportunities, 'title');
-      break;
-
-    case 'main':
-      header = '';
-      renderedOpportunities = sortAllOpportunitiesByCategory(
-        noMayoralOpportunities,
-        'title'
-      );
-      break;
-
-    default:
-      header = '';
-      renderedOpportunities = sortAllOpportunitiesByCategory(
-        noMayoralOpportunities,
-        'title'
-      );
-      break;
+  if (page === 'Mayoral Fellowship') {
+    header = page;
+    const MF_opportunities = opportunities.filter(
+      opp => opp.program_name === 'Mayoral Fellowship'
+    );
+    renderedOpportunities = sortByCategory(MF_opportunities, 'title');
   }
+
+  const handleChangeFilter = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  if (!renderedOpportunities || renderedOpportunities.length === 0)
+    return <div>loading...</div>;
 
   return (
     <div className={classes.container}>
@@ -122,6 +98,16 @@ const CandidateOpportunitiesPage = ({
           {`${header} Opportunities`}
         </Typography>
       </Paper>
+      {page !== 'Mayoral Fellowship' && (
+        <React.Fragment>
+          <FilterByProgramsTabs
+            handleChangeFilter={handleChangeFilter}
+            value={value}
+            programs={programs}
+          />
+          <br className={classes.spacer} />
+        </React.Fragment>
+      )}
       {renderedOpportunities.map(
         (opportunity, index) =>
           opportunity.is_active === true && (
@@ -169,6 +155,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     padding: spacing(2, 3, 3),
     marginBottom: spacing(2),
+  },
+  spacer: {
+    display: 'none',
+
+    [breakpoints.up(1340)]: {
+      width: '100%',
+      display: 'block',
+
+      marginBottom: spacing(2),
+      marginTop: spacing(2),
+    },
   },
 });
 

@@ -5,61 +5,30 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import RoleCards from './RoleCards';
 import PartnershipsNavBar from 'components/Internal/PartnershipsPage/PartnershipsNavBar';
-import {sortAllOpportunitiesByCategory} from 'lib/helperFunctions/helpers';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import {filterOpportunitiesByPrograms} from 'lib/helperFunctions/opportunitiesHelpers';
+import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsTabs';
 
 const InternalOpportunityBoard = ({
   classes,
   opportunities,
   getAllInternalOpportunities,
-  fellowshipOpps,
-  mayoralOpps,
-  placeForPurposeOpps,
 }) => {
   useEffect(() => {
     getAllInternalOpportunities();
   }, [getAllInternalOpportunities]);
 
-  const sortedOpportunities = sortAllOpportunitiesByCategory(
+  const [value, setValue] = React.useState(1);
+  const programs = ['Fellowship', 'Mayoral Fellowship', 'Place for Purpose'];
+
+  let theOpportunities = filterOpportunitiesByPrograms(
     opportunities,
-    'org_name'
+    value,
+    programs
   );
 
-  let theOpportunities = [];
-
-  const [value, setValue] = React.useState(1);
-
-  const handleChange = (event, newValue) => {
+  const handleChangeFilter = (event, newValue) => {
     setValue(newValue);
   };
-
-  switch (value) {
-    case 0:
-      theOpportunities = sortedOpportunities;
-      break;
-    case 1:
-      theOpportunities = sortAllOpportunitiesByCategory(
-        fellowshipOpps,
-        'org_name'
-      );
-      break;
-    case 2:
-      theOpportunities = sortAllOpportunitiesByCategory(
-        mayoralOpps,
-        'org_name'
-      );
-      break;
-    case 3:
-      theOpportunities = sortAllOpportunitiesByCategory(
-        placeForPurposeOpps,
-        'org_name'
-      );
-      break;
-    default:
-      theOpportunities = sortedOpportunities;
-      break;
-  }
 
   if (theOpportunities.length === 0) return <div>loading...</div>;
 
@@ -80,21 +49,11 @@ const InternalOpportunityBoard = ({
           </Typography>
         </Paper>
         <div className={classes.filterAndFormContainer}>
-          <Paper square className={classes.tabsContainer}>
-            <Tabs
-              value={value}
-              indicatorColor="primary"
-              textColor="primary"
-              onChange={handleChange}
-              aria-label="disabled tabs example"
-              className={classes.tabs}
-            >
-              <Tab label="All" className={classes.tab} />
-              <Tab label="Fellowship" className={classes.tab} />
-              <Tab label="Mayoral Fellowship" className={classes.tab} />
-              <Tab label="Place for Purpose" className={classes.tab} />
-            </Tabs>
-          </Paper>
+          <FilterByProgramsTabs
+            handleChangeFilter={handleChangeFilter}
+            value={value}
+            programs={programs}
+          />
         </div>
         <div className={classes.cardContainer}>
           {theOpportunities.map((opportunity, index) => (
@@ -116,7 +75,7 @@ InternalOpportunityBoard.propTypes = {
   opportunities: PropTypes.arrayOf(
     PropTypes.shape({
       short_description: PropTypes.string.isRequired,
-      applications: PropTypes.arrayOf(PropTypes.object).isRequired,
+      applications: PropTypes.arrayOf(PropTypes.object),
       org_name: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
       program_id: PropTypes.number.isRequired,
@@ -178,24 +137,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
     [breakpoints.down('md')]: {},
     [breakpoints.down('xl')]: {},
-  },
-
-  tabsContainer: {
-    marginRight: '10px',
-    marginBottom: '10px',
-
-    [breakpoints.up(1340)]: {
-      marginBottom: '0px',
-    },
-  },
-  tabs: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  tab: {
-    backgroundColor: palette.secondary.main,
-    color: '#ffffff',
-    fontWeight: 'bold',
   },
 });
 

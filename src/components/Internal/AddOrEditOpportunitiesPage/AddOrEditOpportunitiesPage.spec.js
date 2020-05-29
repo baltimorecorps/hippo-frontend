@@ -269,10 +269,10 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
     expect(filterOptions).toBeInTheDocument();
 
     const filterAllPrograms = getByTestId('filter-all');
-    const filterFellowshipPrograms = getByTestId('filter-fellowship');
-    const filterMayoralPrograms = getByTestId('filter-mayoral');
+    const filterFellowshipPrograms = getByTestId('filter-Fellowship');
+    const filterMayoralPrograms = getByTestId('filter-Mayoral Fellowship');
     const filterPlaceForPurposePrograms = getByTestId(
-      'filter-place-for-purpose'
+      'filter-Place for Purpose'
     );
     expect(filterAllPrograms).toBeInTheDocument();
     expect(filterFellowshipPrograms).toBeInTheDocument();
