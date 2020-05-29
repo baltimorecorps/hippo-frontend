@@ -7,7 +7,6 @@ import {createClickTracking} from 'lib/helperFunctions/helpers';
 import EachOpportunity from './EachOpportunity';
 import {
   filterOpportunitiesByPrograms,
-  sortAllOpportunitiesByCategory,
   sortByCategory,
 } from 'lib/helperFunctions/opportunitiesHelpers';
 import FilterByProgramsTabs from '../CandidateOpportunitiesPage/FilterByProgramsTabs';
@@ -61,35 +60,6 @@ const CandidateOpportunitiesPage = ({
 
   let header = '';
   let renderedOpportunities = [];
-  const noMayoralOpportunities = opportunities.filter(
-    opp => opp.program_name !== 'Mayoral Fellowship'
-  );
-
-  switch (page) {
-    case 'Mayoral Fellowship':
-      header = 'Mayoral Fellowship';
-      const MF_opportunities = opportunities.filter(
-        opp => opp.program_name === 'Mayoral Fellowship'
-      );
-      renderedOpportunities = sortByCategory(MF_opportunities, 'title');
-      break;
-
-    case 'main':
-      header = '';
-      renderedOpportunities = sortAllOpportunitiesByCategory(
-        noMayoralOpportunities,
-        'title'
-      );
-      break;
-
-    default:
-      header = '';
-      renderedOpportunities = sortAllOpportunitiesByCategory(
-        noMayoralOpportunities,
-        'title'
-      );
-      break;
-  }
 
   const [value, setValue] = React.useState(0);
   const programs = ['Place for Purpose', 'Fellowship'];
@@ -101,6 +71,7 @@ const CandidateOpportunitiesPage = ({
   );
 
   if (page === 'Mayoral Fellowship') {
+    header = page;
     const MF_opportunities = opportunities.filter(
       opp => opp.program_name === 'Mayoral Fellowship'
     );

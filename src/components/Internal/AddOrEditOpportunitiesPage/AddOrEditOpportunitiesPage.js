@@ -296,23 +296,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
     width: '100%',
   },
-  tabsContainer: {
-    marginRight: '10px',
-    marginBottom: '10px',
-
-    [breakpoints.up(1340)]: {
-      marginBottom: '0px',
-    },
-  },
-  tabs: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  tab: {
-    backgroundColor: palette.secondary.main,
-    color: '#ffffff',
-    fontWeight: 'bold',
-  },
 });
 
 export default withStyles(styles)(AddOrEditOpportunitiesPage);

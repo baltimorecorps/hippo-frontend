@@ -138,24 +138,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.down('md')]: {},
     [breakpoints.down('xl')]: {},
   },
-
-  tabsContainer: {
-    marginRight: '10px',
-    marginBottom: '10px',
-
-    [breakpoints.up(1340)]: {
-      marginBottom: '0px',
-    },
-  },
-  tabs: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  tab: {
-    backgroundColor: palette.secondary.main,
-    color: '#ffffff',
-    fontWeight: 'bold',
-  },
 });
 
 export default withStyles(styles)(InternalOpportunityBoard);
