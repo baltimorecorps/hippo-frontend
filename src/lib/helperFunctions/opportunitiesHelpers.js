@@ -35,10 +35,6 @@ const filterByProgramAndSortByCategory = (
   result = opportunities.filter(opp => opp.program_name === programName);
   result = sortAllOpportunitiesByCategory(result, category);
 
-  // result = opportunities.sort((a, b) => {
-  //   return a[category] > b[category] ? 1 : -1;
-  // });
-
   return result;
 };
 
@@ -93,11 +89,28 @@ const sortAllOpportunitiesByCategory = (opportunities, category) => {
   return sortedOpportunities;
 };
 
-const filterOpportunitiesByPrograms = (opportunities, value) => {
-  const sortedOpportunities = sortAllOpportunitiesByCategory(
-    opportunities,
-    'org_name'
-  );
+const filterOpportunitiesByPrograms = (opportunities, value, programs) => {
+  let sortedOpportunities = [];
+  if (programs && programs.length > 0) {
+    let filteredOpportunities = [];
+    programs.forEach(program => {
+      const opps = filterByProgramAndSortByCategory(
+        opportunities,
+        program,
+        'title'
+      );
+      filteredOpportunities = [...filteredOpportunities, ...opps];
+    });
+    sortedOpportunities = sortAllOpportunitiesByCategory(
+      filteredOpportunities,
+      'title'
+    );
+  } else {
+    sortedOpportunities = sortAllOpportunitiesByCategory(
+      opportunities,
+      'title'
+    );
+  }
 
   let theOpportunities;
 
@@ -106,24 +119,32 @@ const filterOpportunitiesByPrograms = (opportunities, value) => {
     case 0: // All
       theOpportunities = sortedOpportunities;
       break;
-    case 1: // Fellowship
+
+    case 1:
       theOpportunities = filterByProgramAndSortByCategory(
         opportunities,
-        'Fellowship',
+        programs[0],
         'title'
       );
       break;
-    case 2: // Mayoral Fellowship
+    case 2:
       theOpportunities = filterByProgramAndSortByCategory(
         opportunities,
-        'Mayoral Fellowship',
+        programs[1],
         'title'
       );
       break;
-    case 3: //Place for Purpose
+    case 3:
       theOpportunities = filterByProgramAndSortByCategory(
         opportunities,
-        'Place for Purpose',
+        programs[2],
+        'title'
+      );
+      break;
+    case 4:
+      theOpportunities = filterByProgramAndSortByCategory(
+        opportunities,
+        programs[3],
         'title'
       );
       break;

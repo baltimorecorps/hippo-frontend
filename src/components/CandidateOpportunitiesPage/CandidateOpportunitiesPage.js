@@ -6,9 +6,11 @@ import {useHistory} from 'react-router-dom';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 import EachOpportunity from './EachOpportunity';
 import {
+  filterOpportunitiesByPrograms,
   sortAllOpportunitiesByCategory,
   sortByCategory,
 } from 'lib/helperFunctions/opportunitiesHelpers';
+import FilterByProgramsTabs from '../CandidateOpportunitiesPage/FilterByProgramsTabs';
 
 const CandidateOpportunitiesPage = ({
   classes,
@@ -72,22 +74,6 @@ const CandidateOpportunitiesPage = ({
       renderedOpportunities = sortByCategory(MF_opportunities, 'title');
       break;
 
-    case 'Place for Purpose':
-      header = 'Place for Purpose';
-      const PFP_opportunities = opportunities.filter(
-        opp => opp.program_name === 'Place for Purpose'
-      );
-      renderedOpportunities = sortByCategory(PFP_opportunities, 'title');
-      break;
-
-    case 'Fellowship':
-      header = 'Fellowship';
-      const fellowship_opportunities = opportunities.filter(
-        opp => opp.program_name === 'Place for Purpose'
-      );
-      renderedOpportunities = sortByCategory(fellowship_opportunities, 'title');
-      break;
-
     case 'main':
       header = '';
       renderedOpportunities = sortAllOpportunitiesByCategory(
@@ -105,6 +91,29 @@ const CandidateOpportunitiesPage = ({
       break;
   }
 
+  const [value, setValue] = React.useState(0);
+  const programs = ['Place for Purpose', 'Fellowship'];
+
+  renderedOpportunities = filterOpportunitiesByPrograms(
+    opportunities,
+    value,
+    programs
+  );
+
+  if (page === 'Mayoral Fellowship') {
+    const MF_opportunities = opportunities.filter(
+      opp => opp.program_name === 'Mayoral Fellowship'
+    );
+    renderedOpportunities = sortByCategory(MF_opportunities, 'title');
+  }
+
+  const handleChangeFilter = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  if (!renderedOpportunities || renderedOpportunities.length === 0)
+    return <div>loading...</div>;
+
   return (
     <div className={classes.container}>
       <Paper className={classes.headerPaper}>
@@ -118,6 +127,14 @@ const CandidateOpportunitiesPage = ({
           {`${header} Opportunities`}
         </Typography>
       </Paper>
+      {page !== 'Mayoral Fellowship' && (
+        <FilterByProgramsTabs
+          handleChangeFilter={handleChangeFilter}
+          value={value}
+          programs={programs}
+        />
+      )}
+
       {renderedOpportunities.map(
         (opportunity, index) =>
           opportunity.is_active === true && (

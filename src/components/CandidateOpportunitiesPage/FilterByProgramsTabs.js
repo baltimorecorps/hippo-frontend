@@ -5,7 +5,12 @@ import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-const FilterByProgramsTabs = ({classes, handleChangeFilter, value}) => {
+const FilterByProgramsTabs = ({
+  classes,
+  handleChangeFilter,
+  value,
+  programs,
+}) => {
   return (
     <Paper square className={classes.tabsContainer}>
       <Tabs
@@ -18,21 +23,14 @@ const FilterByProgramsTabs = ({classes, handleChangeFilter, value}) => {
         data-testid="filter-options"
       >
         <Tab data-testid="filter-all" label="All" className={classes.tab} />
-        <Tab
-          data-testid="filter-fellowship"
-          label="Fellowship"
-          className={classes.tab}
-        />
-        <Tab
-          data-testid="filter-mayoral"
-          label="Mayoral Fellowship"
-          className={classes.tab}
-        />
-        <Tab
-          data-testid="filter-place-for-purpose"
-          label="Place for Purpose"
-          className={classes.tab}
-        />
+        {programs.map((program, index) => (
+          <Tab
+            key={index}
+            data-testid={`filter-${program}`}
+            label={program}
+            className={classes.tab}
+          />
+        ))}
       </Tabs>
     </Paper>
   );

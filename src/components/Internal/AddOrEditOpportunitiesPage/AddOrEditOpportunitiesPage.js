@@ -52,8 +52,13 @@ const AddOrEditOpportunitiesPage = ({
     }
   };
   const [value, setValue] = React.useState(1);
+  const programs = ['Fellowship', 'Mayoral Fellowship', 'Place for Purpose'];
 
-  let theOpportunities = filterOpportunitiesByPrograms(opportunities, value);
+  let theOpportunities = filterOpportunitiesByPrograms(
+    opportunities,
+    value,
+    programs
+  );
 
   const handleChangeFilter = (event, newValue) => {
     setValue(newValue);
@@ -84,6 +89,7 @@ const AddOrEditOpportunitiesPage = ({
         <FilterByProgramsTabs
           handleChangeFilter={handleChangeFilter}
           value={value}
+          programs={programs}
         />
         {showForm ? (
           <AddOrEditOpportunityForm

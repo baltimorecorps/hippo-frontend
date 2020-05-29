@@ -18,8 +18,13 @@ const InternalOpportunityBoard = ({
   }, [getAllInternalOpportunities]);
 
   const [value, setValue] = React.useState(1);
+  const programs = ['Fellowship', 'Mayoral Fellowship', 'Place for Purpose'];
 
-  let theOpportunities = filterOpportunitiesByPrograms(opportunities, value);
+  let theOpportunities = filterOpportunitiesByPrograms(
+    opportunities,
+    value,
+    programs
+  );
 
   const handleChangeFilter = (event, newValue) => {
     setValue(newValue);
@@ -47,6 +52,7 @@ const InternalOpportunityBoard = ({
           <FilterByProgramsTabs
             handleChangeFilter={handleChangeFilter}
             value={value}
+            programs={programs}
           />
         </div>
         <div className={classes.cardContainer}>
