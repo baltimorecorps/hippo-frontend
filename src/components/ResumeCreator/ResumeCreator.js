@@ -483,8 +483,9 @@ const ResumeCreator = ({
       },
     ];
   }
-  const sortedExp = sortExperiences(sections.experience);
-  sections.experience = sortedExp;
+  sections.experience = sortExperiences(sections.experience);
+  sections.education = sortExperiences(sections.education);
+  sections.portfolio = sortExperiences(sections.portfolio);
 
   if (
     // if has some selected, stop adding new experience/skills/education/portfolio to selected list of each section
