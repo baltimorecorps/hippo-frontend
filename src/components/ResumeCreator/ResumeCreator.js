@@ -14,6 +14,8 @@ import PortfolioItem from './PortfolioItem';
 import SelectDrawer from './SelectDrawer';
 import ReactToPrint from 'react-to-print';
 
+import {sortExperiences} from '../Experiences/ExperiencesList/helpers';
+
 const drawerWidth = 400;
 const headerHeight = 100;
 
@@ -224,6 +226,11 @@ const PageLayout = ({
         education: 'Additional Education',
       };
 
+  console.log(sections.experience);
+  const sortedExp = sortExperiences(sections.experience);
+  console.log('sortedExp', sortedExp);
+
+  sections.experience = sortedExp;
   return (
     <Grid container className={classes.page}>
       {header && (

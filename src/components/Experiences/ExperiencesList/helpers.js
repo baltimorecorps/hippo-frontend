@@ -127,6 +127,7 @@ const getMonthScore = experiences => {
     if (exp.is_current === false) {
       return (exp.end_month_score = monthScore[exp.end_month]);
     }
+    return exp.start_month_score;
   });
 
   return experiences;
