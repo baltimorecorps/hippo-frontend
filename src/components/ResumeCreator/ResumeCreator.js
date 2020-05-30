@@ -225,12 +225,6 @@ const PageLayout = ({
         portfolio: 'Additional Projects',
         education: 'Additional Education',
       };
-
-  console.log(sections.experience);
-  const sortedExp = sortExperiences(sections.experience);
-  console.log('sortedExp', sortedExp);
-
-  sections.experience = sortedExp;
   return (
     <Grid container className={classes.page}>
       {header && (
@@ -489,6 +483,8 @@ const ResumeCreator = ({
       },
     ];
   }
+  const sortedExp = sortExperiences(sections.experience);
+  sections.experience = sortedExp;
 
   if (
     // if has some selected, stop adding new experience/skills/education/portfolio to selected list of each section
