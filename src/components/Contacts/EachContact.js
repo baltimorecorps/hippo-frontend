@@ -1,19 +1,20 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import DeleteProfileDialog from './DeleteProfileDialog';
+
 const ContactList = ({classes, contact, deleteContact}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(null);
 
   const options = ['Delete'];
 
@@ -29,19 +30,26 @@ const ContactList = ({classes, contact, deleteContact}) => {
 
   const handleClickActions = async (option, contactId) => {
     if (option === 'Delete') {
-      const response = await deleteContact(contactId);
-      if (response.statusCode === 200) {
-        console.log('delete profile', contactId);
-        setAnchorEl(null);
-
-        window.location.reload(false);
-      } else {
-        console.error('Error updating application with resume', response);
-      }
+      setOpenDeleteDialog(true);
     }
   };
 
-  // todo add dialog to confirm before delete
+  const onDelete = async contactId => {
+    const response = await deleteContact(contactId);
+    if (response.statusCode === 200) {
+      console.log('delete profile', contactId);
+      setAnchorEl(null);
+      window.location.reload(false);
+    } else {
+      console.error('Error updating application with resume', response);
+    }
+  };
+
+  const handleCancel = () => {
+    setAnchorEl(null);
+    setOpenDeleteDialog(false);
+  };
+
   // add testing
 
   return (
@@ -89,6 +97,13 @@ const ContactList = ({classes, contact, deleteContact}) => {
           </MenuItem>
         ))}
       </Menu>
+      {openDeleteDialog && (
+        <DeleteProfileDialog
+          contact={contact}
+          onDelete={onDelete}
+          handleCancel={handleCancel}
+        />
+      )}
     </div>
   );
 };
@@ -115,23 +130,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   listItem: {
     borderBottom: 'none',
-    // '&:hover': {
-    //   backgroundColor: '#d4d4d4',
-    // },
   },
   deleteButton: {
     margin: spacing(1),
     borderColor: palette.error.main,
     color: palette.error.main,
-
     '&:hover': {
       color: 'white',
       backgroundColor: palette.error.main,
     },
-  },
-  moreIcon: {
-    cursor: 'pointer',
-    padding: '0',
   },
   moreIconContainer: {
     cursor: 'pointer',
@@ -139,6 +146,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginLeft: '5px',
     borderRadius: '3px',
     zIndex: 10,
+  },
+  moreIcon: {
+    cursor: 'pointer',
+    padding: '0',
   },
 });
 
