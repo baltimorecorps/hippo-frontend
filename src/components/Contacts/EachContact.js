@@ -36,12 +36,9 @@ const ContactList = ({classes, contact, deleteContact}) => {
 
   const onDelete = async contactId => {
     const response = await deleteContact(contactId);
-    if (response.statusCode === 200) {
-      console.log('delete profile', contactId);
+    if (response && response.statusCode == 200) {
       setAnchorEl(null);
       window.location.reload(false);
-    } else {
-      console.error('Error updating application with resume', response);
     }
   };
 
@@ -50,8 +47,6 @@ const ContactList = ({classes, contact, deleteContact}) => {
     setOpenDeleteDialog(false);
   };
 
-  // add testing
-
   return (
     <div className={classes.container}>
       <ListItem
@@ -59,6 +54,7 @@ const ContactList = ({classes, contact, deleteContact}) => {
         to={`/profile/${contact.id}`}
         divider
         className={classes.listItem}
+        data-testid="each-contact"
       >
         <ListItemText primary={`${contact.first_name} ${contact.last_name}`} />
       </ListItem>

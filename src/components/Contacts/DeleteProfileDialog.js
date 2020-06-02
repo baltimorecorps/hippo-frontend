@@ -16,7 +16,7 @@ const DeleteProfileDialog = ({classes, contact, onDelete, handleCancel}) => {
     </strong>
   );
   return (
-    <Dialog open={true}>
+    <Dialog open={true} data-testid="confirm-delete-dialog">
       <DialogContent className={classes.dialogContent}>
         <Typography align="center">
           Are you sure you want to delete <br />
@@ -28,11 +28,17 @@ const DeleteProfileDialog = ({classes, contact, onDelete, handleCancel}) => {
           className={classes.delete}
           variant="outlined"
           onClick={() => onDelete(contact.id)}
+          data-testid="confirm-delete-button"
         >
           Yes, Delete
         </Button>
 
-        <Button variant="contained" color="secondary" onClick={handleCancel}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleCancel}
+          data-testid="confirm-not-delete-button"
+        >
           No
         </Button>
       </DialogActions>
