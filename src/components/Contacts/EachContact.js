@@ -11,7 +11,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import DeleteProfileDialog from './DeleteProfileDialog';
 
-const ContactList = ({classes, contact, deleteContact}) => {
+const ContactList = ({classes, contact, deleteContact, setLoaded}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(null);
@@ -38,7 +38,7 @@ const ContactList = ({classes, contact, deleteContact}) => {
     const response = await deleteContact(contactId);
     if (response && response.statusCode == 200) {
       setAnchorEl(null);
-      window.location.reload(false);
+      setLoaded(false);
     }
   };
 
@@ -56,6 +56,7 @@ const ContactList = ({classes, contact, deleteContact}) => {
         className={classes.listItem}
         data-testid="each-contact"
       >
+        <ListItemText primary={`id: ${contact.id}`} />
         <ListItemText primary={`${contact.first_name} ${contact.last_name}`} />
       </ListItem>
 
@@ -78,7 +79,7 @@ const ContactList = ({classes, contact, deleteContact}) => {
         PaperProps={{
           style: {
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch',
+            width: '15ch',
           },
         }}
       >

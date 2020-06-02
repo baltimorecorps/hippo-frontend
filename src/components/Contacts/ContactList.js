@@ -12,22 +12,31 @@ const ContactList = ({
   deleteContact,
 }) => {
   let [loaded, setLoaded] = useState(false);
+  const [profiles, setProfiles] = useState(contacts);
+
   useEffect(() => {
-    if (!loaded) {
-      getAllContactsShort();
-    }
+    if (!loaded) getAllContactsShort();
+
     setLoaded(true);
   }, [loaded, contacts, getAllContactsShort]);
 
+  useEffect(() => {
+    if (profiles.length !== contacts.length) getAllContactsShort();
+
+    setProfiles(contacts);
+  }, [contacts, getAllContactsShort, profiles]);
+
   return (
     <List>
-      {contacts.map((contact, index) => (
-        <EachContact
-          contact={contact}
-          key={index}
-          deleteContact={deleteContact}
-        />
-      ))}
+      {profiles &&
+        profiles.map((contact, index) => (
+          <EachContact
+            contact={contact}
+            key={index}
+            deleteContact={deleteContact}
+            setLoaded={setLoaded}
+          />
+        ))}
     </List>
   );
 };
