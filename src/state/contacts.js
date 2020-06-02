@@ -109,6 +109,16 @@ export const addContactSkill = (contactId, skill) =>
     return result;
   };
 
+export const DELETE_CONTACT_API = fetchActionTypes('DELETE_CONTACT');
+export const deleteContact = contactId =>
+  makeApiFetchActions(
+    'DELETE_CONTACT',
+    `${API_URL}/api/contacts/${contactId}/`,
+    {
+      method: 'DELETE',
+    }
+  );
+
 export const DELETE_CONTACT_SKILL = 'DELETE_CONTACT_SKILL';
 export const DELETE_CONTACT_SKILL_API = fetchActionTypes(DELETE_CONTACT_SKILL);
 export const deleteContactSkill = (contactId, skill) =>
@@ -299,6 +309,17 @@ export const contactsReducer = createReducer(
         ...contact,
       };
     },
+    [DELETE_CONTACT_API.RESOLVE]: (state, action) => {
+      if (!action.body.data) {
+        return {};
+      } else {
+        let newState = {};
+        action.body.data.forEach(contact => {
+          newState[contact.id] = contact;
+        });
+        return newState;
+      }
+    },
 
     [UPDATE_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
@@ -459,6 +480,7 @@ export const accountsReducer = createReducer(
       const contact = action.body.data;
       state[contact.account_id] = contact;
     },
+
     [CREATE_SESSION_API.RESOLVE]: (state, action) => {
       state.has_session = true;
       state.contact = action.body.data.contact;
