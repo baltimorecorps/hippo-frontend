@@ -56,6 +56,7 @@ const ContactList = ({classes, contact, deleteContact}) => {
         className={classes.listItem}
         data-testid="each-contact"
       >
+        <ListItemText primary={`id: ${contact.id}`} />
         <ListItemText primary={`${contact.first_name} ${contact.last_name}`} />
       </ListItem>
 
@@ -77,8 +78,10 @@ const ContactList = ({classes, contact, deleteContact}) => {
         onClose={handleClose}
         PaperProps={{
           style: {
+            // display: 'flex',
+            // justifyContent: 'center',
             maxHeight: ITEM_HEIGHT * 4.5,
-            width: '20ch',
+            width: '15ch',
           },
         }}
       >
