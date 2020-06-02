@@ -18,6 +18,7 @@ const Contacts = props => {
           <ContactList
             contacts={props.contacts}
             getAllContactsShort={props.getAllContactsShort}
+            deleteContact={props.deleteContact}
           />
           {/* <AddContact addNewContact={props.addNewContact} dialog /> */}
         </React.Fragment>
