@@ -78,8 +78,6 @@ const ContactList = ({classes, contact, deleteContact}) => {
         onClose={handleClose}
         PaperProps={{
           style: {
-            // display: 'flex',
-            // justifyContent: 'center',
             maxHeight: ITEM_HEIGHT * 4.5,
             width: '15ch',
           },
