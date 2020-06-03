@@ -101,6 +101,7 @@ const AddContact = ({
     emailSuggest
   );
   const [errors, setErrors] = useState({});
+  const [creatingContact, setCreatingContact] = useState(false);
 
   const submit = () => {
     const {isError, err} = newProfileValidator(values);
@@ -108,6 +109,7 @@ const AddContact = ({
     if (isError) {
       setErrors(err);
     } else {
+      setCreatingContact(true);
       handleSubmit();
       setOpen(false);
     }
@@ -251,6 +253,31 @@ const AddContact = ({
     </form>
   );
 
+  let showThis = <div>Creating your profile....</div>;
+  if (!creatingContact) {
+    showThis = (
+      <Paper className={classes.paper}>
+        <Typography
+          component="h1"
+          variant="h5"
+          align="left"
+          className={classes.paperHeader}
+        >
+          Profile Basics
+        </Typography>
+        {form}
+        <Button
+          onClick={clickSubmitHandler}
+          variant="contained"
+          color="primary"
+          className={classes.createButton}
+        >
+          Create Profile
+        </Button>
+      </Paper>
+    );
+  }
+
   if (dialog) {
     return (
       <React.Fragment>
@@ -295,27 +322,7 @@ const AddContact = ({
       </React.Fragment>
     );
   } else {
-    return (
-      <Paper className={classes.paper}>
-        <Typography
-          component="h1"
-          variant="h5"
-          align="left"
-          className={classes.paperHeader}
-        >
-          Profile Basics
-        </Typography>
-        {form}
-        <Button
-          onClick={clickSubmitHandler}
-          variant="contained"
-          color="primary"
-          className={classes.createButton}
-        >
-          Create Profile
-        </Button>
-      </Paper>
-    );
+    return showThis;
   }
 };
 
