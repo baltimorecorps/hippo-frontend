@@ -41,11 +41,13 @@ const Profile = ({
 
   return (
     <Grid container justify="center">
-      <AddContact
-        addNewContact={addContactLocal}
-        accountId={user.sub}
-        emailSuggest={user.email}
-      />
+      <Delayed>
+        <AddContact
+          addNewContact={addContactLocal}
+          accountId={user.sub}
+          emailSuggest={user.email}
+        />
+      </Delayed>
     </Grid>
   );
 };
@@ -53,6 +55,18 @@ const Profile = ({
 Profile.propTypes = {
   addContact: PropTypes.func.isRequired,
   contact: PropTypes.object,
+};
+
+const Delayed = ({children, waitBeforeShow = 2000}) => {
+  const [isShown, setIsShown] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsShown(true);
+    }, waitBeforeShow);
+  }, [waitBeforeShow]);
+
+  return isShown ? children : <div>Loading...</div>;
 };
 
 export default Profile;
