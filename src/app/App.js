@@ -151,20 +151,6 @@ const App = ({
                   </MenuItem>
                 </Link>
 
-                {/* <Link
-                  to="/opportunities/:opportunityId/contacts/:contactId/internal-review"
-                  className={classes.links}
-                >
-                  <Typography>Internal Review</Typography>
-                </Link> */}
-
-                {/* <Link
-                  to="/internal/add-or-edit-opportunities/"
-                  className={classes.links}
-                >
-                  <Typography>Add/Edit Opportunities</Typography>
-                </Link> */}
-
                 {(hasSession || isAuthenticated) && (
                   <Link
                     to="/opportunities"
@@ -174,22 +160,6 @@ const App = ({
                     <Typography>Opportunities</Typography>
                   </Link>
                 )}
-                {/* 
-                <Link
-                  to="/opportunities/internal-opportunities-board"
-                  className={classes.links}
-                >
-                  <Typography>Opportunities Board</Typography>
-                </Link>
-                <Link
-                  to="/opportunities/internal-applications-board"
-                  className={classes.links}
-                >
-                  <Typography>Applications Board</Typography>
-                </Link> */}
-                {/* <Link to="/internal/partnerships" className={classes.links}>
-                  <Typography>Partnerships</Typography>
-                </Link> */}
 
                 <div className={classes.grow} />
 
@@ -302,19 +272,7 @@ const styles = ({breakpoints, palette, spacing, zIndex}) => ({
   appBar: {
     zIndex: zIndex.drawer + 1,
   },
-  // footerContainer: {
-  //   // position: 'absolute',
-  //   // left: 0,
-  //   // // right: 0,
 
-  //   // bottom: 0,
-  //   width: '100%',
-  //   zIndex: 100,
-  //   // display: 'flex',
-  //   // justifyContent: 'center',
-  //   // alignItems: 'center',
-  //   // flexDirection: 'column',
-  // },
   page: {
     backgroundColor: 'hsl(216, 18%, 89%)',
     paddingBottom: spacing(6),
