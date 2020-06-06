@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import ApproveNewApplicantForm from './ApproveNewApplicantForm';
 import ApplicationCards from './ApplicationCards';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 
 const ApplicationsBoard = ({
   classes,
@@ -32,6 +33,9 @@ const ApplicationsBoard = ({
   const toViewApplication = opportunityId => {
     history.push(`/application/${opportunityId}/review`);
   };
+  // const toViewApplication = opportunityId => {
+  //   history.push(`/application/${opportunityId}/review`);
+  // };
 
   if (!applicants) {
     return <div>...Loading</div>;
@@ -45,6 +49,35 @@ const ApplicationsBoard = ({
       contact: contact,
     };
   });
+
+  const candidates = [
+    {
+      first_name: 'Bay',
+      last_name: 'Chairangsaris',
+      email: 'bay@baltimorecorps.org',
+      programs: ['Place for Purpose', 'Fellowship'],
+    },
+    {
+      first_name: 'Billy',
+      last_name: 'Daly',
+      email: 'billy@baltimorecorps.org',
+      programs: ['Mayoral Fellowship'],
+    },
+    {
+      first_name: 'Jane',
+      last_name: 'Doe',
+      email: 'jane@baltimorecorps.org',
+      programs: ['Place for Purpose', 'Mayoral Fellowship'],
+    },
+    {
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'john@baltimorecorps.org',
+      programs: ['Fellowship'],
+    },
+  ];
+
+  console.log(applicants);
 
   return (
     <div className={classes.container}>
@@ -78,7 +111,7 @@ const ApplicationsBoard = ({
         </Grid>
       )}
 
-      <div className={classes.cardContainer}>
+      {/* <div className={classes.cardContainer}>
         {applicants &&
           applicants.map((applicant, index) => (
             <ApplicationCards
@@ -89,7 +122,32 @@ const ApplicationsBoard = ({
               page="internal"
             />
           ))}
-      </div>
+      </div> */}
+      {applicants.map((applicant, index) => (
+        <Paper
+          className={`${classes.paper} ${classes.applicantsPaper}`}
+          key={index}
+        >
+          <div className={classes.profileIconContainer}>
+            <AccountBoxIcon className={classes.profileIcon} />
+          </div>
+          <div className={classes.nameEmailContainer}>
+            <Typography component="p" variant="body1" className={classes.name}>
+              {applicant.contact.first_name} {applicant.contact.last_name}
+            </Typography>
+            <Typography component="p" variant="body1" className={classes.email}>
+              ({applicant.contact.email})
+            </Typography>
+          </div>
+          <div className={classes.programTagsContainer}>
+            {candidates[0].programs.map((program, index) => (
+              <div className={classes.programTags} key={index}>
+                {program}
+              </div>
+            ))}
+          </div>
+        </Paper>
+      ))}
     </div>
   );
 };
@@ -154,21 +212,57 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
     fontSize: '20px',
   },
-  cardContainer: {
-    width: '100%',
+  applicantsPaper: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    [breakpoints.up('sm')]: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+    },
+  },
+  profileIcon: {
+    fontSize: '60px',
+    color: palette.primary.link,
+    [breakpoints.up('sm')]: {
+      marginRight: '10px',
+    },
+  },
+  nameEmailContainer: {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: spacing(2),
-    flexWrap: 'wrap',
-    [breakpoints.down('sm')]: {
-      //   width: '100%',
-      alignItems: 'center',
-      justifyContent: 'center',
-
-      flexDirection: 'column',
+    alignItems: 'center',
+    flexDirection: 'column',
+    [breakpoints.up('sm')]: {
+      marginRight: '20px',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
     },
-    [breakpoints.down('md')]: {},
-    [breakpoints.down('xl')]: {},
+  },
+  name: {
+    fontSize: '22px',
+  },
+  email: {
+    color: 'grey',
+  },
+  programTagsContainer: {
+    display: 'flex',
+
+    [breakpoints.up('sm')]: {
+      justifySelf: 'flex-end',
+      marginLeft: 'auto',
+    },
+  },
+  programTags: {
+    border: '1px solid grey',
+    padding: '3px 8px',
+    margin: '5px 3px',
+    borderRadius: '5px',
+    [breakpoints.up('sm')]: {
+      marginRight: '10px',
+    },
   },
 });
 
