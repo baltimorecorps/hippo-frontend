@@ -10,15 +10,22 @@ import ApproveNewApplicantForm from './ApproveNewApplicantForm';
 import ApplicationCards from './ApplicationCards';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import Link from '@material-ui/core/Link';
 
-const ApplicationsBoard = ({
+const MainPage = ({
   classes,
-  getAllContactsShort,
   approveNewApplicants,
-  getAllInternalApplicants,
   contacts,
   applicants,
+  getAllContactsShort,
+  getAllInternalApplicants,
 }) => {
+  const [showForm, setShowForm] = useState(false);
+  const [contactId, setContactId] = useState();
+  const [applicant, setApplicant] = useState();
+  const [applications, setApplications] = useState();
+  const [showCard, setShowCard] = useState(false);
+
   useEffect(() => {
     getAllContactsShort();
   }, [getAllContactsShort]);
@@ -26,20 +33,11 @@ const ApplicationsBoard = ({
     getAllInternalApplicants();
   }, [getAllInternalApplicants]);
 
-  const [showForm, setShowForm] = useState(false);
-
   let history = useHistory();
 
-  const toViewApplication = opportunityId => {
-    history.push(`/application/${opportunityId}/review`);
+  const toProfile = contactId => {
+    history.push(`/profile/${contactId}`);
   };
-  // const toViewApplication = opportunityId => {
-  //   history.push(`/application/${opportunityId}/review`);
-  // };
-
-  if (!applicants) {
-    return <div>...Loading</div>;
-  }
 
   let options = {};
   options = contacts.map(contact => {
@@ -55,7 +53,7 @@ const ApplicationsBoard = ({
       first_name: 'Bay',
       last_name: 'Chairangsaris',
       email: 'bay@baltimorecorps.org',
-      programs: ['Place for Purpose', 'Fellowship'],
+      programs: ['Place for Purpose', 'Fellowship', 'Mayoral Fellowship'],
     },
     {
       first_name: 'Billy',
@@ -77,8 +75,16 @@ const ApplicationsBoard = ({
     },
   ];
 
-  console.log(applicants);
+  const onClickView = (contactId, applicant) => {
+    setContactId(contactId);
+    setApplicant(applicant);
+    setApplications(applicant.applications);
+    setShowCard(true);
+  };
 
+  if (!applicants) {
+    return <div>...Loading</div>;
+  }
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
@@ -92,7 +98,18 @@ const ApplicationsBoard = ({
           Internal Applications Board
         </Typography>
       </Paper>
-      {showForm ? (
+      {showCard ? (
+        <Grid className={classes.buttonContainer}>
+          <Button
+            onClick={() => setShowCard(false)}
+            variant="contained"
+            color="primary"
+            className={classes.createButton}
+          >
+            Back
+          </Button>
+        </Grid>
+      ) : showForm ? (
         <ApproveNewApplicantForm
           options={options}
           approveNewApplicants={approveNewApplicants}
@@ -111,48 +128,63 @@ const ApplicationsBoard = ({
         </Grid>
       )}
 
-      {/* <div className={classes.cardContainer}>
-        {applicants &&
-          applicants.map((applicant, index) => (
-            <ApplicationCards
-              key={index}
-              contactId={applicant.contact.id}
-              applicant={applicant}
-              applications={applicant.applications}
-              page="internal"
-            />
-          ))}
-      </div> */}
-      {applicants.map((applicant, index) => (
-        <Paper
-          className={`${classes.paper} ${classes.applicantsPaper}`}
-          key={index}
-        >
-          <div className={classes.profileIconContainer}>
-            <AccountBoxIcon className={classes.profileIcon} />
-          </div>
-          <div className={classes.nameEmailContainer}>
-            <Typography component="p" variant="body1" className={classes.name}>
-              {applicant.contact.first_name} {applicant.contact.last_name}
-            </Typography>
-            <Typography component="p" variant="body1" className={classes.email}>
-              ({applicant.contact.email})
-            </Typography>
-          </div>
-          <div className={classes.programTagsContainer}>
-            {candidates[0].programs.map((program, index) => (
-              <div className={classes.programTags} key={index}>
-                {program}
-              </div>
-            ))}
-          </div>
-        </Paper>
-      ))}
+      {showCard ? (
+        <ApplicationCards
+          contactId={contactId}
+          applicant={applicant}
+          applications={applications}
+          page="internal"
+        />
+      ) : (
+        applicants.map((applicant, index) => (
+          <Paper
+            className={`${classes.paper} ${classes.applicantsPaper}`}
+            key={index}
+          >
+            <div className={classes.profileIconContainer}>
+              <Link
+                onClick={() => toProfile(applicant.contact.id)}
+                className={classes.link}
+              >
+                <AccountBoxIcon className={classes.profileIcon} />
+              </Link>
+            </div>
+            <Link
+              onClick={() => onClickView(applicant.contact.id, applicant)}
+              className={classes.viewApplicantLink}
+            >
+              {/* <div className={classes.nameEmailContainer}> */}
+              <Typography
+                component="p"
+                variant="body1"
+                className={classes.name}
+              >
+                {applicant.contact.first_name} {applicant.contact.last_name}
+              </Typography>
+              <Typography
+                component="p"
+                variant="body1"
+                className={classes.email}
+              >
+                ({applicant.contact.email})
+              </Typography>
+              {/* </div> */}
+            </Link>
+            <div className={classes.programTagsContainer}>
+              {candidates[0].programs.map((program, index) => (
+                <div className={classes.programTags} key={index}>
+                  {program}
+                </div>
+              ))}
+            </div>
+          </Paper>
+        ))
+      )}
     </div>
   );
 };
 
-ApplicationsBoard.propTypes = {
+MainPage.propTypes = {
   classes: PropTypes.object.isRequired,
   getAllContactsShort: PropTypes.func.isRequired,
   approveNewApplicants: PropTypes.func.isRequired,
@@ -223,22 +255,51 @@ const styles = ({breakpoints, palette, spacing}) => ({
       justifyContent: 'flex-start',
     },
   },
+  profileIconContainer: {
+    width: 'auto',
+  },
   profileIcon: {
     fontSize: '60px',
     color: palette.primary.link,
+    cursor: 'pointer',
     [breakpoints.up('sm')]: {
       marginRight: '10px',
     },
   },
   nameEmailContainer: {
+    // width: '100%',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // flexDirection: 'column',
+    // [breakpoints.up('sm')]: {
+    //   marginRight: '20px',
+    //   justifyContent: 'flex-start',
+    //   alignItems: 'flex-start',
+    // },
+  },
+  viewApplicantLink: {
+    color: '#000000',
+    width: '65%',
+    cursor: 'pointer',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    padding: '10px 0px',
+    borderRadius: '5px',
+    marginBottom: '10px',
+    '&:hover': {
+      backgroundColor: '#f0f0f0',
+      textDecoration: 'none',
+    },
+
     [breakpoints.up('sm')]: {
       marginRight: '20px',
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
+      marginBottom: 0,
+      padding: '10px 20px',
     },
   },
   name: {
@@ -249,6 +310,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   programTagsContainer: {
     display: 'flex',
+    flexDirection: 'column',
 
     [breakpoints.up('sm')]: {
       justifySelf: 'flex-end',
@@ -256,14 +318,22 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   programTags: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     border: '1px solid grey',
     padding: '3px 8px',
-    margin: '5px 3px',
+    margin: '3px 3px',
     borderRadius: '5px',
+    fontSize: '15px',
+    minWidth: '150px',
     [breakpoints.up('sm')]: {
       marginRight: '10px',
     },
   },
+  buttonContainer: {
+    marginBottom: spacing(2),
+  },
 });
 
-export default withStyles(styles)(ApplicationsBoard);
+export default withStyles(styles)(MainPage);
