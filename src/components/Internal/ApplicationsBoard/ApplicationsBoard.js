@@ -11,6 +11,7 @@ import ApplicationCards from './ApplicationCards';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Link from '@material-ui/core/Link';
+import Pagination from '@material-ui/lab/Pagination';
 
 const MainPage = ({
   classes,
@@ -25,6 +26,8 @@ const MainPage = ({
   const [applicant, setApplicant] = useState();
   const [applications, setApplications] = useState();
   const [showCard, setShowCard] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(5);
 
   useEffect(() => {
     getAllContactsShort();
@@ -82,6 +85,21 @@ const MainPage = ({
     setShowCard(true);
   };
 
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = applicants.slice(indexOfFirstPost, indexOfLastPost);
+  const pageCount = Math.ceil(applicants.length / postsPerPage);
+  const pageNumbers = [];
+  for (let i = 0; i <= pageCount; i++) {
+    pageNumbers.push(i);
+  }
+
+  const paginate = event => {
+    event.persist();
+    const pageNumber = Number(event.target.textContent);
+    setCurrentPage(pageNumber);
+  };
+
   if (!applicants) {
     return <div>...Loading</div>;
   }
@@ -136,7 +154,7 @@ const MainPage = ({
           page="internal"
         />
       ) : (
-        applicants.map((applicant, index) => (
+        currentPosts.map((applicant, index) => (
           <Paper
             className={`${classes.paper} ${classes.applicantsPaper}`}
             key={index}
@@ -153,7 +171,6 @@ const MainPage = ({
               onClick={() => onClickView(applicant.contact.id, applicant)}
               className={classes.viewApplicantLink}
             >
-              {/* <div className={classes.nameEmailContainer}> */}
               <Typography
                 component="p"
                 variant="body1"
@@ -168,7 +185,6 @@ const MainPage = ({
               >
                 ({applicant.contact.email})
               </Typography>
-              {/* </div> */}
             </Link>
             <div className={classes.programTagsContainer}>
               {candidates[0].programs.map((program, index) => (
@@ -180,6 +196,16 @@ const MainPage = ({
           </Paper>
         ))
       )}
+      <Pagination
+        defaultPage={1}
+        page={currentPage}
+        count={pageCount}
+        onClick={e => paginate(e)}
+        color="primary"
+        className={classes.pagination}
+        hideNextButton
+        hidePrevButton
+      />
     </div>
   );
 };
@@ -266,18 +292,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
       marginRight: '10px',
     },
   },
-  nameEmailContainer: {
-    // width: '100%',
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // flexDirection: 'column',
-    // [breakpoints.up('sm')]: {
-    //   marginRight: '20px',
-    //   justifyContent: 'flex-start',
-    //   alignItems: 'flex-start',
-    // },
-  },
+
   viewApplicantLink: {
     color: '#000000',
     width: '65%',
@@ -333,6 +348,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   buttonContainer: {
     marginBottom: spacing(2),
+  },
+  pagination: {
+    margin: spacing(2),
   },
 });
 
