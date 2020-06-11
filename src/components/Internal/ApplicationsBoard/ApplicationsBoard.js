@@ -85,9 +85,21 @@ const MainPage = ({
     setShowCard(true);
   };
 
+  // TODO
+  // Sorting Applicants
+  // Search applicants by name or email
+
+  const sortApplicants = applicants.sort((a, b) =>
+    a.contact.first_name < b.contact.first_name
+      ? -1
+      : a.contact.first_name < b.contact.first_name
+      ? 1
+      : 0
+  );
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = applicants.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = sortApplicants.slice(indexOfFirstPost, indexOfLastPost);
   const pageCount = Math.ceil(applicants.length / postsPerPage);
   const pageNumbers = [];
   for (let i = 0; i <= pageCount; i++) {
