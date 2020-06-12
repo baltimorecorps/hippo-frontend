@@ -12,6 +12,12 @@ import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Link from '@material-ui/core/Link';
 import Pagination from '@material-ui/lab/Pagination';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
 
 const MainPage = ({
   classes,
@@ -21,6 +27,13 @@ const MainPage = ({
   getAllContactsShort,
   getAllInternalApplicants,
 }) => {
+  useEffect(() => {
+    getAllContactsShort();
+  }, [getAllContactsShort]);
+  useEffect(() => {
+    getAllInternalApplicants();
+  }, [getAllInternalApplicants]);
+
   const [showForm, setShowForm] = useState(false);
   const [contactId, setContactId] = useState();
   const [applicant, setApplicant] = useState();
@@ -29,12 +42,7 @@ const MainPage = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
 
-  useEffect(() => {
-    getAllContactsShort();
-  }, [getAllContactsShort]);
-  useEffect(() => {
-    getAllInternalApplicants();
-  }, [getAllInternalApplicants]);
+  const [allPosts, setAllPosts] = useState(applicants);
 
   let history = useHistory();
 
@@ -86,10 +94,9 @@ const MainPage = ({
   };
 
   // TODO
-  // Sorting Applicants
   // Search applicants by name or email
 
-  const sortApplicants = applicants.sort((a, b) =>
+  let sortApplicants = applicants.sort((a, b) =>
     a.contact.first_name < b.contact.first_name
       ? -1
       : a.contact.first_name < b.contact.first_name
@@ -97,10 +104,43 @@ const MainPage = ({
       : 0
   );
 
+  useEffect(() => {
+    setAllPosts(sortApplicants);
+  }, [setAllPosts, sortApplicants]);
+
+  const handleChangePostsPerPage = event => {
+    event.persist();
+
+    setPostsPerPage(event.target.value);
+  };
+  const handleChangeSearch = event => {
+    event.persist();
+
+    const name = event.target.value.toLowerCase();
+
+    if (name != null) {
+      const searchNames = applicants.filter(applicant => {
+        const applicantName = applicant.contact.first_name.toLowerCase();
+        const applicantLastName = applicant.contact.last_name.toLowerCase();
+        const applicantEmail = applicant.contact.email.toLowerCase();
+        return (
+          applicantName.includes(name) ||
+          applicantLastName.includes(name) ||
+          applicantEmail.includes(name)
+        );
+      });
+      setAllPosts(searchNames);
+    }
+  };
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = sortApplicants.slice(indexOfFirstPost, indexOfLastPost);
-  const pageCount = Math.ceil(applicants.length / postsPerPage);
+  const currentPosts =
+    allPosts && allPosts.length > 2
+      ? allPosts.slice(indexOfFirstPost, indexOfLastPost)
+      : allPosts;
+
+  const pageCount = Math.ceil(sortApplicants.length / postsPerPage);
   const pageNumbers = [];
   for (let i = 0; i <= pageCount; i++) {
     pageNumbers.push(i);
@@ -128,6 +168,7 @@ const MainPage = ({
           Internal Applications Board
         </Typography>
       </Paper>
+
       {showCard ? (
         <Grid className={classes.buttonContainer}>
           <Button
@@ -146,15 +187,47 @@ const MainPage = ({
           closeForm={() => setShowForm(false)}
         />
       ) : (
-        <Grid className={classes.buttonContainer}>
+        <Grid className={`${classes.buttonContainer} `}>
           <Button
             onClick={() => setShowForm(true)}
             variant="contained"
             color="primary"
             className={classes.createButton}
           >
-            Approve New Applicant
+            + Approve New Applicant
           </Button>
+          <div>
+            <TextField
+              id="search-applicants"
+              className={classes.searchBar}
+              placeholder="Search by name or email"
+              // value={degree_other}
+              name="degree_other"
+              onChange={handleChangeSearch}
+              // InputLabelProps={inputLabelProps}
+              // InputProps={inputProps}
+            />
+          </div>
+          <div>
+            <FormControl className={classes.formControlSelector}>
+              <InputLabel
+                className={classes.postsPerPageLabel}
+                id="demo-simple-select-label"
+              >
+                Posts/Page
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={postsPerPage}
+                onChange={handleChangePostsPerPage}
+              >
+                <MenuItem value={5}>5</MenuItem>
+                <MenuItem value={10}>10</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
         </Grid>
       )}
 
@@ -166,6 +239,7 @@ const MainPage = ({
           page="internal"
         />
       ) : (
+        currentPosts &&
         currentPosts.map((applicant, index) => (
           <Paper
             className={`${classes.paper} ${classes.applicantsPaper}`}
@@ -276,6 +350,22 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(2, 3, 3),
     margin: spacing(1.5),
   },
+  formControlSelector: {
+    minWidth: 100,
+    backgroundColor: '#ffffff',
+    padding: '5px 10px',
+    border: '1px solid grey',
+  },
+  searchBar: {
+    backgroundColor: '#ffffff',
+    padding: '5px 20px',
+    minWidth: 400,
+    borderRadius: '20px',
+    // border: '1px solid grey',
+  },
+  postsPerPageLabel: {
+    padding: '5px 10px',
+  },
   header: {
     [breakpoints.up('sm')]: {
       fontSize: '24px',
@@ -359,7 +449,29 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   buttonContainer: {
-    marginBottom: spacing(2),
+    flexGrow: 1,
+
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
+    },
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
+    },
+    width: '95%',
+
+    marginBottom: spacing(0),
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  createButton: {
+    height: '40px',
   },
   pagination: {
     margin: spacing(2),
