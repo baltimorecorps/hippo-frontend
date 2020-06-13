@@ -97,11 +97,34 @@ const FAQPage = ({classes}) => {
       answer:
         'As you tag more skills to your experience, the progress bar will increase. The more your progress bar increases, the stronger your profile becomes.',
     },
+    {
+      question: 'Tips for a strong profile that turns into a powerful resume',
+      answer: '',
+      subContent: [
+        {
+          header:
+            '★ Professional email handles such as your first and last name with a number',
+          content: ['- Example: John_Doe3388'],
+        },
+        {
+          header:
+            '★ You should tag at least 5 skills - be honest, and of course, add skills if not listed.',
+          content: [
+            '- Examples: *** See the question above on How to tag skills effectively ***',
+          ],
+        },
+        {
+          header:
+            '★ Be specific and detailed in the experience section to effectively communicate your capabilities and past work.',
+          content: [''],
+        },
+      ],
+    },
   ];
 
   const applyingForARole = [
     {
-      question: 'What is the application process? (start to end)',
+      question: 'What is the application process? (Start to end)',
 
       answer:
         'There are a few steps in the application process. Below is a breakdown of each step:',
@@ -208,41 +231,6 @@ const FAQPage = ({classes}) => {
             subContent={each.subContent}
           />
         ))}
-        <ExpansionPanel>
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-            className={classes.questionContainer}
-          >
-            <Typography className={classes.questions}>
-              <span style={{marginRight: '10px'}}>❖</span> Tips for a strong
-              profile that turns into a powerful resume:
-            </Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails className={classes.answerContainer}>
-            <Typography className={classes.answers}>
-              <div>
-                <span className={classes.contentHeader}>★</span> Professional
-                email handles such as your first and last name with a number
-              </div>
-              <div className={classes.content}>- Example: John_Doe3388</div>
-              <div>
-                <span className={classes.contentHeader}>★</span> You should tag
-                at least 5 skills - be honest, and of course, add skills if not
-                listed.
-              </div>
-              <div className={classes.content} style={{marginBottom: '10px'}}>
-                - Examples: Tagging skills effectively
-              </div>
-              <div>
-                <span className={classes.contentHeader}>★</span>Be specific and
-                detailed in the experience section to effectively communicate
-                your capabilities and past work.
-              </div>
-            </Typography>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
       </div>
 
       <div className={classes.sectionContainer}>
@@ -324,7 +312,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   header: {
     textAlign: 'center',
-    fontSize: '25px',
+    fontSize: '22px',
     fontWeight: 'bold',
     display: 'flex',
     justifyContent: 'center',
@@ -342,31 +330,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.up('sm')]: {
       fontSize: '28px',
     },
-  },
-  questionContainer: {
-    backgroundColor: '#f5f5f5',
-  },
-  questions: {
-    fontSize: '18px',
-    display: 'flex',
-  },
-  answerContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '15px 30px',
-  },
-  answers: {
-    textIndent: '19px',
-    textAlign: 'justify',
-  },
-  contentHeader: {
-    marginRight: '5px',
-    // marginLeft: '20px',
-  },
-  content: {
-    marginBottom: '10px',
-    textAlign: 'justify',
-    marginLeft: '35px',
   },
 });
 

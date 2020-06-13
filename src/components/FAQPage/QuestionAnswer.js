@@ -60,33 +60,53 @@ const styles = ({breakpoints, palette, spacing}) => ({
     verticalAlign: 'middle',
   },
   questions: {
-    fontSize: '18px',
+    fontSize: '16px',
     display: 'flex',
+    [breakpoints.up('sm')]: {
+      fontSize: '18px',
+    },
   },
   answerContainer: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '15px 30px',
+    padding: '10px 20px',
+    [breakpoints.up('sm')]: {
+      padding: '15px 30px',
+    },
   },
   answer: {
     textIndent: '19px',
     textAlign: 'justify',
+    fontSize: '15px',
+
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
   },
   boldAnswer: {
     textAlign: 'justify',
     fontWeight: 'bold',
-    // marginTop: spacing(1),
     marginBottom: spacing(1),
   },
   subHeader: {
     fontWeight: 'bold',
+    fontSize: '15px',
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
   },
 
   subContent: {
-    textIndent: '19px',
+    textIndent: '10px',
+    textAlign: 'justify',
 
+    fontSize: '15px',
     marginLeft: spacing(1),
     marginBottom: spacing(1),
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+      textIndent: '19px',
+    },
   },
 });
 
