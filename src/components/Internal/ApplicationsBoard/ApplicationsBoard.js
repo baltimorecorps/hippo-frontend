@@ -14,7 +14,6 @@ import Link from '@material-ui/core/Link';
 import Pagination from '@material-ui/lab/Pagination';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
@@ -122,11 +121,10 @@ const MainPage = ({
       const searchNames = applicants.filter(applicant => {
         const applicantName = applicant.contact.first_name.toLowerCase();
         const applicantLastName = applicant.contact.last_name.toLowerCase();
+        const applicantFullName = `${applicantName} ${applicantLastName}`;
         const applicantEmail = applicant.contact.email.toLowerCase();
         return (
-          applicantName.includes(name) ||
-          applicantLastName.includes(name) ||
-          applicantEmail.includes(name)
+          applicantFullName.includes(name) || applicantEmail.includes(name)
         );
       });
       setAllPosts(searchNames);
@@ -140,7 +138,7 @@ const MainPage = ({
       ? allPosts.slice(indexOfFirstPost, indexOfLastPost)
       : allPosts;
 
-  const pageCount = Math.ceil(sortApplicants.length / postsPerPage);
+  const pageCount = Math.ceil(allPosts.length / postsPerPage);
   const pageNumbers = [];
   for (let i = 0; i <= pageCount; i++) {
     pageNumbers.push(i);
@@ -192,41 +190,41 @@ const MainPage = ({
             onClick={() => setShowForm(true)}
             variant="contained"
             color="primary"
-            className={classes.createButton}
+            className={classes.approveButton}
           >
             + Approve New Applicant
           </Button>
-          <div>
-            <TextField
-              id="search-applicants"
-              className={classes.searchBar}
-              placeholder="Search by name or email"
-              // value={degree_other}
-              name="degree_other"
-              onChange={handleChangeSearch}
-              // InputLabelProps={inputLabelProps}
-              // InputProps={inputProps}
-            />
-          </div>
-          <div>
-            <FormControl className={classes.formControlSelector}>
-              <InputLabel
-                className={classes.postsPerPageLabel}
-                id="demo-simple-select-label"
-              >
-                Posts/Page
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={postsPerPage}
-                onChange={handleChangePostsPerPage}
-              >
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={20}>20</MenuItem>
-              </Select>
-            </FormControl>
+          <div className={classes.searchFilterContainer}>
+            <div>
+              <TextField
+                id="search-applicants"
+                className={classes.searchBar}
+                placeholder="Search by name or email"
+                name="search-applicants"
+                onChange={handleChangeSearch}
+                InputProps={{
+                  classes: {
+                    input: classes.resize,
+                  },
+                }}
+              />
+            </div>
+            <div>
+              <FormControl className={classes.formControlSelector}>
+                <InputLabel className={classes.postsPerPageLabel}>
+                  Posts/Page
+                </InputLabel>
+                <Select
+                  id="post-per-page"
+                  value={postsPerPage}
+                  onChange={handleChangePostsPerPage}
+                >
+                  <MenuItem value={5}>5</MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={20}>20</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
           </div>
         </Grid>
       )}
@@ -350,6 +348,21 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: spacing(2, 3, 3),
     margin: spacing(1.5),
   },
+  searchFilterContainer: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    marginTop: '10px',
+    justifyContent: 'space-between',
+    padding: 0,
+    margin: 0,
+
+    width: '100%',
+    [breakpoints.up('lg')]: {
+      alignItems: 'center',
+
+      justifyContent: 'space-around',
+    },
+  },
   formControlSelector: {
     minWidth: 100,
     backgroundColor: '#ffffff',
@@ -359,9 +372,18 @@ const styles = ({breakpoints, palette, spacing}) => ({
   searchBar: {
     backgroundColor: '#ffffff',
     padding: '5px 20px',
-    minWidth: 400,
+    width: 300,
     borderRadius: '20px',
+    [breakpoints.up('md')]: {
+      width: 350,
+    },
+    [breakpoints.up('lg')]: {
+      width: 500,
+    },
     // border: '1px solid grey',
+  },
+  resize: {
+    fontSize: 19,
   },
   postsPerPageLabel: {
     padding: '5px 10px',
@@ -459,6 +481,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
       flexBasis: '66.666667%',
       maxWidth: '66.666667%',
     },
+    [breakpoints.up('lg')]: {
+      flexDirection: 'row',
+    },
     [breakpoints.up('xl')]: {
       flexBasis: '50%',
       maxWidth: '50%',
@@ -469,8 +494,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    flexDirection: 'column',
   },
-  createButton: {
+  approveButton: {
+    [breakpoints.up('lg')]: {
+      height: '55px',
+    },
     height: '40px',
   },
   pagination: {
