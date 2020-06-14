@@ -19,6 +19,7 @@ const NavBarIcons = ({logout, classes}) => {
 
   const toFAQPage = () => {
     history.push('/faq');
+    setOpenIcon(0);
   };
 
   const contactSupportLink = createExternalLink(
@@ -28,6 +29,11 @@ const NavBarIcons = ({logout, classes}) => {
   );
   const helpLink = createExternalLink(
     'Help',
+    'https://www.tfaforms.com/4602493',
+    classes.helpLink
+  );
+  const askQuestionLink = createExternalLink(
+    'Ask Questions or Request Helps',
     'https://www.tfaforms.com/4602493',
     classes.helpLink
   );
@@ -69,6 +75,7 @@ const NavBarIcons = ({logout, classes}) => {
           url: '/faq',
           function: toFAQPage,
         },
+        {name: askQuestionLink},
       ],
     },
   };
