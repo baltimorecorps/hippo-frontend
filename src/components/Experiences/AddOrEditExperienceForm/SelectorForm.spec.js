@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import SelectorForm from './SelectorForm';
 
 ////////-----------------------------------------------------------------/////////
-test('DatePicker test: Month', () => {
+test.skip('DatePicker test: Month', () => {
   const values = {
     start_month: 'March',
   };
@@ -29,7 +29,7 @@ test('DatePicker test: Month', () => {
   expect(select.value).toBe('April');
 });
 
-test('DatePicker test: Year', () => {
+test.skip('DatePicker test: Year', () => {
   const values = {
     end_year: 2015,
   };
