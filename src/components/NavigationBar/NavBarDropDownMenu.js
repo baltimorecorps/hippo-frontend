@@ -18,8 +18,8 @@ const NavBarDropdownMenu = ({
 }) => {
   let contentWidth;
   if (menuHeader === 'Notifications') contentWidth = {width: '72vw'};
-  if (menuHeader === 'Account' || menuHeader === 'FAQ')
-    contentWidth = {width: '100px'};
+  if (menuHeader === 'Account') contentWidth = {width: '100px'};
+  if (menuHeader === 'FAQs') contentWidth = {width: '270px'};
   return (
     <Popper
       open={open}

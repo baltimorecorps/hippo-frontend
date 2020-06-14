@@ -62,8 +62,14 @@ const NavBarIcons = ({logout, classes}) => {
       ],
     },
     faq: {
-      menuHeader: 'FAQ',
-      menuItems: [{name: 'FAQ Page', url: '/faq', function: toFAQPage}],
+      menuHeader: 'FAQs',
+      menuItems: [
+        {
+          name: 'See Frequently Asked Questions',
+          url: '/faq',
+          function: toFAQPage,
+        },
+      ],
     },
   };
 
