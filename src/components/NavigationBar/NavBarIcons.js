@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Icon from './Icon';
+import {useHistory} from 'react-router-dom';
 
 import {
   createExternalLink,
@@ -13,6 +14,12 @@ const NavBarIcons = ({logout, classes}) => {
   const [openIcon, setOpenIcon] = useState(0);
   const [isWarning, setIsWarning] = useState(false);
   const wrapperRef = useRef(null);
+
+  let history = useHistory();
+
+  const toFAQPage = () => {
+    history.push('/faq');
+  };
 
   const contactSupportLink = createExternalLink(
     'Contact Support Page',
@@ -54,14 +61,20 @@ const NavBarIcons = ({logout, classes}) => {
         {name: 'Logout', url: '#', function: logout},
       ],
     },
+    faq: {
+      menuHeader: 'FAQ',
+      menuItems: [{name: 'FAQ Page', url: '/faq', function: toFAQPage}],
+    },
   };
 
   const handleClickIcon = (event, type) => {
     setAnchorEl(event.currentTarget);
     if (type === 'user') {
-      openIcon === 1 ? setOpenIcon(0) : setOpenIcon(1);
+      return openIcon === 1 ? setOpenIcon(0) : setOpenIcon(1);
     } else if (type === 'notifications') {
-      openIcon === 2 ? setOpenIcon(0) : setOpenIcon(2);
+      return openIcon === 2 ? setOpenIcon(0) : setOpenIcon(2);
+    } else if (type === 'faq') {
+      return openIcon === 3 ? setOpenIcon(0) : setOpenIcon(3);
     }
   };
 
@@ -89,6 +102,16 @@ const NavBarIcons = ({logout, classes}) => {
 
   return (
     <div className={classes.container} id="navLinks" ref={wrapperRef}>
+      <Icon
+        name="faq"
+        isWarning={false}
+        handleClickIcon={e => onClickIconHandler(e, 'faq')}
+        openIcon={openIcon === 3}
+        anchorEl={anchorEl}
+        handleClickAway={handleClickAway}
+        menuHeader={dropdownMenuInfo.faq.menuHeader}
+        menuItems={dropdownMenuInfo.faq.menuItems}
+      />
       <Icon
         name="notifications"
         isWarning={false}
