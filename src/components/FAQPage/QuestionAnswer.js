@@ -24,13 +24,13 @@ const QuestionAnswer = ({classes, question, answer, subContent}) => {
         <Typography className={classes.answer}>{answer}</Typography>
 
         {subContent &&
-          subContent.map(content => (
-            <div>
+          subContent.map((content, index) => (
+            <div key={index}>
               <Typography className={classes.subHeader}>
                 {content.header}
               </Typography>
-              {content.content.map(content => (
-                <Typography className={classes.subContent}>
+              {content.content.map((content, index) => (
+                <Typography className={classes.subContent} key={index}>
                   {content}
                 </Typography>
               ))}
