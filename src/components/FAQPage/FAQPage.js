@@ -5,38 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import QuestionAnswer from './QuestionAnswer';
 import Logo from './img/b_square.png';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const FAQPage = ({classes}) => {
-  //   let history = useHistory();
-
-  //   const toProfile = () => {
-  //     history.push('/profile');
-  //   };
-  //   const toOpportunities = () => {
-  //     history.push('/opportunities');
-  //   };
-
-  //   const onClickBackToProfile = () => {
-  //     createClickTracking(
-  //       'Confirmation Page after Submit Application',
-  //       'Click Back to Profile',
-  //       'Click Back to Profile'
-  //     );
-  //     toProfile();
-  //   };
-  //   const onClickViewMoreOpportunities = () => {
-  //     createClickTracking(
-  //       'Confirmation Page after Submit Application',
-  //       'Click View More Opportunities',
-  //       'Click View More Opportunities'
-  //     );
-  //     toOpportunities();
-  //   };
-
   const profileAndResume = [
     {
       question: 'Why do I need a profile?',
@@ -259,6 +229,22 @@ const FAQPage = ({classes}) => {
           />
         ))}
       </div>
+      <div className={classes.sectionContainer}>
+        <Typography variant="h2" component="h2" className={classes.sections}>
+          Have more questions ?
+        </Typography>
+        <Typography variant="body1" component="p" className={classes.bodyText}>
+          <a
+            href="https://www.tfaforms.com/4602493"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.link}
+          >
+            Click here
+          </a>{' '}
+          to let us know if you have any questions or any technical issues.
+        </Typography>
+      </div>
     </Paper>
   );
 };
@@ -322,7 +308,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   sectionContainer: {
-    marginBottom: spacing(5),
+    marginBottom: spacing(2.5),
   },
   sections: {
     fontSize: '20px',
@@ -330,6 +316,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.up('sm')]: {
       fontSize: '28px',
     },
+  },
+  link: {
+    color: palette.primary.link,
+    textDecoration: 'underline',
   },
 });
 
