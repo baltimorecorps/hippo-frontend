@@ -72,19 +72,19 @@ const StaffViewApplication = ({
   const recommendApplication = async () => {
     const response = await staffRecommendApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
-      toInternalOpportunitiesBoard();
+      setConfirmed(false);
     }
   };
   const notAFitApplication = async () => {
     const response = await staffNotAFitApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
-      toInternalOpportunitiesBoard();
+      setConfirmed(false);
     }
   };
   const reopenApplication = async () => {
     const response = await staffReopenApplication(contactId, opportunityId);
     if (response.statusCode == 200) {
-      toInternalOpportunitiesBoard();
+      setConfirmed(false);
     }
   };
   const toInternalOpportunitiesButton = createAButton(
