@@ -180,6 +180,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   link: {
     color: palette.primary.link,
     padding: '2px 5px',
+    cursor: 'pointer',
   },
 
   title: {
