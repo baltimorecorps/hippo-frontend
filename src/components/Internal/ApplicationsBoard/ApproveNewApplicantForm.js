@@ -118,28 +118,23 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   paper: {
-    width: '50%',
-    marginTop: spacing(1),
-    padding: spacing(3, 2),
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
+    flexGrow: 1,
 
-    [breakpoints.down('lg')]: {
-      width: '65%',
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
     },
-    [breakpoints.down('md')]: {
-      width: '70%',
+    [breakpoints.up('md')]: {
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
     },
-    [breakpoints.down('sm')]: {
-      width: '85%',
-      padding: spacing(2, 1),
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
     },
-    [breakpoints.down('xs')]: {
-      width: '95%',
-      padding: spacing(1, 0),
-    },
+    width: '95%',
+    padding: spacing(2, 3, 3),
+    margin: spacing(1.5),
   },
   searchBarContainer: {
     display: 'flex',
