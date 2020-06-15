@@ -16,6 +16,10 @@ const NavBarDropdownMenu = ({
   menuItems,
   classes,
 }) => {
+  let contentWidth;
+  if (menuHeader === 'Notifications') contentWidth = {width: '72vw'};
+  if (menuHeader === 'Account') contentWidth = {width: '100px'};
+  if (menuHeader === 'FAQs') contentWidth = {width: '270px'};
   return (
     <Popper
       open={open}
@@ -34,11 +38,7 @@ const NavBarDropdownMenu = ({
               {menuItems.map((item, index) => (
                 <MenuItem
                   key={index}
-                  style={
-                    menuHeader === 'Account'
-                      ? {width: '100px'}
-                      : {width: '72vw'}
-                  }
+                  style={contentWidth}
                   className={classes.menuItem}
                   component={item.page && Link}
                   to={item.page}

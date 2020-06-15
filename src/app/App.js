@@ -9,7 +9,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-
+import Footer from 'components/Footer';
+import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 import HomeIcon from '@material-ui/icons/Home';
 
 import ErrorBoundary from 'lib/atoms/ErrorBoundary';
@@ -35,8 +36,7 @@ import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffC
 import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
-import Footer from 'components/Footer';
-import NavBarIcons from 'components/NavigationBar/NavBarIcons';
+import FAQPage from 'components/FAQPage';
 
 const App = ({
   hasSession,
@@ -200,6 +200,7 @@ const App = ({
                 component={ApplicationForm}
               />
               <Route path="/confirmation-page" component={ConfirmationPage} />
+              <Route path="/faq" component={FAQPage} />
 
               {/* Internal Pages */}
               <Route
