@@ -127,6 +127,7 @@ const MainPage = ({
           applicantFullName.includes(name) || applicantEmail.includes(name)
         );
       });
+      setCurrentPage(1);
       setAllPosts(searchNames);
     }
   };
@@ -173,7 +174,7 @@ const MainPage = ({
             onClick={() => setShowCard(false)}
             variant="contained"
             color="primary"
-            className={classes.createButton}
+            className={classes.backButton}
           >
             Back
           </Button>
@@ -501,6 +502,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
       height: '55px',
     },
     height: '40px',
+  },
+  backButton: {
+    marginBottom: spacing(2),
   },
   pagination: {
     margin: spacing(2),
