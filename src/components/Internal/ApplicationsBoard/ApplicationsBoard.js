@@ -354,13 +354,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: '10px',
     justifyContent: 'space-between',
     padding: 0,
-    margin: 0,
 
     width: '100%',
     [breakpoints.up('lg')]: {
       alignItems: 'center',
+      marginLeft: spacing(4),
 
-      justifyContent: 'space-around',
+      justifyContent: 'space-between',
     },
   },
   formControlSelector: {
@@ -499,6 +499,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   approveButton: {
     [breakpoints.up('lg')]: {
       height: '55px',
+      width: '300px',
     },
     height: '40px',
   },
