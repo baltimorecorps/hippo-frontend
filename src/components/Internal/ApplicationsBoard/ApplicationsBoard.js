@@ -63,13 +63,13 @@ const MainPage = ({
       first_name: 'Bay',
       last_name: 'Chairangsaris',
       email: 'bay@baltimorecorps.org',
-      programs: ['Place for Purpose', 'Fellowship', 'Mayoral Fellowship'],
+      programs: ['Place for Purpose'],
     },
     {
       first_name: 'Billy',
       last_name: 'Daly',
       email: 'billy@baltimorecorps.org',
-      programs: ['Mayoral Fellowship'],
+      programs: ['Place for Purpose', 'Fellowship', 'Mayoral Fellowship'],
     },
     {
       first_name: 'Jane',
@@ -281,16 +281,18 @@ const MainPage = ({
           </Paper>
         ))
       )}
-      <Pagination
-        defaultPage={1}
-        page={currentPage}
-        count={pageCount}
-        onClick={e => paginate(e)}
-        color="primary"
-        className={classes.pagination}
-        hideNextButton
-        hidePrevButton
-      />
+      {!showCard && (
+        <Pagination
+          defaultPage={1}
+          page={currentPage}
+          count={pageCount}
+          onClick={e => paginate(e)}
+          color="primary"
+          className={classes.pagination}
+          hideNextButton
+          hidePrevButton
+        />
+      )}
     </div>
   );
 };
