@@ -77,6 +77,16 @@ export const getApplication = (contactId, opportunityId) =>
     `${API_URL}/api/contacts/${contactId}/app/${opportunityId}/`
   );
 
+export const GET_CONTACT_APPLICATIONS = 'GET_CONTACT_APPLICATIONS';
+export const GET_CONTACT_APPLICATIONS_API = fetchActionTypes(
+  GET_CONTACT_APPLICATIONS
+);
+export const getContactApplications = contactId =>
+  makeApiFetchActions(
+    GET_CONTACT_APPLICATIONS,
+    `${API_URL}/api/contacts/${contactId}/app/`
+  );
+
 export const UPDATE_APPLICATION = 'UPDATE_APPLICATION';
 export const UPDATE_APPLICATION_API = fetchActionTypes(UPDATE_APPLICATION);
 export const updateApplication = application =>
@@ -346,6 +356,17 @@ export const internalActivateRole = opportunityId =>
     )(dispatch);
   };
 
+// ---------------------------------------------------------------------------
+
+export const GET_ALL_CONTACTS_PROGRAMS = 'GET_ALL_CONTACTS_PROGRAMS';
+export const GET_ALL_CONTACTS_PROGRAMS_API = fetchActionTypes(
+  GET_ALL_CONTACTS_PROGRAMS
+);
+export const getAllContactsPrograms = makeApiFetchActions(
+  GET_ALL_CONTACTS_PROGRAMS,
+  `${API_URL}/api/contacts/programs/`
+);
+
 export const opportunitiesReducer = createReducer(
   {},
   {
@@ -399,6 +420,11 @@ export const applicationsReducer = createReducer(
 
       state[application.id] = application;
     },
+    [GET_CONTACT_APPLICATIONS_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+
+      state[application.id] = application;
+    },
     [GET_ALL_SUBMITTED_APPLICATIONS_API.RESOLVE]: (state, action) => {
       action.body.data.forEach(app => {
         state[app.id] = app;
@@ -447,6 +473,14 @@ export const applicantsReducer = createReducer(
       state[application.id] = application;
     },
     [GET_ALL_INTERNAL_APPLICANTS_API.RESOLVE]: (state, action) => {
+      const newState = {};
+      // clear out all old entries
+      action.body.data.forEach(applicant => {
+        newState[applicant.id] = applicant;
+      });
+      return newState;
+    },
+    [GET_ALL_CONTACTS_PROGRAMS_API.RESOLVE]: (state, action) => {
       const newState = {};
       // clear out all old entries
       action.body.data.forEach(applicant => {
