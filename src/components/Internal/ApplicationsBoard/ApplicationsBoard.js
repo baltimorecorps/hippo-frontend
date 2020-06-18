@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useRouteMatch} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ApproveNewApplicantForm from './ApproveNewApplicantForm';
-import ApplicationCards from './ApplicationCards';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Link from '@material-ui/core/Link';
@@ -18,30 +17,33 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 
-const MainPage = ({
+const ApplicationsBoard = ({
   classes,
   approveNewApplicants,
   contacts,
   applicants,
   getAllContactsShort,
   getAllInternalApplicants,
+  getAllContactsPrograms,
+  approvedApplicants,
 }) => {
   useEffect(() => {
     getAllContactsShort();
   }, [getAllContactsShort]);
+
   useEffect(() => {
-    getAllInternalApplicants();
-  }, [getAllInternalApplicants]);
+    getAllContactsPrograms();
+  }, [getAllContactsPrograms]);
+
+  const match = useRouteMatch();
 
   const [showForm, setShowForm] = useState(false);
-  const [contactId, setContactId] = useState();
-  const [applicant, setApplicant] = useState();
-  const [applications, setApplications] = useState();
+
   const [showCard, setShowCard] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
 
-  const [allPosts, setAllPosts] = useState(applicants);
+  const [allPosts, setAllPosts] = useState(approvedApplicants);
 
   let history = useHistory();
 
@@ -50,55 +52,27 @@ const MainPage = ({
   };
 
   let options = {};
-  options = contacts.map(contact => {
-    return {
-      name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
-      contact_id: contact.id,
-      contact: contact,
-    };
-  });
+  if (contacts) {
+    options = contacts.map(contact => {
+      return {
+        name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
+        contact_id: contact.id,
+        contact: contact,
+      };
+    });
+  }
 
-  const candidates = [
-    {
-      first_name: 'Bay',
-      last_name: 'Chairangsaris',
-      email: 'bay@baltimorecorps.org',
-      programs: ['Place for Purpose'],
-    },
-    {
-      first_name: 'Billy',
-      last_name: 'Daly',
-      email: 'billy@baltimorecorps.org',
-      programs: ['Place for Purpose', 'Fellowship', 'Mayoral Fellowship'],
-    },
-    {
-      first_name: 'Jane',
-      last_name: 'Doe',
-      email: 'jane@baltimorecorps.org',
-      programs: ['Place for Purpose', 'Mayoral Fellowship'],
-    },
-    {
-      first_name: 'John',
-      last_name: 'Doe',
-      email: 'john@baltimorecorps.org',
-      programs: ['Fellowship'],
-    },
-  ];
-
-  const onClickView = (contactId, applicant) => {
-    setContactId(contactId);
-    setApplicant(applicant);
-    setApplications(applicant.applications);
-    setShowCard(true);
+  const onClickView = contactId => {
+    history.push(`${match.url}/${contactId}`);
   };
 
-  let sortApplicants = applicants.sort((a, b) =>
-    a.contact.first_name < b.contact.first_name
-      ? -1
-      : a.contact.first_name < b.contact.first_name
-      ? 1
-      : 0
-  );
+  let sortApplicants = [];
+
+  if (approvedApplicants) {
+    sortApplicants = approvedApplicants.sort((a, b) =>
+      a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
+    );
+  }
 
   useEffect(() => {
     setAllPosts(sortApplicants);
@@ -165,18 +139,7 @@ const MainPage = ({
         </Typography>
       </Paper>
 
-      {showCard ? (
-        <Grid className={classes.buttonContainer}>
-          <Button
-            onClick={() => setShowCard(false)}
-            variant="contained"
-            color="primary"
-            className={classes.backButton}
-          >
-            Back
-          </Button>
-        </Grid>
-      ) : showForm ? (
+      {showForm ? (
         <ApproveNewApplicantForm
           options={options}
           approveNewApplicants={approveNewApplicants}
@@ -210,12 +173,13 @@ const MainPage = ({
             <div>
               <FormControl className={classes.formControlSelector}>
                 <InputLabel className={classes.postsPerPageLabel}>
-                  Posts/Page
+                  Applicants/Page
                 </InputLabel>
                 <Select
                   id="post-per-page"
                   value={postsPerPage}
                   onChange={handleChangePostsPerPage}
+                  className={classes.postsPerPageSelector}
                 >
                   <MenuItem value={5}>5</MenuItem>
                   <MenuItem value={10}>10</MenuItem>
@@ -227,15 +191,7 @@ const MainPage = ({
         </Grid>
       )}
 
-      {showCard ? (
-        <ApplicationCards
-          contactId={contactId}
-          applicant={applicant}
-          applications={applications}
-          page="internal"
-        />
-      ) : (
-        currentPosts &&
+      {currentPosts &&
         currentPosts.map((applicant, index) => (
           <Paper
             className={`${classes.paper} ${classes.applicantsPaper}`}
@@ -243,14 +199,14 @@ const MainPage = ({
           >
             <div className={classes.profileIconContainer}>
               <Link
-                onClick={() => toProfile(applicant.contact.id)}
+                onClick={() => toProfile(applicant.id)}
                 className={classes.link}
               >
                 <AccountBoxIcon className={classes.profileIcon} />
               </Link>
             </div>
             <Link
-              onClick={() => onClickView(applicant.contact.id, applicant)}
+              onClick={() => onClickView(applicant.id)}
               className={classes.viewApplicantLink}
             >
               <Typography
@@ -258,26 +214,29 @@ const MainPage = ({
                 variant="body1"
                 className={classes.name}
               >
-                {applicant.contact.first_name} {applicant.contact.last_name}
+                {applicant.first_name} {applicant.last_name}
               </Typography>
               <Typography
                 component="p"
                 variant="body1"
                 className={classes.email}
               >
-                ({applicant.contact.email})
+                ({applicant.email})
               </Typography>
             </Link>
             <div className={classes.programTagsContainer}>
-              {candidates[0].programs.map((program, index) => (
-                <div className={classes.programTags} key={index}>
-                  {program}
-                </div>
-              ))}
+              {applicant.programs.map(
+                (program, index) =>
+                  program.is_approved && (
+                    <div className={classes.programTags} key={index}>
+                      {program.program.name}
+                    </div>
+                  )
+              )}
             </div>
           </Paper>
-        ))
-      )}
+        ))}
+
       {!showCard && (
         <Pagination
           defaultPage={1}
@@ -294,7 +253,7 @@ const MainPage = ({
   );
 };
 
-MainPage.propTypes = {
+ApplicationsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
   getAllContactsShort: PropTypes.func.isRequired,
   approveNewApplicants: PropTypes.func.isRequired,
@@ -307,16 +266,16 @@ MainPage.propTypes = {
       last_name: PropTypes.string,
     })
   ).isRequired,
-  applicants: PropTypes.arrayOf(
-    PropTypes.shape({
-      is_active: PropTypes.bool.Required,
-      applications: PropTypes.array,
-      contact: PropTypes.object.isRequired,
-      id: PropTypes.number.Required,
-      program_id: PropTypes.number.Required,
-      is_approved: PropTypes.bool.Required,
-    })
-  ).isRequired,
+  // applicants: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     is_active: PropTypes.bool.Required,
+  //     applications: PropTypes.array,
+  //     contact: PropTypes.object.isRequired,
+  //     id: PropTypes.number.Required,
+  //     program_id: PropTypes.number.Required,
+  //     is_approved: PropTypes.bool.Required,
+  //   })
+  // ).isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -354,20 +313,32 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: '10px',
     justifyContent: 'space-between',
     padding: 0,
-    margin: 0,
 
     width: '100%',
     [breakpoints.up('lg')]: {
       alignItems: 'center',
+      marginLeft: spacing(4),
 
-      justifyContent: 'space-around',
+      justifyContent: 'space-between',
     },
   },
   formControlSelector: {
-    minWidth: 100,
+    minWidth: 103,
     backgroundColor: '#ffffff',
     padding: '5px 10px',
     border: '1px solid grey',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  postsPerPageLabel: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  postsPerPageSelector: {
+    width: '90%',
   },
   searchBar: {
     backgroundColor: '#ffffff',
@@ -499,15 +470,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
   approveButton: {
     [breakpoints.up('lg')]: {
       height: '55px',
+      width: '300px',
     },
     height: '40px',
   },
-  backButton: {
-    marginBottom: spacing(2),
-  },
+
   pagination: {
     margin: spacing(2),
   },
 });
 
-export default withStyles(styles)(MainPage);
+export default withStyles(styles)(ApplicationsBoard);

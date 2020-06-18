@@ -37,6 +37,7 @@ import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'components/FAQPage';
+import ApplicationsCard from 'components/Internal/ApplicationsBoard/ApplicationsCard.container';
 
 const App = ({
   hasSession,
@@ -216,6 +217,12 @@ const App = ({
                 exact
                 path="/internal/opportunities-board"
                 component={InternalOpportunitiesBoard}
+              />
+
+              <Route
+                exact
+                path="/internal/applications-board/:contactId"
+                component={ApplicationsCard}
               />
               <Route
                 exact

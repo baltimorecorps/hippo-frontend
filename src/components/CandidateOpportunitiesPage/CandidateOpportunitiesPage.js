@@ -25,7 +25,7 @@ const CandidateOpportunitiesPage = ({
   let history = useHistory();
 
   useEffect(() => {
-    if (!apps && contact) {
+    if (contact) {
       getAllApplications(contact.id);
     }
   }, [apps, getAllApplications, contact]);
@@ -81,6 +81,8 @@ const CandidateOpportunitiesPage = ({
   const handleChangeFilter = (event, newValue) => {
     setValue(newValue);
   };
+
+  console.log(contact);
 
   if (!renderedOpportunities || renderedOpportunities.length === 0)
     return <div>loading...</div>;
