@@ -4,6 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ApplicationStateAccordion from '../OpportunitiesBoard/ApplicationStateAccordion';
+import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import Link from '@material-ui/core/Link';
@@ -17,7 +18,6 @@ const ApplicationsCard = ({
   getContactApplications,
   getContact,
 }) => {
-  console.log(contactId);
   useEffect(() => {
     getContactApplications(contactId);
   }, [getContactApplications, contactId]);
@@ -65,7 +65,18 @@ const ApplicationsCard = ({
   }
 
   return (
-    <div>
+    <div className={classes.container}>
+      <PartnershipsNavBar />
+      <Paper className={classes.paper}>
+        <Typography
+          component="h1"
+          variant="h5"
+          align="center"
+          className={classes.header}
+        >
+          Applicant's Overview
+        </Typography>
+      </Paper>
       <Grid className={classes.buttonContainer}>
         <Button
           onClick={() => backToApplicationsBoard()}
@@ -73,7 +84,7 @@ const ApplicationsCard = ({
           color="primary"
           className={classes.backButton}
         >
-          Back
+          Back to Applicants Board
         </Button>
       </Grid>
       <Paper className={classes.paper}>
@@ -166,10 +177,18 @@ ApplicationsCard.propTypes = {
   contactId: PropTypes.number.isRequired,
   applications: PropTypes.arrayOf(PropTypes.object).isRequired,
   applicant: PropTypes.object.isRequired,
-  page: PropTypes.string.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
+  container: {
+    marginTop: spacing(1),
+
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
   backButton: {
     marginBottom: spacing(2),
     marginTop: spacing(2),
@@ -177,7 +196,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     width: '360px',
     padding: spacing(2, 3, 3),
-    margin: spacing(0, 1, 2, 1),
+    margin: spacing(4, 1, 2, 1),
     [breakpoints.down('xs')]: {
       margin: spacing(0, 0, 1, 0),
       width: '95%',
