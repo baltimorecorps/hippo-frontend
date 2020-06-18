@@ -82,8 +82,6 @@ const CandidateOpportunitiesPage = ({
     setValue(newValue);
   };
 
-  console.log(contact);
-
   if (!renderedOpportunities || renderedOpportunities.length === 0)
     return <div>loading...</div>;
 

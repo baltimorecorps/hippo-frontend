@@ -6,13 +6,15 @@ import {getContact} from 'state/contacts';
 const mapStateToProps = (state, props) => {
   const {contactId} = props.match.params;
 
-  const applications = Object.values(state.applications);
+  const applications = Object.values(state.applications).filter(
+    app => app.contact.id == contactId
+  );
   const applicant = Object.values(state.contacts).filter(
     contact => contact.id == contactId
   );
 
   return {
-    applications: applications[0],
+    applications: applications,
     applicant: applicant[0],
     contactId: Number(contactId),
   };

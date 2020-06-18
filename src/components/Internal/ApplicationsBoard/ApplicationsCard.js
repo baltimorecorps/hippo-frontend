@@ -74,7 +74,7 @@ const ApplicationsCard = ({
           align="center"
           className={classes.header}
         >
-          Applicant's Applications
+          Applicant's Overview
         </Typography>
       </Paper>
       <Grid className={classes.buttonContainer}>
@@ -84,7 +84,7 @@ const ApplicationsCard = ({
           color="primary"
           className={classes.backButton}
         >
-          Back
+          Back to Applicants Board
         </Button>
       </Grid>
       <Paper className={classes.paper}>

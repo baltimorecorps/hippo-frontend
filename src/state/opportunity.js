@@ -421,9 +421,9 @@ export const applicationsReducer = createReducer(
       state[application.id] = application;
     },
     [GET_CONTACT_APPLICATIONS_API.RESOLVE]: (state, action) => {
-      const application = action.body.data;
-
-      state[application.id] = application;
+      action.body.data.forEach(app => {
+        state[app.id] = app;
+      });
     },
     [GET_ALL_SUBMITTED_APPLICATIONS_API.RESOLVE]: (state, action) => {
       action.body.data.forEach(app => {
