@@ -37,10 +37,8 @@ const StaffViewApplication = ({
   let history = useHistory();
 
   useEffect(() => {
-    if (!application || application.length === 0) {
-      getApplication(contactId, opportunityId);
-    }
-  }, [application, getApplication, contactId, opportunityId]);
+    getApplication(contactId, opportunityId);
+  }, [getApplication, contactId, opportunityId]);
 
   if (!application) {
     return <div>Loading...</div>;

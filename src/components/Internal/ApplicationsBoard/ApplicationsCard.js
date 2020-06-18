@@ -17,7 +17,6 @@ const ApplicationsCard = ({
   getContactApplications,
   getContact,
 }) => {
-  console.log(contactId);
   useEffect(() => {
     getContactApplications(contactId);
   }, [getContactApplications, contactId]);

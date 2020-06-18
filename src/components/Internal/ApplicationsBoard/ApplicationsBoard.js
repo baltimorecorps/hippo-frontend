@@ -87,13 +87,12 @@ const ApplicationsBoard = ({
     event.persist();
 
     const name = event.target.value.toLowerCase();
-
     if (name != null) {
-      const searchNames = applicants.filter(applicant => {
-        const applicantName = applicant.contact.first_name.toLowerCase();
-        const applicantLastName = applicant.contact.last_name.toLowerCase();
+      const searchNames = approvedApplicants.filter(applicant => {
+        const applicantName = applicant.first_name.toLowerCase();
+        const applicantLastName = applicant.last_name.toLowerCase();
         const applicantFullName = `${applicantName} ${applicantLastName}`;
-        const applicantEmail = applicant.contact.email.toLowerCase();
+        const applicantEmail = applicant.email.toLowerCase();
         return (
           applicantFullName.includes(name) || applicantEmail.includes(name)
         );
