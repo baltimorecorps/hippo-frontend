@@ -3,10 +3,8 @@ import ApplicationsBoard from './ApplicationsBoard';
 import {getAllContactsPrograms, approveNewApplicants} from 'state/opportunity';
 
 const mapStateToProps = state => {
-  const contacts = Object.values(state.contacts);
-
-  const applicants = Object.values(state.applicants);
-  const approvedApplicants = applicants.filter(app => {
+  const allApplicants = Object.values(state.applicants);
+  const approvedApplicants = allApplicants.filter(app => {
     const isApproved = app.programs.filter(
       program => program.is_approved === true
     );
@@ -14,8 +12,7 @@ const mapStateToProps = state => {
   });
 
   return {
-    contacts,
-    applicants,
+    allApplicants,
     approvedApplicants,
   };
 };
