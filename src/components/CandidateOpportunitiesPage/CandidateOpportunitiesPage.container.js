@@ -8,7 +8,9 @@ import {
 const mapStateToProps = state => {
   const submittedIds = Object.values(state.applications)
     .filter(app => app.status !== 'draft')
-    .map(app => app.opportunity.id);
+    .map(app => {
+      if (app.opportunity) return app.opportunity.id;
+    });
 
   const opportunities = Object.values(state.opportunities);
 

@@ -37,10 +37,8 @@ const StaffViewApplication = ({
   let history = useHistory();
 
   useEffect(() => {
-    if (!application || application.length === 0) {
-      getApplication(contactId, opportunityId);
-    }
-  }, [application, getApplication, contactId, opportunityId]);
+    getApplication(contactId, opportunityId);
+  }, [getApplication, contactId, opportunityId]);
 
   if (!application) {
     return <div>Loading...</div>;
@@ -54,6 +52,9 @@ const StaffViewApplication = ({
   };
   const toInternalApplicationsBoard = () => {
     history.push('/internal/applications-board');
+  };
+  const toApplicantApplicationsCard = () => {
+    history.push(`/internal/applications-board/${contactId}`);
   };
 
   const handleClickRecommend = () => {
@@ -99,11 +100,18 @@ const StaffViewApplication = ({
     true,
     classes.buttons
   );
+  const toApplicantApplicationsCardButton = createAButton(
+    "To This Applicant's Overview",
+    toApplicantApplicationsCard,
+    true,
+    classes.buttons
+  );
 
   return (
     <div className={classes.container}>
       <div className={classes.headerButtonContainer}>
         {toInternalOpportunitiesButton}
+        {toApplicantApplicationsCardButton}
         {toInternalApplicationsButton}
       </div>
       <ViewFullApplication application={application} />

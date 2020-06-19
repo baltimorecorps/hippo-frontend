@@ -25,7 +25,7 @@ const CandidateOpportunitiesPage = ({
   let history = useHistory();
 
   useEffect(() => {
-    if (!apps && contact) {
+    if (contact) {
       getAllApplications(contact.id);
     }
   }, [apps, getAllApplications, contact]);
