@@ -1,7 +1,6 @@
 import {connect} from 'react-redux';
 import ApplicationsBoard from './ApplicationsBoard';
-import {approveNewApplicants} from 'state/opportunity';
-import {getAllContactsPrograms} from 'state/opportunity';
+import {getAllContactsPrograms, approveNewApplicants} from 'state/opportunity';
 
 const mapStateToProps = state => {
   const contacts = Object.values(state.contacts);
