@@ -20,14 +20,14 @@ import Select from '@material-ui/core/Select';
 const ApplicationsBoard = ({
   classes,
   approveNewApplicants,
-  contacts,
-  applicants,
+  allApplicants,
   getAllContactsPrograms,
   approvedApplicants,
 }) => {
   useEffect(() => {
-    getAllContactsPrograms();
-  }, [getAllContactsPrograms]);
+    if (approvedApplicants && approvedApplicants.length === 0)
+      getAllContactsPrograms();
+  }, [getAllContactsPrograms, approvedApplicants]);
 
   const match = useRouteMatch();
 
@@ -46,8 +46,8 @@ const ApplicationsBoard = ({
   };
 
   let options = {};
-  if (contacts) {
-    options = contacts.map(contact => {
+  if (allApplicants) {
+    options = allApplicants.map(contact => {
       return {
         name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
         contact_id: contact.id,
@@ -115,7 +115,7 @@ const ApplicationsBoard = ({
     setCurrentPage(pageNumber);
   };
 
-  if (!applicants) {
+  if (!approvedApplicants) {
     return <div>...Loading</div>;
   }
   return (
