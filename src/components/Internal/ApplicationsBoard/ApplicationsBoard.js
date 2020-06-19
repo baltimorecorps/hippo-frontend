@@ -22,15 +22,9 @@ const ApplicationsBoard = ({
   approveNewApplicants,
   contacts,
   applicants,
-  getAllContactsShort,
-  getAllInternalApplicants,
   getAllContactsPrograms,
   approvedApplicants,
 }) => {
-  useEffect(() => {
-    getAllContactsShort();
-  }, [getAllContactsShort]);
-
   useEffect(() => {
     getAllContactsPrograms();
   }, [getAllContactsPrograms]);
