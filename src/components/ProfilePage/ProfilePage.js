@@ -14,8 +14,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import BasicInfoDisplay from 'components/Users/BasicInfoDisplay';
-import BasicInfoForm from 'components/Users/BasicInfoForm';
+import BasicInfoDisplay from 'components/AboutMe/BasicInfoDisplay';
+import BasicInfoForm from 'components/AboutMe/BasicInfoForm';
+import DemographicForm from 'components/AboutMe/DemographicForm';
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
@@ -346,13 +347,18 @@ const ProfilePage = ({
                       </Typography>
                     </div>
                     <Grid container justify="center">
-                      {openForm ? (
-                        <BasicInfoForm
-                          contact={contactInfo}
-                          onSubmit={handleUpdateContact}
-                          onCloseForm={() => setOpenForm(false)}
-                        />
-                      ) : (
+                      {/* {openForm ? ( */}
+                      <BasicInfoForm
+                        contact={contactInfo}
+                        onSubmit={handleUpdateContact}
+                        onCloseForm={() => setOpenForm(false)}
+                      />
+                      <DemographicForm
+                        contact={contactInfo}
+                        onSubmit={handleUpdateContact}
+                        onCloseForm={() => setOpenForm(false)}
+                      />
+                      {/* ) : (
                         <BasicInfoDisplay
                           firstName={contactInfo.first_name}
                           lastName={contactInfo.last_name}
@@ -360,7 +366,7 @@ const ProfilePage = ({
                           phone={contactInfo.phone_primary}
                           onClickEdit={() => setOpenForm(true)}
                         />
-                      )}
+                      )} */}
                     </Grid>
                   </Paper>
                 </Grid>
