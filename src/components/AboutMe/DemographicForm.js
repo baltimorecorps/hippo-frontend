@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -21,17 +21,10 @@ import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import mockData from './mockData';
+
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
-
-  if (values.email_primary.type == null) {
-    const updatedEmail = {
-      ...values.email_primary,
-      type: 'Personal',
-    };
-    update('email_primary')(updatedEmail);
-    update('emails')([updatedEmail]);
-  }
 
   const handlers = {
     handleChange: event => {
@@ -41,15 +34,9 @@ const useForm = (initialValues, onSubmit) => {
     handleSubmit: values => {
       onSubmit(values);
     },
-    handlePhoneChange: value => {
-      update('phone_primary')(value);
-    },
-    handleEmailChange: event => {
-      const updatedEmail = {
-        ...values.email_primary,
-        email: event.target.value,
-      };
-      update('email_primary')(updatedEmail);
+
+    handleRacesChange: changedDemographic => {
+      update('demographic')(changedDemographic);
     },
   };
 
@@ -57,14 +44,43 @@ const useForm = (initialValues, onSubmit) => {
 };
 
 const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
-  const [
-    values,
-    {handleChange, handleSubmit, handlePhoneChange, handleEmailChange},
-  ] = useForm(contact, onSubmit);
+  const [values, {handleChange, handleSubmit, handleRacesChange}] = useForm(
+    mockData,
+    onSubmit
+  );
   const [errors, setErrors] = useState({});
+  const genders = ['Female', 'Male', 'Non-Binary', 'Not Listed'];
+  const pronouns = ['She/Her', 'He/Him', 'They/Them', 'Not Listed'];
+  const {demographic} = values;
+
+  const racesKeys = Object.keys(demographic.races);
+  const racesValuesGroupOne = Object.values(demographic.races).slice(0, 4);
+  const racesValuesGroupTwo = Object.values(demographic.races).slice(4, 8);
+
+  const handleRacesCheckbox = event => {
+    event.persist();
+    const updatedDemographic = {
+      ...demographic,
+      races: {
+        ...demographic.races,
+        [event.target.name]: [
+          event.target.checked,
+          demographic.races[event.target.name][1],
+        ],
+      },
+    };
+    handleRacesChange(updatedDemographic);
+  };
+  const handleDropdownSelector = event => {
+    event.persist();
+    const updatedDemographic = {
+      ...demographic,
+      [event.target.name]: event.target.value,
+    };
+    handleRacesChange(updatedDemographic);
+  };
 
   const submit = () => {
-    values.email = values.email_primary.email;
     const {isError, err} = newProfileValidator(values);
 
     if (isError) {
@@ -74,44 +90,6 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
       onCloseForm();
     }
   };
-
-  const inputLabelProps = {
-    classes: {
-      root: classes.labelRoot,
-      focused: classes.labelFocused,
-    },
-    shrink: true,
-  };
-
-  const inputProps = {
-    classes: {input: classes.resize},
-    autoComplete: 'off',
-  };
-
-  const [races, setRaces] = useState([]);
-
-  const handleCheckbox = e => {
-    e.persist();
-    console.log(e.target.name);
-    console.log(e.target.checked);
-  };
-
-  const allRaces = [
-    [
-      'American Indian or Alaskan Native',
-      'Asian',
-      'Black or African Descent',
-      'Hispanic or Latinx',
-    ],
-    [
-      'Native Hawaiian or Other Pacific Islander',
-      'South Asian',
-      'White',
-      'Not Listed',
-    ],
-  ];
-  const genders = ['Female', 'Male', 'Non-Binary', 'Not Listed'];
-  const pronouns = ['She/Her', 'He/Him', 'They/Them', 'Not Listed'];
 
   return (
     <Grid item xs={12} md={10} className={classes.form}>
@@ -130,47 +108,62 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
       </Grid>
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
-          {/* <Grid container justify="space-between"> */}
           <div className={classes.allRacesContainer}>
-            {allRaces.map(raceGroup => (
-              <div className={classes.raceGroupContainer}>
-                {raceGroup.map(race => (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={races}
-                        onChange={handleCheckbox}
-                        name={race}
-                        color="primary"
-                      />
-                    }
-                    className={classes.race}
-                    label={race}
-                  />
-                ))}
-              </div>
-            ))}
+            <div className={classes.raceGroupContainer}>
+              {racesValuesGroupOne.map((race, index) => (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={race[0]}
+                      onChange={handleRacesCheckbox}
+                      name={racesKeys[index]}
+                      color="primary"
+                    />
+                  }
+                  className={classes.race}
+                  label={race[1]}
+                />
+              ))}
+            </div>
+            <div className={classes.raceGroupContainer}>
+              {racesValuesGroupTwo.map((race, index) => (
+                <FormControlLabel
+                  key={index}
+                  control={
+                    <Checkbox
+                      checked={race[0]}
+                      onChange={handleRacesCheckbox}
+                      name={racesKeys[index + 4]}
+                      color="primary"
+                    />
+                  }
+                  className={classes.race}
+                  label={race[1]}
+                />
+              ))}
+            </div>
           </div>
           <div className={classes.genderAndPronounsContainer}>
-            <div className={classes.genderContainer}>
-              <InputLabel htmlFor="gender" className={classes.genderInputLabel}>
+            <div className={classes.dropdownContainer}>
+              <InputLabel htmlFor="gender" className={classes.inputLabel}>
                 Gender
               </InputLabel>
               <Select
                 disabled={false}
                 required
                 id="gender"
-                value={values.gender || ''}
-                onChange={handleChange}
+                value={demographic.gender}
+                onChange={handleDropdownSelector}
                 inputProps={{
                   name: 'gender',
                   id: 'gender',
-                  classes: {select: classes.gender},
+                  classes: {select: classes.dropdownSelector},
                   'data-testid': 'gender',
                 }}
               >
                 {genders.map(gender => (
-                  <MenuItem value={values.gender} key={gender}>
+                  <MenuItem value={gender} key={gender}>
                     {gender}
                   </MenuItem>
                 ))}
@@ -179,28 +172,25 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {errors.firstName_error || null}
               </FormHelperText>
             </div>
-            <div className={classes.pronounContainer}>
-              <InputLabel
-                htmlFor="pronoun"
-                className={classes.pronounInputLabel}
-              >
+            <div className={classes.dropdownContainer}>
+              <InputLabel htmlFor="pronoun" className={classes.inputLabel}>
                 Pronouns
               </InputLabel>
               <Select
                 disabled={false}
                 required
                 id="pronoun"
-                value={values.pronoun || ''}
-                onChange={handleChange}
+                value={demographic.pronoun}
+                onChange={handleDropdownSelector}
                 inputProps={{
                   name: 'pronoun',
                   id: 'pronoun',
-                  classes: {select: classes.pronoun},
+                  classes: {select: classes.dropdownSelector},
                   'data-testid': 'pronoun',
                 }}
               >
                 {pronouns.map(pronoun => (
-                  <MenuItem value={values.pronoun} key={pronoun}>
+                  <MenuItem value={pronoun} key={pronoun}>
                     {pronoun}
                   </MenuItem>
                 ))}
@@ -287,25 +277,25 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     flexGrow: 1,
   },
-  gender: {
-    textAlign: 'left',
-
-    width: '120px',
+  dropdownContainer: {
+    marginTop: '10px',
   },
-  pronoun: {
+  dropdownSelector: {
     textAlign: 'left',
-
-    width: '120px',
+    width: '80px',
   },
+
   race: {
     textAlign: 'left',
-    // fontSize: '10px',
-    // marginBottom: '1px',
   },
   genderAndPronounsContainer: {
     marginTop: spacing(2),
     display: 'flex',
     flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  inputLabel: {
+    textAlign: 'left',
   },
 });
 
