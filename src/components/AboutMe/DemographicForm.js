@@ -22,6 +22,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import mockData from './mockData';
+import {genders, pronouns} from './defaultData';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -49,10 +50,8 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
     onSubmit
   );
   const [errors, setErrors] = useState({});
-  const genders = ['Female', 'Male', 'Non-Binary', 'Not Listed'];
-  const pronouns = ['She/Her', 'He/Him', 'They/Them', 'Not Listed'];
-  const {demographic} = values;
 
+  const {demographic} = values;
   const racesKeys = Object.keys(demographic.races);
   const racesValuesGroupOne = Object.values(demographic.races).slice(0, 4);
   const racesValuesGroupTwo = Object.values(demographic.races).slice(4, 8);
@@ -90,6 +89,15 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
       onCloseForm();
     }
   };
+
+  // todo
+  // display a textfield when user checks or selects Not Listed option
+
+  // add information icon to the header of the section
+  // which expands a tooltip explaining why the information is needed
+
+  // form validation
+  // testing
 
   return (
     <Grid item xs={12} md={10} className={classes.form}>
@@ -282,7 +290,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   dropdownSelector: {
     textAlign: 'left',
-    width: '80px',
+    width: '90px',
   },
 
   race: {

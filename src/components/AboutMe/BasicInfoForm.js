@@ -17,6 +17,8 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
+import {states} from './defaultData';
+
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
@@ -52,68 +54,6 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const states = [
-  'Alabama',
-  'Alaska',
-  'American Samoa',
-  'Arizona',
-  'Arkansas',
-  'California',
-  'Colorado',
-  'Connecticut',
-  'Delaware',
-  'District of Columbia',
-  'Federated States of Micronesia',
-  'Florida',
-  'Georgia',
-  'Guam',
-  'Hawaii',
-  'Idaho',
-  'Illinois',
-  'Indiana',
-  'Iowa',
-  'Kansas',
-  'Kentucky',
-  'Louisiana',
-  'Maine',
-  'Marshall Islands',
-  'Maryland',
-  'Massachusetts',
-  'Michigan',
-  'Minnesota',
-  'Mississippi',
-  'Missouri',
-  'Montana',
-  'Nebraska',
-  'Nevada',
-  'New Hampshire',
-  'New Jersey',
-  'New Mexico',
-  'New York',
-  'North Carolina',
-  'North Dakota',
-  'Northern Mariana Islands',
-  'Ohio',
-  'Oklahoma',
-  'Oregon',
-  'Palau',
-  'Pennsylvania',
-  'Puerto Rico',
-  'Rhode Island',
-  'South Carolina',
-  'South Dakota',
-  'Tennessee',
-  'Texas',
-  'Utah',
-  'Vermont',
-  'Virgin Island',
-  'Virginia',
-  'Washington',
-  'West Virginia',
-  'Wisconsin',
-  'Wyoming',
-];
-
 const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [
     values,
@@ -145,6 +85,11 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     classes: {input: classes.resize},
     autoComplete: 'off',
   };
+
+  // todo
+  // use MockData to test updating state with address fields
+  // form validation
+  // testing
 
   return (
     <Grid item xs={12} md={10} className={classes.form}>
@@ -287,7 +232,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                     }}
                   >
                     {states.map(state => (
-                      <MenuItem value={values.state} key={state}>
+                      <MenuItem value={state} key={state}>
                         {state}
                       </MenuItem>
                     ))}
