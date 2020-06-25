@@ -11,7 +11,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import BasicInfoDisplay from './BasicInfoDisplay';
 import BasicInfoForm from './BasicInfoForm';
 import DemographicForm from './DemographicForm';
-// import DemographicDisplay from './DemographicDisplay';
+import DemographicDisplay from './DemographicDisplay';
 import InterestsAndGoalsForm from './InterestsAndGoalsForm';
 import InterestsAndGoalsDisplay from './InterestsAndGoalsDisplay';
 import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
@@ -149,11 +149,20 @@ const AboutMeForms = ({
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <DemographicForm
-            contact={contact}
-            onSubmit={onSubmit}
-            onCloseForm={() => setOpenDemographicForm(false)}
-          />
+          {openDemographicForm ? (
+            <DemographicForm
+              contact={contact}
+              onSubmit={onSubmit}
+              onCloseForm={() => setOpenDemographicForm(false)}
+            />
+          ) : (
+            <div className={classes.extraPadding}>
+              <DemographicDisplay
+                contact={contact}
+                onClickEdit={() => setOpenDemographicForm(true)}
+              />
+            </div>
+          )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </Grid>

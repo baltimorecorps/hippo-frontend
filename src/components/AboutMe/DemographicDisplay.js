@@ -7,12 +7,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
-const ProgramsAndEligibilityDisplay = ({onClickEdit, classes}) => {
+const DemographicDisplay = ({onClickEdit, classes}) => {
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
         <Typography variant="h6" component="h3" className={classes.header}>
-          Programs and Eligibility
+          Demographic Information
         </Typography>
         <IconButton
           onClick={onClickEdit}
@@ -24,17 +24,26 @@ const ProgramsAndEligibilityDisplay = ({onClickEdit, classes}) => {
       </Grid>
 
       <Typography variant="body1" component="p" className={classes.item}>
-        <p className={classes.question}>Interested Programs: </p>
+        <p className={classes.question}>Race: </p>
 
-        <p className={classes.answer}>- Baltimore Corps Fellowship</p>
-        <p className={classes.answer}>- Place for Purpose</p>
-        <p className={classes.answer}>- Public Allies</p>
+        <p className={classes.answer}>- Asian</p>
+        <p className={classes.answer}>- South Asian</p>
+      </Typography>
+      <Typography variant="body1" component="p" className={classes.item}>
+        <p className={classes.question}>Gender: </p>
+
+        <p className={classes.answer}>- Female</p>
+      </Typography>
+      <Typography variant="body1" component="p" className={classes.item}>
+        <p className={classes.question}>Pronoun: </p>
+
+        <p className={classes.answer}>- She/Her</p>
       </Typography>
     </React.Fragment>
   );
 };
 
-ProgramsAndEligibilityDisplay.propTypes = {
+DemographicDisplay.propTypes = {
   //   firstName: PropTypes.string.isRequired,
   //   lastName: PropTypes.string.isRequired,
   //   email: PropTypes.string,
@@ -76,4 +85,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(ProgramsAndEligibilityDisplay);
+export default withStyles(styles)(DemographicDisplay);
