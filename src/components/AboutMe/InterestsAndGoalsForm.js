@@ -25,6 +25,10 @@ import mockData from './mockData';
 import {genders, pronouns} from './defaultData';
 import InfoIcon from '@material-ui/icons/Info';
 import Tooltip from '@material-ui/core/Tooltip';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -46,7 +50,7 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
+const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [values, {handleChange, handleSubmit, handleRacesChange}] = useForm(
     mockData,
     onSubmit
@@ -92,6 +96,16 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
     }
   };
 
+  const roles = [
+    'Advocacy and Public Policy',
+    'Community Engagement and Outreach',
+    'Data Analysis',
+    'Fundraising and Development',
+    'Marketing and Public Relations',
+    'Operations and Administration',
+    'Program Management',
+  ];
+
   // todo
   // display a textfield when user checks or selects Not Listed option
 
@@ -102,7 +116,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
     <Grid item xs={12} md={10} className={classes.form}>
       <div className={classes.headerContainer}>
         <Typography variant="h3" component="h3" className={classes.formHeader}>
-          Demographic Information
+          Interests and Goals
         </Typography>
         <Grid align="end">
           <IconButton
@@ -117,108 +131,110 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
       </div>
 
       <Typography variant="body1" component="p" className={classes.sectionInfo}>
-        The information below helps us build a better picture of our applicants.
-        As an organization committed to equity, it is important for us to
-        understand the variety of identities and affinities that are represented
-        within our pool so that we can engage in a thoughtful process. That
-        being said, we understand that this information is sensitive and
-        providing it is completely optional.
+        The questions below help us understand a little bit more about your
+        experience and which roles you might be interested in applying for.
       </Typography>
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
-          <div className={classes.allRacesContainer}>
-            <div className={classes.raceGroupContainer}>
-              {racesValuesGroupOne.map((race, index) => (
+          <div className={classes.eachQuestionContainer}>
+            <FormControl component="fieldset">
+              <Typography
+                variant="body1"
+                component="p"
+                className={classes.question}
+              >
+                How many years of professional experience (internships,
+                advocacy, employed etc.) do you have?
+              </Typography>
+              <RadioGroup
+                aria-label="gender"
+                name="gender1"
+                value="female"
+                onChange={handleChange}
+                className={classes.radioGroup}
+              >
                 <FormControlLabel
-                  key={index}
+                  className={classes.radio}
+                  value="0-2 years"
+                  control={<Radio />}
+                  label="0-2 years"
+                />
+                <FormControlLabel
+                  className={classes.radio}
+                  value="3-5 years"
+                  control={<Radio />}
+                  label="3-5 years"
+                />
+                <FormControlLabel
+                  className={classes.radio}
+                  value="5+ years"
+                  control={<Radio />}
+                  label="5+ years"
+                />
+              </RadioGroup>
+            </FormControl>
+          </div>
+
+          <div className={classes.interestedRolesContainer}>
+            <Typography
+              variant="body1"
+              component="p"
+              className={classes.question}
+            >
+              Which of the following types of roles are you interested in
+              applying for? (select all that apply)
+            </Typography>
+            <div className={classes.checkboxesContainer}>
+              {roles.map(role => (
+                <FormControlLabel
                   control={
                     <Checkbox
-                      checked={race[0]}
+                      checked={false}
                       onChange={handleRacesCheckbox}
-                      name={racesKeys[index]}
+                      name={role}
                       color="primary"
                     />
                   }
-                  className={classes.race}
-                  label={race[1]}
+                  className={classes.role}
+                  label={role}
                 />
               ))}
             </div>
-            <div className={classes.raceGroupContainer}>
-              {racesValuesGroupTwo.map((race, index) => (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={race[0]}
-                      onChange={handleRacesCheckbox}
-                      name={racesKeys[index + 4]}
-                      color="primary"
-                    />
-                  }
-                  className={classes.race}
-                  label={race[1]}
-                />
-              ))}
+            <div className={classes.eachQuestionContainer}>
+              <FormControl component="fieldset">
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className={classes.question}
+                >
+                  Have you participated in any of Baltimore Corps' programs and
+                  services already?
+                </Typography>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  value="no"
+                  onChange={handleChange}
+                  className={classes.radioGroup}
+                >
+                  <FormControlLabel
+                    className={classes.radio}
+                    value="yes"
+                    control={<Radio />}
+                    label="Yes"
+                  />
+                  <FormControlLabel
+                    className={classes.radio}
+                    value="no"
+                    control={<Radio />}
+                    label="No"
+                  />
+                </RadioGroup>
+              </FormControl>
             </div>
           </div>
-          <div className={classes.genderAndPronounsContainer}>
-            <div className={classes.dropdownContainer}>
-              <InputLabel htmlFor="gender" className={classes.inputLabel}>
-                Gender
-              </InputLabel>
-              <Select
-                disabled={false}
-                required
-                id="gender"
-                value={demographic.gender}
-                onChange={handleDropdownSelector}
-                inputProps={{
-                  name: 'gender',
-                  id: 'gender',
-                  classes: {select: classes.dropdownSelector},
-                  'data-testid': 'gender',
-                }}
-              >
-                {genders.map(gender => (
-                  <MenuItem value={gender} key={gender}>
-                    {gender}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText className={classes.formHelperText}>
-                {errors.firstName_error || null}
-              </FormHelperText>
-            </div>
-            <div className={classes.dropdownContainer}>
-              <InputLabel htmlFor="pronoun" className={classes.inputLabel}>
-                Pronouns
-              </InputLabel>
-              <Select
-                disabled={false}
-                required
-                id="pronoun"
-                value={demographic.pronoun}
-                onChange={handleDropdownSelector}
-                inputProps={{
-                  name: 'pronoun',
-                  id: 'pronoun',
-                  classes: {select: classes.dropdownSelector},
-                  'data-testid': 'pronoun',
-                }}
-              >
-                {pronouns.map(pronoun => (
-                  <MenuItem value={pronoun} key={pronoun}>
-                    {pronoun}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText className={classes.formHelperText}>
-                {errors.firstName_error || null}
-              </FormHelperText>
-            </div>
-          </div>
+          <div className={classes.genderAndPronounsContainer}></div>
           <Grid item xs={12} align="end" className={classes.submitButton}>
             <Button
               variant="contained"
@@ -236,7 +252,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
   );
 };
 
-DemographicForm.propTypes = {
+InterestsAndGoalsForm.propTypes = {
   contact: PropTypes.shape({
     first_name: PropTypes.string.isRequired,
     last_name: PropTypes.string.isRequired,
@@ -261,7 +277,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: '10px',
   },
   sectionInfo: {
-    fontSize: '15px',
     textIndent: '25px',
     marginBottom: '15px',
     marginTop: '10px',
@@ -296,35 +311,36 @@ const styles = ({breakpoints, palette, spacing}) => ({
       color: 'black',
     },
   },
-  allRacesContainer: {
+  eachQuestionContainer: {
     display: 'flex',
-    flexDirection: 'column',
-
-    [breakpoints.up('lg')]: {
-      flexDirection: 'row',
-    },
-  },
-  raceGroupContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
-  dropdownContainer: {
-    marginTop: '10px',
-  },
-  dropdownSelector: {
-    textAlign: 'left',
-    width: '90px',
-  },
-
-  race: {
-    textAlign: 'left',
-  },
-  genderAndPronounsContainer: {
-    marginTop: spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
     alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    width: '100%',
+    marginBottom: '15px',
+  },
+  question: {
+    color: '#000000',
+    // left: '20px',
+    width: '100%',
+    textAlign: 'left',
+  },
+
+  radio: {
+    width: '100%',
+    paddingLeft: '30px',
+  },
+
+  checkboxesContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    width: '100%',
+    marginBottom: '15px',
+  },
+  role: {
+    width: '100%',
+    paddingLeft: '30px',
   },
   inputLabel: {
     textAlign: 'left',
@@ -334,4 +350,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(DemographicForm);
+export default withStyles(styles)(InterestsAndGoalsForm);

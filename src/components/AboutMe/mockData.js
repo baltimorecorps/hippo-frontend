@@ -79,18 +79,42 @@ export default {
     current_job_status: 'Unemployed',
     years_exp: '0-2',
     types_of_roles: {
-      AdvocacyPublicPolicy: true,
-      CommunityEngagementOutreach: true,
-      DataAnalysis: true,
-      FundraisingDevelopment: false,
-      ProgramManagement: false,
+      AdvocacyPublicPolicy: {
+        checked: false,
+        label: 'Advocacy and Public Policy',
+      },
+      CommunityEngagementOutreach: {
+        checked: false,
+        label: 'Community Engagement and Outreach',
+      },
+      DataAnalysis: {checked: false, label: 'Data Analysis'},
+      FundraisingDevelopment: {
+        checked: false,
+        label: 'Fundraising and Development',
+      },
+      MarketingPublicRelations: {
+        checked: false,
+        label: 'Marketing and Public Relations',
+      },
+      OperationsAdministration: {
+        checked: false,
+        label: 'Operations and Administration',
+      },
+      ProgramManagement: {checked: false, label: 'Program Management'},
     },
     in_programs_before: false,
     interested_programs: {
-      BaltimoreCorpsFellowship: true,
-      JHUCareyHumanitiesFellowship: true,
-      PlaceForPurpose: true,
-      PublicAllies: true,
+      BaltimoreCorpsFellowship: {
+        checked: false,
+        label: 'Baltimore Corps Fellowship',
+      },
+      JHUCareyHumanitiesFellowship: {
+        checked: false,
+        label: 'JHU Carey Humanities Fellowship',
+      },
+      PlaceForPurpose: {checked: false, label: 'Place for Purpose'},
+      PublicAllies: {checked: false, label: 'Public Allies'},
+      needHelp: {checked: false, label: "I'd like some help figuring this out"},
     },
   },
 };

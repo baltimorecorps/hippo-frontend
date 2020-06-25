@@ -17,6 +17,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import BasicInfoDisplay from 'components/AboutMe/BasicInfoDisplay';
 import BasicInfoForm from 'components/AboutMe/BasicInfoForm';
 import DemographicForm from 'components/AboutMe/DemographicForm';
+import InterestsAndGoalsForm from 'components/AboutMe/InterestsAndGoalsForm';
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
@@ -354,6 +355,11 @@ const ProfilePage = ({
                         onCloseForm={() => setOpenForm(false)}
                       />
                       <DemographicForm
+                        contact={contactInfo}
+                        onSubmit={handleUpdateContact}
+                        onCloseForm={() => setOpenForm(false)}
+                      />
+                      <InterestsAndGoalsForm
                         contact={contactInfo}
                         onSubmit={handleUpdateContact}
                         onCloseForm={() => setOpenForm(false)}
