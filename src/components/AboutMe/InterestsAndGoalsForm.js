@@ -101,7 +101,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
   const yearsOfExperience = ['0-2 years', '3-5 years', '5+ years'];
   // todo
-
+  // Work with API
   // form validation
   // testing
 
@@ -177,6 +177,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
               >
                 {yearsOfExperience.map((range, index) => (
                   <FormControlLabel
+                    key={index}
                     className={classes.radio}
                     value={range}
                     control={<Radio />}

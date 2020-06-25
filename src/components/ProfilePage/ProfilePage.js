@@ -16,6 +16,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import BasicInfoDisplay from 'components/AboutMe/BasicInfoDisplay';
 import BasicInfoForm from 'components/AboutMe/BasicInfoForm';
+import AboutMeForms from 'components/AboutMe/AboutMeForms';
 import DemographicForm from 'components/AboutMe/DemographicForm';
 import InterestsAndGoalsForm from 'components/AboutMe/InterestsAndGoalsForm';
 import ProgramsAndEligibilityForm from 'components/AboutMe/ProgramsAndEligibilityForm';
@@ -350,23 +351,7 @@ const ProfilePage = ({
                     </div>
                     <Grid container justify="center">
                       {/* {openForm ? ( */}
-                      <BasicInfoForm
-                        contact={contactInfo}
-                        onSubmit={handleUpdateContact}
-                        onCloseForm={() => setOpenForm(false)}
-                      />
-
-                      <InterestsAndGoalsForm
-                        contact={contactInfo}
-                        onSubmit={handleUpdateContact}
-                        onCloseForm={() => setOpenForm(false)}
-                      />
-                      <ProgramsAndEligibilityForm
-                        contact={contactInfo}
-                        onSubmit={handleUpdateContact}
-                        onCloseForm={() => setOpenForm(false)}
-                      />
-                      <DemographicForm
+                      <AboutMeForms
                         contact={contactInfo}
                         onSubmit={handleUpdateContact}
                         onCloseForm={() => setOpenForm(false)}
