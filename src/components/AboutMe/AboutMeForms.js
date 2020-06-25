@@ -13,9 +13,9 @@ import BasicInfoForm from './BasicInfoForm';
 import DemographicForm from './DemographicForm';
 // import DemographicDisplay from './DemographicDisplay';
 import InterestsAndGoalsForm from './InterestsAndGoalsForm';
-// import InterestsAndGoalsDisplay from './InterestsAndGoalsDisplay';
+import InterestsAndGoalsDisplay from './InterestsAndGoalsDisplay';
 import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
-// import ProgramsAndEligibilityDisplay from './ProgramsAndEligibilityDisplay';
+import ProgramsAndEligibilityDisplay from './ProgramsAndEligibilityDisplay';
 
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -95,10 +95,10 @@ const AboutMeForms = ({
             />
           ) : (
             <div className={classes.extraPadding}>
-              {/* <InterestsAndGoalsDisplay
+              <InterestsAndGoalsDisplay
                 contact={contact}
                 onClickEdit={() => setOpenInterestsGoalsForm(true)}
-              /> */}
+              />
             </div>
           )}
         </ExpansionPanelDetails>
@@ -118,11 +118,20 @@ const AboutMeForms = ({
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          <ProgramsAndEligibilityForm
-            contact={contact}
-            onSubmit={onSubmit}
-            onCloseForm={() => setOpenProgramsEligibilityForm(false)}
-          />
+          {openProgramsEligibilityForm ? (
+            <ProgramsAndEligibilityForm
+              contact={contact}
+              onSubmit={onSubmit}
+              onCloseForm={() => setOpenProgramsEligibilityForm(false)}
+            />
+          ) : (
+            <div className={classes.extraPadding}>
+              <ProgramsAndEligibilityDisplay
+                contact={contact}
+                onClickEdit={() => setOpenProgramsEligibilityForm(true)}
+              />
+            </div>
+          )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
       <ExpansionPanel
