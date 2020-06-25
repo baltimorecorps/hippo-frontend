@@ -289,7 +289,7 @@ BasicInfoForm.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
-    padding: '17px 30px 30px 30px',
+    padding: '17px 30px 20px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
   },

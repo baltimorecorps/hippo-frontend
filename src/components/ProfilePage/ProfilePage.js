@@ -17,9 +17,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import BasicInfoDisplay from 'components/AboutMe/BasicInfoDisplay';
 import BasicInfoForm from 'components/AboutMe/BasicInfoForm';
 import AboutMeForms from 'components/AboutMe/AboutMeForms';
-import DemographicForm from 'components/AboutMe/DemographicForm';
-import InterestsAndGoalsForm from 'components/AboutMe/InterestsAndGoalsForm';
-import ProgramsAndEligibilityForm from 'components/AboutMe/ProgramsAndEligibilityForm';
+
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
@@ -33,6 +31,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import {ResumeViewer} from 'components/ResumeCreator';
+
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 
 import CAPABILITIES from './capabilities.yml';
 
@@ -348,23 +349,40 @@ const ProfilePage = ({
                       >
                         About Me
                       </Typography>
+                      {openForm ? (
+                        <IconButton
+                          edge="end"
+                          aria-label="cancel form"
+                          onMouseDown={() => setOpenForm(false)}
+                          className={classes.iconButton}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      ) : (
+                        <div style={{height: '45px'}}></div>
+                      )}
                     </div>
                     <Grid container justify="center">
-                      {/* {openForm ? ( */}
-                      <AboutMeForms
-                        contact={contactInfo}
-                        onSubmit={handleUpdateContact}
-                        onCloseForm={() => setOpenForm(false)}
-                      />
-                      {/* ) : (
-                        <BasicInfoDisplay
-                          firstName={contactInfo.first_name}
-                          lastName={contactInfo.last_name}
-                          email={email}
-                          phone={contactInfo.phone_primary}
+                      {openForm ? (
+                        <AboutMeForms
+                          contact={contactInfo}
+                          onSubmit={handleUpdateContact}
+                          onCloseAllForms={() => setOpenForm(false)}
                           onClickEdit={() => setOpenForm(true)}
                         />
-                      )} */}
+                      ) : (
+                        <Grid container justify="center">
+                          <Grid item xs={12} md={9}>
+                            <BasicInfoDisplay
+                              firstName={contactInfo.first_name}
+                              lastName={contactInfo.last_name}
+                              email={email}
+                              phone={contactInfo.phone_primary}
+                              onClickEdit={() => setOpenForm(true)}
+                            />
+                          </Grid>
+                        </Grid>
+                      )}
                     </Grid>
                   </Paper>
                 </Grid>
@@ -695,9 +713,11 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     },
   },
   headerContainer: {
-    paddingBottom: spacing(2),
+    // paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   instructions: {
     padding: spacing(2, 3, 3),
