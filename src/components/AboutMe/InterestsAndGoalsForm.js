@@ -1,20 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
 import IconButton from '@material-ui/core/IconButton';
-
-import MuiPhoneNumber from 'material-ui-phone-number';
 
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
@@ -22,13 +16,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import mockData from './mockData';
-import {genders, pronouns} from './defaultData';
-import InfoIcon from '@material-ui/icons/Info';
-import Tooltip from '@material-ui/core/Tooltip';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -58,9 +48,6 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [errors, setErrors] = useState({});
 
   const {demographic} = values;
-  const racesKeys = Object.keys(demographic.races);
-  const racesValuesGroupOne = Object.values(demographic.races).slice(0, 4);
-  const racesValuesGroupTwo = Object.values(demographic.races).slice(4, 8);
 
   const handleRacesCheckbox = event => {
     event.persist();
@@ -76,14 +63,14 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     };
     handleRacesChange(updatedDemographic);
   };
-  const handleDropdownSelector = event => {
-    event.persist();
-    const updatedDemographic = {
-      ...demographic,
-      [event.target.name]: event.target.value,
-    };
-    handleRacesChange(updatedDemographic);
-  };
+  //   const handleDropdownSelector = event => {
+  //     event.persist();
+  //     const updatedDemographic = {
+  //       ...demographic,
+  //       [event.target.name]: event.target.value,
+  //     };
+  //     handleRacesChange(updatedDemographic);
+  //   };
 
   const submit = () => {
     const {isError, err} = newProfileValidator(values);
@@ -107,7 +94,6 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   ];
 
   // todo
-  // display a textfield when user checks or selects Not Listed option
 
   // form validation
   // testing
@@ -148,9 +134,9 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 advocacy, employed etc.) do you have?
               </Typography>
               <RadioGroup
-                aria-label="gender"
-                name="gender1"
-                value="female"
+                aria-label="years of experience"
+                name="years_of_experience"
+                value="0-2 years"
                 onChange={handleChange}
                 className={classes.radioGroup}
               >
@@ -186,8 +172,9 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
               applying for? (select all that apply)
             </Typography>
             <div className={classes.checkboxesContainer}>
-              {roles.map(role => (
+              {roles.map((role, index) => (
                 <FormControlLabel
+                  key={index}
                   control={
                     <Checkbox
                       checked={false}

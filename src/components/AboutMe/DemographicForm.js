@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -14,8 +13,6 @@ import Typography from '@material-ui/core/Typography';
 
 import IconButton from '@material-ui/core/IconButton';
 
-import MuiPhoneNumber from 'material-ui-phone-number';
-
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -23,8 +20,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import mockData from './mockData';
 import {genders, pronouns} from './defaultData';
-import InfoIcon from '@material-ui/icons/Info';
-import Tooltip from '@material-ui/core/Tooltip';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
