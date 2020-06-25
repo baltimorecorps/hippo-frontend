@@ -92,7 +92,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   // testing
 
   return (
-    <Grid item xs={12} md={10} className={classes.form}>
+    <Grid item xs={12} className={classes.form}>
       <Grid item xs={12} align="end">
         <IconButton
           edge="end"
