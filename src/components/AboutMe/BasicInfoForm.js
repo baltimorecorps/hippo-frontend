@@ -259,7 +259,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 </div>
               </div>
             </Grid>
-            <Grid item xs={12} align="end">
+            <Grid item xs={12} align="end" className={classes.submitButton}>
               <Button
                 variant="contained"
                 color="primary"
@@ -289,7 +289,7 @@ BasicInfoForm.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
-    padding: '7px 20px 20px 20px',
+    padding: '17px 30px 30px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
   },
@@ -319,6 +319,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       color: 'black',
     },
+  },
+  submitButton: {
+    margin: '10px 20px 0px 0px',
   },
   addressContainer: {
     display: 'flex',

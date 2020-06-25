@@ -23,6 +23,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import mockData from './mockData';
 import {genders, pronouns} from './defaultData';
+import InfoIcon from '@material-ui/icons/Info';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -93,27 +95,36 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
   // todo
   // display a textfield when user checks or selects Not Listed option
 
-  // add information icon to the header of the section
-  // which expands a tooltip explaining why the information is needed
-
   // form validation
   // testing
 
   return (
     <Grid item xs={12} md={10} className={classes.form}>
-      <Typography variant="h3" component="h3" className={classes.formHeader}>
-        Demographic Information
+      <div className={classes.headerContainer}>
+        <Typography variant="h3" component="h3" className={classes.formHeader}>
+          Demographic Information
+        </Typography>
+        <Grid align="end">
+          <IconButton
+            edge="end"
+            aria-label="cancel form"
+            onMouseDown={onCloseForm}
+            className={classes.iconButton}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Grid>
+      </div>
+
+      <Typography variant="body1" component="p" className={classes.sectionInfo}>
+        The information below helps us build a better picture of our applicants.
+        As an organization committed to equity, it is important for us to
+        understand the variety of identities and affinities that are represented
+        within our pool so that we can engage in a thoughtful process. That
+        being said, we understand that this information is sensitive and
+        providing it is completely optional.
       </Typography>
-      <Grid item xs={12} align="end">
-        <IconButton
-          edge="end"
-          aria-label="cancel form"
-          onMouseDown={onCloseForm}
-          className={classes.iconButton}
-        >
-          <CloseIcon />
-        </IconButton>
-      </Grid>
+
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
           <div className={classes.allRacesContainer}>
@@ -208,7 +219,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
               </FormHelperText>
             </div>
           </div>
-          <Grid item xs={12} align="end">
+          <Grid item xs={12} align="end" className={classes.submitButton}>
             <Button
               variant="contained"
               color="primary"
@@ -238,10 +249,22 @@ DemographicForm.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
-    padding: '7px 20px 20px 20px',
+    padding: '17px 30px 30px 30px',
     backgroundColor: '#f7f7f7',
   },
-
+  headerContainer: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: '10px',
+  },
+  sectionInfo: {
+    fontSize: '15px',
+    textIndent: '25px',
+    marginBottom: '15px',
+    marginTop: '10px',
+  },
   formControl: {
     width: '95%',
     marginTop: spacing(0),
@@ -304,6 +327,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   inputLabel: {
     textAlign: 'left',
+  },
+  submitButton: {
+    margin: '10px 20px 0px 0px',
   },
 });
 
