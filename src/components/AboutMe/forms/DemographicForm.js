@@ -18,8 +18,8 @@ import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import mockData from './mockData';
-import {genders, pronouns} from './defaultData';
+import mockData from '../mockData';
+import {genders, pronouns} from '../defaultData';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);

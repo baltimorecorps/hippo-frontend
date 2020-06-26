@@ -14,8 +14,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import BasicInfoDisplay from 'components/AboutMe/BasicInfoDisplay';
-import BasicInfoForm from 'components/AboutMe/BasicInfoForm';
+import ContactInfoDisplay from 'components/AboutMe/defaultDisplays/ContactInfoDisplay';
+import ContactInfoForm from 'components/AboutMe/forms/ContactInfoForm';
 import AboutMeForms from 'components/AboutMe/AboutMeForms';
 
 import ExperiencesList from 'components/Experiences/ExperiencesList';
@@ -160,7 +160,7 @@ const ProfilePage = ({
   // This page primarily serves as the top level container for the profile of
   // this person's employment-relevant experiences and skills.
   //
-  // The three main components it makes use of are BasicInfoDisplay,
+  // The three main components it makes use of are ContactInfoDisplay,
   // ExperiencesList, and SkillsList
 
   const onClickMoreDetails = header => {
@@ -373,7 +373,7 @@ const ProfilePage = ({
                       {/* ) : ( */}
                       {/* <Grid container justify="center">
                           <Grid item xs={12} md={9}>
-                            <BasicInfoDisplay
+                            <ContactInfoDisplay
                               firstName={contactInfo.first_name}
                               lastName={contactInfo.last_name}
                               email={email}

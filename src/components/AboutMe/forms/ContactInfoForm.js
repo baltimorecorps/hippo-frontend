@@ -17,7 +17,7 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-import {states} from './defaultData';
+import {states} from '../defaultData';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);

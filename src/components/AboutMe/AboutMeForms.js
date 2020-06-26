@@ -8,14 +8,14 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import BasicInfoDisplay from './BasicInfoDisplay';
-import BasicInfoForm from './BasicInfoForm';
-import DemographicForm from './DemographicForm';
-import DemographicDisplay from './DemographicDisplay';
-import InterestsAndGoalsForm from './InterestsAndGoalsForm';
-import InterestsAndGoalsDisplay from './InterestsAndGoalsDisplay';
-import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
-import ProgramsAndEligibilityDisplay from './ProgramsAndEligibilityDisplay';
+import ContactInfoDisplay from './defaultDisplays/ContactInfoDisplay';
+import ContactInfoForm from './forms/ContactInfoForm';
+import DemographicForm from './forms/DemographicForm';
+import DemographicDisplay from './defaultDisplays/DemographicDisplay';
+import InterestsAndGoalsForm from './forms/InterestsAndGoalsForm';
+import InterestsAndGoalsDisplay from './defaultDisplays/InterestsAndGoalsDisplay';
+import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm';
+import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
 
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -54,14 +54,14 @@ const AboutMeForms = ({
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           {openContactInfoForm ? (
-            <BasicInfoForm
+            <ContactInfoForm
               contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() => setOpenContactInfoForm(false)}
             />
           ) : (
             <div className={classes.extraPadding}>
-              <BasicInfoDisplay
+              <ContactInfoDisplay
                 firstName={contact.first_name}
                 lastName={contact.last_name}
                 email={email}

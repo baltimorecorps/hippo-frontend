@@ -15,10 +15,7 @@ import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import mockData from './mockData';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
+import mockData from '../mockData';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -40,7 +37,12 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
+const ProgramsAndEligibilityForm = ({
+  contact,
+  onSubmit,
+  onCloseForm,
+  classes,
+}) => {
   const [values, {handleChange, handleSubmit, handleRacesChange}] = useForm(
     mockData,
     onSubmit
@@ -83,25 +85,16 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     }
   };
 
-  const roles = [
-    'Advocacy and Public Policy',
-    'Community Engagement and Outreach',
-    'Data Analysis',
-    'Fundraising and Development',
-    'Marketing and Public Relations',
-    'Operations and Administration',
-    'Program Management',
+  const programs = [
+    'Baltimore Corps Fellowship',
+    'JHU Carey Humanities Fellowship',
+    'Place for Purpose',
+    'Public Allies',
+    "I'd like some help figuring this out",
   ];
 
-  const jobSearchStatus = [
-    'Actively looking for a job',
-    'Looking for a job in the next 2-6 months',
-    'Curious to see what opportunities are available',
-  ];
-
-  const yearsOfExperience = ['0-2 years', '3-5 years', '5+ years'];
   // todo
-  // Work with API
+  // working with API
   // form validation
   // testing
 
@@ -109,7 +102,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     <Grid item xs={12} className={classes.form}>
       <div className={classes.headerContainer}>
         <Typography variant="h3" component="h3" className={classes.formHeader}>
-          Interests and Goals
+          Programs and Eligibility
         </Typography>
         <Grid align="end">
           <IconButton
@@ -124,127 +117,44 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
       </div>
 
       <Typography variant="body1" component="p" className={classes.sectionInfo}>
-        The questions below help us understand a little bit more about your
-        experience and which roles you might be interested in applying for.
+        While our team will help you figure out which of program and services
+        best align with where you are in your career, some folks apply to join
+        our network because they are interested in a particular program
+        offering.
+      </Typography>
+      <Typography variant="body1" component="p" className={classes.sectionInfo}>
+        The questions below allow you to indicate which programs (if any) you
+        know you're interested in before we get a chance to chat with you, and
+        checks to see if you're eligible for them
       </Typography>
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
-          <div className={classes.eachQuestionContainer}>
-            <FormControl component="fieldset">
-              <Typography
-                variant="body1"
-                component="p"
-                className={classes.question}
-              >
-                What is the status of your job search?
-              </Typography>
-              <RadioGroup
-                aria-label="job search status"
-                name="job_search_status"
-                value="Actively looking for a job"
-                onChange={handleChange}
-                className={classes.radioGroup}
-              >
-                {jobSearchStatus.map((status, index) => (
-                  <FormControlLabel
-                    key={index}
-                    className={classes.radio}
-                    value={status}
-                    control={<Radio />}
-                    label={status}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </div>
-          <div className={classes.eachQuestionContainer}>
-            <FormControl component="fieldset">
-              <Typography
-                variant="body1"
-                component="p"
-                className={classes.question}
-              >
-                How many years of professional experience (internships,
-                advocacy, employed etc.) do you have?
-              </Typography>
-              <RadioGroup
-                aria-label="years of experience"
-                name="years_of_experience"
-                value="0-2 years"
-                onChange={handleChange}
-                className={classes.radioGroup}
-              >
-                {yearsOfExperience.map((range, index) => (
-                  <FormControlLabel
-                    key={index}
-                    className={classes.radio}
-                    value={range}
-                    control={<Radio />}
-                    label={range}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </div>
-
           <div className={classes.interestedRolesContainer}>
             <Typography
               variant="body1"
               component="p"
               className={classes.question}
             >
-              Which of the following types of roles are you interested in
-              applying for? (select all that apply)
+              Which of the following programs and services are you interested
+              in? (select all that apply)
             </Typography>
             <div className={classes.checkboxesContainer}>
-              {roles.map((role, index) => (
+              {programs.map((program, index) => (
                 <FormControlLabel
                   key={index}
                   control={
                     <Checkbox
                       checked={false}
                       onChange={handleRacesCheckbox}
-                      name={role}
+                      name={program}
                       color="primary"
                     />
                   }
-                  className={classes.role}
-                  label={role}
+                  className={classes.program}
+                  label={program}
                 />
               ))}
-            </div>
-            <div className={classes.eachQuestionContainer}>
-              <FormControl component="fieldset">
-                <Typography
-                  variant="body1"
-                  component="p"
-                  className={classes.question}
-                >
-                  Have you participated in any of Baltimore Corps' programs and
-                  services already?
-                </Typography>
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender1"
-                  value="no"
-                  onChange={handleChange}
-                  className={classes.radioGroup}
-                >
-                  <FormControlLabel
-                    className={classes.radio}
-                    value="yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel
-                    className={classes.radio}
-                    value="no"
-                    control={<Radio />}
-                    label="No"
-                  />
-                </RadioGroup>
-              </FormControl>
             </div>
           </div>
           <div className={classes.genderAndPronounsContainer}></div>
@@ -258,14 +168,13 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
               Save
             </Button>
           </Grid>
-          {/* </Grid> */}
         </form>
       </Grid>
     </Grid>
   );
 };
 
-InterestsAndGoalsForm.propTypes = {
+ProgramsAndEligibilityForm.propTypes = {
   contact: PropTypes.shape({
     first_name: PropTypes.string.isRequired,
     last_name: PropTypes.string.isRequired,
@@ -351,7 +260,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     marginBottom: '15px',
   },
-  role: {
+  program: {
     width: '100%',
     paddingLeft: '30px',
   },
@@ -363,4 +272,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(InterestsAndGoalsForm);
+export default withStyles(styles)(ProgramsAndEligibilityForm);
