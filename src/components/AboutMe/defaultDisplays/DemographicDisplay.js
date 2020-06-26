@@ -23,22 +23,38 @@ const DemographicDisplay = ({onClickEdit, classes}) => {
         </IconButton>
       </Grid>
 
-      <Typography variant="body1" component="p" className={classes.item}>
-        <p className={classes.question}>Race: </p>
+      <div className={classes.item}>
+        <Typography variant="body1" component="p" className={classes.question}>
+          Race:
+        </Typography>
 
-        <p className={classes.answer}>- Asian</p>
-        <p className={classes.answer}>- South Asian</p>
-      </Typography>
-      <Typography variant="body1" component="p" className={classes.item}>
-        <p className={classes.question}>Gender: </p>
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Asian
+        </Typography>
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - South Asian
+        </Typography>
+      </div>
 
-        <p className={classes.answer}>- Female</p>
-      </Typography>
-      <Typography variant="body1" component="p" className={classes.item}>
-        <p className={classes.question}>Pronoun: </p>
+      <div className={classes.item}>
+        <Typography variant="body1" component="p" className={classes.question}>
+          Gender:
+        </Typography>
 
-        <p className={classes.answer}>- She/Her</p>
-      </Typography>
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Female
+        </Typography>
+      </div>
+
+      <div className={classes.item}>
+        <Typography variant="body1" component="p" className={classes.question}>
+          Pronoun:
+        </Typography>
+
+        <Typography variant="body1" component="p" className={classes.answer}>
+          She/Her
+        </Typography>
+      </div>
     </React.Fragment>
   );
 };

@@ -23,35 +23,46 @@ const InterestsAndGoalsDisplay = ({onClickEdit, classes}) => {
         </IconButton>
       </Grid>
 
-      <Typography variant="body1" component="p" className={classes.item}>
-        <p className={classes.question}>Job Search Status: </p>
+      <div className={classes.item}>
+        <Typography variant="body1" component="p" className={classes.question}>
+          Job Search Status:
+        </Typography>
 
-        <p className={classes.answer}>- Actively looking for jobs</p>
-      </Typography>
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Actively looking for jobs
+        </Typography>
+      </div>
 
-      <Typography variant="body1" component="p" className={classes.item}>
-        <p className={classes.question}>Years of experience: </p>
-        <p className={classes.answer}>- 0-2 years</p>
-      </Typography>
+      <div className={classes.item}>
+        <Typography variant="body1" component="p" className={classes.question}>
+          Years of experience:
+        </Typography>
 
-      <Typography variant="body1" component="p" className={classes.item}>
-        <p className={classes.question}>Interested Types of Roles: </p>
-        <p className={classes.answer}>
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - 0-2 years
+        </Typography>
+      </div>
+
+      <div className={classes.item}>
+        <Typography variant="body1" component="p" className={classes.question}>
+          Interested Types of Roles:
+        </Typography>
+
+        <Typography variant="body1" component="p" className={classes.answer}>
           - Operations and Administration, Program Management,Community
           Engagement and Outreach
-        </p>
-      </Typography>
-      <Typography
-        gutterBottm
-        variant="body1"
-        component="p"
-        className={classes.item}
-      >
-        <p className={classes.question}>
+        </Typography>
+      </div>
+
+      <div className={classes.item}>
+        <Typography variant="body1" component="p" className={classes.question}>
           Have participated with Baltimore Corps:
-        </p>
-        <p className={classes.answer}>- Yes</p>
-      </Typography>
+        </Typography>
+
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Yes
+        </Typography>
+      </div>
     </React.Fragment>
   );
 };

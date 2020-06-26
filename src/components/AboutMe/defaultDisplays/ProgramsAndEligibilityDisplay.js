@@ -23,13 +23,21 @@ const ProgramsAndEligibilityDisplay = ({onClickEdit, classes}) => {
         </IconButton>
       </Grid>
 
-      <Typography variant="body1" component="p" className={classes.item}>
-        <p className={classes.question}>Interested Programs: </p>
+      <div className={classes.item}>
+        <Typography variant="body1" component="p" className={classes.question}>
+          Interested Programs:
+        </Typography>
 
-        <p className={classes.answer}>- Baltimore Corps Fellowship</p>
-        <p className={classes.answer}>- Place for Purpose</p>
-        <p className={classes.answer}>- Public Allies</p>
-      </Typography>
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Baltimore Corps Fellowship
+        </Typography>
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Place for Purpose
+        </Typography>
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Public Allies
+        </Typography>
+      </div>
     </React.Fragment>
   );
 };

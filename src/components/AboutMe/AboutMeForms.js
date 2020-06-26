@@ -17,9 +17,6 @@ import InterestsAndGoalsDisplay from './defaultDisplays/InterestsAndGoalsDisplay
 import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm';
 import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
 
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-
 const AboutMeForms = ({
   contact,
   onSubmit,
@@ -172,7 +169,8 @@ const AboutMeForms = ({
 AboutMeForms.propTypes = {
   contact: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  onCloseForm: PropTypes.func.isRequired,
+  onCloseAllForms: PropTypes.func.isRequired,
+  onClickEdit: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
