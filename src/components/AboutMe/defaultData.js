@@ -81,4 +81,20 @@ const jobSearchStatus = [
 
 const yearsOfExperience = ['0-2 years', '3-5 years', '5+ years'];
 
-export {states, genders, pronouns, roles, jobSearchStatus, yearsOfExperience};
+const programs = [
+  'Baltimore Corps Fellowship',
+  'JHU Carey Humanities Fellowship',
+  'Place for Purpose',
+  'Public Allies',
+  "I'd like some help figuring this out",
+];
+
+export {
+  states,
+  genders,
+  pronouns,
+  roles,
+  jobSearchStatus,
+  yearsOfExperience,
+  programs,
+};

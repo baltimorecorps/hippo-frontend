@@ -2,14 +2,8 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-
 import Button from '@material-ui/core/Button';
-
-import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-
-import IconButton from '@material-ui/core/IconButton';
-
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -22,16 +16,22 @@ const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handlers = {
-    handleChange: event => {
-      event.persist();
-      update(event.target.name)(event.target.value);
-    },
     handleSubmit: values => {
       onSubmit(values);
     },
 
-    handleRacesChange: changedDemographic => {
-      update('demographic')(changedDemographic);
+    handleInterestedProgramsChange: event => {
+      event.persist();
+      console.log(event.target.name);
+
+      const newValue = {
+        ...values.interested_programs,
+        [event.target.name]: {
+          ...values.interested_programs[event.target.name],
+          checked: event.target.checked,
+        },
+      };
+      update('interested_programs')(newValue);
     },
   };
 
@@ -44,28 +44,28 @@ const ProgramsAndEligibilityForm = ({
   onCloseForm,
   classes,
 }) => {
-  const [values, {handleChange, handleSubmit, handleRacesChange}] = useForm(
+  const [values, {handleSubmit, handleInterestedProgramsChange}] = useForm(
     mockData,
     onSubmit
   );
   const [errors, setErrors] = useState({});
 
-  const {demographic} = values;
+  // const {demographic} = values;
 
-  const handleRacesCheckbox = event => {
-    event.persist();
-    const updatedDemographic = {
-      ...demographic,
-      races: {
-        ...demographic.races,
-        [event.target.name]: [
-          event.target.checked,
-          demographic.races[event.target.name][1],
-        ],
-      },
-    };
-    handleRacesChange(updatedDemographic);
-  };
+  // const handleRacesCheckbox = event => {
+  //   event.persist();
+  //   const updatedDemographic = {
+  //     ...demographic,
+  //     races: {
+  //       ...demographic.races,
+  //       [event.target.name]: [
+  //         event.target.checked,
+  //         demographic.races[event.target.name][1],
+  //       ],
+  //     },
+  //   };
+  //   handleRacesChange(updatedDemographic);
+  // };
   //   const handleDropdownSelector = event => {
   //     event.persist();
   //     const updatedDemographic = {
@@ -86,16 +86,9 @@ const ProgramsAndEligibilityForm = ({
     }
   };
 
-  const programs = [
-    'Baltimore Corps Fellowship',
-    'JHU Carey Humanities Fellowship',
-    'Place for Purpose',
-    'Public Allies',
-    "I'd like some help figuring this out",
-  ];
+  const programsKeys = Object.keys(values.interested_programs);
 
   // todo
-  // working with API
   // form validation
   // testing
 
@@ -124,21 +117,23 @@ const ProgramsAndEligibilityForm = ({
               in? (select all that apply)
             </Typography>
             <div className={classes.checkboxesContainer}>
-              {programs.map((program, index) => (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={false}
-                      onChange={handleRacesCheckbox}
-                      name={program}
-                      color="primary"
-                    />
-                  }
-                  className={classes.program}
-                  label={program}
-                />
-              ))}
+              {Object.values(values.interested_programs).map(
+                (program, index) => (
+                  <FormControlLabel
+                    key={index}
+                    control={
+                      <Checkbox
+                        checked={program.checked}
+                        onChange={handleInterestedProgramsChange}
+                        name={programsKeys[index]}
+                        color="primary"
+                      />
+                    }
+                    className={classes.program}
+                    label={program.label}
+                  />
+                )
+              )}
             </div>
           </div>
           <div className={classes.genderAndPronounsContainer}></div>
