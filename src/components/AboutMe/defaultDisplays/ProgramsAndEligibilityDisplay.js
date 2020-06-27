@@ -7,6 +7,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
+import {QuestionWithMultipleAnswersObject} from './QuestionAnswerTemplates.js';
+
 const ProgramsAndEligibilityDisplay = ({contact, onClickEdit, classes}) => {
   const checkedPrograms = Object.values(contact.interested_programs).filter(
     program => program.checked === true
@@ -27,22 +29,10 @@ const ProgramsAndEligibilityDisplay = ({contact, onClickEdit, classes}) => {
         </IconButton>
       </Grid>
 
-      <div className={classes.item}>
-        <Typography variant="body1" component="p" className={classes.question}>
-          Interested Programs:
-        </Typography>
-
-        {checkedPrograms.map((program, index) => (
-          <Typography
-            key={index}
-            variant="body1"
-            component="p"
-            className={classes.answer}
-          >
-            - {program.label}
-          </Typography>
-        ))}
-      </div>
+      <QuestionWithMultipleAnswersObject
+        question="Interested Programs:"
+        answers={checkedPrograms}
+      />
     </React.Fragment>
   );
 };

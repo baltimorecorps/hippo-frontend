@@ -6,6 +6,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+import {
+  QuestionWithOneAnswer,
+  QuestionWithMultipleAnswersArray,
+} from './QuestionAnswerTemplates.js';
 
 const DemographicDisplay = ({contact, onClickEdit, classes}) => {
   const checkedRace = Object.values(contact.race).filter(
@@ -27,42 +31,13 @@ const DemographicDisplay = ({contact, onClickEdit, classes}) => {
         </IconButton>
       </Grid>
 
-      <div className={classes.item}>
-        <Typography variant="body1" component="p" className={classes.question}>
-          Race:
-        </Typography>
+      <QuestionWithMultipleAnswersArray
+        question="Race:"
+        answers={checkedRace}
+      />
 
-        {checkedRace.map((race, index) => (
-          <Typography
-            key={index}
-            variant="body1"
-            component="p"
-            className={classes.answer}
-          >
-            - {race[1]}
-          </Typography>
-        ))}
-      </div>
-
-      <div className={classes.item}>
-        <Typography variant="body1" component="p" className={classes.question}>
-          Gender:
-        </Typography>
-
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - {contact.gender}
-        </Typography>
-      </div>
-
-      <div className={classes.item}>
-        <Typography variant="body1" component="p" className={classes.question}>
-          Pronoun:
-        </Typography>
-
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - {contact.pronoun}
-        </Typography>
-      </div>
+      <QuestionWithOneAnswer question="Gender:" answer={contact.gender} />
+      <QuestionWithOneAnswer question="Pronoun:" answer={contact.pronoun} />
     </React.Fragment>
   );
 };

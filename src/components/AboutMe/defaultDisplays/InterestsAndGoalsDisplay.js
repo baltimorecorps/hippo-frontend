@@ -7,6 +7,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
+import {
+  QuestionWithOneAnswer,
+  QuestionWithMultipleAnswersObject,
+} from './QuestionAnswerTemplates.js';
+
 const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
   const checkedRoles = Object.values(contact.interested_roles).filter(
     role => role.checked === true
@@ -27,52 +32,24 @@ const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
         </IconButton>
       </Grid>
 
-      <div className={classes.item}>
-        <Typography variant="body1" component="p" className={classes.question}>
-          Job Search Status:
-        </Typography>
+      <QuestionWithOneAnswer
+        question="Job Search Status:"
+        answer={contact.job_search_status}
+      />
+      <QuestionWithOneAnswer
+        question="Years of experience:"
+        answer={contact.years_exp}
+      />
 
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - {contact.job_search_status}
-        </Typography>
-      </div>
+      <QuestionWithMultipleAnswersObject
+        question="Interested Types of Roles:"
+        answers={checkedRoles}
+      />
 
-      <div className={classes.item}>
-        <Typography variant="body1" component="p" className={classes.question}>
-          Years of experience:
-        </Typography>
-
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - {contact.years_exp}
-        </Typography>
-      </div>
-
-      <div className={classes.item}>
-        <Typography variant="body1" component="p" className={classes.question}>
-          Interested Types of Roles:
-        </Typography>
-
-        {checkedRoles.map((role, index) => (
-          <Typography
-            key={index}
-            variant="body1"
-            component="p"
-            className={classes.answer}
-          >
-            - {role.label}
-          </Typography>
-        ))}
-      </div>
-
-      <div className={classes.item}>
-        <Typography variant="body1" component="p" className={classes.question}>
-          Have participated with Baltimore Corps:
-        </Typography>
-
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - {contact.participated_baltimore_corps_before}
-        </Typography>
-      </div>
+      <QuestionWithOneAnswer
+        question="Have participated with Baltimore Corps Before:"
+        answer={contact.participated_baltimore_corps_before}
+      />
     </React.Fragment>
   );
 };
