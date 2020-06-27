@@ -16,6 +16,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import mockData from '../mockData';
+import {jobSearchStatus, roles, yearsOfExperience} from '../defaultData';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
@@ -32,8 +33,21 @@ const useForm = (initialValues, onSubmit) => {
       onSubmit(values);
     },
 
-    handleRacesChange: changedDemographic => {
-      update('demographic')(changedDemographic);
+    // handleRacesChange: changedDemographic => {
+    //   update('demographic')(changedDemographic);
+    // },
+
+    handleInterestedRolesChange: event => {
+      event.persist();
+      const newValue = {
+        ...values.interested_roles,
+        [event.target.name]: {
+          ...values.interested_roles[event.target.name],
+          checked: event.target.checked,
+        },
+      };
+
+      update('interested_roles')(newValue);
     },
   };
 
@@ -41,36 +55,11 @@ const useForm = (initialValues, onSubmit) => {
 };
 
 const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
-  const [values, {handleChange, handleSubmit, handleRacesChange}] = useForm(
-    mockData,
-    onSubmit
-  );
+  const [
+    values,
+    {handleChange, handleSubmit, handleInterestedRolesChange},
+  ] = useForm(mockData, onSubmit);
   const [errors, setErrors] = useState({});
-
-  const {demographic} = values;
-
-  const handleRacesCheckbox = event => {
-    event.persist();
-    const updatedDemographic = {
-      ...demographic,
-      races: {
-        ...demographic.races,
-        [event.target.name]: [
-          event.target.checked,
-          demographic.races[event.target.name][1],
-        ],
-      },
-    };
-    handleRacesChange(updatedDemographic);
-  };
-  //   const handleDropdownSelector = event => {
-  //     event.persist();
-  //     const updatedDemographic = {
-  //       ...demographic,
-  //       [event.target.name]: event.target.value,
-  //     };
-  //     handleRacesChange(updatedDemographic);
-  //   };
 
   const submit = () => {
     const {isError, err} = newProfileValidator(values);
@@ -83,27 +72,12 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     }
   };
 
-  const roles = [
-    'Advocacy and Public Policy',
-    'Community Engagement and Outreach',
-    'Data Analysis',
-    'Fundraising and Development',
-    'Marketing and Public Relations',
-    'Operations and Administration',
-    'Program Management',
-  ];
-
-  const jobSearchStatus = [
-    'Actively looking for a job',
-    'Looking for a job in the next 2-6 months',
-    'Curious to see what opportunities are available',
-  ];
-
-  const yearsOfExperience = ['0-2 years', '3-5 years', '5+ years'];
   // todo
   // Work with API
   // form validation
   // testing
+
+  const rolesKeys = Object.keys(values.interested_roles);
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -142,7 +116,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
               <RadioGroup
                 aria-label="job search status"
                 name="job_search_status"
-                value="Actively looking for a job"
+                value={values.job_search_status}
                 onChange={handleChange}
                 className={classes.radioGroup}
               >
@@ -198,19 +172,19 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
               applying for? (select all that apply)
             </Typography>
             <div className={classes.checkboxesContainer}>
-              {roles.map((role, index) => (
+              {Object.values(values.interested_roles).map((role, index) => (
                 <FormControlLabel
                   key={index}
                   control={
                     <Checkbox
-                      checked={false}
-                      onChange={handleRacesCheckbox}
-                      name={role}
+                      checked={role.checked}
+                      onChange={handleInterestedRolesChange}
+                      name={rolesKeys[index]}
                       color="primary"
                     />
                   }
                   className={classes.role}
-                  label={role}
+                  label={role.label}
                 />
               ))}
             </div>

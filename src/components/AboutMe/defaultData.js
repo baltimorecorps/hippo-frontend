@@ -63,4 +63,22 @@ const states = [
 const genders = ['Female', 'Male', 'Non-Binary', 'Not Listed'];
 const pronouns = ['She/Her', 'He/Him', 'They/Them', 'Not Listed'];
 
-export {states, genders, pronouns};
+const roles = [
+  'Advocacy and Public Policy',
+  'Community Engagement and Outreach',
+  'Data Analysis',
+  'Fundraising and Development',
+  'Marketing and Public Relations',
+  'Operations and Administration',
+  'Program Management',
+];
+
+const jobSearchStatus = [
+  'Actively looking for a job',
+  'Looking for a job in the next 2-6 months',
+  'Curious to see what opportunities are available',
+];
+
+const yearsOfExperience = ['0-2 years', '3-5 years', '5+ years'];
+
+export {states, genders, pronouns, roles, jobSearchStatus, yearsOfExperience};

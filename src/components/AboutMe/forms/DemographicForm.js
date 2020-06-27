@@ -33,8 +33,20 @@ const useForm = (initialValues, onSubmit) => {
       onSubmit(values);
     },
 
-    handleRacesChange: changedDemographic => {
-      update('demographic')(changedDemographic);
+    // handleRacesChange: changedDemographic => {
+    //   update('demographic')(changedDemographic);
+    // },
+    handleRacesChange: event => {
+      event.persist();
+      const newValue = {
+        ...values.race,
+        [event.target.name]: [
+          event.target.checked,
+          values.race[event.target.name][1],
+        ],
+      };
+
+      update('race')(newValue);
     },
   };
 
@@ -48,33 +60,33 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
   );
   const [errors, setErrors] = useState({});
 
-  const {demographic} = values;
-  const racesKeys = Object.keys(demographic.races);
-  const racesValuesGroupOne = Object.values(demographic.races).slice(0, 4);
-  const racesValuesGroupTwo = Object.values(demographic.races).slice(4, 8);
+  // const {demographic} = values;
+  const racesKeys = Object.keys(values.race);
+  const racesValuesGroupOne = Object.values(values.race).slice(0, 4);
+  const racesValuesGroupTwo = Object.values(values.race).slice(4, 8);
 
-  const handleRacesCheckbox = event => {
-    event.persist();
-    const updatedDemographic = {
-      ...demographic,
-      races: {
-        ...demographic.races,
-        [event.target.name]: [
-          event.target.checked,
-          demographic.races[event.target.name][1],
-        ],
-      },
-    };
-    handleRacesChange(updatedDemographic);
-  };
-  const handleDropdownSelector = event => {
-    event.persist();
-    const updatedDemographic = {
-      ...demographic,
-      [event.target.name]: event.target.value,
-    };
-    handleRacesChange(updatedDemographic);
-  };
+  // const handleRacesCheckbox = event => {
+  //   event.persist();
+  //   const updatedDemographic = {
+  //     ...demographic,
+  //     races: {
+  //       ...demographic.races,
+  //       [event.target.name]: [
+  //         event.target.checked,
+  //         demographic.races[event.target.name][1],
+  //       ],
+  //     },
+  //   };
+  //   handleRacesChange(updatedDemographic);
+  // };
+  // const handleDropdownSelector = event => {
+  //   event.persist();
+  //   const updatedDemographic = {
+  //     // ...demographic,
+  //     [event.target.name]: event.target.value,
+  //   };
+  //   handleRacesChange(updatedDemographic);
+  // };
 
   const submit = () => {
     const {isError, err} = newProfileValidator(values);
@@ -130,7 +142,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   control={
                     <Checkbox
                       checked={race[0]}
-                      onChange={handleRacesCheckbox}
+                      onChange={handleRacesChange}
                       name={racesKeys[index]}
                       color="primary"
                     />
@@ -147,7 +159,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   control={
                     <Checkbox
                       checked={race[0]}
-                      onChange={handleRacesCheckbox}
+                      onChange={handleRacesChange}
                       name={racesKeys[index + 4]}
                       color="primary"
                     />
@@ -167,8 +179,8 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 disabled={false}
                 required
                 id="gender"
-                value={demographic.gender}
-                onChange={handleDropdownSelector}
+                value={values.gender}
+                onChange={handleChange}
                 inputProps={{
                   name: 'gender',
                   id: 'gender',
@@ -194,8 +206,8 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 disabled={false}
                 required
                 id="pronoun"
-                value={demographic.pronoun}
-                onChange={handleDropdownSelector}
+                value={values.pronoun}
+                onChange={handleChange}
                 inputProps={{
                   name: 'pronoun',
                   id: 'pronoun',
