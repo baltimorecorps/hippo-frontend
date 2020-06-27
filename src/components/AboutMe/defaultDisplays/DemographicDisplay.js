@@ -32,8 +32,13 @@ const DemographicDisplay = ({contact, onClickEdit, classes}) => {
           Race:
         </Typography>
 
-        {checkedRace.map(race => (
-          <Typography variant="body1" component="p" className={classes.answer}>
+        {checkedRace.map((race, index) => (
+          <Typography
+            key={index}
+            variant="body1"
+            component="p"
+            className={classes.answer}
+          >
             - {race[1]}
           </Typography>
         ))}
@@ -64,7 +69,6 @@ const DemographicDisplay = ({contact, onClickEdit, classes}) => {
 
 DemographicDisplay.propTypes = {
   contact: PropTypes.object,
-
   onClickEdit: PropTypes.func,
 };
 

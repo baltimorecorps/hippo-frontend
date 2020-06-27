@@ -7,7 +7,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
-const InterestsAndGoalsDisplay = ({onClickEdit, classes}) => {
+const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
+  const checkedRoles = Object.values(contact.interested_roles).filter(role => {
+    if (role.checked === true) return role.label;
+  });
+
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
@@ -29,7 +33,7 @@ const InterestsAndGoalsDisplay = ({onClickEdit, classes}) => {
         </Typography>
 
         <Typography variant="body1" component="p" className={classes.answer}>
-          - Actively looking for jobs
+          - {contact.job_search_status}
         </Typography>
       </div>
 
@@ -39,7 +43,7 @@ const InterestsAndGoalsDisplay = ({onClickEdit, classes}) => {
         </Typography>
 
         <Typography variant="body1" component="p" className={classes.answer}>
-          - 0-2 years
+          - {contact.years_exp}
         </Typography>
       </div>
 
@@ -48,17 +52,16 @@ const InterestsAndGoalsDisplay = ({onClickEdit, classes}) => {
           Interested Types of Roles:
         </Typography>
 
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - Operations and Administration
-        </Typography>
-
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - Program Management,Community
-        </Typography>
-
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - Community Engagement and Outreach
-        </Typography>
+        {checkedRoles.map((role, index) => (
+          <Typography
+            key={index}
+            variant="body1"
+            component="p"
+            className={classes.answer}
+          >
+            - {role.label}
+          </Typography>
+        ))}
       </div>
 
       <div className={classes.item}>
@@ -67,7 +70,7 @@ const InterestsAndGoalsDisplay = ({onClickEdit, classes}) => {
         </Typography>
 
         <Typography variant="body1" component="p" className={classes.answer}>
-          - Yes
+          - {contact.participated_baltimore_corps_before}
         </Typography>
       </div>
     </React.Fragment>
@@ -75,11 +78,8 @@ const InterestsAndGoalsDisplay = ({onClickEdit, classes}) => {
 };
 
 InterestsAndGoalsDisplay.propTypes = {
-  //   firstName: PropTypes.string.isRequired,
-  //   lastName: PropTypes.string.isRequired,
-  //   email: PropTypes.string,
-  //   phone: PropTypes.string,
-  //   onClickEdit: PropTypes.func.isRequired,
+  contact: PropTypes.object,
+  onClickEdit: PropTypes.func,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

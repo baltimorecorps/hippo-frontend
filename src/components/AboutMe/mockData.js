@@ -38,32 +38,32 @@ export default {
   job_search_status: 'Actively looking for a job',
   currently_student: true,
   current_job_status: 'Unemployed',
-  years_exp: '0-2',
+  years_exp: '0-2 years',
   interested_roles: {
     AdvocacyPublicPolicy: {
-      checked: true,
+      checked: false,
       label: 'Advocacy and Public Policy',
     },
     CommunityEngagementOutreach: {
       checked: false,
       label: 'Community Engagement and Outreach',
     },
-    DataAnalysis: {checked: false, label: 'Data Analysis'},
+    DataAnalysis: {checked: true, label: 'Data Analysis'},
     FundraisingDevelopment: {
       checked: false,
       label: 'Fundraising and Development',
     },
     MarketingPublicRelations: {
-      checked: false,
+      checked: true,
       label: 'Marketing and Public Relations',
     },
     OperationsAdministration: {
-      checked: false,
+      checked: true,
       label: 'Operations and Administration',
     },
     ProgramManagement: {checked: false, label: 'Program Management'},
   },
-  in_programs_before: false,
+  participated_baltimore_corps_before: 'Yes',
   interested_programs: {
     BaltimoreCorpsFellowship: {
       checked: false,
