@@ -35,10 +35,7 @@ const AboutMeForms = ({
   const [openDemographicForm, setOpenDemographicForm] = useState(false);
   return (
     <Grid container justify="center" style={{width: '100%'}}>
-      <ExpansionPanel
-        defaultExpanded={false}
-        className={classes.expansionPanel}
-      >
+      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -69,10 +66,7 @@ const AboutMeForms = ({
           )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel
-        defaultExpanded={false}
-        className={classes.expansionPanel}
-      >
+      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -100,10 +94,7 @@ const AboutMeForms = ({
           )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel
-        defaultExpanded={false}
-        className={classes.expansionPanel}
-      >
+      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -131,10 +122,7 @@ const AboutMeForms = ({
           )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel
-        defaultExpanded={false}
-        className={classes.expansionPanel}
-      >
+      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"

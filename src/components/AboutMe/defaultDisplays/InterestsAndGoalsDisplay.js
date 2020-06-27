@@ -49,8 +49,15 @@ const InterestsAndGoalsDisplay = ({onClickEdit, classes}) => {
         </Typography>
 
         <Typography variant="body1" component="p" className={classes.answer}>
-          - Operations and Administration, Program Management,Community
-          Engagement and Outreach
+          - Operations and Administration
+        </Typography>
+
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Program Management,Community
+        </Typography>
+
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Community Engagement and Outreach
         </Typography>
       </div>
 

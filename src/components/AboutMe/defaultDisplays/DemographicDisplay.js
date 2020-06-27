@@ -52,7 +52,7 @@ const DemographicDisplay = ({onClickEdit, classes}) => {
         </Typography>
 
         <Typography variant="body1" component="p" className={classes.answer}>
-          She/Her
+          - She/Her
         </Typography>
       </div>
     </React.Fragment>
