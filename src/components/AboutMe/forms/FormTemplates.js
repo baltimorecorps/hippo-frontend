@@ -4,6 +4,11 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import IconButton from '@material-ui/core/IconButton';
 
@@ -40,77 +45,92 @@ const FormHeaderTemplate = ({header, descriptions, onCloseForm, classes}) => {
   );
 };
 
-const QATemplate1 = ({question, answer, classes}) => {
+const FormRadioButtonsTemplate = ({
+  question,
+  value,
+  options,
+  handleChange,
+  name,
+  ariaLabel,
+  classes,
+}) => {
   return (
-    <div className={classes.item}>
-      <Typography variant="body1" component="p" className={classes.question}>
-        {question}
-      </Typography>
-
-      <Typography variant="body1" component="p" className={classes.answer}>
-        - {answer}
-      </Typography>
-    </div>
-  );
-};
-
-const QATemplate2 = ({question, answers, classes}) => {
-  return (
-    <div className={classes.item}>
-      <Typography variant="body1" component="p" className={classes.question}>
-        {question}
-      </Typography>
-
-      {answers.map((answer, index) => (
-        <Typography
-          key={index}
-          variant="body1"
-          component="p"
-          className={classes.answer}
-        >
-          - {answer.label}
+    <div className={classes.eachQuestionContainer}>
+      <FormControl component="fieldset">
+        <Typography variant="body1" component="p" className={classes.question}>
+          {question}
         </Typography>
-      ))}
+        <RadioGroup
+          aria-label={ariaLabel}
+          name={name}
+          value={value}
+          onChange={handleChange}
+          className={classes.radioGroup}
+        >
+          {options.map((option, index) => (
+            <FormControlLabel
+              key={index}
+              className={classes.radio}
+              value={option}
+              control={<Radio />}
+              label={option}
+            />
+          ))}
+        </RadioGroup>
+      </FormControl>
     </div>
   );
 };
-const QATemplate3 = ({question, answers, classes}) => {
+
+const FormCheckboxesTemplate = ({
+  question,
+  options,
+  handleChange,
+  names,
+  classes,
+}) => {
   return (
-    <div className={classes.item}>
+    <React.Fragment>
       <Typography variant="body1" component="p" className={classes.question}>
         {question}
       </Typography>
-
-      {answers.map((answer, index) => (
-        <Typography
-          key={index}
-          variant="body1"
-          component="p"
-          className={classes.answer}
-        >
-          - {answer[1]}
-        </Typography>
-      ))}
-    </div>
+      <div className={classes.checkboxesContainer}>
+        {options.map((option, index) => (
+          <FormControlLabel
+            key={index}
+            control={
+              <Checkbox
+                checked={option.checked}
+                onChange={handleChange}
+                name={names[index]}
+                color="primary"
+              />
+            }
+            className={classes.role}
+            label={option.label}
+          />
+        ))}
+      </div>
+    </React.Fragment>
   );
 };
 
-// FormHeaderTemplate.propTypes = {
-//   header: PropTypes.string,
-//   onClickEdit: PropTypes.func,
-// };
-// QATemplate1.propTypes = {
-//   question: PropTypes.string,
-//   answer: PropTypes.string,
-// };
-// QATemplate2.propTypes = {
-//   question: PropTypes.string,
-//   answers: PropTypes.array,
-// };
-// QATemplate3.propTypes = {
-//   question: PropTypes.string,
-//   answers: PropTypes.array,
-// };
+FormHeaderTemplate.propTypes = {
+  header: PropTypes.string,
+  descriptions: PropTypes.array,
+  onCloseForm: PropTypes.func,
+};
+FormRadioButtonsTemplate.propTypes = {
+  header: PropTypes.string,
+  descriptions: PropTypes.array,
+  onCloseForm: PropTypes.func,
+  question: PropTypes.string,
+  value: PropTypes.string,
+  options: PropTypes.array,
+  handleChange: PropTypes.func,
+  name: PropTypes.string,
+  ariaLabel: PropTypes.string,
+};
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
@@ -126,7 +146,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: '10px',
   },
   sectionInfo: {
-    fontSize: '15px',
+    fontSize: '16px',
     textIndent: '25px',
     marginBottom: '15px',
     marginTop: '10px',
@@ -182,6 +202,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '90px',
   },
 
+  radio: {
+    width: '100%',
+    paddingLeft: '30px',
+  },
+
   race: {
     textAlign: 'left',
   },
@@ -197,16 +222,44 @@ const styles = ({breakpoints, palette, spacing}) => ({
   submitButton: {
     margin: '10px 20px 0px 0px',
   },
+  eachQuestionContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    width: '100%',
+    marginBottom: '15px',
+  },
+  question: {
+    color: '#000000',
+    // left: '20px',
+    width: '100%',
+    textAlign: 'left',
+  },
+
+  checkboxesContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    width: '100%',
+    marginBottom: '15px',
+  },
+  role: {
+    width: '100%',
+    paddingLeft: '30px',
+  },
 });
 
-const QuestionWithOneAnswer = withStyles(styles)(QATemplate1);
-const QuestionWithMultipleAnswersObject = withStyles(styles)(QATemplate2);
-const QuestionWithMultipleAnswersArray = withStyles(styles)(QATemplate3);
+const FormRadioButtons = withStyles(styles)(FormRadioButtonsTemplate);
+const FormCheckboxes = withStyles(styles)(FormCheckboxesTemplate);
+// const QuestionWithMultipleAnswersArray = withStyles(styles)(QATemplate3);
 const FormHeader = withStyles(styles)(FormHeaderTemplate);
 
 export {
-  QuestionWithOneAnswer,
-  QuestionWithMultipleAnswersObject,
-  QuestionWithMultipleAnswersArray,
+  // QuestionWithOneAnswer,
+  // QuestionWithMultipleAnswersObject,
+  // QuestionWithMultipleAnswersArray,
+  FormRadioButtons,
   FormHeader,
+  FormCheckboxes,
 };

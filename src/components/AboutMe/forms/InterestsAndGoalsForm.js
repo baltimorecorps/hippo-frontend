@@ -17,7 +17,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 
-import {FormHeader} from './FormTemplates';
+import {FormHeader, FormRadioButtons, FormCheckboxes} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -67,8 +67,8 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   };
 
   // todo
-  // Refactor
   // form validation
+  // responsive styles
   // testing
 
   const rolesKeys = Object.keys(values.interested_roles);
@@ -85,124 +85,39 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
-          <div className={classes.eachQuestionContainer}>
-            <FormControl component="fieldset">
-              <Typography
-                variant="body1"
-                component="p"
-                className={classes.question}
-              >
-                What is the status of your job search?
-              </Typography>
-              <RadioGroup
-                aria-label="job search status"
-                name="job_search_status"
-                value={values.job_search_status}
-                onChange={handleChange}
-                className={classes.radioGroup}
-              >
-                {jobSearchStatus.map((status, index) => (
-                  <FormControlLabel
-                    key={index}
-                    className={classes.radio}
-                    value={status}
-                    control={<Radio />}
-                    label={status}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </div>
-          <div className={classes.eachQuestionContainer}>
-            <FormControl component="fieldset">
-              <Typography
-                variant="body1"
-                component="p"
-                className={classes.question}
-              >
-                How many years of professional experience (internships,
-                advocacy, employed etc.) do you have?
-              </Typography>
-              <RadioGroup
-                aria-label="years of experience"
-                name="years_exp"
-                value={values.years_exp}
-                onChange={handleChange}
-                className={classes.radioGroup}
-              >
-                {yearsOfExperience.map((range, index) => (
-                  <FormControlLabel
-                    key={index}
-                    className={classes.radio}
-                    value={range}
-                    control={<Radio />}
-                    label={range}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </div>
+          <FormRadioButtons
+            question="What is the status of your job search?"
+            value={values.job_search_status}
+            handleChange={handleChange}
+            options={jobSearchStatus}
+            name="job_search_status"
+            ariaLabel="Job search status"
+          />
 
-          <div className={classes.interestedRolesContainer}>
-            <Typography
-              variant="body1"
-              component="p"
-              className={classes.question}
-            >
-              Which of the following types of roles are you interested in
-              applying for? (select all that apply)
-            </Typography>
-            <div className={classes.checkboxesContainer}>
-              {Object.values(values.interested_roles).map((role, index) => (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={role.checked}
-                      onChange={handleInterestedRolesChange}
-                      name={rolesKeys[index]}
-                      color="primary"
-                    />
-                  }
-                  className={classes.role}
-                  label={role.label}
-                />
-              ))}
-            </div>
-            <div className={classes.eachQuestionContainer}>
-              <FormControl component="fieldset">
-                <Typography
-                  variant="body1"
-                  component="p"
-                  className={classes.question}
-                >
-                  Have you participated in any of Baltimore Corps' programs and
-                  services already?
-                </Typography>
-                <RadioGroup
-                  aria-label="Have participated with Baltimore Corps before"
-                  name="participated_baltimore_corps_before"
-                  value={values.participated_baltimore_corps_before}
-                  onChange={handleChange}
-                  className={classes.radioGroup}
-                >
-                  <FormControlLabel
-                    className={classes.radio}
-                    value="Yes"
-                    control={<Radio />}
-                    label="Yes"
-                  />
-                  <FormControlLabel
-                    className={classes.radio}
-                    value="No"
-                    control={<Radio />}
-                    label="No"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </div>
-          </div>
-          <div className={classes.genderAndPronounsContainer}></div>
+          <FormRadioButtons
+            question="How many years of professional experience (internships, advocacy, employed etc.) do you have?"
+            value={values.years_exp}
+            handleChange={handleChange}
+            options={yearsOfExperience}
+            name="years_exp"
+            ariaLabel="Years of experience"
+          />
+
+          <FormCheckboxes
+            question="Which of the following types of roles are you interested in applying for? (select all that apply)"
+            names={rolesKeys}
+            options={Object.values(values.interested_roles)}
+            handleChange={handleInterestedRolesChange}
+          />
+
+          <FormRadioButtons
+            question="Have you participated in any of Baltimore Corps' programs and services already?"
+            value={values.participated_baltimore_corps_before}
+            handleChange={handleChange}
+            options={['Yes', 'No']}
+            name="participated_baltimore_corps_before"
+            ariaLabel="Have participated with Baltimore Corps before"
+          />
           <Grid item xs={12} align="end" className={classes.submitButton}>
             <Button
               variant="contained"
@@ -232,7 +147,7 @@ InterestsAndGoalsForm.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
-    padding: '17px 30px 30px 30px',
+    padding: '17px 30px 10px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
   },
