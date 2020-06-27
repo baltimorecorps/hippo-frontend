@@ -16,6 +16,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import mockData from '../mockData';
+import {FormHeader} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -98,35 +99,18 @@ const ProgramsAndEligibilityForm = ({
   // form validation
   // testing
 
+  const descriptions = [
+    'While our team will help you figure out which of program and services best align with where you are in your career, some folks apply to join our network because they are interested in a particular program offering.',
+    "The questions below allow you to indicate which programs (if any) you know you're interested in before we get a chance to chat with you, and checks to see if you're eligible for them",
+  ];
+
   return (
     <Grid item xs={12} className={classes.form}>
-      <div className={classes.headerContainer}>
-        <Typography variant="h3" component="h3" className={classes.formHeader}>
-          Programs and Eligibility
-        </Typography>
-        <Grid align="end">
-          <IconButton
-            edge="end"
-            aria-label="cancel form"
-            onMouseDown={onCloseForm}
-            className={classes.iconButton}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-      </div>
-
-      <Typography variant="body1" component="p" className={classes.sectionInfo}>
-        While our team will help you figure out which of program and services
-        best align with where you are in your career, some folks apply to join
-        our network because they are interested in a particular program
-        offering.
-      </Typography>
-      <Typography variant="body1" component="p" className={classes.sectionInfo}>
-        The questions below allow you to indicate which programs (if any) you
-        know you're interested in before we get a chance to chat with you, and
-        checks to see if you're eligible for them
-      </Typography>
+      <FormHeader
+        header=" Programs and Eligibility"
+        descriptions={descriptions}
+        onCloseForm={onCloseForm}
+      />
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">

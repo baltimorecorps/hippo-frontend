@@ -129,8 +129,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-// export default withStyles(styles)(QuestionAnswerTemplates);
-
 const QuestionWithOneAnswer = withStyles(styles)(QATemplate1);
 const QuestionWithMultipleAnswersObject = withStyles(styles)(QATemplate2);
 const QuestionWithMultipleAnswersArray = withStyles(styles)(QATemplate3);

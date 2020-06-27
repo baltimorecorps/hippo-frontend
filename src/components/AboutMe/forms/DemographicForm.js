@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -20,6 +20,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import mockData from '../mockData';
 import {genders, pronouns} from '../defaultData';
+
+import {FormHeader} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -100,37 +102,23 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
   };
 
   // todo
+
+  // refactor form
   // display a textfield when user checks or selects Not Listed option
 
   // form validation
   // testing
+  const descriptions = [
+    ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
+  ];
 
   return (
     <Grid item xs={12} className={classes.form}>
-      <div className={classes.headerContainer}>
-        <Typography variant="h3" component="h3" className={classes.formHeader}>
-          Demographic Information
-        </Typography>
-        <Grid align="end">
-          <IconButton
-            edge="end"
-            aria-label="cancel form"
-            onMouseDown={onCloseForm}
-            className={classes.iconButton}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-      </div>
-
-      <Typography variant="body1" component="p" className={classes.sectionInfo}>
-        The information below helps us build a better picture of our applicants.
-        As an organization committed to equity, it is important for us to
-        understand the variety of identities and affinities that are represented
-        within our pool so that we can engage in a thoughtful process. That
-        being said, we understand that this information is sensitive and
-        providing it is completely optional.
-      </Typography>
+      <FormHeader
+        header="Demographic Information"
+        descriptions={descriptions}
+        onCloseForm={onCloseForm}
+      />
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">

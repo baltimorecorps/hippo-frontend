@@ -21,6 +21,8 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 
+import {FormHeader} from './FormTemplates';
+
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
@@ -78,29 +80,16 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   // testing
 
   const rolesKeys = Object.keys(values.interested_roles);
-
+  const descriptions = [
+    'The questions below help us understand a little bit more about your experience and which roles you might be interested in applying for.',
+  ];
   return (
     <Grid item xs={12} className={classes.form}>
-      <div className={classes.headerContainer}>
-        <Typography variant="h3" component="h3" className={classes.formHeader}>
-          Interests and Goals
-        </Typography>
-        <Grid align="end">
-          <IconButton
-            edge="end"
-            aria-label="cancel form"
-            onMouseDown={onCloseForm}
-            className={classes.iconButton}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
-      </div>
-
-      <Typography variant="body1" component="p" className={classes.sectionInfo}>
-        The questions below help us understand a little bit more about your
-        experience and which roles you might be interested in applying for.
-      </Typography>
+      <FormHeader
+        header="Interests and Goals"
+        descriptions={descriptions}
+        onCloseForm={onCloseForm}
+      />
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
