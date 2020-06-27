@@ -195,97 +195,106 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
             </div>
           </div>
           <div className={classes.genderAndPronounsContainer}>
-            <div className={classes.dropdownContainer}>
-              <InputLabel htmlFor="gender" className={classes.inputLabel}>
-                Gender
-              </InputLabel>
-              <Select
-                disabled={false}
-                required
-                id="gender"
-                value={values.gender}
-                onChange={handleChange}
-                inputProps={{
-                  name: 'gender',
-                  id: 'gender',
-                  classes: {select: classes.dropdownSelector},
-                  'data-testid': 'gender',
-                }}
-              >
-                {genders.map(gender => (
-                  <MenuItem value={gender} key={gender}>
-                    {gender}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText className={classes.formHelperText}>
-                {errors.firstName_error || null}
-              </FormHelperText>
-              {values.gender === 'Not Listed' && (
-                <Grid item xs={12} lg={6} align="center">
-                  <TextField
-                    required
-                    id="other_gender"
-                    label="Other Gender"
-                    className={classes.formControl}
-                    name="other_gender"
-                    value={values.other_gender}
-                    onChange={handleChange}
-                    InputLabelProps={inputLabelProps}
-                    InputProps={inputProps}
-                  />
-                  <FormHelperText className={classes.formHelperText}>
-                    {errors.firstName_error || null}
-                  </FormHelperText>
-                </Grid>
-              )}
-            </div>
-            <div className={classes.dropdownContainer}>
-              <InputLabel htmlFor="pronoun" className={classes.inputLabel}>
-                Pronouns
-              </InputLabel>
-              <Select
-                disabled={false}
-                required
-                id="pronoun"
-                value={values.pronoun}
-                onChange={handleChange}
-                inputProps={{
-                  name: 'pronoun',
-                  id: 'pronoun',
-                  classes: {select: classes.dropdownSelector},
-                  'data-testid': 'pronoun',
-                }}
-              >
-                {pronouns.map(pronoun => (
-                  <MenuItem value={pronoun} key={pronoun}>
-                    {pronoun}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText className={classes.formHelperText}>
-                {errors.firstName_error || null}
-              </FormHelperText>
-            </div>
-            {values.pronoun === 'Not Listed' && (
-              <Grid item xs={12} lg={6} align="center">
-                <TextField
+            <div className={classes.dropdownAndTextfieldContainer}>
+              <div className={classes.dropdownContainer}>
+                <InputLabel htmlFor="gender" className={classes.inputLabel}>
+                  Gender
+                </InputLabel>
+                <Select
+                  disabled={false}
                   required
-                  id="other_pronoun"
-                  label="Other Pronoun"
-                  className={classes.formControl}
-                  name="other_pronoun"
-                  value={values.other_pronoun}
+                  id="gender"
+                  value={values.gender}
                   onChange={handleChange}
-                  InputLabelProps={inputLabelProps}
-                  InputProps={inputProps}
-                />
+                  inputProps={{
+                    name: 'gender',
+                    id: 'gender',
+                    classes: {select: classes.dropdownSelector},
+                    'data-testid': 'gender',
+                  }}
+                >
+                  {genders.map(gender => (
+                    <MenuItem value={gender} key={gender}>
+                      {gender}
+                    </MenuItem>
+                  ))}
+                </Select>
                 <FormHelperText className={classes.formHelperText}>
                   {errors.firstName_error || null}
                 </FormHelperText>
+              </div>
+              <Grid item xs={6} lg={5} align="center">
+                {values.gender === 'Not Listed' && (
+                  <React.Fragment>
+                    <TextField
+                      required
+                      id="other_gender"
+                      label="Other Gender"
+                      className={classes.formControl}
+                      name="other_gender"
+                      value={values.other_gender}
+                      onChange={handleChange}
+                      InputLabelProps={inputLabelProps}
+                      InputProps={inputProps}
+                    />
+                    <FormHelperText className={classes.formHelperText}>
+                      {errors.firstName_error || null}
+                    </FormHelperText>
+                  </React.Fragment>
+                )}
               </Grid>
-            )}
+            </div>
+            <div className={classes.dropdownAndTextfieldContainer}>
+              <div className={classes.dropdownContainer}>
+                <InputLabel htmlFor="pronoun" className={classes.inputLabel}>
+                  Pronouns
+                </InputLabel>
+                <Select
+                  disabled={false}
+                  required
+                  id="pronoun"
+                  value={values.pronoun}
+                  onChange={handleChange}
+                  inputProps={{
+                    name: 'pronoun',
+                    id: 'pronoun',
+                    classes: {select: classes.dropdownSelector},
+                    'data-testid': 'pronoun',
+                  }}
+                >
+                  {pronouns.map(pronoun => (
+                    <MenuItem value={pronoun} key={pronoun}>
+                      {pronoun}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText className={classes.formHelperText}>
+                  {errors.firstName_error || null}
+                </FormHelperText>
+              </div>
+              <Grid item xs={6} lg={5} align="center">
+                {values.pronoun === 'Not Listed' && (
+                  <React.Fragment>
+                    <TextField
+                      required
+                      id="other_pronoun"
+                      label="Other Pronoun"
+                      className={classes.formControl}
+                      name="other_pronoun"
+                      value={values.other_pronoun}
+                      onChange={handleChange}
+                      InputLabelProps={inputLabelProps}
+                      InputProps={inputProps}
+                    />
+                    <FormHelperText className={classes.formHelperText}>
+                      {errors.firstName_error || null}
+                    </FormHelperText>
+                  </React.Fragment>
+                )}
+              </Grid>
+            </div>
           </div>
+
           <Grid item xs={12} align="end" className={classes.submitButton}>
             <Button
               variant="contained"
@@ -378,6 +387,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   dropdownContainer: {
     marginTop: '10px',
+    alignSelf: 'flex-start',
   },
   dropdownSelector: {
     textAlign: 'left',
@@ -388,10 +398,26 @@ const styles = ({breakpoints, palette, spacing}) => ({
     textAlign: 'left',
   },
   genderAndPronounsContainer: {
+    width: '100%',
     marginTop: spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  dropdownAndTextfieldContainer: {
+    width: '100%',
+
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    margin: 0,
+    [breakpoints.up('sm')]: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'flex-start',
+    },
   },
   inputLabel: {
     textAlign: 'left',
