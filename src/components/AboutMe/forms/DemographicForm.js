@@ -8,17 +8,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-
-import IconButton from '@material-ui/core/IconButton';
 
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import mockData from '../mockData';
 import {genders, pronouns} from '../defaultData';
 
 import {FormHeader} from './FormTemplates';
@@ -57,7 +52,7 @@ const useForm = (initialValues, onSubmit) => {
 
 const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [values, {handleChange, handleSubmit, handleRacesChange}] = useForm(
-    mockData,
+    contact,
     onSubmit
   );
   const [errors, setErrors] = useState({});

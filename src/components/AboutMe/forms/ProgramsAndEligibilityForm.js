@@ -9,7 +9,6 @@ import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import mockData from '../mockData';
 import {FormHeader} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
@@ -45,7 +44,7 @@ const ProgramsAndEligibilityForm = ({
   classes,
 }) => {
   const [values, {handleSubmit, handleInterestedProgramsChange}] = useForm(
-    mockData,
+    contact,
     onSubmit
   );
   const [errors, setErrors] = useState({});

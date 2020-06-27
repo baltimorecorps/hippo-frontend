@@ -5,18 +5,14 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import Button from '@material-ui/core/Button';
 
-import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-
-import IconButton from '@material-ui/core/IconButton';
 
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import mockData from '../mockData';
-import {jobSearchStatus, roles, yearsOfExperience} from '../defaultData';
+import {jobSearchStatus, yearsOfExperience} from '../defaultData';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
@@ -34,10 +30,6 @@ const useForm = (initialValues, onSubmit) => {
     handleSubmit: values => {
       onSubmit(values);
     },
-
-    // handleRacesChange: changedDemographic => {
-    //   update('demographic')(changedDemographic);
-    // },
 
     handleInterestedRolesChange: event => {
       event.persist();
@@ -60,7 +52,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [
     values,
     {handleChange, handleSubmit, handleInterestedRolesChange},
-  ] = useForm(mockData, onSubmit);
+  ] = useForm(contact, onSubmit);
   const [errors, setErrors] = useState({});
 
   const submit = () => {
@@ -221,7 +213,6 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
               Save
             </Button>
           </Grid>
-          {/* </Grid> */}
         </form>
       </Grid>
     </Grid>
