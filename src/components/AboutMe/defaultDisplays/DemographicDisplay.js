@@ -7,7 +7,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
-const DemographicDisplay = ({onClickEdit, classes}) => {
+const DemographicDisplay = ({contact, onClickEdit, classes}) => {
+  const checkedRace = Object.values(contact.race).filter(race => {
+    if (race[0] === true) return race[1];
+  });
+
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
@@ -28,12 +32,11 @@ const DemographicDisplay = ({onClickEdit, classes}) => {
           Race:
         </Typography>
 
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - Asian
-        </Typography>
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - South Asian
-        </Typography>
+        {checkedRace.map(race => (
+          <Typography variant="body1" component="p" className={classes.answer}>
+            - {race[1]}
+          </Typography>
+        ))}
       </div>
 
       <div className={classes.item}>
@@ -42,7 +45,7 @@ const DemographicDisplay = ({onClickEdit, classes}) => {
         </Typography>
 
         <Typography variant="body1" component="p" className={classes.answer}>
-          - Female
+          - {contact.gender}
         </Typography>
       </div>
 
@@ -52,7 +55,7 @@ const DemographicDisplay = ({onClickEdit, classes}) => {
         </Typography>
 
         <Typography variant="body1" component="p" className={classes.answer}>
-          - She/Her
+          - {contact.pronoun}
         </Typography>
       </div>
     </React.Fragment>
@@ -60,11 +63,9 @@ const DemographicDisplay = ({onClickEdit, classes}) => {
 };
 
 DemographicDisplay.propTypes = {
-  //   firstName: PropTypes.string.isRequired,
-  //   lastName: PropTypes.string.isRequired,
-  //   email: PropTypes.string,
-  //   phone: PropTypes.string,
-  //   onClickEdit: PropTypes.func.isRequired,
+  contact: PropTypes.object,
+
+  onClickEdit: PropTypes.func,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

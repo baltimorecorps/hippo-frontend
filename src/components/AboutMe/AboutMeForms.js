@@ -17,13 +17,16 @@ import InterestsAndGoalsDisplay from './defaultDisplays/InterestsAndGoalsDisplay
 import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm';
 import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
 
+import mockData from './mockData';
+
 const AboutMeForms = ({
-  contact,
+  // contact,
   onSubmit,
   onCloseAllForms,
   onClickEdit,
   classes,
 }) => {
+  const contact = mockData;
   const email = contact.email_primary ? contact.email_primary.email : '';
 
   const [openContactInfoForm, setOpenContactInfoForm] = useState(false);

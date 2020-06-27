@@ -1,5 +1,22 @@
 export default {
   id: 1,
+  first_name: 'Taylor',
+  last_name: 'Swift',
+  email: [
+    {
+      email: 'taylor@swift.com',
+      id: 560,
+      is_primary: true,
+      type: 'Personal',
+    },
+  ],
+  email_primary: {
+    email: 'taylor@swift.com',
+    id: 560,
+    is_primary: true,
+    type: 'Personal',
+  },
+  phone_primary: '+1 (555) 555-9999',
   address: '1234 Monday St.',
   city: 'Baltimore',
   state: 'Maryland',
