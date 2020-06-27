@@ -125,8 +125,8 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
               </Typography>
               <RadioGroup
                 aria-label="years of experience"
-                name="years_of_experience"
-                value="0-2 years"
+                name="years_exp"
+                value={values.years_exp}
                 onChange={handleChange}
                 className={classes.radioGroup}
               >
@@ -180,21 +180,21 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   services already?
                 </Typography>
                 <RadioGroup
-                  aria-label="gender"
-                  name="gender1"
-                  value="no"
+                  aria-label="Have participated with Baltimore Corps before"
+                  name="participated_baltimore_corps_before"
+                  value={values.participated_baltimore_corps_before}
                   onChange={handleChange}
                   className={classes.radioGroup}
                 >
                   <FormControlLabel
                     className={classes.radio}
-                    value="yes"
+                    value="Yes"
                     control={<Radio />}
                     label="Yes"
                   />
                   <FormControlLabel
                     className={classes.radio}
-                    value="no"
+                    value="No"
                     control={<Radio />}
                     label="No"
                   />

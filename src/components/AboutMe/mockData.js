@@ -63,7 +63,7 @@ export default {
     },
     ProgramManagement: {checked: false, label: 'Program Management'},
   },
-  participated_baltimore_corps_before: 'Yes',
+  participated_baltimore_corps_before: 'No',
   interested_programs: {
     BaltimoreCorpsFellowship: {
       checked: true,
