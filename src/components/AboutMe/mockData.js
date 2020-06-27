@@ -66,15 +66,15 @@ export default {
   participated_baltimore_corps_before: 'Yes',
   interested_programs: {
     BaltimoreCorpsFellowship: {
-      checked: false,
+      checked: true,
       label: 'Baltimore Corps Fellowship',
     },
     JHUCareyHumanitiesFellowship: {
       checked: false,
       label: 'JHU Carey Humanities Fellowship',
     },
-    PlaceForPurpose: {checked: false, label: 'Place for Purpose'},
-    PublicAllies: {checked: false, label: 'Public Allies'},
+    PlaceForPurpose: {checked: true, label: 'Place for Purpose'},
+    PublicAllies: {checked: true, label: 'Public Allies'},
     needHelp: {checked: false, label: "I'd like some help figuring this out"},
   },
 };

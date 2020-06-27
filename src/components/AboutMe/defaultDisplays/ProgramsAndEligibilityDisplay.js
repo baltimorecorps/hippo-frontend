@@ -7,7 +7,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
-const ProgramsAndEligibilityDisplay = ({onClickEdit, classes}) => {
+const ProgramsAndEligibilityDisplay = ({contact, onClickEdit, classes}) => {
+  const checkedPrograms = Object.values(contact.interested_programs).filter(
+    program => program.checked === true
+  );
+
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
@@ -28,26 +32,24 @@ const ProgramsAndEligibilityDisplay = ({onClickEdit, classes}) => {
           Interested Programs:
         </Typography>
 
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - Baltimore Corps Fellowship
-        </Typography>
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - Place for Purpose
-        </Typography>
-        <Typography variant="body1" component="p" className={classes.answer}>
-          - Public Allies
-        </Typography>
+        {checkedPrograms.map((program, index) => (
+          <Typography
+            key={index}
+            variant="body1"
+            component="p"
+            className={classes.answer}
+          >
+            - {program.label}
+          </Typography>
+        ))}
       </div>
     </React.Fragment>
   );
 };
 
 ProgramsAndEligibilityDisplay.propTypes = {
-  //   firstName: PropTypes.string.isRequired,
-  //   lastName: PropTypes.string.isRequired,
-  //   email: PropTypes.string,
-  //   phone: PropTypes.string,
-  //   onClickEdit: PropTypes.func.isRequired,
+  contact: PropTypes.object,
+  onClickEdit: PropTypes.func,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

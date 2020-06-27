@@ -8,9 +8,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
 const DemographicDisplay = ({contact, onClickEdit, classes}) => {
-  const checkedRace = Object.values(contact.race).filter(race => {
-    if (race[0] === true) return race[1];
-  });
+  const checkedRace = Object.values(contact.race).filter(
+    race => race[0] === true
+  );
 
   return (
     <React.Fragment>

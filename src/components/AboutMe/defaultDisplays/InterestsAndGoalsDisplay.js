@@ -8,9 +8,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
 const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
-  const checkedRoles = Object.values(contact.interested_roles).filter(role => {
-    if (role.checked === true) return role.label;
-  });
+  const checkedRoles = Object.values(contact.interested_roles).filter(
+    role => role.checked === true
+  );
 
   return (
     <React.Fragment>
