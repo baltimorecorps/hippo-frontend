@@ -67,7 +67,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   };
 
   // todo
-  // Work with API
+  // Refactor
   // form validation
   // testing
 

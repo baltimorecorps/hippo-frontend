@@ -30,10 +30,12 @@ export default {
     southAsian: [true, 'South Asian'],
     white: [false, 'White'],
     notListed: [false, 'Not Listed'],
-    other: '',
+    other_race: '',
   },
   gender: 'Female',
+  other_gender: '',
   pronoun: 'She/Her',
+  other_pronoun: '',
 
   job_search_status: 'Actively looking for a job',
   currently_student: true,

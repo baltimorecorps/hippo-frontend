@@ -13,6 +13,7 @@ import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 
 import {genders, pronouns} from '../defaultData';
 
@@ -45,16 +46,26 @@ const useForm = (initialValues, onSubmit) => {
 
       update('race')(newValue);
     },
+
+    handleRaceOther: event => {
+      event.persist();
+      const newValue = {
+        ...values.race,
+        [event.target.name]: event.target.value,
+      };
+
+      update('race')(newValue);
+    },
   };
 
   return [values, handlers];
 };
 
 const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
-  const [values, {handleChange, handleSubmit, handleRacesChange}] = useForm(
-    contact,
-    onSubmit
-  );
+  const [
+    values,
+    {handleChange, handleSubmit, handleRacesChange, handleRaceOther},
+  ] = useForm(contact, onSubmit);
   const [errors, setErrors] = useState({});
 
   // const {demographic} = values;
@@ -98,14 +109,26 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
   // todo
 
-  // refactor form
   // display a textfield when user checks or selects Not Listed option
-
+  // Refactor
   // form validation
   // testing
   const descriptions = [
     ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
   ];
+
+  const inputLabelProps = {
+    classes: {
+      root: classes.labelRoot,
+      focused: classes.labelFocused,
+    },
+    shrink: true,
+  };
+
+  const inputProps = {
+    classes: {input: classes.resize},
+    autoComplete: 'off',
+  };
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -151,6 +174,24 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   label={race[1]}
                 />
               ))}
+              {values.race.notListed[0] && (
+                <Grid item xs={6} lg={6} align="center">
+                  <TextField
+                    required
+                    id="other_race"
+                    label="Other Race"
+                    className={classes.formControl}
+                    name="other_race"
+                    value={values.race.other_race}
+                    onChange={handleRaceOther}
+                    InputLabelProps={inputLabelProps}
+                    InputProps={inputProps}
+                  />
+                  <FormHelperText className={classes.formHelperText}>
+                    {errors.firstName_error || null}
+                  </FormHelperText>
+                </Grid>
+              )}
             </div>
           </div>
           <div className={classes.genderAndPronounsContainer}>
@@ -180,6 +221,24 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
               <FormHelperText className={classes.formHelperText}>
                 {errors.firstName_error || null}
               </FormHelperText>
+              {values.gender === 'Not Listed' && (
+                <Grid item xs={12} lg={6} align="center">
+                  <TextField
+                    required
+                    id="other_gender"
+                    label="Other Gender"
+                    className={classes.formControl}
+                    name="other_gender"
+                    value={values.other_gender}
+                    onChange={handleChange}
+                    InputLabelProps={inputLabelProps}
+                    InputProps={inputProps}
+                  />
+                  <FormHelperText className={classes.formHelperText}>
+                    {errors.firstName_error || null}
+                  </FormHelperText>
+                </Grid>
+              )}
             </div>
             <div className={classes.dropdownContainer}>
               <InputLabel htmlFor="pronoun" className={classes.inputLabel}>
@@ -208,6 +267,24 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {errors.firstName_error || null}
               </FormHelperText>
             </div>
+            {values.pronoun === 'Not Listed' && (
+              <Grid item xs={12} lg={6} align="center">
+                <TextField
+                  required
+                  id="other_pronoun"
+                  label="Other Pronoun"
+                  className={classes.formControl}
+                  name="other_pronoun"
+                  value={values.other_pronoun}
+                  onChange={handleChange}
+                  InputLabelProps={inputLabelProps}
+                  InputProps={inputProps}
+                />
+                <FormHelperText className={classes.formHelperText}>
+                  {errors.firstName_error || null}
+                </FormHelperText>
+              </Grid>
+            )}
           </div>
           <Grid item xs={12} align="end" className={classes.submitButton}>
             <Button
