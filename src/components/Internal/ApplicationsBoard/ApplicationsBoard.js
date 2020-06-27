@@ -20,14 +20,19 @@ import Select from '@material-ui/core/Select';
 const ApplicationsBoard = ({
   classes,
   approveNewApplicants,
-  allApplicants,
   getAllContactsPrograms,
+  getAllApprovedApplicants,
+  allApplicants,
   approvedApplicants,
+  unapprovedApplicants,
 }) => {
   useEffect(() => {
-    if (approvedApplicants && approvedApplicants.length === 0)
-      getAllContactsPrograms();
-  }, [getAllContactsPrograms, approvedApplicants]);
+    if (!approvedApplicants || approvedApplicants.length === 0)
+      getAllApprovedApplicants();
+  }, [getAllApprovedApplicants, approvedApplicants]);
+  useEffect(() => {
+    if (!allApplicants || allApplicants.length === 0) getAllContactsPrograms();
+  }, [getAllContactsPrograms, allApplicants]);
 
   const match = useRouteMatch();
 
@@ -37,7 +42,13 @@ const ApplicationsBoard = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
 
-  const [allPosts, setAllPosts] = useState(approvedApplicants);
+  const sortApplicants =
+    approvedApplicants &&
+    approvedApplicants.sort((a, b) =>
+      a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
+    );
+
+  const [allPosts, setAllPosts] = useState(sortApplicants || []);
 
   let history = useHistory();
 
@@ -46,8 +57,8 @@ const ApplicationsBoard = ({
   };
 
   let options = {};
-  if (allApplicants) {
-    options = allApplicants.map(contact => {
+  if (unapprovedApplicants) {
+    options = unapprovedApplicants.map(contact => {
       return {
         name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
         contact_id: contact.id,
@@ -60,17 +71,28 @@ const ApplicationsBoard = ({
     history.push(`${match.url}/${contactId}`);
   };
 
-  let sortApplicants = [];
-
-  if (approvedApplicants) {
-    sortApplicants = approvedApplicants.sort((a, b) =>
-      a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
-    );
-  }
-
   useEffect(() => {
     setAllPosts(sortApplicants);
-  }, [setAllPosts, sortApplicants]);
+  }, [sortApplicants]);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts =
+    allPosts && allPosts.length > 2
+      ? allPosts.slice(indexOfFirstPost, indexOfLastPost)
+      : allPosts;
+
+  const pageCount = allPosts && Math.ceil(allPosts.length / postsPerPage);
+  const pageNumbers = [];
+  for (let i = 0; i <= pageCount; i++) {
+    pageNumbers.push(i);
+  }
+
+  const paginate = event => {
+    event.persist();
+    const pageNumber = Number(event.target.textContent);
+    setCurrentPage(pageNumber);
+  };
 
   const handleChangePostsPerPage = event => {
     event.persist();
@@ -96,26 +118,7 @@ const ApplicationsBoard = ({
     }
   };
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts =
-    allPosts && allPosts.length > 2
-      ? allPosts.slice(indexOfFirstPost, indexOfLastPost)
-      : allPosts;
-
-  const pageCount = Math.ceil(allPosts.length / postsPerPage);
-  const pageNumbers = [];
-  for (let i = 0; i <= pageCount; i++) {
-    pageNumbers.push(i);
-  }
-
-  const paginate = event => {
-    event.persist();
-    const pageNumber = Number(event.target.textContent);
-    setCurrentPage(pageNumber);
-  };
-
-  if (!approvedApplicants) {
+  if (!currentPosts) {
     return <div>...Loading</div>;
   }
   return (
@@ -248,27 +251,11 @@ const ApplicationsBoard = ({
 
 ApplicationsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
-  getAllContactsShort: PropTypes.func.isRequired,
   approveNewApplicants: PropTypes.func.isRequired,
-  getAllInternalApplicants: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      email: PropTypes.string,
-      first_name: PropTypes.string,
-      id: PropTypes.number,
-      last_name: PropTypes.string,
-    })
-  ).isRequired,
-  // applicants: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     is_active: PropTypes.bool.Required,
-  //     applications: PropTypes.array,
-  //     contact: PropTypes.object.isRequired,
-  //     id: PropTypes.number.Required,
-  //     program_id: PropTypes.number.Required,
-  //     is_approved: PropTypes.bool.Required,
-  //   })
-  // ).isRequired,
+  getAllApprovedApplicants: PropTypes.func.isRequired,
+  getAllContactsPrograms: PropTypes.func.isRequired,
+  allApplicants: PropTypes.array,
+  approvedApplicants: PropTypes.array,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

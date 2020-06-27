@@ -242,6 +242,17 @@ export const getAllInternalApplicants = makeApiFetchActions(
 
 // ---------------------------------------------------------------------------
 
+export const GET_ALL_APPROVED_APPLICANTS = 'GET_ALL_APPROVED_APPLICANTS';
+export const GET_ALL_APPROVED_APPLICANTS_API = fetchActionTypes(
+  GET_ALL_APPROVED_APPLICANTS
+);
+export const getAllApprovedApplicants = makeApiFetchActions(
+  GET_ALL_APPROVED_APPLICANTS,
+  `${API_URL}/api/contacts/programs/?is_approved=true`
+);
+
+// ---------------------------------------------------------------------------
+
 export const GET_ORG_OPPORTUNITY = 'GET_ORG_OPPORTUNITY';
 export const GET_ORG_OPPORTUNITY_API = fetchActionTypes(GET_ORG_OPPORTUNITY);
 export const getOrgOpportunity = opportunityId =>
@@ -475,18 +486,17 @@ export const applicantsReducer = createReducer(
     [GET_ALL_INTERNAL_APPLICANTS_API.RESOLVE]: (state, action) => {
       const newState = {};
       // clear out all old entries
+
       action.body.data.forEach(applicant => {
         newState[applicant.id] = applicant;
       });
       return newState;
     },
     [GET_ALL_CONTACTS_PROGRAMS_API.RESOLVE]: (state, action) => {
-      const newState = {};
-      // clear out all old entries
-      action.body.data.forEach(applicant => {
-        newState[applicant.id] = applicant;
-      });
-      return newState;
+      state['all_applicants'] = action.body.data;
+    },
+    [GET_ALL_APPROVED_APPLICANTS_API.RESOLVE]: (state, action) => {
+      state['approved_applicants'] = action.body.data;
     },
   }
 );
