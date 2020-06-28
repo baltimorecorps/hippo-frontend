@@ -17,7 +17,12 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 
-import {FormHeader, FormRadioButtons, FormCheckboxes} from './FormTemplates';
+import {
+  FormHeader,
+  FormRadioButtons,
+  FormCheckboxes,
+  FormSubmitButton,
+} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -56,14 +61,15 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [errors, setErrors] = useState({});
 
   const submit = () => {
-    const {isError, err} = newProfileValidator(values);
+    // const {isError, err} = newProfileValidator(values);
 
-    if (isError) {
-      setErrors(err);
-    } else {
-      handleSubmit(values);
-      onCloseForm();
-    }
+    console.log('submitted form');
+    // if (isError) {
+    //   setErrors(err);
+    // } else {
+    //   handleSubmit(values);
+    //   onCloseForm();
+    // }
   };
 
   // todo
@@ -88,7 +94,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
           <FormRadioButtons
             question="What is the status of your job search?"
             value={values.job_search_status}
-            handleChange={handleChange}
+            onChange={handleChange}
             options={jobSearchStatus}
             name="job_search_status"
             ariaLabel="Job search status"
@@ -97,7 +103,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
           <FormRadioButtons
             question="How many years of professional experience (internships, advocacy, employed etc.) do you have?"
             value={values.years_exp}
-            handleChange={handleChange}
+            onChange={handleChange}
             options={yearsOfExperience}
             name="years_exp"
             ariaLabel="Years of experience"
@@ -107,27 +113,18 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
             question="Which of the following types of roles are you interested in applying for? (select all that apply)"
             names={rolesKeys}
             options={Object.values(values.interested_roles)}
-            handleChange={handleInterestedRolesChange}
+            onChange={handleInterestedRolesChange}
           />
 
           <FormRadioButtons
             question="Have you participated in any of Baltimore Corps' programs and services already?"
             value={values.participated_baltimore_corps_before}
-            handleChange={handleChange}
+            onChange={handleChange}
             options={['Yes', 'No']}
             name="participated_baltimore_corps_before"
             ariaLabel="Have participated with Baltimore Corps before"
           />
-          <Grid item xs={12} align="end" className={classes.submitButton}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={submit}
-              align="end"
-            >
-              Save
-            </Button>
-          </Grid>
+          <FormSubmitButton onSubmit={submit} />
         </form>
       </Grid>
     </Grid>

@@ -9,6 +9,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
 
 import IconButton from '@material-ui/core/IconButton';
 
@@ -49,7 +50,7 @@ const FormRadioButtonsTemplate = ({
   question,
   value,
   options,
-  handleChange,
+  onChange,
   name,
   ariaLabel,
   classes,
@@ -64,7 +65,7 @@ const FormRadioButtonsTemplate = ({
           aria-label={ariaLabel}
           name={name}
           value={value}
-          onChange={handleChange}
+          onChange={onChange}
           className={classes.radioGroup}
         >
           {options.map((option, index) => (
@@ -85,7 +86,7 @@ const FormRadioButtonsTemplate = ({
 const FormCheckboxesTemplate = ({
   question,
   options,
-  handleChange,
+  onChange,
   names,
   classes,
 }) => {
@@ -101,7 +102,7 @@ const FormCheckboxesTemplate = ({
             control={
               <Checkbox
                 checked={option.checked}
-                onChange={handleChange}
+                onChange={onChange}
                 name={names[index]}
                 color="primary"
               />
@@ -112,6 +113,20 @@ const FormCheckboxesTemplate = ({
         ))}
       </div>
     </React.Fragment>
+  );
+};
+const FormSubmitButtonTemplate = ({onSubmit, classes}) => {
+  return (
+    <Grid item xs={12} align="end" className={classes.submitButton}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={onSubmit}
+        align="end"
+      >
+        Save
+      </Button>
+    </Grid>
   );
 };
 
@@ -130,6 +145,9 @@ FormRadioButtonsTemplate.propTypes = {
   handleChange: PropTypes.func,
   name: PropTypes.string,
   ariaLabel: PropTypes.string,
+};
+FormSubmitButtonTemplate.propTypes = {
+  onSubmit: PropTypes.func,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -252,14 +270,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
 const FormRadioButtons = withStyles(styles)(FormRadioButtonsTemplate);
 const FormCheckboxes = withStyles(styles)(FormCheckboxesTemplate);
-// const QuestionWithMultipleAnswersArray = withStyles(styles)(QATemplate3);
+const FormSubmitButton = withStyles(styles)(FormSubmitButtonTemplate);
 const FormHeader = withStyles(styles)(FormHeaderTemplate);
 
-export {
-  // QuestionWithOneAnswer,
-  // QuestionWithMultipleAnswersObject,
-  // QuestionWithMultipleAnswersArray,
-  FormRadioButtons,
-  FormHeader,
-  FormCheckboxes,
-};
+export {FormRadioButtons, FormHeader, FormCheckboxes, FormSubmitButton};

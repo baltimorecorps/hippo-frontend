@@ -29,13 +29,12 @@ const AboutMeForms = ({
   const contact = mockData;
   const email = contact.email_primary ? contact.email_primary.email : '';
 
-  const [openContactInfoForm, setOpenContactInfoForm] = useState(false);
-  const [openInterestsGoalsForm, setOpenInterestsGoalsForm] = useState(false);
-  const [
-    openProgramsEligibilityForm,
-    setOpenProgramsEligibilityForm,
-  ] = useState(false);
-  const [openDemographicForm, setOpenDemographicForm] = useState(false);
+  const [openForms, setOpenForms] = useState({
+    contact_info: false,
+    interests_goals: false,
+    programs_eligibility: false,
+    demographic_info: false,
+  });
   return (
     <Grid container justify="center" style={{width: '100%'}}>
       <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
@@ -50,11 +49,13 @@ const AboutMeForms = ({
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          {openContactInfoForm ? (
+          {openForms.contact_info ? (
             <ContactInfoForm
               contact={contact}
               onSubmit={onSubmit}
-              onCloseForm={() => setOpenContactInfoForm(false)}
+              onCloseForm={() =>
+                setOpenForms({...openForms, contact_info: false})
+              }
             />
           ) : (
             <div className={classes.extraPadding}>
@@ -63,7 +64,9 @@ const AboutMeForms = ({
                 lastName={contact.last_name}
                 email={email}
                 phone={contact.phone_primary}
-                onClickEdit={() => setOpenContactInfoForm(true)}
+                onClickEdit={() =>
+                  setOpenForms({...openForms, contact_info: true})
+                }
               />
             </div>
           )}
@@ -81,17 +84,21 @@ const AboutMeForms = ({
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          {openInterestsGoalsForm ? (
+          {openForms.interests_goals ? (
             <InterestsAndGoalsForm
               contact={contact}
               onSubmit={onSubmit}
-              onCloseForm={() => setOpenInterestsGoalsForm(false)}
+              onCloseForm={() =>
+                setOpenForms({...openForms, interests_goals: false})
+              }
             />
           ) : (
             <div className={classes.extraPadding}>
               <InterestsAndGoalsDisplay
                 contact={contact}
-                onClickEdit={() => setOpenInterestsGoalsForm(true)}
+                onClickEdit={() =>
+                  setOpenForms({...openForms, interests_goals: true})
+                }
               />
             </div>
           )}
@@ -109,17 +116,21 @@ const AboutMeForms = ({
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          {openProgramsEligibilityForm ? (
+          {openForms.programs_eligibility ? (
             <ProgramsAndEligibilityForm
               contact={contact}
               onSubmit={onSubmit}
-              onCloseForm={() => setOpenProgramsEligibilityForm(false)}
+              onCloseForm={() =>
+                setOpenForms({...openForms, programs_eligibility: false})
+              }
             />
           ) : (
             <div className={classes.extraPadding}>
               <ProgramsAndEligibilityDisplay
                 contact={contact}
-                onClickEdit={() => setOpenProgramsEligibilityForm(true)}
+                onClickEdit={() =>
+                  setOpenForms({...openForms, programs_eligibility: true})
+                }
               />
             </div>
           )}
@@ -137,17 +148,21 @@ const AboutMeForms = ({
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          {openDemographicForm ? (
+          {openForms.demographic_info ? (
             <DemographicForm
               contact={contact}
               onSubmit={onSubmit}
-              onCloseForm={() => setOpenDemographicForm(false)}
+              onCloseForm={() =>
+                setOpenForms({...openForms, demographic_info: false})
+              }
             />
           ) : (
             <div className={classes.extraPadding}>
               <DemographicDisplay
                 contact={contact}
-                onClickEdit={() => setOpenDemographicForm(true)}
+                onClickEdit={() =>
+                  setOpenForms({...openForms, demographic_info: true})
+                }
               />
             </div>
           )}
