@@ -17,7 +17,7 @@ import TextField from '@material-ui/core/TextField';
 
 import {genders, pronouns} from '../defaultData';
 
-import {FormHeader} from './FormTemplates';
+import {FormHeader, FormDropDownSelector} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -196,84 +196,46 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
           </div>
           <div className={classes.genderAndPronounsContainer}>
             <div className={classes.dropdownAndTextfieldContainer}>
-              <div className={classes.dropdownContainer}>
-                <InputLabel htmlFor="gender" className={classes.inputLabel}>
-                  Gender
-                </InputLabel>
-                <Select
-                  disabled={false}
-                  required
-                  id="gender"
-                  value={values.gender}
-                  onChange={handleChange}
-                  inputProps={{
-                    name: 'gender',
-                    id: 'gender',
-                    classes: {select: classes.dropdownSelector},
-                    'data-testid': 'gender',
-                  }}
-                >
-                  {genders.map(gender => (
-                    <MenuItem value={gender} key={gender}>
-                      {gender}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText className={classes.formHelperText}>
-                  {errors.firstName_error || null}
-                </FormHelperText>
-              </div>
-              <Grid item xs={6} lg={5} align="center">
-                {values.gender === 'Not Listed' && (
-                  <React.Fragment>
-                    <TextField
-                      required
-                      id="other_gender"
-                      label="Other Gender"
-                      className={classes.formControl}
-                      name="other_gender"
-                      value={values.other_gender}
-                      onChange={handleChange}
-                      InputLabelProps={inputLabelProps}
-                      InputProps={inputProps}
-                    />
-                    <FormHelperText className={classes.formHelperText}>
-                      {errors.firstName_error || null}
-                    </FormHelperText>
-                  </React.Fragment>
-                )}
-              </Grid>
+              <FormDropDownSelector
+                question="Gender"
+                name="gender"
+                value={values.gender}
+                options={genders}
+                onChange={handleChange}
+              />
+
+              {values.gender === 'Not Listed' && (
+                <Grid item xs={6} lg={5} align="center">
+                  {/* <React.Fragment> */}
+                  <TextField
+                    required
+                    id="other_gender"
+                    label="Other Gender"
+                    className={classes.formControl}
+                    name="other_gender"
+                    value={values.other_gender}
+                    onChange={handleChange}
+                    InputLabelProps={inputLabelProps}
+                    InputProps={inputProps}
+                  />
+                  <FormHelperText className={classes.formHelperText}>
+                    {errors.firstName_error || null}
+                  </FormHelperText>
+                  {/* </React.Fragment> */}
+                </Grid>
+              )}
             </div>
             <div className={classes.dropdownAndTextfieldContainer}>
-              <div className={classes.dropdownContainer}>
-                <InputLabel htmlFor="pronoun" className={classes.inputLabel}>
-                  Pronouns
-                </InputLabel>
-                <Select
-                  disabled={false}
-                  required
-                  id="pronoun"
-                  value={values.pronoun}
-                  onChange={handleChange}
-                  inputProps={{
-                    name: 'pronoun',
-                    id: 'pronoun',
-                    classes: {select: classes.dropdownSelector},
-                    'data-testid': 'pronoun',
-                  }}
-                >
-                  {pronouns.map(pronoun => (
-                    <MenuItem value={pronoun} key={pronoun}>
-                      {pronoun}
-                    </MenuItem>
-                  ))}
-                </Select>
-                <FormHelperText className={classes.formHelperText}>
-                  {errors.firstName_error || null}
-                </FormHelperText>
-              </div>
-              <Grid item xs={6} lg={5} align="center">
-                {values.pronoun === 'Not Listed' && (
+              <FormDropDownSelector
+                question="Pronoun"
+                name="pronoun"
+                value={values.pronoun}
+                options={pronouns}
+                onChange={handleChange}
+              />
+
+              {values.pronoun === 'Not Listed' && (
+                <Grid item xs={6} lg={5} align="center">
                   <React.Fragment>
                     <TextField
                       required
@@ -290,8 +252,8 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                       {errors.firstName_error || null}
                     </FormHelperText>
                   </React.Fragment>
-                )}
-              </Grid>
+                </Grid>
+              )}
             </div>
           </div>
 
@@ -387,7 +349,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   dropdownContainer: {
     marginTop: '10px',
-    alignSelf: 'flex-start',
+    // alignSelf: 'flex-start',
   },
   dropdownSelector: {
     textAlign: 'left',
@@ -410,7 +372,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
     justifyContent: 'flex-start',
     margin: 0,
     [breakpoints.up('sm')]: {

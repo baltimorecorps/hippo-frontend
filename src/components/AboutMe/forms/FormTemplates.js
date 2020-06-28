@@ -10,6 +10,10 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import IconButton from '@material-ui/core/IconButton';
 
@@ -129,6 +133,41 @@ const FormSubmitButtonTemplate = ({onSubmit, classes}) => {
     </Grid>
   );
 };
+const FormDropDownSelectorTemplate = ({
+  question,
+  value,
+  name,
+  options,
+  onChange,
+  classes,
+}) => {
+  return (
+    <div className={classes.dropdownContainer}>
+      <InputLabel htmlFor={name} className={classes.inputLabel}>
+        {question}
+      </InputLabel>
+      <Select
+        disabled={false}
+        required
+        id={name}
+        value={value}
+        onChange={onChange}
+        inputProps={{
+          name: name,
+          id: name,
+          classes: {select: classes.dropdownSelector},
+          'data-testid': name,
+        }}
+      >
+        {options.map(option => (
+          <MenuItem value={option} key={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
+    </div>
+  );
+};
 
 FormHeaderTemplate.propTypes = {
   header: PropTypes.string,
@@ -214,6 +253,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   dropdownContainer: {
     marginTop: '10px',
+    // alignSelf: 'flex-start',
   },
   dropdownSelector: {
     textAlign: 'left',
@@ -269,8 +309,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
 });
 
 const FormRadioButtons = withStyles(styles)(FormRadioButtonsTemplate);
+const FormDropDownSelector = withStyles(styles)(FormDropDownSelectorTemplate);
 const FormCheckboxes = withStyles(styles)(FormCheckboxesTemplate);
 const FormSubmitButton = withStyles(styles)(FormSubmitButtonTemplate);
 const FormHeader = withStyles(styles)(FormHeaderTemplate);
 
-export {FormRadioButtons, FormHeader, FormCheckboxes, FormSubmitButton};
+export {
+  FormRadioButtons,
+  FormHeader,
+  FormCheckboxes,
+  FormSubmitButton,
+  FormDropDownSelector,
+};
