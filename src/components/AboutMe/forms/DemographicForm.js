@@ -240,54 +240,11 @@ DemographicForm.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
-    padding: '17px 30px 30px 30px',
+    padding: '0px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
   },
-  headerContainer: {
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: '10px',
-  },
-  sectionInfo: {
-    fontSize: '15px',
-    textIndent: '25px',
-    marginBottom: '15px',
-    marginTop: '10px',
-    textAlign: 'justify',
-  },
-  formControl: {
-    width: '95%',
-    marginTop: spacing(0),
-  },
-  resize: {
-    fontSize: 16,
-  },
-  labelRoot: {
-    fontSize: 17,
-  },
-  labelFocused: {
-    fontSize: 19,
-  },
-  formHeader: {
-    fontSize: '18px',
-    fontWeight: 'bold',
-  },
-  formHelperText: {
-    color: palette.error.main,
-    marginTop: '2px',
-    width: '95%',
-    marginBottom: spacing(1),
-  },
-  iconButton: {
-    flexBasis: '60px',
-    padding: spacing(0.5),
-    '&:hover': {
-      color: 'black',
-    },
-  },
+
   allRacesContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -306,17 +263,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     flexGrow: 1,
   },
-  dropdownContainer: {
-    marginTop: '10px',
-  },
-  dropdownSelector: {
-    textAlign: 'left',
-    width: '90px',
-  },
 
-  race: {
-    textAlign: 'left',
-  },
   genderAndPronounsContainer: {
     width: '100%',
     marginTop: spacing(2),
@@ -338,12 +285,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
       alignItems: 'flex-end',
       justifyContent: 'flex-start',
     },
-  },
-  inputLabel: {
-    textAlign: 'left',
-  },
-  submitButton: {
-    margin: '10px 20px 0px 0px',
   },
 });
 

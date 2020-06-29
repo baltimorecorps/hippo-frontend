@@ -251,6 +251,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginTop: '10px',
+    marginBottom: '7px',
   },
   descriptionsContainer: {
     marginBottom: '15px',

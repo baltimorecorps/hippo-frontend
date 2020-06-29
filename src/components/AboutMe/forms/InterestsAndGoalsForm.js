@@ -2,20 +2,10 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-
-import Button from '@material-ui/core/Button';
-
-import Typography from '@material-ui/core/Typography';
-
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 
 import {jobSearchStatus, yearsOfExperience} from '../defaultData';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
 
 import {
   FormHeader,
@@ -144,7 +134,7 @@ InterestsAndGoalsForm.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
-    padding: '17px 30px 10px 30px',
+    padding: '0px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
   },
