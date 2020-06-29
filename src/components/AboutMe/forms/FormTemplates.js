@@ -197,22 +197,30 @@ const FormTextFieldTemplate = ({
     autoComplete: 'off',
   };
   return (
-    <Grid item xs={6} lg={5} align="center">
-      <TextField
-        required
-        id={name}
-        label={label}
-        className={classes.formControl}
-        name={name}
-        value={value}
-        onChange={onChange}
-        InputLabelProps={inputLabelProps}
-        InputProps={inputProps}
-      />
-      <FormHelperText className={classes.formHelperText}>
-        {/* {errors.firstName_error || null} */}
-        {error || null}
-      </FormHelperText>
+    <Grid container style={{marginBottom: '10px'}} direction="column">
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.textFieldLabel}
+      >
+        {label}
+      </Typography>
+      <Grid item xs={8} sm={6} md={5} lg={4} align="center">
+        <TextField
+          required
+          id={name}
+          // label={label}
+          className={classes.formControl}
+          name={name}
+          value={value}
+          onChange={onChange}
+          InputLabelProps={inputLabelProps}
+          InputProps={inputProps}
+        />
+        <FormHelperText className={classes.formHelperText}>
+          {error || null}
+        </FormHelperText>
+      </Grid>
     </Grid>
   );
 };
@@ -312,8 +320,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexGrow: 1,
   },
   dropdownContainer: {
-    marginTop: '10px',
-    // alignSelf: 'flex-start',
+    margin: '10px 0',
   },
   dropdownSelector: {
     textAlign: 'left',
@@ -322,7 +329,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   radio: {
     width: '100%',
-    paddingLeft: '30px',
+    marginLeft: '20px',
   },
 
   race: {
@@ -344,7 +351,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    // flexDirection: 'column',
     width: '100%',
     marginBottom: '15px',
   },
@@ -364,7 +370,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   role: {
     width: '100%',
-    paddingLeft: '30px',
+    marginLeft: '20px',
+  },
+  textFieldLabel: {
+    color: 'grey',
+    textAlign: 'justify',
   },
 });
 

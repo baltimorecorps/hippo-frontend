@@ -36,7 +36,7 @@ const QATemplate1 = ({question, answer, classes}) => {
         </Typography>
       ) : (
         <Typography variant="body1" component="p" className={classes.answer}>
-          - Please answer
+          * Please answer *
         </Typography>
       )}
     </div>
@@ -63,7 +63,7 @@ const QATemplate2 = ({question, answers, classes}) => {
         ))
       ) : (
         <Typography variant="body1" component="p" className={classes.answer}>
-          - Please answer
+          * Please answer *
         </Typography>
       )}
     </div>
@@ -89,7 +89,7 @@ const QATemplate3 = ({question, answers, classes}) => {
         ))
       ) : (
         <Typography variant="body1" component="p" className={classes.answer}>
-          - Please answer
+          * Please answer *
         </Typography>
       )}
     </div>

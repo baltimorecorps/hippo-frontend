@@ -63,25 +63,13 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
   const submit = () => {
     values.email = values.email_primary.email;
-    // const {isError, err} = newProfileValidator(values);
     const {isError, err} = contactInfoValidator(values);
-    // console.log(err);
-    // if (isError) {
-    //   setErrors(err);
-    // } else {
-    //   handleSubmit(values);
-    //   onCloseForm();
-    // }
 
     setErrors(err);
 
     console.log(err);
     console.log(errors);
 
-    // if (isError) {
-    //   setErrors(err);
-    //   console.log(err);
-    //   console.log(errors);
     if (!isError) {
       console.log('submitted form');
       // handleSubmit(values);
@@ -103,8 +91,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   };
 
   // todo
-  // use MockData to test updating state with address fields
-  // form validation
   // testing
 
   return (
