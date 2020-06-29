@@ -260,6 +260,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: '16px',
     textIndent: '25px',
     textAlign: 'justify',
+    marginBottom: '5px',
   },
 
   formControl: {
