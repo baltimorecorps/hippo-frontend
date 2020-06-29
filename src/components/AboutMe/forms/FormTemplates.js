@@ -59,6 +59,7 @@ const FormRadioButtonsTemplate = ({
   onChange,
   name,
   ariaLabel,
+  error,
   classes,
 }) => {
   return (
@@ -84,6 +85,9 @@ const FormRadioButtonsTemplate = ({
             />
           ))}
         </RadioGroup>
+        <FormHelperText className={classes.formHelperText}>
+          {error || null}
+        </FormHelperText>
       </FormControl>
     </div>
   );
@@ -340,6 +344,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
+    // flexDirection: 'column',
     width: '100%',
     marginBottom: '15px',
   },

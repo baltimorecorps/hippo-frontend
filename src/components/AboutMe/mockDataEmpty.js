@@ -16,6 +16,7 @@ export default {
     is_primary: true,
     type: 'Personal',
   },
+  email: 'taylor@swift.com',
   phone_primary: '+1 (555) 555-9999',
   address: '',
   city: '',

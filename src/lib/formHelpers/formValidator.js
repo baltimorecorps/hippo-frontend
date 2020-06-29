@@ -280,7 +280,7 @@ const interviewScheduledValidator = values => {
 
   return {isError, err};
 };
-const aboutMeValidator = values => {
+const contactInfoValidator = values => {
   const {
     first_name,
     last_name,
@@ -290,9 +290,6 @@ const aboutMeValidator = values => {
     city,
     state,
     zip_code,
-    job_search_status,
-    years_exp,
-    interested_programs,
   } = values;
 
   let isError = false;
@@ -349,6 +346,14 @@ const aboutMeValidator = values => {
     err.zip_code_error = 'Invalid value. Please enter five-digit numbers only';
   }
 
+  return {isError, err};
+};
+const interestsAndGoalsValidator = values => {
+  const {job_search_status, years_exp, interested_programs} = values;
+
+  let isError = false;
+  let err = {};
+
   if (!job_search_status || job_search_status.length === 0) {
     isError = true;
     err.jobSearchStatus_error = 'Required';
@@ -356,27 +361,13 @@ const aboutMeValidator = values => {
 
   if (!years_exp || years_exp.length === 0) {
     isError = true;
-    err.years_exp_error = 'Required';
+    err.yearsExp_error = 'Required';
   }
 
   if (!interested_programs || interested_programs.length === 0) {
     isError = true;
     err.interestedPrograms_error = 'Required';
   }
-
-  // if (!interview_date || interview_date.length === 0) {
-  //   isError = true;
-  //   err.interviewDate_error = 'Required';
-  // } else if (interview_date.toString() === 'Invalid Date') {
-  //   isError = true;
-  // }
-
-  // if (!interview_time || interview_time.length === 0) {
-  //   isError = true;
-  //   err.interviewTime_error = 'Required';
-  // } else if (interview_time.toString() === 'Invalid Date') {
-  //   isError = true;
-  // }
 
   return {isError, err};
 };
@@ -387,5 +378,6 @@ export {
   opportunityValidator,
   interestValidator,
   interviewScheduledValidator,
-  aboutMeValidator,
+  contactInfoValidator,
+  interestsAndGoalsValidator,
 };

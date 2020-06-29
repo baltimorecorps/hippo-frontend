@@ -14,10 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import MuiPhoneNumber from 'material-ui-phone-number';
 
-import {
-  newProfileValidator,
-  aboutMeValidator,
-} from 'lib/formHelpers/formValidator';
+import {contactInfoValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
 import {states} from '../defaultData';
@@ -67,12 +64,27 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const submit = () => {
     values.email = values.email_primary.email;
     // const {isError, err} = newProfileValidator(values);
-    const {isError, err} = aboutMeValidator(values);
+    const {isError, err} = contactInfoValidator(values);
+    // console.log(err);
+    // if (isError) {
+    //   setErrors(err);
+    // } else {
+    //   handleSubmit(values);
+    //   onCloseForm();
+    // }
+
+    setErrors(err);
+
     console.log(err);
-    if (isError) {
-      setErrors(err);
-    } else {
-      handleSubmit(values);
+    console.log(errors);
+
+    // if (isError) {
+    //   setErrors(err);
+    //   console.log(err);
+    //   console.log(errors);
+    if (!isError) {
+      console.log('submitted form');
+      // handleSubmit(values);
       onCloseForm();
     }
   };
@@ -220,7 +232,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                     htmlFor="state"
                     className={classes.stateInputLabel}
                   >
-                    State
+                    State *
                   </InputLabel>
                   <Select
                     disabled={false}
