@@ -14,8 +14,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import BasicInfoDisplay from 'components/Users/BasicInfoDisplay';
-import BasicInfoForm from 'components/Users/BasicInfoForm';
+import ContactInfoDisplay from 'components/AboutMe/defaultDisplays/ContactInfoDisplay';
+import ContactInfoForm from 'components/AboutMe/forms/ContactInfoForm';
+import AboutMeForms from 'components/AboutMe/AboutMeForms';
+
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
@@ -29,6 +31,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import {ResumeViewer} from 'components/ResumeCreator';
+
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 
 import CAPABILITIES from './capabilities.yml';
 
@@ -155,7 +160,7 @@ const ProfilePage = ({
   // This page primarily serves as the top level container for the profile of
   // this person's employment-relevant experiences and skills.
   //
-  // The three main components it makes use of are BasicInfoDisplay,
+  // The three main components it makes use of are ContactInfoDisplay,
   // ExperiencesList, and SkillsList
 
   const onClickMoreDetails = header => {
@@ -344,22 +349,41 @@ const ProfilePage = ({
                       >
                         About Me
                       </Typography>
+                      {openForm ? (
+                        <IconButton
+                          edge="end"
+                          aria-label="cancel form"
+                          onMouseDown={() => setOpenForm(false)}
+                          className={classes.iconButton}
+                        >
+                          <CloseIcon />
+                        </IconButton>
+                      ) : (
+                        <div style={{height: '45px'}}></div>
+                      )}
                     </div>
                     <Grid container justify="center">
                       {openForm ? (
-                        <BasicInfoForm
+                        <AboutMeForms
                           contact={contactInfo}
                           onSubmit={handleUpdateContact}
-                          onCloseForm={() => setOpenForm(false)}
-                        />
-                      ) : (
-                        <BasicInfoDisplay
-                          firstName={contactInfo.first_name}
-                          lastName={contactInfo.last_name}
-                          email={email}
-                          phone={contactInfo.phone_primary}
+                          onCloseAllForms={() => setOpenForm(false)}
                           onClickEdit={() => setOpenForm(true)}
                         />
+                      ) : (
+                        <Grid container justify="center">
+                          <Grid item xs={12} md={9}>
+                            <div className={classes.extraPadding}>
+                              <ContactInfoDisplay
+                                firstName={contactInfo.first_name}
+                                lastName={contactInfo.last_name}
+                                email={email}
+                                phone={contactInfo.phone_primary}
+                                onClickEdit={() => setOpenForm(true)}
+                              />
+                            </div>
+                          </Grid>
+                        </Grid>
                       )}
                     </Grid>
                   </Paper>
@@ -691,9 +715,11 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     },
   },
   headerContainer: {
-    paddingBottom: spacing(2),
+    // paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   instructions: {
     padding: spacing(2, 3, 3),
@@ -757,6 +783,10 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
 
       marginBottom: '20px',
     },
+  },
+  extraPadding: {
+    width: '100%',
+    padding: '0px 30px 0px 30px',
   },
 });
 

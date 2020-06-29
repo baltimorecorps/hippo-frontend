@@ -17,47 +17,45 @@ const BasicInfoDisplay = ({
   classes,
 }) => {
   return (
-    <Grid container justify="center">
-      <Grid item xs={12} md={9}>
-        <Grid item xs={12} className={classes.justifyBetween}>
-          <Typography
-            variant="h6"
-            component="h3"
-            style={{
-              fontWeight: '600',
-            }}
-          >
-            {firstName} {lastName}
-          </Typography>
-          <IconButton
-            onClick={onClickEdit}
-            size="small"
-            aria-label="edit experience"
-          >
-            <EditIcon className={classes.editIcon} />
-          </IconButton>
-        </Grid>
-
+    <React.Fragment>
+      <Grid item xs={12} className={classes.justifyBetween}>
         <Typography
-          gutterBottom
-          variant="body1"
-          component="p"
-          style={{display: 'flex', alignItems: 'center'}}
+          variant="h6"
+          component="h3"
+          style={{
+            fontWeight: '600',
+          }}
         >
-          <Icon style={{marginRight: '5px'}}>mail</Icon>
-          {email}
+          {firstName} {lastName}
         </Typography>
-
-        <Typography
-          gutterBottom
-          variant="body1"
-          component="p"
-          style={{display: 'flex', alignItems: 'center'}}
+        <IconButton
+          onClick={onClickEdit}
+          size="small"
+          aria-label="edit experience"
         >
-          <Icon style={{marginRight: '5px'}}>phone</Icon> {phone}
-        </Typography>
+          <EditIcon className={classes.editIcon} />
+        </IconButton>
       </Grid>
-    </Grid>
+
+      <Typography
+        gutterBottom
+        variant="body1"
+        component="p"
+        style={{display: 'flex', alignItems: 'center'}}
+      >
+        <Icon style={{marginRight: '5px'}}>mail</Icon>
+        {email}
+      </Typography>
+
+      <Typography
+        gutterBottom
+        variant="body1"
+        component="p"
+        style={{display: 'flex', alignItems: 'center'}}
+      >
+        <Icon style={{marginRight: '5px'}}>phone</Icon> {phone}
+      </Typography>
+    </React.Fragment>
   );
 };
 
