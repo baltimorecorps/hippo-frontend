@@ -125,14 +125,14 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
+          <Typography
+            variant="body1"
+            component="p"
+            className={classes.question}
+          >
+            Race (select all that apply)
+          </Typography>
           <div className={classes.allRacesContainer}>
-            <Typography
-              variant="body1"
-              component="p"
-              className={classes.question}
-            >
-              Race (select all that apply)
-            </Typography>
             <div className={classes.raceGroupContainer}>
               {racesValuesGroupOne.map((race, index) => (
                 <FormControlLabel
@@ -255,11 +255,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
     color: '#000000',
     width: '100%',
     textAlign: 'left',
+    marginBottom: spacing(1),
   },
   raceGroupContainer: {
     display: 'flex',
     flexDirection: 'column',
     flexGrow: 1,
+  },
+  race: {
+    textAlign: 'left',
   },
 
   genderAndPronounsContainer: {
