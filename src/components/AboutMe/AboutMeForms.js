@@ -31,6 +31,8 @@ const AboutMeForms = ({
   const contact = mockDataEmpty;
   const email = contact.email_primary ? contact.email_primary.email : '';
 
+  const {address, city, state, zipcode} = contact;
+
   const [openForms, setOpenForms] = useState({
     contact_info: false,
     interests_goals: false,
@@ -62,10 +64,8 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <ContactInfoDisplay
-                firstName={contact.first_name}
-                lastName={contact.last_name}
-                email={email}
-                phone={contact.phone_primary}
+                contact={contact}
+                isOnEditMode={true}
                 onClickEdit={() =>
                   setOpenForms({...openForms, contact_info: true})
                 }

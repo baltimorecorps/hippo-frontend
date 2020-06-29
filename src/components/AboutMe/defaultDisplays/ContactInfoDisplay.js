@@ -7,15 +7,21 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+import HomeIcon from '@material-ui/icons/Home';
 
-const BasicInfoDisplay = ({
-  firstName,
-  lastName,
-  email,
-  phone,
-  onClickEdit,
-  classes,
-}) => {
+const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
+  const email = contact.email_primary ? contact.email_primary.email : '';
+  const {
+    first_name,
+    last_name,
+    phone_primary,
+    address,
+    city,
+    state,
+    zip_code,
+  } = contact;
+
+  const fullAddress = `${address}, ${city}, ${state} ${zip_code}`;
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
@@ -26,7 +32,7 @@ const BasicInfoDisplay = ({
             fontWeight: '600',
           }}
         >
-          {firstName} {lastName}
+          {first_name} {last_name}
         </Typography>
         <IconButton
           onClick={onClickEdit}
@@ -41,9 +47,9 @@ const BasicInfoDisplay = ({
         gutterBottom
         variant="body1"
         component="p"
-        style={{display: 'flex', alignItems: 'center'}}
+        className={classes.textInfo}
       >
-        <Icon style={{marginRight: '5px'}}>mail</Icon>
+        <Icon className={classes.homeIcon}>mail</Icon>
         {email}
       </Typography>
 
@@ -51,20 +57,41 @@ const BasicInfoDisplay = ({
         gutterBottom
         variant="body1"
         component="p"
-        style={{display: 'flex', alignItems: 'center'}}
+        className={classes.textInfo}
       >
-        <Icon style={{marginRight: '5px'}}>phone</Icon> {phone}
+        <Icon className={classes.icon}>phone</Icon> {phone_primary}
       </Typography>
+
+      {isOnEditMode ? (
+        address && fullAddress ? (
+          <Typography
+            gutterBottom
+            variant="body1"
+            component="p"
+            className={classes.textInfo}
+          >
+            <HomeIcon className={classes.homeIcon} />
+            {fullAddress}
+          </Typography>
+        ) : (
+          <Typography
+            gutterBottom
+            variant="body1"
+            component="p"
+            className={classes.textInfo}
+          >
+            <HomeIcon className={classes.homeIcon} />* Please Enter *
+          </Typography>
+        )
+      ) : null}
     </React.Fragment>
   );
 };
 
-BasicInfoDisplay.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-  email: PropTypes.string,
-  phone: PropTypes.string,
-  onClickEdit: PropTypes.func.isRequired,
+ContactInfoDisplay.propTypes = {
+  contact: PropTypes.object,
+  isOnEditMode: PropTypes.bool,
+  onClickEdit: PropTypes.func,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -72,6 +99,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: spacing(1),
   },
   editIcon: {
     flexBasis: '60px',
@@ -80,6 +108,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
       color: 'black',
     },
   },
+  homeIcon: {marginRight: '5px', fontSize: '30px'},
+  icon: {marginRight: '5px'},
+  textInfo: {display: 'flex', alignItems: 'center'},
 });
 
-export default withStyles(styles)(BasicInfoDisplay);
+export default withStyles(styles)(ContactInfoDisplay);
