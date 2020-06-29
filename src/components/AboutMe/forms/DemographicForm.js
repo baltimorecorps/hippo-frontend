@@ -241,6 +241,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     textAlign: 'left',
     marginBottom: spacing(1),
+    fontWeight: 'bold',
   },
   raceGroupContainer: {
     display: 'flex',

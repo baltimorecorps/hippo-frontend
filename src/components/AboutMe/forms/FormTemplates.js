@@ -119,7 +119,7 @@ const FormCheckboxesTemplate = ({
                 color="primary"
               />
             }
-            className={classes.role}
+            className={classes.checkbox}
             label={option.label}
           />
         ))}
@@ -329,12 +329,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   radio: {
     width: '100%',
-    marginLeft: '20px',
+    textAlign: 'left',
+
+    [breakpoints.up('sm')]: {
+      marginLeft: '20px',
+    },
   },
 
-  race: {
-    textAlign: 'left',
-  },
   genderAndPronounsContainer: {
     marginTop: spacing(2),
     display: 'flex',
@@ -358,6 +359,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     color: '#000000',
     width: '100%',
     textAlign: 'left',
+    fontWeight: 'bold',
+    fontSize: '15.5px',
+    marginBottom: spacing(1),
   },
 
   checkboxesContainer: {
@@ -368,9 +372,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     marginBottom: '15px',
   },
-  role: {
+  checkbox: {
     width: '100%',
-    marginLeft: '20px',
+    textAlign: 'left',
+    [breakpoints.up('sm')]: {
+      marginLeft: '20px',
+    },
   },
   textFieldLabel: {
     color: 'grey',
