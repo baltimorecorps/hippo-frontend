@@ -363,26 +363,28 @@ const ProfilePage = ({
                       )}
                     </div>
                     <Grid container justify="center">
-                      {/* {openForm ? ( */}
-                      <AboutMeForms
-                        contact={contactInfo}
-                        onSubmit={handleUpdateContact}
-                        onCloseAllForms={() => setOpenForm(false)}
-                        onClickEdit={() => setOpenForm(true)}
-                      />
-                      {/* ) : ( */}
-                      {/* <Grid container justify="center">
+                      {openForm ? (
+                        <AboutMeForms
+                          contact={contactInfo}
+                          onSubmit={handleUpdateContact}
+                          onCloseAllForms={() => setOpenForm(false)}
+                          onClickEdit={() => setOpenForm(true)}
+                        />
+                      ) : (
+                        <Grid container justify="center">
                           <Grid item xs={12} md={9}>
-                            <ContactInfoDisplay
-                              firstName={contactInfo.first_name}
-                              lastName={contactInfo.last_name}
-                              email={email}
-                              phone={contactInfo.phone_primary}
-                              onClickEdit={() => setOpenForm(true)}
-                            />
+                            <div className={classes.extraPadding}>
+                              <ContactInfoDisplay
+                                firstName={contactInfo.first_name}
+                                lastName={contactInfo.last_name}
+                                email={email}
+                                phone={contactInfo.phone_primary}
+                                onClickEdit={() => setOpenForm(true)}
+                              />
+                            </div>
                           </Grid>
                         </Grid>
-                      )} */}
+                      )}
                     </Grid>
                   </Paper>
                 </Grid>
@@ -781,6 +783,10 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
 
       marginBottom: '20px',
     },
+  },
+  extraPadding: {
+    width: '100%',
+    padding: '0px 30px 0px 30px',
   },
 });
 
