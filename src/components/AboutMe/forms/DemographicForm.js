@@ -218,9 +218,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
             </div>
           </div>
 
-          <Grid item xs={12} align="end" className={classes.submitButton}>
-            <FormSubmitButton onSubmit={submit} />
-          </Grid>
+          <FormSubmitButton onSubmit={submit} />
         </form>
       </Grid>
     </Grid>
