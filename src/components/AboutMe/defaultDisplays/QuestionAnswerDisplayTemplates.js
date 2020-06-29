@@ -30,9 +30,15 @@ const QATemplate1 = ({question, answer, classes}) => {
         {question}
       </Typography>
 
-      <Typography variant="body1" component="p" className={classes.answer}>
-        - {answer}
-      </Typography>
+      {answer && answer.length > 0 ? (
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - {answer}
+        </Typography>
+      ) : (
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Please answer
+        </Typography>
+      )}
     </div>
   );
 };
@@ -44,16 +50,22 @@ const QATemplate2 = ({question, answers, classes}) => {
         {question}
       </Typography>
 
-      {answers.map((answer, index) => (
-        <Typography
-          key={index}
-          variant="body1"
-          component="p"
-          className={classes.answer}
-        >
-          - {answer.label}
+      {answers && answers.length > 0 ? (
+        answers.map((answer, index) => (
+          <Typography
+            key={index}
+            variant="body1"
+            component="p"
+            className={classes.answer}
+          >
+            - {answer.label}
+          </Typography>
+        ))
+      ) : (
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Please answer
         </Typography>
-      ))}
+      )}
     </div>
   );
 };
@@ -64,16 +76,22 @@ const QATemplate3 = ({question, answers, classes}) => {
         {question}
       </Typography>
 
-      {answers.map((answer, index) => (
-        <Typography
-          key={index}
-          variant="body1"
-          component="p"
-          className={classes.answer}
-        >
-          - {answer[1]}
+      {answers && answers.length > 0 ? (
+        answers.map((answer, index) => (
+          <Typography
+            key={index}
+            variant="body1"
+            component="p"
+            className={classes.answer}
+          >
+            - {answer[1]}
+          </Typography>
+        ))
+      ) : (
+        <Typography variant="body1" component="p" className={classes.answer}>
+          - Please answer
         </Typography>
-      ))}
+      )}
     </div>
   );
 };

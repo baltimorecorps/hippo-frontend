@@ -18,6 +18,7 @@ import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm';
 import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
 
 import mockData from './mockData';
+import mockDataEmpty from './mockDataEmpty';
 
 const AboutMeForms = ({
   // contact,
@@ -26,7 +27,8 @@ const AboutMeForms = ({
   onClickEdit,
   classes,
 }) => {
-  const contact = mockData;
+  // const contact = mockData;
+  const contact = mockDataEmpty;
   const email = contact.email_primary ? contact.email_primary.email : '';
 
   const [openForms, setOpenForms] = useState({

@@ -363,14 +363,14 @@ const ProfilePage = ({
                       )}
                     </div>
                     <Grid container justify="center">
-                      {openForm ? (
-                        <AboutMeForms
-                          contact={contactInfo}
-                          onSubmit={handleUpdateContact}
-                          onCloseAllForms={() => setOpenForm(false)}
-                          onClickEdit={() => setOpenForm(true)}
-                        />
-                      ) : (
+                      {/* {openForm ? ( */}
+                      <AboutMeForms
+                        contact={contactInfo}
+                        onSubmit={handleUpdateContact}
+                        onCloseAllForms={() => setOpenForm(false)}
+                        onClickEdit={() => setOpenForm(true)}
+                      />
+                      {/* ) : (
                         <Grid container justify="center">
                           <Grid item xs={12} md={9}>
                             <div className={classes.extraPadding}>
@@ -384,7 +384,7 @@ const ProfilePage = ({
                             </div>
                           </Grid>
                         </Grid>
-                      )}
+                      )} */}
                     </Grid>
                   </Paper>
                 </Grid>
