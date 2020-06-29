@@ -177,7 +177,7 @@ const FormTextFieldTemplate = ({
   name,
   label,
   onChange,
-  errors,
+  error,
   classes,
 }) => {
   const inputLabelProps = {
@@ -206,7 +206,8 @@ const FormTextFieldTemplate = ({
         InputProps={inputProps}
       />
       <FormHelperText className={classes.formHelperText}>
-        {errors.firstName_error || null}
+        {/* {errors.firstName_error || null} */}
+        {error || null}
       </FormHelperText>
     </Grid>
   );
