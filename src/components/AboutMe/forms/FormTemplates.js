@@ -14,6 +14,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
 
 import IconButton from '@material-ui/core/IconButton';
 
@@ -35,17 +36,18 @@ const FormHeaderTemplate = ({header, descriptions, onCloseForm, classes}) => {
           </IconButton>
         </Grid>
       </div>
-
-      {descriptions.map((description, index) => (
-        <Typography
-          key={index}
-          variant="body1"
-          component="p"
-          className={classes.sectionInfo}
-        >
-          {description}
-        </Typography>
-      ))}
+      <div className={classes.descriptionsContainer}>
+        {descriptions.map((description, index) => (
+          <Typography
+            key={index}
+            variant="body1"
+            component="p"
+            className={classes.sectionInfo}
+          >
+            {description}
+          </Typography>
+        ))}
+      </div>
     </React.Fragment>
   );
 };
@@ -96,9 +98,11 @@ const FormCheckboxesTemplate = ({
 }) => {
   return (
     <React.Fragment>
-      <Typography variant="body1" component="p" className={classes.question}>
-        {question}
-      </Typography>
+      {question && (
+        <Typography variant="body1" component="p" className={classes.question}>
+          {question}
+        </Typography>
+      )}
       <div className={classes.checkboxesContainer}>
         {options.map((option, index) => (
           <FormControlLabel
@@ -168,6 +172,45 @@ const FormDropDownSelectorTemplate = ({
     </div>
   );
 };
+const FormTextFieldTemplate = ({
+  value,
+  name,
+  label,
+  onChange,
+  errors,
+  classes,
+}) => {
+  const inputLabelProps = {
+    classes: {
+      root: classes.labelRoot,
+      focused: classes.labelFocused,
+    },
+    shrink: true,
+  };
+
+  const inputProps = {
+    classes: {input: classes.resize},
+    autoComplete: 'off',
+  };
+  return (
+    <Grid item xs={6} lg={5} align="center">
+      <TextField
+        required
+        id={name}
+        label={label}
+        className={classes.formControl}
+        name={name}
+        value={value}
+        onChange={onChange}
+        InputLabelProps={inputLabelProps}
+        InputProps={inputProps}
+      />
+      <FormHelperText className={classes.formHelperText}>
+        {errors.firstName_error || null}
+      </FormHelperText>
+    </Grid>
+  );
+};
 
 FormHeaderTemplate.propTypes = {
   header: PropTypes.string,
@@ -188,6 +231,13 @@ FormRadioButtonsTemplate.propTypes = {
 FormSubmitButtonTemplate.propTypes = {
   onSubmit: PropTypes.func,
 };
+FormTextFieldTemplate.propTypes = {
+  value: PropTypes.string,
+  name: PropTypes.string,
+  label: PropTypes.string,
+  onChange: PropTypes.func,
+  errors: PropTypes.object,
+};
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
@@ -202,12 +252,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'space-between',
     marginTop: '10px',
   },
+  descriptionsContainer: {
+    marginBottom: '15px',
+  },
   sectionInfo: {
     fontSize: '16px',
     textIndent: '25px',
-    marginBottom: '15px',
-    marginTop: '10px',
+    textAlign: 'justify',
   },
+
   formControl: {
     width: '95%',
     marginTop: spacing(0),
@@ -289,7 +342,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   question: {
     color: '#000000',
-    // left: '20px',
     width: '100%',
     textAlign: 'left',
   },
@@ -313,6 +365,7 @@ const FormDropDownSelector = withStyles(styles)(FormDropDownSelectorTemplate);
 const FormCheckboxes = withStyles(styles)(FormCheckboxesTemplate);
 const FormSubmitButton = withStyles(styles)(FormSubmitButtonTemplate);
 const FormHeader = withStyles(styles)(FormHeaderTemplate);
+const FormTextField = withStyles(styles)(FormTextFieldTemplate);
 
 export {
   FormRadioButtons,
@@ -320,4 +373,5 @@ export {
   FormCheckboxes,
   FormSubmitButton,
   FormDropDownSelector,
+  FormTextField,
 };

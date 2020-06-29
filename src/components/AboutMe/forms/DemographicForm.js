@@ -2,22 +2,21 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-
-import Button from '@material-ui/core/Button';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Typography from '@material-ui/core/Typography';
 
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
 
 import {genders, pronouns} from '../defaultData';
 
-import {FormHeader, FormDropDownSelector} from './FormTemplates';
+import {
+  FormHeader,
+  FormDropDownSelector,
+  FormTextField,
+  FormSubmitButton,
+} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -109,26 +108,12 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
   // todo
 
-  // display a textfield when user checks or selects Not Listed option
   // Refactor
   // form validation
   // testing
   const descriptions = [
     ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
   ];
-
-  const inputLabelProps = {
-    classes: {
-      root: classes.labelRoot,
-      focused: classes.labelFocused,
-    },
-    shrink: true,
-  };
-
-  const inputProps = {
-    classes: {input: classes.resize},
-    autoComplete: 'off',
-  };
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -141,6 +126,13 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
           <div className={classes.allRacesContainer}>
+            <Typography
+              variant="body1"
+              component="p"
+              className={classes.question}
+            >
+              Race (select all that apply)
+            </Typography>
             <div className={classes.raceGroupContainer}>
               {racesValuesGroupOne.map((race, index) => (
                 <FormControlLabel
@@ -175,22 +167,13 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 />
               ))}
               {values.race.notListed[0] && (
-                <Grid item xs={6} lg={6} align="center">
-                  <TextField
-                    required
-                    id="other_race"
-                    label="Other Race"
-                    className={classes.formControl}
-                    name="other_race"
-                    value={values.race.other_race}
-                    onChange={handleRaceOther}
-                    InputLabelProps={inputLabelProps}
-                    InputProps={inputProps}
-                  />
-                  <FormHelperText className={classes.formHelperText}>
-                    {errors.firstName_error || null}
-                  </FormHelperText>
-                </Grid>
+                <FormTextField
+                  value={values.other_race}
+                  name="other_race"
+                  label="Other Race"
+                  onChange={handleRaceOther}
+                  errors={errors}
+                />
               )}
             </div>
           </div>
@@ -205,24 +188,13 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
               />
 
               {values.gender === 'Not Listed' && (
-                <Grid item xs={6} lg={5} align="center">
-                  {/* <React.Fragment> */}
-                  <TextField
-                    required
-                    id="other_gender"
-                    label="Other Gender"
-                    className={classes.formControl}
-                    name="other_gender"
-                    value={values.other_gender}
-                    onChange={handleChange}
-                    InputLabelProps={inputLabelProps}
-                    InputProps={inputProps}
-                  />
-                  <FormHelperText className={classes.formHelperText}>
-                    {errors.firstName_error || null}
-                  </FormHelperText>
-                  {/* </React.Fragment> */}
-                </Grid>
+                <FormTextField
+                  value={values.other_gender}
+                  name="other_gender"
+                  label="Other Gender"
+                  onChange={handleChange}
+                  errors={errors}
+                />
               )}
             </div>
             <div className={classes.dropdownAndTextfieldContainer}>
@@ -235,39 +207,20 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
               />
 
               {values.pronoun === 'Not Listed' && (
-                <Grid item xs={6} lg={5} align="center">
-                  <React.Fragment>
-                    <TextField
-                      required
-                      id="other_pronoun"
-                      label="Other Pronoun"
-                      className={classes.formControl}
-                      name="other_pronoun"
-                      value={values.other_pronoun}
-                      onChange={handleChange}
-                      InputLabelProps={inputLabelProps}
-                      InputProps={inputProps}
-                    />
-                    <FormHelperText className={classes.formHelperText}>
-                      {errors.firstName_error || null}
-                    </FormHelperText>
-                  </React.Fragment>
-                </Grid>
+                <FormTextField
+                  value={values.other_pronoun}
+                  name="other_pronoun"
+                  label="Other Pronoun"
+                  onChange={handleChange}
+                  errors={errors}
+                />
               )}
             </div>
           </div>
 
           <Grid item xs={12} align="end" className={classes.submitButton}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={submit}
-              align="end"
-            >
-              Save
-            </Button>
+            <FormSubmitButton onSubmit={submit} />
           </Grid>
-          {/* </Grid> */}
         </form>
       </Grid>
     </Grid>
@@ -303,6 +256,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     textIndent: '25px',
     marginBottom: '15px',
     marginTop: '10px',
+    textAlign: 'justify',
   },
   formControl: {
     width: '95%',
@@ -342,6 +296,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
       flexDirection: 'row',
     },
   },
+  question: {
+    color: '#000000',
+    width: '100%',
+    textAlign: 'left',
+  },
   raceGroupContainer: {
     display: 'flex',
     flexDirection: 'column',
@@ -349,7 +308,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   dropdownContainer: {
     marginTop: '10px',
-    // alignSelf: 'flex-start',
   },
   dropdownSelector: {
     textAlign: 'left',
