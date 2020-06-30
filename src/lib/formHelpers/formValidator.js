@@ -337,13 +337,13 @@ const contactInfoValidator = values => {
 
   if (!zip_code || zip_code.length === 0) {
     isError = true;
-    err.zip_code_error = 'Required';
+    err.zipCode_error = 'Required';
   } else if (!isNumeric(zip_code)) {
     isError = true;
-    err.zip_code_error = 'Invalid value. Please enter numbers only';
+    err.zipCode_error = 'Invalid value. Please enter numbers only';
   } else if (zip_code.length !== 5) {
     isError = true;
-    err.zip_code_error = 'Invalid value. Please enter five-digit numbers only';
+    err.zipCode_error = 'Invalid value. Please enter five-digit numbers only';
   }
 
   return {isError, err};
