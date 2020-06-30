@@ -109,55 +109,32 @@ describe('About Me: Contact Info Form', () => {
   });
 });
 
-// describe('About Me: Interest and Goals Form', () => {
-//   test('Interest and Goals Validator: empty values ', () => {
-//     const values = {
-//       job_search_status: '',
-//       years_exp: '',
-//       interested_programs: '',
-//     };
-//     let expectedErr = {
-//       jobSearchStatus_error: 'Required',
-//       yearsExp_error: 'Required',
-//       interestedPrograms_error: 'Required',
-//     };
-//     let {isError, err} = interestsAndGoalsValidator(values);
+describe('About Me: Interest and Goals Form', () => {
+  test('Interest and Goals Validator: empty values ', () => {
+    const values = {
+      job_search_status: '',
+      years_exp: '',
+    };
+    let expectedErr = {
+      jobSearchStatus_error: 'Required',
+      yearsExp_error: 'Required',
+    };
+    let {isError, err} = interestsAndGoalsValidator(values);
 
-//     expect(isError).toBe(true);
-//     expect(err).toEqual(expectedErr);
-//   });
+    expect(isError).toBe(true);
+    expect(err).toEqual(expectedErr);
+  });
 
-//   test('Interest and Goals Validator: empty values ', () => {
-//     const values = {
-//       job_search_status: 'Actively looking for a job',
-//       years_exp: '0-2 years',
-//       interested_programs: '',
-//     };
-//     let expectedErr = {
-//       jobSearchStatus_error: 'Required',
-//       yearsExp_error: 'Required',
-//       interestedPrograms_error: 'Required',
-//     };
-//     let {isError, err} = interestsAndGoalsValidator(values);
+  test('Interest and Goals Validator: empty values ', () => {
+    const values = {
+      job_search_status: 'Actively looking for a job',
+      years_exp: '0-2 years',
+    };
+    let expectedErr = {};
+    let {isError, err} = interestsAndGoalsValidator(values);
 
-//     expect(isError).toBe(true);
-//     expect(err).toEqual(expectedErr);
-//   });
-
-//   test('Interest and Goals Validator: empty values', () => {
-//     const values = {
-//         job_search_status: 'Bay',
-//       last_name: 'C',
-//       email: 'email@gmail.com',
-
-//     };
-//     const expectedErr = {
-//       phonePrimary_error: 'Required',
-//     };
-
-//     const {isError, err} = interestsAndGoalsValidator(values);
-
-//     expect(isError).toBe(true);
-//     expect(err).toEqual(expectedErr);
-//   });
-// });
+    console.log(err);
+    expect(isError).toBe(false);
+    expect(err).toEqual(expectedErr);
+  });
+});

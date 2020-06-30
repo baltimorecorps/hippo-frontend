@@ -349,7 +349,7 @@ const contactInfoValidator = values => {
   return {isError, err};
 };
 const interestsAndGoalsValidator = values => {
-  const {job_search_status, years_exp, interested_programs} = values;
+  const {job_search_status, years_exp} = values;
 
   let isError = false;
   let err = {};
@@ -363,6 +363,14 @@ const interestsAndGoalsValidator = values => {
     isError = true;
     err.yearsExp_error = 'Required';
   }
+
+  return {isError, err};
+};
+const interestedProgramsValidator = values => {
+  const {interested_programs} = values;
+
+  let isError = false;
+  let err = {};
 
   if (!interested_programs || interested_programs.length === 0) {
     isError = true;
@@ -380,4 +388,5 @@ export {
   interviewScheduledValidator,
   contactInfoValidator,
   interestsAndGoalsValidator,
+  interestedProgramsValidator,
 };
