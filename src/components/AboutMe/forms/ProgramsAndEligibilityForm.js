@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {newProfileValidator} from 'lib/formHelpers/formValidator';
+import {programsAndEligibilityValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
 import {FormHeader, FormCheckboxes, FormSubmitButton} from './FormTemplates';
@@ -46,12 +46,12 @@ const ProgramsAndEligibilityForm = ({
   const [errors, setErrors] = useState({});
 
   const submit = () => {
-    const {isError, err} = newProfileValidator(values);
+    const {isError, err} = programsAndEligibilityValidator(values);
+    setErrors(err);
 
-    if (isError) {
-      setErrors(err);
-    } else {
-      handleSubmit(values);
+    if (!isError) {
+      console.log('submitted form');
+      // handleSubmit(values);
       onCloseForm();
     }
   };
@@ -59,7 +59,6 @@ const ProgramsAndEligibilityForm = ({
   const programsKeys = Object.keys(values.interested_programs);
 
   // todo
-  // form validation
   // testing
 
   const descriptions = [
@@ -78,10 +77,11 @@ const ProgramsAndEligibilityForm = ({
         <form noValidate autoComplete="off">
           <div className={classes.interestedRolesContainer}>
             <FormCheckboxes
-              question="Which of the following programs and services are you interested in? (select all that apply)"
+              question="Which of the following programs and services are you interested in? (select all that apply) *"
               names={programsKeys}
               options={Object.values(values.interested_programs)}
               onChange={handleInterestedProgramsChange}
+              error={errors.interestedPrograms_error}
             />
           </div>
           <FormSubmitButton onSubmit={submit} />

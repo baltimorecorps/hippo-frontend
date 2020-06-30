@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {newProfileValidator} from 'lib/formHelpers/formValidator';
+import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
 import {jobSearchStatus, yearsOfExperience} from '../defaultData';
@@ -51,15 +51,17 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [errors, setErrors] = useState({});
 
   const submit = () => {
-    // const {isError, err} = newProfileValidator(values);
+    const {isError, err} = interestsAndGoalsValidator(values);
+    setErrors(err);
 
-    console.log('submitted form');
-    // if (isError) {
-    //   setErrors(err);
-    // } else {
-    //   handleSubmit(values);
-    //   onCloseForm();
-    // }
+    console.log(err);
+    console.log(errors);
+
+    if (!isError) {
+      console.log('submitted form');
+      // handleSubmit(values);
+      onCloseForm();
+    }
   };
 
   // todo
@@ -82,21 +84,23 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
           <FormRadioButtons
-            question="What is the status of your job search?"
+            question="What is the status of your job search? *"
             value={values.job_search_status}
             onChange={handleChange}
             options={jobSearchStatus}
             name="job_search_status"
             ariaLabel="Job search status"
+            error={errors.jobSearchStatus_error}
           />
 
           <FormRadioButtons
-            question="How many years of professional experience (internships, advocacy, employed etc.) do you have?"
+            question="How many years of professional experience (internships, advocacy, employed etc.) do you have? *"
             value={values.years_exp}
             onChange={handleChange}
             options={yearsOfExperience}
             name="years_exp"
             ariaLabel="Years of experience"
+            error={errors.yearsExp_error}
           />
 
           <FormCheckboxes

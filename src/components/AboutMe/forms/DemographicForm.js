@@ -35,6 +35,7 @@ const useForm = (initialValues, onSubmit) => {
     // },
     handleRacesChange: event => {
       event.persist();
+      console.log(event.target.name);
       const newValue = {
         ...values.race,
         [event.target.name]: [
@@ -69,8 +70,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
   // const {demographic} = values;
   const racesKeys = Object.keys(values.race);
-  const racesValuesGroupOne = Object.values(values.race).slice(0, 4);
-  const racesValuesGroupTwo = Object.values(values.race).slice(4, 8);
+  const races = Object.values(values.race).slice(0, -1);
 
   // const handleRacesCheckbox = event => {
   //   event.persist();
@@ -132,50 +132,33 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
           >
             Race (select all that apply)
           </Typography>
-          <div className={classes.allRacesContainer}>
-            <div className={classes.raceGroupContainer}>
-              {racesValuesGroupOne.map((race, index) => (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={race[0]}
-                      onChange={handleRacesChange}
-                      name={racesKeys[index]}
-                      color="primary"
-                    />
-                  }
-                  className={classes.race}
-                  label={race[1]}
-                />
-              ))}
-            </div>
-            <div className={classes.raceGroupContainer}>
-              {racesValuesGroupTwo.map((race, index) => (
-                <FormControlLabel
-                  key={index}
-                  control={
-                    <Checkbox
-                      checked={race[0]}
-                      onChange={handleRacesChange}
-                      name={racesKeys[index + 4]}
-                      color="primary"
-                    />
-                  }
-                  className={classes.race}
-                  label={race[1]}
-                />
-              ))}
-              {values.race.notListed[0] && (
+          <div className={classes.raceGroupContainer}>
+            {races.map((race, index) => (
+              <FormControlLabel
+                key={index}
+                control={
+                  <Checkbox
+                    checked={race[0]}
+                    onChange={handleRacesChange}
+                    name={racesKeys[index]}
+                    color="primary"
+                  />
+                }
+                className={classes.race}
+                label={race[1]}
+              />
+            ))}
+            {values.race.notListed[0] && (
+              <div className={classes.otherRace}>
                 <FormTextField
                   value={values.other_race}
                   name="other_race"
-                  label="Other Race"
+                  label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
                   onChange={handleRaceOther}
                   errors={errors}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
           <div className={classes.genderAndPronounsContainer}>
             <div className={classes.dropdownAndTextfieldContainer}>
@@ -191,7 +174,8 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 <FormTextField
                   value={values.other_gender}
                   name="other_gender"
-                  label="Other Gender"
+                  // label="Other Gender"
+                  label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
                   onChange={handleChange}
                   errors={errors}
                 />
@@ -210,7 +194,8 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 <FormTextField
                   value={values.other_pronoun}
                   name="other_pronoun"
-                  label="Other Pronoun"
+                  // label="Other Pronoun"
+                  label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
                   onChange={handleChange}
                   errors={errors}
                 />
@@ -256,6 +241,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     textAlign: 'left',
     marginBottom: spacing(1),
+    fontWeight: 'bold',
   },
   raceGroupContainer: {
     display: 'flex',
@@ -264,6 +250,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   race: {
     textAlign: 'left',
+    [breakpoints.up('sm')]: {
+      marginLeft: '20px',
+    },
   },
 
   genderAndPronounsContainer: {
@@ -276,16 +265,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   dropdownAndTextfieldContainer: {
     width: '100%',
-
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
     margin: 0,
+  },
+  otherRace: {
+    marginLeft: '0px',
+
     [breakpoints.up('sm')]: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-      justifyContent: 'flex-start',
+      marginLeft: '60px',
     },
   },
 });

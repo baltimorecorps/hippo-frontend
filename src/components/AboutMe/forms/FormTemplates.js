@@ -59,6 +59,7 @@ const FormRadioButtonsTemplate = ({
   onChange,
   name,
   ariaLabel,
+  error,
   classes,
 }) => {
   return (
@@ -84,6 +85,9 @@ const FormRadioButtonsTemplate = ({
             />
           ))}
         </RadioGroup>
+        <FormHelperText className={classes.formHelperText}>
+          {error || null}
+        </FormHelperText>
       </FormControl>
     </div>
   );
@@ -94,6 +98,7 @@ const FormCheckboxesTemplate = ({
   options,
   onChange,
   names,
+  error,
   classes,
 }) => {
   return (
@@ -115,11 +120,14 @@ const FormCheckboxesTemplate = ({
                 color="primary"
               />
             }
-            className={classes.role}
+            className={classes.checkbox}
             label={option.label}
           />
         ))}
       </div>
+      <FormHelperText className={classes.formHelperText}>
+        {error || null}
+      </FormHelperText>
     </React.Fragment>
   );
 };
@@ -177,7 +185,7 @@ const FormTextFieldTemplate = ({
   name,
   label,
   onChange,
-  errors,
+  error,
   classes,
 }) => {
   const inputLabelProps = {
@@ -193,21 +201,30 @@ const FormTextFieldTemplate = ({
     autoComplete: 'off',
   };
   return (
-    <Grid item xs={6} lg={5} align="center">
-      <TextField
-        required
-        id={name}
-        label={label}
-        className={classes.formControl}
-        name={name}
-        value={value}
-        onChange={onChange}
-        InputLabelProps={inputLabelProps}
-        InputProps={inputProps}
-      />
-      <FormHelperText className={classes.formHelperText}>
-        {errors.firstName_error || null}
-      </FormHelperText>
+    <Grid container style={{marginBottom: '10px'}} direction="column">
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.textFieldLabel}
+      >
+        {label}
+      </Typography>
+      <Grid item xs={8} sm={6} md={5} lg={4} align="center">
+        <TextField
+          required
+          id={name}
+          // label={label}
+          className={classes.formControl}
+          name={name}
+          value={value}
+          onChange={onChange}
+          InputLabelProps={inputLabelProps}
+          InputProps={inputProps}
+        />
+        <FormHelperText className={classes.formHelperText}>
+          {error || null}
+        </FormHelperText>
+      </Grid>
     </Grid>
   );
 };
@@ -307,8 +324,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexGrow: 1,
   },
   dropdownContainer: {
-    marginTop: '10px',
-    // alignSelf: 'flex-start',
+    margin: '10px 0',
   },
   dropdownSelector: {
     textAlign: 'left',
@@ -317,12 +333,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   radio: {
     width: '100%',
-    paddingLeft: '30px',
+    textAlign: 'left',
+
+    [breakpoints.up('sm')]: {
+      marginLeft: '20px',
+    },
   },
 
-  race: {
-    textAlign: 'left',
-  },
   genderAndPronounsContainer: {
     marginTop: spacing(2),
     display: 'flex',
@@ -346,6 +363,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     color: '#000000',
     width: '100%',
     textAlign: 'left',
+    fontWeight: 'bold',
+    fontSize: '15.5px',
+    marginBottom: spacing(1),
   },
 
   checkboxesContainer: {
@@ -356,9 +376,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     marginBottom: '15px',
   },
-  role: {
+  checkbox: {
     width: '100%',
-    paddingLeft: '30px',
+    textAlign: 'left',
+    [breakpoints.up('sm')]: {
+      marginLeft: '20px',
+    },
+  },
+  textFieldLabel: {
+    color: 'grey',
+    textAlign: 'justify',
   },
 });
 

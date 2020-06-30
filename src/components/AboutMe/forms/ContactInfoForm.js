@@ -14,7 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import MuiPhoneNumber from 'material-ui-phone-number';
 
-import {newProfileValidator} from 'lib/formHelpers/formValidator';
+import {contactInfoValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
 import {states} from '../defaultData';
@@ -63,12 +63,16 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
   const submit = () => {
     values.email = values.email_primary.email;
-    const {isError, err} = newProfileValidator(values);
+    const {isError, err} = contactInfoValidator(values);
 
-    if (isError) {
-      setErrors(err);
-    } else {
-      handleSubmit(values);
+    setErrors(err);
+
+    console.log(err);
+    console.log(errors);
+
+    if (!isError) {
+      console.log('submitted form');
+      // handleSubmit(values);
       onCloseForm();
     }
   };
@@ -87,8 +91,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   };
 
   // todo
-  // use MockData to test updating state with address fields
-  // form validation
   // testing
 
   return (
@@ -184,7 +186,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 InputProps={inputProps}
               />
               <FormHelperText className={classes.formHelperText}>
-                {errors.firstName_error || null}
+                {errors.address_error || null}
               </FormHelperText>
             </Grid>
             <Grid
@@ -207,7 +209,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   InputProps={inputProps}
                 />
                 <FormHelperText className={classes.formHelperText}>
-                  {errors.firstName_error || null}
+                  {errors.city_error || null}
                 </FormHelperText>
               </div>
               <div className={classes.StateAndZipCodeContainer}>
@@ -216,7 +218,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                     htmlFor="state"
                     className={classes.stateInputLabel}
                   >
-                    State
+                    State *
                   </InputLabel>
                   <Select
                     disabled={false}
@@ -238,7 +240,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                     ))}
                   </Select>
                   <FormHelperText className={classes.formHelperText}>
-                    {errors.firstName_error || null}
+                    {errors.state_error || null}
                   </FormHelperText>
                 </div>
                 <div className={classes.zipCodeContainer}>
@@ -254,7 +256,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                     InputProps={inputProps}
                   />
                   <FormHelperText className={classes.formHelperText}>
-                    {errors.firstName_error || null}
+                    {errors.zip_code_error || null}
                   </FormHelperText>
                 </div>
               </div>

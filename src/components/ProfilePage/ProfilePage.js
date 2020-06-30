@@ -375,10 +375,8 @@ const ProfilePage = ({
                           <Grid item xs={12} md={9}>
                             <div className={classes.extraPadding}>
                               <ContactInfoDisplay
-                                firstName={contactInfo.first_name}
-                                lastName={contactInfo.last_name}
-                                email={email}
-                                phone={contactInfo.phone_primary}
+                                contact={contactInfo}
+                                isOnEditMode={openForm}
                                 onClickEdit={() => setOpenForm(true)}
                               />
                             </div>
