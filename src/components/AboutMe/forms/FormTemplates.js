@@ -98,6 +98,7 @@ const FormCheckboxesTemplate = ({
   options,
   onChange,
   names,
+  error,
   classes,
 }) => {
   return (
@@ -124,6 +125,9 @@ const FormCheckboxesTemplate = ({
           />
         ))}
       </div>
+      <FormHelperText className={classes.formHelperText}>
+        {error || null}
+      </FormHelperText>
     </React.Fragment>
   );
 };

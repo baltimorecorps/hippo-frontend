@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {
   contactInfoValidator,
   interestsAndGoalsValidator,
+  programsAndEligibilityValidator,
 } from './formValidator';
 
 afterEach(cleanup);
@@ -132,6 +133,33 @@ describe('About Me: Interest and Goals Form', () => {
     };
     let expectedErr = {};
     let {isError, err} = interestsAndGoalsValidator(values);
+
+    console.log(err);
+    expect(isError).toBe(false);
+    expect(err).toEqual(expectedErr);
+  });
+});
+
+describe('About Me: Programs and Eligibility Form', () => {
+  test('Programs and Eligibility Validator: empty values ', () => {
+    const values = {
+      interested_programs: '',
+    };
+    let expectedErr = {
+      interestedPrograms_error: 'Required',
+    };
+    let {isError, err} = programsAndEligibilityValidator(values);
+
+    expect(isError).toBe(true);
+    expect(err).toEqual(expectedErr);
+  });
+
+  test('Programs and Eligibility Validator: empty values ', () => {
+    const values = {
+      interested_programs: 'Actively looking for a job',
+    };
+    let expectedErr = {};
+    let {isError, err} = programsAndEligibilityValidator(values);
 
     console.log(err);
     expect(isError).toBe(false);

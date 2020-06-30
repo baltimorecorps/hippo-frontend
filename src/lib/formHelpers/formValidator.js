@@ -366,13 +366,18 @@ const interestsAndGoalsValidator = values => {
 
   return {isError, err};
 };
-const interestedProgramsValidator = values => {
+const programsAndEligibilityValidator = values => {
   const {interested_programs} = values;
+  console.log(interested_programs);
+
+  const allValues = Object.values(interested_programs).map(
+    program => program.checked
+  );
 
   let isError = false;
   let err = {};
 
-  if (!interested_programs || interested_programs.length === 0) {
+  if (!allValues.includes(true)) {
     isError = true;
     err.interestedPrograms_error = 'Required';
   }
@@ -388,5 +393,5 @@ export {
   interviewScheduledValidator,
   contactInfoValidator,
   interestsAndGoalsValidator,
-  interestedProgramsValidator,
+  programsAndEligibilityValidator,
 };
