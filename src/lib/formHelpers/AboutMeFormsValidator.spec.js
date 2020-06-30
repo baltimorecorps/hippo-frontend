@@ -143,7 +143,22 @@ describe('About Me: Interest and Goals Form', () => {
 describe('About Me: Programs and Eligibility Form', () => {
   test('Programs and Eligibility Validator: empty values ', () => {
     const values = {
-      interested_programs: '',
+      interested_programs: {
+        BaltimoreCorpsFellowship: {
+          checked: false,
+          label: 'Baltimore Corps Fellowship',
+        },
+        JHUCareyHumanitiesFellowship: {
+          checked: false,
+          label: 'JHU Carey Humanities Fellowship',
+        },
+        PlaceForPurpose: {checked: false, label: 'Place for Purpose'},
+        PublicAllies: {checked: false, label: 'Public Allies'},
+        needHelp: {
+          checked: false,
+          label: "I'd like some help figuring this out",
+        },
+      },
     };
     let expectedErr = {
       interestedPrograms_error: 'Required',
@@ -156,7 +171,22 @@ describe('About Me: Programs and Eligibility Form', () => {
 
   test('Programs and Eligibility Validator: empty values ', () => {
     const values = {
-      interested_programs: 'Actively looking for a job',
+      interested_programs: {
+        BaltimoreCorpsFellowship: {
+          checked: false,
+          label: 'Baltimore Corps Fellowship',
+        },
+        JHUCareyHumanitiesFellowship: {
+          checked: false,
+          label: 'JHU Carey Humanities Fellowship',
+        },
+        PlaceForPurpose: {checked: true, label: 'Place for Purpose'},
+        PublicAllies: {checked: true, label: 'Public Allies'},
+        needHelp: {
+          checked: false,
+          label: "I'd like some help figuring this out",
+        },
+      },
     };
     let expectedErr = {};
     let {isError, err} = programsAndEligibilityValidator(values);
