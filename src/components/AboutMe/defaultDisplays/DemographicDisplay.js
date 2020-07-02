@@ -7,20 +7,29 @@ import {
   QuestionWithMultipleAnswersArray,
 } from './QuestionAnswerDisplayTemplates.js';
 
-const DemographicDisplay = ({contact, onClickEdit, classes}) => {
-  const checkedRace = Object.values(contact.race).filter(
-    race => race[0] === true
-  );
+import {raceLabels} from '../defaultData';
+
+const DemographicDisplay = ({profile, onClickEdit, classes}) => {
+  // const checkedRace = Object.values(profile.race).filter(
+  //   race => race[0] === true
+  // );
+
+  let checkedRoles = [];
+  for (const [key, value] of Object.entries(profile.race)) {
+    if (value === true) checkedRoles.push(key);
+  }
+
+  let race = [];
+  for (const [key, value] of Object.entries(raceLabels)) {
+    if (checkedRoles.includes(key)) race.push(value);
+  }
 
   return (
     <React.Fragment>
       <Header header="Demographic Information" onClickEdit={onClickEdit} />
-      <QuestionWithMultipleAnswersArray
-        question="Race:"
-        answers={checkedRace}
-      />
-      <QuestionWithOneAnswer question="Gender:" answer={contact.gender} />
-      <QuestionWithOneAnswer question="Pronoun:" answer={contact.pronoun} />
+      <QuestionWithMultipleAnswersArray question="Race:" answers={race} />
+      <QuestionWithOneAnswer question="Gender:" answer={profile.gender} />
+      <QuestionWithOneAnswer question="Pronoun:" answer={profile.pronoun} />
     </React.Fragment>
   );
 };

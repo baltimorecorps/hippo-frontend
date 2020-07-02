@@ -61,17 +61,34 @@ const states = [
 ];
 
 const genders = ['Female', 'Male', 'Non-Binary', 'Not Listed'];
-const pronouns = ['She/Her', 'He/Him', 'They/Them', 'Not Listed'];
-
-const roles = [
-  'Advocacy and Public Policy',
-  'Community Engagement and Outreach',
-  'Data Analysis',
-  'Fundraising and Development',
-  'Marketing and Public Relations',
-  'Operations and Administration',
-  'Program Management',
+const pronouns = [
+  'She/Her/Hers',
+  'He/Him/His',
+  'They/Them/Their',
+  'Not Listed',
 ];
+
+const raceLabels = {
+  american_indian: 'American Indian or Alaskan Native',
+  asian: 'Asian',
+  black: 'Black or African Descent',
+  hispanic: 'Hispanic or Latinx',
+  hawaiian: 'Native Hawaiian or Other Pacific Islander',
+  south_asian: 'South Asian',
+  white: 'White',
+  not_listed: 'Not Listed',
+  race_other: '',
+};
+
+const roleNames = {
+  advocacy_publicPolicy: 'Advocacy and Public Policy',
+  community_engagement_outreach: 'Community Engagement and Outreach',
+  data_analysis: 'Data Analysis',
+  fundraising_development: 'Fundraising and Development',
+  marketing_public_relations: 'Marketing and Public Relations',
+  operations_administration: 'Operations and Administration',
+  program_management: 'Program Management',
+};
 
 const jobSearchStatus = [
   'Actively looking for a job',
@@ -93,8 +110,9 @@ export {
   states,
   genders,
   pronouns,
-  roles,
+  raceLabels,
   jobSearchStatus,
   yearsOfExperience,
   programs,
+  roleNames,
 };

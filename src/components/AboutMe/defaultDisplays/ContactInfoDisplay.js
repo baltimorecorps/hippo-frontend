@@ -11,17 +11,20 @@ import HomeIcon from '@material-ui/icons/Home';
 
 const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const email = contact.email_primary ? contact.email_primary.email : '';
-  const {
-    first_name,
-    last_name,
-    phone_primary,
-    address,
-    city,
-    state,
-    zip_code,
-  } = contact;
+  const {first_name, last_name, phone_primary, profile} = contact;
+  // const {street1, city, state, zip_code, country} =
+  //   contact && contact.profile.address;
 
-  const fullAddress = `${address}, ${city}, ${state} ${zip_code}`;
+  // console.log(profile);
+  let address1 = '';
+  let address2 = '';
+  let country = '';
+  if (profile) {
+    address1 = `${profile.address.street1}, ${profile.address.street2}`;
+    address2 = `${profile.address.city}, ${profile.address.state} ${profile.address.zip_code}`;
+    country = profile.address.country;
+  }
+
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
@@ -63,7 +66,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
       </Typography>
 
       {isOnEditMode ? (
-        address && fullAddress ? (
+        contact && profile ? (
           <Typography
             gutterBottom
             variant="body1"
@@ -71,7 +74,10 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
             className={classes.textInfo}
           >
             <HomeIcon className={classes.homeIcon} />
-            {fullAddress}
+            {address1}
+            <br />
+            {address2} <br />
+            {country}
           </Typography>
         ) : (
           <Typography
@@ -110,7 +116,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   homeIcon: {marginRight: '5px', fontSize: '30px'},
   icon: {marginRight: '5px'},
-  textInfo: {display: 'flex', alignItems: 'center'},
+  textInfo: {display: 'flex'},
 });
 
 export default withStyles(styles)(ContactInfoDisplay);

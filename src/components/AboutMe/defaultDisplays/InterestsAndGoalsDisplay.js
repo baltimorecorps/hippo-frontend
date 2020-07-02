@@ -4,39 +4,46 @@ import PropTypes from 'prop-types';
 import {
   Header,
   QuestionWithOneAnswer,
-  QuestionWithMultipleAnswersObject,
+  QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
 
-const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
-  const checkedRoles = Object.values(contact.interested_roles).filter(
-    role => role.checked === true
-  );
+import {roleNames} from '../defaultData';
 
+const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
+  let checkedRoles = [];
+  for (const [key, value] of Object.entries(profile.interested_roles)) {
+    if (value === true) checkedRoles.push(key);
+  }
+
+  let roles = [];
+  for (const [key, value] of Object.entries(roleNames)) {
+    if (checkedRoles.includes(key)) roles.push(value);
+  }
   return (
     <React.Fragment>
       <Header header="Interest and Goals" onClickEdit={onClickEdit} />
       <QuestionWithOneAnswer
         question="Job Search Status:"
-        answer={contact.job_search_status}
+        answer={profile.job_search_status}
       />
       <QuestionWithOneAnswer
         question="Years of experience:"
-        answer={contact.years_exp}
+        answer={profile.years_exp}
       />
-      <QuestionWithMultipleAnswersObject
+      <QuestionWithMultipleAnswers
         question="Interested Types of Roles:"
-        answers={checkedRoles}
+        answers={roles}
       />
       <QuestionWithOneAnswer
         question="Have participated with Baltimore Corps Before:"
-        answer={contact.participated_baltimore_corps_before}
+        answer={profile.previous_bcorps_program}
       />
     </React.Fragment>
   );
 };
 
 InterestsAndGoalsDisplay.propTypes = {
-  contact: PropTypes.object,
+  profile: PropTypes.object,
   onClickEdit: PropTypes.func,
 };
 

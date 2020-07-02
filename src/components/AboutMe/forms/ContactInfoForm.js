@@ -90,6 +90,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     autoComplete: 'off',
   };
 
+  console.log(values);
   // todo
   // testing
 

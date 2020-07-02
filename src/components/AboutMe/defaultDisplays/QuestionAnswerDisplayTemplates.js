@@ -43,7 +43,7 @@ const QATemplate1 = ({question, answer, classes}) => {
   );
 };
 
-const QATemplate2 = ({question, answers, classes}) => {
+const QuestionWithMultipleAnswersTemplate = ({question, answers, classes}) => {
   return (
     <div className={classes.item}>
       <Typography variant="body1" component="p" className={classes.question}>
@@ -58,7 +58,7 @@ const QATemplate2 = ({question, answers, classes}) => {
             component="p"
             className={classes.answer}
           >
-            - {answer.label}
+            - {answer}
           </Typography>
         ))
       ) : (
@@ -84,7 +84,7 @@ const QATemplate3 = ({question, answers, classes}) => {
             component="p"
             className={classes.answer}
           >
-            - {answer[1]}
+            - {answer}
           </Typography>
         ))
       ) : (
@@ -104,7 +104,7 @@ QATemplate1.propTypes = {
   question: PropTypes.string,
   answer: PropTypes.string,
 };
-QATemplate2.propTypes = {
+QuestionWithMultipleAnswersTemplate.propTypes = {
   question: PropTypes.string,
   answers: PropTypes.array,
 };
@@ -148,13 +148,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
 });
 
 const QuestionWithOneAnswer = withStyles(styles)(QATemplate1);
-const QuestionWithMultipleAnswersObject = withStyles(styles)(QATemplate2);
+const QuestionWithMultipleAnswers = withStyles(styles)(
+  QuestionWithMultipleAnswersTemplate
+);
 const QuestionWithMultipleAnswersArray = withStyles(styles)(QATemplate3);
 const Header = withStyles(styles)(HeaderTemplate);
 
 export {
   QuestionWithOneAnswer,
-  QuestionWithMultipleAnswersObject,
+  QuestionWithMultipleAnswers,
   QuestionWithMultipleAnswersArray,
   Header,
 };

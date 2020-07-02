@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
   Header,
-  QuestionWithMultipleAnswersObject,
+  QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
 
 const ProgramsAndEligibilityDisplay = ({contact, onClickEdit}) => {
@@ -14,7 +14,7 @@ const ProgramsAndEligibilityDisplay = ({contact, onClickEdit}) => {
   return (
     <React.Fragment>
       <Header header="Programs and Eligibility" onClickEdit={onClickEdit} />
-      <QuestionWithMultipleAnswersObject
+      <QuestionWithMultipleAnswers
         question="Interested Programs:"
         answers={checkedPrograms}
       />

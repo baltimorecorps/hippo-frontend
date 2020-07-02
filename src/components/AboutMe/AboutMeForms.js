@@ -27,11 +27,9 @@ const AboutMeForms = ({
   onClickEdit,
   classes,
 }) => {
-  // const contact = mockData;
-  const contact = mockDataEmpty;
+  const contact = mockData;
+  // const contact = mockDataEmpty;
   const email = contact.email_primary ? contact.email_primary.email : '';
-
-  const {address, city, state, zipcode} = contact;
 
   const [openForms, setOpenForms] = useState({
     contact_info: false,
@@ -88,7 +86,7 @@ const AboutMeForms = ({
         <ExpansionPanelDetails>
           {openForms.interests_goals ? (
             <InterestsAndGoalsForm
-              contact={contact}
+              profile={contact.profile}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenForms({...openForms, interests_goals: false})
@@ -97,7 +95,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <InterestsAndGoalsDisplay
-                contact={contact}
+                profile={contact.profile}
                 onClickEdit={() =>
                   setOpenForms({...openForms, interests_goals: true})
                 }
@@ -106,7 +104,7 @@ const AboutMeForms = ({
           )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+      {/* <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -120,7 +118,7 @@ const AboutMeForms = ({
         <ExpansionPanelDetails>
           {openForms.programs_eligibility ? (
             <ProgramsAndEligibilityForm
-              contact={contact}
+              contact={contact.profile}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenForms({...openForms, programs_eligibility: false})
@@ -129,7 +127,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <ProgramsAndEligibilityDisplay
-                contact={contact}
+                contact={contact.profile}
                 onClickEdit={() =>
                   setOpenForms({...openForms, programs_eligibility: true})
                 }
@@ -137,7 +135,7 @@ const AboutMeForms = ({
             </div>
           )}
         </ExpansionPanelDetails>
-      </ExpansionPanel>
+      </ExpansionPanel> */}
       <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
@@ -152,7 +150,7 @@ const AboutMeForms = ({
         <ExpansionPanelDetails>
           {openForms.demographic_info ? (
             <DemographicForm
-              contact={contact}
+              profile={contact.profile}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenForms({...openForms, demographic_info: false})
@@ -161,7 +159,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <DemographicDisplay
-                contact={contact}
+                profile={contact.profile}
                 onClickEdit={() =>
                   setOpenForms({...openForms, demographic_info: true})
                 }
