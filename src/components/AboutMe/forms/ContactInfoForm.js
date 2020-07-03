@@ -17,7 +17,7 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 import {contactInfoValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-import {states} from '../defaultData';
+import {states, countryList} from '../defaultData';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -49,6 +49,16 @@ const useForm = (initialValues, onSubmit) => {
       };
       update('email_primary')(updatedEmail);
     },
+    handleAddress: event => {
+      event.persist();
+      const newValue = {
+        address: {
+          ...values.profile.address,
+          [event.target.name]: event.target.value,
+        },
+      };
+      update('profile')(newValue);
+    },
   };
 
   return [values, handlers];
@@ -57,7 +67,13 @@ const useForm = (initialValues, onSubmit) => {
 const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [
     values,
-    {handleChange, handleSubmit, handlePhoneChange, handleEmailChange},
+    {
+      handleChange,
+      handleSubmit,
+      handlePhoneChange,
+      handleEmailChange,
+      handleAddress,
+    },
   ] = useForm(contact, onSubmit);
   const [errors, setErrors] = useState({});
 
@@ -174,92 +190,149 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {errors.phonePrimary_error || null}
               </FormHelperText>
             </Grid>
-            <Grid item xs={12} align="center">
-              <TextField
-                required
-                id="address"
-                label="Address"
-                className={classes.formControl}
-                name="address"
-                value={values.address || ''}
-                onChange={handleChange}
-                InputLabelProps={inputLabelProps}
-                InputProps={inputProps}
-              />
-              <FormHelperText className={classes.formHelperText}>
-                {errors.address_error || null}
-              </FormHelperText>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              // lg={6}
-              align="center"
-              className={classes.addressContainer}
-            >
-              <div className={classes.cityContainer}>
+            <div className={classes.addressContainer}>
+              <Grid item xs={12} md={6} align="center">
                 <TextField
                   required
-                  id="city"
-                  label="City"
-                  className={`${classes.formControl} ${classes.city}`}
-                  name="city"
-                  value={values.city || ''}
-                  onChange={handleChange}
+                  id="street1"
+                  label="Address 1"
+                  className={classes.formControl}
+                  name="street1"
+                  value={values.profile.address.street1 || ''}
+                  onChange={handleAddress}
                   InputLabelProps={inputLabelProps}
                   InputProps={inputProps}
                 />
                 <FormHelperText className={classes.formHelperText}>
-                  {errors.city_error || null}
+                  {errors.address_error || null}
                 </FormHelperText>
-              </div>
-              <div className={classes.StateAndZipCodeContainer}>
-                <div className={classes.stateContainer}>
-                  <InputLabel
-                    htmlFor="state"
-                    className={classes.stateInputLabel}
-                  >
-                    State *
-                  </InputLabel>
-                  <Select
-                    disabled={false}
+              </Grid>
+              <Grid item xs={12} md={6} align="center">
+                <TextField
+                  required
+                  id="street2"
+                  label="Address 2"
+                  className={classes.formControl}
+                  name="street2"
+                  value={values.profile.address.street2 || ''}
+                  onChange={handleAddress}
+                  InputLabelProps={inputLabelProps}
+                  InputProps={inputProps}
+                />
+                <FormHelperText className={classes.formHelperText}>
+                  {errors.address_error || null}
+                </FormHelperText>
+              </Grid>
+            </div>
+
+            <Grid
+              item
+              xs={12}
+              align="center"
+              className={classes.cityStateZipCodeStateContainer}
+            >
+              <div className={classes.addressContainer}>
+                <Grid item xs={12} md={6} align="center">
+                  <TextField
                     required
-                    id="state"
-                    value={values.state || ''}
-                    onChange={handleChange}
-                    inputProps={{
-                      name: 'state',
-                      id: 'state',
-                      classes: {select: classes.state},
-                      'data-testid': 'state',
-                    }}
-                  >
-                    {states.map(state => (
-                      <MenuItem value={state} key={state}>
-                        {state}
-                      </MenuItem>
-                    ))}
-                  </Select>
+                    id="city"
+                    label="City"
+                    className={`${classes.formControl} ${classes.city}`}
+                    name="city"
+                    value={values.profile.address.city || ''}
+                    onChange={handleAddress}
+                    InputLabelProps={inputLabelProps}
+                    InputProps={inputProps}
+                  />
                   <FormHelperText className={classes.formHelperText}>
-                    {errors.state_error || null}
+                    {errors.city_error || null}
                   </FormHelperText>
-                </div>
-                <div className={classes.zipCodeContainer}>
+                </Grid>
+
+                <Grid item xs={12} md={6} align="center">
+                  <div className={classes.dropdownContainer}>
+                    <InputLabel
+                      htmlFor="state"
+                      className={classes.dropdownInputLabel}
+                    >
+                      State *
+                    </InputLabel>
+                    <Select
+                      disabled={false}
+                      required
+                      id="state"
+                      value={values.profile.address.state || ''}
+                      onChange={handleAddress}
+                      inputProps={{
+                        name: 'state',
+                        id: 'state',
+                        classes: {select: classes.dropdown},
+                        'data-testid': 'state',
+                      }}
+                    >
+                      {states.map(state => (
+                        <MenuItem value={state} key={state}>
+                          {state}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText className={classes.formHelperText}>
+                      {errors.state_error || null}
+                    </FormHelperText>
+                  </div>
+                </Grid>
+              </div>
+
+              <div className={classes.addressContainer}>
+                <Grid item sm={12} md={6} align="center">
                   <TextField
                     required
                     id="zip_code"
                     label="Zip Code"
                     className={`${classes.formControl} ${classes.zipCode}`}
                     name="zip_code"
-                    value={values.zip_code || ''}
-                    onChange={handleChange}
+                    value={values.profile.address.zip_code || ''}
+                    onChange={handleAddress}
                     InputLabelProps={inputLabelProps}
                     InputProps={inputProps}
                   />
                   <FormHelperText className={classes.formHelperText}>
                     {errors.zip_code_error || null}
                   </FormHelperText>
-                </div>
+                </Grid>
+
+                <Grid item sm={12} md={6} align="center">
+                  <div className={classes.dropdownContainer}>
+                    <InputLabel
+                      htmlFor="country"
+                      className={classes.dropdownInputLabel}
+                    >
+                      Country *
+                    </InputLabel>
+                    <Select
+                      disabled={false}
+                      required
+                      id="country"
+                      value={values.profile.address.country || ''}
+                      onChange={handleAddress}
+                      inputProps={{
+                        name: 'country',
+                        id: 'country',
+                        classes: {select: classes.dropdown},
+                        'data-testid': 'country',
+                      }}
+                    >
+                      {countryList.map(country => (
+                        <MenuItem value={country} key={country}>
+                          {country}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText className={classes.formHelperText}>
+                      {errors.country_error || null}
+                    </FormHelperText>
+                  </div>
+                </Grid>
               </div>
             </Grid>
             <Grid item xs={12} align="end" className={classes.submitButton}>
@@ -327,11 +400,26 @@ const styles = ({breakpoints, palette, spacing}) => ({
     margin: '10px 20px 0px 0px',
   },
   addressContainer: {
+    width: '100%',
+    padding: spacing(0, 1),
     display: 'flex',
     flexDirection: 'column',
+
     [breakpoints.up('sm')]: {
       flexDirection: 'row',
-      padding: spacing(0, 2),
+    },
+  },
+  cityStateZipCodeStateContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cityAndStateContainer: {
+    display: 'flex',
+    width: '100%',
+
+    padding: spacing(0, 1),
+    [breakpoints.up('sm')]: {
+      padding: 0,
     },
   },
   cityContainer: {
@@ -340,54 +428,49 @@ const styles = ({breakpoints, palette, spacing}) => ({
       padding: 0,
     },
   },
-  city: {
-    width: '100%',
-    [breakpoints.up('sm')]: {
-      width: '180px',
-    },
-    [breakpoints.up('md')]: {
-      width: '250px',
-    },
-  },
-  StateAndZipCodeContainer: {
-    display: 'flex',
-    marginLeft: '10px',
-    justifyContent: 'flex-start',
-    [breakpoints.up('sm')]: {
-      flexGrow: 1,
-    },
-  },
-  stateContainer: {
+  // city: {
+  //   width: '100%',
+  //   [breakpoints.up('sm')]: {
+  //     width: '180px',
+  //   },
+  //   [breakpoints.up('md')]: {
+  //     width: '250px',
+  //   },
+  // },
+
+  dropdownContainer: {
     marginRight: '10px',
-    flexGrow: 1,
+    // flexGrow: 1,
     display: 'flex',
     flexDirection: 'column',
+    padding: spacing(0, 1),
 
     justifyContent: 'flex-start',
   },
-  state: {
-    display: 'flex',
-    alignItems: 'flex-end',
-    fontSize: 16,
-
-    width: '100px',
-    [breakpoints.up('sm')]: {
-      width: '80px',
-    },
+  dropdown: {
+    // display: 'flex',
+    alignItems: 'flex-start',
+    // fontSize: 16,
+    width: '100%',
+    textAlign: 'left',
   },
-  stateInputLabel: {
+  dropdownInputLabel: {
     fontSize: 14,
     textAlign: 'left',
     marginBottom: '2px',
+    width: '100%',
   },
-  zipCodeContainer: {
-    flexGrow: 2,
-  },
-  zipCode: {
-    [breakpoints.up('sm')]: {
-      width: '100%',
-    },
-  },
+  // zipCodeContainer: {
+  //   flexGrow: 2,
+  // },
+  // zipCode: {
+  //   [breakpoints.up('sm')]: {
+  //     width: '100%',
+  //   },
+  // },
+  // zipCodeAndCountryContainer: {
+  //   display: 'flex',
+  // },
 });
 
 export default withStyles(styles)(BasicInfoForm);
