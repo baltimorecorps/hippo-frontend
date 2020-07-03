@@ -129,12 +129,7 @@ const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
 };
 
 InterestsAndGoalsForm.propTypes = {
-  contact: PropTypes.shape({
-    first_name: PropTypes.string.isRequired,
-    last_name: PropTypes.string.isRequired,
-    email_primary: PropTypes.object.isRequired,
-    phone_primary: PropTypes.string.isRequired,
-  }),
+  profile: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onCloseForm: PropTypes.func.isRequired,
 };

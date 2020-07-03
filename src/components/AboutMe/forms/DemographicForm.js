@@ -2,9 +2,6 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
 
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
@@ -73,7 +70,6 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
   };
 
   // todo
-  // Refactor
   // form validation
   // testing
   const descriptions = [
@@ -122,7 +118,7 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
             </div>
           )}
           <div className={classes.genderAndPronounsContainer}>
-            <div className={classes.dropdownAndTextfieldContainer}>
+            <div className={classes.dropdownAndTextFieldContainer}>
               <FormDropDownSelector
                 question="Gender"
                 name="gender"
@@ -141,7 +137,7 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
                 />
               )}
             </div>
-            <div className={classes.dropdownAndTextfieldContainer}>
+            <div className={classes.dropdownAndTextFieldContainer}>
               <FormDropDownSelector
                 question="Pronoun"
                 name="pronoun"
@@ -170,12 +166,7 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
 };
 
 DemographicForm.propTypes = {
-  contact: PropTypes.shape({
-    first_name: PropTypes.string.isRequired,
-    last_name: PropTypes.string.isRequired,
-    email_primary: PropTypes.object.isRequired,
-    phone_primary: PropTypes.string.isRequired,
-  }),
+  profile: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onCloseForm: PropTypes.func.isRequired,
 };
@@ -187,22 +178,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(2),
   },
 
-  allRacesContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-
-    [breakpoints.up('lg')]: {
-      flexDirection: 'row',
-    },
-  },
-  question: {
-    color: '#000000',
-    width: '100%',
-    textAlign: 'left',
-    marginBottom: spacing(1),
-    fontWeight: 'bold',
-  },
-
   genderAndPronounsContainer: {
     width: '100%',
     marginTop: spacing(2),
@@ -211,7 +186,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
-  dropdownAndTextfieldContainer: {
+  dropdownAndTextFieldContainer: {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
