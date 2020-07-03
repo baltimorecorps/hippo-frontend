@@ -9,13 +9,14 @@ import Typography from '@material-ui/core/Typography';
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-import {genders, pronouns} from '../defaultData';
+import {genders, pronouns, raceLabels} from '../defaultData';
 
 import {
   FormHeader,
   FormDropDownSelector,
   FormTextField,
   FormSubmitButton,
+  FormCheckboxes,
 } from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
@@ -30,20 +31,12 @@ const useForm = (initialValues, onSubmit) => {
       onSubmit(values);
     },
 
-    // handleRacesChange: changedDemographic => {
-    //   update('demographic')(changedDemographic);
-    // },
     handleRacesChange: event => {
       event.persist();
-      console.log(event.target.name);
       const newValue = {
         ...values.race,
-        [event.target.name]: [
-          event.target.checked,
-          values.race[event.target.name][1],
-        ],
+        [event.target.name]: event.target.checked,
       };
-
       update('race')(newValue);
     },
 
@@ -61,39 +54,12 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
+const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
   const [
     values,
     {handleChange, handleSubmit, handleRacesChange, handleRaceOther},
-  ] = useForm(contact, onSubmit);
+  ] = useForm(profile, onSubmit);
   const [errors, setErrors] = useState({});
-
-  // const {demographic} = values;
-  const racesKeys = Object.keys(values.race);
-  const races = Object.values(values.race).slice(0, -1);
-
-  // const handleRacesCheckbox = event => {
-  //   event.persist();
-  //   const updatedDemographic = {
-  //     ...demographic,
-  //     races: {
-  //       ...demographic.races,
-  //       [event.target.name]: [
-  //         event.target.checked,
-  //         demographic.races[event.target.name][1],
-  //       ],
-  //     },
-  //   };
-  //   handleRacesChange(updatedDemographic);
-  // };
-  // const handleDropdownSelector = event => {
-  //   event.persist();
-  //   const updatedDemographic = {
-  //     // ...demographic,
-  //     [event.target.name]: event.target.value,
-  //   };
-  //   handleRacesChange(updatedDemographic);
-  // };
 
   const submit = () => {
     const {isError, err} = newProfileValidator(values);
@@ -107,13 +73,27 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
   };
 
   // todo
-
   // Refactor
   // form validation
   // testing
   const descriptions = [
     ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
   ];
+
+  let race = [];
+  for (const [key, value] of Object.entries(values.race)) {
+    race.push({name: key, checked: value});
+  }
+
+  for (const [key, value] of Object.entries(raceLabels)) {
+    race.forEach((role, index) => {
+      if (role.name === key) {
+        race[index] = {...role, label: value};
+      }
+    });
+  }
+
+  const raceOptions = race.slice(0, -1);
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -125,41 +105,22 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
-          <Typography
-            variant="body1"
-            component="p"
-            className={classes.question}
-          >
-            Race (select all that apply)
-          </Typography>
-          <div className={classes.raceGroupContainer}>
-            {races.map((race, index) => (
-              <FormControlLabel
-                key={index}
-                control={
-                  <Checkbox
-                    checked={race[0]}
-                    onChange={handleRacesChange}
-                    name={racesKeys[index]}
-                    color="primary"
-                  />
-                }
-                className={classes.race}
-                label={race[1]}
+          <FormCheckboxes
+            question="Race (select all that apply)"
+            options={raceOptions}
+            onChange={handleRacesChange}
+          />
+          {values.race.not_listed && (
+            <div className={classes.otherRace}>
+              <FormTextField
+                value={values.race.race_other}
+                name="race_other"
+                label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
+                onChange={handleRaceOther}
+                errors={errors}
               />
-            ))}
-            {values.race.notListed[0] && (
-              <div className={classes.otherRace}>
-                <FormTextField
-                  value={values.other_race}
-                  name="other_race"
-                  label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
-                  onChange={handleRaceOther}
-                  errors={errors}
-                />
-              </div>
-            )}
-          </div>
+            </div>
+          )}
           <div className={classes.genderAndPronounsContainer}>
             <div className={classes.dropdownAndTextfieldContainer}>
               <FormDropDownSelector
@@ -172,9 +133,8 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
               {values.gender === 'Not Listed' && (
                 <FormTextField
-                  value={values.other_gender}
-                  name="other_gender"
-                  // label="Other Gender"
+                  value={values.gender_other}
+                  name="gender_other"
                   label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
                   onChange={handleChange}
                   errors={errors}
@@ -192,9 +152,8 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
               {values.pronoun === 'Not Listed' && (
                 <FormTextField
-                  value={values.other_pronoun}
-                  name="other_pronoun"
-                  // label="Other Pronoun"
+                  value={values.pronoun_other}
+                  name="pronoun_other"
                   label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
                   onChange={handleChange}
                   errors={errors}
@@ -243,17 +202,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(1),
     fontWeight: 'bold',
   },
-  raceGroupContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-  },
-  race: {
-    textAlign: 'left',
-    [breakpoints.up('sm')]: {
-      marginLeft: '20px',
-    },
-  },
 
   genderAndPronounsContainer: {
     width: '100%',
@@ -274,7 +222,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   otherRace: {
     marginLeft: '0px',
 
-    [breakpoints.up('sm')]: {
+    [breakpoints.up('md')]: {
       marginLeft: '60px',
     },
   },

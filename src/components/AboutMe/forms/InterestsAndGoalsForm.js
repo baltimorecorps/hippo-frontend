@@ -50,9 +50,6 @@ const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
     const {isError, err} = interestsAndGoalsValidator(values);
     setErrors(err);
 
-    console.log(err);
-    console.log(errors);
-
     if (!isError) {
       console.log('submitted form');
       // handleSubmit(values);
@@ -62,7 +59,6 @@ const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
 
   // todo
   // form validation
-  // responsive styles
   // testing
 
   const descriptions = [

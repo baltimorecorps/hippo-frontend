@@ -10,10 +10,6 @@ import {
 import {raceLabels} from '../defaultData';
 
 const DemographicDisplay = ({profile, onClickEdit, classes}) => {
-  // const checkedRace = Object.values(profile.race).filter(
-  //   race => race[0] === true
-  // );
-
   let checkedRace = [];
   for (const [key, value] of Object.entries(profile.race)) {
     if (value === true) checkedRace.push(key);

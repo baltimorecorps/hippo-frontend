@@ -212,7 +212,6 @@ const FormTextFieldTemplate = ({
         <TextField
           required
           id={name}
-          // label={label}
           className={classes.formControl}
           name={name}
           value={value}
@@ -334,7 +333,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     textAlign: 'left',
 
-    [breakpoints.up('sm')]: {
+    [breakpoints.up('md')]: {
       marginLeft: '20px',
     },
   },
@@ -378,7 +377,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   checkbox: {
     width: '100%',
     textAlign: 'left',
-    [breakpoints.up('sm')]: {
+    [breakpoints.up('md')]: {
       marginLeft: '20px',
     },
   },
