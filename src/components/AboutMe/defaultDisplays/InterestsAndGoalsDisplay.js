@@ -7,7 +7,7 @@ import {
   QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
 
-import {roleNames} from '../defaultData';
+import {roleLabels} from '../defaultData';
 
 const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
   let checkedRoles = [];
@@ -16,7 +16,7 @@ const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
   }
 
   let roles = [];
-  for (const [key, value] of Object.entries(roleNames)) {
+  for (const [key, value] of Object.entries(roleLabels)) {
     if (checkedRoles.includes(key)) roles.push(value);
   }
   return (

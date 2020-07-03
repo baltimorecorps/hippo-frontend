@@ -97,7 +97,6 @@ const FormCheckboxesTemplate = ({
   question,
   options,
   onChange,
-  names,
   error,
   classes,
 }) => {
@@ -116,7 +115,7 @@ const FormCheckboxesTemplate = ({
               <Checkbox
                 checked={option.checked}
                 onChange={onChange}
-                name={names[index]}
+                name={option.name}
                 color="primary"
               />
             }

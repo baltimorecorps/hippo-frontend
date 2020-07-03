@@ -332,8 +332,8 @@ const raceLabels = {
   race_other: '',
 };
 
-const roleNames = {
-  advocacy_publicPolicy: 'Advocacy and Public Policy',
+const roleLabels = {
+  advocacy_public_policy: 'Advocacy and Public Policy',
   community_engagement_outreach: 'Community Engagement and Outreach',
   data_analysis: 'Data Analysis',
   fundraising_development: 'Fundraising and Development',
@@ -367,5 +367,5 @@ export {
   jobSearchStatus,
   yearsOfExperience,
   programs,
-  roleNames,
+  roleLabels,
 };

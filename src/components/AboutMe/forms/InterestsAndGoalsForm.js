@@ -5,7 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-import {jobSearchStatus, yearsOfExperience} from '../defaultData';
+import {jobSearchStatus, yearsOfExperience, roleLabels} from '../defaultData';
 
 import {
   FormHeader,
@@ -30,12 +30,8 @@ const useForm = (initialValues, onSubmit) => {
       event.persist();
       const newValue = {
         ...values.interested_roles,
-        [event.target.name]: {
-          ...values.interested_roles[event.target.name],
-          checked: event.target.checked,
-        },
+        [event.target.name]: event.target.checked,
       };
-
       update('interested_roles')(newValue);
     },
   };
@@ -43,11 +39,11 @@ const useForm = (initialValues, onSubmit) => {
   return [values, handlers];
 };
 
-const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
+const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
   const [
     values,
     {handleChange, handleSubmit, handleInterestedRolesChange},
-  ] = useForm(contact, onSubmit);
+  ] = useForm(profile, onSubmit);
   const [errors, setErrors] = useState({});
 
   const submit = () => {
@@ -69,10 +65,22 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   // responsive styles
   // testing
 
-  const rolesKeys = Object.keys(values.interested_roles);
   const descriptions = [
     'The questions below help us understand a little bit more about your experience and which roles you might be interested in applying for.',
   ];
+
+  let roles = [];
+  for (const [key, value] of Object.entries(values.interested_roles)) {
+    roles.push({name: key, checked: value});
+  }
+
+  for (const [key, value] of Object.entries(roleLabels)) {
+    roles.forEach((role, index) => {
+      if (role.name === key) {
+        roles[index] = {...role, label: value};
+      }
+    });
+  }
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader
@@ -105,18 +113,17 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
           <FormCheckboxes
             question="Which of the following types of roles are you interested in applying for? (select all that apply)"
-            names={rolesKeys}
-            options={Object.values(values.interested_roles)}
+            options={roles}
             onChange={handleInterestedRolesChange}
           />
 
           <FormRadioButtons
             question="Have you participated in any of Baltimore Corps' programs and services already?"
-            value={values.participated_baltimore_corps_before}
+            value={values.previous_bcorps_program}
             onChange={handleChange}
             options={['Yes', 'No']}
-            name="participated_baltimore_corps_before"
-            ariaLabel="Have participated with Baltimore Corps before"
+            name="previous_bcorps_program"
+            ariaLabel="Have participated with Baltimore Corps programs and services before"
           />
           <FormSubmitButton onSubmit={submit} />
         </form>

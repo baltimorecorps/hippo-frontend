@@ -14,14 +14,14 @@ const DemographicDisplay = ({profile, onClickEdit, classes}) => {
   //   race => race[0] === true
   // );
 
-  let checkedRoles = [];
+  let checkedRace = [];
   for (const [key, value] of Object.entries(profile.race)) {
-    if (value === true) checkedRoles.push(key);
+    if (value === true) checkedRace.push(key);
   }
 
   let race = [];
   for (const [key, value] of Object.entries(raceLabels)) {
-    if (checkedRoles.includes(key)) race.push(value);
+    if (checkedRace.includes(key)) race.push(value);
   }
 
   return (
