@@ -284,8 +284,6 @@ const contactInfoValidator = values => {
   const {first_name, last_name, email, phone_primary} = values;
   const {street1, city, state, zip_code, country} = values.profile.address;
 
-  console.log(values);
-
   let isError = false;
   let err = {};
   function isNumeric(value) {
@@ -366,7 +364,6 @@ const interestsAndGoalsValidator = values => {
 };
 const programsAndEligibilityValidator = values => {
   const {interested_programs} = values;
-  console.log(interested_programs);
 
   const allValues = Object.values(interested_programs).map(
     program => program.checked
