@@ -103,14 +103,14 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     autoComplete: 'off',
   };
 
-  const createTextField = (name, label, classNames, value, onChange, error) => {
+  const createTextField = (name, label, value, onChange, error) => {
     return (
       <Grid item xs={12} md={6} align="center">
         <TextField
           required
           id={name}
           label={label}
-          className={classNames}
+          className={classes.formControl}
           name={name}
           value={value}
           onChange={onChange}
@@ -120,6 +120,46 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
         <FormHelperText className={classes.formHelperText}>
           {error || null}
         </FormHelperText>
+      </Grid>
+    );
+  };
+  const createDropdownSelector = (
+    name,
+    label,
+    value,
+    options,
+    onChange,
+    error
+  ) => {
+    return (
+      <Grid item xs={12} md={6} align="center">
+        <div className={classes.dropdownContainer}>
+          <InputLabel htmlFor={name} className={classes.dropdownInputLabel}>
+            {label}
+          </InputLabel>
+          <Select
+            disabled={false}
+            required
+            id={name}
+            className={classes.dropdown}
+            value={value || ''}
+            onChange={onChange}
+            inputProps={{
+              name: name,
+              id: name,
+              'data-testid': name,
+            }}
+          >
+            {options.map(option => (
+              <MenuItem value={option} key={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+          <FormHelperText className={classes.formHelperText}>
+            {error || null}
+          </FormHelperText>
+        </div>
       </Grid>
     );
   };
@@ -142,7 +182,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             {createTextField(
               'first_name',
               'First Name',
-              classes.formControl,
               values.first_name,
               handleChange,
               errors.firstName_error
@@ -151,7 +190,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             {createTextField(
               'last_name',
               'Last Name',
-              classes.formControl,
               values.last_name,
               handleChange,
               errors.lastName_error
@@ -160,7 +198,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             {createTextField(
               'email',
               'Email',
-              classes.formControl,
               values.email_primary.email,
               handleEmailChange,
               errors.email_error
@@ -187,7 +224,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               {createTextField(
                 'street1',
                 'Address 1',
-                classes.formControl,
                 values.profile.address.street1,
                 handleAddress,
                 errors.street1_error
@@ -196,99 +232,46 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               {createTextField(
                 'street2',
                 'Address 2',
-                classes.formControl,
                 values.profile.address.street2,
                 handleAddress
               )}
             </Grid>
 
-            {/* </div> */}
-
             <Grid container align="center" justify="space-between">
               {createTextField(
                 'city',
                 'City',
-                classes.formControl,
                 values.profile.address.city,
                 handleAddress,
                 errors.city_error
               )}
 
-              <Grid item xs={12} md={6} align="center">
-                <div className={classes.dropdownContainer}>
-                  <InputLabel
-                    htmlFor="state"
-                    className={classes.dropdownInputLabel}
-                  >
-                    State *
-                  </InputLabel>
-                  <Select
-                    disabled={false}
-                    required
-                    id="state"
-                    className={classes.dropdown}
-                    value={values.profile.address.state || ''}
-                    onChange={handleAddress}
-                    inputProps={{
-                      name: 'state',
-                      id: 'state',
-                      'data-testid': 'state',
-                    }}
-                  >
-                    {states.map(state => (
-                      <MenuItem value={state} key={state}>
-                        {state}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <FormHelperText className={classes.formHelperText}>
-                    {errors.state_error || null}
-                  </FormHelperText>
-                </div>
-              </Grid>
+              {createDropdownSelector(
+                'state',
+                'State *',
+                values.profile.address.state,
+                states,
+                handleAddress,
+                errors.state_error
+              )}
 
               <Grid container align="center" justify="space-between">
                 {createTextField(
                   'zip_code',
                   'Zip Code',
-                  classes.formControl,
                   values.profile.address.zip_code,
                   handleAddress,
                   errors.zipCode_error
                 )}
 
-                <Grid item xs={12} md={6} align="center">
-                  <div className={classes.dropdownContainer}>
-                    <InputLabel
-                      htmlFor="country"
-                      className={classes.dropdownInputLabel}
-                    >
-                      Country *
-                    </InputLabel>
-                    <Select
-                      disabled={false}
-                      required
-                      id="country"
-                      className={classes.dropdown}
-                      value={values.profile.address.country || ''}
-                      onChange={handleAddress}
-                      inputProps={{
-                        name: 'country',
-                        id: 'country',
-                        'data-testid': 'country',
-                      }}
-                    >
-                      {countryList.map(country => (
-                        <MenuItem value={country} key={country}>
-                          {country}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                    <FormHelperText className={classes.formHelperText}>
-                      {errors.country_error || null}
-                    </FormHelperText>
-                  </div>
-                </Grid>
+                {createDropdownSelector(
+                  'country',
+                  'Country *',
+                  values.profile.address.country,
+                  countryList,
+                  handleAddress,
+                  errors.country_error
+                )}
               </Grid>
             </Grid>
             <Grid item xs={12} align="end" className={classes.submitButton}>
@@ -309,12 +292,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 };
 
 BasicInfoForm.propTypes = {
-  contact: PropTypes.shape({
-    first_name: PropTypes.string.isRequired,
-    last_name: PropTypes.string.isRequired,
-    email_primary: PropTypes.object.isRequired,
-    phone_primary: PropTypes.string.isRequired,
-  }),
+  contact: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onCloseForm: PropTypes.func.isRequired,
 };
