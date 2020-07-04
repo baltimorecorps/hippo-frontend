@@ -25,16 +25,18 @@ const FormHeaderTemplate = ({header, descriptions, onCloseForm, classes}) => {
         <Typography variant="h3" component="h3" className={classes.formHeader}>
           {header}
         </Typography>
-        <Grid align="end">
-          <IconButton
-            edge="end"
-            aria-label="cancel form"
-            onMouseDown={onCloseForm}
-            className={classes.iconButton}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
+        {onCloseForm && (
+          <Grid align="end">
+            <IconButton
+              edge="end"
+              aria-label="cancel form"
+              onMouseDown={onCloseForm}
+              className={classes.iconButton}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+        )}
       </div>
       <div className={classes.descriptionsContainer}>
         {descriptions.map((description, index) => (
