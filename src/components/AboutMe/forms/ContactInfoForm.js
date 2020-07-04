@@ -83,9 +83,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
     setErrors(err);
 
-    console.log(err);
-    console.log(errors);
-
     if (!isError) {
       console.log('submitted form');
       // handleSubmit(values);
@@ -106,7 +103,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     autoComplete: 'off',
   };
 
-  console.log(values);
   // todo
   // testing
 
@@ -204,7 +200,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   InputProps={inputProps}
                 />
                 <FormHelperText className={classes.formHelperText}>
-                  {errors.address_error || null}
+                  {errors.street1_error || null}
                 </FormHelperText>
               </Grid>
               <Grid item xs={12} md={6} align="center">
@@ -219,9 +215,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   InputLabelProps={inputLabelProps}
                   InputProps={inputProps}
                 />
-                <FormHelperText className={classes.formHelperText}>
-                  {errors.address_error || null}
-                </FormHelperText>
               </Grid>
             </div>
 
@@ -297,7 +290,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                     InputProps={inputProps}
                   />
                   <FormHelperText className={classes.formHelperText}>
-                    {errors.zip_code_error || null}
+                    {errors.zipCode_error || null}
                   </FormHelperText>
                 </Grid>
 

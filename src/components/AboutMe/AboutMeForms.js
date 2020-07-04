@@ -27,8 +27,8 @@ const AboutMeForms = ({
   onClickEdit,
   classes,
 }) => {
-  const contact = mockData;
-  // const contact = mockDataEmpty;
+  // const contact = mockData;
+  const contact = mockDataEmpty;
   const email = contact.email_primary ? contact.email_primary.email : '';
 
   const [openForms, setOpenForms] = useState({

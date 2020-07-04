@@ -66,7 +66,11 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
       </Typography>
 
       {isOnEditMode ? (
-        contact && profile ? (
+        contact &&
+        profile.address.street1 &&
+        profile.address.city &&
+        profile.address.state &&
+        profile.address.country ? (
           <Typography
             gutterBottom
             variant="body1"

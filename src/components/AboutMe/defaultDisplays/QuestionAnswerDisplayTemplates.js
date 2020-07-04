@@ -23,7 +23,7 @@ const HeaderTemplate = ({header, onClickEdit, classes}) => {
   );
 };
 
-const QATemplate1 = ({question, answer, classes}) => {
+const QuestionWithOneAnswerTemplate = ({question, answer, classes}) => {
   return (
     <div className={classes.item}>
       <Typography variant="body1" component="p" className={classes.question}>
@@ -100,7 +100,7 @@ HeaderTemplate.propTypes = {
   header: PropTypes.string,
   onClickEdit: PropTypes.func,
 };
-QATemplate1.propTypes = {
+QuestionWithOneAnswerTemplate.propTypes = {
   question: PropTypes.string,
   answer: PropTypes.string,
 };
@@ -147,7 +147,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-const QuestionWithOneAnswer = withStyles(styles)(QATemplate1);
+const QuestionWithOneAnswer = withStyles(styles)(QuestionWithOneAnswerTemplate);
 const QuestionWithMultipleAnswers = withStyles(styles)(
   QuestionWithMultipleAnswersTemplate
 );

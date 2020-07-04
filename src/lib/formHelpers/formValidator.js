@@ -281,16 +281,10 @@ const interviewScheduledValidator = values => {
   return {isError, err};
 };
 const contactInfoValidator = values => {
-  const {
-    first_name,
-    last_name,
-    email,
-    phone_primary,
-    address,
-    city,
-    state,
-    zip_code,
-  } = values;
+  const {first_name, last_name, email, phone_primary} = values;
+  const {street1, city, state, zip_code, country} = values.profile.address;
+
+  console.log(values);
 
   let isError = false;
   let err = {};
@@ -320,9 +314,9 @@ const contactInfoValidator = values => {
     err.phonePrimary_error = 'Required';
   }
 
-  if (!address || address.length === 0) {
+  if (!street1 || street1.length === 0) {
     isError = true;
-    err.address_error = 'Required';
+    err.street1_error = 'Required';
   }
 
   if (!city || city.length === 0) {
@@ -344,6 +338,10 @@ const contactInfoValidator = values => {
   } else if (zip_code.length !== 5) {
     isError = true;
     err.zipCode_error = 'Invalid value. Please enter five-digit numbers only';
+  }
+  if (!country || country.length === 0) {
+    isError = true;
+    err.country_error = 'Required';
   }
 
   return {isError, err};
