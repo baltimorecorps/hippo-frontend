@@ -56,22 +56,12 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
     values,
     {handleChange, handleSubmit, handleRacesChange, handleRaceOther},
   ] = useForm(profile, onSubmit);
-  const [errors, setErrors] = useState({});
 
   const submit = () => {
-    const {isError, err} = newProfileValidator(values);
-
-    if (isError) {
-      setErrors(err);
-    } else {
-      handleSubmit(values);
-      onCloseForm();
-    }
+    // handleSubmit(values);
+    onCloseForm();
   };
 
-  // todo
-  // form validation
-  // testing
   const descriptions = [
     ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
   ];
@@ -113,7 +103,6 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
                 name="race_other"
                 label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
                 onChange={handleRaceOther}
-                errors={errors}
               />
             </div>
           )}
@@ -133,7 +122,6 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
                   name="gender_other"
                   label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
                   onChange={handleChange}
-                  errors={errors}
                 />
               )}
             </div>
@@ -152,7 +140,6 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
                   name="pronoun_other"
                   label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
                   onChange={handleChange}
-                  errors={errors}
                 />
               )}
             </div>
