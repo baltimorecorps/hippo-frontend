@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import QuestionAnswer from './QuestionAnswer';
-import Logo from './img/b_square.png';
+import Logo from '../../lib/images/b_square.png';
 
 const FAQPage = ({classes}) => {
   const profileAndResume = [
