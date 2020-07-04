@@ -3,45 +3,17 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 
-import ContactInfoForm from '../AboutMe/forms/ContactInfoForm';
-import DemographicForm from '../AboutMe/forms/DemographicForm';
-import InterestsAndGoalsForm from '../AboutMe/forms/InterestsAndGoalsForm';
-import ProgramsAndEligibilityForm from '../AboutMe/forms/ProgramsAndEligibilityForm';
+import ContactInfoForm from './ContactInfoForm';
+import InterestsAndGoalsForm from './InterestsAndGoalsForm';
+import DemographicInfoForm from './DemographicInfoForm';
 
 import mockData from '../AboutMe/mockData';
 import mockDataEmpty from '../AboutMe/mockDataEmpty';
 import Logo from '../../lib/images/long.png';
 import {contactInfoValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-
-import {
-  states,
-  countryList,
-  jobSearchStatus,
-  yearsOfExperience,
-  roleLabels,
-  genders,
-  pronouns,
-  raceLabels,
-} from '../AboutMe/defaultData';
-
-import {
-  FormHeader,
-  FormRadioButtons,
-  FormCheckboxes,
-  FormSubmitButton,
-  FormTextField,
-  FormDropDownSelector,
-} from '../AboutMe/forms/FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -97,8 +69,6 @@ const useForm = (initialValues, onSubmit) => {
 const Questionnaire = ({
   // contact,
   onSubmit,
-  onCloseAllForms,
-  onClickEdit,
   classes,
 }) => {
   //   const contact = mockData;
@@ -107,7 +77,6 @@ const Questionnaire = ({
     values,
     {
       handleChange,
-
       handleAddress,
       handleInterestedRolesChange,
       handleRacesChange,
@@ -128,105 +97,6 @@ const Questionnaire = ({
       //   onCloseForm();
     }
   };
-
-  const inputLabelProps = {
-    classes: {
-      root: classes.labelRoot,
-      focused: classes.labelFocused,
-    },
-    shrink: true,
-  };
-
-  const inputProps = {
-    classes: {input: classes.resize},
-    autoComplete: 'off',
-  };
-  const createTextField = (name, label, value, onChange, error) => {
-    return (
-      <Grid item xs={12} md={6} align="center">
-        <TextField
-          required
-          id={name}
-          label={label}
-          className={classes.formControl}
-          name={name}
-          value={value}
-          onChange={onChange}
-          InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
-        />
-        <FormHelperText className={classes.formHelperText}>
-          {error || null}
-        </FormHelperText>
-      </Grid>
-    );
-  };
-  const createDropdownSelector = (
-    name,
-    label,
-    value,
-    options,
-    onChange,
-    error
-  ) => {
-    return (
-      <Grid item xs={12} md={6} align="center">
-        <div className={classes.dropdownContainer}>
-          <InputLabel htmlFor={name} className={classes.dropdownInputLabel}>
-            {label}
-          </InputLabel>
-          <Select
-            disabled={false}
-            required
-            id={name}
-            className={classes.dropdown}
-            value={value || ''}
-            onChange={onChange}
-            inputProps={{
-              name: name,
-              id: name,
-              'data-testid': name,
-            }}
-          >
-            {options.map(option => (
-              <MenuItem value={option} key={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormHelperText className={classes.formHelperText}>
-            {error || null}
-          </FormHelperText>
-        </div>
-      </Grid>
-    );
-  };
-
-  let roles = [];
-  for (const [key, value] of Object.entries(values.interested_roles)) {
-    roles.push({name: key, checked: value});
-  }
-
-  for (const [key, value] of Object.entries(roleLabels)) {
-    roles.forEach((role, index) => {
-      if (role.name === key) {
-        roles[index] = {...role, label: value};
-      }
-    });
-  }
-  let race = [];
-  for (const [key, value] of Object.entries(values.race)) {
-    race.push({name: key, checked: value});
-  }
-
-  for (const [key, value] of Object.entries(raceLabels)) {
-    race.forEach((role, index) => {
-      if (role.name === key) {
-        race[index] = {...role, label: value};
-      }
-    });
-  }
-  const raceOptions = race.slice(0, -1);
 
   return (
     <Paper className={classes.paper}>
@@ -257,59 +127,11 @@ const Questionnaire = ({
                 Address
               </Typography>
             </legend>
-            <Grid container align="center" justify="space-between">
-              {createTextField(
-                'street1',
-                'Address 1',
-                values.address.street1,
-                handleAddress,
-                errors.street1_error
-              )}
-
-              {createTextField(
-                'street2',
-                'Address 2',
-                values.address.street2,
-                handleAddress
-              )}
-            </Grid>
-            <Grid container align="center" justify="space-between">
-              {createTextField(
-                'city',
-                'City',
-                values.address.city,
-                handleAddress,
-                errors.city_error
-              )}
-
-              {createDropdownSelector(
-                'state',
-                'State *',
-                values.address.state,
-                states,
-                handleAddress,
-                errors.state_error
-              )}
-
-              <Grid container align="center" justify="space-between">
-                {createTextField(
-                  'zip_code',
-                  'Zip Code',
-                  values.address.zip_code,
-                  handleAddress,
-                  errors.zipCode_error
-                )}
-
-                {createDropdownSelector(
-                  'country',
-                  'Country *',
-                  values.address.country,
-                  countryList,
-                  handleAddress,
-                  errors.country_error
-                )}
-              </Grid>
-            </Grid>
+            <ContactInfoForm
+              values={values}
+              handleAddress={handleAddress}
+              errors={errors}
+            />
           </fieldset>
 
           <fieldset className={classes.sectionContainer}>
@@ -331,40 +153,11 @@ const Questionnaire = ({
               your experience and which roles you might be interested in
               applying for.
             </Typography>
-
-            <FormRadioButtons
-              question="What is the status of your job search? *"
-              value={values.job_search_status}
-              onChange={handleChange}
-              options={jobSearchStatus}
-              name="job_search_status"
-              ariaLabel="Job search status"
-              error={errors.jobSearchStatus_error}
-            />
-
-            <FormRadioButtons
-              question="How many years of professional experience (internships, advocacy, employed etc.) do you have? *"
-              value={values.years_exp}
-              onChange={handleChange}
-              options={yearsOfExperience}
-              name="years_exp"
-              ariaLabel="Years of experience"
-              error={errors.yearsExp_error}
-            />
-
-            <FormCheckboxes
-              question="Which of the following types of roles are you interested in applying for? (select all that apply)"
-              options={roles}
-              onChange={handleInterestedRolesChange}
-            />
-
-            <FormRadioButtons
-              question="Have you participated in any of Baltimore Corps' programs and services already?"
-              value={values.previous_bcorps_program}
-              onChange={handleChange}
-              options={['Yes', 'No']}
-              name="previous_bcorps_program"
-              ariaLabel="Have participated with Baltimore Corps programs and services before"
+            <InterestsAndGoalsForm
+              values={values}
+              handleChange={handleChange}
+              handleInterestedRolesChange={handleInterestedRolesChange}
+              errors={errors}
             />
           </fieldset>
           <fieldset className={classes.sectionContainer}>
@@ -390,59 +183,12 @@ const Questionnaire = ({
               that this information is sensitive and providing it is completely
               optional.
             </Typography>
-            <FormCheckboxes
-              question="Race (select all that apply)"
-              options={raceOptions}
-              onChange={handleRacesChange}
+            <DemographicInfoForm
+              values={values}
+              handleChange={handleChange}
+              handleRacesChange={handleRacesChange}
+              handleRaceOther={handleRaceOther}
             />
-            {values.race.not_listed && (
-              <div className={classes.otherRace}>
-                <FormTextField
-                  value={values.race.race_other}
-                  name="race_other"
-                  label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
-                  onChange={handleRaceOther}
-                />
-              </div>
-            )}
-            <div className={classes.genderAndPronounsContainer}>
-              <div className={classes.dropdownAndTextFieldContainer}>
-                <FormDropDownSelector
-                  question="Gender"
-                  name="gender"
-                  value={values.gender}
-                  options={genders}
-                  onChange={handleChange}
-                />
-
-                {values.gender === 'Not Listed' && (
-                  <FormTextField
-                    value={values.gender_other}
-                    name="gender_other"
-                    label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
-                    onChange={handleChange}
-                  />
-                )}
-              </div>
-              <div className={classes.dropdownAndTextFieldContainer}>
-                <FormDropDownSelector
-                  question="Pronoun"
-                  name="pronoun"
-                  value={values.pronoun}
-                  options={pronouns}
-                  onChange={handleChange}
-                />
-
-                {values.pronoun === 'Not Listed' && (
-                  <FormTextField
-                    value={values.pronoun_other}
-                    name="pronoun_other"
-                    label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
-                    onChange={handleChange}
-                  />
-                )}
-              </div>
-            </div>
           </fieldset>
         </form>
       </Grid>
@@ -549,33 +295,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.up('sm')]: {
       fontSize: '16px',
     },
-  },
-  resize: {
-    fontSize: 16,
-  },
-  labelRoot: {
-    fontSize: 20,
-  },
-  labelFocused: {
-    fontSize: 19,
-  },
-  formHelperText: {
-    color: palette.error.main,
-    marginTop: '2px',
-    width: '95%',
-    marginBottom: spacing(1),
-  },
-  dropdownContainer: {
-    width: '95%',
-  },
-  dropdown: {
-    width: '100%',
-    textAlign: 'left',
-  },
-  dropdownInputLabel: {
-    fontSize: 15,
-    textAlign: 'left',
-    marginBottom: '2px',
   },
 });
 
