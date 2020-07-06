@@ -4,8 +4,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
 
 import ContactInfoForm from './ContactInfoForm';
+import ValueQuestionForm from './ValueQuestionForm';
 import InterestsAndGoalsForm from './InterestsAndGoalsForm';
 import DemographicInfoForm from './DemographicInfoForm';
 
@@ -133,7 +135,29 @@ const Questionnaire = ({
               errors={errors}
             />
           </fieldset>
-
+          <fieldset className={classes.sectionContainer}>
+            <legend>
+              <Typography
+                variant="body1"
+                component="p"
+                className={classes.sectionHeader}
+              >
+                Values
+              </Typography>
+            </legend>
+            <Typography
+              variant="body1"
+              component="p"
+              className={classes.sectionDescription}
+            >
+              The questions below help us assess whether or not you are aligned
+              with the core values of our organization and network. For more
+              information on how we define these terms please review this
+              document and our website
+              {/* add link */}
+            </Typography>
+            <ValueQuestionForm values={values} handleChange={handleChange} />
+          </fieldset>
           <fieldset className={classes.sectionContainer}>
             <legend>
               <Typography
@@ -278,7 +302,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: spacing(0),
   },
   sectionContainer: {
-    border: '2px solid #ffe070',
+    border: `1px solid ${palette.primary.main}`,
     padding: '0px 40px 20px 40px',
     marginBottom: '20px',
   },
@@ -295,6 +319,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.up('sm')]: {
       fontSize: '16px',
     },
+  },
+  valuesQuestions: {
+    margin: '10px 0px 30px 0px',
+  },
+  question: {
+    marginBottom: '10px',
+    fontWeight: 'bold',
+    // fontSize: '15px',
+    color: '#303030',
   },
 });
 

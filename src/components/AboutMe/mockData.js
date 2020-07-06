@@ -55,6 +55,8 @@ export default {
       operations_administration: true,
       program_management: true,
     },
+    value_question1: 'test1',
+    value_question2: 'test2',
   },
 };
 
