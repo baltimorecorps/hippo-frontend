@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
-const ValueQuestionForm = ({values, handleChange, classes}) => {
+const ValueQuestionForm = ({values, handleChange, errors, classes}) => {
   return (
     <React.Fragment>
       <div className={classes.valuesQuestions}>
@@ -23,6 +24,9 @@ const ValueQuestionForm = ({values, handleChange, classes}) => {
           variant="outlined"
           style={{width: '100%'}}
         />
+        <FormHelperText className={classes.formHelperText}>
+          {errors.valueQuestion1_error || null}
+        </FormHelperText>
       </div>
       <div className={classes.valuesQuestions}>
         <Typography variant="body1" component="p" className={classes.question}>
@@ -41,6 +45,9 @@ const ValueQuestionForm = ({values, handleChange, classes}) => {
           style={{width: '100%'}}
         />
       </div>
+      <FormHelperText className={classes.formHelperText}>
+        {errors.valueQuestion2_error || null}
+      </FormHelperText>
     </React.Fragment>
   );
 };

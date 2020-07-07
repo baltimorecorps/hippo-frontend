@@ -345,7 +345,7 @@ const contactInfoValidator = values => {
   return {isError, err};
 };
 const interestsAndGoalsValidator = values => {
-  const {job_search_status, years_exp} = values;
+  const {job_search_status, years_exp} = values.profile;
 
   let isError = false;
   let err = {};

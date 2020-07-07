@@ -84,7 +84,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     setErrors(err);
 
     if (!isError) {
-      console.log('submitted form');
+      console.log('submitted form', values);
+
       // handleSubmit(values);
       onCloseForm();
     }
@@ -224,7 +225,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               {createTextField(
                 'street1',
                 'Address 1',
-                values.profile.address.street1,
+                values.profile.address_primary.street1,
                 handleAddress,
                 errors.street1_error
               )}
@@ -241,7 +242,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               {createTextField(
                 'city',
                 'City',
-                values.profile.address.city,
+                values.profile.address_primary.city,
                 handleAddress,
                 errors.city_error
               )}
@@ -249,7 +250,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               {createDropdownSelector(
                 'state',
                 'State *',
-                values.profile.address.state,
+                values.profile.address_primary.state,
                 states,
                 handleAddress,
                 errors.state_error
@@ -259,7 +260,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {createTextField(
                   'zip_code',
                   'Zip Code',
-                  values.profile.address.zip_code,
+                  values.profile.address_primary.zip_code,
                   handleAddress,
                   errors.zipCode_error
                 )}
@@ -267,7 +268,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {createDropdownSelector(
                   'country',
                   'Country *',
-                  values.profile.address.country,
+                  values.profile.address_primary.country,
                   countryList,
                   handleAddress,
                   errors.country_error

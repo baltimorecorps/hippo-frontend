@@ -20,30 +20,37 @@ const useForm = (initialValues, onSubmit) => {
   const handlers = {
     handleChange: event => {
       event.persist();
-      update(event.target.name)(event.target.value);
+      const newValue = {
+        ...values.profile,
+        [event.target.name]: event.target.value,
+      };
+      update('profile')(newValue);
     },
-    handleSubmit: values => {
-      onSubmit(values);
+    handleSubmit: (contactId, values) => {
+      onSubmit(contactId, values);
     },
 
     handleInterestedRolesChange: event => {
       event.persist();
       const newValue = {
-        ...values.interested_roles,
-        [event.target.name]: event.target.checked,
+        ...values.profile,
+        roles: {
+          ...values.profile.roles,
+          [event.target.name]: event.target.checked,
+        },
       };
-      update('interested_roles')(newValue);
+      update('profile')(newValue);
     },
   };
 
   return [values, handlers];
 };
 
-const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
+const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [
     values,
     {handleChange, handleSubmit, handleInterestedRolesChange},
-  ] = useForm(profile, onSubmit);
+  ] = useForm(contact, onSubmit);
   const [errors, setErrors] = useState({});
 
   const submit = () => {
@@ -51,23 +58,22 @@ const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
     setErrors(err);
 
     if (!isError) {
-      console.log('submitted form');
-      // handleSubmit(values);
+      handleSubmit(contact.id, values);
       onCloseForm();
     }
   };
-
-  // todo
-  // form validation
-  // testing
 
   const descriptions = [
     'The questions below help us understand a little bit more about your experience and which roles you might be interested in applying for.',
   ];
 
   let roles = [];
-  for (const [key, value] of Object.entries(values.interested_roles)) {
-    roles.push({name: key, checked: value});
+  for (const [key, value] of Object.entries(values.profile.roles)) {
+    if (value == null) {
+      roles.push({name: key, checked: false});
+    } else {
+      roles.push({name: key, checked: value});
+    }
   }
 
   for (const [key, value] of Object.entries(roleLabels)) {
@@ -77,6 +83,7 @@ const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
       }
     });
   }
+
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader
@@ -89,7 +96,7 @@ const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
         <form noValidate autoComplete="off">
           <FormRadioButtons
             question="What is the status of your job search? *"
-            value={values.job_search_status}
+            value={values.profile.job_search_status}
             onChange={handleChange}
             options={jobSearchStatus}
             name="job_search_status"
@@ -99,7 +106,7 @@ const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
 
           <FormRadioButtons
             question="How many years of professional experience (internships, advocacy, employed etc.) do you have? *"
-            value={values.years_exp}
+            value={values.profile.years_exp}
             onChange={handleChange}
             options={yearsOfExperience}
             name="years_exp"
@@ -115,7 +122,7 @@ const InterestsAndGoalsForm = ({profile, onSubmit, onCloseForm, classes}) => {
 
           <FormRadioButtons
             question="Have you participated in any of Baltimore Corps' programs and services already?"
-            value={values.previous_bcorps_program}
+            value={values.profile.previous_bcorps_program}
             onChange={handleChange}
             options={['Yes', 'No']}
             name="previous_bcorps_program"

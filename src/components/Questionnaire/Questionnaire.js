@@ -14,8 +14,14 @@ import DemographicInfoForm from './DemographicInfoForm';
 import mockData from '../AboutMe/mockData';
 import mockDataEmpty from '../AboutMe/mockDataEmpty';
 import Logo from '../../lib/images/long.png';
-import {contactInfoValidator} from 'lib/formHelpers/formValidator';
+import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
+import {
+  FormCheckboxes,
+  FormTextField,
+  FormDropDownSelector,
+  FormSubmitButton,
+} from '../AboutMe/forms/FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -88,8 +94,7 @@ const Questionnaire = ({
   const [errors, setErrors] = useState({});
 
   const submit = () => {
-    values.email = values.email_primary.email;
-    const {isError, err} = contactInfoValidator(values);
+    const {isError, err} = interestsAndGoalsValidator(values);
 
     setErrors(err);
 
@@ -156,7 +161,11 @@ const Questionnaire = ({
               document and our website
               {/* add link */}
             </Typography>
-            <ValueQuestionForm values={values} handleChange={handleChange} />
+            <ValueQuestionForm
+              values={values}
+              handleChange={handleChange}
+              errors={errors}
+            />
           </fieldset>
           <fieldset className={classes.sectionContainer}>
             <legend>
@@ -214,6 +223,7 @@ const Questionnaire = ({
               handleRaceOther={handleRaceOther}
             />
           </fieldset>
+          <FormSubmitButton onSubmit={submit} />
         </form>
       </Grid>
     </Paper>

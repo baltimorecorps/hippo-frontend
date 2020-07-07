@@ -55,7 +55,7 @@ export const updateExperience = experience =>
     )(dispatch);
     await Promise.all([
       getExperience(experience.id)(dispatch),
-      getContactCapabilities(experience.contact_id)(dispatch)
+      getContactCapabilities(experience.contact_id)(dispatch),
     ]);
   };
 

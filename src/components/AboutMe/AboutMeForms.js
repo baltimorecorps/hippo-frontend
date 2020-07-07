@@ -21,14 +21,14 @@ import mockData from './mockData';
 import mockDataEmpty from './mockDataEmpty';
 
 const AboutMeForms = ({
-  // contact,
+  contact,
   onSubmit,
   onCloseAllForms,
   onClickEdit,
   classes,
 }) => {
   // const contact = mockData;
-  const contact = mockDataEmpty;
+  // const contact = mockDataEmpty;
   const email = contact.email_primary ? contact.email_primary.email : '';
 
   const [openForms, setOpenForms] = useState({
@@ -86,7 +86,7 @@ const AboutMeForms = ({
         <ExpansionPanelDetails>
           {openForms.interests_goals ? (
             <InterestsAndGoalsForm
-              profile={contact.profile}
+              contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenForms({...openForms, interests_goals: false})
@@ -159,6 +159,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <DemographicDisplay
+                contactId={contact.id}
                 profile={contact.profile}
                 onClickEdit={() =>
                   setOpenForms({...openForms, demographic_info: true})

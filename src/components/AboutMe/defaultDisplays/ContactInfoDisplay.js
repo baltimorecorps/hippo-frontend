@@ -19,10 +19,10 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   let address1 = '';
   let address2 = '';
   let country = '';
-  if (profile) {
-    address1 = `${profile.address.street1}, ${profile.address.street2}`;
-    address2 = `${profile.address.city}, ${profile.address.state} ${profile.address.zip_code}`;
-    country = profile.address.country;
+  if (profile && profile.address_primary) {
+    address1 = `${profile.address_primary.street1}, ${profile.address_primary.street2}`;
+    address2 = `${profile.address_primary.city}, ${profile.address_primary.state} ${profile.address_primary.zip_code}`;
+    country = profile.address_primary.country;
   }
 
   return (
@@ -38,7 +38,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
           {first_name} {last_name}
         </Typography>
         <IconButton
-          onClick={onClickEdit}
+          onClick={() => onClickEdit()}
           size="small"
           aria-label="edit experience"
         >
@@ -67,10 +67,10 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
 
       {isOnEditMode ? (
         contact &&
-        profile.address.street1 &&
-        profile.address.city &&
-        profile.address.state &&
-        profile.address.country ? (
+        profile.address_primary.street1 &&
+        profile.address_primary.city &&
+        profile.address_primary.state &&
+        profile.address_primary.country ? (
           <Typography
             gutterBottom
             variant="body1"

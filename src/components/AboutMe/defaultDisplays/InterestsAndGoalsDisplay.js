@@ -11,7 +11,7 @@ import {roleLabels} from '../defaultData';
 
 const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
   let checkedRoles = [];
-  for (const [key, value] of Object.entries(profile.interested_roles)) {
+  for (const [key, value] of Object.entries(profile.roles)) {
     if (value === true) checkedRoles.push(key);
   }
 
