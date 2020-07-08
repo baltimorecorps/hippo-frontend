@@ -282,7 +282,13 @@ const interviewScheduledValidator = values => {
 };
 const contactInfoValidator = values => {
   const {first_name, last_name, email, phone_primary} = values;
-  const {street1, city, state, zip_code, country} = values.profile.address;
+  const {
+    street1,
+    city,
+    state,
+    zip_code,
+    country,
+  } = values.profile.address_primary;
 
   let isError = false;
   let err = {};

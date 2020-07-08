@@ -52,8 +52,8 @@ const useForm = (initialValues, onSubmit) => {
     handleAddress: event => {
       event.persist();
       const newValue = {
-        address: {
-          ...values.profile.address,
+        address_primary: {
+          ...values.profile.address_primary,
           [event.target.name]: event.target.value,
         },
       };
@@ -113,7 +113,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
           label={label}
           className={classes.formControl}
           name={name}
-          value={value}
+          value={value || ''}
           onChange={onChange}
           InputLabelProps={inputLabelProps}
           InputProps={inputProps}
@@ -233,7 +233,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               {createTextField(
                 'street2',
                 'Address 2',
-                values.profile.address.street2,
+                values.profile.address_primary.street2,
                 handleAddress
               )}
             </Grid>

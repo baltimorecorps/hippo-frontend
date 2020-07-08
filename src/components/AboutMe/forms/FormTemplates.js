@@ -73,7 +73,7 @@ const FormRadioButtonsTemplate = ({
         <RadioGroup
           aria-label={ariaLabel}
           name={name}
-          value={value}
+          value={value || ''}
           onChange={onChange}
           className={classes.radioGroup}
         >
@@ -163,7 +163,7 @@ const FormDropDownSelectorTemplate = ({
         disabled={false}
         required
         id={name}
-        value={value}
+        value={value || ''}
         onChange={onChange}
         inputProps={{
           name: name,
@@ -216,7 +216,7 @@ const FormTextFieldTemplate = ({
           id={name}
           className={classes.formControl}
           name={name}
-          value={value}
+          value={value || ''}
           onChange={onChange}
           InputLabelProps={inputLabelProps}
           InputProps={inputProps}
