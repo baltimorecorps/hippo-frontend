@@ -150,7 +150,7 @@ const AboutMeForms = ({
         <ExpansionPanelDetails>
           {openForms.demographic_info ? (
             <DemographicForm
-              profile={contact.profile}
+              contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenForms({...openForms, demographic_info: false})

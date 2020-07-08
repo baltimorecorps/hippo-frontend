@@ -22,43 +22,53 @@ const useForm = (initialValues, onSubmit) => {
   const handlers = {
     handleChange: event => {
       event.persist();
-      update(event.target.name)(event.target.value);
+      const newValue = {
+        ...values.profile,
+        [event.target.name]: event.target.value,
+      };
+      update('profile')(newValue);
     },
-    handleSubmit: values => {
-      onSubmit(values);
+    handleSubmit: (contactId, values) => {
+      onSubmit(contactId, values);
     },
 
     handleRacesChange: event => {
       event.persist();
       const newValue = {
-        ...values.race,
-        [event.target.name]: event.target.checked,
+        ...values.profile,
+        race: {
+          ...values.profile.race,
+          [event.target.name]: event.target.checked,
+        },
       };
-      update('race')(newValue);
+      update('profile')(newValue);
     },
 
     handleRaceOther: event => {
       event.persist();
       const newValue = {
-        ...values.race,
-        [event.target.name]: event.target.value,
+        ...values.profile,
+        race: {
+          ...values.profile.race,
+          [event.target.name]: event.target.value,
+        },
       };
 
-      update('race')(newValue);
+      update('profile')(newValue);
     },
   };
 
   return [values, handlers];
 };
 
-const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
+const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [
     values,
     {handleChange, handleSubmit, handleRacesChange, handleRaceOther},
-  ] = useForm(profile, onSubmit);
+  ] = useForm(contact, onSubmit);
 
   const submit = () => {
-    // handleSubmit(values);
+    handleSubmit(contact.id, values);
     onCloseForm();
   };
 
@@ -67,8 +77,14 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
   ];
 
   let race = [];
-  for (const [key, value] of Object.entries(values.race)) {
-    race.push({name: key, checked: value});
+  for (const [key, value] of Object.entries(values.profile.race)) {
+    if (key !== 'race_other') {
+      if (value == null) {
+        race.push({name: key, checked: false});
+      } else {
+        race.push({name: key, checked: value});
+      }
+    }
   }
 
   for (const [key, value] of Object.entries(raceLabels)) {
@@ -96,10 +112,10 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
             options={raceOptions}
             onChange={handleRacesChange}
           />
-          {values.race.not_listed && (
+          {values.profile.race.not_listed && (
             <div className={classes.otherRace}>
               <FormTextField
-                value={values.race.race_other}
+                value={values.profile.race.race_other}
                 name="race_other"
                 label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
                 onChange={handleRaceOther}
@@ -111,14 +127,14 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
               <FormDropDownSelector
                 question="Gender"
                 name="gender"
-                value={values.gender}
+                value={values.profile.gender}
                 options={genders}
                 onChange={handleChange}
               />
 
-              {values.gender === 'Not Listed' && (
+              {values.profile.gender === 'Not Listed' && (
                 <FormTextField
-                  value={values.gender_other}
+                  value={values.profile.gender_other}
                   name="gender_other"
                   label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
                   onChange={handleChange}
@@ -129,14 +145,14 @@ const DemographicForm = ({profile, onSubmit, onCloseForm, classes}) => {
               <FormDropDownSelector
                 question="Pronoun"
                 name="pronoun"
-                value={values.pronoun}
+                value={values.profile.pronoun}
                 options={pronouns}
                 onChange={handleChange}
               />
 
-              {values.pronoun === 'Not Listed' && (
+              {values.profile.pronoun === 'Not Listed' && (
                 <FormTextField
-                  value={values.pronoun_other}
+                  value={values.profile.pronoun_other}
                   name="pronoun_other"
                   label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
                   onChange={handleChange}
