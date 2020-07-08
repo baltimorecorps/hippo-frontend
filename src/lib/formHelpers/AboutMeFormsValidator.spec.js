@@ -16,7 +16,7 @@ describe('About Me: Contact Info Form', () => {
       phone_primary: '',
       email: '',
       profile: {
-        address: {
+        address_primary: {
           street1: '',
           street2: '',
           city: '',
@@ -51,7 +51,7 @@ describe('About Me: Contact Info Form', () => {
       phone_primary: '9990001111',
       email: 'bay@gmail.com',
       profile: {
-        address: {
+        address_primary: {
           street1: '123 Monday St.',
           street2: 'Apt 3',
           city: 'Baltimore',
@@ -75,7 +75,7 @@ describe('About Me: Contact Info Form', () => {
       phone_primary: '9990001111',
       email: 'bay@gmail.com',
       profile: {
-        address: {
+        address_primary: {
           street1: '123 Monday St.',
           street2: 'Apt 3',
           city: 'Baltimore',
@@ -102,7 +102,7 @@ describe('About Me: Contact Info Form', () => {
       phone_primary: '9990001111',
       email: 'bay@gmail.com',
       profile: {
-        address: {
+        address_primary: {
           street1: '123 Monday St.',
           street2: 'Apt 3',
           city: 'Baltimore',
@@ -129,7 +129,7 @@ describe('About Me: Contact Info Form', () => {
       phone_primary: '9990001111',
       email: 'bay@gmail.com',
       profile: {
-        address: {
+        address_primary: {
           street1: '123 Monday St.',
           street2: 'Apt 3',
           city: 'Baltimore',
@@ -153,8 +153,10 @@ describe('About Me: Contact Info Form', () => {
 describe('About Me: Interest and Goals Form', () => {
   test('Interest and Goals Validator: empty values ', () => {
     const values = {
-      job_search_status: '',
-      years_exp: '',
+      profile: {
+        job_search_status: '',
+        years_exp: '',
+      },
     };
     let expectedErr = {
       jobSearchStatus_error: 'Required',
@@ -168,8 +170,10 @@ describe('About Me: Interest and Goals Form', () => {
 
   test('Interest and Goals Validator: empty values ', () => {
     const values = {
-      job_search_status: 'Actively looking for a job',
-      years_exp: '0-2 years',
+      profile: {
+        job_search_status: 'Actively looking for a job',
+        years_exp: '0-2 years',
+      },
     };
     let expectedErr = {};
     let {isError, err} = interestsAndGoalsValidator(values);
