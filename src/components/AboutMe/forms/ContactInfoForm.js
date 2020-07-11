@@ -36,8 +36,8 @@ const useForm = (initialValues, onSubmit) => {
       event.persist();
       update(event.target.name)(event.target.value);
     },
-    handleSubmit: values => {
-      onSubmit(values);
+    handleSubmit: (contactId, values) => {
+      onSubmit(contactId, values);
     },
     handlePhoneChange: value => {
       update('phone_primary')(value);
@@ -52,6 +52,7 @@ const useForm = (initialValues, onSubmit) => {
     handleAddress: event => {
       event.persist();
       const newValue = {
+        ...values.profile,
         address_primary: {
           ...values.profile.address_primary,
           [event.target.name]: event.target.value,
@@ -86,7 +87,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     if (!isError) {
       console.log('submitted form', values);
 
-      // handleSubmit(values);
+      handleSubmit(contact.id, values);
+
       onCloseForm();
     }
   };

@@ -110,3 +110,18 @@ export default {
 //     },
 //   ],
 // };
+
+// const contact = {
+//   instructions: {
+//     // all default values are false
+//     address: false, // check if all fields in address_primary are not null (except street2, it can be null)
+//     value_alignment: false, // check if values in profile are not null
+//     programs_eligibility: false, // check if values in profile are not null
+//     interests_goals: false, // check if values in profile are not null
+//     skills: false, // check skills array inside contact, must have length > 0
+//     work_exp: false, // check work experience array length > 0
+//     responsibility: false, // check achievements array inside a work experience, must have length > 0
+//     tag_skills: false, // check skills array inside a work experience, must have length > 0
+//     education: false, // check education array length > 0
+//   },
+// };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
@@ -11,19 +11,16 @@ import HomeIcon from '@material-ui/icons/Home';
 
 const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const email = contact.email_primary ? contact.email_primary.email : '';
-  const {first_name, last_name, phone_primary, profile} = contact;
-  // const {street1, city, state, zip_code, country} =
-  //   contact && contact.profile.address;
+  const {first_name, last_name, phone_primary} = contact;
+  const {street1, street2, city, state, zip_code, country} =
+    contact && contact.profile && contact.profile.address_primary;
 
-  // console.log(profile);
-  let address1 = '';
-  let address2 = '';
-  let country = '';
-  if (profile && profile.address_primary) {
-    address1 = `${profile.address_primary.street1}, ${profile.address_primary.street2}`;
-    address2 = `${profile.address_primary.city}, ${profile.address_primary.state} ${profile.address_primary.zip_code}`;
-    country = profile.address_primary.country;
-  }
+  let address_street2 = '';
+  if (street2) address_street2 = `, ${street2}`;
+
+  const address1 = `${street1}${address_street2}` || '';
+  const address2 = `${city}, ${state} ${zip_code}` || '';
+  const address3 = country || '';
 
   return (
     <React.Fragment>
@@ -67,10 +64,9 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
 
       {isOnEditMode ? (
         contact &&
-        profile.address_primary.street1 &&
-        profile.address_primary.city &&
-        profile.address_primary.state &&
-        profile.address_primary.country ? (
+        address1.length > 0 &&
+        address2.length > 0 &&
+        address3.length > 0 ? (
           <Typography
             gutterBottom
             variant="body1"
@@ -81,7 +77,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
             {address1}
             <br />
             {address2} <br />
-            {country}
+            {address3}
           </Typography>
         ) : (
           <Typography
