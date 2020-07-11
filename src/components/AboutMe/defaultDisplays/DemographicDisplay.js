@@ -20,12 +20,17 @@ const DemographicDisplay = ({profile, onClickEdit, classes}) => {
     if (checkedRace.includes(key)) race.push(value);
   }
 
+  let gender = profile.gender;
+  let pronoun = profile.pronoun;
+  if (profile.gender === 'Not Listed') gender = profile.gender_other;
+  if (profile.pronoun === 'Not Listed') pronoun = profile.pronoun_other;
+
   return (
     <React.Fragment>
       <Header header="Demographic Information" onClickEdit={onClickEdit} />
       <QuestionWithMultipleAnswersArray question="Race:" answers={race} />
-      <QuestionWithOneAnswer question="Gender:" answer={profile.gender} />
-      <QuestionWithOneAnswer question="Pronoun:" answer={profile.pronoun} />
+      <QuestionWithOneAnswer question="Gender:" answer={gender} />
+      <QuestionWithOneAnswer question="Pronoun:" answer={pronoun} />
     </React.Fragment>
   );
 };
