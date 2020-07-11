@@ -301,7 +301,6 @@ export const updateAboutMe = (contactId, aboutMe) =>
     //   type: UPDATE_ABOUT_ME,
     //   aboutMe,
     // });
-    console.log(aboutMe);
 
     await makeApiFetchActions(
       UPDATE_ABOUT_ME,

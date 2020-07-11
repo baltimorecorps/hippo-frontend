@@ -22,10 +22,19 @@ const useForm = (initialValues, onSubmit) => {
   const handlers = {
     handleChange: event => {
       event.persist();
-      const newValue = {
+
+      let newValue = {
         ...values.profile,
         [event.target.name]: event.target.value,
       };
+      if (event.target.name === 'gender' && event.target.value !== 'Not Listed')
+        newValue.gender_other = '';
+      if (
+        event.target.name === 'pronoun' &&
+        event.target.value !== 'Not Listed'
+      )
+        newValue.pronoun_other = '';
+
       update('profile')(newValue);
     },
     handleSubmit: (contactId, values) => {
@@ -68,6 +77,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
   ] = useForm(contact, onSubmit);
 
   const submit = () => {
+    // console.log('profile', values.profile);
     handleSubmit(contact.id, values);
     onCloseForm();
   };
@@ -97,6 +107,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
   const raceOptions = race.slice(0, -1);
 
+  // console.log(values.profile);
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader
