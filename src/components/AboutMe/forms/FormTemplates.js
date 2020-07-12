@@ -228,6 +228,36 @@ const FormTextFieldTemplate = ({
     </Grid>
   );
 };
+const FormMultiRowsTextFieldTemplate = ({
+  value,
+  name,
+  question,
+  onChange,
+  error,
+  classes,
+}) => {
+  return (
+    <Grid container style={{marginBottom: '10px'}} direction="column">
+      <Typography variant="body1" component="p" className={classes.question}>
+        {question}
+      </Typography>
+      <TextField
+        required
+        id={name}
+        name={name}
+        value={value}
+        multiline
+        rows={6}
+        onChange={onChange}
+        variant="outlined"
+        style={{width: '100%'}}
+      />
+      <FormHelperText className={classes.formHelperText}>
+        {error || null}
+      </FormHelperText>
+    </Grid>
+  );
+};
 
 FormHeaderTemplate.propTypes = {
   header: PropTypes.string,
@@ -387,6 +417,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
     color: 'grey',
     textAlign: 'justify',
   },
+  valuesQuestions: {
+    margin: '10px 0px 20px 0px',
+  },
+  // question: {
+  //   marginBottom: '10px',
+  //   fontWeight: 'bold',
+  //   color: '#303030',
+  //   fontSize: '15px',
+  //   textAlign: 'left',
+  // },
 });
 
 const FormRadioButtons = withStyles(styles)(FormRadioButtonsTemplate);
@@ -395,6 +435,9 @@ const FormCheckboxes = withStyles(styles)(FormCheckboxesTemplate);
 const FormSubmitButton = withStyles(styles)(FormSubmitButtonTemplate);
 const FormHeader = withStyles(styles)(FormHeaderTemplate);
 const FormTextField = withStyles(styles)(FormTextFieldTemplate);
+const FormMultiRowsTextField = withStyles(styles)(
+  FormMultiRowsTextFieldTemplate
+);
 
 export {
   FormRadioButtons,
@@ -403,4 +446,5 @@ export {
   FormSubmitButton,
   FormDropDownSelector,
   FormTextField,
+  FormMultiRowsTextField,
 };

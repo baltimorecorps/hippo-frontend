@@ -4,11 +4,12 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {valueAlignmentValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import FormHelperText from '@material-ui/core/FormHelperText';
 
-import {FormHeader, FormSubmitButton} from './FormTemplates';
+import {
+  FormMultiRowsTextField,
+  FormHeader,
+  FormSubmitButton,
+} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -58,55 +59,23 @@ const ValueAlignmentForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
-          <div className={classes.valuesQuestions}>
-            <Typography
-              variant="body1"
-              component="p"
-              className={classes.question}
-            >
-              Racial Equity & Baltimore: Why is racial equity work in Baltimore
-              important to you? *
-            </Typography>
-            <TextField
-              required
-              id="value_question1"
-              name="value_question1"
-              value={values.profile.value_question1}
-              multiline
-              rows={6}
-              onChange={handleChange}
-              variant="outlined"
-              style={{width: '100%'}}
-            />
-            <FormHelperText className={classes.formHelperText}>
-              {errors.valueQuestion1_error || null}
-            </FormHelperText>
-          </div>
-          <div className={classes.valuesQuestions}>
-            <Typography
-              variant="body1"
-              component="p"
-              className={classes.question}
-            >
-              Sector Effectiveness: How has your background and experiences
-              prepared you for today’s work in Baltimore’s social impact sector?
-              *
-            </Typography>
-            <TextField
-              required
-              id="value_question2"
-              name="value_question2"
-              value={values.profile.value_question2}
-              onChange={handleChange}
-              multiline
-              rows={6}
-              variant="outlined"
-              style={{width: '100%'}}
-            />
-          </div>
-          <FormHelperText className={classes.formHelperText}>
-            {errors.valueQuestion2_error || null}
-          </FormHelperText>
+          <FormMultiRowsTextField
+            value={values.profile.value_question1}
+            name="value_question1"
+            question="Racial Equity & Baltimore: Why is racial equity work in Baltimore
+              important to you? *"
+            onChange={handleChange}
+            error={errors.valueQuestion1_error}
+          />
+
+          <FormMultiRowsTextField
+            value={values.profile.value_question2}
+            name="value_question2"
+            question="Sector Effectiveness: How has your background and experiences prepared you for today’s work in Baltimore’s social impact sector? *"
+            onChange={handleChange}
+            error={errors.valueQuestion2_error}
+          />
+
           <FormSubmitButton onSubmit={submit} />
         </form>
       </Grid>
@@ -125,16 +94,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: '0px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
-  },
-  valuesQuestions: {
-    margin: '10px 0px 20px 0px',
-  },
-  question: {
-    marginBottom: '10px',
-    fontWeight: 'bold',
-    color: '#303030',
-    fontSize: '15px',
-    textAlign: 'left',
   },
 });
 
