@@ -27,7 +27,7 @@ export default {
     current_job_status: '',
     current_edu_status: '',
     previous_bcorps_program: '',
-    address: {
+    address_primary: {
       street1: '',
       street2: '',
       city: '',
@@ -46,7 +46,7 @@ export default {
       not_listed: false,
       race_other: '',
     },
-    interested_roles: {
+    roles: {
       advocacy_public_policy: false,
       community_engagement_outreach: false,
       data_analysis: false,

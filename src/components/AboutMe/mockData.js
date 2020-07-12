@@ -24,10 +24,10 @@ export default {
     pronoun_other: '',
     years_exp: '3-5 years',
     job_search_status: 'Actively looking for a job',
-    current_job_status: 'Employed',
-    current_edu_status: 'Full-time Student',
+    current_job_status: 'Unemployed',
+    current_edu_status: 'Full-time student',
     previous_bcorps_program: 'No',
-    address: {
+    address_primary: {
       street1: '123 Main St',
       street2: 'Apt 3',
       city: 'Baltimore',
@@ -46,7 +46,7 @@ export default {
       not_listed: false,
       race_other: '',
     },
-    interested_roles: {
+    roles: {
       advocacy_public_policy: false,
       community_engagement_outreach: false,
       data_analysis: true,
@@ -55,8 +55,11 @@ export default {
       operations_administration: true,
       program_management: true,
     },
-    value_question1: 'test1',
-    value_question2: 'test2',
+    value_question1:
+      'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae ipsa dolorem voluptas sint assumenda inventore vitae tenetur? Dolorum, vel possimus!',
+
+    value_question2:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quia consequuntur illo perspiciatis temporibus laborum exercitationem, in eius, error soluta nihil. Ipsa accusantium illo harum obcaecati id maiores reiciendis velit quae voluptatum, facere, accusamus fuga eveniet recusandae itaque nostrum fugiat?',
   },
 };
 

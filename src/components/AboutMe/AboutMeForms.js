@@ -14,6 +14,7 @@ import DemographicForm from './forms/DemographicForm';
 import DemographicDisplay from './defaultDisplays/DemographicDisplay';
 import InterestsAndGoalsForm from './forms/InterestsAndGoalsForm';
 import ValueAlignmentForm from './forms/ValueAlignmentForm';
+import ValueAlignmentDisplay from './defaultDisplays/ValueAlignmentDisplay';
 import InterestsAndGoalsDisplay from './defaultDisplays/InterestsAndGoalsDisplay';
 import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm';
 import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
@@ -22,15 +23,14 @@ import mockData from './mockData';
 import mockDataEmpty from './mockDataEmpty';
 
 const AboutMeForms = ({
-  contact,
+  // contact,
   onSubmit,
   onCloseAllForms,
   onClickEdit,
   classes,
 }) => {
-  // const contact = mockData;
+  const contact = mockData;
   // const contact = mockDataEmpty;
-  const email = contact.email_primary ? contact.email_primary.email : '';
 
   const [openForms, setOpenForms] = useState({
     contact_info: false,
@@ -118,15 +118,15 @@ const AboutMeForms = ({
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
-          {/* {openForms.value_alignment ? ( */}
-          <ValueAlignmentForm
-            contact={contact}
-            onSubmit={onSubmit}
-            onCloseForm={() =>
-              setOpenForms({...openForms, value_alignment: false})
-            }
-          />
-          {/* ) : (
+          {openForms.value_alignment ? (
+            <ValueAlignmentForm
+              contact={contact}
+              onSubmit={onSubmit}
+              onCloseForm={() =>
+                setOpenForms({...openForms, value_alignment: false})
+              }
+            />
+          ) : (
             <div className={classes.extraPadding}>
               <ValueAlignmentDisplay
                 profile={contact.profile}
@@ -135,7 +135,7 @@ const AboutMeForms = ({
                 }
               />
             </div>
-          )} */}
+          )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
       {/* <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
