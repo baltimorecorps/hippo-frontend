@@ -4,6 +4,7 @@ import {
   contactInfoValidator,
   interestsAndGoalsValidator,
   programsAndEligibilityValidator,
+  valueAlignmentValidator,
 } from './formValidator';
 
 afterEach(cleanup);
@@ -172,7 +173,7 @@ describe('About Me: Interest and Goals Form', () => {
     expect(err).toEqual(expectedErr);
   });
 
-  test('Interest and Goals Validator: empty values ', () => {
+  test('Interest and Goals Validator: Valid values ', () => {
     const values = {
       profile: {
         job_search_status: 'Actively looking for a job',
@@ -183,6 +184,39 @@ describe('About Me: Interest and Goals Form', () => {
     };
     let expectedErr = {};
     let {isError, err} = interestsAndGoalsValidator(values);
+
+    console.log(err);
+    expect(isError).toBe(false);
+    expect(err).toEqual(expectedErr);
+  });
+});
+describe('About Me: Value Alignment Form', () => {
+  test('Value Alignment Validator: empty values ', () => {
+    const values = {
+      profile: {
+        value_question1: '',
+        value_question2: '',
+      },
+    };
+    let expectedErr = {
+      valueQuestion1_error: 'Required',
+      valueQuestion2_error: 'Required',
+    };
+    let {isError, err} = valueAlignmentValidator(values);
+
+    expect(isError).toBe(true);
+    expect(err).toEqual(expectedErr);
+  });
+
+  test('Value Alignment Validator: Valid values ', () => {
+    const values = {
+      profile: {
+        value_question1: 'Answer1',
+        value_question2: 'Answer2',
+      },
+    };
+    let expectedErr = {};
+    let {isError, err} = valueAlignmentValidator(values);
 
     console.log(err);
     expect(isError).toBe(false);
