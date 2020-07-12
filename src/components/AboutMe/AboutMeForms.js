@@ -13,6 +13,7 @@ import ContactInfoForm from './forms/ContactInfoForm';
 import DemographicForm from './forms/DemographicForm';
 import DemographicDisplay from './defaultDisplays/DemographicDisplay';
 import InterestsAndGoalsForm from './forms/InterestsAndGoalsForm';
+import ValueAlignmentForm from './forms/ValueAlignmentForm';
 import InterestsAndGoalsDisplay from './defaultDisplays/InterestsAndGoalsDisplay';
 import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm';
 import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
@@ -33,6 +34,7 @@ const AboutMeForms = ({
 
   const [openForms, setOpenForms] = useState({
     contact_info: false,
+    value_alignment: false,
     interests_goals: false,
     programs_eligibility: false,
     demographic_info: false,
@@ -102,6 +104,38 @@ const AboutMeForms = ({
               />
             </div>
           )}
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          className={classes.header}
+        >
+          <Typography className={classes.headerText}>
+            Value Alignment
+          </Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          {/* {openForms.value_alignment ? ( */}
+          <ValueAlignmentForm
+            contact={contact}
+            onSubmit={onSubmit}
+            onCloseForm={() =>
+              setOpenForms({...openForms, value_alignment: false})
+            }
+          />
+          {/* ) : (
+            <div className={classes.extraPadding}>
+              <ValueAlignmentDisplay
+                profile={contact.profile}
+                onClickEdit={() =>
+                  setOpenForms({...openForms, value_alignment: true})
+                }
+              />
+            </div>
+          )} */}
         </ExpansionPanelDetails>
       </ExpansionPanel>
       {/* <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
