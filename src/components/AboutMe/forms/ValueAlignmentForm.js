@@ -2,12 +2,11 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
+import {valueAlignmentValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import {roleLabels} from '../defaultData';
 
 import {FormHeader, FormSubmitButton} from './FormTemplates';
 
@@ -36,7 +35,7 @@ const ValueAlignmentForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [errors, setErrors] = useState({});
 
   const submit = () => {
-    const {isError, err} = interestsAndGoalsValidator(values);
+    const {isError, err} = valueAlignmentValidator(values);
     setErrors(err);
 
     if (!isError) {
@@ -72,7 +71,7 @@ const ValueAlignmentForm = ({contact, onSubmit, onCloseForm, classes}) => {
               required
               id="value_question1"
               name="value_question1"
-              value={values.value_question1}
+              value={values.profile.value_question1}
               multiline
               rows={6}
               onChange={handleChange}
@@ -97,7 +96,7 @@ const ValueAlignmentForm = ({contact, onSubmit, onCloseForm, classes}) => {
               required
               id="value_question2"
               name="value_question2"
-              value={values.value_question2}
+              value={values.profile.value_question2}
               onChange={handleChange}
               multiline
               rows={6}

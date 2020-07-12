@@ -398,6 +398,22 @@ const programsAndEligibilityValidator = values => {
 
   return {isError, err};
 };
+const valueAlignmentValidator = values => {
+  const {value_question1, value_question2} = values.profile;
+
+  let isError = false;
+  let err = {};
+  if (!value_question1 || value_question1.length === 0) {
+    isError = true;
+    err.valueQuestion1_error = 'Required';
+  }
+  if (!value_question2 || value_question2.length === 0) {
+    isError = true;
+    err.valueQuestion2_error = 'Required';
+  }
+
+  return {isError, err};
+};
 
 export {
   newProfileValidator,
@@ -408,4 +424,5 @@ export {
   contactInfoValidator,
   interestsAndGoalsValidator,
   programsAndEligibilityValidator,
+  valueAlignmentValidator,
 };
