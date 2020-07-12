@@ -351,7 +351,12 @@ const contactInfoValidator = values => {
   return {isError, err};
 };
 const interestsAndGoalsValidator = values => {
-  const {job_search_status, years_exp} = values.profile;
+  const {
+    job_search_status,
+    current_job_status,
+    current_edu_status,
+    years_exp,
+  } = values.profile;
 
   let isError = false;
   let err = {};
@@ -359,6 +364,14 @@ const interestsAndGoalsValidator = values => {
   if (!job_search_status || job_search_status.length === 0) {
     isError = true;
     err.jobSearchStatus_error = 'Required';
+  }
+  if (!current_job_status || current_job_status.length === 0) {
+    isError = true;
+    err.currentJobStatus_error = 'Required';
+  }
+  if (!current_edu_status || current_edu_status.length === 0) {
+    isError = true;
+    err.currentEduStatus_error = 'Required';
   }
 
   if (!years_exp || years_exp.length === 0) {

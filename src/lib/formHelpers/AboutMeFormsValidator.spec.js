@@ -155,11 +155,15 @@ describe('About Me: Interest and Goals Form', () => {
     const values = {
       profile: {
         job_search_status: '',
+        current_job_status: '',
+        current_edu_status: '',
         years_exp: '',
       },
     };
     let expectedErr = {
       jobSearchStatus_error: 'Required',
+      currentJobStatus_error: 'Required',
+      currentEduStatus_error: 'Required',
       yearsExp_error: 'Required',
     };
     let {isError, err} = interestsAndGoalsValidator(values);
@@ -172,6 +176,8 @@ describe('About Me: Interest and Goals Form', () => {
     const values = {
       profile: {
         job_search_status: 'Actively looking for a job',
+        current_job_status: 'Unemployed',
+        current_edu_status: 'Full-time student',
         years_exp: '0-2 years',
       },
     };
