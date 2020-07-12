@@ -27,6 +27,14 @@ const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
         answer={profile.job_search_status}
       />
       <QuestionWithOneAnswer
+        question="Employment Status:"
+        answer={profile.current_job_status}
+      />
+      <QuestionWithOneAnswer
+        question="Currently a student:"
+        answer={profile.current_edu_status}
+      />
+      <QuestionWithOneAnswer
         question="Years of experience:"
         answer={profile.years_exp}
       />

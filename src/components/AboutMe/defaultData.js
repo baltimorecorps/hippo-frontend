@@ -347,6 +347,16 @@ const jobSearchStatus = [
   'Looking for a job in the next 2-6 months',
   'Curious to see what opportunities are available',
 ];
+const currentJobStatus = [
+  'Unemployed',
+  'Employed part-time',
+  'Employed full-time',
+];
+const currentEduStatus = [
+  'Full-time student',
+  'Part-time student',
+  'Currently not a student',
+];
 
 const yearsOfExperience = ['0-2 years', '3-5 years', '5+ years'];
 
@@ -368,4 +378,6 @@ export {
   yearsOfExperience,
   programs,
   roleLabels,
+  currentJobStatus,
+  currentEduStatus,
 };

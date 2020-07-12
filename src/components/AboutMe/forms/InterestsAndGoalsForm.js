@@ -5,7 +5,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-import {jobSearchStatus, yearsOfExperience, roleLabels} from '../defaultData';
+import {
+  jobSearchStatus,
+  currentJobStatus,
+  currentEduStatus,
+  yearsOfExperience,
+  roleLabels,
+} from '../defaultData';
 
 import {
   FormHeader,
@@ -94,6 +100,25 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
+          <FormRadioButtons
+            question="What's your current employment status? *"
+            value={values.profile.current_job_status}
+            onChange={handleChange}
+            options={currentJobStatus}
+            name="current_job_status"
+            ariaLabel="Current job status"
+            error={errors.currentJobStatus_error}
+          />
+          <FormRadioButtons
+            question="Are you currently a student? *"
+            value={values.profile.current_edu_status}
+            onChange={handleChange}
+            options={currentEduStatus}
+            name="current_edu_status"
+            ariaLabel="Current education status"
+            error={errors.currentEduStatus_error}
+          />
+
           <FormRadioButtons
             question="What is the status of your job search? *"
             value={values.profile.job_search_status}
