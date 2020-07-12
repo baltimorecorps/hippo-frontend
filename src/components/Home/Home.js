@@ -54,7 +54,7 @@ const Home = ({hasSession, classes}) => {
                 <CardMedia
                   component="img"
                   height="140"
-                  image={`/logos/long.png`}
+                  image={`/logos/temp_long.png`}
                 />
                 <CardContent className={classes.cardContent}>
                   <Typography
