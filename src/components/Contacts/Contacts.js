@@ -3,24 +3,50 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+
 import ContactList from './ContactList';
 // import AddContact from './AddContact';
 
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
-  const [searchBy, setSearchBy] = useState('name');
-  const [showContacts, setShowContacts] = useState(contacts || null);
-
   useEffect(() => {
     getAllContactsShort();
   }, [getAllContactsShort]);
+
+  const [searchBy, setSearchBy] = useState('name');
+  const [showContacts, setShowContacts] = useState(contacts || null);
+  const [searchBarPlaceholder, setSearchBarPlaceholder] = useState(
+    'Search by name'
+  );
 
   useEffect(() => {
     setShowContacts(contacts);
   }, [contacts]);
 
-  const handleChangeSearch = event => {
+  const handleChangeSearchBy = event => {
+    event.persist();
+
+    setSearchBy(event.target.value);
+
+    switch (event.target.value) {
+      case 'email':
+        setSearchBarPlaceholder('Search by email');
+        break;
+      case 'id':
+        setSearchBarPlaceholder('Search by id');
+        break;
+      default:
+        setSearchBarPlaceholder('Search by name');
+        break;
+    }
+  };
+
+  const handleChangeSearch = (event, searchContactsBy) => {
     event.persist();
     const name = event.target.value.toLowerCase();
 
@@ -32,14 +58,10 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
         const contactEmail = contact.email.toLowerCase();
         return contactFullName.includes(name) || contactEmail.includes(name);
       });
-      // setCurrentPage(1);
       console.log('searchContacts', searchContacts);
       setShowContacts(searchContacts);
     }
   };
-
-  // console.log('showContacts', showContacts);
-  // console.log('contacts', contacts);
 
   if (!showContacts || showContacts.length === 0) return <div>Loading...</div>;
   return (
@@ -48,19 +70,39 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
         <Typography component="h1" variant="h4" align="center">
           Profiles
         </Typography>
-        <div>
-          <TextField
-            id="search-contacts"
-            className={classes.searchBar}
-            placeholder="Search by name, email, or id"
-            name="search-contacts"
-            onChange={handleChangeSearch}
-            InputProps={{
-              classes: {
-                input: classes.resize,
-              },
-            }}
-          />
+        <div className={classes.searchFilterContainer}>
+          <div className={classes.searchByContainer}>
+            <FormControl className={classes.formControlSelector}>
+              <InputLabel className={classes.postsPerPageLabel}>
+                Search by
+              </InputLabel>
+              <Select
+                id="search-by"
+                value={searchBy}
+                onChange={handleChangeSearchBy}
+                className={classes.searchBySelector}
+              >
+                <MenuItem value="name">Name</MenuItem>
+                <MenuItem value="email">Email</MenuItem>
+                <MenuItem value="id">id</MenuItem>
+              </Select>
+            </FormControl>
+          </div>
+          <div className={classes.searchBarContainer}>
+            <TextField
+              id="search-contacts"
+              className={classes.searchBar}
+              placeholder={searchBarPlaceholder}
+              name="search-contacts"
+              onChange={e => handleChangeSearch(e, searchBy)}
+              variant="outlined"
+              InputProps={{
+                classes: {
+                  input: classes.resize,
+                },
+              }}
+            />
+          </div>
         </div>
         <React.Fragment>
           <ContactList
@@ -68,7 +110,6 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
             getAllContactsShort={getAllContactsShort}
             deleteContact={deleteContact}
           />
-          {/* <AddContact addNewContact={props.addNewContact} dialog /> */}
         </React.Fragment>
       </Paper>
     </main>
@@ -87,13 +128,20 @@ const styles = ({breakpoints, spacing}) => ({
     width: 'auto',
     marginLeft: spacing(2),
     marginRight: spacing(2),
+
     [breakpoints.up(600 + spacing(2 * 2))]: {
       width: 600,
+
       marginLeft: 'auto',
       marginRight: 'auto',
     },
   },
   paper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+
     marginTop: spacing(3),
     marginBottom: spacing(3),
     padding: spacing(2),
@@ -107,18 +155,32 @@ const styles = ({breakpoints, spacing}) => ({
     marginTop: spacing(3),
     marginLeft: spacing(1),
   },
+  searchFilterContainer: {
+    display: 'flex',
+    marginTop: '10px',
+    padding: 0,
+
+    width: '85%',
+    [breakpoints.up('lg')]: {},
+  },
+  searchBySelector: {
+    width: '70px',
+  },
+  searchByContainer: {
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  searchBarContainer: {
+    width: '100%',
+    display: 'flex',
+    marginLeft: spacing(1.5),
+    alignItems: 'flex-end',
+  },
   searchBar: {
     backgroundColor: '#ffffff',
-    padding: '5px 20px',
+    // padding: '0px 20px',
     width: '100%',
-    borderRadius: '20px',
-    // [breakpoints.up('md')]: {
-    //   width: 350,
-    // },
-    // [breakpoints.up('lg')]: {
-    //   width: 500,
-    // },
-    // border: '1px solid grey',
+    borderRadius: '40px',
   },
 });
 

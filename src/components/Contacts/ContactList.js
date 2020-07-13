@@ -27,7 +27,7 @@ const ContactList = ({
   // }, [contacts, getAllContactsShort, profiles]);
 
   return (
-    <List>
+    <List style={{width: '85%'}}>
       {contacts &&
         contacts.map((contact, index) => (
           <EachContact
