@@ -60,6 +60,7 @@ const ProfilePage = ({
   updateContact,
   contactId,
   contactInfo,
+  haveExperience,
   programs,
   myResume,
   getContact,
@@ -268,20 +269,23 @@ const ProfilePage = ({
                         : `${classes.fixedContainer}`
                     }
                   >
-                    <FormGroup row className={classes.previewResumeSwitch}>
-                      <FormControlLabel
-                        control={
-                          <Switch
-                            checked={viewResume}
-                            onChange={handleChange}
-                            name="preview"
-                            color="primary"
-                            data-testid="preview-resume-switch"
-                          />
-                        }
-                        label="Preview Resume"
-                      />
-                    </FormGroup>
+                    {haveExperience && (
+                      <FormGroup row className={classes.previewResumeSwitch}>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={viewResume}
+                              onChange={handleChange}
+                              name="preview"
+                              color="primary"
+                              data-testid="preview-resume-switch"
+                            />
+                          }
+                          label="Preview Resume"
+                        />
+                      </FormGroup>
+                    )}
+
                     {!inSelectMode && (
                       <CapabilityScores
                         contactCapabilities={contactInfo.capabilities}

@@ -181,6 +181,7 @@ describe('ProfilePage', () => {
               showResumeDialog={false}
               showResumeSpinner={false}
               inSelectMode={false}
+              haveExperience={true}
             />
           </ThemeProvider>
         </Router>
