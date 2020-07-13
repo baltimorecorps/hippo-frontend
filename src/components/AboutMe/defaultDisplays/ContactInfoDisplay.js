@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
@@ -11,17 +11,17 @@ import HomeIcon from '@material-ui/icons/Home';
 
 const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const email = contact.email_primary ? contact.email_primary.email : '';
-  const {
-    first_name,
-    last_name,
-    phone_primary,
-    address,
-    city,
-    state,
-    zip_code,
-  } = contact;
+  const {first_name, last_name, phone_primary} = contact;
+  const {street1, street2, city, state, zip_code, country} =
+    contact && contact.profile && contact.profile.address_primary;
 
-  const fullAddress = `${address}, ${city}, ${state} ${zip_code}`;
+  let address_street2 = '';
+  if (street2) address_street2 = `, ${street2}`;
+
+  const address1 = `${street1}${address_street2}` || '';
+  const address2 = `${city}, ${state} ${zip_code}` || '';
+  const address3 = country || '';
+
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
@@ -35,7 +35,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
           {first_name} {last_name}
         </Typography>
         <IconButton
-          onClick={onClickEdit}
+          onClick={() => onClickEdit()}
           size="small"
           aria-label="edit experience"
         >
@@ -63,7 +63,10 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
       </Typography>
 
       {isOnEditMode ? (
-        address && fullAddress ? (
+        contact &&
+        address1.length > 0 &&
+        address2.length > 0 &&
+        address3.length > 0 ? (
           <Typography
             gutterBottom
             variant="body1"
@@ -71,7 +74,10 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
             className={classes.textInfo}
           >
             <HomeIcon className={classes.homeIcon} />
-            {fullAddress}
+            {address1}
+            <br />
+            {address2} <br />
+            {address3}
           </Typography>
         ) : (
           <Typography
@@ -110,7 +116,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   homeIcon: {marginRight: '5px', fontSize: '30px'},
   icon: {marginRight: '5px'},
-  textInfo: {display: 'flex', alignItems: 'center'},
+  textInfo: {display: 'flex'},
 });
 
 export default withStyles(styles)(ContactInfoDisplay);

@@ -13,6 +13,8 @@ import ContactInfoForm from './forms/ContactInfoForm';
 import DemographicForm from './forms/DemographicForm';
 import DemographicDisplay from './defaultDisplays/DemographicDisplay';
 import InterestsAndGoalsForm from './forms/InterestsAndGoalsForm';
+import ValueAlignmentForm from './forms/ValueAlignmentForm';
+import ValueAlignmentDisplay from './defaultDisplays/ValueAlignmentDisplay';
 import InterestsAndGoalsDisplay from './defaultDisplays/InterestsAndGoalsDisplay';
 import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm';
 import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
@@ -27,14 +29,12 @@ const AboutMeForms = ({
   onClickEdit,
   classes,
 }) => {
-  // const contact = mockData;
-  const contact = mockDataEmpty;
-  const email = contact.email_primary ? contact.email_primary.email : '';
-
-  const {address, city, state, zipcode} = contact;
+  const contact = mockData;
+  // const contact = mockDataEmpty;
 
   const [openForms, setOpenForms] = useState({
     contact_info: false,
+    value_alignment: false,
     interests_goals: false,
     programs_eligibility: false,
     demographic_info: false,
@@ -97,7 +97,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <InterestsAndGoalsDisplay
-                contact={contact}
+                profile={contact.profile}
                 onClickEdit={() =>
                   setOpenForms({...openForms, interests_goals: true})
                 }
@@ -114,13 +114,45 @@ const AboutMeForms = ({
           className={classes.header}
         >
           <Typography className={classes.headerText}>
+            Value Alignment
+          </Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          {openForms.value_alignment ? (
+            <ValueAlignmentForm
+              contact={contact}
+              onSubmit={onSubmit}
+              onCloseForm={() =>
+                setOpenForms({...openForms, value_alignment: false})
+              }
+            />
+          ) : (
+            <div className={classes.extraPadding}>
+              <ValueAlignmentDisplay
+                profile={contact.profile}
+                onClickEdit={() =>
+                  setOpenForms({...openForms, value_alignment: true})
+                }
+              />
+            </div>
+          )}
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      {/* <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          className={classes.header}
+        >
+          <Typography className={classes.headerText}>
             Programs and Eligibility
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           {openForms.programs_eligibility ? (
             <ProgramsAndEligibilityForm
-              contact={contact}
+              contact={contact.profile}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenForms({...openForms, programs_eligibility: false})
@@ -129,7 +161,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <ProgramsAndEligibilityDisplay
-                contact={contact}
+                contact={contact.profile}
                 onClickEdit={() =>
                   setOpenForms({...openForms, programs_eligibility: true})
                 }
@@ -137,7 +169,7 @@ const AboutMeForms = ({
             </div>
           )}
         </ExpansionPanelDetails>
-      </ExpansionPanel>
+      </ExpansionPanel> */}
       <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
@@ -161,7 +193,8 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <DemographicDisplay
-                contact={contact}
+                contactId={contact.id}
+                profile={contact.profile}
                 onClickEdit={() =>
                   setOpenForms({...openForms, demographic_info: true})
                 }

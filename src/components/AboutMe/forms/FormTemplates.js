@@ -25,16 +25,18 @@ const FormHeaderTemplate = ({header, descriptions, onCloseForm, classes}) => {
         <Typography variant="h3" component="h3" className={classes.formHeader}>
           {header}
         </Typography>
-        <Grid align="end">
-          <IconButton
-            edge="end"
-            aria-label="cancel form"
-            onMouseDown={onCloseForm}
-            className={classes.iconButton}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Grid>
+        {onCloseForm && (
+          <Grid align="end">
+            <IconButton
+              edge="end"
+              aria-label="cancel form"
+              onMouseDown={onCloseForm}
+              className={classes.iconButton}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Grid>
+        )}
       </div>
       <div className={classes.descriptionsContainer}>
         {descriptions.map((description, index) => (
@@ -71,7 +73,7 @@ const FormRadioButtonsTemplate = ({
         <RadioGroup
           aria-label={ariaLabel}
           name={name}
-          value={value}
+          value={value || ''}
           onChange={onChange}
           className={classes.radioGroup}
         >
@@ -97,7 +99,6 @@ const FormCheckboxesTemplate = ({
   question,
   options,
   onChange,
-  names,
   error,
   classes,
 }) => {
@@ -116,7 +117,7 @@ const FormCheckboxesTemplate = ({
               <Checkbox
                 checked={option.checked}
                 onChange={onChange}
-                name={names[index]}
+                name={option.name}
                 color="primary"
               />
             }
@@ -162,7 +163,7 @@ const FormDropDownSelectorTemplate = ({
         disabled={false}
         required
         id={name}
-        value={value}
+        value={value || ''}
         onChange={onChange}
         inputProps={{
           name: name,
@@ -213,10 +214,9 @@ const FormTextFieldTemplate = ({
         <TextField
           required
           id={name}
-          // label={label}
           className={classes.formControl}
           name={name}
-          value={value}
+          value={value || ''}
           onChange={onChange}
           InputLabelProps={inputLabelProps}
           InputProps={inputProps}
@@ -225,6 +225,36 @@ const FormTextFieldTemplate = ({
           {error || null}
         </FormHelperText>
       </Grid>
+    </Grid>
+  );
+};
+const FormMultiRowsTextFieldTemplate = ({
+  value,
+  name,
+  question,
+  onChange,
+  error,
+  classes,
+}) => {
+  return (
+    <Grid container style={{marginBottom: '10px'}} direction="column">
+      <Typography variant="body1" component="p" className={classes.question}>
+        {question}
+      </Typography>
+      <TextField
+        required
+        id={name}
+        name={name}
+        value={value}
+        multiline
+        rows={6}
+        onChange={onChange}
+        variant="outlined"
+        style={{width: '100%'}}
+      />
+      <FormHelperText className={classes.formHelperText}>
+        {error || null}
+      </FormHelperText>
     </Grid>
   );
 };
@@ -335,7 +365,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '100%',
     textAlign: 'left',
 
-    [breakpoints.up('sm')]: {
+    [breakpoints.up('md')]: {
       marginLeft: '20px',
     },
   },
@@ -379,7 +409,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   checkbox: {
     width: '100%',
     textAlign: 'left',
-    [breakpoints.up('sm')]: {
+    [breakpoints.up('md')]: {
       marginLeft: '20px',
     },
   },
@@ -387,6 +417,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
     color: 'grey',
     textAlign: 'justify',
   },
+  valuesQuestions: {
+    margin: '10px 0px 20px 0px',
+  },
+  // question: {
+  //   marginBottom: '10px',
+  //   fontWeight: 'bold',
+  //   color: '#303030',
+  //   fontSize: '15px',
+  //   textAlign: 'left',
+  // },
 });
 
 const FormRadioButtons = withStyles(styles)(FormRadioButtonsTemplate);
@@ -395,6 +435,9 @@ const FormCheckboxes = withStyles(styles)(FormCheckboxesTemplate);
 const FormSubmitButton = withStyles(styles)(FormSubmitButtonTemplate);
 const FormHeader = withStyles(styles)(FormHeaderTemplate);
 const FormTextField = withStyles(styles)(FormTextFieldTemplate);
+const FormMultiRowsTextField = withStyles(styles)(
+  FormMultiRowsTextFieldTemplate
+);
 
 export {
   FormRadioButtons,
@@ -403,4 +446,5 @@ export {
   FormSubmitButton,
   FormDropDownSelector,
   FormTextField,
+  FormMultiRowsTextField,
 };

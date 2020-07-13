@@ -38,6 +38,7 @@ import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'components/FAQPage';
 import ApplicationsCard from 'components/Internal/ApplicationsBoard/ApplicationsCard.container';
+import Questionnaire from 'components/Questionnaire';
 
 const App = ({
   hasSession,
@@ -179,6 +180,7 @@ const App = ({
               <Route exact path="/" component={Home} />
 
               <Route exact path="/contacts" component={Contacts} />
+              <Route exact path="/questionnaire" component={Questionnaire} />
 
               <Route exact path="/resume/:contactId" component={ResumeView} />
               <Route exact path="/resume/:gdocId" component={Resume} />

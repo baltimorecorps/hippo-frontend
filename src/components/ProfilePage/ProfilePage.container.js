@@ -1,6 +1,13 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {getContact, updateContact, addContactSkill} from 'state/contacts';
+import {
+  getContact,
+  updateContact,
+  addContactSkill,
+  getAboutMe,
+  createAboutMe,
+  updateAboutMe,
+} from 'state/contacts';
 import {refreshPrograms, addNewProgram} from 'state/programs';
 import {
   startResumeCreation,
@@ -143,6 +150,16 @@ export const mapDispatchToProps = dispatch => ({
   getContact: async contactId => {
     await getContact(contactId)(dispatch);
   },
+  createAboutMe: async contactId => {
+    await createAboutMe(contactId)(dispatch);
+  },
+  getAboutMe: async contactId => {
+    await getAboutMe(contactId)(dispatch);
+  },
+  updateAboutMe: async (contactId, aboutMe) => {
+    await updateAboutMe(contactId, aboutMe)(dispatch);
+  },
+
   addNewProgram: async program => {
     await addNewProgram(program)(dispatch);
   },

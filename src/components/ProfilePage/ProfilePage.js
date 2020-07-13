@@ -77,6 +77,9 @@ const ProfilePage = ({
   showResumeDialog,
   showResumeSpinner,
   inSelectMode,
+  getAboutMe,
+  createAboutMe,
+  updateAboutMe,
 }) => {
   const wrapperRef = useRef();
   const scrollTo = useScroll(wrapperRef);
@@ -107,6 +110,9 @@ const ProfilePage = ({
   const handleUpdateContact = async values => {
     await updateContact(values);
     setOpenForm(false);
+  };
+  const handleUpdateAboutMe = async (contactId, values) => {
+    await updateAboutMe(contactId, values);
   };
 
   const handleUpdateSkills = skills => {
@@ -214,6 +220,22 @@ const ProfilePage = ({
 
   const handleChange = event => {
     setViewResume(event.target.checked);
+  };
+
+  const handleEditAboutMe = async () => {
+    if (contactInfo.profile == null) {
+      let response = await getAboutMe(contactInfo.id);
+      // console.log('response', response);
+
+      if (contactInfo.profile == null) {
+        response = await createAboutMe(contactInfo.id);
+        if (response && response.statusCode !== 201) {
+          console.error('Error starting new about-me', response);
+        }
+      }
+    }
+
+    setOpenForm(true);
   };
 
   return (
@@ -366,7 +388,7 @@ const ProfilePage = ({
                       {openForm ? (
                         <AboutMeForms
                           contact={contactInfo}
-                          onSubmit={handleUpdateContact}
+                          onSubmit={handleUpdateAboutMe}
                           onCloseAllForms={() => setOpenForm(false)}
                           onClickEdit={() => setOpenForm(true)}
                         />
@@ -377,7 +399,7 @@ const ProfilePage = ({
                               <ContactInfoDisplay
                                 contact={contactInfo}
                                 isOnEditMode={openForm}
-                                onClickEdit={() => setOpenForm(true)}
+                                onClickEdit={handleEditAboutMe}
                               />
                             </div>
                           </Grid>

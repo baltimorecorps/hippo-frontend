@@ -281,16 +281,14 @@ const interviewScheduledValidator = values => {
   return {isError, err};
 };
 const contactInfoValidator = values => {
+  const {first_name, last_name, email, phone_primary} = values;
   const {
-    first_name,
-    last_name,
-    email,
-    phone_primary,
-    address,
+    street1,
     city,
     state,
     zip_code,
-  } = values;
+    country,
+  } = values.profile.address_primary;
 
   let isError = false;
   let err = {};
@@ -320,9 +318,9 @@ const contactInfoValidator = values => {
     err.phonePrimary_error = 'Required';
   }
 
-  if (!address || address.length === 0) {
+  if (!street1 || street1.length === 0) {
     isError = true;
-    err.address_error = 'Required';
+    err.street1_error = 'Required';
   }
 
   if (!city || city.length === 0) {
@@ -345,11 +343,20 @@ const contactInfoValidator = values => {
     isError = true;
     err.zipCode_error = 'Invalid value. Please enter five-digit numbers only';
   }
+  if (!country || country.length === 0) {
+    isError = true;
+    err.country_error = 'Required';
+  }
 
   return {isError, err};
 };
 const interestsAndGoalsValidator = values => {
-  const {job_search_status, years_exp} = values;
+  const {
+    job_search_status,
+    current_job_status,
+    current_edu_status,
+    years_exp,
+  } = values.profile;
 
   let isError = false;
   let err = {};
@@ -357,6 +364,14 @@ const interestsAndGoalsValidator = values => {
   if (!job_search_status || job_search_status.length === 0) {
     isError = true;
     err.jobSearchStatus_error = 'Required';
+  }
+  if (!current_job_status || current_job_status.length === 0) {
+    isError = true;
+    err.currentJobStatus_error = 'Required';
+  }
+  if (!current_edu_status || current_edu_status.length === 0) {
+    isError = true;
+    err.currentEduStatus_error = 'Required';
   }
 
   if (!years_exp || years_exp.length === 0) {
@@ -368,7 +383,6 @@ const interestsAndGoalsValidator = values => {
 };
 const programsAndEligibilityValidator = values => {
   const {interested_programs} = values;
-  console.log(interested_programs);
 
   const allValues = Object.values(interested_programs).map(
     program => program.checked
@@ -384,6 +398,22 @@ const programsAndEligibilityValidator = values => {
 
   return {isError, err};
 };
+const valueAlignmentValidator = values => {
+  const {value_question1, value_question2} = values.profile;
+
+  let isError = false;
+  let err = {};
+  if (!value_question1 || value_question1.length === 0) {
+    isError = true;
+    err.valueQuestion1_error = 'Required';
+  }
+  if (!value_question2 || value_question2.length === 0) {
+    isError = true;
+    err.valueQuestion2_error = 'Required';
+  }
+
+  return {isError, err};
+};
 
 export {
   newProfileValidator,
@@ -394,4 +424,5 @@ export {
   contactInfoValidator,
   interestsAndGoalsValidator,
   programsAndEligibilityValidator,
+  valueAlignmentValidator,
 };

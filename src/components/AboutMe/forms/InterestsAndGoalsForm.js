@@ -5,7 +5,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-import {jobSearchStatus, yearsOfExperience} from '../defaultData';
+import {
+  jobSearchStatus,
+  currentJobStatus,
+  currentEduStatus,
+  yearsOfExperience,
+  roleLabels,
+} from '../defaultData';
 
 import {
   FormHeader,
@@ -20,23 +26,26 @@ const useForm = (initialValues, onSubmit) => {
   const handlers = {
     handleChange: event => {
       event.persist();
-      update(event.target.name)(event.target.value);
+      const newValue = {
+        ...values.profile,
+        [event.target.name]: event.target.value,
+      };
+      update('profile')(newValue);
     },
-    handleSubmit: values => {
-      onSubmit(values);
+    handleSubmit: (contactId, values) => {
+      onSubmit(contactId, values);
     },
 
     handleInterestedRolesChange: event => {
       event.persist();
       const newValue = {
-        ...values.interested_roles,
-        [event.target.name]: {
-          ...values.interested_roles[event.target.name],
-          checked: event.target.checked,
+        ...values.profile,
+        roles: {
+          ...values.profile.roles,
+          [event.target.name]: event.target.checked,
         },
       };
-
-      update('interested_roles')(newValue);
+      update('profile')(newValue);
     },
   };
 
@@ -54,25 +63,33 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     const {isError, err} = interestsAndGoalsValidator(values);
     setErrors(err);
 
-    console.log(err);
-    console.log(errors);
-
     if (!isError) {
-      console.log('submitted form');
-      // handleSubmit(values);
+      handleSubmit(contact.id, values);
       onCloseForm();
     }
   };
 
-  // todo
-  // form validation
-  // responsive styles
-  // testing
-
-  const rolesKeys = Object.keys(values.interested_roles);
   const descriptions = [
     'The questions below help us understand a little bit more about your experience and which roles you might be interested in applying for.',
   ];
+
+  let roles = [];
+  for (const [key, value] of Object.entries(values.profile.roles)) {
+    if (value == null) {
+      roles.push({name: key, checked: false});
+    } else {
+      roles.push({name: key, checked: value});
+    }
+  }
+
+  for (const [key, value] of Object.entries(roleLabels)) {
+    roles.forEach((role, index) => {
+      if (role.name === key) {
+        roles[index] = {...role, label: value};
+      }
+    });
+  }
+
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader
@@ -84,8 +101,27 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
           <FormRadioButtons
+            question="What's your current employment status? *"
+            value={values.profile.current_job_status}
+            onChange={handleChange}
+            options={currentJobStatus}
+            name="current_job_status"
+            ariaLabel="Current job status"
+            error={errors.currentJobStatus_error}
+          />
+          <FormRadioButtons
+            question="Are you currently a student? *"
+            value={values.profile.current_edu_status}
+            onChange={handleChange}
+            options={currentEduStatus}
+            name="current_edu_status"
+            ariaLabel="Current education status"
+            error={errors.currentEduStatus_error}
+          />
+
+          <FormRadioButtons
             question="What is the status of your job search? *"
-            value={values.job_search_status}
+            value={values.profile.job_search_status}
             onChange={handleChange}
             options={jobSearchStatus}
             name="job_search_status"
@@ -95,7 +131,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
           <FormRadioButtons
             question="How many years of professional experience (internships, advocacy, employed etc.) do you have? *"
-            value={values.years_exp}
+            value={values.profile.years_exp}
             onChange={handleChange}
             options={yearsOfExperience}
             name="years_exp"
@@ -105,18 +141,17 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
           <FormCheckboxes
             question="Which of the following types of roles are you interested in applying for? (select all that apply)"
-            names={rolesKeys}
-            options={Object.values(values.interested_roles)}
+            options={roles}
             onChange={handleInterestedRolesChange}
           />
 
           <FormRadioButtons
             question="Have you participated in any of Baltimore Corps' programs and services already?"
-            value={values.participated_baltimore_corps_before}
+            value={values.profile.previous_bcorps_program}
             onChange={handleChange}
             options={['Yes', 'No']}
-            name="participated_baltimore_corps_before"
-            ariaLabel="Have participated with Baltimore Corps before"
+            name="previous_bcorps_program"
+            ariaLabel="Have participated with Baltimore Corps programs and services before"
           />
           <FormSubmitButton onSubmit={submit} />
         </form>
@@ -126,12 +161,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 };
 
 InterestsAndGoalsForm.propTypes = {
-  contact: PropTypes.shape({
-    first_name: PropTypes.string.isRequired,
-    last_name: PropTypes.string.isRequired,
-    email_primary: PropTypes.object.isRequired,
-    phone_primary: PropTypes.string.isRequired,
-  }),
+  profile: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onCloseForm: PropTypes.func.isRequired,
 };

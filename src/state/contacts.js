@@ -265,6 +265,55 @@ export const getAllContactsShort = makeApiFetchActions(
   `${API_URL}/api/contacts/short/`
 );
 
+// ---------------------------------------------------------------------------
+
+export const CREATE_ABOUT_ME = 'CREATE_ABOUT_ME';
+export const CREATE_ABOUT_ME_API = fetchActionTypes(CREATE_ABOUT_ME);
+export const createAboutMe = contactId =>
+  async function(dispatch) {
+    // dispatch({
+    //   type: CREATE_ABOUT_ME,
+    //   applicants,
+    // });
+
+    return await makeApiFetchActions(
+      CREATE_ABOUT_ME,
+      `${API_URL}/api/contacts/${contactId}/about-me/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
+export const GET_ABOUT_ME = 'GET_ABOUT_ME';
+export const GET_ABOUT_ME_API = fetchActionTypes(GET_ABOUT_ME);
+export const getAboutMe = contactId =>
+  makeApiFetchActions(
+    GET_ABOUT_ME,
+    `${API_URL}/api/contacts/${contactId}/about-me/`
+  );
+
+export const UPDATE_ABOUT_ME = 'UPDATE_ABOUT_ME';
+export const UPDATE_ABOUT_ME_API = fetchActionTypes(UPDATE_ABOUT_ME);
+export const updateAboutMe = (contactId, aboutMe) =>
+  async function(dispatch) {
+    // dispatch({
+    //   type: UPDATE_ABOUT_ME,
+    //   aboutMe,
+    // });
+
+    await makeApiFetchActions(
+      UPDATE_ABOUT_ME,
+      `${API_URL}/api/contacts/${contactId}/about-me/`,
+      {
+        body: JSON.stringify(aboutMe),
+        method: 'PUT',
+      }
+    )(dispatch);
+  };
+
+// ---------------------------------------------------------------------------
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -345,6 +394,19 @@ export const contactsReducer = createReducer(
         ...state[contact.id],
         ...contact,
       };
+    },
+
+    [GET_ABOUT_ME_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id].profile = contact.profile;
+    },
+    [CREATE_ABOUT_ME_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id].profile = contact.profile;
+    },
+    [UPDATE_ABOUT_ME_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id].profile = contact.profile;
     },
     [GET_CONTACT_CAPABILITIES_API.RESOLVE]: (state, action) => {
       const result = action.body.data;
