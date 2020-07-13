@@ -11,30 +11,30 @@ const ContactList = ({
   getAllContactsShort,
   deleteContact,
 }) => {
-  let [loaded, setLoaded] = useState(false);
-  const [profiles, setProfiles] = useState(contacts);
+  // let [loaded, setLoaded] = useState(false);
+  // const [profiles, setProfiles] = useState(contacts);
 
-  useEffect(() => {
-    if (!loaded) getAllContactsShort();
+  // useEffect(() => {
+  //   if (!loaded) getAllContactsShort();
 
-    setLoaded(true);
-  }, [loaded, contacts, getAllContactsShort]);
+  //   setLoaded(true);
+  // }, [loaded, contacts, getAllContactsShort]);
 
-  useEffect(() => {
-    if (profiles.length !== contacts.length) getAllContactsShort();
+  // useEffect(() => {
+  //   if (profiles.length !== contacts.length) getAllContactsShort();
 
-    setProfiles(contacts);
-  }, [contacts, getAllContactsShort, profiles]);
+  //   setProfiles(contacts);
+  // }, [contacts, getAllContactsShort, profiles]);
 
   return (
     <List>
-      {profiles &&
-        profiles.map((contact, index) => (
+      {contacts &&
+        contacts.map((contact, index) => (
           <EachContact
             contact={contact}
             key={index}
             deleteContact={deleteContact}
-            setLoaded={setLoaded}
+            // setLoaded={setLoaded}
           />
         ))}
     </List>
