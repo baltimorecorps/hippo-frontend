@@ -20,9 +20,8 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
 
   const [searchBy, setSearchBy] = useState('name');
   const [showContacts, setShowContacts] = useState(contacts || null);
-  const [searchBarPlaceholder, setSearchBarPlaceholder] = useState(
-    'Search by name'
-  );
+  let searchValue = '';
+  const searchBarPlaceholder = `Search by ${searchBy}`;
 
   useEffect(() => {
     setShowContacts(contacts);
@@ -30,40 +29,45 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
 
   const handleChangeSearchBy = event => {
     event.persist();
-
     setSearchBy(event.target.value);
-
-    switch (event.target.value) {
-      case 'email':
-        setSearchBarPlaceholder('Search by email');
-        break;
-      case 'id':
-        setSearchBarPlaceholder('Search by id');
-        break;
-      default:
-        setSearchBarPlaceholder('Search by name');
-        break;
-    }
   };
 
   const handleChangeSearch = (event, searchContactsBy) => {
     event.persist();
-    const name = event.target.value.toLowerCase();
-
-    if (name != null) {
-      const searchContacts = contacts.filter(contact => {
-        const contactName = contact.first_name.toLowerCase();
-        const contactLastName = contact.last_name.toLowerCase();
-        const contactFullName = `${contactName} ${contactLastName}`;
-        const contactEmail = contact.email.toLowerCase();
-        return contactFullName.includes(name) || contactEmail.includes(name);
-      });
-      console.log('searchContacts', searchContacts);
-      setShowContacts(searchContacts);
+    searchValue = event.target.value.toLowerCase();
+    let searchContacts = [];
+    if (searchValue != null) {
+      switch (searchContactsBy) {
+        case 'name':
+          searchContacts = contacts.filter(contact => {
+            const contactName = contact.first_name.toLowerCase();
+            const contactLastName = contact.last_name.toLowerCase();
+            const contactFullName = `${contactName} ${contactLastName}`;
+            return contactFullName.includes(searchValue);
+          });
+          setShowContacts(searchContacts);
+          break;
+        case 'email':
+          searchContacts = contacts.filter(contact => {
+            const contactEmail = contact.email.toLowerCase();
+            return contactEmail.includes(searchValue);
+          });
+          setShowContacts(searchContacts);
+          break;
+        case 'id':
+          searchContacts = contacts.filter(contact => {
+            const contactId = String(contact.id);
+            return contactId.includes(searchValue);
+          });
+          setShowContacts(searchContacts);
+          break;
+        default:
+          break;
+      }
     }
   };
 
-  if (!showContacts || showContacts.length === 0) return <div>Loading...</div>;
+  if (!showContacts) return <div>Loading...</div>;
   return (
     <main className={classes.layout}>
       <Paper className={classes.paper}>
@@ -175,12 +179,12 @@ const styles = ({breakpoints, spacing}) => ({
     display: 'flex',
     marginLeft: spacing(1.5),
     alignItems: 'flex-end',
+    borderRadius: '40%',
   },
   searchBar: {
     backgroundColor: '#ffffff',
-    // padding: '0px 20px',
     width: '100%',
-    borderRadius: '40px',
+    borderRadius: '40%',
   },
 });
 
