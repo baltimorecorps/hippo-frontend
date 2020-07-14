@@ -56,8 +56,16 @@ const ContactList = ({classes, contact, deleteContact, setLoaded}) => {
         className={classes.listItem}
         data-testid="each-contact"
       >
-        <ListItemText primary={`id: ${contact.id}`} />
-        <ListItemText primary={`${contact.first_name} ${contact.last_name}`} />
+        <ListItemText
+          style={{flex: '0 1 auto'}}
+          primary={`id: ${contact.id}`}
+        />
+        <div className={classes.nameEmailContainer}>
+          <ListItemText
+            primary={`${contact.first_name} ${contact.last_name}`}
+          />
+          <ListItemText secondary={`${contact.email}`} />
+        </div>
       </ListItem>
 
       <IconButton
@@ -127,6 +135,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   listItem: {
     borderBottom: 'none',
+    display: 'flex',
+  },
+  nameEmailContainer: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   deleteButton: {
     margin: spacing(1),
