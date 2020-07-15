@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-
 import ContactList from './ContactList';
-// import AddContact from './AddContact';
-
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -129,12 +126,12 @@ Contacts.propTypes = {
 
 const styles = ({breakpoints, spacing}) => ({
   layout: {
-    width: 'auto',
     marginLeft: spacing(2),
     marginRight: spacing(2),
+    width: '100%',
 
-    [breakpoints.up(600 + spacing(2 * 2))]: {
-      width: 600,
+    [breakpoints.up(750 + spacing(2 * 2))]: {
+      width: 750,
 
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -164,8 +161,9 @@ const styles = ({breakpoints, spacing}) => ({
     marginTop: '10px',
     padding: 0,
 
-    width: '85%',
-    [breakpoints.up('lg')]: {},
+    [breakpoints.up('sm')]: {
+      width: '85%',
+    },
   },
   searchBySelector: {
     width: '70px',
