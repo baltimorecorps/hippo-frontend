@@ -138,7 +138,7 @@ const AboutMeForms = ({
           )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      {/* <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -152,7 +152,7 @@ const AboutMeForms = ({
         <ExpansionPanelDetails>
           {openForms.programs_eligibility ? (
             <ProgramsAndEligibilityForm
-              contact={contact.profile}
+              contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenForms({...openForms, programs_eligibility: false})
@@ -161,7 +161,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <ProgramsAndEligibilityDisplay
-                contact={contact.profile}
+                contact={contact}
                 onClickEdit={() =>
                   setOpenForms({...openForms, programs_eligibility: true})
                 }
@@ -169,7 +169,7 @@ const AboutMeForms = ({
             </div>
           )}
         </ExpansionPanelDetails>
-      </ExpansionPanel> */}
+      </ExpansionPanel>
       <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}

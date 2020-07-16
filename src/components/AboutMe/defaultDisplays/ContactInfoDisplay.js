@@ -13,7 +13,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const email = contact.email_primary ? contact.email_primary.email : '';
   const {first_name, last_name, phone_primary} = contact;
   const {street1, street2, city, state, zip_code, country} =
-    contact && contact.profile && contact.profile.address_primary;
+    contact && contact.profile != null && contact.profile.address_primary;
 
   let address_street2 = '';
   if (street2) address_street2 = `, ${street2}`;
