@@ -17,16 +17,17 @@ const useForm = (initialValues, onSubmit) => {
 
     handleInterestedProgramsChange: event => {
       event.persist();
-      console.log(event.target.name);
 
-      const newValue = {
-        ...values.interested_programs,
-        [event.target.name]: {
-          ...values.interested_programs[event.target.name],
-          checked: event.target.checked,
-        },
-      };
-      update('interested_programs')(newValue);
+      const newValue = values.program_apps.map(program => {
+        if (program.program.name === event.target.name) {
+          return {
+            ...program,
+            is_interested: event.target.checked,
+          };
+        } else return program;
+      });
+
+      update('program_apps')(newValue);
     },
   };
 
@@ -50,14 +51,19 @@ const ProgramsAndEligibilityForm = ({
     setErrors(err);
 
     if (!isError) {
-      console.log('submitted form');
+      console.log('submitted form', values);
       // handleSubmit(values);
       onCloseForm();
     }
   };
 
-  const programsKeys = Object.keys(values.interested_programs);
-
+  const programOptions = values.program_apps.map(program => {
+    return {
+      name: program.program.name,
+      label: program.program.name,
+      checked: program.is_interested,
+    };
+  });
   // todo
   // testing
 
@@ -78,8 +84,7 @@ const ProgramsAndEligibilityForm = ({
           <div className={classes.interestedRolesContainer}>
             <FormCheckboxes
               question="Which of the following programs and services are you interested in? (select all that apply) *"
-              names={programsKeys}
-              options={Object.values(values.interested_programs)}
+              options={programOptions}
               onChange={handleInterestedProgramsChange}
               error={errors.interestedPrograms_error}
             />
