@@ -58,7 +58,7 @@ const RoleCards = ({
 
   let paperStyles = '';
 
-  if (page === 'internal') {
+  if (page === 'internal-opportunities-board') {
     switch (opportunity.program_name) {
       case 'Fellowship':
         paperStyles = `${classes.paper} + ${classes.fellowshipContainerTop}`;
@@ -125,7 +125,7 @@ const RoleCards = ({
             onClick={() => toEmployerPage(opportunity.id)}
             className={classes.linkContainer}
           >
-            {page === 'internal' && (
+            {page === 'internal-opportunities-board' && (
               <Tooltip title="Employer's View">
                 <VisibilityIcon className={classes.employerViewIcon} />
               </Tooltip>
@@ -133,7 +133,7 @@ const RoleCards = ({
           </Link>
         </div>
       </div>
-      {page === 'internal' && (
+      {page === 'internal-opportunities-board' && (
         <ApplicationStateAccordion
           header="Submitted"
           applications={submittedApps}

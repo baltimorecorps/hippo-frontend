@@ -224,6 +224,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   buttons: {
     marginBottom: spacing(1.5),
+    marginRight: '20px',
   },
 });
 
