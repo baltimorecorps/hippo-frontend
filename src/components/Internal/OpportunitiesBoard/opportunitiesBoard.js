@@ -61,7 +61,7 @@ const InternalOpportunityBoard = ({
               key={index}
               opportunity={opportunity}
               applications={opportunity.applications}
-              page="internal"
+              page="internal-opportunities-board"
             />
           ))}
         </div>
@@ -81,7 +81,6 @@ InternalOpportunityBoard.propTypes = {
       program_id: PropTypes.number.isRequired,
       gdoc_link: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      cycle_id: PropTypes.number.isRequired,
       status: PropTypes.string.isRequired,
     })
   ),
