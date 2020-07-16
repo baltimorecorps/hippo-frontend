@@ -2,6 +2,7 @@ import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 
 import EachContact from './EachContact';
 
@@ -13,14 +14,24 @@ const ContactList = ({
 }) => {
   return (
     <List className={classes.container}>
-      {contacts &&
+      {contacts.length > 0 ? (
         contacts.map((contact, index) => (
           <EachContact
             contact={contact}
             key={index}
             deleteContact={deleteContact}
           />
-        ))}
+        ))
+      ) : (
+        <Typography
+          component="p"
+          variant="body"
+          align="center"
+          className={classes.noResult}
+        >
+          No result found
+        </Typography>
+      )}
     </List>
   );
 };
@@ -43,6 +54,11 @@ const styles = ({breakpoints, spacing}) => ({
     [breakpoints.up('sm')]: {
       width: '85%',
     },
+  },
+  noResult: {
+    marginTop: '20px',
+    width: '100%',
+    fontSize: '20px',
   },
 });
 
