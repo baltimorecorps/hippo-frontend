@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import Typography from '@material-ui/core/Typography';
 
 import DeleteProfileDialog from './DeleteProfileDialog';
 
@@ -56,15 +57,27 @@ const ContactList = ({classes, contact, deleteContact, setLoaded}) => {
         className={classes.listItem}
         data-testid="each-contact"
       >
-        <ListItemText
-          style={{flex: '0 1 auto'}}
-          primary={`id: ${contact.id}`}
-        />
+        <Typography
+          component="p"
+          variant="caption"
+          align="center"
+          className={classes.listItemId}
+        >
+          {`id: ${contact.id}`}
+        </Typography>
         <div className={classes.nameEmailContainer}>
           <ListItemText
+            className={classes.listItemName}
             primary={`${contact.first_name} ${contact.last_name}`}
           />
-          <ListItemText secondary={`${contact.email}`} />
+          <Typography
+            component="p"
+            variant="caption"
+            align="center"
+            className={classes.listItemEmail}
+          >
+            {contact.email}
+          </Typography>
         </div>
       </ListItem>
 
@@ -128,21 +141,50 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'space-between',
     borderBottom: 'solid #d4d4d4 1px',
     alignItems: 'center',
-    padding: '0 20px',
     '&:hover': {
       backgroundColor: '#f0f0f0',
+    },
+    padding: '0 10px',
+
+    [breakpoints.up('sm')]: {
+      padding: '0 20px',
     },
   },
   listItem: {
     borderBottom: 'none',
     display: 'flex',
+    padding: 0,
   },
+
   nameEmailContainer: {
     display: 'flex',
     width: '100%',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  listItemId: {
+    fontSize: '13px',
+    width: '50px',
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
+  },
+  listItemName: {
+    textAlign: 'center',
+    fontSize: '13px',
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
+  },
+  listItemEmail: {
+    textAlign: 'center',
+    fontSize: '13px',
+    color: '#878787',
+
+    [breakpoints.up('sm')]: {
+      fontSize: '14px',
+    },
   },
   deleteButton: {
     margin: spacing(1),

@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-
 import ContactList from './ContactList';
-// import AddContact from './AddContact';
-
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
@@ -20,24 +17,21 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
 
   const [searchBy, setSearchBy] = useState('name');
   const [showContacts, setShowContacts] = useState(contacts || null);
-  let searchValue = '';
+  const [searchValue, setSearchValue] = useState('');
   const searchBarPlaceholder = `Search by ${searchBy}`;
 
   useEffect(() => {
     setShowContacts(contacts);
   }, [contacts]);
 
-  const handleChangeSearchBy = event => {
-    event.persist();
-    setSearchBy(event.target.value);
-  };
+  useEffect(() => {
+    setSearchValue('');
+  }, [searchBy]);
 
-  const handleChangeSearch = (event, searchContactsBy) => {
-    event.persist();
-    searchValue = event.target.value.toLowerCase();
+  useEffect(() => {
     let searchContacts = [];
     if (searchValue != null) {
-      switch (searchContactsBy) {
+      switch (searchBy) {
         case 'name':
           searchContacts = contacts.filter(contact => {
             const contactName = contact.first_name.toLowerCase();
@@ -65,6 +59,16 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
           break;
       }
     }
+  }, [searchValue, searchBy, contacts]);
+
+  const handleChangeSearchBy = event => {
+    event.persist();
+    setSearchBy(event.target.value);
+  };
+
+  const handleChangeSearch = event => {
+    event.persist();
+    setSearchValue(event.target.value.toLowerCase());
   };
 
   if (!showContacts) return <div>Loading...</div>;
@@ -98,7 +102,8 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
               className={classes.searchBar}
               placeholder={searchBarPlaceholder}
               name="search-contacts"
-              onChange={e => handleChangeSearch(e, searchBy)}
+              value={searchValue}
+              onChange={handleChangeSearch}
               variant="outlined"
               InputProps={{
                 classes: {
@@ -129,12 +134,12 @@ Contacts.propTypes = {
 
 const styles = ({breakpoints, spacing}) => ({
   layout: {
-    width: 'auto',
     marginLeft: spacing(2),
     marginRight: spacing(2),
+    width: '100%',
 
-    [breakpoints.up(600 + spacing(2 * 2))]: {
-      width: 600,
+    [breakpoints.up(750 + spacing(2 * 2))]: {
+      width: 750,
 
       marginLeft: 'auto',
       marginRight: 'auto',
@@ -164,8 +169,9 @@ const styles = ({breakpoints, spacing}) => ({
     marginTop: '10px',
     padding: 0,
 
-    width: '85%',
-    [breakpoints.up('lg')]: {},
+    [breakpoints.up('sm')]: {
+      width: '85%',
+    },
   },
   searchBySelector: {
     width: '70px',

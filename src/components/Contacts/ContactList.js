@@ -1,7 +1,8 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
+import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 
 import EachContact from './EachContact';
 
@@ -11,32 +12,26 @@ const ContactList = ({
   getAllContactsShort,
   deleteContact,
 }) => {
-  // let [loaded, setLoaded] = useState(false);
-  // const [profiles, setProfiles] = useState(contacts);
-
-  // useEffect(() => {
-  //   if (!loaded) getAllContactsShort();
-
-  //   setLoaded(true);
-  // }, [loaded, contacts, getAllContactsShort]);
-
-  // useEffect(() => {
-  //   if (profiles.length !== contacts.length) getAllContactsShort();
-
-  //   setProfiles(contacts);
-  // }, [contacts, getAllContactsShort, profiles]);
-
   return (
-    <List style={{width: '85%'}}>
-      {contacts &&
+    <List className={classes.container}>
+      {contacts.length > 0 ? (
         contacts.map((contact, index) => (
           <EachContact
             contact={contact}
             key={index}
             deleteContact={deleteContact}
-            // setLoaded={setLoaded}
           />
-        ))}
+        ))
+      ) : (
+        <Typography
+          component="p"
+          variant="body"
+          align="center"
+          className={classes.noResult}
+        >
+          No result found
+        </Typography>
+      )}
     </List>
   );
 };
@@ -52,4 +47,19 @@ ContactList.propTypes = {
   getAllContactsShort: PropTypes.func.isRequired,
 };
 
-export default ContactList;
+const styles = ({breakpoints, spacing}) => ({
+  container: {
+    width: '100%',
+
+    [breakpoints.up('sm')]: {
+      width: '85%',
+    },
+  },
+  noResult: {
+    marginTop: '20px',
+    width: '100%',
+    fontSize: '20px',
+  },
+});
+
+export default withStyles(styles)(ContactList);
