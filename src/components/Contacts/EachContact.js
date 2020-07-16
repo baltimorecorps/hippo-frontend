@@ -147,7 +147,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: '0 10px',
 
     [breakpoints.up('sm')]: {
-      padding: '0 20px',
+      padding: '0px 15px 0px 0px',
     },
   },
   listItem: {
@@ -168,6 +168,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '50px',
     [breakpoints.up('sm')]: {
       fontSize: '16px',
+      width: '100px',
     },
   },
   listItemName: {
