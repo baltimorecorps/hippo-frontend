@@ -367,6 +367,8 @@ export const getAllContactsPrograms = makeApiFetchActions(
   `${API_URL}/api/contacts/programs/`
 );
 
+// ---------------------------------------------------------------------------
+
 export const opportunitiesReducer = createReducer(
   {},
   {

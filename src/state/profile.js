@@ -208,6 +208,7 @@ export const refreshTagItems = (contactId, tagType) =>
       }
     )(dispatch);
   };
+// ---------------------------------------------------------------------------
 
 //////////////
 // REDUCERS //
