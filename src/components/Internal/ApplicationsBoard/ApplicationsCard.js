@@ -63,7 +63,6 @@ const ApplicationsCard = ({
   if (!applications) {
     return <div>loading...</div>;
   }
-
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
@@ -123,7 +122,7 @@ const ApplicationsCard = ({
           handleChange={handleChange}
           panelName="Submitted"
           contactId={contactId}
-          page="internal"
+          page="internal-applications-board"
         />
 
         <ApplicationStateAccordion
@@ -134,7 +133,7 @@ const ApplicationsCard = ({
           handleChange={handleChange}
           panelName="Recommended"
           contactId={contactId}
-          page="internal"
+          page="internal-applications-board"
         />
 
         <ApplicationStateAccordion
@@ -145,7 +144,7 @@ const ApplicationsCard = ({
           handleChange={handleChange}
           panelName="Interviewing"
           contactId={contactId}
-          page="internal"
+          page="internal-applications-board"
         />
         <ApplicationStateAccordion
           header="Considered for Role"
@@ -155,7 +154,7 @@ const ApplicationsCard = ({
           handleChange={handleChange}
           panelName="consideredForRole"
           contactId={contactId}
-          page="internal"
+          page="internal-applications-board"
         />
         <ApplicationStateAccordion
           header="Not a Fit"
@@ -165,7 +164,7 @@ const ApplicationsCard = ({
           handleChange={handleChange}
           panelName="notAFit"
           contactId={contactId}
-          page="internal"
+          page="internal-applications-board"
         />
       </Paper>
     </div>

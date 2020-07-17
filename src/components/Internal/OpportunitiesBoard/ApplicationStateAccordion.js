@@ -47,7 +47,10 @@ const ApplicationStateAccordion = ({
     if (page === 'employer') {
       return toEmployerViewApplication(contactId, opportunityId);
     }
-    if (page === 'internal') {
+    if (
+      page === 'internal-applications-board' ||
+      page === 'internal-opportunities-board'
+    ) {
       return toStaffViewApplication(contactId, opportunityId);
     }
   };
@@ -80,7 +83,11 @@ const ApplicationStateAccordion = ({
     else highlightHead = classes.highlightHead;
   }
 
-  if (page === 'internal' && isActive === false)
+  if (
+    (page === 'internal-applications-board' ||
+      page === 'internal-opportunities-board') &&
+    isActive === false
+  )
     highlightHead = `${classes.inactive} ${highlightHead}`;
 
   return (
@@ -136,14 +143,18 @@ const ApplicationStateAccordion = ({
                       component="p"
                       className={classes.name}
                     >
-                      {`${app.contact.first_name} ${app.contact.last_name}`}
+                      {page === 'internal-applications-board'
+                        ? app.opportunity.title
+                        : `${app.contact.first_name} ${app.contact.last_name}`}
                     </Typography>
                     <Typography
                       variant="body1"
                       component="p"
                       className={classes.email}
                     >
-                      {`(${app.contact.email})`}
+                      {page === 'internal-applications-board'
+                        ? app.opportunity.org_name
+                        : `(${app.contact.email})`}
                     </Typography>
                   </div>
                   {header === 'Not a Fit' && (
