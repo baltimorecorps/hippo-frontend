@@ -158,7 +158,7 @@ const ApplicationsBoard = ({
         />
       ) : (
         <React.Fragment>
-          <Grid className={`${classes.buttonContainer} `}>
+          <Grid className={classes.buttonContainer}>
             <Button
               onClick={() => setShowForm(true)}
               variant="contained"
@@ -201,7 +201,10 @@ const ApplicationsBoard = ({
               </div>
             </div>
           </Grid>
-          <div>
+          <div
+            className={classes.buttonContainer}
+            style={{justifyContent: 'center'}}
+          >
             <FilterByProgramsTabs
               handleChangeFilter={handleChangeValueProgramTabs}
               value={programTabsValue}
