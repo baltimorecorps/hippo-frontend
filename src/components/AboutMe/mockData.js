@@ -61,6 +61,20 @@ export default {
     value_question2:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quia consequuntur illo perspiciatis temporibus laborum exercitationem, in eius, error soluta nihil. Ipsa accusantium illo harum obcaecati id maiores reiciendis velit quae voluptatum, facere, accusamus fuga eveniet recusandae itaque nostrum fugiat?',
   },
+  program_apps: [
+    // {
+    //   program: {id: 1, name: 'Place for Purpose'},
+    //   is_interested: true,
+    // },
+    // {
+    //   program: {id: 2, name: 'Baltimore Corps Fellowship'},
+    //   is_interested: false,
+    // },
+    // {
+    //   program: {id: 3, name: 'Public Allies'},-
+    //   is_interested: true,
+    // },
+  ],
 };
 
 // const idealProgramsAPI = {

@@ -7,9 +7,9 @@ import {
 } from './QuestionAnswerDisplayTemplates.js';
 
 const ProgramsAndEligibilityDisplay = ({contact, onClickEdit}) => {
-  const checkedPrograms = Object.values(contact.interested_programs).filter(
-    program => program.checked === true
-  );
+  const checkedPrograms = contact.program_apps
+    .filter(program => program.is_interested === true)
+    .map(program => program.program.name);
 
   return (
     <React.Fragment>

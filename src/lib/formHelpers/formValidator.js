@@ -382,11 +382,13 @@ const interestsAndGoalsValidator = values => {
   return {isError, err};
 };
 const programsAndEligibilityValidator = values => {
-  const {interested_programs} = values;
+  const {program_apps} = values;
 
-  const allValues = Object.values(interested_programs).map(
-    program => program.checked
+  const allValues = Object.values(program_apps).map(
+    program => program.is_interested
   );
+
+  console.log(allValues);
 
   let isError = false;
   let err = {};

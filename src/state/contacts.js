@@ -314,6 +314,27 @@ export const updateAboutMe = (contactId, aboutMe) =>
 
 // ---------------------------------------------------------------------------
 
+export const UPDATE_PROGRAM_APPS = 'UPDATE_PROGRAM_APPS';
+export const UPDATE_PROGRAM_APPS_API = fetchActionTypes(UPDATE_PROGRAM_APPS);
+export const updateProgramApps = (programApps, contactId) =>
+  async function(dispatch) {
+    dispatch({
+      type: UPDATE_PROGRAM_APPS,
+      programApps,
+    });
+
+    return await makeApiFetchActions(
+      UPDATE_PROGRAM_APPS,
+      `${API_URL}/api/contacts/${contactId}/program-apps/interested/`,
+      {
+        body: JSON.stringify(programApps),
+        method: 'PUT',
+      }
+    )(dispatch);
+  };
+
+// ---------------------------------------------------------------------------
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -408,6 +429,14 @@ export const contactsReducer = createReducer(
       const contact = action.body.data;
       state[contact.id].profile = contact.profile;
     },
+
+    [UPDATE_PROGRAM_APPS_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      console.log('updateProgramApps return payload', contact);
+
+      state[contact.id].program_apps = contact.program_apps;
+    },
+
     [GET_CONTACT_CAPABILITIES_API.RESOLVE]: (state, action) => {
       const result = action.body.data;
       const contact_id = result.contact_id;

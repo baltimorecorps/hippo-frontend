@@ -16,20 +16,20 @@ import InterestsAndGoalsForm from './forms/InterestsAndGoalsForm';
 import ValueAlignmentForm from './forms/ValueAlignmentForm';
 import ValueAlignmentDisplay from './defaultDisplays/ValueAlignmentDisplay';
 import InterestsAndGoalsDisplay from './defaultDisplays/InterestsAndGoalsDisplay';
-import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm';
+import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm.container';
 import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
 
 import mockData from './mockData';
 import mockDataEmpty from './mockDataEmpty';
 
 const AboutMeForms = ({
-  // contact,
+  contact,
   onSubmit,
   onCloseAllForms,
   onClickEdit,
   classes,
 }) => {
-  const contact = mockData;
+  // const contact = mockData;
   // const contact = mockDataEmpty;
 
   const [openForms, setOpenForms] = useState({
@@ -138,7 +138,7 @@ const AboutMeForms = ({
           )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      {/* <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -152,7 +152,7 @@ const AboutMeForms = ({
         <ExpansionPanelDetails>
           {openForms.programs_eligibility ? (
             <ProgramsAndEligibilityForm
-              contact={contact.profile}
+              contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenForms({...openForms, programs_eligibility: false})
@@ -161,7 +161,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <ProgramsAndEligibilityDisplay
-                contact={contact.profile}
+                contact={contact}
                 onClickEdit={() =>
                   setOpenForms({...openForms, programs_eligibility: true})
                 }
@@ -169,7 +169,7 @@ const AboutMeForms = ({
             </div>
           )}
         </ExpansionPanelDetails>
-      </ExpansionPanel> */}
+      </ExpansionPanel>
       <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
