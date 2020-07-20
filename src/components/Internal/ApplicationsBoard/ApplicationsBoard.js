@@ -157,54 +157,61 @@ const ApplicationsBoard = ({
           closeForm={() => setShowForm(false)}
         />
       ) : (
-        <Grid className={`${classes.buttonContainer} `}>
-          <Button
-            onClick={() => setShowForm(true)}
-            variant="contained"
-            color="primary"
-            className={classes.approveButton}
+        <React.Fragment>
+          <Grid className={classes.buttonContainer}>
+            <Button
+              onClick={() => setShowForm(true)}
+              variant="contained"
+              color="primary"
+              className={classes.approveButton}
+            >
+              + Approve New Applicant
+            </Button>
+            <div className={classes.searchFilterContainer}>
+              <div>
+                <TextField
+                  id="search-applicants"
+                  className={classes.searchBar}
+                  placeholder="Search by name or email"
+                  name="search-applicants"
+                  onChange={handleChangeSearch}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
+                />
+              </div>
+              <div>
+                <FormControl className={classes.formControlSelector}>
+                  <InputLabel className={classes.postsPerPageLabel}>
+                    Applicants/Page
+                  </InputLabel>
+                  <Select
+                    id="post-per-page"
+                    value={postsPerPage}
+                    onChange={handleChangePostsPerPage}
+                    className={classes.postsPerPageSelector}
+                  >
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+          </Grid>
+          <div
+            className={classes.buttonContainer}
+            style={{justifyContent: 'center'}}
           >
-            + Approve New Applicant
-          </Button>
-          <div className={classes.searchFilterContainer}>
-            <div>
-              <TextField
-                id="search-applicants"
-                className={classes.searchBar}
-                placeholder="Search by name or email"
-                name="search-applicants"
-                onChange={handleChangeSearch}
-                InputProps={{
-                  classes: {
-                    input: classes.resize,
-                  },
-                }}
-              />
-            </div>
-            <div>
-              <FormControl className={classes.formControlSelector}>
-                <InputLabel className={classes.postsPerPageLabel}>
-                  Applicants/Page
-                </InputLabel>
-                <Select
-                  id="post-per-page"
-                  value={postsPerPage}
-                  onChange={handleChangePostsPerPage}
-                  className={classes.postsPerPageSelector}
-                >
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={20}>20</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+            <FilterByProgramsTabs
+              handleChangeFilter={handleChangeValueProgramTabs}
+              value={programTabsValue}
+              programs={programs}
+            />
           </div>
-          <FilterByProgramsTabs
-            handleChangeFilter={handleChangeValueProgramTabs}
-            value={programTabsValue}
-            programs={programs}
-          />
-        </Grid>
+        </React.Fragment>
       )}
 
       {currentPosts &&
