@@ -60,20 +60,41 @@ export default {
 
     value_question2:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quia consequuntur illo perspiciatis temporibus laborum exercitationem, in eius, error soluta nihil. Ipsa accusantium illo harum obcaecati id maiores reiciendis velit quae voluptatum, facere, accusamus fuga eveniet recusandae itaque nostrum fugiat?',
+
+    needs_help_programs: 'Yes',
+    hear_about_us: 'Facebook',
+    hear_about_us_other: 'Other',
+    programs_completed: {
+      fellowship: false,
+      public_allies: false,
+      mayoral_fellowship: true,
+      kiva: false,
+      elevation_awards: false,
+      civic_innovators: false,
+    },
   },
   program_apps: [
-    // {
-    //   program: {id: 1, name: 'Place for Purpose'},
-    //   is_interested: true,
-    // },
-    // {
-    //   program: {id: 2, name: 'Baltimore Corps Fellowship'},
-    //   is_interested: false,
-    // },
-    // {
-    //   program: {id: 3, name: 'Public Allies'},-
-    //   is_interested: true,
-    // },
+    {
+      program: {id: 1, name: 'Place for Purpose'},
+      is_interested: true,
+    },
+    {
+      program: {id: 2, name: 'Mayoral Fellowship'},
+      is_interested: false,
+    },
+    {
+      program: {id: 3, name: 'Fellowship'},
+      is_interested: false,
+    },
+
+    {
+      program: {id: 4, name: 'Public Allies'},
+      is_interested: true,
+    },
+    {
+      program: {id: 5, name: 'JHU Carey Humanities Fellowship'},
+      is_interested: true,
+    },
   ],
 };
 

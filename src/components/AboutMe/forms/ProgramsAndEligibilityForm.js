@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {programsAndEligibilityValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-
 import {FormHeader, FormCheckboxes, FormSubmitButton} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit, defaultProgramApps) => {
@@ -29,17 +28,21 @@ const useForm = (initialValues, onSubmit, defaultProgramApps) => {
 
     handleInterestedProgramsChange: event => {
       event.persist();
+      if (event.target.name !== 'needs_help_programs') {
+        const newValue = values.program_apps.map(program => {
+          if (program.program.name === event.target.name) {
+            return {
+              ...program,
+              is_interested: event.target.checked,
+            };
+          } else return program;
+        });
 
-      const newValue = values.program_apps.map(program => {
-        if (program.program.name === event.target.name) {
-          return {
-            ...program,
-            is_interested: event.target.checked,
-          };
-        } else return program;
-      });
-
-      update('program_apps')(newValue);
+        update('program_apps')(newValue);
+      } else {
+        const newValue = event.target.checked === true ? 'Yes' : 'No';
+        update('needs_help_programs')(newValue);
+      }
     },
   };
 
@@ -86,11 +89,17 @@ const ProgramsAndEligibilityForm = ({
 
     if (!isError) {
       // handleSubmit(values, contact.id);
-      const programApps = values.program_apps;
+      const {first_name, last_name, email, id, program_apps} = values;
+      const programApps = {
+        first_name,
+        last_name,
+        email,
+        id,
+        program_apps,
+      };
       console.log('submitted programApps', programApps, contact.id);
 
       updateProgramApps(programApps, contact.id);
-      // update About me for need-help
       onCloseForm();
     }
   };
@@ -102,8 +111,14 @@ const ProgramsAndEligibilityForm = ({
       checked: program.is_interested,
     };
   });
-  // todo
-  // testing
+
+  const needsHelpPrograms = {
+    name: 'needs_help_programs',
+    label: "I'd like some help figuring this out",
+    checked: values.needs_help_programs === 'Yes' ? true : false,
+  };
+
+  programOptions.push(needsHelpPrograms);
 
   const descriptions = [
     'While our team will help you figure out which of program and services best align with where you are in your career, some folks apply to join our network because they are interested in a particular program offering.',
