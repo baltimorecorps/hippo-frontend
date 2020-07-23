@@ -262,7 +262,7 @@ const ApplicationsBoard = ({
       {currentPosts.length === 0 && (
         <Typography
           component="p"
-          variant="body"
+          variant="body1"
           align="center"
           className={classes.noResult}
         >
