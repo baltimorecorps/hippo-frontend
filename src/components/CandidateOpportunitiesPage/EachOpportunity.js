@@ -181,7 +181,6 @@ const EachOpportunity = ({
           <div className={classes.applyButton}>
             {contact
               ? contact.programs.map((eachProgram, index) =>
-                  eachProgram.program.id === opportunity.program_id &&
                   eachProgram.is_approved === true ? (
                     submittedIds.includes(opportunity.id) ? (
                       <Button

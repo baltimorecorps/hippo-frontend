@@ -16,7 +16,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-
+import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsTabs';
 const ApplicationsBoard = ({
   classes,
   approveNewApplicants,
@@ -34,13 +34,39 @@ const ApplicationsBoard = ({
     if (!allApplicants || allApplicants.length === 0) getAllContactsPrograms();
   }, [getAllContactsPrograms, allApplicants]);
 
+  let history = useHistory();
+  const toProfile = contactId => {
+    history.push(`/profile/${contactId}`);
+  };
+  const onClickView = contactId => {
+    history.push(`${match.url}/${contactId}`);
+  };
+
   const match = useRouteMatch();
-
   const [showForm, setShowForm] = useState(false);
-
   const [showCard, setShowCard] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
+  const [programTabsValue, setProgramTabsValue] = useState(1);
+  const programs = ['Place for Purpose', 'Mayoral Fellowship', 'Fellowship'];
+  const [allPosts, setAllPosts] = useState();
+  const [currentPosts, setCurrentPosts] = useState();
+  let indexOfLastPost = currentPage * postsPerPage;
+  let indexOfFirstPost = indexOfLastPost - postsPerPage;
+  let pageCount = allPosts && Math.ceil(allPosts.length / postsPerPage);
+  let pageNumbers = [];
+  for (let i = 0; i <= pageCount; i++) {
+    pageNumbers.push(i);
+  }
+  const options =
+    unapprovedApplicants &&
+    unapprovedApplicants.map(contact => {
+      return {
+        name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
+        contact_id: contact.id,
+        contact: contact,
+      };
+    });
 
   const sortApplicants =
     approvedApplicants &&
@@ -48,66 +74,52 @@ const ApplicationsBoard = ({
       a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
     );
 
-  const [allPosts, setAllPosts] = useState(sortApplicants || []);
-
-  let history = useHistory();
-
-  const toProfile = contactId => {
-    history.push(`/profile/${contactId}`);
-  };
-
-  let options = {};
-  if (unapprovedApplicants) {
-    options = unapprovedApplicants.map(contact => {
-      return {
-        name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
-        contact_id: contact.id,
-        contact: contact,
-      };
-    });
-  }
-
-  const onClickView = contactId => {
-    history.push(`${match.url}/${contactId}`);
-  };
-
   useEffect(() => {
     setAllPosts(sortApplicants);
   }, [sortApplicants]);
 
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts =
-    allPosts && allPosts.length > 2
-      ? allPosts.slice(indexOfFirstPost, indexOfLastPost)
-      : allPosts;
+  useEffect(() => {
+    let theApplicants = [];
+    if (approvedApplicants && programTabsValue !== 0) {
+      for (let i = 0; i < approvedApplicants.length; i++) {
+        let theApplicant = [];
+        approvedApplicants[i].programs.forEach(program => {
+          if (program.program.id === programTabsValue)
+            theApplicant.push(approvedApplicants[i]);
+        });
+        theApplicants.push(...theApplicant);
+      }
+      setAllPosts(theApplicants);
+    } else {
+      setAllPosts(approvedApplicants);
+    }
+  }, [approvedApplicants, programTabsValue]);
 
-  const pageCount = allPosts && Math.ceil(allPosts.length / postsPerPage);
-  const pageNumbers = [];
-  for (let i = 0; i <= pageCount; i++) {
-    pageNumbers.push(i);
-  }
+  useEffect(() => {
+    setCurrentPosts(
+      allPosts && allPosts.length > 2
+        ? allPosts.slice(indexOfFirstPost, indexOfLastPost)
+        : allPosts
+    );
+  }, [allPosts, indexOfFirstPost, indexOfLastPost]);
 
   const paginate = event => {
     event.persist();
-    const pageNumber = Number(event.target.textContent);
-    setCurrentPage(pageNumber);
+    setCurrentPage(Number(event.target.textContent));
   };
 
   const handleChangePostsPerPage = event => {
     event.persist();
-
     setPostsPerPage(event.target.value);
+    setCurrentPage(1);
   };
+
   const handleChangeSearch = event => {
     event.persist();
-
     const name = event.target.value.toLowerCase();
     if (name != null) {
       const searchNames = approvedApplicants.filter(applicant => {
-        const applicantName = applicant.first_name.toLowerCase();
-        const applicantLastName = applicant.last_name.toLowerCase();
-        const applicantFullName = `${applicantName} ${applicantLastName}`;
+        const applicantFullName = `${applicant.first_name} ${applicant.last_name}`.toLowerCase();
         const applicantEmail = applicant.email.toLowerCase();
         return (
           applicantFullName.includes(name) || applicantEmail.includes(name)
@@ -116,6 +128,9 @@ const ApplicationsBoard = ({
       setCurrentPage(1);
       setAllPosts(searchNames);
     }
+  };
+  const handleChangeValueProgramTabs = (event, newValue) => {
+    setProgramTabsValue(newValue);
   };
 
   if (!currentPosts) {
@@ -142,49 +157,61 @@ const ApplicationsBoard = ({
           closeForm={() => setShowForm(false)}
         />
       ) : (
-        <Grid className={`${classes.buttonContainer} `}>
-          <Button
-            onClick={() => setShowForm(true)}
-            variant="contained"
-            color="primary"
-            className={classes.approveButton}
+        <React.Fragment>
+          <Grid className={classes.buttonContainer}>
+            <Button
+              onClick={() => setShowForm(true)}
+              variant="contained"
+              color="primary"
+              className={classes.approveButton}
+            >
+              + Approve New Applicant
+            </Button>
+            <div className={classes.searchFilterContainer}>
+              <div>
+                <TextField
+                  id="search-applicants"
+                  className={classes.searchBar}
+                  placeholder="Search by name or email"
+                  name="search-applicants"
+                  onChange={handleChangeSearch}
+                  InputProps={{
+                    classes: {
+                      input: classes.resize,
+                    },
+                  }}
+                />
+              </div>
+              <div>
+                <FormControl className={classes.formControlSelector}>
+                  <InputLabel className={classes.postsPerPageLabel}>
+                    Applicants/Page
+                  </InputLabel>
+                  <Select
+                    id="post-per-page"
+                    value={postsPerPage}
+                    onChange={handleChangePostsPerPage}
+                    className={classes.postsPerPageSelector}
+                  >
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+          </Grid>
+          <div
+            className={classes.buttonContainer}
+            style={{justifyContent: 'center'}}
           >
-            + Approve New Applicant
-          </Button>
-          <div className={classes.searchFilterContainer}>
-            <div>
-              <TextField
-                id="search-applicants"
-                className={classes.searchBar}
-                placeholder="Search by name or email"
-                name="search-applicants"
-                onChange={handleChangeSearch}
-                InputProps={{
-                  classes: {
-                    input: classes.resize,
-                  },
-                }}
-              />
-            </div>
-            <div>
-              <FormControl className={classes.formControlSelector}>
-                <InputLabel className={classes.postsPerPageLabel}>
-                  Applicants/Page
-                </InputLabel>
-                <Select
-                  id="post-per-page"
-                  value={postsPerPage}
-                  onChange={handleChangePostsPerPage}
-                  className={classes.postsPerPageSelector}
-                >
-                  <MenuItem value={5}>5</MenuItem>
-                  <MenuItem value={10}>10</MenuItem>
-                  <MenuItem value={20}>20</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
+            <FilterByProgramsTabs
+              handleChangeFilter={handleChangeValueProgramTabs}
+              value={programTabsValue}
+              programs={programs}
+            />
           </div>
-        </Grid>
+        </React.Fragment>
       )}
 
       {currentPosts &&
@@ -232,6 +259,16 @@ const ApplicationsBoard = ({
             </div>
           </Paper>
         ))}
+      {currentPosts.length === 0 && (
+        <Typography
+          component="p"
+          variant="body1"
+          align="center"
+          className={classes.noResult}
+        >
+          No result found
+        </Typography>
+      )}
 
       {!showCard && (
         <Pagination
@@ -291,9 +328,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     alignItems: 'flex-end',
     marginTop: '10px',
+    marginBottom: '20px',
     justifyContent: 'space-between',
     padding: 0,
-
     width: '100%',
     [breakpoints.up('lg')]: {
       alignItems: 'center',
@@ -312,10 +349,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
   },
   postsPerPageLabel: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
+    padding: '5px 10px',
   },
   postsPerPageSelector: {
     width: '90%',
@@ -331,14 +365,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.up('lg')]: {
       width: 500,
     },
-    // border: '1px solid grey',
   },
   resize: {
     fontSize: 19,
   },
-  postsPerPageLabel: {
-    padding: '5px 10px',
-  },
+
   header: {
     [breakpoints.up('sm')]: {
       fontSize: '24px',
@@ -457,6 +488,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   pagination: {
     margin: spacing(2),
+  },
+  noResult: {
+    marginTop: '20px',
+    width: '100%',
+    fontSize: '20px',
   },
 });
 
