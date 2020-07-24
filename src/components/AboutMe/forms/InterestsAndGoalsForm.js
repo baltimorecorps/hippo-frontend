@@ -17,6 +17,8 @@ import {
   FormHeader,
   FormRadioButtons,
   FormCheckboxes,
+  FormDropDownSelector,
+  FormTextField,
   FormSubmitButton,
 } from './FormTemplates';
 
@@ -90,6 +92,17 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     });
   }
 
+  const hearAboutUsOptions = [
+    'Baltimore Corps Website',
+    'Facebook',
+    'Instagram',
+    'Indeed',
+    'LinkedIn',
+    'School',
+    'Virtual Event',
+    'Other',
+  ];
+
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader
@@ -98,7 +111,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
         onCloseForm={onCloseForm}
       />
 
-      <Grid item xs={12} align="center">
+      <Grid item xs={12} align="flex-start">
         <form noValidate autoComplete="off">
           <FormRadioButtons
             question="What's your current employment status? *"
@@ -153,6 +166,34 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
             name="previous_bcorps_program"
             ariaLabel="Have participated with Baltimore Corps programs and services before"
           />
+
+          {/* Need to update the checkboxes and validation  */}
+          {values.profile.previous_bcorps_program === 'Yes' && (
+            <FormCheckboxes
+              question="Which of our programs and services have you participated in?"
+              options={roles}
+              onChange={handleInterestedRolesChange}
+            />
+          )}
+
+          {/* <div className={classes.dropdownAndTextFieldContainer}> */}
+          <FormDropDownSelector
+            question="How do you find out about Baltimore Corps?"
+            name="hear_about_us"
+            value={values.profile.hear_about_us}
+            options={hearAboutUsOptions}
+            onChange={handleChange}
+          />
+
+          {values.profile.hear_about_us === 'Other' && (
+            <FormTextField
+              value={values.profile.hear_about_us_other}
+              name="hear_about_us_other"
+              label="Provide more details about how you heard about us:"
+              onChange={handleChange}
+            />
+          )}
+          {/* </div> */}
           <FormSubmitButton onSubmit={submit} />
         </form>
       </Grid>

@@ -156,28 +156,34 @@ const FormDropDownSelectorTemplate = ({
 }) => {
   return (
     <div className={classes.dropdownContainer}>
-      <InputLabel htmlFor={name} className={classes.inputLabel}>
-        {question}
-      </InputLabel>
-      <Select
-        disabled={false}
-        required
-        id={name}
-        value={value || ''}
-        onChange={onChange}
-        inputProps={{
-          name: name,
-          id: name,
-          classes: {select: classes.dropdownSelector},
-          'data-testid': name,
-        }}
-      >
-        {options.map(option => (
-          <MenuItem value={option} key={option}>
-            {option}
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.dropdownLabel}
+        >
+          {question}
+        </Typography>
+        <Select
+          disabled={false}
+          required
+          id={name}
+          value={value || ''}
+          onChange={onChange}
+          inputProps={{
+            name: name,
+            id: name,
+            classes: {select: classes.dropdownSelector},
+            'data-testid': name,
+          }}
+        >
+          {options.map(option => (
+            <MenuItem value={option} key={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   );
 };
@@ -210,7 +216,7 @@ const FormTextFieldTemplate = ({
       >
         {label}
       </Typography>
-      <Grid item xs={8} sm={6} md={5} lg={4} align="center">
+      <Grid item xs={12} align="left">
         <TextField
           required
           id={name}
@@ -311,7 +317,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 
   formControl: {
-    width: '95%',
+    width: '50%',
     marginTop: spacing(0),
   },
   resize: {
@@ -354,11 +360,23 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexGrow: 1,
   },
   dropdownContainer: {
-    margin: '10px 0',
+    // margin: '10px 0',
+    // display: 'flex',
+    // flexDirection: 'column',
+    // alignItems: 'flex-start',
+    // justifyContent: 'flex-start',
+    width: '100%',
+  },
+  dropdownLabel: {
+    color: '#000000',
+    textAlign: 'left',
+    fontWeight: 'bold',
   },
   dropdownSelector: {
     textAlign: 'left',
-    width: '90px',
+    width: '100%',
+    alignSelf: 'flex-start',
+    margin: 0,
   },
 
   radio: {

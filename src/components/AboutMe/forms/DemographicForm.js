@@ -116,7 +116,7 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
         onCloseForm={onCloseForm}
       />
 
-      <Grid item xs={12} align="center">
+      <Grid item xs={12} align="flex-start">
         <form noValidate autoComplete="off">
           <FormCheckboxes
             question="Race (select all that apply)"
