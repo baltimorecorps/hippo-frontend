@@ -341,6 +341,14 @@ const roleLabels = {
   operations_administration: 'Operations and Administration',
   program_management: 'Program Management',
 };
+const programsCompletedLabels = {
+  fellowship: 'Baltimore Corps Fellowship',
+  civic_innovators: 'Civic Innovators Program',
+  elevation_awards: 'Elevation Awards',
+  kiva: 'Kiva',
+  mayoral_fellowship: 'Mayoral Fellowship',
+  public_allies: 'Public Allies',
+};
 
 const jobSearchStatus = [
   'Actively looking for a job',
@@ -380,4 +388,5 @@ export {
   roleLabels,
   currentJobStatus,
   currentEduStatus,
+  programsCompletedLabels,
 };

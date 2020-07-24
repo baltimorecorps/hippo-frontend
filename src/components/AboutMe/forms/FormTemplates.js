@@ -251,7 +251,7 @@ const FormMultiRowsTextFieldTemplate = ({
         required
         id={name}
         name={name}
-        value={value}
+        value={value || ''}
         multiline
         rows={6}
         onChange={onChange}

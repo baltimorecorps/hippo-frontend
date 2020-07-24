@@ -11,6 +11,7 @@ import {
   currentEduStatus,
   yearsOfExperience,
   roleLabels,
+  programsCompletedLabels,
 } from '../defaultData';
 
 import {
@@ -49,6 +50,17 @@ const useForm = (initialValues, onSubmit) => {
       };
       update('profile')(newValue);
     },
+    handleProgramsCompletedChange: event => {
+      event.persist();
+      const newValue = {
+        ...values.profile,
+        programs_completed: {
+          ...values.profile.programs_completed,
+          [event.target.name]: event.target.checked,
+        },
+      };
+      update('profile')(newValue);
+    },
   };
 
   return [values, handlers];
@@ -57,7 +69,12 @@ const useForm = (initialValues, onSubmit) => {
 const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [
     values,
-    {handleChange, handleSubmit, handleInterestedRolesChange},
+    {
+      handleChange,
+      handleSubmit,
+      handleInterestedRolesChange,
+      handleProgramsCompletedChange,
+    },
   ] = useForm(contact, onSubmit);
   const [errors, setErrors] = useState({});
 
@@ -75,22 +92,36 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     'The questions below help us understand a little bit more about your experience and which roles you might be interested in applying for.',
   ];
 
-  let roles = [];
-  for (const [key, value] of Object.entries(values.profile.roles)) {
-    if (value == null) {
-      roles.push({name: key, checked: false});
-    } else {
-      roles.push({name: key, checked: value});
-    }
-  }
-
-  for (const [key, value] of Object.entries(roleLabels)) {
-    roles.forEach((role, index) => {
-      if (role.name === key) {
-        roles[index] = {...role, label: value};
+  let roleOptions = [];
+  Object.entries(roleLabels).forEach(([labelKey, labelName], index) => {
+    Object.entries(values.profile.roles).forEach(([roleKey, roleChecked]) => {
+      if (roleKey === labelKey) {
+        roleOptions[index] = {
+          name: roleKey,
+          checked: roleChecked === true ? true : false,
+          label: labelName,
+        };
       }
     });
-  }
+  });
+
+  let programsCompletedOptions = [];
+
+  Object.entries(programsCompletedLabels).forEach(
+    ([labelKey, labelName], index) => {
+      Object.entries(values.profile.programs_completed).forEach(
+        ([programKey, programChecked]) => {
+          if (programKey === labelKey) {
+            programsCompletedOptions[index] = {
+              name: programKey,
+              checked: programChecked === true ? true : false,
+              label: labelName,
+            };
+          }
+        }
+      );
+    }
+  );
 
   const hearAboutUsOptions = [
     'Baltimore Corps Website',
@@ -102,6 +133,8 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     'Virtual Event',
     'Other',
   ];
+
+  console.log(programsCompletedOptions);
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -154,7 +187,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
           <FormCheckboxes
             question="Which of the following types of roles are you interested in applying for? (select all that apply)"
-            options={roles}
+            options={roleOptions}
             onChange={handleInterestedRolesChange}
           />
 
@@ -171,8 +204,8 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
           {values.profile.previous_bcorps_program === 'Yes' && (
             <FormCheckboxes
               question="Which of our programs and services have you participated in?"
-              options={roles}
-              onChange={handleInterestedRolesChange}
+              options={programsCompletedOptions}
+              onChange={handleProgramsCompletedChange}
             />
           )}
 
@@ -185,14 +218,13 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
             onChange={handleChange}
           />
 
-          {values.profile.hear_about_us === 'Other' && (
-            <FormTextField
-              value={values.profile.hear_about_us_other}
-              name="hear_about_us_other"
-              label="Provide more details about how you heard about us:"
-              onChange={handleChange}
-            />
-          )}
+          <FormTextField
+            value={values.profile.hear_about_us_other}
+            name="hear_about_us_other"
+            label="Please provide more details about how you find out about us:"
+            onChange={handleChange}
+          />
+
           {/* </div> */}
           <FormSubmitButton onSubmit={submit} />
         </form>
