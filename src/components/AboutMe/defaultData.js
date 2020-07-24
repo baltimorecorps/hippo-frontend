@@ -325,7 +325,7 @@ const raceLabels = {
   asian: 'Asian',
   black: 'Black or African Descent',
   hispanic: 'Hispanic or Latinx',
-  hawaiin: 'Native Hawaiian or Other Pacific Islander',
+  hawaiian: 'Native Hawaiian or Other Pacific Islander',
   south_asian: 'South Asian',
   white: 'White',
   not_listed: 'Not Listed',

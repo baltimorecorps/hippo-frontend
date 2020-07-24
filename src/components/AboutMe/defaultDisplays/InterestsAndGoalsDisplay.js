@@ -46,6 +46,10 @@ const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
         question="Have participated with Baltimore Corps Before:"
         answer={profile.previous_bcorps_program}
       />
+      <QuestionWithOneAnswer
+        question="How you find out about Baltimore Corps:"
+        answer={profile.hear_about_us}
+      />
     </React.Fragment>
   );
 };

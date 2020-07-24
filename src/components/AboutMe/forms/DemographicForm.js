@@ -27,8 +27,10 @@ const useForm = (initialValues, onSubmit) => {
         ...values.profile,
         [event.target.name]: event.target.value,
       };
+
       if (event.target.name === 'gender' && event.target.value !== 'Not Listed')
         newValue.gender_other = '';
+
       if (
         event.target.name === 'pronoun' &&
         event.target.value !== 'Not Listed'
@@ -86,28 +88,18 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
     ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
   ];
 
-  let race = [];
-  for (const [key, value] of Object.entries(values.profile.race)) {
-    if (key !== 'race_other') {
-      if (value == null) {
-        race.push({name: key, checked: false});
-      } else {
-        race.push({name: key, checked: value});
-      }
-    }
-  }
-
-  for (const [key, value] of Object.entries(raceLabels)) {
-    race.forEach((role, index) => {
-      if (role.name === key) {
-        race[index] = {...role, label: value};
-      }
+  let raceOptions = [];
+  Object.entries(values.profile.race).forEach(([raceKey, raceValue]) => {
+    Object.entries(raceLabels).forEach(([labelKey, labelName], index) => {
+      if (raceKey !== 'race_other' && raceKey === labelKey)
+        raceOptions[index] = {
+          name: raceKey,
+          label: labelName,
+          checked: raceValue === true ? true : false,
+        };
     });
-  }
+  });
 
-  const raceOptions = race.slice(0, -1);
-
-  // console.log(values.profile);
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader

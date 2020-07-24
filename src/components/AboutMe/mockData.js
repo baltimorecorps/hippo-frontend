@@ -62,7 +62,7 @@ export default {
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quia consequuntur illo perspiciatis temporibus laborum exercitationem, in eius, error soluta nihil. Ipsa accusantium illo harum obcaecati id maiores reiciendis velit quae voluptatum, facere, accusamus fuga eveniet recusandae itaque nostrum fugiat?',
 
     needs_help_programs: 'Yes',
-    hear_about_us: 'Facebook',
+    hear_about_us: 'LinkedIn',
     hear_about_us_other: 'Other',
     programs_completed: {
       fellowship: false,
