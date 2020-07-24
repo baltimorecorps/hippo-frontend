@@ -159,6 +159,17 @@ describe('About Me: Interest and Goals Form', () => {
         current_job_status: '',
         current_edu_status: '',
         years_exp: '',
+        needs_help_programs: '',
+        hear_about_us: '',
+        hear_about_us_other: '',
+        programs_completed: {
+          fellowship: false,
+          public_allies: false,
+          mayoral_fellowship: true,
+          kiva: false,
+          elevation_awards: false,
+          civic_innovators: false,
+        },
       },
     };
     let expectedErr = {
@@ -180,6 +191,17 @@ describe('About Me: Interest and Goals Form', () => {
         current_job_status: 'Unemployed',
         current_edu_status: 'Full-time student',
         years_exp: '0-2 years',
+        needs_help_programs: 'Yes',
+        hear_about_us: 'School',
+        hear_about_us_other: 'UMBC',
+        programs_completed: {
+          fellowship: false,
+          public_allies: false,
+          mayoral_fellowship: true,
+          kiva: false,
+          elevation_awards: false,
+          civic_innovators: false,
+        },
       },
     };
     let expectedErr = {};
