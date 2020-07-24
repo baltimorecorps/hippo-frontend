@@ -364,8 +364,6 @@ const interestsAndGoalsValidator = values => {
 
   const allValues = Object.values(programs_completed);
 
-  console.log(allValues);
-
   let isError = false;
   let err = {};
 
@@ -393,6 +391,14 @@ const interestsAndGoalsValidator = values => {
   ) {
     isError = true;
     err.programsCompleted_error = 'Required';
+  }
+  if (
+    hear_about_us &&
+    hear_about_us === 'Other' &&
+    (!hear_about_us_other || hear_about_us_other.length === 0)
+  ) {
+    isError = true;
+    err.hearAboutUsOther_error = 'Required';
   }
 
   return {isError, err};

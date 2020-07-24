@@ -187,6 +187,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
             name="hear_about_us_other"
             label="Please provide more details about how you find out about us:"
             onChange={handleChange}
+            error={errors.hearAboutUsOther_error}
           />
 
           <FormSubmitButton onSubmit={submit} />
