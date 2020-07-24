@@ -335,9 +335,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   formHelperText: {
     color: palette.error.main,
-    marginTop: '2px',
+    // marginTop: '2px',
     width: '95%',
-    marginBottom: spacing(1),
+    marginBottom: spacing(2),
   },
   iconButton: {
     flexBasis: '60px',

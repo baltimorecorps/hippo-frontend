@@ -165,16 +165,15 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
             ariaLabel="Have participated with Baltimore Corps programs and services before"
           />
 
-          {/* Need to update the checkboxes and validation  */}
           {values.profile.previous_bcorps_program === 'Yes' && (
             <FormCheckboxes
-              question="Which of our programs and services have you participated in?"
+              question="Which of our programs and services have you participated in? *"
               options={programsCompletedOptions}
               onChange={handleProgramsCompletedChange}
+              error={errors.programsCompleted_error}
             />
           )}
 
-          {/* <div className={classes.dropdownAndTextFieldContainer}> */}
           <FormDropDownSelector
             question="How do you find out about Baltimore Corps?"
             name="hear_about_us"
@@ -190,7 +189,6 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
             onChange={handleChange}
           />
 
-          {/* </div> */}
           <FormSubmitButton onSubmit={submit} />
         </form>
       </Grid>

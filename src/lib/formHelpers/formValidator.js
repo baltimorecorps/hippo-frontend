@@ -356,7 +356,15 @@ const interestsAndGoalsValidator = values => {
     current_job_status,
     current_edu_status,
     years_exp,
+    previous_bcorps_program,
+    programs_completed,
+    hear_about_us,
+    hear_about_us_other,
   } = values.profile;
+
+  const allValues = Object.values(programs_completed);
+
+  console.log(allValues);
 
   let isError = false;
   let err = {};
@@ -377,6 +385,14 @@ const interestsAndGoalsValidator = values => {
   if (!years_exp || years_exp.length === 0) {
     isError = true;
     err.yearsExp_error = 'Required';
+  }
+  if (
+    previous_bcorps_program &&
+    previous_bcorps_program === 'Yes' &&
+    !allValues.includes(true)
+  ) {
+    isError = true;
+    err.programsCompleted_error = 'Required';
   }
 
   return {isError, err};
