@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import {newProfileValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-
+import {getCheckboxOptions} from '../../../lib/helperFunctions/helpers';
 import {genders, pronouns, raceLabels} from '../defaultData';
 
 import {
@@ -88,17 +87,11 @@ const DemographicForm = ({contact, onSubmit, onCloseForm, classes}) => {
     ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
   ];
 
-  let raceOptions = [];
-  Object.entries(values.profile.race).forEach(([raceKey, raceValue]) => {
-    Object.entries(raceLabels).forEach(([labelKey, labelName], index) => {
-      if (raceKey !== 'race_other' && raceKey === labelKey)
-        raceOptions[index] = {
-          name: raceKey,
-          label: labelName,
-          checked: raceValue === true ? true : false,
-        };
-    });
-  });
+  const raceOptions = getCheckboxOptions(
+    raceLabels,
+    values.profile.race,
+    'race'
+  );
 
   return (
     <Grid item xs={12} className={classes.form}>

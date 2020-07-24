@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
+import {getCheckboxOptions} from '../../../lib/helperFunctions/helpers';
 
 import {
   jobSearchStatus,
@@ -12,6 +13,7 @@ import {
   yearsOfExperience,
   roleLabels,
   programsCompletedLabels,
+  hearAboutUsOptions,
 } from '../defaultData';
 
 import {
@@ -92,49 +94,12 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     'The questions below help us understand a little bit more about your experience and which roles you might be interested in applying for.',
   ];
 
-  let roleOptions = [];
-  Object.entries(roleLabels).forEach(([labelKey, labelName], index) => {
-    Object.entries(values.profile.roles).forEach(([roleKey, roleChecked]) => {
-      if (roleKey === labelKey) {
-        roleOptions[index] = {
-          name: roleKey,
-          checked: roleChecked === true ? true : false,
-          label: labelName,
-        };
-      }
-    });
-  });
+  const roleOptions = getCheckboxOptions(roleLabels, values.profile.roles);
 
-  let programsCompletedOptions = [];
-
-  Object.entries(programsCompletedLabels).forEach(
-    ([labelKey, labelName], index) => {
-      Object.entries(values.profile.programs_completed).forEach(
-        ([programKey, programChecked]) => {
-          if (programKey === labelKey) {
-            programsCompletedOptions[index] = {
-              name: programKey,
-              checked: programChecked === true ? true : false,
-              label: labelName,
-            };
-          }
-        }
-      );
-    }
+  const programsCompletedOptions = getCheckboxOptions(
+    programsCompletedLabels,
+    values.profile.programs_completed
   );
-
-  const hearAboutUsOptions = [
-    'Baltimore Corps Website',
-    'Facebook',
-    'Instagram',
-    'Indeed',
-    'LinkedIn',
-    'School',
-    'Virtual Event',
-    'Other',
-  ];
-
-  console.log(programsCompletedOptions);
 
   return (
     <Grid item xs={12} className={classes.form}>

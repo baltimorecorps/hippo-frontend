@@ -376,6 +376,17 @@ const programs = [
   "I'd like some help figuring this out",
 ];
 
+const hearAboutUsOptions = [
+  'Baltimore Corps Website',
+  'Facebook',
+  'Instagram',
+  'Indeed',
+  'LinkedIn',
+  'School',
+  'Virtual Event',
+  'Other',
+];
+
 export {
   countryList,
   states,
@@ -389,4 +400,5 @@ export {
   currentJobStatus,
   currentEduStatus,
   programsCompletedLabels,
+  hearAboutUsOptions,
 };
