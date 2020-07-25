@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Header,
   QuestionWithMultipleAnswers,
+  QuestionWithOneAnswer,
 } from './QuestionAnswerDisplayTemplates.js';
 
 const ProgramsAndEligibilityDisplay = ({contact, onClickEdit}) => {
@@ -11,13 +12,28 @@ const ProgramsAndEligibilityDisplay = ({contact, onClickEdit}) => {
     .filter(program => program.is_interested === true)
     .map(program => program.program.name);
 
+  if (
+    contact.profile.needs_help_programs === true &&
+    checkedPrograms.length > 0
+  )
+    checkedPrograms.push("I'd like some help figuring this out");
+
   return (
     <React.Fragment>
       <Header header="Programs and Eligibility" onClickEdit={onClickEdit} />
-      <QuestionWithMultipleAnswers
-        question="Interested Programs:"
-        answers={checkedPrograms}
-      />
+
+      {contact.profile.needs_help_programs === true &&
+      checkedPrograms.length === 0 ? (
+        <QuestionWithOneAnswer
+          question="Interested Programs:"
+          answer="I'd like some help figuring this out"
+        />
+      ) : (
+        <QuestionWithMultipleAnswers
+          question="Interested Programs:"
+          answers={checkedPrograms}
+        />
+      )}
     </React.Fragment>
   );
 };

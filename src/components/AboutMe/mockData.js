@@ -60,7 +60,6 @@ export default {
     value_question2:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quia consequuntur illo perspiciatis temporibus laborum exercitationem, in eius, error soluta nihil. Ipsa accusantium illo harum obcaecati id maiores reiciendis velit quae voluptatum, facere, accusamus fuga eveniet recusandae itaque nostrum fugiat?',
 
-    needs_help_programs: 'Yes',
     hear_about_us: 'School',
     hear_about_us_other: 'UMBC',
     previous_bcorps_program: 'Yes',
@@ -73,7 +72,9 @@ export default {
       elevation_awards: false,
       civic_innovators: false,
     },
+    needs_help_programs: true,
   },
+
   program_apps: [
     {
       program: {id: 1, name: 'Place for Purpose'},
@@ -85,16 +86,16 @@ export default {
     },
     {
       program: {id: 3, name: 'Fellowship'},
-      is_interested: false,
+      is_interested: true,
     },
 
     {
       program: {id: 4, name: 'Public Allies'},
-      is_interested: true,
+      is_interested: false,
     },
     {
       program: {id: 5, name: 'JHU Carey Humanities Fellowship'},
-      is_interested: true,
+      is_interested: false,
     },
   ],
 };
