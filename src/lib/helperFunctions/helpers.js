@@ -116,6 +116,16 @@ const getCheckboxOptions = (labels, apiValues, type = '') => {
   return options;
 };
 
+const getListOfAnswers = (apiValues, labelNames) => {
+  let answers = [];
+  Object.entries(apiValues).forEach(([apiKey, apiValue]) => {
+    Object.entries(labelNames).forEach(([labelKey, labelName]) => {
+      if (apiKey === labelKey && apiValue === true) answers.push(labelName);
+    });
+  });
+  return answers;
+};
+
 export {
   createExternalLink,
   createClickTracking,
@@ -124,4 +134,5 @@ export {
   formatDate,
   formatTime,
   getCheckboxOptions,
+  getListOfAnswers,
 };

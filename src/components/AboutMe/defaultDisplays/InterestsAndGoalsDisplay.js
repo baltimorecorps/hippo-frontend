@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import {getListOfAnswers} from '../../../lib/helperFunctions/helpers';
 import {
   Header,
   QuestionWithOneAnswer,
   QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
 
-import {roleLabels} from '../defaultData';
+import {roleLabels, programsCompletedLabels} from '../defaultData';
 
 const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
   const {
@@ -22,13 +22,11 @@ const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
     hear_about_us_other,
   } = profile;
 
-  let roleOptions = [];
-  Object.entries(roles).forEach(([roleKey, roleValue]) => {
-    Object.entries(roleLabels).forEach(([labelKey, labelName]) => {
-      if (roleKey === labelKey && roleValue === true)
-        roleOptions.push(labelName);
-    });
-  });
+  let roleAnswer = getListOfAnswers(roles, roleLabels);
+  let programsCompletedAnswer = getListOfAnswers(
+    programs_completed,
+    programsCompletedLabels
+  );
 
   let hearAboutUs = '';
   if (hear_about_us !== 'Other' && hear_about_us_other.length > 0) {
@@ -60,12 +58,20 @@ const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
       />
       <QuestionWithMultipleAnswers
         question="Interested Types of Roles:"
-        answers={roleOptions}
+        answers={roleAnswer}
       />
+
       <QuestionWithOneAnswer
         question="Have participated with Baltimore Corps Before:"
         answer={previous_bcorps_program}
       />
+      {previous_bcorps_program === 'Yes' && (
+        <QuestionWithMultipleAnswers
+          question="Program(s) I've completed:"
+          answers={programsCompletedAnswer}
+        />
+      )}
+
       <QuestionWithOneAnswer
         question="How you find out about Baltimore Corps:"
         answer={hearAboutUs}

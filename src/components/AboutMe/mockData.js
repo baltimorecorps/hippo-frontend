@@ -26,7 +26,6 @@ export default {
     job_search_status: 'Actively looking for a job',
     current_job_status: 'Unemployed',
     current_edu_status: 'Full-time student',
-    previous_bcorps_program: 'No',
     address_primary: {
       street1: '123 Main St',
       street2: 'Apt 3',
@@ -64,9 +63,11 @@ export default {
     needs_help_programs: 'Yes',
     hear_about_us: 'School',
     hear_about_us_other: 'UMBC',
+    previous_bcorps_program: 'Yes',
+
     programs_completed: {
       fellowship: false,
-      public_allies: false,
+      public_allies: true,
       mayoral_fellowship: true,
       kiva: false,
       elevation_awards: false,
