@@ -10,45 +10,65 @@ import {
 import {roleLabels} from '../defaultData';
 
 const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
-  let checkedRoles = [];
-  for (const [key, value] of Object.entries(profile.roles)) {
-    if (value === true) checkedRoles.push(key);
+  const {
+    job_search_status,
+    current_job_status,
+    current_edu_status,
+    years_exp,
+    roles,
+    previous_bcorps_program,
+    programs_completed,
+    hear_about_us,
+    hear_about_us_other,
+  } = profile;
+
+  let roleOptions = [];
+  Object.entries(roles).forEach(([roleKey, roleValue]) => {
+    Object.entries(roleLabels).forEach(([labelKey, labelName]) => {
+      if (roleKey === labelKey && roleValue === true)
+        roleOptions.push(labelName);
+    });
+  });
+
+  let hearAboutUs = '';
+  if (hear_about_us !== 'Other' && hear_about_us_other.length > 0) {
+    hearAboutUs = `${hear_about_us}: ${hear_about_us_other}`;
+  } else if (hear_about_us !== 'Other') {
+    hearAboutUs = hear_about_us;
+  } else {
+    hearAboutUs = hear_about_us_other;
   }
 
-  let roles = [];
-  for (const [key, value] of Object.entries(roleLabels)) {
-    if (checkedRoles.includes(key)) roles.push(value);
-  }
   return (
     <React.Fragment>
       <Header header="Interest and Goals" onClickEdit={onClickEdit} />
       <QuestionWithOneAnswer
         question="Job Search Status:"
-        answer={profile.job_search_status}
+        answer={job_search_status}
       />
       <QuestionWithOneAnswer
         question="Employment Status:"
-        answer={profile.current_job_status}
+        answer={current_job_status}
       />
       <QuestionWithOneAnswer
         question="Currently a student:"
-        answer={profile.current_edu_status}
+        answer={current_edu_status}
       />
       <QuestionWithOneAnswer
         question="Years of experience:"
-        answer={profile.years_exp}
+        answer={years_exp}
       />
       <QuestionWithMultipleAnswers
         question="Interested Types of Roles:"
-        answers={roles}
+        answers={roleOptions}
       />
       <QuestionWithOneAnswer
         question="Have participated with Baltimore Corps Before:"
-        answer={profile.previous_bcorps_program}
+        answer={previous_bcorps_program}
       />
       <QuestionWithOneAnswer
         question="How you find out about Baltimore Corps:"
-        answer={profile.hear_about_us}
+        answer={hearAboutUs}
       />
     </React.Fragment>
   );
