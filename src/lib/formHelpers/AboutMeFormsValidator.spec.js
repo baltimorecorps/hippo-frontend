@@ -91,7 +91,6 @@ describe('About Me: Contact Info Form', () => {
     };
 
     const {isError, err} = contactInfoValidator(values);
-    console.log(err);
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
   });
@@ -118,7 +117,6 @@ describe('About Me: Contact Info Form', () => {
     };
 
     const {isError, err} = contactInfoValidator(values);
-    console.log(err);
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
   });
@@ -145,7 +143,6 @@ describe('About Me: Contact Info Form', () => {
     };
 
     const {isError, err} = contactInfoValidator(values);
-    console.log(err);
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
   });
@@ -178,9 +175,9 @@ describe('About Me: Interest and Goals Form', () => {
       current_job_status: 'Unemployed',
       current_edu_status: 'Full-time student',
       years_exp: '0-2 years',
-      previous_bcorps_program: 'Yes',
       hear_about_us: 'School',
       hear_about_us_other: 'UMBC',
+      previous_bcorps_program: 'Yes',
       programs_completed: {
         fellowship: false,
         public_allies: false,
@@ -191,6 +188,16 @@ describe('About Me: Interest and Goals Form', () => {
       },
     },
   };
+  test('Interest and Goals Validator: Valid values ', () => {
+    const values = validValues;
+    values.profile.programs_completed.mayoral_fellowship = true;
+
+    let expectedErr = {};
+    let {isError, err} = interestsAndGoalsValidator(values);
+
+    expect(isError).toBe(false);
+    expect(err).toEqual(expectedErr);
+  });
   test('Interest and Goals Validator: empty values ', () => {
     const values = emptyValues;
 
@@ -210,8 +217,6 @@ describe('About Me: Interest and Goals Form', () => {
     const values = validValues;
     values.profile.programs_completed.mayoral_fellowship = false;
 
-    // console.log(values);
-
     let expectedErr = {
       programsCompleted_error: 'Required',
     };
@@ -221,14 +226,18 @@ describe('About Me: Interest and Goals Form', () => {
     expect(err).toEqual(expectedErr);
   });
 
-  test('Interest and Goals Validator: Valid values ', () => {
+  test('Interest and Goals Validator: require hear_about_us_other ', () => {
     const values = validValues;
     values.profile.programs_completed.mayoral_fellowship = true;
+    values.profile.hear_about_us = 'Other';
+    values.profile.hear_about_us_other = '';
 
-    let expectedErr = {};
+    let expectedErr = {
+      hearAboutUsOther_error: 'Required',
+    };
     let {isError, err} = interestsAndGoalsValidator(values);
 
-    expect(isError).toBe(false);
+    expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
   });
 });
