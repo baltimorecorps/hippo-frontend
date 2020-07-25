@@ -152,26 +152,48 @@ describe('About Me: Contact Info Form', () => {
 });
 
 describe('About Me: Interest and Goals Form', () => {
-  test('Interest and Goals Validator: empty values ', () => {
-    const values = {
-      profile: {
-        job_search_status: '',
-        current_job_status: '',
-        current_edu_status: '',
-        years_exp: '',
-        needs_help_programs: '',
-        hear_about_us: '',
-        hear_about_us_other: '',
-        programs_completed: {
-          fellowship: false,
-          public_allies: false,
-          mayoral_fellowship: true,
-          kiva: false,
-          elevation_awards: false,
-          civic_innovators: false,
-        },
+  const emptyValues = {
+    profile: {
+      job_search_status: '',
+      current_job_status: '',
+      current_edu_status: '',
+      years_exp: '',
+      previous_bcorps_program: '',
+      hear_about_us: '',
+      hear_about_us_other: '',
+      programs_completed: {
+        fellowship: false,
+        public_allies: false,
+        mayoral_fellowship: false,
+        kiva: false,
+        elevation_awards: false,
+        civic_innovators: false,
       },
-    };
+    },
+  };
+
+  const validValues = {
+    profile: {
+      job_search_status: 'Actively looking for a job',
+      current_job_status: 'Unemployed',
+      current_edu_status: 'Full-time student',
+      years_exp: '0-2 years',
+      previous_bcorps_program: 'Yes',
+      hear_about_us: 'School',
+      hear_about_us_other: 'UMBC',
+      programs_completed: {
+        fellowship: false,
+        public_allies: false,
+        mayoral_fellowship: true,
+        kiva: false,
+        elevation_awards: false,
+        civic_innovators: false,
+      },
+    },
+  };
+  test('Interest and Goals Validator: empty values ', () => {
+    const values = emptyValues;
+
     let expectedErr = {
       jobSearchStatus_error: 'Required',
       currentJobStatus_error: 'Required',
@@ -184,34 +206,33 @@ describe('About Me: Interest and Goals Form', () => {
     expect(err).toEqual(expectedErr);
   });
 
-  test('Interest and Goals Validator: Valid values ', () => {
-    const values = {
-      profile: {
-        job_search_status: 'Actively looking for a job',
-        current_job_status: 'Unemployed',
-        current_edu_status: 'Full-time student',
-        years_exp: '0-2 years',
-        needs_help_programs: 'Yes',
-        hear_about_us: 'School',
-        hear_about_us_other: 'UMBC',
-        programs_completed: {
-          fellowship: false,
-          public_allies: false,
-          mayoral_fellowship: true,
-          kiva: false,
-          elevation_awards: false,
-          civic_innovators: false,
-        },
-      },
+  test('Interest and Goals Validator: require programs completed ', () => {
+    const values = validValues;
+    values.profile.programs_completed.mayoral_fellowship = false;
+
+    // console.log(values);
+
+    let expectedErr = {
+      programsCompleted_error: 'Required',
     };
+    let {isError, err} = interestsAndGoalsValidator(values);
+
+    expect(isError).toBe(true);
+    expect(err).toEqual(expectedErr);
+  });
+
+  test('Interest and Goals Validator: Valid values ', () => {
+    const values = validValues;
+    values.profile.programs_completed.mayoral_fellowship = true;
+
     let expectedErr = {};
     let {isError, err} = interestsAndGoalsValidator(values);
 
-    console.log(err);
     expect(isError).toBe(false);
     expect(err).toEqual(expectedErr);
   });
 });
+
 describe('About Me: Value Alignment Form', () => {
   test('Value Alignment Validator: empty values ', () => {
     const values = {
