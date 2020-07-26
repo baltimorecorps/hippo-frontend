@@ -18,6 +18,16 @@ import {contactInfoValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
 import {states, countryList} from '../defaultData';
+import {getCheckboxOptions} from '../../../lib/helperFunctions/helpers';
+import {genders, pronouns, raceLabels} from '../defaultData';
+
+import {
+  FormHeader,
+  FormDropDownSelector,
+  FormTextField,
+  FormSubmitButton,
+  FormCheckboxes,
+} from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -60,6 +70,49 @@ const useForm = (initialValues, onSubmit) => {
       };
       update('profile')(newValue);
     },
+    handleRacesChange: event => {
+      event.persist();
+      const newValue = {
+        ...values.profile,
+        race: {
+          ...values.profile.race,
+          [event.target.name]: event.target.checked,
+        },
+      };
+      update('profile')(newValue);
+    },
+
+    handleRaceOther: event => {
+      event.persist();
+      const newValue = {
+        ...values.profile,
+        race: {
+          ...values.profile.race,
+          [event.target.name]: event.target.value,
+        },
+      };
+
+      update('profile')(newValue);
+    },
+    handleGenderAndPronounChange: event => {
+      event.persist();
+
+      let newValue = {
+        ...values.profile,
+        [event.target.name]: event.target.value,
+      };
+
+      if (event.target.name === 'gender' && event.target.value !== 'Not Listed')
+        newValue.gender_other = '';
+
+      if (
+        event.target.name === 'pronoun' &&
+        event.target.value !== 'Not Listed'
+      )
+        newValue.pronoun_other = '';
+
+      update('profile')(newValue);
+    },
   };
 
   return [values, handlers];
@@ -74,6 +127,9 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
       handlePhoneChange,
       handleEmailChange,
       handleAddress,
+      handleRacesChange,
+      handleRaceOther,
+      handleGenderAndPronounChange,
     },
   ] = useForm(contact, onSubmit);
   const [errors, setErrors] = useState({});
@@ -106,6 +162,15 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     autoComplete: 'off',
   };
 
+  const descriptions = [
+    ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
+  ];
+
+  const raceOptions = getCheckboxOptions(
+    raceLabels,
+    values.profile.race,
+    'race'
+  );
   const createTextField = (name, label, value, onChange, error) => {
     return (
       <Grid item xs={12} md={6} align="center">
@@ -166,6 +231,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
       </Grid>
     );
   };
+
+  console.log(values);
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -277,18 +344,84 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 )}
               </Grid>
             </Grid>
-            <Grid item xs={12} align="end" className={classes.submitButton}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={submit}
-                align="end"
-              >
-                Save
-              </Button>
-            </Grid>
           </Grid>
         </form>
+        <Grid item xs={12} className={classes.demographicForm}>
+          <FormHeader
+            header="Demographic Information"
+            descriptions={descriptions}
+            // onCloseForm={onCloseForm}
+          />
+
+          <Grid item xs={12} align="flex-start">
+            <form noValidate autoComplete="off">
+              <FormCheckboxes
+                question="Race (select all that apply)"
+                options={raceOptions}
+                onChange={handleRacesChange}
+              />
+              {values.profile.race.not_listed && (
+                <div className={classes.otherRace}>
+                  <FormTextField
+                    value={values.profile.race.race_other}
+                    name="race_other"
+                    label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
+                    onChange={handleRaceOther}
+                  />
+                </div>
+              )}
+              <div className={classes.genderAndPronounsContainer}>
+                <div className={classes.dropdownAndTextFieldContainer}>
+                  <FormDropDownSelector
+                    question="Gender"
+                    name="gender"
+                    value={values.profile.gender}
+                    options={genders}
+                    onChange={handleGenderAndPronounChange}
+                  />
+
+                  {values.profile.gender === 'Not Listed' && (
+                    <FormTextField
+                      value={values.profile.gender_other}
+                      name="gender_other"
+                      label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
+                      onChange={handleGenderAndPronounChange}
+                    />
+                  )}
+                </div>
+                <div className={classes.dropdownAndTextFieldContainer}>
+                  <FormDropDownSelector
+                    question="Pronoun"
+                    name="pronoun"
+                    value={values.profile.pronoun}
+                    options={pronouns}
+                    onChange={handleGenderAndPronounChange}
+                  />
+
+                  {values.profile.pronoun === 'Not Listed' && (
+                    <FormTextField
+                      value={values.profile.pronoun_other}
+                      name="pronoun_other"
+                      label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
+                      onChange={handleGenderAndPronounChange}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <Grid item xs={12} align="end" className={classes.submitButton}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={submit}
+                  align="end"
+                >
+                  Save
+                </Button>
+              </Grid>
+            </form>
+          </Grid>
+        </Grid>
       </Grid>
     </Grid>
   );
@@ -303,6 +436,11 @@ BasicInfoForm.propTypes = {
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
     padding: '17px 30px 20px 30px',
+    backgroundColor: '#f7f7f7',
+    marginBottom: spacing(2),
+  },
+  demographicForm: {
+    // padding: '0px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
   },
@@ -349,6 +487,30 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontSize: 14,
     textAlign: 'left',
     marginBottom: '2px',
+  },
+  genderAndPronounsContainer: {
+    width: '100%',
+    marginTop: spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  dropdownAndTextFieldContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    // alignSelf: 'flex-start',
+    marginTop: '10px',
+  },
+  otherRace: {
+    marginLeft: '0px',
+
+    [breakpoints.up('md')]: {
+      marginLeft: '60px',
+    },
   },
 });
 

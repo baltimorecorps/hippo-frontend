@@ -22,6 +22,7 @@ import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
 import CapabilityScores from 'components/CapabilityScores';
+import ProfileInstructions from '../ProfileInstructions';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
@@ -327,38 +328,9 @@ const ProfilePage = ({
                       page="profile"
                     />
                   )}
-
-                  <Paper className={classes.instructions}>
-                    <div className={classes.headerContainer}>
-                      <Typography
-                        variant="h5"
-                        component="h1"
-                        style={{
-                          fontWeight: '700',
-                        }}
-                      >
-                        Instructions
-                      </Typography>
-                    </div>
-                    <Typography
-                      variant="body1"
-                      component="h3"
-                      className={classes.steps}
-                    >
-                      <span className={classes.stepNum}>Step 1:</span> Answer a
-                      brief
-                      {screeningQuestionLink}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      component="h3"
-                      className={classes.steps}
-                    >
-                      <span className={classes.stepNum}>Step 2:</span> Complete
-                      your profile by filling out the sections below.
-                    </Typography>
-                  </Paper>
                 </Grid>
+                <ProfileInstructions />
+
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>
                     <div className={classes.headerContainer}>

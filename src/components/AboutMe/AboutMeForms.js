@@ -49,7 +49,7 @@ const AboutMeForms = ({
           className={classes.header}
         >
           <Typography className={classes.headerText}>
-            Contact Information
+            Candidate Information
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>

@@ -365,7 +365,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     // flexDirection: 'column',
     // alignItems: 'flex-start',
     // justifyContent: 'flex-start',
-    width: '100%',
+    // width: '100%',
   },
   dropdownLabel: {
     color: '#000000',
