@@ -270,7 +270,6 @@ describe('About Me: Value Alignment Form', () => {
     let expectedErr = {};
     let {isError, err} = valueAlignmentValidator(values);
 
-    console.log(err);
     expect(isError).toBe(false);
     expect(err).toEqual(expectedErr);
   });

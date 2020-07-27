@@ -82,6 +82,38 @@ const AboutMeForms = ({
           className={classes.header}
         >
           <Typography className={classes.headerText}>
+            Programs and Eligibility
+          </Typography>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          {openForms.programs_eligibility ? (
+            <ProgramsAndEligibilityForm
+              contact={contact}
+              onSubmit={onSubmit}
+              onCloseForm={() =>
+                setOpenForms({...openForms, programs_eligibility: false})
+              }
+            />
+          ) : (
+            <div className={classes.extraPadding}>
+              <ProgramsAndEligibilityDisplay
+                contact={contact}
+                onClickEdit={() =>
+                  setOpenForms({...openForms, programs_eligibility: true})
+                }
+              />
+            </div>
+          )}
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          className={classes.header}
+        >
+          <Typography className={classes.headerText}>
             Interests and Goals
           </Typography>
         </ExpansionPanelSummary>
@@ -138,39 +170,8 @@ const AboutMeForms = ({
           )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
-      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          className={classes.header}
-        >
-          <Typography className={classes.headerText}>
-            Programs and Eligibility
-          </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          {openForms.programs_eligibility ? (
-            <ProgramsAndEligibilityForm
-              contact={contact}
-              onSubmit={onSubmit}
-              onCloseForm={() =>
-                setOpenForms({...openForms, programs_eligibility: false})
-              }
-            />
-          ) : (
-            <div className={classes.extraPadding}>
-              <ProgramsAndEligibilityDisplay
-                contact={contact}
-                onClickEdit={() =>
-                  setOpenForms({...openForms, programs_eligibility: true})
-                }
-              />
-            </div>
-          )}
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-      <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+
+      {/* <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
         <ExpansionPanelSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -202,7 +203,7 @@ const AboutMeForms = ({
             </div>
           )}
         </ExpansionPanelDetails>
-      </ExpansionPanel>
+      </ExpansionPanel> */}
     </Grid>
   );
 };

@@ -161,7 +161,7 @@ describe('ProfilePage', () => {
     expect(queryByText('(123) 456-7890')).not.toBeNull();
 
     expect(queryByText('Experience')).not.toBeNull();
-    expect(queryByText(/education/i)).not.toBeNull();
+    expect(queryByText('Education')).not.toBeNull();
     expect(queryByText('Portfolio and Work Products')).not.toBeNull();
   });
 
