@@ -24,11 +24,15 @@ import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
 const SubmitProfileExpansion = ({classes}) => {
   const AboutMeSteps = [
-    {content: 'Contact information (Address)', checked: true},
-    {content: 'Value alignment', checked: false},
+    {
+      content: 'Candidate information: address and demographic info (optional)',
+      checked: true,
+    },
     {content: 'Programs and eligibility', checked: true},
     {content: 'Interests and goals', checked: false},
-    {content: 'Demographic questions (optional)', checked: false},
+    {content: 'Value alignment', checked: false},
+
+    // {content: 'Demographic questions (optional)', checked: false},
   ];
   const ExperienceSteps = [
     {content: 'Add skills', checked: true},
@@ -140,7 +144,7 @@ const SubmitProfileExpansion = ({classes}) => {
           // onClick={onSubmit}
           align="end"
           className={classes.submitButton}
-          //   disabled
+          disabled
         >
           Submit profile for review
         </Button>

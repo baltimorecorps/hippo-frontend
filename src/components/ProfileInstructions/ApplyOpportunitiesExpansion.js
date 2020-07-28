@@ -46,6 +46,19 @@ const ApplyOpportunitiesExpansion = ({classes}) => {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
         <Typography variant="body1" component="h4" className={classes.steps}>
+          <WorkSharpIcon className={classes.stepIcon} /> Apply for opportunities
+        </Typography>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.stepDetails}
+        >
+          Once you are approved for a particular program after your
+          consultation, you will be able to apply for opportunities related to
+          that program.
+        </Typography>
+
+        <Typography variant="body1" component="h4" className={classes.steps}>
           <CallSharpIcon className={classes.stepIcon} /> Schedule a consultation
         </Typography>
         <Typography
@@ -57,19 +70,6 @@ const ApplyOpportunitiesExpansion = ({classes}) => {
           a consultation to help you review and improve your profile, as well as
           recommend the programs and opportunities that best align with your
           current interests and goals.
-        </Typography>
-
-        <Typography variant="body1" component="h4" className={classes.steps}>
-          <WorkSharpIcon className={classes.stepIcon} /> Apply for opportunities
-        </Typography>
-        <Typography
-          variant="body1"
-          component="p"
-          className={classes.stepDetails}
-        >
-          Once you are approved for a particular program after your
-          consultation, you will be able to apply for opportunities related to
-          that program.
         </Typography>
 
         <Typography variant="body1" component="h4" className={classes.steps}>
