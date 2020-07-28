@@ -1,8 +1,6 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
@@ -10,16 +8,11 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CancelIcon from '@material-ui/icons/Cancel';
-import CancelPresentationIcon from '@material-ui/icons/CancelPresentation';
-import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
+
 import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 
-import StarIcon from '@material-ui/icons/Star';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
 const SubmitProfileExpansion = ({classes}) => {
@@ -40,6 +33,7 @@ const SubmitProfileExpansion = ({classes}) => {
     {content: 'Add education, certificates, or training', checked: true},
     {content: 'Add portfolio or work products (optional)', checked: false},
   ];
+
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
       <ExpansionPanelSummary
@@ -64,18 +58,13 @@ const SubmitProfileExpansion = ({classes}) => {
               key={index}
               control={
                 <Checkbox
-                  style={
-                    option.checked
-                      ? {
-                          color: '#2f5be0',
-                        }
-                      : {color: '#c7c7c7'}
-                  }
+                  style={{
+                    color: option.checked ? '#2f5be0' : '#c7c7c7',
+                  }}
                   checked={option.checked}
                   name={option.content}
                   checkedIcon={<CheckCircleIcon />}
                   icon={<CheckCircleOutlinedIcon />}
-                  //   disabled={option.checked ? false : true}
                 />
               }
               className={classes.checkbox}
@@ -93,19 +82,13 @@ const SubmitProfileExpansion = ({classes}) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    style={
-                      option.checked
-                        ? {
-                            color: '#2f5be0',
-                          }
-                        : {color: '#c7c7c7'}
-                    }
+                    style={{
+                      color: option.checked ? '#2f5be0' : '#c7c7c7',
+                    }}
                     checked={option.checked}
                     name={option.content}
-                    disableRipple={option.checked ? false : true}
                     checkedIcon={<CheckCircleIcon />}
                     icon={<CheckCircleOutlinedIcon />}
-                    // disabled={option.checked ? false : true}
                   />
                 }
                 className={classes.checkbox}
@@ -199,10 +182,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
   checkbox: {
     width: '100%',
     textAlign: 'left',
+
     [breakpoints.up('md')]: {
       marginLeft: '20px',
     },
   },
+
   list: {
     marginLeft: '60px',
     marginBottom: '5px',

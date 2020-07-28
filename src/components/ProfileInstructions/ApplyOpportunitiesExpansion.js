@@ -1,36 +1,16 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import WorkSharpIcon from '@material-ui/icons/WorkSharp';
-import WorkOutlineSharpIcon from '@material-ui/icons/WorkOutlineSharp';
 import CallSharpIcon from '@material-ui/icons/CallSharp';
-import MessageSharpIcon from '@material-ui/icons/MessageSharp';
 import TodaySharpIcon from '@material-ui/icons/TodaySharp';
 import AssistantPhotoSharpIcon from '@material-ui/icons/AssistantPhotoSharp';
 
 const ApplyOpportunitiesExpansion = ({classes}) => {
-  const AboutMeSteps = [
-    {content: 'Contact information (Address)', checked: true},
-    {content: 'Value alignment', checked: false},
-    {content: 'Programs and eligibility', checked: true},
-    {content: 'Interests and goals', checked: false},
-    {content: 'Demographic questions (optional)', checked: false},
-  ];
-  const ExperienceSteps = [
-    {content: 'Add skills', checked: true},
-    {content: 'Add all relevant experience', checked: false},
-    {content: 'Add education, certificates, or training', checked: true},
-    {content: 'Add portfolio or work products (optional)', checked: false},
-  ];
   return (
     <ExpansionPanel defaultExpanded={false} className={classes.expansionPanel}>
       <ExpansionPanelSummary
