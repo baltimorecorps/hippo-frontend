@@ -23,13 +23,13 @@ import mockData from './mockData';
 import mockDataEmpty from './mockDataEmpty';
 
 const AboutMeForms = ({
-  // contact,
+  contact,
   onSubmit,
   onCloseAllForms,
   onClickEdit,
   classes,
 }) => {
-  const contact = mockData;
+  // const contact = mockData;
   // const contact = mockDataEmpty;
 
   const [openForms, setOpenForms] = useState({

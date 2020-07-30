@@ -94,12 +94,13 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     'The questions below help us understand a little bit more about your experience and which roles you might be interested in applying for.',
   ];
 
-  const roleOptions = getCheckboxOptions(roleLabels, values.profile.roles);
+  const {roles, programs_completed} = values.profile;
 
-  const programsCompletedOptions = getCheckboxOptions(
-    programsCompletedLabels,
-    values.profile.programs_completed
-  );
+  const roleOptions = roles && getCheckboxOptions(roleLabels, roles);
+
+  const programsCompletedOptions =
+    programs_completed &&
+    getCheckboxOptions(programsCompletedLabels, programs_completed);
 
   return (
     <Grid item xs={12} className={classes.form}>

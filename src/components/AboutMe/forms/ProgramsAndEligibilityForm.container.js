@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {updateProgramApps} from 'state/contacts';
+import {updateProgramApps, updateAboutMe} from 'state/contacts';
 import {getAllProgramNames} from 'state/programs';
 import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
 
@@ -22,6 +22,9 @@ export const mapDispatchToProps = dispatch => ({
   getAllProgramNames: () => getAllProgramNames()(dispatch),
   updateProgramApps: (programApps, contactId) =>
     updateProgramApps(programApps, contactId)(dispatch),
+  updateAboutMe: async (contactId, aboutMe) => {
+    await updateAboutMe(contactId, aboutMe)(dispatch);
+  },
 });
 
 export default connect(

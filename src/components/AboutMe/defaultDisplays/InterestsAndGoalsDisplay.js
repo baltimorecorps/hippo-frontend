@@ -22,14 +22,17 @@ const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
     hear_about_us_other,
   } = profile;
 
-  let roleAnswer = getListOfAnswers(roles, roleLabels);
-  let programsCompletedAnswer = getListOfAnswers(
-    programs_completed,
-    programsCompletedLabels
-  );
+  let roleAnswer = roles && getListOfAnswers(roles, roleLabels);
+  let programsCompletedAnswer =
+    programs_completed &&
+    getListOfAnswers(programs_completed, programsCompletedLabels);
 
   let hearAboutUs = '';
-  if (hear_about_us !== 'Other' && hear_about_us_other.length > 0) {
+  if (
+    hear_about_us !== 'Other' &&
+    hear_about_us_other &&
+    hear_about_us_other.length > 0
+  ) {
     hearAboutUs = `${hear_about_us}: ${hear_about_us_other}`;
   } else if (hear_about_us !== 'Other') {
     hearAboutUs = hear_about_us;

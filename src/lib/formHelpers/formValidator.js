@@ -431,9 +431,19 @@ const valueAlignmentValidator = values => {
     isError = true;
     err.valueQuestion1_error = 'Required';
   }
+  if (value_question1 && value_question1.length > 1500) {
+    isError = true;
+    err.valueQuestion1_error =
+      'You have reached the maximum limit of 1,500 characters';
+  }
   if (!value_question2 || value_question2.length === 0) {
     isError = true;
     err.valueQuestion2_error = 'Required';
+  }
+  if (value_question2 && value_question2.length > 2500) {
+    isError = true;
+    err.valueQuestion2_error =
+      'You have reached the maximum limit of 2,500 characters';
   }
 
   return {isError, err};

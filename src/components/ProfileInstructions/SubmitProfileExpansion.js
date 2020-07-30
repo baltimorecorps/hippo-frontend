@@ -18,7 +18,7 @@ import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 const SubmitProfileExpansion = ({classes}) => {
   const AboutMeSteps = [
     {
-      content: 'Candidate information: address and demographic info (optional)',
+      content: 'Candidate information',
       checked: true,
     },
     {content: 'Programs and eligibility', checked: true},

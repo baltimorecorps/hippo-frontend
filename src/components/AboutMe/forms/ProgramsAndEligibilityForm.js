@@ -19,15 +19,9 @@ const useForm = (initialValues, onSubmit, defaultProgramApps) => {
   }
 
   const handlers = {
-    // handleSubmit: (values, contactId) => {
-    //   const programApps = values.program_apps;
-    //   console.log('submitted programApps', programApps, contactId);
-
-    //   onSubmit(programApps, contactId);
-    // },
-
     handleInterestedProgramsChange: event => {
       event.persist();
+
       if (event.target.name !== 'needs_help_programs') {
         const newValue = values.program_apps.map(program => {
           if (program.program.name === event.target.name) {
@@ -41,7 +35,10 @@ const useForm = (initialValues, onSubmit, defaultProgramApps) => {
         update('program_apps')(newValue);
       } else {
         const newValue = event.target.checked === true ? 'Yes' : 'No';
-        update('needs_help_programs')(newValue);
+        update('profile')({
+          ...values.profile,
+          needs_help_programs: newValue,
+        });
       }
     },
   };
@@ -55,6 +52,7 @@ const ProgramsAndEligibilityForm = ({
   defaultProgramApps,
   getAllProgramNames,
   updateProgramApps,
+  updateAboutMe,
   classes,
 }) => {
   // console.log('defaultProgramApps', defaultProgramApps);
@@ -72,7 +70,7 @@ const ProgramsAndEligibilityForm = ({
   //   // initialValues.program_apps = programs;
   // }
 
-  const [values, {handleSubmit, handleInterestedProgramsChange}] = useForm(
+  const [values, {handleInterestedProgramsChange}] = useForm(
     contact,
     updateProgramApps,
     defaultProgramApps
@@ -88,17 +86,23 @@ const ProgramsAndEligibilityForm = ({
     setErrors(err);
 
     if (!isError) {
-      // handleSubmit(values, contact.id);
-      const {first_name, last_name, email, id, program_apps} = values;
-      const programApps = {
+      const {first_name, last_name, id, program_apps} = values;
+      const contactInfo = {
         first_name,
         last_name,
-        email,
+        email: values.email_primary.email,
         id,
+      };
+      const programApps = {
+        ...contactInfo,
         program_apps,
       };
-      console.log('submitted programApps', programApps, contact.id);
 
+      const aboutMeInfo = {
+        ...contactInfo,
+        profile: {...values.profile},
+      };
+      updateAboutMe(contact.id, aboutMeInfo);
       updateProgramApps(programApps, contact.id);
       onCloseForm();
     }
@@ -115,7 +119,11 @@ const ProgramsAndEligibilityForm = ({
   const needsHelpPrograms = {
     name: 'needs_help_programs',
     label: "I'd like some help figuring this out",
-    checked: values.needs_help_programs === 'Yes' ? true : false,
+    checked:
+      values.profile.needs_help_programs === 'Yes' ||
+      values.profile.needs_help_programs === true
+        ? true
+        : false,
   };
 
   programOptions.push(needsHelpPrograms);
@@ -125,6 +133,7 @@ const ProgramsAndEligibilityForm = ({
     "The questions below allow you to indicate which programs (if any) you know you're interested in before we get a chance to chat with you, and checks to see if you're eligible for them",
   ];
 
+  console.log('programOptions', programOptions);
   console.log(values);
   return (
     <Grid item xs={12} className={classes.form}>
