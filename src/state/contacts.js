@@ -427,7 +427,15 @@ export const contactsReducer = createReducer(
     },
     [UPDATE_ABOUT_ME_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
-      state[contact.id].profile = contact.profile;
+      const {first_name, last_name, email, phone_primary, profile} = contact;
+      state[contact.id] = {
+        ...state[contact.id],
+        first_name,
+        last_name,
+        email,
+        phone_primary,
+        profile,
+      };
     },
 
     [UPDATE_PROGRAM_APPS_API.RESOLVE]: (state, action) => {

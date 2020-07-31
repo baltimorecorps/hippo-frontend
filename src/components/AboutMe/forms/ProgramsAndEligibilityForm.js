@@ -55,21 +55,6 @@ const ProgramsAndEligibilityForm = ({
   updateAboutMe,
   classes,
 }) => {
-  // console.log('defaultProgramApps', defaultProgramApps);
-  // let initialValues = contact;
-  // console.log('initialValues', initialValues);
-
-  //   programs.forEach((eachProgram, index) => {
-  //     console.log('eachProgram', eachProgram);
-  //     return initialValues.program_apps.push({
-  //       program: eachProgram,
-  //       is_interested: false,
-  //     });
-  //   });
-  //   console.log('initialValues', initialValues);
-  //   // initialValues.program_apps = programs;
-  // }
-
   const [values, {handleInterestedProgramsChange}] = useForm(
     contact,
     updateProgramApps,
@@ -133,8 +118,8 @@ const ProgramsAndEligibilityForm = ({
     "The questions below allow you to indicate which programs (if any) you know you're interested in before we get a chance to chat with you, and checks to see if you're eligible for them",
   ];
 
-  console.log('programOptions', programOptions);
-  console.log(values);
+  // console.log('programOptions', programOptions);
+  // console.log(values);
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader

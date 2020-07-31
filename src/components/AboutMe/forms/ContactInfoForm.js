@@ -19,7 +19,13 @@ import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
 import {states, countryList} from '../defaultData';
 import {getCheckboxOptions} from '../../../lib/helperFunctions/helpers';
-import {genders, pronouns, raceLabels} from '../defaultData';
+
+import {
+  genders,
+  pronouns,
+  raceLabels,
+  hearAboutUsOptions,
+} from '../defaultData';
 
 import {
   FormHeader,
@@ -45,6 +51,13 @@ const useForm = (initialValues, onSubmit) => {
     handleChange: event => {
       event.persist();
       update(event.target.name)(event.target.value);
+    },
+    handleProfileChange: event => {
+      event.persist();
+      update('profile')({
+        ...values.profile,
+        [event.target.name]: event.target.value,
+      });
     },
     handleSubmit: (contactId, values) => {
       onSubmit(contactId, values);
@@ -123,6 +136,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     values,
     {
       handleChange,
+      handleProfileChange,
       handleSubmit,
       handlePhoneChange,
       handleEmailChange,
@@ -233,6 +247,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   };
 
   console.log(values);
+  console.log('hear_about_us', values.profile.hear_about_us);
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -408,6 +423,23 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   )}
                 </div>
               </div>
+              <div className={classes.hearAboutUsContainer}>
+                <FormDropDownSelector
+                  question="How do you find out about Baltimore Corps?"
+                  name="hear_about_us"
+                  value={values.profile.hear_about_us}
+                  options={hearAboutUsOptions}
+                  onChange={handleProfileChange}
+                />
+
+                <FormTextField
+                  value={values.profile.hear_about_us_other}
+                  name="hear_about_us_other"
+                  label="Please provide more details about how you find out about us:"
+                  onChange={handleProfileChange}
+                  error={errors.hearAboutUsOther_error}
+                />
+              </div>
 
               <Grid item xs={12} align="end" className={classes.submitButton}>
                 <Button
@@ -511,6 +543,14 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.up('md')]: {
       marginLeft: '60px',
     },
+  },
+  hearAboutUsContainer: {
+    width: '100%',
+    marginTop: '30px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
 });
 

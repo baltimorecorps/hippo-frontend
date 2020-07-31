@@ -175,22 +175,6 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
             />
           )}
 
-          <FormDropDownSelector
-            question="How do you find out about Baltimore Corps?"
-            name="hear_about_us"
-            value={values.profile.hear_about_us}
-            options={hearAboutUsOptions}
-            onChange={handleChange}
-          />
-
-          <FormTextField
-            value={values.profile.hear_about_us_other}
-            name="hear_about_us_other"
-            label="Please provide more details about how you find out about us:"
-            onChange={handleChange}
-            error={errors.hearAboutUsOther_error}
-          />
-
           <FormSubmitButton onSubmit={submit} />
         </form>
       </Grid>

@@ -8,6 +8,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
+import {
+  QuestionWithOneAnswer,
+  QuestionWithMultipleAnswersArray,
+} from './QuestionAnswerDisplayTemplates.js';
+
+import {raceLabels} from '../defaultData';
 
 const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const email = contact.email_primary ? contact.email_primary.email : '';
@@ -21,6 +27,25 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const address1 = `${street1}${address_street2}` || '';
   const address2 = `${city}, ${state} ${zip_code}` || '';
   const address3 = country || '';
+
+  let checkedRace = [];
+  if (contact.profile) {
+    for (const [key, value] of Object.entries(contact.profile.race)) {
+      if (value === true) checkedRace.push(key);
+    }
+  }
+
+  let race = [];
+  for (const [key, value] of Object.entries(raceLabels)) {
+    if (checkedRace.includes(key)) race.push(value);
+  }
+
+  let gender = contact.profile && contact.profile.gender;
+  let pronoun = contact.profile && contact.profile.pronoun;
+  if (contact.profile && contact.profile.gender === 'Not Listed')
+    gender = contact.profile.gender_other;
+  if (contact.profile && contact.profile.pronoun === 'Not Listed')
+    pronoun = contact.profile.pronoun_other;
 
   return (
     <React.Fragment>
@@ -90,6 +115,13 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
           </Typography>
         )
       ) : null}
+      {isOnEditMode && contact && contact.profile && (
+        <React.Fragment>
+          <QuestionWithMultipleAnswersArray question="Race:" answers={race} />
+          <QuestionWithOneAnswer question="Gender:" answer={gender} />
+          <QuestionWithOneAnswer question="Pronoun:" answer={pronoun} />
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 };
