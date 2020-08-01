@@ -387,6 +387,58 @@ const hearAboutUsOptions = [
   'Other',
 ];
 
+const blankProfile = {
+  address_primary: {
+    city: '',
+    country: '',
+    state: '',
+    street1: '',
+    street2: '',
+    zip_code: '',
+  },
+  current_edu_status: '',
+  current_job_status: '',
+  gender: '',
+  gender_other: '',
+  hear_about_us: '',
+  hear_about_us_other: '',
+  job_search_status: '',
+  needs_help_programs: false,
+  previous_bcorps_program: '',
+  programs_completed: {
+    civic_innovators: false,
+    elevation_awards: false,
+    fellowship: false,
+    kiva: false,
+    mayoral_fellowship: false,
+    public_allies: false,
+  },
+  pronoun: '',
+  pronoun_other: '',
+  race: {
+    american_indian: false,
+    asian: false,
+    black: false,
+    hawaiian: false,
+    hispanic: false,
+    not_listed: false,
+    race_other: false,
+    south_asian: false,
+    white: false,
+  },
+  roles: {
+    advocacy_public_policy: false,
+    community_engagement_outreach: false,
+    data_analysis: false,
+    fundraising_development: false,
+    marketing_public_relations: false,
+    program_management: false,
+  },
+  value_question1: '',
+  value_question2: '',
+  years_exp: '',
+};
+
 export {
   countryList,
   states,
@@ -401,4 +453,5 @@ export {
   currentEduStatus,
   programsCompletedLabels,
   hearAboutUsOptions,
+  blankProfile,
 };

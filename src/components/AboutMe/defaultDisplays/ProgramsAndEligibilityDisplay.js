@@ -6,23 +6,30 @@ import {
   QuestionWithMultipleAnswers,
   QuestionWithOneAnswer,
 } from './QuestionAnswerDisplayTemplates.js';
+import {blankProfile} from '../defaultData';
+import get from 'lodash.get';
 
 const ProgramsAndEligibilityDisplay = ({contact, onClickEdit}) => {
+  const profile = get(contact, 'profile', blankProfile);
+  console.log('profile', profile);
+  const needs_help_programs = get(
+    contact,
+    'profile.needs_help_programs',
+    false
+  );
+
   const checkedPrograms = contact.program_apps
     .filter(program => program.is_interested === true)
     .map(program => program.program.name);
 
-  if (
-    contact.profile.needs_help_programs === true &&
-    checkedPrograms.length > 0
-  )
+  if (needs_help_programs === true)
     checkedPrograms.push("I'd like some help figuring this out");
-
   return (
     <React.Fragment>
       <Header header="Programs and Eligibility" onClickEdit={onClickEdit} />
 
-      {contact.profile.needs_help_programs === true &&
+      {contact.profile &&
+      contact.profile.needs_help_programs === true &&
       checkedPrograms.length === 0 ? (
         <QuestionWithOneAnswer
           question="Interested Programs:"

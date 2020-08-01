@@ -129,7 +129,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <InterestsAndGoalsDisplay
-                profile={contact.profile}
+                contact={contact}
                 onClickEdit={() =>
                   setOpenForms({...openForms, interests_goals: true})
                 }
@@ -161,7 +161,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <ValueAlignmentDisplay
-                profile={contact.profile}
+                contact={contact}
                 onClickEdit={() =>
                   setOpenForms({...openForms, value_alignment: true})
                 }

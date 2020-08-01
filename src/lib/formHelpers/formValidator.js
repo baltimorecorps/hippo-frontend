@@ -410,8 +410,8 @@ const programsAndEligibilityValidator = values => {
     program => program.is_interested
   );
 
-  allValues.push(values.needs_help_programs === 'Yes' ? true : false);
-
+  allValues.push(values.profile.needs_help_programs);
+  console.log(allValues);
   let isError = false;
   let err = {};
 

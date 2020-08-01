@@ -7,9 +7,18 @@ import {
   QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
 
-import {roleLabels, programsCompletedLabels} from '../defaultData';
+import {
+  roleLabels,
+  programsCompletedLabels,
+  blankProfile,
+} from '../defaultData';
 
-const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
+import get from 'lodash.get';
+
+const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
+  const profile = get(contact, 'profile', blankProfile);
+  console.log('profile', profile);
+
   const {
     job_search_status,
     current_job_status,
@@ -18,27 +27,12 @@ const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
     roles,
     previous_bcorps_program,
     programs_completed,
-    hear_about_us,
-    hear_about_us_other,
   } = profile;
 
   let roleAnswer = roles && getListOfAnswers(roles, roleLabels);
   let programsCompletedAnswer =
     programs_completed &&
     getListOfAnswers(programs_completed, programsCompletedLabels);
-
-  let hearAboutUs = '';
-  if (
-    hear_about_us !== 'Other' &&
-    hear_about_us_other &&
-    hear_about_us_other.length > 0
-  ) {
-    hearAboutUs = `${hear_about_us}: ${hear_about_us_other}`;
-  } else if (hear_about_us !== 'Other') {
-    hearAboutUs = hear_about_us;
-  } else {
-    hearAboutUs = hear_about_us_other;
-  }
 
   return (
     <React.Fragment>
@@ -74,11 +68,6 @@ const InterestsAndGoalsDisplay = ({profile, onClickEdit, classes}) => {
           answers={programsCompletedAnswer}
         />
       )}
-
-      <QuestionWithOneAnswer
-        question="How you find out about Baltimore Corps:"
-        answer={hearAboutUs}
-      />
     </React.Fragment>
   );
 };

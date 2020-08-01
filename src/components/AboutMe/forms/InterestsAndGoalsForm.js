@@ -28,6 +28,20 @@ import {
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
+  if (values.profile && values.profile.programs_completed == null) {
+    update('profile')({
+      ...values.profile,
+      programs_completed: {
+        fellowship: false,
+        public_allies: false,
+        mayoral_fellowship: false,
+        kiva: false,
+        elevation_awards: false,
+        civic_innovators: false,
+      },
+    });
+  }
+
   const handlers = {
     handleChange: event => {
       event.persist();
@@ -38,7 +52,17 @@ const useForm = (initialValues, onSubmit) => {
       update('profile')(newValue);
     },
     handleSubmit: (contactId, values) => {
-      onSubmit(contactId, values);
+      const {first_name, last_name, email, phone_primary, id, profile} = values;
+      const payload = {
+        first_name,
+        last_name,
+        email,
+        phone_primary,
+        id,
+        profile,
+      };
+
+      onSubmit(contactId, payload);
     },
 
     handleInterestedRolesChange: event => {
@@ -102,6 +126,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     programs_completed &&
     getCheckboxOptions(programsCompletedLabels, programs_completed);
 
+  console.log('values', values);
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader

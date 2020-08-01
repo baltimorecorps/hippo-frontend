@@ -155,10 +155,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     setErrors(err);
 
     if (!isError) {
-      console.log('submitted form', values);
-
       handleSubmit(contact.id, values);
-
       onCloseForm();
     }
   };
@@ -245,9 +242,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
       </Grid>
     );
   };
-
-  console.log(values);
-  console.log('hear_about_us', values.profile.hear_about_us);
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -365,7 +359,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
           <FormHeader
             header="Demographic Information"
             descriptions={descriptions}
-            // onCloseForm={onCloseForm}
           />
 
           <Grid item xs={12} align="flex-start">

@@ -7,7 +7,14 @@ import {
   QuestionWithOneAnswer,
 } from './QuestionAnswerDisplayTemplates.js';
 
-const ValueAlignmentDisplay = ({profile, onClickEdit, classes}) => {
+import {blankProfile} from '../defaultData';
+
+import get from 'lodash.get';
+
+const ValueAlignmentDisplay = ({contact, onClickEdit, classes}) => {
+  const profile = get(contact, 'profile', blankProfile);
+  console.log('profile', profile);
+
   const {value_question1, value_question2} = profile;
 
   return (
@@ -27,7 +34,7 @@ const ValueAlignmentDisplay = ({profile, onClickEdit, classes}) => {
 };
 
 ValueAlignmentDisplay.propTypes = {
-  profile: PropTypes.object,
+  contact: PropTypes.object,
   onClickEdit: PropTypes.func,
 };
 

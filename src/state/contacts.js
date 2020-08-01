@@ -271,11 +271,6 @@ export const CREATE_ABOUT_ME = 'CREATE_ABOUT_ME';
 export const CREATE_ABOUT_ME_API = fetchActionTypes(CREATE_ABOUT_ME);
 export const createAboutMe = contactId =>
   async function(dispatch) {
-    // dispatch({
-    //   type: CREATE_ABOUT_ME,
-    //   applicants,
-    // });
-
     return await makeApiFetchActions(
       CREATE_ABOUT_ME,
       `${API_URL}/api/contacts/${contactId}/about-me/`,
@@ -297,11 +292,6 @@ export const UPDATE_ABOUT_ME = 'UPDATE_ABOUT_ME';
 export const UPDATE_ABOUT_ME_API = fetchActionTypes(UPDATE_ABOUT_ME);
 export const updateAboutMe = (contactId, aboutMe) =>
   async function(dispatch) {
-    // dispatch({
-    //   type: UPDATE_ABOUT_ME,
-    //   aboutMe,
-    // });
-
     await makeApiFetchActions(
       UPDATE_ABOUT_ME,
       `${API_URL}/api/contacts/${contactId}/about-me/`,

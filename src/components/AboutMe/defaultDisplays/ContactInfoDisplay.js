@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-
+import get from 'lodash.get';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
@@ -21,6 +21,9 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const {street1, street2, city, state, zip_code, country} =
     contact && contact.profile != null && contact.profile.address_primary;
 
+  // const profile = get(contact, 'profile', "");
+  // console.log(profile, profile);
+
   let address_street2 = '';
   if (street2) address_street2 = `, ${street2}`;
 
@@ -28,6 +31,8 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const address2 = `${city}, ${state} ${zip_code}` || '';
   const address3 = country || '';
 
+  const {hear_about_us, hear_about_us_other} =
+    contact && contact.profile != null && contact.profile;
   let checkedRace = [];
   if (contact.profile) {
     for (const [key, value] of Object.entries(contact.profile.race)) {
@@ -47,6 +52,18 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   if (contact.profile && contact.profile.pronoun === 'Not Listed')
     pronoun = contact.profile.pronoun_other;
 
+  let hearAboutUs = '';
+  if (
+    hear_about_us !== 'Other' &&
+    hear_about_us_other &&
+    hear_about_us_other.length > 0
+  ) {
+    hearAboutUs = `${hear_about_us}: ${hear_about_us_other}`;
+  } else if (hear_about_us !== 'Other') {
+    hearAboutUs = hear_about_us;
+  } else {
+    hearAboutUs = hear_about_us_other;
+  }
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
@@ -120,6 +137,10 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
           <QuestionWithMultipleAnswersArray question="Race:" answers={race} />
           <QuestionWithOneAnswer question="Gender:" answer={gender} />
           <QuestionWithOneAnswer question="Pronoun:" answer={pronoun} />
+          <QuestionWithOneAnswer
+            question="How you find out about Baltimore Corps:"
+            answer={hearAboutUs}
+          />
         </React.Fragment>
       )}
     </React.Fragment>

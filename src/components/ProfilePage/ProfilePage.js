@@ -224,15 +224,11 @@ const ProfilePage = ({
   };
 
   const handleEditAboutMe = async () => {
-    if (contactInfo.profile == null) {
-      let response = await getAboutMe(contactInfo.id);
-      // console.log('response', response);
-
-      if (contactInfo.profile == null) {
-        response = await createAboutMe(contactInfo.id);
-        if (response && response.statusCode !== 201) {
-          console.error('Error starting new about-me', response);
-        }
+    if (!contactInfo.profile || contactInfo.profile == null) {
+      let response = await createAboutMe(contactInfo.id);
+      console.log('response', response);
+      if (response && response.statusCode !== 201) {
+        console.error('Error starting new about-me', response);
       }
     }
 

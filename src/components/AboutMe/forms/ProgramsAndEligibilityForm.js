@@ -104,14 +104,12 @@ const ProgramsAndEligibilityForm = ({
   const needsHelpPrograms = {
     name: 'needs_help_programs',
     label: "I'd like some help figuring this out",
-    checked:
-      values.profile.needs_help_programs === 'Yes' ||
-      values.profile.needs_help_programs === true
-        ? true
-        : false,
+    checked: values.profile.needs_help_programs,
   };
 
   programOptions.push(needsHelpPrograms);
+
+  console.log(values);
 
   const descriptions = [
     'While our team will help you figure out which of program and services best align with where you are in your career, some folks apply to join our network because they are interested in a particular program offering.',
