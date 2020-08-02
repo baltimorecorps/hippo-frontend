@@ -25,7 +25,10 @@ import {
   pronouns,
   raceLabels,
   hearAboutUsOptions,
+  blankProfile,
 } from '../defaultData';
+
+import get from 'lodash.get';
 
 import {
   FormHeader,
@@ -177,31 +180,11 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
   ];
 
-  const raceOptions = getCheckboxOptions(
-    raceLabels,
-    values.profile.race,
-    'race'
-  );
-  const createTextField = (name, label, value, onChange, error) => {
-    return (
-      <Grid item xs={12} md={6} align="center">
-        <TextField
-          required
-          id={name}
-          label={label}
-          className={classes.formControl}
-          name={name}
-          value={value || ''}
-          onChange={onChange}
-          InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
-        />
-        <FormHelperText className={classes.formHelperText}>
-          {error || null}
-        </FormHelperText>
-      </Grid>
-    );
-  };
+  const profile = get(contact, 'profile', blankProfile);
+
+  const raceOptions = getCheckboxOptions(raceLabels, profile.race, 'race');
+
+  // Can we move this function to formTemplates?
   const createDropdownSelector = (
     name,
     label,
@@ -258,30 +241,31 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
       <Grid item xs={12} align="center">
         <form noValidate autoComplete="off">
           <Grid container justify="space-between">
-            {createTextField(
-              'first_name',
-              'First Name',
-              values.first_name,
-              handleChange,
-              errors.firstName_error
-            )}
+            <FormTextField
+              isLabelInside={true}
+              value={values.first_name}
+              name="first_name"
+              label="First Name"
+              onChange={handleChange}
+              error={errors.firstName_error}
+            />
+            <FormTextField
+              isLabelInside={true}
+              value={values.first_name}
+              name="last_name"
+              label="Last Name"
+              onChange={handleChange}
+              error={errors.lastName_error}
+            />
 
-            {createTextField(
-              'last_name',
-              'Last Name',
-              values.last_name,
-              handleChange,
-              errors.lastName_error
-            )}
-
-            {createTextField(
-              'email',
-              'Email',
-              values.email_primary.email,
-              handleEmailChange,
-              errors.email_error
-            )}
-
+            <FormTextField
+              isLabelInside={true}
+              value={values.email_primary.email}
+              name="email"
+              label="Email"
+              onChange={handleEmailChange}
+              error={errors.email_error}
+            />
             <Grid item xs={12} md={6} align="center">
               <MuiPhoneNumber
                 name="phone_primary"
@@ -300,31 +284,33 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             </Grid>
 
             <Grid container align="center" justify="space-between">
-              {createTextField(
-                'street1',
-                'Address 1',
-                values.profile.address_primary.street1,
-                handleAddress,
-                errors.street1_error
-              )}
-
-              {createTextField(
-                'street2',
-                'Address 2',
-                values.profile.address_primary.street2,
-                handleAddress
-              )}
+              <FormTextField
+                isLabelInside={true}
+                value={values.profile.address_primary.street1}
+                name="street1"
+                label="Address 1"
+                onChange={handleAddress}
+                error={errors.street1_error}
+              />
+              <FormTextField
+                isLabelInside={true}
+                value={values.profile.address_primary.street2}
+                name="street2"
+                label="Address 2"
+                onChange={handleAddress}
+                error={errors.street1_error}
+              />
             </Grid>
 
             <Grid container align="center" justify="space-between">
-              {createTextField(
-                'city',
-                'City',
-                values.profile.address_primary.city,
-                handleAddress,
-                errors.city_error
-              )}
-
+              <FormTextField
+                isLabelInside={true}
+                value={values.profile.address_primary.city}
+                name="city"
+                label="City"
+                onChange={handleAddress}
+                error={errors.city_error}
+              />
               {createDropdownSelector(
                 'state',
                 'State *',
@@ -335,13 +321,14 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               )}
 
               <Grid container align="center" justify="space-between">
-                {createTextField(
-                  'zip_code',
-                  'Zip Code',
-                  values.profile.address_primary.zip_code,
-                  handleAddress,
-                  errors.zipCode_error
-                )}
+                <FormTextField
+                  isLabelInside={true}
+                  value={values.profile.address_primary.zip_code}
+                  name="zip_code"
+                  label="Zip Code"
+                  onChange={handleAddress}
+                  error={errors.zipCode_error}
+                />
 
                 {createDropdownSelector(
                   'country',
@@ -465,7 +452,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(2),
   },
   demographicForm: {
-    // padding: '0px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
   },

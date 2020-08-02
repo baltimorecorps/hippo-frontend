@@ -187,7 +187,9 @@ const FormDropDownSelectorTemplate = ({
     </div>
   );
 };
+
 const FormTextFieldTemplate = ({
+  isLabelInside,
   value,
   name,
   label,
@@ -207,7 +209,34 @@ const FormTextFieldTemplate = ({
     classes: {input: classes.resize},
     autoComplete: 'off',
   };
-  return (
+
+  const textFieldAndError = (
+    <React.Fragment>
+      <TextField
+        required
+        id={name}
+        label={isLabelInside ? label : null}
+        className={classes.formControl}
+        style={{width: isLabelInside ? '95%' : '50%'}}
+        name={name}
+        value={value || ''}
+        onChange={onChange}
+        InputLabelProps={inputLabelProps}
+        InputProps={inputProps}
+      />
+      <FormHelperText className={classes.formHelperText}>
+        {error || null}
+      </FormHelperText>
+    </React.Fragment>
+  );
+
+  const labelInsideTextField = (
+    <Grid item xs={12} md={6} align="center">
+      {textFieldAndError}
+    </Grid>
+  );
+
+  const labelOutsideTextField = (
     <Grid container style={{marginBottom: '10px'}} direction="column">
       <Typography
         variant="body1"
@@ -217,22 +246,16 @@ const FormTextFieldTemplate = ({
         {label}
       </Typography>
       <Grid item xs={12} align="left">
-        <TextField
-          required
-          id={name}
-          className={classes.formControl}
-          name={name}
-          value={value || ''}
-          onChange={onChange}
-          InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
-        />
-        <FormHelperText className={classes.formHelperText}>
-          {error || null}
-        </FormHelperText>
+        {textFieldAndError}
       </Grid>
     </Grid>
   );
+
+  if (isLabelInside) {
+    return labelInsideTextField;
+  } else {
+    return labelOutsideTextField;
+  }
 };
 const FormMultiRowsTextFieldTemplate = ({
   value,
@@ -317,7 +340,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 
   formControl: {
-    width: '50%',
+    width: '95%',
     marginTop: spacing(0),
   },
   resize: {
