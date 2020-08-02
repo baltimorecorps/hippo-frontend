@@ -6,18 +6,15 @@ import {
   QuestionWithOneAnswer,
   QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
-
 import {
   roleLabels,
   programsCompletedLabels,
   blankProfile,
 } from '../defaultData';
-
 import get from 'lodash.get';
 
 const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
   const profile = get(contact, 'profile', blankProfile);
-  console.log('profile', profile);
 
   const {
     job_search_status,
@@ -38,16 +35,16 @@ const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
     <React.Fragment>
       <Header header="Interest and Goals" onClickEdit={onClickEdit} />
       <QuestionWithOneAnswer
-        question="Job Search Status:"
-        answer={job_search_status}
-      />
-      <QuestionWithOneAnswer
         question="Employment Status:"
         answer={current_job_status}
       />
       <QuestionWithOneAnswer
         question="Currently a student:"
         answer={current_edu_status}
+      />
+      <QuestionWithOneAnswer
+        question="Job Search Status:"
+        answer={job_search_status}
       />
       <QuestionWithOneAnswer
         question="Years of experience:"
@@ -73,7 +70,7 @@ const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
 };
 
 InterestsAndGoalsDisplay.propTypes = {
-  profile: PropTypes.object,
+  contact: PropTypes.object,
   onClickEdit: PropTypes.func,
 };
 
