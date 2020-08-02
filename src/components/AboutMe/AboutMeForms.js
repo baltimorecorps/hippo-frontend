@@ -10,8 +10,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ContactInfoDisplay from './defaultDisplays/ContactInfoDisplay';
 import ContactInfoForm from './forms/ContactInfoForm';
-import DemographicForm from './forms/DemographicForm';
-import DemographicDisplay from './defaultDisplays/DemographicDisplay';
 import InterestsAndGoalsForm from './forms/InterestsAndGoalsForm';
 import ValueAlignmentForm from './forms/ValueAlignmentForm';
 import ValueAlignmentDisplay from './defaultDisplays/ValueAlignmentDisplay';
@@ -170,40 +168,6 @@ const AboutMeForms = ({
           )}
         </ExpansionPanelDetails>
       </ExpansionPanel>
-
-      {/* <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          className={classes.header}
-        >
-          <Typography className={classes.headerText}>
-            Demographic Information
-          </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          {openForms.demographic_info ? (
-            <DemographicForm
-              contact={contact}
-              onSubmit={onSubmit}
-              onCloseForm={() =>
-                setOpenForms({...openForms, demographic_info: false})
-              }
-            />
-          ) : (
-            <div className={classes.extraPadding}>
-              <DemographicDisplay
-                contactId={contact.id}
-                profile={contact.profile}
-                onClickEdit={() =>
-                  setOpenForms({...openForms, demographic_info: true})
-                }
-              />
-            </div>
-          )}
-        </ExpansionPanelDetails>
-      </ExpansionPanel> */}
     </Grid>
   );
 };
