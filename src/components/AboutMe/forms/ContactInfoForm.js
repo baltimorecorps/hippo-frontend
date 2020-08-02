@@ -180,7 +180,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     ' The information below helps us build a better picture of our applicants. As an organization committed to equity, it is important for us to understand the variety of identities and affinities that are represented within our pool so that we can engage in a thoughtful process. That being said, we understand that this information is sensitive and providing it is completely optional.',
   ];
 
-  const profile = get(contact, 'profile', blankProfile);
+  const profile = get(values, 'profile', blankProfile);
   const raceOptions = getCheckboxOptions(raceLabels, profile.race, 'race');
 
   return (

@@ -260,7 +260,7 @@ const FormTextFieldTemplate = ({
   );
 
   const labelInsideTextField = (
-    <Grid item xs={12} md={6} align="center" justify="center">
+    <Grid item xs={12} md={6} align="center">
       {textFieldAndError}
     </Grid>
   );
