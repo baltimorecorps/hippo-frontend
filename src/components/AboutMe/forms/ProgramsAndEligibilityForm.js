@@ -14,7 +14,6 @@ const useForm = (initialValues, onSubmit, defaultProgramApps) => {
     values.program_apps.length === 0 &&
     defaultProgramApps.length > 0
   ) {
-    console.log('Use defaultProgramApps');
     update('program_apps')(defaultProgramApps);
   }
 
@@ -34,10 +33,9 @@ const useForm = (initialValues, onSubmit, defaultProgramApps) => {
 
         update('program_apps')(newValue);
       } else {
-        const newValue = event.target.checked === true ? 'Yes' : 'No';
         update('profile')({
           ...values.profile,
-          needs_help_programs: newValue,
+          needs_help_programs: event.target.checked,
         });
       }
     },
@@ -71,20 +69,21 @@ const ProgramsAndEligibilityForm = ({
     setErrors(err);
 
     if (!isError) {
-      const {first_name, last_name, id, program_apps} = values;
-      const contactInfo = {
+      const {first_name, last_name, email_primary, id, program_apps} = values;
+
+      const programApps = {
         first_name,
         last_name,
-        email: values.email_primary.email,
+        email: email_primary.email,
         id,
-      };
-      const programApps = {
-        ...contactInfo,
         program_apps,
       };
 
       const aboutMeInfo = {
-        ...contactInfo,
+        first_name,
+        last_name,
+        email: email_primary.email,
+        id,
         profile: {...values.profile},
       };
       updateAboutMe(contact.id, aboutMeInfo);
@@ -109,15 +108,11 @@ const ProgramsAndEligibilityForm = ({
 
   programOptions.push(needsHelpPrograms);
 
-  console.log(values);
-
   const descriptions = [
     'While our team will help you figure out which of program and services best align with where you are in your career, some folks apply to join our network because they are interested in a particular program offering.',
     "The questions below allow you to indicate which programs (if any) you know you're interested in before we get a chance to chat with you, and checks to see if you're eligible for them",
   ];
 
-  // console.log('programOptions', programOptions);
-  // console.log(values);
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader
@@ -143,13 +138,7 @@ const ProgramsAndEligibilityForm = ({
 };
 
 ProgramsAndEligibilityForm.propTypes = {
-  contact: PropTypes.shape({
-    first_name: PropTypes.string.isRequired,
-    last_name: PropTypes.string.isRequired,
-    email_primary: PropTypes.object.isRequired,
-    phone_primary: PropTypes.string.isRequired,
-  }),
-  onSubmit: PropTypes.func.isRequired,
+  contact: PropTypes.object.isRequired,
   onCloseForm: PropTypes.func.isRequired,
 };
 
