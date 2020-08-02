@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -204,7 +203,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             />
             <FormTextField
               isLabelInside={true}
-              value={values.first_name}
+              value={values.last_name}
               name="last_name"
               label="Last Name"
               onChange={handleChange}
@@ -385,17 +384,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   error={errors.hearAboutUsOther_error}
                 />
               </div>
-
-              <Grid item xs={12} align="end" className={classes.submitButton}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={submit}
-                  align="end"
-                >
-                  Save
-                </Button>
-              </Grid>
+              <FormSubmitButton onSubmit={submit} />
             </form>
           </Grid>
         </Grid>
@@ -449,9 +438,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       color: 'black',
     },
-  },
-  submitButton: {
-    margin: '10px 20px 0px 0px',
   },
 
   genderAndPronounsContainer: {
