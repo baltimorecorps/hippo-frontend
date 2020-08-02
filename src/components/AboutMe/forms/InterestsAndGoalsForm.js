@@ -13,32 +13,31 @@ import {
   yearsOfExperience,
   roleLabels,
   programsCompletedLabels,
-  hearAboutUsOptions,
 } from '../defaultData';
 
 import {
   FormHeader,
   FormRadioButtons,
   FormCheckboxes,
-  FormDropDownSelector,
-  FormTextField,
   FormSubmitButton,
 } from './FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
+  const blankProgramCompleted = {
+    fellowship: false,
+    public_allies: false,
+    mayoral_fellowship: false,
+    kiva: false,
+    elevation_awards: false,
+    civic_innovators: false,
+  };
+
   if (values.profile && values.profile.programs_completed == null) {
     update('profile')({
       ...values.profile,
-      programs_completed: {
-        fellowship: false,
-        public_allies: false,
-        mayoral_fellowship: false,
-        kiva: false,
-        elevation_awards: false,
-        civic_innovators: false,
-      },
+      programs_completed: blankProgramCompleted,
     });
   }
 
@@ -49,6 +48,13 @@ const useForm = (initialValues, onSubmit) => {
         ...values.profile,
         [event.target.name]: event.target.value,
       };
+
+      if (
+        event.target.name === 'previous_bcorps_program' &&
+        event.target.value === 'No'
+      ) {
+        newValue.programs_completed = blankProgramCompleted;
+      }
       update('profile')(newValue);
     },
     handleSubmit: (contactId, values) => {
@@ -74,6 +80,7 @@ const useForm = (initialValues, onSubmit) => {
           [event.target.name]: event.target.checked,
         },
       };
+
       update('profile')(newValue);
     },
     handleProgramsCompletedChange: event => {
@@ -126,7 +133,6 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     programs_completed &&
     getCheckboxOptions(programsCompletedLabels, programs_completed);
 
-  console.log('values', values);
   return (
     <Grid item xs={12} className={classes.form}>
       <FormHeader
