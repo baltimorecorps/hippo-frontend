@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
@@ -12,58 +12,47 @@ import {
   QuestionWithOneAnswer,
   QuestionWithMultipleAnswersArray,
 } from './QuestionAnswerDisplayTemplates.js';
-
-import {raceLabels} from '../defaultData';
+import {getListOfAnswers} from 'lib/helperFunctions/helpers';
+import {raceLabels, blankProfile} from '../defaultData';
 
 const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
-  const email = contact.email_primary ? contact.email_primary.email : '';
   const {first_name, last_name, phone_primary} = contact;
-  const {street1, street2, city, state, zip_code, country} =
-    contact && contact.profile != null && contact.profile.address_primary;
+  const email = contact.email_primary ? contact.email_primary.email : '';
+  const profile = get(contact, 'profile', blankProfile);
+  const {
+    address_primary,
+    race,
+    gender,
+    gender_other,
+    pronoun,
+    pronoun_other,
+    hear_about_us,
+    hear_about_us_other,
+  } = profile;
+  const {street1, street2, city, state, zip_code, country} = address_primary;
 
-  // const profile = get(contact, 'profile', "");
-  // console.log(profile, profile);
+  let theAddress = '';
+  if (street1 && city && state && zip_code && country)
+    theAddress = (
+      <span>
+        {street1}
+        <br />
+        {street2 || null}
+        {street2 ? <br /> : null}
+        {`${city}, ${state} ${zip_code}`} <br />
+        {country}
+      </span>
+    );
 
-  let address_street2 = '';
-  if (street2) address_street2 = `, ${street2}`;
+  const theRace = getListOfAnswers(race, raceLabels);
+  const theGender = gender === 'Not Listed' ? gender_other : gender;
+  const thePronoun = pronoun === 'Not Listed' ? pronoun_other : pronoun;
 
-  const address1 = `${street1}${address_street2}` || '';
-  const address2 = `${city}, ${state} ${zip_code}` || '';
-  const address3 = country || '';
-
-  const {hear_about_us, hear_about_us_other} =
-    contact && contact.profile != null && contact.profile;
-  let checkedRace = [];
-  if (contact.profile) {
-    for (const [key, value] of Object.entries(contact.profile.race)) {
-      if (value === true) checkedRace.push(key);
-    }
-  }
-
-  let race = [];
-  for (const [key, value] of Object.entries(raceLabels)) {
-    if (checkedRace.includes(key)) race.push(value);
-  }
-
-  let gender = contact.profile && contact.profile.gender;
-  let pronoun = contact.profile && contact.profile.pronoun;
-  if (contact.profile && contact.profile.gender === 'Not Listed')
-    gender = contact.profile.gender_other;
-  if (contact.profile && contact.profile.pronoun === 'Not Listed')
-    pronoun = contact.profile.pronoun_other;
-
-  let hearAboutUs = '';
-  if (
-    hear_about_us !== 'Other' &&
-    hear_about_us_other &&
-    hear_about_us_other.length > 0
-  ) {
+  let hearAboutUs = hear_about_us;
+  if (hear_about_us === 'Other') hearAboutUs = hear_about_us_other;
+  if (hear_about_us !== 'Other' && hear_about_us_other.length > 0)
     hearAboutUs = `${hear_about_us}: ${hear_about_us_other}`;
-  } else if (hear_about_us !== 'Other') {
-    hearAboutUs = hear_about_us;
-  } else {
-    hearAboutUs = hear_about_us_other;
-  }
+
   return (
     <React.Fragment>
       <Grid item xs={12} className={classes.justifyBetween}>
@@ -105,10 +94,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
       </Typography>
 
       {isOnEditMode ? (
-        contact &&
-        address1.length > 0 &&
-        address2.length > 0 &&
-        address3.length > 0 ? (
+        theAddress ? (
           <Typography
             gutterBottom
             variant="body1"
@@ -116,10 +102,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
             className={classes.textInfo}
           >
             <HomeIcon className={classes.homeIcon} />
-            {address1}
-            <br />
-            {address2} <br />
-            {address3}
+            {theAddress}
           </Typography>
         ) : (
           <Typography
@@ -129,14 +112,18 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
             className={classes.textInfo}
           >
             <HomeIcon className={classes.homeIcon} />* Please Enter *
+            <Icon className={classes.icon}>home</Icon>
           </Typography>
         )
       ) : null}
       {isOnEditMode && contact && contact.profile && (
         <React.Fragment>
-          <QuestionWithMultipleAnswersArray question="Race:" answers={race} />
-          <QuestionWithOneAnswer question="Gender:" answer={gender} />
-          <QuestionWithOneAnswer question="Pronoun:" answer={pronoun} />
+          <QuestionWithMultipleAnswersArray
+            question="Race:"
+            answers={theRace}
+          />
+          <QuestionWithOneAnswer question="Gender:" answer={theGender} />
+          <QuestionWithOneAnswer question="Pronoun:" answer={thePronoun} />
           <QuestionWithOneAnswer
             question="How you find out about Baltimore Corps:"
             answer={hearAboutUs}
@@ -167,9 +154,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
       color: 'black',
     },
   },
-  homeIcon: {marginRight: '5px', fontSize: '30px'},
-  icon: {marginRight: '5px'},
-  textInfo: {display: 'flex'},
+  homeIcon: {marginRight: '15px', fontSize: '30px'},
+  icon: {marginRight: '15px', fontSize: '30px'},
+  textInfo: {display: 'flex', marginBottom: spacing(1)},
 });
 
 export default withStyles(styles)(ContactInfoDisplay);
