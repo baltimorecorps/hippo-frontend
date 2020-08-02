@@ -357,8 +357,6 @@ const ProfilePage = ({
                         <AboutMeForms
                           contact={contactInfo}
                           onSubmit={handleUpdateAboutMe}
-                          onCloseAllForms={() => setOpenForm(false)}
-                          onClickEdit={() => setOpenForm(true)}
                         />
                       ) : (
                         <Grid container justify="center">
