@@ -44,6 +44,8 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
       </span>
     );
 
+  console.log('race', race);
+  console.log('raceLabels', raceLabels);
   const theRace = getListOfAnswers(race, raceLabels);
   const theGender = gender === 'Not Listed' ? gender_other : gender;
   const thePronoun = pronoun === 'Not Listed' ? pronoun_other : pronoun;

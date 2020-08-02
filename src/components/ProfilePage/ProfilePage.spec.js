@@ -9,6 +9,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {ThemeProvider} from '@material-ui/core/styles';
 import theme from '../../styles/theme';
 import ProfilePage from './ProfilePage';
+import {blankProfile} from '../AboutMe/defaultData';
 
 describe('ProfilePage', () => {
   const contactInfo = {
@@ -18,7 +19,7 @@ describe('ProfilePage', () => {
     email_primary: {email: 'alice@example.com'},
     phone_primary: '(123) 456-7890',
     skills: [],
-    profile: {address_primary: {}},
+    profile: blankProfile,
   };
 
   let store = configureStore({
