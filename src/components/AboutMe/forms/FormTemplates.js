@@ -147,14 +147,45 @@ const FormSubmitButtonTemplate = ({onSubmit, classes}) => {
   );
 };
 const FormDropDownSelectorTemplate = ({
+  isLabelInside,
   question,
   value,
   name,
   options,
   onChange,
+  error,
   classes,
 }) => {
-  return (
+  const theDropdownSelector = (
+    <React.Fragment>
+      <Select
+        disabled={false}
+        className={isLabelInside ? classes.dropdown : null}
+        required
+        id={name}
+        value={value || ''}
+        onChange={onChange}
+        inputProps={{
+          name: name,
+          id: name,
+          classes: {select: !isLabelInside ? classes.dropdownSelector : null},
+          'data-testid': name,
+        }}
+      >
+        {options.map(option => (
+          <MenuItem value={option} key={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </Select>
+      {error && (
+        <FormHelperText className={classes.formHelperText}>
+          {error || null}
+        </FormHelperText>
+      )}
+    </React.Fragment>
+  );
+  const labelOutsideDropdown = (
     <div className={classes.dropdownContainer}>
       <FormControl>
         <Typography
@@ -164,28 +195,27 @@ const FormDropDownSelectorTemplate = ({
         >
           {question}
         </Typography>
-        <Select
-          disabled={false}
-          required
-          id={name}
-          value={value || ''}
-          onChange={onChange}
-          inputProps={{
-            name: name,
-            id: name,
-            classes: {select: classes.dropdownSelector},
-            'data-testid': name,
-          }}
-        >
-          {options.map(option => (
-            <MenuItem value={option} key={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
+
+        {theDropdownSelector}
       </FormControl>
     </div>
   );
+  const labelInsideDropdown = (
+    <Grid item xs={12} md={6} align="center">
+      <div className={classes.dropdownContainerLabelInside}>
+        <InputLabel htmlFor={name} className={classes.dropdownInputLabel}>
+          {question}
+        </InputLabel>
+        {theDropdownSelector}
+      </div>
+    </Grid>
+  );
+
+  if (isLabelInside) {
+    return labelInsideDropdown;
+  } else {
+    return labelOutsideDropdown;
+  }
 };
 
 const FormTextFieldTemplate = ({
@@ -386,18 +416,22 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     flexGrow: 1,
   },
-  dropdownContainer: {
-    // margin: '10px 0',
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'flex-start',
-    // justifyContent: 'flex-start',
-    // width: '100%',
+  dropdownContainerLabelInside: {
+    width: '95%',
+  },
+  dropdown: {
+    width: '100%',
+    textAlign: 'left',
   },
   dropdownLabel: {
     color: '#000000',
     textAlign: 'left',
     fontWeight: 'bold',
+  },
+  dropdownInputLabel: {
+    fontSize: 14,
+    textAlign: 'left',
+    marginBottom: '2px',
   },
   dropdownSelector: {
     textAlign: 'left',

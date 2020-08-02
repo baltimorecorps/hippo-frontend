@@ -181,50 +181,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   ];
 
   const profile = get(contact, 'profile', blankProfile);
-
   const raceOptions = getCheckboxOptions(raceLabels, profile.race, 'race');
-
-  // Can we move this function to formTemplates?
-  const createDropdownSelector = (
-    name,
-    label,
-    value,
-    options,
-    onChange,
-    error
-  ) => {
-    return (
-      <Grid item xs={12} md={6} align="center">
-        <div className={classes.dropdownContainer}>
-          <InputLabel htmlFor={name} className={classes.dropdownInputLabel}>
-            {label}
-          </InputLabel>
-          <Select
-            disabled={false}
-            required
-            id={name}
-            className={classes.dropdown}
-            value={value || ''}
-            onChange={onChange}
-            inputProps={{
-              name: name,
-              id: name,
-              'data-testid': name,
-            }}
-          >
-            {options.map(option => (
-              <MenuItem value={option} key={option}>
-                {option}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormHelperText className={classes.formHelperText}>
-            {error || null}
-          </FormHelperText>
-        </div>
-      </Grid>
-    );
-  };
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -311,14 +268,16 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 onChange={handleAddress}
                 error={errors.city_error}
               />
-              {createDropdownSelector(
-                'state',
-                'State *',
-                values.profile.address_primary.state,
-                states,
-                handleAddress,
-                errors.state_error
-              )}
+
+              <FormDropDownSelector
+                isLabelInside={true}
+                question="State *"
+                value={values.profile.address_primary.state}
+                name="state"
+                options={states}
+                onChange={handleAddress}
+                error={errors.state_error}
+              />
 
               <Grid container align="center" justify="space-between">
                 <FormTextField
@@ -330,14 +289,15 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   error={errors.zipCode_error}
                 />
 
-                {createDropdownSelector(
-                  'country',
-                  'Country *',
-                  values.profile.address_primary.country,
-                  countryList,
-                  handleAddress,
-                  errors.country_error
-                )}
+                <FormDropDownSelector
+                  isLabelInside={true}
+                  question="Country *"
+                  value={values.profile.address_primary.country}
+                  name="country"
+                  options={countryList}
+                  onChange={handleAddress}
+                  error={errors.country_error}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -356,7 +316,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   options={raceOptions}
                   onChange={handleRacesChange}
                 />
-                {values.profile.race.not_listed && (
+                {values.profile.race.not_listed ? (
                   <div className={classes.otherRace}>
                     <FormTextField
                       value={values.profile.race.race_other}
@@ -365,6 +325,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                       onChange={handleRaceOther}
                     />
                   </div>
+                ) : (
+                  <div style={{marginBottom: '15px'}}></div>
                 )}
               </div>
 
@@ -378,13 +340,15 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                     onChange={handleGenderAndPronounChange}
                   />
 
-                  {values.profile.gender === 'Not Listed' && (
+                  {values.profile.gender === 'Not Listed' ? (
                     <FormTextField
                       value={values.profile.gender_other}
                       name="gender_other"
                       label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
                       onChange={handleGenderAndPronounChange}
                     />
+                  ) : (
+                    <div style={{marginBottom: '15px'}}></div>
                   )}
                 </div>
                 <div className={classes.dropdownAndTextFieldContainer}>
@@ -396,13 +360,15 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                     onChange={handleGenderAndPronounChange}
                   />
 
-                  {values.profile.pronoun === 'Not Listed' && (
+                  {values.profile.pronoun === 'Not Listed' ? (
                     <FormTextField
                       value={values.profile.pronoun_other}
                       name="pronoun_other"
                       label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
                       onChange={handleGenderAndPronounChange}
                     />
+                  ) : (
+                    <div style={{marginBottom: '15px'}}></div>
                   )}
                 </div>
               </div>
@@ -492,18 +458,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     margin: '10px 20px 0px 0px',
   },
 
-  dropdownContainer: {
-    width: '95%',
-  },
-  dropdown: {
-    width: '100%',
-    textAlign: 'left',
-  },
-  dropdownInputLabel: {
-    fontSize: 14,
-    textAlign: 'left',
-    marginBottom: '2px',
-  },
   genderAndPronounsContainer: {
     width: '100%',
     display: 'flex',
