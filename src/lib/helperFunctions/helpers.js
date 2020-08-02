@@ -120,8 +120,11 @@ const getListOfAnswers = (apiValues, labelNames) => {
   let answers = [];
   Object.entries(apiValues).forEach(([apiKey, apiValue]) => {
     Object.entries(labelNames).forEach(([labelKey, labelName]) => {
-      if (apiKey === labelKey && apiValue === true) answers.push(labelName);
+      if (apiKey === labelKey && apiKey !== 'not_listed' && apiValue === true)
+        return answers.push(labelName);
     });
+    if (apiKey === 'race_other' && apiValue.length > 0)
+      return answers.push(apiValue);
   });
   return answers;
 };

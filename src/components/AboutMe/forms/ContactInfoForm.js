@@ -2,14 +2,8 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import MuiPhoneNumber from 'material-ui-phone-number';
@@ -95,6 +89,8 @@ const useForm = (initialValues, onSubmit) => {
           [event.target.name]: event.target.checked,
         },
       };
+      if (event.target.name === 'not_listed' && event.target.checked === false)
+        newValue.race.race_other = '';
       update('profile')(newValue);
     },
 
