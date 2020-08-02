@@ -216,8 +216,7 @@ const FormTextFieldTemplate = ({
         required
         id={name}
         label={isLabelInside ? label : null}
-        className={classes.formControl}
-        style={{width: isLabelInside ? '95%' : '50%'}}
+        className={isLabelInside ? classes.formControl : classes.formControl50}
         name={name}
         value={value || ''}
         onChange={onChange}
@@ -231,7 +230,7 @@ const FormTextFieldTemplate = ({
   );
 
   const labelInsideTextField = (
-    <Grid item xs={12} md={6} align="center">
+    <Grid item xs={12} md={6} align="center" justify="center">
       {textFieldAndError}
     </Grid>
   );
@@ -341,7 +340,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   formControl: {
     width: '95%',
-    marginTop: spacing(0),
+  },
+  formControl50: {
+    width: '95%',
+    [breakpoints.up('sm')]: {
+      width: '50%',
+    },
   },
   resize: {
     fontSize: 16,

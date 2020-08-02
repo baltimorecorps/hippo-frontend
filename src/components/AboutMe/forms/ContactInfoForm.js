@@ -350,21 +350,24 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
           <Grid item xs={12} align="flex-start">
             <form noValidate autoComplete="off">
-              <FormCheckboxes
-                question="Race (select all that apply)"
-                options={raceOptions}
-                onChange={handleRacesChange}
-              />
-              {values.profile.race.not_listed && (
-                <div className={classes.otherRace}>
-                  <FormTextField
-                    value={values.profile.race.race_other}
-                    name="race_other"
-                    label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
-                    onChange={handleRaceOther}
-                  />
-                </div>
-              )}
+              <div>
+                <FormCheckboxes
+                  question="Race (select all that apply)"
+                  options={raceOptions}
+                  onChange={handleRacesChange}
+                />
+                {values.profile.race.not_listed && (
+                  <div className={classes.otherRace}>
+                    <FormTextField
+                      value={values.profile.race.race_other}
+                      name="race_other"
+                      label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
+                      onChange={handleRaceOther}
+                    />
+                  </div>
+                )}
+              </div>
+
               <div className={classes.genderAndPronounsContainer}>
                 <div className={classes.dropdownAndTextFieldContainer}>
                   <FormDropDownSelector
@@ -447,9 +450,11 @@ BasicInfoForm.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   form: {
-    padding: '17px 30px 20px 30px',
+    padding: '8px 10px 8px 10px',
     backgroundColor: '#f7f7f7',
-    marginBottom: spacing(2),
+    [breakpoints.up('sm')]: {
+      padding: '17px 30px 20px 30px',
+    },
   },
   demographicForm: {
     backgroundColor: '#f7f7f7',
@@ -501,7 +506,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   genderAndPronounsContainer: {
     width: '100%',
-    marginTop: spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -513,8 +517,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    // alignSelf: 'flex-start',
-    marginTop: '10px',
   },
   otherRace: {
     marginLeft: '0px',
@@ -525,7 +527,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   hearAboutUsContainer: {
     width: '100%',
-    marginTop: '30px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
