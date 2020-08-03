@@ -8,22 +8,18 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import ArrowForwardIosOutlinedIcon from '@material-ui/icons/ArrowForwardIosOutlined';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
 import {dynamicInstructionLabels} from './defaultValues';
-
 import get from 'lodash.get';
 
 const SubmitProfileExpansion = ({instructions, classes}) => {
   const isCompletedAboutMe = get(instructions, 'about_me.is_complete', false);
   const isCompletedProfile = get(instructions, 'profile.is_complete', false);
   const aboutMeValues = get(instructions, 'about_me.components', false);
-  const experienceValues = get(instructions, 'about_me.components', false);
+  const experienceValues = get(instructions, 'profile.components', false);
 
   const aboutMeChecks = [];
   Object.entries(dynamicInstructionLabels.about_me).forEach(
@@ -35,31 +31,33 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
   );
 
   const experienceChecks = [];
-  // Object.entries(dynamicInstructionLabels.profile).forEach(([labelKey, labelName]) =>
-  //   Object.entries(experienceValues).forEach(([apiKey, apiValue]) => {
-  //     if (apiKey === labelKey)
-  //       experienceChecks.push({content: labelName, checked: apiValue});
-  //   })
-  // );
+  Object.entries(dynamicInstructionLabels.profile).forEach(
+    ([labelKey, labelName]) =>
+      Object.entries(experienceValues).forEach(([apiKey, apiValue]) => {
+        if (apiKey === labelKey) {
+          if (apiKey === 'add_experience') {
+            experienceChecks.push({
+              content: labelName.is_complete,
+              checked: apiValue.is_complete,
+              components: [
+                {
+                  content: labelName.components.add_achievements,
+                  checked: apiValue.components.add_achievements,
+                },
+                {
+                  content: labelName.components.tag_skills,
+                  checked: apiValue.components.tag_skills,
+                },
+              ],
+            });
+          } else {
+            experienceChecks.push({content: labelName, checked: apiValue});
+          }
+        }
+      })
+  );
 
-  // const AboutMeSteps = [
-  //   {
-  //     content: 'Candidate information',
-  //     checked: true,
-  //   },
-  //   {content: 'Programs and eligibility', checked: true},
-  //   {content: 'Interests and goals', checked: false},
-  //   {content: 'Value alignment', checked: false},
-  // ];
-  // const ExperienceSteps = [
-  //   {content: 'Add skills', checked: true},
-  //   {content: 'Add all relevant experience', checked: false},
-  //   {content: 'Add education, certificates, or training', checked: true},
-  //   {content: 'Add portfolio or work products (optional)', checked: false},
-  // ];
-
-  // console.log('dynamicInstructionLabels', dynamicInstructionLabels);
-  console.log('profile instructions', instructions);
+  // console.log('profile instructions', instructions);
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
       <ExpansionPanelSummary
@@ -103,7 +101,7 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
           by filling out the sections below
         </Typography>
         <div className={classes.checkboxesContainer}>
-          {/* {ExperienceSteps.map((option, index) => (
+          {experienceChecks.map((option, index) => (
             <React.Fragment key={index}>
               <FormControlLabel
                 control={
@@ -120,32 +118,27 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
                 className={classes.checkbox}
                 label={option.content}
               />
-              {option.content === 'Add all relevant experience' && (
-                <div>
-                  <Typography
-                    variant="body1"
-                    component="h3"
-                    className={classes.list}
-                  >
-                    <ArrowForwardIosOutlinedIcon
-                      className={classes.listSymbol}
-                    />
-                    Add responsibilities
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    component="h3"
-                    className={classes.list}
-                  >
-                    <ArrowForwardIosOutlinedIcon
-                      className={classes.listSymbol}
-                    />
-                    Tag skills to each experience under responsibilities
-                  </Typography>
-                </div>
-              )}
-            </React.Fragment> */}
-          {/* ))} */}
+              {option.components &&
+                option.components.map((subOption, index) => (
+                  <FormControlLabel
+                    key={index}
+                    control={
+                      <Checkbox
+                        style={{
+                          color: subOption.checked ? '#2f5be0' : '#c7c7c7',
+                        }}
+                        checked={subOption.checked}
+                        name={subOption.content}
+                        checkedIcon={<CheckCircleIcon />}
+                        icon={<CheckCircleOutlinedIcon />}
+                      />
+                    }
+                    className={classes.subCheckbox}
+                    label={subOption.content}
+                  />
+                ))}
+            </React.Fragment>
+          ))}
         </div>
         <Button
           variant="contained"
@@ -212,7 +205,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
       marginLeft: '20px',
     },
   },
-
+  subCheckbox: {
+    marginLeft: '55px',
+  },
   list: {
     marginLeft: '60px',
     marginBottom: '5px',

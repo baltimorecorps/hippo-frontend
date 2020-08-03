@@ -31,6 +31,7 @@ const ExperiencesList = ({
   deselectExperience,
   updateEditScore,
   inSelectMode,
+  refreshDynamicInstructions,
   classes,
 }) => {
   const [showForm, setShowForm] = useState(false);
@@ -41,7 +42,14 @@ const ExperiencesList = ({
       refreshExperiences();
       setLoaded(true);
     }
-  }, [experiences, refreshExperiences, loaded, setLoaded]);
+  }, [
+    experiences,
+    refreshExperiences,
+    loaded,
+    setLoaded,
+    refreshDynamicInstructions,
+    contactId,
+  ]);
 
   let blankExperience = {
     description: '',
@@ -65,6 +73,8 @@ const ExperiencesList = ({
 
   const submitNewExperience = async function(experience) {
     await addNewExperience(experience);
+    await refreshDynamicInstructions();
+
     setShowForm(false);
   };
 
@@ -174,6 +184,7 @@ const ExperiencesList = ({
               key={experience.id}
               onUpdate={updateExperience}
               onDelete={deleteExperience}
+              refreshDynamicInstructions={refreshDynamicInstructions}
               onSelect={makeSelectExperience(experience)}
               onSkillsMore={handleOnSkillsMore}
               experience={experience}

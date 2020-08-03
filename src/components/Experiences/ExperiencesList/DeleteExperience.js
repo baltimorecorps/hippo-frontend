@@ -9,7 +9,13 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-const DeleteExperience = ({experience, onDelete, classes, handleCancel}) => {
+const DeleteExperience = ({
+  experience,
+  onDelete,
+  classes,
+  refreshDynamicInstructions,
+  handleCancel,
+}) => {
   let experienceName = 'this item';
 
   if (experience.host && experience.title) {
@@ -23,6 +29,11 @@ const DeleteExperience = ({experience, onDelete, classes, handleCancel}) => {
     );
   }
 
+  const deleteAndRefreshInstructions = async experience => {
+    await onDelete(experience);
+    await refreshDynamicInstructions();
+  };
+
   return (
     <Dialog open={true}>
       <DialogContent className={classes.dialogContent}>
@@ -34,7 +45,7 @@ const DeleteExperience = ({experience, onDelete, classes, handleCancel}) => {
         <Button
           className={classes.delete}
           variant="outlined"
-          onClick={() => onDelete(experience)}
+          onClick={() => deleteAndRefreshInstructions(experience)}
         >
           Yes, Delete
         </Button>
