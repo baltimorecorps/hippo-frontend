@@ -22,7 +22,7 @@ import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
 import CapabilityScores from 'components/CapabilityScores';
-import ProfileInstructions from '../ProfileInstructions';
+import ProfileInstructions from '../DynamicInstructions';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';

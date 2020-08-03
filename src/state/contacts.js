@@ -325,6 +325,16 @@ export const updateProgramApps = (programApps, contactId) =>
 
 // ---------------------------------------------------------------------------
 
+export const GET_DYNAMIC_INSTRUCTIONS = 'GET_DYNAMIC_INSTRUCTIONS';
+export const GET_DYNAMIC_INSTRUCTIONS_API = fetchActionTypes(
+  GET_DYNAMIC_INSTRUCTIONS
+);
+export const getDynamicInstructions = contactId =>
+  makeApiFetchActions(
+    GET_DYNAMIC_INSTRUCTIONS,
+    `${API_URL}/api/contacts/${contactId}/instructions/`
+  );
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -407,6 +417,10 @@ export const contactsReducer = createReducer(
       };
     },
 
+    [GET_DYNAMIC_INSTRUCTIONS_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id].instructions = contact.instructions;
+    },
     [GET_ABOUT_ME_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id].profile = contact.profile;

@@ -15,7 +15,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
-const SubmitProfileExpansion = ({classes}) => {
+const SubmitProfileExpansion = ({instructions, classes}) => {
   const AboutMeSteps = [
     {
       content: 'Candidate information',
@@ -34,6 +34,7 @@ const SubmitProfileExpansion = ({classes}) => {
     {content: 'Add portfolio or work products (optional)', checked: false},
   ];
 
+  console.log('profile instructions', instructions);
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
       <ExpansionPanelSummary

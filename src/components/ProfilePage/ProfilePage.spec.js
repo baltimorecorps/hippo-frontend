@@ -20,6 +20,10 @@ describe('ProfilePage', () => {
     phone_primary: '(123) 456-7890',
     skills: [],
     profile: blankProfile,
+    instructions: {
+      id: 1,
+      instructions: {},
+    },
   };
 
   let store = configureStore({

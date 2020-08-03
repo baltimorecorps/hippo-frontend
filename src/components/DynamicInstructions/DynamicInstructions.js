@@ -1,13 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import SubmitProfileExpansion from './SubmitProfileExpansion';
 import ApplyOpportunitiesExpansion from './ApplyOpportunitiesExpansion';
 
-const ProfileInstructions = ({classes}) => {
+const DynamicInstructions = ({
+  getDynamicInstructions,
+  id,
+  instructions,
+  classes,
+}) => {
+  useEffect(() => {
+    if (!id || !instructions) getDynamicInstructions(id);
+  }, [id, instructions, getDynamicInstructions]);
+
   return (
     <Paper className={classes.instructions}>
       <div className={classes.headerContainer}>
@@ -21,7 +29,7 @@ const ProfileInstructions = ({classes}) => {
           Instructions
         </Typography>
       </div>
-      <SubmitProfileExpansion />
+      <SubmitProfileExpansion instructions={instructions} />
       <ApplyOpportunitiesExpansion />
     </Paper>
   );
@@ -33,7 +41,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
     padding: spacing(1.5, 1, 1),
-    // paddingBottom: spacing(3),
     marginTop: spacing(5),
     [breakpoints.down('sm')]: {
       margin: spacing(0.2),
@@ -45,13 +52,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   headerContainer: {
     marginBottom: spacing(1),
-    // borderBottom: 'solid #e0e0e0 1px',
-    // borderBottom: 'solid #ffcc33 1px',
     display: 'flex',
     justifyContent: 'space-between',
-    // color: '#ffbf00',
     paddingLeft: '15px',
   },
 });
 
-export default withStyles(styles)(ProfileInstructions);
+export default withStyles(styles)(DynamicInstructions);
