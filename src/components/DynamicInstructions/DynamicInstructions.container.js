@@ -5,8 +5,9 @@ import get from 'lodash.get';
 
 export const mapStateToProps = state => {
   const contact = Object.values(state.contacts)[0];
-  const id = get(contact, 'id', 0);
-  const instructions = get(contact, 'instructions', {});
+
+  const id = get(contact, 'id', false);
+  const instructions = get(contact, 'instructions', false);
 
   return {
     id,

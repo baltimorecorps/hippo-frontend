@@ -17,24 +17,48 @@ import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
 import {dynamicInstructionLabels} from './defaultValues';
 
-const SubmitProfileExpansion = ({instructions, classes}) => {
-  const AboutMeSteps = [
-    {
-      content: 'Candidate information',
-      checked: true,
-    },
-    {content: 'Programs and eligibility', checked: true},
-    {content: 'Interests and goals', checked: false},
-    {content: 'Value alignment', checked: false},
-  ];
-  const ExperienceSteps = [
-    {content: 'Add skills', checked: true},
-    {content: 'Add all relevant experience', checked: false},
-    {content: 'Add education, certificates, or training', checked: true},
-    {content: 'Add portfolio or work products (optional)', checked: false},
-  ];
+import get from 'lodash.get';
 
-  console.log('dynamicInstructionLabels', dynamicInstructionLabels);
+const SubmitProfileExpansion = ({instructions, classes}) => {
+  const isCompletedAboutMe = get(instructions, 'about_me.is_complete', false);
+  const isCompletedProfile = get(instructions, 'profile.is_complete', false);
+  const aboutMeValues = get(instructions, 'about_me.components', false);
+  const experienceValues = get(instructions, 'about_me.components', false);
+
+  const aboutMeChecks = [];
+  Object.entries(dynamicInstructionLabels.about_me).forEach(
+    ([labelKey, labelName]) =>
+      Object.entries(aboutMeValues).forEach(([apiKey, apiValue]) => {
+        if (apiKey === labelKey)
+          aboutMeChecks.push({content: labelName, checked: apiValue});
+      })
+  );
+
+  const experienceChecks = [];
+  // Object.entries(dynamicInstructionLabels.profile).forEach(([labelKey, labelName]) =>
+  //   Object.entries(experienceValues).forEach(([apiKey, apiValue]) => {
+  //     if (apiKey === labelKey)
+  //       experienceChecks.push({content: labelName, checked: apiValue});
+  //   })
+  // );
+
+  // const AboutMeSteps = [
+  //   {
+  //     content: 'Candidate information',
+  //     checked: true,
+  //   },
+  //   {content: 'Programs and eligibility', checked: true},
+  //   {content: 'Interests and goals', checked: false},
+  //   {content: 'Value alignment', checked: false},
+  // ];
+  // const ExperienceSteps = [
+  //   {content: 'Add skills', checked: true},
+  //   {content: 'Add all relevant experience', checked: false},
+  //   {content: 'Add education, certificates, or training', checked: true},
+  //   {content: 'Add portfolio or work products (optional)', checked: false},
+  // ];
+
+  // console.log('dynamicInstructionLabels', dynamicInstructionLabels);
   console.log('profile instructions', instructions);
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
@@ -55,7 +79,7 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
           section
         </Typography>
         <div className={classes.checkboxesContainer}>
-          {AboutMeSteps.map((option, index) => (
+          {aboutMeChecks.map((option, index) => (
             <FormControlLabel
               key={index}
               control={
@@ -79,7 +103,7 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
           by filling out the sections below
         </Typography>
         <div className={classes.checkboxesContainer}>
-          {ExperienceSteps.map((option, index) => (
+          {/* {ExperienceSteps.map((option, index) => (
             <React.Fragment key={index}>
               <FormControlLabel
                 control={
@@ -120,15 +144,15 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
                   </Typography>
                 </div>
               )}
-            </React.Fragment>
-          ))}
+            </React.Fragment> */}
+          {/* ))} */}
         </div>
         <Button
           variant="contained"
           // onClick={onSubmit}
           align="end"
           className={classes.submitButton}
-          disabled
+          disabled={!isCompletedAboutMe || !isCompletedProfile ? true : false}
         >
           Submit profile for review
         </Button>
@@ -179,11 +203,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     width: '100%',
     marginBottom: '10px',
+    marginLeft: '55px',
   },
   checkbox: {
     width: '100%',
     textAlign: 'left',
-
     [breakpoints.up('md')]: {
       marginLeft: '20px',
     },
