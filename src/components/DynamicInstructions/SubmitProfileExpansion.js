@@ -15,6 +15,8 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
+import {dynamicInstructionLabels} from './defaultValues';
+
 const SubmitProfileExpansion = ({instructions, classes}) => {
   const AboutMeSteps = [
     {
@@ -24,8 +26,6 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
     {content: 'Programs and eligibility', checked: true},
     {content: 'Interests and goals', checked: false},
     {content: 'Value alignment', checked: false},
-
-    // {content: 'Demographic questions (optional)', checked: false},
   ];
   const ExperienceSteps = [
     {content: 'Add skills', checked: true},
@@ -34,6 +34,7 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
     {content: 'Add portfolio or work products (optional)', checked: false},
   ];
 
+  console.log('dynamicInstructionLabels', dynamicInstructionLabels);
   console.log('profile instructions', instructions);
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
@@ -124,7 +125,6 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
         </div>
         <Button
           variant="contained"
-          //   color="primary"
           // onClick={onSubmit}
           align="end"
           className={classes.submitButton}
