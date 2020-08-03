@@ -356,7 +356,13 @@ const interestsAndGoalsValidator = values => {
     current_job_status,
     current_edu_status,
     years_exp,
+    previous_bcorps_program,
+    programs_completed,
+    hear_about_us,
+    hear_about_us_other,
   } = values.profile;
+
+  const allValues = Object.values(programs_completed);
 
   let isError = false;
   let err = {};
@@ -378,6 +384,22 @@ const interestsAndGoalsValidator = values => {
     isError = true;
     err.yearsExp_error = 'Required';
   }
+  if (
+    previous_bcorps_program &&
+    previous_bcorps_program === 'Yes' &&
+    !allValues.includes(true)
+  ) {
+    isError = true;
+    err.programsCompleted_error = 'Required';
+  }
+  if (
+    hear_about_us &&
+    hear_about_us === 'Other' &&
+    (!hear_about_us_other || hear_about_us_other.length === 0)
+  ) {
+    isError = true;
+    err.hearAboutUsOther_error = 'Required';
+  }
 
   return {isError, err};
 };
@@ -388,8 +410,8 @@ const programsAndEligibilityValidator = values => {
     program => program.is_interested
   );
 
+  allValues.push(values.profile.needs_help_programs);
   console.log(allValues);
-
   let isError = false;
   let err = {};
 
@@ -409,9 +431,19 @@ const valueAlignmentValidator = values => {
     isError = true;
     err.valueQuestion1_error = 'Required';
   }
+  if (value_question1 && value_question1.length > 1500) {
+    isError = true;
+    err.valueQuestion1_error =
+      'You have reached the maximum limit of 1,500 characters';
+  }
   if (!value_question2 || value_question2.length === 0) {
     isError = true;
     err.valueQuestion2_error = 'Required';
+  }
+  if (value_question2 && value_question2.length > 2500) {
+    isError = true;
+    err.valueQuestion2_error =
+      'You have reached the maximum limit of 2,500 characters';
   }
 
   return {isError, err};

@@ -147,20 +147,20 @@ const FormSubmitButtonTemplate = ({onSubmit, classes}) => {
   );
 };
 const FormDropDownSelectorTemplate = ({
+  isLabelInside,
   question,
   value,
   name,
   options,
   onChange,
+  error,
   classes,
 }) => {
-  return (
-    <div className={classes.dropdownContainer}>
-      <InputLabel htmlFor={name} className={classes.inputLabel}>
-        {question}
-      </InputLabel>
+  const theDropdownSelector = (
+    <React.Fragment>
       <Select
         disabled={false}
+        className={isLabelInside ? classes.dropdown : null}
         required
         id={name}
         value={value || ''}
@@ -168,7 +168,7 @@ const FormDropDownSelectorTemplate = ({
         inputProps={{
           name: name,
           id: name,
-          classes: {select: classes.dropdownSelector},
+          classes: {select: !isLabelInside ? classes.dropdownSelector : null},
           'data-testid': name,
         }}
       >
@@ -178,10 +178,48 @@ const FormDropDownSelectorTemplate = ({
           </MenuItem>
         ))}
       </Select>
+      {error && (
+        <FormHelperText className={classes.formHelperText}>
+          {error || null}
+        </FormHelperText>
+      )}
+    </React.Fragment>
+  );
+  const labelOutsideDropdown = (
+    <div className={classes.dropdownContainer}>
+      <FormControl>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.dropdownLabel}
+        >
+          {question}
+        </Typography>
+
+        {theDropdownSelector}
+      </FormControl>
     </div>
   );
+  const labelInsideDropdown = (
+    <Grid item xs={12} md={6} align="center">
+      <div className={classes.dropdownContainerLabelInside}>
+        <InputLabel htmlFor={name} className={classes.dropdownInputLabel}>
+          {question}
+        </InputLabel>
+        {theDropdownSelector}
+      </div>
+    </Grid>
+  );
+
+  if (isLabelInside) {
+    return labelInsideDropdown;
+  } else {
+    return labelOutsideDropdown;
+  }
 };
+
 const FormTextFieldTemplate = ({
+  isLabelInside,
   value,
   name,
   label,
@@ -201,7 +239,33 @@ const FormTextFieldTemplate = ({
     classes: {input: classes.resize},
     autoComplete: 'off',
   };
-  return (
+
+  const textFieldAndError = (
+    <React.Fragment>
+      <TextField
+        required
+        id={name}
+        label={isLabelInside ? label : null}
+        className={isLabelInside ? classes.formControl : classes.formControl50}
+        name={name}
+        value={value || ''}
+        onChange={onChange}
+        InputLabelProps={inputLabelProps}
+        InputProps={inputProps}
+      />
+      <FormHelperText className={classes.formHelperText}>
+        {error || null}
+      </FormHelperText>
+    </React.Fragment>
+  );
+
+  const labelInsideTextField = (
+    <Grid item xs={12} md={6} align="center">
+      {textFieldAndError}
+    </Grid>
+  );
+
+  const labelOutsideTextField = (
     <Grid container style={{marginBottom: '10px'}} direction="column">
       <Typography
         variant="body1"
@@ -210,23 +274,17 @@ const FormTextFieldTemplate = ({
       >
         {label}
       </Typography>
-      <Grid item xs={8} sm={6} md={5} lg={4} align="center">
-        <TextField
-          required
-          id={name}
-          className={classes.formControl}
-          name={name}
-          value={value || ''}
-          onChange={onChange}
-          InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
-        />
-        <FormHelperText className={classes.formHelperText}>
-          {error || null}
-        </FormHelperText>
+      <Grid item xs={12} align="left">
+        {textFieldAndError}
       </Grid>
     </Grid>
   );
+
+  if (isLabelInside) {
+    return labelInsideTextField;
+  } else {
+    return labelOutsideTextField;
+  }
 };
 const FormMultiRowsTextFieldTemplate = ({
   value,
@@ -245,7 +303,7 @@ const FormMultiRowsTextFieldTemplate = ({
         required
         id={name}
         name={name}
-        value={value}
+        value={value || ''}
         multiline
         rows={6}
         onChange={onChange}
@@ -312,7 +370,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   formControl: {
     width: '95%',
-    marginTop: spacing(0),
+  },
+  formControl50: {
+    width: '95%',
+    [breakpoints.up('sm')]: {
+      width: '50%',
+    },
   },
   resize: {
     fontSize: 16,
@@ -329,9 +392,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   formHelperText: {
     color: palette.error.main,
-    marginTop: '2px',
+    // marginTop: '2px',
     width: '95%',
-    marginBottom: spacing(1),
+    marginBottom: spacing(2),
   },
   iconButton: {
     flexBasis: '60px',
@@ -353,12 +416,28 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     flexGrow: 1,
   },
-  dropdownContainer: {
-    margin: '10px 0',
+  dropdownContainerLabelInside: {
+    width: '95%',
+  },
+  dropdown: {
+    width: '100%',
+    textAlign: 'left',
+  },
+  dropdownLabel: {
+    color: '#000000',
+    textAlign: 'left',
+    fontWeight: 'bold',
+  },
+  dropdownInputLabel: {
+    fontSize: 14,
+    textAlign: 'left',
+    marginBottom: '2px',
   },
   dropdownSelector: {
     textAlign: 'left',
-    width: '90px',
+    width: '100%',
+    alignSelf: 'flex-start',
+    margin: 0,
   },
 
   radio: {

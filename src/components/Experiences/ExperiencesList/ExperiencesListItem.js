@@ -151,6 +151,7 @@ const ExperiencesListItem = ({
   onSkillsMore,
   updateEditScore,
   selectable,
+  refreshDynamicInstructions,
   classes,
 }) => {
   const config = configureForm(experience.type);
@@ -200,6 +201,7 @@ const ExperiencesListItem = ({
               onSubmit={submitUpdate}
               experience={experience}
               onDelete={onDelete}
+              refreshDynamicInstructions={refreshDynamicInstructions}
               onSkillsMore={onSkillsMore}
               updateEditScore={updateEditScore}
             />
@@ -288,8 +290,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
       textDecoration: 'none',
     },
   },
-  wrapper: {
-  },
+  wrapper: {},
 });
 
 export default withStyles(styles)(ExperiencesListItem);

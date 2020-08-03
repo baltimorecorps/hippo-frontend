@@ -75,8 +75,8 @@ const formatDate = date => {
   const year = date.substring(0, 4);
   const month = date.substring(5, 7);
   const day = date.substring(8, 10);
-  const formatedDate = `${month}/${day}/${year}`;
-  return formatedDate;
+  const formatDate = `${month}/${day}/${year}`;
+  return formatDate;
 };
 
 const formatTime = time => {
@@ -91,8 +91,42 @@ const formatTime = time => {
   } else if (hours === 0) {
     hours = 12;
   }
-  const formatedTime = `${hours}:${minutes} ${suffix}`;
-  return formatedTime;
+  const formatTime = `${hours}:${minutes} ${suffix}`;
+  return formatTime;
+};
+
+const getCheckboxOptions = (labels, apiValues, type = '') => {
+  let options = [];
+
+  Object.entries(apiValues).forEach(([apiKey, apiChecked]) => {
+    Object.entries(labels).forEach(([labelKey, labelName], index) => {
+      if (
+        (type === 'race' && apiKey !== 'race_other' && apiKey === labelKey) ||
+        (type !== 'race' && apiKey === labelKey)
+      ) {
+        options[index] = {
+          name: apiKey,
+          label: labelName,
+          checked: apiChecked === true ? true : false,
+        };
+      }
+    });
+  });
+
+  return options;
+};
+
+const getListOfAnswers = (apiValues, labelNames) => {
+  let answers = [];
+  Object.entries(apiValues).forEach(([apiKey, apiValue]) => {
+    Object.entries(labelNames).forEach(([labelKey, labelName]) => {
+      if (apiKey === labelKey && apiKey !== 'not_listed' && apiValue === true)
+        return answers.push(labelName);
+    });
+    if (apiKey === 'race_other' && apiValue.length > 0)
+      return answers.push(apiValue);
+  });
+  return answers;
 };
 
 export {
@@ -102,4 +136,6 @@ export {
   createAButton,
   formatDate,
   formatTime,
+  getCheckboxOptions,
+  getListOfAnswers,
 };

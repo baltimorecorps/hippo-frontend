@@ -271,11 +271,6 @@ export const CREATE_ABOUT_ME = 'CREATE_ABOUT_ME';
 export const CREATE_ABOUT_ME_API = fetchActionTypes(CREATE_ABOUT_ME);
 export const createAboutMe = contactId =>
   async function(dispatch) {
-    // dispatch({
-    //   type: CREATE_ABOUT_ME,
-    //   applicants,
-    // });
-
     return await makeApiFetchActions(
       CREATE_ABOUT_ME,
       `${API_URL}/api/contacts/${contactId}/about-me/`,
@@ -297,11 +292,6 @@ export const UPDATE_ABOUT_ME = 'UPDATE_ABOUT_ME';
 export const UPDATE_ABOUT_ME_API = fetchActionTypes(UPDATE_ABOUT_ME);
 export const updateAboutMe = (contactId, aboutMe) =>
   async function(dispatch) {
-    // dispatch({
-    //   type: UPDATE_ABOUT_ME,
-    //   aboutMe,
-    // });
-
     await makeApiFetchActions(
       UPDATE_ABOUT_ME,
       `${API_URL}/api/contacts/${contactId}/about-me/`,
@@ -334,6 +324,16 @@ export const updateProgramApps = (programApps, contactId) =>
   };
 
 // ---------------------------------------------------------------------------
+
+export const GET_DYNAMIC_INSTRUCTIONS = 'GET_DYNAMIC_INSTRUCTIONS';
+export const GET_DYNAMIC_INSTRUCTIONS_API = fetchActionTypes(
+  GET_DYNAMIC_INSTRUCTIONS
+);
+export const getDynamicInstructions = contactId =>
+  makeApiFetchActions(
+    GET_DYNAMIC_INSTRUCTIONS,
+    `${API_URL}/api/contacts/${contactId}/instructions/`
+  );
 
 /* eslint-enable no-unused-vars */
 
@@ -417,6 +417,10 @@ export const contactsReducer = createReducer(
       };
     },
 
+    [GET_DYNAMIC_INSTRUCTIONS_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id].instructions = contact.instructions;
+    },
     [GET_ABOUT_ME_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id].profile = contact.profile;
@@ -427,7 +431,15 @@ export const contactsReducer = createReducer(
     },
     [UPDATE_ABOUT_ME_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
-      state[contact.id].profile = contact.profile;
+      const {first_name, last_name, email, phone_primary, profile} = contact;
+      state[contact.id] = {
+        ...state[contact.id],
+        first_name,
+        last_name,
+        email,
+        phone_primary,
+        profile,
+      };
     },
 
     [UPDATE_PROGRAM_APPS_API.RESOLVE]: (state, action) => {

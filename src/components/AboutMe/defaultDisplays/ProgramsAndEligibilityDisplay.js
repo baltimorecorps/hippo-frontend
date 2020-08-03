@@ -5,11 +5,21 @@ import {
   Header,
   QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
+import get from 'lodash.get';
 
 const ProgramsAndEligibilityDisplay = ({contact, onClickEdit}) => {
+  const needs_help_programs = get(
+    contact,
+    'profile.needs_help_programs',
+    false
+  );
+
   const checkedPrograms = contact.program_apps
     .filter(program => program.is_interested === true)
     .map(program => program.program.name);
+
+  if (needs_help_programs === true)
+    checkedPrograms.push("I'd like some help figuring this out");
 
   return (
     <React.Fragment>

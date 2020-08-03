@@ -26,7 +26,6 @@ export default {
     job_search_status: 'Actively looking for a job',
     current_job_status: 'Unemployed',
     current_edu_status: 'Full-time student',
-    previous_bcorps_program: 'No',
     address_primary: {
       street1: '123 Main St',
       street2: 'Apt 3',
@@ -60,20 +59,44 @@ export default {
 
     value_question2:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem quia consequuntur illo perspiciatis temporibus laborum exercitationem, in eius, error soluta nihil. Ipsa accusantium illo harum obcaecati id maiores reiciendis velit quae voluptatum, facere, accusamus fuga eveniet recusandae itaque nostrum fugiat?',
+
+    hear_about_us: 'School',
+    hear_about_us_other: 'UMBC',
+    previous_bcorps_program: 'Yes',
+
+    programs_completed: {
+      fellowship: false,
+      public_allies: true,
+      mayoral_fellowship: true,
+      kiva: false,
+      elevation_awards: false,
+      civic_innovators: false,
+    },
+    needs_help_programs: true,
   },
+
   program_apps: [
-    // {
-    //   program: {id: 1, name: 'Place for Purpose'},
-    //   is_interested: true,
-    // },
-    // {
-    //   program: {id: 2, name: 'Baltimore Corps Fellowship'},
-    //   is_interested: false,
-    // },
-    // {
-    //   program: {id: 3, name: 'Public Allies'},-
-    //   is_interested: true,
-    // },
+    {
+      program: {id: 1, name: 'Place for Purpose'},
+      is_interested: true,
+    },
+    {
+      program: {id: 2, name: 'Mayoral Fellowship'},
+      is_interested: false,
+    },
+    {
+      program: {id: 3, name: 'Fellowship'},
+      is_interested: true,
+    },
+
+    {
+      program: {id: 4, name: 'Public Allies'},
+      is_interested: false,
+    },
+    {
+      program: {id: 5, name: 'JHU Carey Humanities Fellowship'},
+      is_interested: false,
+    },
   ],
 };
 
@@ -142,3 +165,215 @@ export default {
 //     education: false, // check education array length > 0
 //   },
 // };
+
+const payload = {
+  email: 'bayBC@baltimorecorps.org',
+  first_name: 'Bay',
+  id: 78,
+  profile: {
+    address_primary: {
+      city: 'Baltimore',
+      country: 'United States',
+      state: 'Maryland',
+      street1: '123 Monday St.',
+      street2: 'Apt 3',
+      zip_code: '21111',
+    },
+    current_edu_status: 'Full-time student',
+    current_job_status: 'Unemployed',
+    gender: 'Not Listed',
+    gender_other: 'sads',
+    hear_about_us: null,
+    hear_about_us_other: null,
+    id: 1,
+    job_search_status: 'Looking for a job in the next 2-6 months',
+    needs_help_programs: null,
+    previous_bcorps_program: 'No',
+    programs_completed: null,
+    pronoun: 'They/Them/Their',
+    pronoun_other: null,
+    value_question1: 'sasdsad',
+    value_question2: 'asdsdasd',
+    years_exp: '5+ years',
+    race: {
+      american_indian: null,
+      asian: true,
+      black: null,
+      hawaiian: null,
+      hispanic: null,
+      not_listed: null,
+      race_other: null,
+      south_asian: null,
+      white: true,
+    },
+    roles: {
+      advocacy_public_policy: false,
+      community_engagement_outreach: null,
+      data_analysis: true,
+      fundraising_development: false,
+      marketing_public_relations: false,
+      program_management: true,
+    },
+  },
+};
+
+const updateProgramsInterested = {
+  email: 'bayBC@baltimorecorps.org',
+  first_name: 'Bay',
+  id: 78,
+  last_name: 'Chairangsaris',
+  program_apps: [
+    {
+      decision_date: null,
+      id: 1,
+      is_approved: false,
+      is_interested: false,
+      program: {name: 'Place for Purpose', id: 1},
+      status: 'Not interested',
+    },
+    {
+      decision_date: null,
+      id: 2,
+      is_approved: false,
+      is_interested: true,
+      program: {name: 'Mayoral Fellowship', id: 2},
+      status: 'Waiting for approval',
+    },
+    {
+      decision_date: null,
+      id: 3,
+      is_approved: false,
+      is_interested: true,
+      program: {name: 'Fellowship', id: 3},
+      status: 'Waiting for approval',
+    },
+
+    {
+      decision_date: null,
+      id: 4,
+      is_approved: false,
+      is_interested: true,
+      program: {name: 'Public Allies', id: 4},
+      status: 'Not interested',
+    },
+    {
+      decision_date: null,
+      id: 5,
+      is_approved: false,
+      is_interested: true,
+      program: {name: 'JHU Carey Humanities Fellowship', id: 5},
+      status: 'Not interested',
+    },
+  ],
+};
+
+const payloadInterestsGoals = {
+  email: 'bayBC@baltimorecorps.org',
+  first_name: 'Bay',
+  id: 78,
+  last_name: 'Chairangsaris',
+  phone_primary: '+1 (555) 555-9999',
+  profile: {
+    address_primary: {
+      city: 'Baltimore',
+      country: 'United States',
+      state: 'Maryland',
+      street1: '123 Monday St.',
+      street2: 'Apt 3',
+      zip_code: '21111',
+    },
+    current_edu_status: 'Full-time student',
+    current_job_status: 'Unemployed',
+    gender: 'Female',
+    gender_other: '',
+    hear_about_us: 'Facebook',
+    hear_about_us_other: 'Baltimore Corps',
+    id: 1,
+    job_search_status: 'Looking for a job in the next 2-6 months',
+    needs_help_programs: true,
+    previous_bcorps_program: 'No',
+    programs_completed: {
+      civic_innovators: false,
+      elevation_awards: false,
+      fellowship: false,
+      kiva: false,
+      mayoral_fellowship: false,
+      public_allies: false,
+    },
+    pronoun: 'She/Her/Hers',
+    pronoun_other: '',
+    race: {
+      american_indian: true,
+      asian: true,
+      black: false,
+      hawaiian: false,
+      hispanic: null,
+      not_listed: null,
+      race_other: null,
+      south_asian: true,
+      white: false,
+    },
+    roles: {
+      advocacy_public_policy: false,
+      community_engagement_outreach: null,
+      data_analysis: true,
+      fundraising_development: false,
+      marketing_public_relations: false,
+      program_management: true,
+    },
+    value_question1: 'sss',
+    value_question2: 'sss55',
+    years_exp: '5+ years',
+  },
+};
+const blankProfile = {
+  address_primary: {
+    city: '',
+    country: '',
+    state: '',
+    street1: '',
+    street2: '',
+    zip_code: '',
+  },
+  current_edu_status: '',
+  current_job_status: '',
+  gender: '',
+  gender_other: '',
+  hear_about_us: '',
+  hear_about_us_other: '',
+  job_search_status: '',
+  needs_help_programs: false,
+  previous_bcorps_program: '',
+  programs_completed: {
+    civic_innovators: false,
+    elevation_awards: false,
+    fellowship: false,
+    kiva: false,
+    mayoral_fellowship: false,
+    public_allies: false,
+  },
+  pronoun: '',
+  pronoun_other: '',
+  race: {
+    american_indian: false,
+    asian: false,
+    black: false,
+    hawaiian: false,
+    hispanic: false,
+    not_listed: false,
+    race_other: false,
+    south_asian: false,
+    white: false,
+  },
+  roles: {
+    advocacy_public_policy: false,
+    community_engagement_outreach: false,
+    data_analysis: false,
+    fundraising_development: false,
+    marketing_public_relations: false,
+    program_management: false,
+  },
+  value_question1: '',
+  value_question2: '',
+  years_exp: '',
+};

@@ -22,6 +22,7 @@ import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
 import CapabilityScores from 'components/CapabilityScores';
+import ProfileInstructions from '../DynamicInstructions';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
@@ -224,15 +225,11 @@ const ProfilePage = ({
   };
 
   const handleEditAboutMe = async () => {
-    if (contactInfo.profile == null) {
-      let response = await getAboutMe(contactInfo.id);
-      // console.log('response', response);
-
-      if (contactInfo.profile == null) {
-        response = await createAboutMe(contactInfo.id);
-        if (response && response.statusCode !== 201) {
-          console.error('Error starting new about-me', response);
-        }
+    if (!contactInfo.profile || contactInfo.profile == null) {
+      let response = await createAboutMe(contactInfo.id);
+      console.log('response', response);
+      if (response && response.statusCode !== 201) {
+        console.error('Error starting new about-me', response);
       }
     }
 
@@ -331,38 +328,9 @@ const ProfilePage = ({
                       page="profile"
                     />
                   )}
-
-                  <Paper className={classes.instructions}>
-                    <div className={classes.headerContainer}>
-                      <Typography
-                        variant="h5"
-                        component="h1"
-                        style={{
-                          fontWeight: '700',
-                        }}
-                      >
-                        Instructions
-                      </Typography>
-                    </div>
-                    <Typography
-                      variant="body1"
-                      component="h3"
-                      className={classes.steps}
-                    >
-                      <span className={classes.stepNum}>Step 1:</span> Answer a
-                      brief
-                      {screeningQuestionLink}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      component="h3"
-                      className={classes.steps}
-                    >
-                      <span className={classes.stepNum}>Step 2:</span> Complete
-                      your profile by filling out the sections below.
-                    </Typography>
-                  </Paper>
                 </Grid>
+                <ProfileInstructions />
+
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>
                     <div className={classes.headerContainer}>
@@ -393,8 +361,6 @@ const ProfilePage = ({
                         <AboutMeForms
                           contact={contactInfo}
                           onSubmit={handleUpdateAboutMe}
-                          onCloseAllForms={() => setOpenForm(false)}
-                          onClickEdit={() => setOpenForm(true)}
                         />
                       ) : (
                         <Grid container justify="center">

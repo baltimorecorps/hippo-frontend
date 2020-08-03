@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
+import {getCheckboxOptions} from '../../../lib/helperFunctions/helpers';
 
 import {
   jobSearchStatus,
@@ -11,6 +12,7 @@ import {
   currentEduStatus,
   yearsOfExperience,
   roleLabels,
+  programsCompletedLabels,
 } from '../defaultData';
 
 import {
@@ -23,6 +25,22 @@ import {
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
+  const blankProgramCompleted = {
+    fellowship: false,
+    public_allies: false,
+    mayoral_fellowship: false,
+    kiva: false,
+    elevation_awards: false,
+    civic_innovators: false,
+  };
+
+  if (values.profile && values.profile.programs_completed == null) {
+    update('profile')({
+      ...values.profile,
+      programs_completed: blankProgramCompleted,
+    });
+  }
+
   const handlers = {
     handleChange: event => {
       event.persist();
@@ -30,10 +48,27 @@ const useForm = (initialValues, onSubmit) => {
         ...values.profile,
         [event.target.name]: event.target.value,
       };
+
+      if (
+        event.target.name === 'previous_bcorps_program' &&
+        event.target.value === 'No'
+      ) {
+        newValue.programs_completed = blankProgramCompleted;
+      }
       update('profile')(newValue);
     },
     handleSubmit: (contactId, values) => {
-      onSubmit(contactId, values);
+      const {first_name, last_name, email, phone_primary, id, profile} = values;
+      const payload = {
+        first_name,
+        last_name,
+        email,
+        phone_primary,
+        id,
+        profile,
+      };
+
+      onSubmit(contactId, payload);
     },
 
     handleInterestedRolesChange: event => {
@@ -42,6 +77,18 @@ const useForm = (initialValues, onSubmit) => {
         ...values.profile,
         roles: {
           ...values.profile.roles,
+          [event.target.name]: event.target.checked,
+        },
+      };
+
+      update('profile')(newValue);
+    },
+    handleProgramsCompletedChange: event => {
+      event.persist();
+      const newValue = {
+        ...values.profile,
+        programs_completed: {
+          ...values.profile.programs_completed,
           [event.target.name]: event.target.checked,
         },
       };
@@ -55,7 +102,12 @@ const useForm = (initialValues, onSubmit) => {
 const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [
     values,
-    {handleChange, handleSubmit, handleInterestedRolesChange},
+    {
+      handleChange,
+      handleSubmit,
+      handleInterestedRolesChange,
+      handleProgramsCompletedChange,
+    },
   ] = useForm(contact, onSubmit);
   const [errors, setErrors] = useState({});
 
@@ -73,22 +125,13 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     'The questions below help us understand a little bit more about your experience and which roles you might be interested in applying for.',
   ];
 
-  let roles = [];
-  for (const [key, value] of Object.entries(values.profile.roles)) {
-    if (value == null) {
-      roles.push({name: key, checked: false});
-    } else {
-      roles.push({name: key, checked: value});
-    }
-  }
+  const {roles, programs_completed} = values.profile;
 
-  for (const [key, value] of Object.entries(roleLabels)) {
-    roles.forEach((role, index) => {
-      if (role.name === key) {
-        roles[index] = {...role, label: value};
-      }
-    });
-  }
+  const roleOptions = roles && getCheckboxOptions(roleLabels, roles);
+
+  const programsCompletedOptions =
+    programs_completed &&
+    getCheckboxOptions(programsCompletedLabels, programs_completed);
 
   return (
     <Grid item xs={12} className={classes.form}>
@@ -98,7 +141,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
         onCloseForm={onCloseForm}
       />
 
-      <Grid item xs={12} align="center">
+      <Grid item xs={12} align="flex-start">
         <form noValidate autoComplete="off">
           <FormRadioButtons
             question="What's your current employment status? *"
@@ -141,7 +184,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
           <FormCheckboxes
             question="Which of the following types of roles are you interested in applying for? (select all that apply)"
-            options={roles}
+            options={roleOptions}
             onChange={handleInterestedRolesChange}
           />
 
@@ -153,6 +196,16 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
             name="previous_bcorps_program"
             ariaLabel="Have participated with Baltimore Corps programs and services before"
           />
+
+          {values.profile.previous_bcorps_program === 'Yes' && (
+            <FormCheckboxes
+              question="Which of our programs and services have you participated in? *"
+              options={programsCompletedOptions}
+              onChange={handleProgramsCompletedChange}
+              error={errors.programsCompleted_error}
+            />
+          )}
+
           <FormSubmitButton onSubmit={submit} />
         </form>
       </Grid>
@@ -161,7 +214,7 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
 };
 
 InterestsAndGoalsForm.propTypes = {
-  profile: PropTypes.object,
+  contact: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
   onCloseForm: PropTypes.func.isRequired,
 };

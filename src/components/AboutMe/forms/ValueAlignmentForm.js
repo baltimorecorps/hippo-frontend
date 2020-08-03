@@ -24,7 +24,15 @@ const useForm = (initialValues, onSubmit) => {
       update('profile')(newValue);
     },
     handleSubmit: (contactId, values) => {
-      onSubmit(contactId, values);
+      const {id, first_name, last_name, email, profile} = values;
+      const payload = {
+        id,
+        first_name,
+        last_name,
+        email,
+        profile,
+      };
+      onSubmit(contactId, payload);
     },
   };
 
