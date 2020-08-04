@@ -73,9 +73,14 @@ const ExperiencesList = ({
 
   const submitNewExperience = async function(experience) {
     await addNewExperience(experience);
-    await refreshDynamicInstructions();
+    console.log('got here!!');
+    await refreshDynamicInstructions(contactId);
 
     setShowForm(false);
+  };
+  const handleUpdateExperience = async function(experience) {
+    await updateExperience(experience);
+    await refreshDynamicInstructions(contactId);
   };
 
   const header = headers[experienceType.toLowerCase()];
@@ -182,7 +187,7 @@ const ExperiencesList = ({
           {sortedExperiences.map(experience => (
             <ExperiencesListItem
               key={experience.id}
-              onUpdate={updateExperience}
+              onUpdate={handleUpdateExperience}
               onDelete={deleteExperience}
               refreshDynamicInstructions={refreshDynamicInstructions}
               onSelect={makeSelectExperience(experience)}
