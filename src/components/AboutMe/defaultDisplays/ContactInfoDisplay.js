@@ -16,8 +16,7 @@ import {getListOfAnswers} from 'lib/helperFunctions/helpers';
 import {raceLabels, blankProfile} from '../defaultData';
 
 const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
-  const {first_name, last_name, phone_primary} = contact;
-  const email = contact.email_primary ? contact.email_primary.email : '';
+  const {first_name, last_name, phone_primary, email} = contact;
   const profile = get(contact, 'profile', blankProfile);
   const {
     address_primary,
@@ -50,7 +49,11 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
 
   let hearAboutUs = hear_about_us;
   if (hear_about_us === 'Other') hearAboutUs = hear_about_us_other;
-  if (hear_about_us !== 'Other' && hear_about_us_other.length > 0)
+  if (
+    hear_about_us !== 'Other' &&
+    hear_about_us_other &&
+    hear_about_us_other.length > 0
+  )
     hearAboutUs = `${hear_about_us}: ${hear_about_us_other}`;
 
   return (

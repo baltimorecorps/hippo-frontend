@@ -61,13 +61,6 @@ const useForm = (initialValues, onSubmit) => {
     handlePhoneChange: value => {
       update('phone_primary')(value);
     },
-    handleEmailChange: event => {
-      const updatedEmail = {
-        ...values.email_primary,
-        email: event.target.value,
-      };
-      update('email_primary')(updatedEmail);
-    },
     handleAddress: event => {
       event.persist();
       const newValue = {
@@ -137,7 +130,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
       handleProfileChange,
       handleSubmit,
       handlePhoneChange,
-      handleEmailChange,
       handleAddress,
       handleRacesChange,
       handleRaceOther,
@@ -147,7 +139,6 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const [errors, setErrors] = useState({});
 
   const submit = () => {
-    values.email = values.email_primary.email;
     const {isError, err} = contactInfoValidator(values);
 
     setErrors(err);
@@ -212,10 +203,10 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
             <FormTextField
               isLabelInside={true}
-              value={values.email_primary.email}
+              value={values.email}
               name="email"
               label="Email"
-              onChange={handleEmailChange}
+              onChange={handleChange}
               error={errors.email_error}
             />
             <Grid item xs={12} md={6} align="center">

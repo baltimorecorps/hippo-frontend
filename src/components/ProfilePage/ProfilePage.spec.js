@@ -16,6 +16,7 @@ describe('ProfilePage', () => {
     contactId: 123,
     first_name: 'Alice',
     last_name: 'Tester',
+    email: 'alice@example.com',
     email_primary: {email: 'alice@example.com'},
     phone_primary: '(123) 456-7890',
     skills: [],

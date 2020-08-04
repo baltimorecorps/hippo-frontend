@@ -123,7 +123,7 @@ const getListOfAnswers = (apiValues, labelNames) => {
       if (apiKey === labelKey && apiKey !== 'not_listed' && apiValue === true)
         return answers.push(labelName);
     });
-    if (apiKey === 'race_other' && apiValue.length > 0)
+    if (apiKey === 'race_other' && apiValue && apiValue.length > 0)
       return answers.push(apiValue);
   });
   return answers;
