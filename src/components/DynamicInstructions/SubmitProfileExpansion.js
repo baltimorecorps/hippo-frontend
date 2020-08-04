@@ -122,22 +122,31 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
               />
               {option.components &&
                 option.components.map((subOption, index) => (
-                  <FormControlLabel
-                    key={index}
-                    control={
-                      <Checkbox
-                        style={{
-                          color: subOption.checked ? '#2f5be0' : '#c7c7c7',
-                        }}
-                        checked={subOption.checked}
-                        name={subOption.content}
-                        checkedIcon={<CheckCircleIcon />}
-                        icon={<CheckCircleOutlinedIcon />}
-                      />
-                    }
-                    className={classes.subCheckbox}
-                    label={subOption.content}
-                  />
+                  <React.Fragment>
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          style={{
+                            color: subOption.checked ? '#2f5be0' : '#c7c7c7',
+                          }}
+                          checked={subOption.checked}
+                          name={subOption.content}
+                          checkedIcon={<CheckCircleIcon />}
+                          icon={<CheckCircleOutlinedIcon />}
+                        />
+                      }
+                      className={classes.subCheckbox}
+                      label={subOption.content}
+                    />
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      className={classes.helpTextNoMargin}
+                    >
+                      Ideally 2-5 responsibilities for each experience
+                    </Typography>
+                  </React.Fragment>
                 ))}
             </React.Fragment>
           ))}
@@ -204,6 +213,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginLeft: '55px',
   },
   checkbox: {
+    display: 'inline',
     width: '100%',
     textAlign: 'left',
     [breakpoints.up('md')]: {
@@ -212,6 +222,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   subCheckbox: {
     marginLeft: '55px',
+    display: 'inline',
   },
   list: {
     marginLeft: '60px',
@@ -236,6 +247,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
     color: 'grey',
     fontSize: '13px',
     margin: '10px 20px',
+    textAlign: 'justify',
+    textIndent: '25px',
+  },
+  helpTextNoMargin: {
+    marginLeft: '70px',
+
+    display: 'inline',
+    color: 'grey',
+    fontSize: '13px',
     textAlign: 'justify',
     textIndent: '25px',
   },
