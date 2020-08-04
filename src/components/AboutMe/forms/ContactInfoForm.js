@@ -203,7 +203,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
             <FormTextField
               isLabelInside={true}
-              value={values.email}
+              value={values.email || values.email_primary.email}
               name="email"
               label="Email"
               onChange={handleChange}
@@ -241,7 +241,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 name="street2"
                 label="Address 2"
                 onChange={handleAddress}
-                error={errors.street1_error}
+                error={errors.street2_error}
               />
             </Grid>
 
