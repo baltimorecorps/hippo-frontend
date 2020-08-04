@@ -57,7 +57,9 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
       })
   );
 
-  // console.log('profile instructions', instructions);
+  const afterSubmitHelpText =
+    '* After you submit your profile, our staff will review your value alignment and profile to determine your eligibility for Place for Purpose.  If/once you are approved, you will receive an email communication of your acceptance.  Also, the email will provide you with a link to schedule your consultation and watch the “Place for Purpose How to Apply.”  Scheduling the consultation and watching the video tutorial is required to  access the job portal to apply for opportunities. ';
+
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
       <ExpansionPanelSummary
@@ -120,22 +122,31 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
               />
               {option.components &&
                 option.components.map((subOption, index) => (
-                  <FormControlLabel
-                    key={index}
-                    control={
-                      <Checkbox
-                        style={{
-                          color: subOption.checked ? '#2f5be0' : '#c7c7c7',
-                        }}
-                        checked={subOption.checked}
-                        name={subOption.content}
-                        checkedIcon={<CheckCircleIcon />}
-                        icon={<CheckCircleOutlinedIcon />}
-                      />
-                    }
-                    className={classes.subCheckbox}
-                    label={subOption.content}
-                  />
+                  <React.Fragment>
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          style={{
+                            color: subOption.checked ? '#2f5be0' : '#c7c7c7',
+                          }}
+                          checked={subOption.checked}
+                          name={subOption.content}
+                          checkedIcon={<CheckCircleIcon />}
+                          icon={<CheckCircleOutlinedIcon />}
+                        />
+                      }
+                      className={classes.subCheckbox}
+                      label={subOption.content}
+                    />
+                    <Typography
+                      variant="body2"
+                      component="p"
+                      className={classes.helpTextNoMargin}
+                    >
+                      Ideally 2-5 responsibilities for each experience
+                    </Typography>
+                  </React.Fragment>
                 ))}
             </React.Fragment>
           ))}
@@ -149,6 +160,9 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
         >
           Submit profile for review
         </Button>
+        <Typography variant="body2" component="p" className={classes.helpText}>
+          {afterSubmitHelpText}
+        </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
@@ -199,6 +213,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginLeft: '55px',
   },
   checkbox: {
+    display: 'inline',
     width: '100%',
     textAlign: 'left',
     [breakpoints.up('md')]: {
@@ -207,6 +222,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   subCheckbox: {
     marginLeft: '55px',
+    display: 'inline',
   },
   list: {
     marginLeft: '60px',
@@ -226,6 +242,22 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       backgroundColor: '#1846d9',
     },
+  },
+  helpText: {
+    color: 'grey',
+    fontSize: '13px',
+    margin: '10px 20px',
+    textAlign: 'justify',
+    textIndent: '25px',
+  },
+  helpTextNoMargin: {
+    marginLeft: '70px',
+
+    display: 'inline',
+    color: 'grey',
+    fontSize: '13px',
+    textAlign: 'justify',
+    textIndent: '25px',
   },
 });
 

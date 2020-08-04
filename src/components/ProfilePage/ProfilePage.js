@@ -82,6 +82,7 @@ const ProfilePage = ({
   getAboutMe,
   createAboutMe,
   updateAboutMe,
+  refreshDynamicInstructions,
 }) => {
   const wrapperRef = useRef();
   const scrollTo = useScroll(wrapperRef);
@@ -115,6 +116,7 @@ const ProfilePage = ({
   };
   const handleUpdateAboutMe = async (contactId, values) => {
     await updateAboutMe(contactId, values);
+    await refreshDynamicInstructions(contactId);
   };
 
   const handleUpdateSkills = skills => {

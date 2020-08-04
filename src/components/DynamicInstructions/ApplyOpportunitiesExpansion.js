@@ -9,6 +9,7 @@ import WorkSharpIcon from '@material-ui/icons/WorkSharp';
 import CallSharpIcon from '@material-ui/icons/CallSharp';
 import TodaySharpIcon from '@material-ui/icons/TodaySharp';
 import AssistantPhotoSharpIcon from '@material-ui/icons/AssistantPhotoSharp';
+import YouTubeIcon from '@material-ui/icons/YouTube';
 
 const ApplyOpportunitiesExpansion = ({classes}) => {
   return (
@@ -26,44 +27,67 @@ const ApplyOpportunitiesExpansion = ({classes}) => {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
         <Typography variant="body1" component="h4" className={classes.steps}>
-          <WorkSharpIcon className={classes.stepIcon} /> Apply for opportunities
+          <CallSharpIcon className={classes.stepIcon} /> Consultation
         </Typography>
         <Typography
           variant="body1"
           component="p"
           className={classes.stepDetails}
         >
-          Once you are approved for a particular program after your
-          consultation, you will be able to apply for opportunities related to
-          that program.
+          As a member of Place for Purpose, you will be given a free-15-minute
+          job consultation with our Talent Consultant. This is an invaluable
+          opportunity for our team to learn more about your interest and
+          experiences to provide targeted job and program recommendations and
+          expert advice on strengthening your profile. Consultations are
+          mandatory for all members of Place for Purpose. It is advised that you
+          schedule your consultation ASAP, however, you will be able to apply to
+          jobs in the portal prior to the consultation as long as you view the
+          required Place for Purpose “How to Apply” Video.
+        </Typography>
+        <Typography variant="body1" component="h4" className={classes.steps}>
+          <YouTubeIcon className={classes.stepIcon} />
+          Place for Purpose “How to Apply” Video
+        </Typography>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.stepDetails}
+        >
+          This is a short video that provides you with tips and tricks on how to
+          apply to jobs in Place for Purpose starting with creating your
+          profile, which functions as the majority of your job applications in
+          the portal. All members of Place for Purpose will need to watch this
+          video before applying.
         </Typography>
 
         <Typography variant="body1" component="h4" className={classes.steps}>
-          <CallSharpIcon className={classes.stepIcon} /> Schedule a consultation
+          <WorkSharpIcon className={classes.stepIcon} /> Apply for Opportunities
         </Typography>
         <Typography
           variant="body1"
           component="p"
           className={classes.stepDetails}
         >
-          After you submit your profile, our staff will contact you to schedule
-          a consultation to help you review and improve your profile, as well as
-          recommend the programs and opportunities that best align with your
-          current interests and goals.
+          After you have scheduled your consultation and completed the tutorial
+          video, you will be able to apply for jobs and opportunities. Do not
+          forget that your profile functions as 90% of your application, so make
+          sure you have added all experience and skills to make your application
+          competitive.
         </Typography>
 
         <Typography variant="body1" component="h4" className={classes.steps}>
-          <TodaySharpIcon className={classes.stepIcon} /> Employer reviews and
-          schedule interviews with selected candidates
+          <TodaySharpIcon className={classes.stepIcon} /> Employer Schedule an
+          Interview
         </Typography>
         <Typography
           variant="body1"
           component="p"
           className={classes.stepDetails}
         >
-          If you are selected, the employer or our staff will contact you via
-          email within 14 business days after you submit the application to
-          schedule interviews with the employer.
+          When you submit your interest in an opportunity, your skills and
+          experiences will be reviewed and qualified candidates will be shared
+          with employers. This will happen on a rolling basis. Employers will
+          contact candidates directly to schedule an interview.
         </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>
@@ -100,8 +124,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
   },
   expansionDetails: {
-    padding: '20px 30px',
-
+    padding: '30px 45px 20px 45px',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
@@ -113,16 +136,18 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'space-between',
   },
   stepIcon: {
-    marginRight: '6px',
+    marginRight: '12px',
   },
   steps: {
     fontWeight: '600',
     display: 'flex',
     alignItems: 'center',
+    marginBottom: '5px',
   },
   stepDetails: {
+    textAlign: 'justify',
     textIndent: '29px',
-    marginBottom: '10px',
+    marginBottom: '17px',
   },
 
   checkboxesContainer: {

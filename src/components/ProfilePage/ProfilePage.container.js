@@ -7,7 +7,9 @@ import {
   getAboutMe,
   createAboutMe,
   updateAboutMe,
+  getDynamicInstructions,
 } from 'state/contacts';
+
 import {refreshPrograms, addNewProgram} from 'state/programs';
 import {
   startResumeCreation,
@@ -148,7 +150,8 @@ export const mapStateToProps = (state, props) => {
 // the ALL_CONTACTS event (see state/contacts.js for details)
 export const mapDispatchToProps = dispatch => ({
   updateContact: contact => updateContact(contact)(dispatch),
-
+  refreshDynamicInstructions: contactId =>
+    getDynamicInstructions(contactId)(dispatch),
   refreshPrograms: async contactId => {
     await refreshPrograms(contactId)(dispatch);
   },
