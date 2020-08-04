@@ -57,7 +57,9 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
       })
   );
 
-  // console.log('profile instructions', instructions);
+  const afterSubmitHelpText =
+    '* After you submit your profile, our staff will review your value alignment and profile to determine your eligibility for Place for Purpose.  If/once you are approved, you will receive an email communication of your acceptance.  Also, the email will provide you with a link to schedule your consultation and watch the “Place for Purpose How to Apply.”  Scheduling the consultation and watching the video tutorial is required to  access the job portal to apply for opportunities. ';
+
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
       <ExpansionPanelSummary
@@ -149,6 +151,9 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
         >
           Submit profile for review
         </Button>
+        <Typography variant="body2" component="p" className={classes.helpText}>
+          {afterSubmitHelpText}
+        </Typography>
       </ExpansionPanelDetails>
     </ExpansionPanel>
   );
@@ -226,6 +231,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       backgroundColor: '#1846d9',
     },
+  },
+  helpText: {
+    color: 'grey',
+    fontSize: '13px',
+    margin: '10px 20px',
+    textAlign: 'justify',
+    textIndent: '25px',
   },
 });
 
