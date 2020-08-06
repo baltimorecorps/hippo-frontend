@@ -124,10 +124,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
   },
   expansionDetails: {
-    padding: '30px 45px 20px 45px',
+    padding: '15px 25px 15px 25px',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
+    [breakpoints.up('sm')]: {
+      padding: '30px 45px 20px 45px',
+    },
   },
   headerContainer: {
     marginBottom: spacing(2),
