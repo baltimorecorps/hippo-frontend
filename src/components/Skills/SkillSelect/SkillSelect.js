@@ -168,6 +168,7 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
           autoComplete
           autoHighlight
           freeSolo
+          closeIcon={null}
           options={options}
           getOptionLabel={option => option.label}
           // Note 'filterSelectedOptions' doesn't work because we use objects
