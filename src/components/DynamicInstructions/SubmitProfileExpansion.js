@@ -84,11 +84,21 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
         className={isSubContent ? classes.subContent : classes.content}
         key={index || null}
       >
+        {isSubContent && (
+          <ArrowForwardIosIcon className={classes.arrowRightIcon} />
+        )}{' '}
         {option.content}{' '}
         {option.helpText && (
           <Tooltip
             title={
-              <Typography style={{fontSize: '14px'}}>
+              <Typography
+                style={{
+                  fontSize: '14px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}
+              >
                 {option.helpText}
               </Typography>
             }
@@ -232,7 +242,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   subContent: {
-    marginLeft: '45px',
+    marginLeft: '60px',
     display: 'flex',
     alignItems: 'center',
     marginBottom: '10px',
@@ -267,12 +277,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     textIndent: '25px',
   },
   infoIcon: {
-    // marginLeft: '7px',
     color: '#c4c4c4',
     fontSize: '26px',
     padding: '5px',
-    // verticalAlign: 'bottom',
-    // alignItems: 'center',
   },
 });
 
