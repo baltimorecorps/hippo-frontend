@@ -5,6 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {programsAndEligibilityValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import {FormHeader, FormCheckboxes, FormSubmitButton} from './FormTemplates';
+import {createALink} from 'lib/helperFunctions/helpers';
 
 const useForm = (initialValues, onSubmit, defaultProgramApps) => {
   const [update, values] = useFormUpdate(initialValues);
@@ -100,16 +101,28 @@ const ProgramsAndEligibilityForm = ({
     };
   });
 
-  const needsHelpPrograms = {
+  programOptions.push({
     name: 'needs_help_programs',
     label: "I'd like some help figuring this out",
     checked: values.profile.needs_help_programs,
-  };
+  });
 
-  programOptions.push(needsHelpPrograms);
+  const programAndServicesLink = createALink(
+    'program and services',
+    'https://www.baltimorecorps.org/start-here',
+    classes.descriptionLink
+  );
+
+  const descriptionWithLink = (
+    <span>
+      While our team will help you figure out which of {programAndServicesLink}{' '}
+      best align with where you are in your career, some folks apply to join our
+      network because they are interested in a particular program offering.
+    </span>
+  );
 
   const descriptions = [
-    'While our team will help you figure out which of program and services best align with where you are in your career, some folks apply to join our network because they are interested in a particular program offering.',
+    descriptionWithLink,
     "The questions below allow you to indicate which programs (if any) you know you're interested in before we get a chance to chat with you, and checks to see if you're eligible for them",
   ];
 
@@ -147,6 +160,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: '0px 30px',
     backgroundColor: '#f7f7f7',
     marginBottom: spacing(2),
+  },
+  descriptionLink: {
+    color: 'blue',
+    textDecoration: 'underline',
   },
 });
 
