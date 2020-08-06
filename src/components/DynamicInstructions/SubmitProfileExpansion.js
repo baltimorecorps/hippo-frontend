@@ -155,14 +155,14 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
         </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
-        <Typography variant="body1" component="h3" className={classes.steps}>
+        <Typography variant="body1" component="h3" className={classes.stepText}>
           <span className={classes.stepNum}>Step 1:</span> Complete About Me
           section
         </Typography>
         <div className={classes.checkboxesContainer}>
           {checkboxesWithToolTips(aboutMeChecks)}
         </div>
-        <Typography variant="body1" component="h3" className={classes.steps}>
+        <Typography variant="body1" component="h3" className={classes.stepText}>
           <span className={classes.stepNum}>Step 2:</span> Complete your profile
           by filling out the sections below
         </Typography>
@@ -199,13 +199,19 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   headerIcon: {
     marginRight: '10px',
-    fontSize: '28px',
+    fontSize: '24px',
+    [breakpoints.up('sm')]: {
+      fontSize: '28px',
+    },
   },
   expansionHeaderText: {
     fontWeight: '500',
-    fontSize: '18px',
+    fontSize: '16px',
     display: 'flex',
     alignItems: 'center',
+    [breakpoints.up('sm')]: {
+      fontSize: '18px',
+    },
   },
   expansionDetails: {
     display: 'flex',
@@ -222,7 +228,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-
+  stepText: {
+    fontSize: '15px',
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
+  },
   stepNum: {
     marginRight: '3px',
   },
@@ -238,20 +249,30 @@ const styles = ({breakpoints, palette, spacing}) => ({
       marginLeft: '55px',
     },
   },
-  checkbox: {
+  content: {
     textAlign: 'left',
+    fontSize: '15px',
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
   },
   subContent: {
     marginLeft: '25px',
     display: 'flex',
     alignItems: 'center',
     marginBottom: '10px',
+    fontSize: '15px',
+
     [breakpoints.up('sm')]: {
-      marginLeft: '60px',
+      marginLeft: '30px',
+      fontSize: '16px',
     },
   },
   arrowRightIcon: {
-    fontSize: '18px',
+    fontSize: '16px',
+    [breakpoints.up('sm')]: {
+      fontSize: '18px',
+    },
   },
   list: {
     marginLeft: '60px',

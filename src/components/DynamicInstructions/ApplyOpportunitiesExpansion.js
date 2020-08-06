@@ -115,13 +115,19 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   headerIcon: {
     marginRight: '10px',
-    fontSize: '28px',
+    fontSize: '24px',
+    [breakpoints.up('sm')]: {
+      fontSize: '28px',
+    },
   },
   expansionHeaderText: {
     fontWeight: '500',
-    fontSize: '18px',
+    fontSize: '16px',
     display: 'flex',
     alignItems: 'center',
+    [breakpoints.up('sm')]: {
+      fontSize: '18px',
+    },
   },
   expansionDetails: {
     padding: '15px 25px 15px 25px',
@@ -164,6 +170,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
   checkbox: {
     width: '100%',
     textAlign: 'left',
+    fontSize: '15px',
+
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
     [breakpoints.up('md')]: {
       marginLeft: '20px',
     },
