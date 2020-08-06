@@ -16,7 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import InfoIcon from '@material-ui/icons/Info';
 
-import {dynamicInstructionLabels} from './defaultValues';
+import {dynamicInstructionContents} from './defaultValues';
 import get from 'lodash.get';
 
 const SubmitProfileExpansion = ({instructions, classes}) => {
@@ -26,7 +26,7 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
   const experienceValues = get(instructions, 'profile.components', false);
 
   const aboutMeChecks = [];
-  Object.entries(dynamicInstructionLabels.about_me).forEach(
+  Object.entries(dynamicInstructionContents.about_me).forEach(
     ([labelKey, labelName]) =>
       Object.entries(aboutMeValues).forEach(([apiKey, apiValue]) => {
         if (apiKey === labelKey)
@@ -39,7 +39,7 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
   );
 
   const experienceChecks = [];
-  Object.entries(dynamicInstructionLabels.profile).forEach(
+  Object.entries(dynamicInstructionContents.profile).forEach(
     ([labelKey, labelName]) =>
       Object.entries(experienceValues).forEach(([apiKey, apiValue]) => {
         if (apiKey === labelKey) {
@@ -208,11 +208,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
   },
   expansionDetails: {
-    padding: '20px 30px',
-
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
+    padding: '10px 25px 10px 25px',
+    [breakpoints.up('sm')]: {
+      padding: '20px 30px',
+    },
   },
   headerContainer: {
     marginBottom: spacing(2),
@@ -232,20 +234,21 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     width: '100%',
     marginBottom: '10px',
-    marginLeft: '55px',
-  },
-  checkbox: {
-    // display: 'inline',
-    textAlign: 'left',
-    [breakpoints.up('md')]: {
-      marginLeft: '20px',
+    [breakpoints.up('sm')]: {
+      marginLeft: '55px',
     },
   },
+  checkbox: {
+    textAlign: 'left',
+  },
   subContent: {
-    marginLeft: '60px',
+    marginLeft: '25px',
     display: 'flex',
     alignItems: 'center',
     marginBottom: '10px',
+    [breakpoints.up('sm')]: {
+      marginLeft: '60px',
+    },
   },
   arrowRightIcon: {
     fontSize: '18px',
@@ -272,9 +275,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
   afterSubmitHelpText: {
     color: 'grey',
     fontSize: '13px',
-    margin: '15px 20px 5px 20px',
+    margin: '10px 10px 5px 10px',
     textAlign: 'justify',
-    textIndent: '25px',
+    [breakpoints.up('sm')]: {
+      textIndent: '25px',
+      margin: '15px 20px 5px 20px',
+    },
   },
   infoIcon: {
     color: '#c4c4c4',

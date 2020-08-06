@@ -1,4 +1,4 @@
-const dynamicInstructionLabels = {
+const dynamicInstructionContents = {
   about_me: {
     candidate_information: {content: 'Candidate information'},
     value_alignment: {
@@ -41,4 +41,4 @@ const dynamicInstructionLabels = {
   },
 };
 
-export {dynamicInstructionLabels};
+export {dynamicInstructionContents};
