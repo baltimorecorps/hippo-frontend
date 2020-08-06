@@ -11,6 +11,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import InfoIcon from '@material-ui/icons/Info';
 
 import {dynamicInstructionLabels} from './defaultValues';
 import get from 'lodash.get';
@@ -26,7 +30,11 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
     ([labelKey, labelName]) =>
       Object.entries(aboutMeValues).forEach(([apiKey, apiValue]) => {
         if (apiKey === labelKey)
-          aboutMeChecks.push({content: labelName, checked: apiValue});
+          aboutMeChecks.push({
+            content: labelName.content,
+            checked: apiValue,
+            helpText: labelName.helpText || null,
+          });
       })
   );
 
@@ -37,21 +45,29 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
         if (apiKey === labelKey) {
           if (apiKey === 'add_experience') {
             experienceChecks.push({
-              content: labelName.is_complete,
+              content: labelName.is_complete.content,
               checked: apiValue.is_complete,
+              helpText: labelName.is_complete.helpText,
+
               components: [
                 {
-                  content: labelName.components.add_achievements,
-                  checked: apiValue.components.add_achievements,
+                  content: labelName.components.add_achievements.content,
+                  checked: apiValue.components.add_achievements.content,
+                  helpText: labelName.components.add_achievements.helpText,
                 },
                 {
-                  content: labelName.components.tag_skills,
-                  checked: apiValue.components.tag_skills,
+                  content: labelName.components.tag_skills.content,
+                  checked: apiValue.components.tag_skills.content,
+                  helpText: labelName.components.tag_skills.helpText,
                 },
               ],
             });
           } else {
-            experienceChecks.push({content: labelName, checked: apiValue});
+            experienceChecks.push({
+              content: labelName.content,
+              checked: apiValue,
+              helpText: labelName.helpText,
+            });
           }
         }
       })
@@ -59,6 +75,61 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
 
   const afterSubmitHelpText =
     '* After you submit your profile, our staff will review your value alignment and profile to determine your eligibility for Place for Purpose.  If/once you are approved, you will receive an email communication of your acceptance.  Also, the email will provide you with a link to schedule your consultation and watch the “Place for Purpose How to Apply.”  Scheduling the consultation and watching the video tutorial is required to  access the job portal to apply for opportunities. ';
+
+  const helpTextToolTips = (option, index, isSubContent) => {
+    return (
+      <Typography
+        variant="body1"
+        component="p"
+        className={isSubContent ? classes.subContent : classes.content}
+        key={index || null}
+      >
+        {option.content}{' '}
+        {option.helpText && (
+          <Tooltip
+            title={
+              <Typography style={{fontSize: '14px'}}>
+                {option.helpText}
+              </Typography>
+            }
+            placement="right"
+          >
+            <IconButton aria-label={option.helpText} style={{padding: '3px'}}>
+              <InfoIcon className={classes.infoIcon} />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Typography>
+    );
+  };
+
+  const checkboxesWithToolTips = listOfOptions => {
+    return listOfOptions.map((option, index) => (
+      <React.Fragment key={index}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              style={{
+                color: option.checked ? '#2f5be0' : '#c7c7c7',
+              }}
+              checked={option.checked}
+              name={option.content}
+              checkedIcon={
+                <CheckCircleIcon style={{padding: '0px', margin: 0}} />
+              }
+              icon={<CheckCircleOutlinedIcon />}
+            />
+          }
+          className={classes.checkbox}
+          label={helpTextToolTips(option)}
+        />{' '}
+        {option.components &&
+          option.components.map((subOption, index) =>
+            helpTextToolTips(subOption, index, true)
+          )}
+      </React.Fragment>
+    ));
+  };
 
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
@@ -79,77 +150,14 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
           section
         </Typography>
         <div className={classes.checkboxesContainer}>
-          {aboutMeChecks.map((option, index) => (
-            <FormControlLabel
-              key={index}
-              control={
-                <Checkbox
-                  style={{
-                    color: option.checked ? '#2f5be0' : '#c7c7c7',
-                  }}
-                  checked={option.checked}
-                  name={option.content}
-                  checkedIcon={<CheckCircleIcon />}
-                  icon={<CheckCircleOutlinedIcon />}
-                />
-              }
-              className={classes.checkbox}
-              label={option.content}
-            />
-          ))}
+          {checkboxesWithToolTips(aboutMeChecks)}
         </div>
         <Typography variant="body1" component="h3" className={classes.steps}>
           <span className={classes.stepNum}>Step 2:</span> Complete your profile
           by filling out the sections below
         </Typography>
         <div className={classes.checkboxesContainer}>
-          {experienceChecks.map((option, index) => (
-            <React.Fragment key={index}>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    style={{
-                      color: option.checked ? '#2f5be0' : '#c7c7c7',
-                    }}
-                    checked={option.checked}
-                    name={option.content}
-                    checkedIcon={<CheckCircleIcon />}
-                    icon={<CheckCircleOutlinedIcon />}
-                  />
-                }
-                className={classes.checkbox}
-                label={option.content}
-              />
-              {option.components &&
-                option.components.map((subOption, index) => (
-                  <React.Fragment>
-                    <FormControlLabel
-                      key={index}
-                      control={
-                        <Checkbox
-                          style={{
-                            color: subOption.checked ? '#2f5be0' : '#c7c7c7',
-                          }}
-                          checked={subOption.checked}
-                          name={subOption.content}
-                          checkedIcon={<CheckCircleIcon />}
-                          icon={<CheckCircleOutlinedIcon />}
-                        />
-                      }
-                      className={classes.subCheckbox}
-                      label={subOption.content}
-                    />
-                    <Typography
-                      variant="body2"
-                      component="p"
-                      className={classes.helpTextNoMargin}
-                    >
-                      Ideally 2-5 responsibilities for each experience
-                    </Typography>
-                  </React.Fragment>
-                ))}
-            </React.Fragment>
-          ))}
+          {checkboxesWithToolTips(experienceChecks)}
         </div>
         <Button
           variant="contained"
@@ -160,7 +168,11 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
         >
           Submit profile for review
         </Button>
-        <Typography variant="body2" component="p" className={classes.helpText}>
+        <Typography
+          variant="body2"
+          component="p"
+          className={classes.afterSubmitHelpText}
+        >
           {afterSubmitHelpText}
         </Typography>
       </ExpansionPanelDetails>
@@ -213,16 +225,20 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginLeft: '55px',
   },
   checkbox: {
-    display: 'inline',
-    width: '100%',
+    // display: 'inline',
     textAlign: 'left',
     [breakpoints.up('md')]: {
       marginLeft: '20px',
     },
   },
-  subCheckbox: {
-    marginLeft: '55px',
-    display: 'inline',
+  subContent: {
+    marginLeft: '45px',
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '10px',
+  },
+  arrowRightIcon: {
+    fontSize: '18px',
   },
   list: {
     marginLeft: '60px',
@@ -243,21 +259,20 @@ const styles = ({breakpoints, palette, spacing}) => ({
       backgroundColor: '#1846d9',
     },
   },
-  helpText: {
+  afterSubmitHelpText: {
     color: 'grey',
     fontSize: '13px',
-    margin: '10px 20px',
+    margin: '15px 20px 5px 20px',
     textAlign: 'justify',
     textIndent: '25px',
   },
-  helpTextNoMargin: {
-    marginLeft: '70px',
-
-    display: 'inline',
-    color: 'grey',
-    fontSize: '13px',
-    textAlign: 'justify',
-    textIndent: '25px',
+  infoIcon: {
+    // marginLeft: '7px',
+    color: '#c4c4c4',
+    fontSize: '26px',
+    padding: '5px',
+    // verticalAlign: 'bottom',
+    // alignItems: 'center',
   },
 });
 
