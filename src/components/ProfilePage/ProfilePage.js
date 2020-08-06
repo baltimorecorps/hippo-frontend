@@ -223,6 +223,7 @@ const ProfilePage = ({
 
   const handleChange = event => {
     setViewResume(event.target.checked);
+    window.scrollTo(0, 0);
   };
 
   const handleEditAboutMe = async () => {
