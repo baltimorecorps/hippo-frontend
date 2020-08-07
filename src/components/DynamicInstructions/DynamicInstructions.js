@@ -37,7 +37,7 @@ const DynamicInstructions = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   instructions: {
-    width: '80%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     padding: spacing(1.5, 1, 1),

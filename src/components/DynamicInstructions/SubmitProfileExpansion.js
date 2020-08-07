@@ -1,23 +1,18 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+
 import Button from '@material-ui/core/Button';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import CheckCircleOutlinedIcon from '@material-ui/icons/CheckCircleOutlined';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import InfoIcon from '@material-ui/icons/Info';
 
 import {dynamicInstructionContents} from './defaultValues';
 import get from 'lodash.get';
+import CheckboxesWithToolTips from './CheckboxesWithToolTips';
 
 const SubmitProfileExpansion = ({instructions, classes}) => {
   const isCompletedAboutMe = get(instructions, 'about_me.is_complete', false);
@@ -42,25 +37,24 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
   Object.entries(dynamicInstructionContents.profile).forEach(
     ([labelKey, labelName]) =>
       Object.entries(experienceValues).forEach(([apiKey, apiValue]) => {
+        console.log('apiValue', apiValue);
         if (apiKey === labelKey) {
           if (apiKey === 'add_experience') {
             experienceChecks.push({
               content: labelName.is_complete.content,
               checked: apiValue.is_complete,
               helpText: labelName.is_complete.helpText,
-
-              components: [
-                {
-                  content: labelName.components.add_achievements.content,
-                  checked: apiValue.components.add_achievements.content,
-                  helpText: labelName.components.add_achievements.helpText,
-                },
-                {
-                  content: labelName.components.tag_skills.content,
-                  checked: apiValue.components.tag_skills.content,
-                  helpText: labelName.components.tag_skills.helpText,
-                },
-              ],
+              components: Object.entries(labelName.components).map(
+                ([key, value]) => {
+                  const components = {};
+                  Object.values(apiValue.components).forEach(apiComponent => {
+                    components.content = value.content;
+                    components.checked = apiComponent[key];
+                    components.helpText = value.helpText;
+                  });
+                  return components;
+                }
+              ),
             });
           } else {
             experienceChecks.push({
@@ -73,74 +67,27 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
       })
   );
 
+  console.log('experienceChecks', experienceChecks);
+
   const afterSubmitHelpText =
     '* After you submit your profile, our staff will review your value alignment and profile to determine your eligibility for Place for Purpose.  If/once you are approved, you will receive an email communication of your acceptance.  Also, the email will provide you with a link to schedule your consultation and watch the “Place for Purpose How to Apply.”  Scheduling the consultation and watching the video tutorial is required to  access the job portal to apply for opportunities. ';
 
-  const helpTextToolTips = (option, index, isSubContent) => {
-    return (
-      <Typography
-        variant="body1"
-        component="p"
-        className={isSubContent ? classes.subContent : classes.content}
-        key={index || null}
-      >
-        {isSubContent && (
-          <ArrowForwardIosIcon className={classes.arrowRightIcon} />
-        )}{' '}
-        {option.content}{' '}
-        {option.helpText && (
-          <Tooltip
-            title={
-              <Typography
-                style={{
-                  fontSize: '14px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                }}
-              >
-                {option.helpText}
-              </Typography>
-            }
-            placement="right"
-          >
-            <IconButton aria-label={option.helpText} style={{padding: '3px'}}>
-              <InfoIcon className={classes.infoIcon} />
-            </IconButton>
-          </Tooltip>
-        )}
-      </Typography>
-    );
-  };
+  const status = 'approved';
 
-  const checkboxesWithToolTips = listOfOptions => {
-    return listOfOptions.map((option, index) => (
-      <React.Fragment key={index}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              style={{
-                color: option.checked ? '#2f5be0' : '#c7c7c7',
-              }}
-              checked={option.checked}
-              name={option.content}
-              checkedIcon={
-                <CheckCircleIcon style={{padding: '0px', margin: 0}} />
-              }
-              icon={<CheckCircleOutlinedIcon />}
-            />
-          }
-          className={classes.checkbox}
-          label={helpTextToolTips(option)}
-        />{' '}
-        {option.components &&
-          option.components.map((subOption, index) =>
-            helpTextToolTips(subOption, index, true)
-          )}
-      </React.Fragment>
-    ));
-  };
+  let isDisabledSubmitButton = true;
+  let submitButtonText = 'Submit profile for review';
 
+  if (status === 'created' && isCompletedAboutMe && isCompletedProfile) {
+    isDisabledSubmitButton = false;
+  } else if (status === 'submitted') {
+    submitButtonText = 'Profile is submitted';
+  } else if (status === 'approved') {
+    submitButtonText = 'Profile was submitted and got approved';
+  }
+
+  const onSubmit = () => {
+    console.log('submit profile for review');
+  };
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
       <ExpansionPanelSummary
@@ -160,23 +107,22 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
           section
         </Typography>
         <div className={classes.checkboxesContainer}>
-          {checkboxesWithToolTips(aboutMeChecks)}
+          <CheckboxesWithToolTips listOfOptions={aboutMeChecks} />
         </div>
         <Typography variant="body1" component="h3" className={classes.stepText}>
           <span className={classes.stepNum}>Step 2:</span> Complete your profile
           by filling out the sections below
         </Typography>
         <div className={classes.checkboxesContainer}>
-          {checkboxesWithToolTips(experienceChecks)}
+          <CheckboxesWithToolTips listOfOptions={experienceChecks} />
         </div>
         <Button
           variant="contained"
-          // onClick={onSubmit}
-          align="end"
+          onClick={onSubmit}
           className={classes.submitButton}
-          disabled={!isCompletedAboutMe || !isCompletedProfile ? true : false}
+          disabled={isDisabledSubmitButton}
         >
-          Submit profile for review
+          {submitButtonText}
         </Button>
         <Typography
           variant="body2"
@@ -249,31 +195,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
       marginLeft: '55px',
     },
   },
-  content: {
-    textAlign: 'left',
-    fontSize: '15px',
-    [breakpoints.up('sm')]: {
-      fontSize: '16px',
-    },
-  },
-  subContent: {
-    marginLeft: '25px',
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '10px',
-    fontSize: '15px',
 
-    [breakpoints.up('sm')]: {
-      marginLeft: '30px',
-      fontSize: '16px',
-    },
-  },
-  arrowRightIcon: {
-    fontSize: '16px',
-    [breakpoints.up('sm')]: {
-      fontSize: '18px',
-    },
-  },
   list: {
     marginLeft: '60px',
     marginBottom: '5px',
@@ -302,11 +224,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
       textIndent: '25px',
       margin: '15px 20px 5px 20px',
     },
-  },
-  infoIcon: {
-    color: '#c4c4c4',
-    fontSize: '26px',
-    padding: '5px',
   },
 });
 

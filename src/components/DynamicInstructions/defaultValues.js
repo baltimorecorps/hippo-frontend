@@ -10,7 +10,10 @@ const dynamicInstructionContents = {
     programs: {content: 'Programs and eligibility'},
   },
   profile: {
-    tag_skills: {content: 'Add skills', helpText: 'Pick at least three skills'},
+    tag_skills: {
+      content: 'Add skills',
+      helpText: 'Pick at least three skills on Get started with skills section',
+    },
     add_experience: {
       is_complete: {
         content: 'Add all relevant experience',
