@@ -16,10 +16,11 @@ import {getListOfAnswers} from 'lib/helperFunctions/helpers';
 import {raceLabels, blankProfile} from '../defaultData';
 
 const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
-  const {first_name, last_name, phone_primary} = contact;
+  const {first_name, last_name, phone_primary, email_primary} = contact;
   let email = contact.email;
-  if (!email) email = contact.email_primary.email;
-  const profile = get(contact, 'profile', blankProfile);
+  if (!email) email = email_primary.email;
+  let profile = get(contact, 'profile', blankProfile);
+  if (!profile) profile = blankProfile;
   const {
     address_primary,
     race,

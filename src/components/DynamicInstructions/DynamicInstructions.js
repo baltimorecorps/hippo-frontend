@@ -8,12 +8,14 @@ import ApplyOpportunitiesExpansion from './ApplyOpportunitiesExpansion';
 
 const DynamicInstructions = ({
   getDynamicInstructions,
+  submitProfileForReview,
   id,
   instructions,
+  status,
   classes,
 }) => {
   useEffect(() => {
-    if (!id || !instructions) getDynamicInstructions(id);
+    if (id == null || instructions == null) getDynamicInstructions(id);
   }, [id, instructions, getDynamicInstructions]);
 
   return (
@@ -29,7 +31,11 @@ const DynamicInstructions = ({
           Instructions
         </Typography>
       </div>
-      <SubmitProfileExpansion instructions={instructions} />
+      <SubmitProfileExpansion
+        instructions={instructions}
+        status={status}
+        onSubmit={() => submitProfileForReview(id)}
+      />
       <ApplyOpportunitiesExpansion />
     </Paper>
   );

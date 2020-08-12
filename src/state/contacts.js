@@ -335,6 +335,27 @@ export const getDynamicInstructions = contactId =>
     `${API_URL}/api/contacts/${contactId}/instructions/`
   );
 
+// ---------------------------------------------------------------------------
+
+export const SUBMIT_PROFILE_FOR_REVIEW = 'SUBMIT_PROFILE_FOR_REVIEW';
+export const SUBMIT_PROFILE_FOR_REVIEW_API = fetchActionTypes(
+  SUBMIT_PROFILE_FOR_REVIEW
+);
+export const submitProfileForReview = contactId =>
+  async function(dispatch) {
+    dispatch({
+      type: SUBMIT_PROFILE_FOR_REVIEW,
+    });
+
+    return await makeApiFetchActions(
+      SUBMIT_PROFILE_FOR_REVIEW,
+      `${API_URL}/api/contacts/${contactId}/submit/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -420,6 +441,12 @@ export const contactsReducer = createReducer(
     [GET_DYNAMIC_INSTRUCTIONS_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id].instructions = contact.instructions;
+    },
+    [SUBMIT_PROFILE_FOR_REVIEW_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      console.log(contact);
+      state[contact.id].instructions = contact.instructions;
+      state[contact.id].status = contact.status;
     },
     [GET_ABOUT_ME_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;

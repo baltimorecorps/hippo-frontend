@@ -52,6 +52,7 @@ const ProgramsAndEligibilityForm = ({
   getAllProgramNames,
   updateProgramApps,
   updateAboutMe,
+  refreshDynamicInstructions,
   classes,
 }) => {
   const [values, {handleInterestedProgramsChange}] = useForm(
@@ -89,6 +90,7 @@ const ProgramsAndEligibilityForm = ({
       };
       updateAboutMe(contact.id, aboutMeInfo);
       updateProgramApps(programApps, contact.id);
+      refreshDynamicInstructions(contact.id);
       onCloseForm();
     }
   };

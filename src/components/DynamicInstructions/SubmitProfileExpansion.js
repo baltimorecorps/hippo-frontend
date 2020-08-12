@@ -1,20 +1,18 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-
 import Button from '@material-ui/core/Button';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
 
 import {dynamicInstructionContents} from './defaultValues';
 import get from 'lodash.get';
 import CheckboxesWithToolTips from './CheckboxesWithToolTips';
 
-const SubmitProfileExpansion = ({instructions, classes}) => {
+const SubmitProfileExpansion = ({instructions, status, onSubmit, classes}) => {
   const isCompletedAboutMe = get(instructions, 'about_me.is_complete', false);
   const isCompletedProfile = get(instructions, 'profile.is_complete', false);
   const aboutMeValues = get(instructions, 'about_me.components', false);
@@ -37,7 +35,6 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
   Object.entries(dynamicInstructionContents.profile).forEach(
     ([labelKey, labelName]) =>
       Object.entries(experienceValues).forEach(([apiKey, apiValue]) => {
-        console.log('apiValue', apiValue);
         if (apiKey === labelKey) {
           if (apiKey === 'add_experience') {
             experienceChecks.push({
@@ -67,12 +64,12 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
       })
   );
 
-  console.log('experienceChecks', experienceChecks);
+  console.log(experienceChecks);
 
   const afterSubmitHelpText =
     '* After you submit your profile, our staff will review your value alignment and profile to determine your eligibility for Place for Purpose.  If/once you are approved, you will receive an email communication of your acceptance.  Also, the email will provide you with a link to schedule your consultation and watch the “Place for Purpose How to Apply.”  Scheduling the consultation and watching the video tutorial is required to  access the job portal to apply for opportunities. ';
 
-  const status = 'approved';
+  console.log('status', status);
 
   let isDisabledSubmitButton = true;
   let submitButtonText = 'Submit profile for review';
@@ -80,13 +77,15 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
   if (status === 'created' && isCompletedAboutMe && isCompletedProfile) {
     isDisabledSubmitButton = false;
   } else if (status === 'submitted') {
-    submitButtonText = 'Profile is submitted';
-  } else if (status === 'approved') {
-    submitButtonText = 'Profile was submitted and got approved';
+    submitButtonText = 'Waiting for review';
   }
 
-  const onSubmit = () => {
+  const handleSubmit = () => {
     console.log('submit profile for review');
+    onSubmit();
+  };
+  const applyForRoles = () => {
+    console.log('apply for roles');
   };
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
@@ -116,14 +115,24 @@ const SubmitProfileExpansion = ({instructions, classes}) => {
         <div className={classes.checkboxesContainer}>
           <CheckboxesWithToolTips listOfOptions={experienceChecks} />
         </div>
-        <Button
-          variant="contained"
-          onClick={onSubmit}
-          className={classes.submitButton}
-          disabled={isDisabledSubmitButton}
-        >
-          {submitButtonText}
-        </Button>
+        {status === 'approved' ? (
+          <Button
+            variant="contained"
+            onClick={applyForRoles}
+            className={classes.submitButton}
+          >
+            Start Applying for Roles
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            className={classes.submitButton}
+            disabled={isDisabledSubmitButton}
+          >
+            {submitButtonText}
+          </Button>
+        )}
         <Typography
           variant="body2"
           component="p"
