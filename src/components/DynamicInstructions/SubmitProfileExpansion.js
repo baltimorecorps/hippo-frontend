@@ -13,7 +13,13 @@ import {dynamicInstructionContents} from './defaultValues';
 import get from 'lodash.get';
 import CheckboxesWithToolTips from './CheckboxesWithToolTips';
 
-const SubmitProfileExpansion = ({instructions, status, onSubmit, classes}) => {
+const SubmitProfileExpansion = ({
+  instructions,
+  status,
+  onSubmit,
+  isExpanded,
+  classes,
+}) => {
   const isCompletedAboutMe = get(instructions, 'about_me.is_complete', false);
   const isCompletedProfile = get(instructions, 'profile.is_complete', false);
   const aboutMeValues = get(instructions, 'about_me.components', false);
@@ -88,7 +94,10 @@ const SubmitProfileExpansion = ({instructions, status, onSubmit, classes}) => {
   };
 
   return (
-    <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+    <ExpansionPanel
+      defaultExpanded={isExpanded}
+      className={classes.expansionPanel}
+    >
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

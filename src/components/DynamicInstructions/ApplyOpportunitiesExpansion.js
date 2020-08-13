@@ -11,9 +11,12 @@ import TodaySharpIcon from '@material-ui/icons/TodaySharp';
 import AssistantPhotoSharpIcon from '@material-ui/icons/AssistantPhotoSharp';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 
-const ApplyOpportunitiesExpansion = ({classes}) => {
+const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
   return (
-    <ExpansionPanel defaultExpanded={false} className={classes.expansionPanel}>
+    <ExpansionPanel
+      defaultExpanded={isExpanded}
+      className={classes.expansionPanel}
+    >
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

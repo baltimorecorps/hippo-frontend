@@ -34,9 +34,10 @@ const DynamicInstructions = ({
       <SubmitProfileExpansion
         instructions={instructions}
         status={status}
+        isExpanded={status !== 'approved'}
         onSubmit={() => submitProfileForReview(id)}
       />
-      <ApplyOpportunitiesExpansion />
+      <ApplyOpportunitiesExpansion isExpanded={status === 'approved'} />
     </Paper>
   );
 };
