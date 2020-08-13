@@ -59,7 +59,7 @@ export const getContactCapabilities = contactId =>
   );
 
 // Get a contact profile
-export const GET_CONTACT_PROFILE = 'GET_CONTACT';
+export const GET_CONTACT_PROFILE = 'GET_CONTACT_PROFILE';
 export const GET_CONTACT_PROFILE_API = fetchActionTypes(GET_CONTACT_PROFILE);
 export const getContactProfile = contactId =>
   makeApiFetchActions(
@@ -443,7 +443,7 @@ export const contactsReducer = createReducer(
       // const contact = action.body.data.contact;
       // state[contact.id] = {
       //   ...state[contact.id],
-      //   ...contact,
+      //   id: contact.id,
       // };
     },
     [CREATE_SESSION_API.RESOLVE]: (state, action) => {

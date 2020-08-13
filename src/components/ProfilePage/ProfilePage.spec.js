@@ -25,6 +25,48 @@ describe('ProfilePage', () => {
       id: 1,
       instructions: {},
     },
+    experiences: {
+      work: [
+        {
+          type: 'Work',
+          id: 1,
+          title: 'Title',
+          host: 'Host',
+          contact_id: 123,
+          is_current: false,
+          start_month: 'September',
+          start_year: 2004,
+          achievements: [],
+          skills: [],
+        },
+      ],
+      education: [
+        {
+          type: 'Education',
+          id: 2,
+          title: 'Title',
+          host: 'Host',
+          contact_id: 123,
+          is_current: false,
+          start_month: 'September',
+          start_year: 2004,
+          achievements: [],
+          skills: [],
+        },
+      ],
+      portfolio: [
+        {
+          type: 'Accomplishment',
+          id: 3,
+          title: 'Title',
+          host: 'Host',
+          contact_id: 123,
+          is_current: false,
+          achievements: [],
+          skills: [],
+        },
+      ],
+    },
   };
 
   let store = configureStore({
@@ -57,6 +99,7 @@ describe('ProfilePage', () => {
           <ProfilePage
             contactId={contactInfo.contactId}
             contactInfo={contactInfo}
+            refreshDynamicInstructions={jest.fn()}
             refreshContacts={jest.fn()}
             startResumeCreation={start}
             startResumeSelect={jest.fn()}
@@ -64,6 +107,8 @@ describe('ProfilePage', () => {
             showResumeDialog={false}
             showResumeSpinner={false}
             inSelectMode={false}
+            experiences={contactInfo.experiences}
+            getContactProfile={jest.fn()}
           />
         </Router>
       </Provider>
@@ -88,6 +133,7 @@ describe('ProfilePage', () => {
           <ProfilePage
             contactId={contactInfo.contactId}
             contactInfo={contactInfo}
+            refreshDynamicInstructions={jest.fn()}
             refreshContacts={jest.fn()}
             startResumeCreation={jest.fn()}
             startResumeSelect={start}
@@ -95,6 +141,8 @@ describe('ProfilePage', () => {
             showResumeDialog={true}
             showResumeSpinner={false}
             inSelectMode={false}
+            experiences={contactInfo.experiences}
+            getContactProfile={jest.fn()}
           />
         </Router>
       </Provider>
@@ -119,12 +167,15 @@ describe('ProfilePage', () => {
             contactId={contactInfo.contactId}
             contactInfo={contactInfo}
             refreshContacts={jest.fn()}
+            refreshDynamicInstructions={jest.fn()}
             startResumeCreation={jest.fn()}
             startResumeSelect={jest.fn()}
             cancelResumeSelect={cancel}
             showResumeDialog={false}
             showResumeSpinner={false}
             inSelectMode={true}
+            experiences={contactInfo.experiences}
+            getContactProfile={jest.fn()}
           />
         </Router>
       </Provider>
@@ -151,12 +202,15 @@ describe('ProfilePage', () => {
             contactId={contactInfo.contactId}
             contactInfo={contactInfo}
             refreshContacts={jest.fn()}
+            refreshDynamicInstructions={jest.fn()}
             startResumeCreation={jest.fn()}
             startResumeSelect={jest.fn()}
             cancelResumeSelect={jest.fn()}
             showResumeDialog={false}
             showResumeSpinner={false}
             inSelectMode={false}
+            experiences={contactInfo.experiences}
+            getContactProfile={jest.fn()}
           />
         </Router>
       </Provider>
@@ -182,12 +236,15 @@ describe('ProfilePage', () => {
               contactId={contactInfo.contactId}
               contactInfo={contactInfo}
               refreshContacts={jest.fn()}
+              refreshDynamicInstructions={jest.fn()}
               startResumeCreation={start}
               startResumeSelect={jest.fn()}
               cancelResumeSelect={jest.fn()}
               showResumeDialog={false}
               showResumeSpinner={false}
               inSelectMode={false}
+              experiences={contactInfo.experiences}
+              getContactProfile={jest.fn()}
             />
           </ThemeProvider>
         </Router>

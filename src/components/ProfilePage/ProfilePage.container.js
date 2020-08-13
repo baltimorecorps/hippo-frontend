@@ -133,7 +133,11 @@ export const mapStateToProps = (state, props) => {
   const contactInfo = state.contacts[contactId];
 
   let experiences = {work: [], education: [], portfolio: []};
-  if (contactInfo)
+  if (
+    contactInfo &&
+    contactInfo.experiences &&
+    contactInfo.experiences.length > 0
+  )
     contactInfo.experiences.forEach(exp => {
       if (exp.type === 'Work') return experiences.work.push(exp);
       if (exp.type === 'Education') return experiences.education.push(exp);

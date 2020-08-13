@@ -93,7 +93,7 @@ const ExperiencesList = ({
     }
   };
   let sortedExperiences = [];
-  if (experiences.length > 0) {
+  if (experiences && experiences.length > 0) {
     sortedExperiences = sortExperiences(experiences);
   }
 

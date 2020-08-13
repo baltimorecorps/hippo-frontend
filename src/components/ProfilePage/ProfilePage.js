@@ -132,7 +132,7 @@ const ProfilePage = ({
       (!loading &&
         typeof contactInfo == 'undefined' &&
         contactId !== 'undefined') ||
-      (contactInfo && !contactInfo.email_primary)
+      (contactInfo && !contactInfo.email)
     ) {
       setLoading(true);
       (async () => {
@@ -157,10 +157,6 @@ const ProfilePage = ({
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }
-
-  const email = contactInfo.email_primary
-    ? contactInfo.email_primary.email
-    : '';
 
   const genResumeLocal = async () => {
     // TODO: How should we get the resume name for real?
@@ -196,12 +192,6 @@ const ProfilePage = ({
     setOpenDrawer1(false);
     setOpenDrawer2(true);
   };
-
-  const screeningQuestionLink = createExternalLink(
-    'questionnaire',
-    `https://www.tfaforms.com/4798338&tfa_2=${contactId}&tfa_3=1`,
-    classes.link
-  );
 
   const getContainerSize = breakpoint => {
     if (inSelectMode) {
@@ -398,14 +388,14 @@ const ProfilePage = ({
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
-                  experiences={experiences.work}
+                  experiences={experiences && experiences.work}
                 />
                 <ExperiencesList
                   contactId={contactInfo.id}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
-                  experiences={experiences.education}
+                  experiences={experiences && experiences.education}
                 />
 
                 <ExperiencesList
@@ -413,7 +403,7 @@ const ProfilePage = ({
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
-                  experiences={experiences.portfolio}
+                  experiences={experiences && experiences.portfolio}
                 />
 
                 {/*<ResumesList />*/}

@@ -124,15 +124,18 @@ const getMonthScore = experiences => {
   experiences.forEach(exp => {
     // exclude end_month === 'none'
     if (exp.is_current === false) {
-      return expWithScores.push({
+      expWithScores.push({
         ...exp,
+        start_month_score: monthScore[exp.start_month],
+
         end_month_score: monthScore[exp.end_month],
       });
+    } else {
+      expWithScores.push({
+        ...exp,
+        start_month_score: monthScore[exp.start_month],
+      });
     }
-    return expWithScores.push({
-      ...exp,
-      start_month_score: monthScore[exp.start_month],
-    });
   });
 
   return expWithScores;
