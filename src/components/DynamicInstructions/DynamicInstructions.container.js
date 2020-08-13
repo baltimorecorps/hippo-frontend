@@ -11,7 +11,7 @@ export const mapStateToProps = state => {
   const status = get(contact, 'status', false);
   return {
     id,
-    instructions: contact.instructions,
+    instructions,
     status,
   };
 };
