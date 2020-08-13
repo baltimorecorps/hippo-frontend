@@ -7,6 +7,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AccountCircleSharpIcon from '@material-ui/icons/AccountCircleSharp';
+import {useHistory} from 'react-router-dom';
 
 import {dynamicInstructionContents} from './defaultValues';
 import get from 'lodash.get';
@@ -17,6 +18,7 @@ const SubmitProfileExpansion = ({instructions, status, onSubmit, classes}) => {
   const isCompletedProfile = get(instructions, 'profile.is_complete', false);
   const aboutMeValues = get(instructions, 'about_me.components', false);
   const experienceValues = get(instructions, 'profile.components', false);
+  let history = useHistory();
 
   const aboutMeChecks = [];
   Object.entries(dynamicInstructionContents.about_me).forEach(
@@ -64,12 +66,8 @@ const SubmitProfileExpansion = ({instructions, status, onSubmit, classes}) => {
       })
   );
 
-  console.log(experienceChecks);
-
   const afterSubmitHelpText =
     '* After you submit your profile, our staff will review your value alignment and profile to determine your eligibility for Place for Purpose.  If/once you are approved, you will receive an email communication of your acceptance.  Also, the email will provide you with a link to schedule your consultation and watch the “Place for Purpose How to Apply.”  Scheduling the consultation and watching the video tutorial is required to  access the job portal to apply for opportunities. ';
-
-  console.log('status', status);
 
   let isDisabledSubmitButton = true;
   let submitButtonText = 'Submit profile for review';
@@ -84,9 +82,11 @@ const SubmitProfileExpansion = ({instructions, status, onSubmit, classes}) => {
     console.log('submit profile for review');
     onSubmit();
   };
+
   const applyForRoles = () => {
-    console.log('apply for roles');
+    history.push(`/opportunities/`);
   };
+
   return (
     <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
       <ExpansionPanelSummary
