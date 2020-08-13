@@ -66,9 +66,11 @@ const ProfilePage = ({
   updateContact,
   contactId,
   contactInfo,
+  experiences,
   programs,
   myResume,
   getContact,
+  getContactProfile,
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
@@ -134,11 +136,19 @@ const ProfilePage = ({
     ) {
       setLoading(true);
       (async () => {
-        await getContact(contactId);
+        // await getContact(contactId);
+        await getContactProfile(contactId);
         setLoading(false);
       })();
     }
-  }, [loading, setLoading, contactId, contactInfo, getContact]);
+  }, [
+    loading,
+    setLoading,
+    contactId,
+    contactInfo,
+    getContact,
+    getContactProfile,
+  ]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -388,12 +398,14 @@ const ProfilePage = ({
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences.work}
                 />
                 <ExperiencesList
                   contactId={contactInfo.id}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences.education}
                 />
 
                 <ExperiencesList
@@ -401,6 +413,7 @@ const ProfilePage = ({
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences.portfolio}
                 />
 
                 {/*<ResumesList />*/}

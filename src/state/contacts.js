@@ -58,6 +58,15 @@ export const getContactCapabilities = contactId =>
     `${API_URL}/api/contacts/${contactId}/capabilities/`
   );
 
+// Get a contact profile
+export const GET_CONTACT_PROFILE = 'GET_CONTACT';
+export const GET_CONTACT_PROFILE_API = fetchActionTypes(GET_CONTACT_PROFILE);
+export const getContactProfile = contactId =>
+  makeApiFetchActions(
+    GET_CONTACT_PROFILE,
+    `${API_URL}/api/contacts/${contactId}/profile/`
+  );
+
 export const refreshContacts = apiGetAllContacts();
 
 export const ADD_CONTACT = 'ADD_CONTACT';
@@ -392,6 +401,13 @@ export const contactsReducer = createReducer(
         ...contact,
       };
     },
+    [GET_CONTACT_PROFILE_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id] = {
+        ...state[contact.id],
+        ...contact,
+      };
+    },
 
     [GET_MY_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
@@ -424,11 +440,11 @@ export const contactsReducer = createReducer(
       state[contact.id] = contact;
     },
     [GET_SESSION_API.RESOLVE]: (state, action) => {
-      const contact = action.body.data.contact;
-      state[contact.id] = {
-        ...state[contact.id],
-        ...contact,
-      };
+      // const contact = action.body.data.contact;
+      // state[contact.id] = {
+      //   ...state[contact.id],
+      //   ...contact,
+      // };
     },
     [CREATE_SESSION_API.RESOLVE]: (state, action) => {
       const contact = action.body.data.contact;

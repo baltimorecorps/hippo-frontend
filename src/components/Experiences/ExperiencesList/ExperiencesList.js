@@ -37,19 +37,19 @@ const ExperiencesList = ({
   const [showForm, setShowForm] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    if (!loaded && experiences.length === 0) {
-      refreshExperiences();
-      setLoaded(true);
-    }
-  }, [
-    experiences,
-    refreshExperiences,
-    loaded,
-    setLoaded,
-    refreshDynamicInstructions,
-    contactId,
-  ]);
+  // useEffect(() => {
+  //   if (!loaded && experiences.length === 0) {
+  //     refreshExperiences();
+  //     setLoaded(true);
+  //   }
+  // }, [
+  //   experiences,
+  //   refreshExperiences,
+  //   loaded,
+  //   setLoaded,
+  //   refreshDynamicInstructions,
+  //   contactId,
+  // ]);
 
   let blankExperience = {
     description: '',
@@ -73,7 +73,6 @@ const ExperiencesList = ({
 
   const submitNewExperience = async function(experience) {
     await addNewExperience(experience);
-    console.log('got here!!');
     await refreshDynamicInstructions(contactId);
 
     setShowForm(false);
