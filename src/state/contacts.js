@@ -525,11 +525,11 @@ export const contactsReducer = createReducer(
       // };
     },
     [CREATE_SESSION_API.RESOLVE]: (state, action) => {
-      const contact = action.body.data.contact;
-      state[contact.id] = {
-        ...state[contact.id],
-        ...contact,
-      };
+      // const contact = action.body.data.contact;
+      // state[contact.id] = {
+      //   ...state[contact.id],
+      //   ...contact,
+      // };
     },
 
     [GET_DYNAMIC_INSTRUCTIONS_API.RESOLVE]: (state, action) => {
@@ -538,7 +538,6 @@ export const contactsReducer = createReducer(
     },
     [SUBMIT_PROFILE_FOR_REVIEW_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
-      console.log(contact);
       state[contact.id].instructions = contact.instructions;
       state[contact.id].status = contact.status;
     },
