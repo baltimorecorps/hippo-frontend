@@ -20,6 +20,7 @@ import {sortExperiences} from './helpers';
 const ExperiencesList = ({
   onClickMore,
   contactId,
+  contactStatus,
   experienceType,
   experiences,
   capabilities,
@@ -73,13 +74,15 @@ const ExperiencesList = ({
 
   const submitNewExperience = async function(experience) {
     await addNewExperience(experience);
-    await refreshDynamicInstructions(contactId);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
 
     setShowForm(false);
   };
   const handleUpdateExperience = async function(experience) {
     await updateExperience(experience);
-    await refreshDynamicInstructions(contactId);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
   };
 
   const header = headers[experienceType.toLowerCase()];

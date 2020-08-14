@@ -227,14 +227,18 @@ const ProfilePage = ({
   };
 
   const handleEditAboutMe = async () => {
-    if (!contactInfo.profile || contactInfo.profile == null) {
-      let response = await createAboutMe(contactInfo.id);
-      console.log('response', response);
-      if (response && response.statusCode !== 201) {
-        console.error('Error starting new about-me', response);
+    if (contactInfo.profile == null) {
+      try {
+        await getAboutMe(contactInfo.id);
+      } catch (error) {
+        console.error('Error getting new about-me', error);
+        try {
+          await createAboutMe(contactInfo.id);
+        } catch (error) {
+          console.error('Error creating new about-me', error);
+        }
       }
     }
-
     setOpenForm(true);
   };
 
@@ -318,14 +322,16 @@ const ProfilePage = ({
                   </div>
 
                   {viewResume && (
-                    <ResumeViewer
-                      contactId={contactId}
-                      resume={resume}
-                      setResume={setResume}
-                      viewOnly={true}
-                      selected={null}
-                      page="profile"
-                    />
+                    <div style={{marginBottom: '20px'}}>
+                      <ResumeViewer
+                        contactId={contactId}
+                        resume={resume}
+                        setResume={setResume}
+                        viewOnly={true}
+                        selected={null}
+                        page="profile"
+                      />
+                    </div>
                   )}
                 </Grid>
                 <ProfileInstructions />
@@ -380,11 +386,13 @@ const ProfilePage = ({
 
                 <SkillsSection
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   onClickMore={onClickMoreDetails}
                   splitScreen={inSelectMode}
                 />
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
@@ -392,6 +400,7 @@ const ProfilePage = ({
                 />
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
@@ -400,6 +409,7 @@ const ProfilePage = ({
 
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}

@@ -358,7 +358,7 @@ export const submitProfileForReview = contactId =>
 
     return await makeApiFetchActions(
       SUBMIT_PROFILE_FOR_REVIEW,
-      `${API_URL}/api/contacts/${contactId}/submit/`,
+      `${API_URL}/api/contacts/${contactId}/profile/submit/`,
       {
         method: 'POST',
       }

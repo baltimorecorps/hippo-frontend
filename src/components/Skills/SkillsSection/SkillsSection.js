@@ -43,6 +43,7 @@ const CAPABILITIES = [
 const SkillsSection = ({
   classes,
   contactId,
+  contactStatus,
   capabilities,
   contactCapabilities,
   allSkills,
@@ -119,7 +120,8 @@ const SkillsSection = ({
 
   const addNewContactSkill = async (contactId, skill) => {
     await addContactSkill(contactId, skill);
-    await refreshDynamicInstructions(contactId);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
   };
 
   return (
