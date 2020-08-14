@@ -372,6 +372,69 @@ export const getExperience = expId =>
   makeApiFetchActions(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
 
 // ---------------------------------------------------------------------------
+export const ADD_EXPERIENCE = 'ADD_EXPERIENCE';
+export const ADD_EXPERIENCE_API = fetchActionTypes(ADD_EXPERIENCE);
+export const addExperience = experience =>
+  async function(dispatch) {
+    dispatch({
+      type: ADD_EXPERIENCE,
+      experience,
+    });
+
+    await makeApiFetchActions(
+      ADD_EXPERIENCE,
+      `${API_URL}/api/contacts/${experience.contact_id}/experiences/`,
+      {
+        body: JSON.stringify(experience),
+        method: 'POST',
+        credentials: 'include',
+      }
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
+export const REFRESH_EXPERIENCE_TYPE = 'REFRESH_EXPERIENCE_TYPE';
+export const REFRESH_EXPERIENCE_TYPE_API = fetchActionTypes(
+  REFRESH_EXPERIENCE_TYPE
+);
+export const refreshExperienceType = (contactId, expType) => {
+  expType = expType.toLowerCase();
+  return makeApiFetchActions(
+    REFRESH_EXPERIENCE_TYPE,
+    `${API_URL}/api/contacts/${contactId}/experiences/?type=${expType}`,
+    null,
+    {
+      onResolve: resolveAction => ({
+        ...resolveAction,
+        filter: expType,
+      }),
+    }
+  );
+};
+// ---------------------------------------------------------------------------
+
+export const DELETE_EXPERIENCE = 'DELETE_EXPERIENCE';
+export const DELETE_EXPERIENCE_API = fetchActionTypes(DELETE_EXPERIENCE);
+export const deleteExperience = experience =>
+  async function(dispatch) {
+    dispatch({
+      type: DELETE_EXPERIENCE,
+      experience: experience,
+    });
+
+    await makeApiFetchActions(
+      DELETE_EXPERIENCE,
+      `${API_URL}/api/experiences/${experience.id}/`,
+      {
+        method: 'DELETE',
+      }
+    )(dispatch);
+
+    await refreshExperienceType(
+      experience.contact_id,
+      experience.type
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
 
 /* eslint-enable no-unused-vars */
 
@@ -422,6 +485,15 @@ export const contactsReducer = createReducer(
       state[contact.id] = {
         ...state[contact.id],
         ...contact,
+      };
+    },
+    [DELETE_EXPERIENCE]: (state, action) => {
+      const experience = action.experience;
+      state[experience.contact_id] = {
+        ...state[experience.contact_id],
+        experiences: state[experience.contact_id].experiences.filter(
+          exp => exp.id !== experience.id
+        ),
       };
     },
     [DELETE_CONTACT_API.RESOLVE]: (state, action) => {
@@ -505,6 +577,10 @@ export const contactsReducer = createReducer(
           }
         }),
       };
+    },
+    [ADD_EXPERIENCE_API.RESOLVE]: (state, action) => {
+      const experience = action.body.data;
+      state[experience.contact_id].experiences.push(experience);
     },
 
     [UPDATE_PROGRAM_APPS_API.RESOLVE]: (state, action) => {
