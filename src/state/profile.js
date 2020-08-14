@@ -231,6 +231,7 @@ export const experiencesReducer = createReducer(
     },
     [REFRESH_EXPERIENCE_TYPE_API.RESOLVE]: (state, action) => {
       const newState = {};
+      console.log(action.body.data);
       // clear out all old entries with the rfreshed type
       Object.entries(state).forEach(([key, value]) => {
         if (value.type.toLowerCase() !== action.filter.toLowerCase()) {

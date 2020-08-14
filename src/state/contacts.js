@@ -364,6 +364,14 @@ export const submitProfileForReview = contactId =>
       }
     )(dispatch);
   };
+// ---------------------------------------------------------------------------
+
+export const GET_EXPERIENCE = 'GET_EXPERIENCE';
+export const GET_EXPERIENCE_API = fetchActionTypes(GET_EXPERIENCE);
+export const getExperience = expId =>
+  makeApiFetchActions(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
+
+// ---------------------------------------------------------------------------
 
 /* eslint-enable no-unused-vars */
 
@@ -485,10 +493,22 @@ export const contactsReducer = createReducer(
       };
     },
 
+    [GET_EXPERIENCE_API.RESOLVE]: (state, action) => {
+      const experience = action.body.data;
+      state[experience.contact_id] = {
+        ...state[experience.contact_id],
+        experiences: state[experience.contact_id].experiences.map(exp => {
+          if (exp.id === experience.id) {
+            return experience;
+          } else {
+            return exp;
+          }
+        }),
+      };
+    },
+
     [UPDATE_PROGRAM_APPS_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
-      console.log('updateProgramApps return payload', contact);
-
       state[contact.id].program_apps = contact.program_apps;
     },
 

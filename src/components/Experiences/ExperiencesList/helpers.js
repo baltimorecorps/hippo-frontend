@@ -141,10 +141,24 @@ const getMonthScore = experiences => {
   return expWithScores;
 };
 
+// const sortAchievements = achievemen => {
+
+//   let result = [];
+//   for (let i = 0; i < experiences.length; i++) {
+//     const sortedAchievements = Array.prototype.slice
+//       .call(experiences[i].achievements)
+//       .sort((ach1, ach2) => {
+//         return ach1.id - ach2.id;
+//       });
+//     result.push({...experiences[i], achievements: sortedAchievements});
+//   }
+
+//   return result;
+// };
+
 const sortExperiences = experiences => {
   const experiencesWithScores = getMonthScore(experiences);
-
-  const sortedExperiences = experiencesWithScores.sort(function(exp1, exp2) {
+  let sortedExperiences = experiencesWithScores.sort(function(exp1, exp2) {
     // sort by is_current first, then end_date, then start_date
     if (exp1.is_current !== exp2.is_current) {
       return exp1.is_current === true ? -1 : 1;
