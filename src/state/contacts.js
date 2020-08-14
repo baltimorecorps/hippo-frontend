@@ -416,23 +416,21 @@ export const DELETE_EXPERIENCE = 'DELETE_EXPERIENCE';
 export const DELETE_EXPERIENCE_API = fetchActionTypes(DELETE_EXPERIENCE);
 export const deleteExperience = experience =>
   async function(dispatch) {
-    dispatch({
-      type: DELETE_EXPERIENCE,
-      experience: experience,
-    });
-
-    await makeApiFetchActions(
-      DELETE_EXPERIENCE,
-      `${API_URL}/api/experiences/${experience.id}/`,
-      {
-        method: 'DELETE',
-      }
-    )(dispatch);
-
-    await refreshExperienceType(
-      experience.contact_id,
-      experience.type
-    )(dispatch);
+    try {
+      await makeApiFetchActions(
+        DELETE_EXPERIENCE,
+        `${API_URL}/api/experiences/${experience.id}/`,
+        {
+          method: 'DELETE',
+        }
+      )(dispatch);
+      dispatch({
+        type: DELETE_EXPERIENCE,
+        experience: experience,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 // ---------------------------------------------------------------------------
 

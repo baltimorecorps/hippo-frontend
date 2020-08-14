@@ -9,11 +9,15 @@ import ExperiencesList from './ExperiencesList';
 
 import {
   // addExperience,
-  refreshExperienceType,
+  // refreshExperienceType,
   updateExperience,
   deleteExperience,
 } from 'state/profile';
-import {getDynamicInstructions, addExperience} from 'state/contacts';
+import {
+  getDynamicInstructions,
+  addExperience,
+  refreshExperienceType,
+} from 'state/contacts';
 
 const getExperiences = createSelector(['experiences'], experiences =>
   Object.keys(experiences).map(id => experiences[id])
