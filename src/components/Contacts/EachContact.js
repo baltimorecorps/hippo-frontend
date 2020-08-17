@@ -11,7 +11,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import DeleteProfileDialog from './DeleteProfileDialog';
 
-const ContactList = ({classes, contact, deleteContact, setLoaded}) => {
+const ContactList = ({classes, contact, deleteContact}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(null);
@@ -32,13 +32,14 @@ const ContactList = ({classes, contact, deleteContact, setLoaded}) => {
     if (option === 'Delete') {
       setOpenDeleteDialog(true);
     }
+    setAnchorEl(null);
   };
 
   const onDelete = async contactId => {
     const response = await deleteContact(contactId);
     if (response && response.statusCode == 200) {
       setAnchorEl(null);
-      setLoaded(false);
+      setOpenDeleteDialog(false);
     }
   };
 

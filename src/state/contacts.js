@@ -118,15 +118,23 @@ export const addContactSkill = (contactId, skill) =>
     return result;
   };
 
-export const DELETE_CONTACT_API = fetchActionTypes('DELETE_CONTACT');
+const DELETE_CONTACT = 'DELETE_CONTACT';
+export const DELETE_CONTACT_API = fetchActionTypes(DELETE_CONTACT);
 export const deleteContact = contactId =>
-  makeApiFetchActions(
-    'DELETE_CONTACT',
-    `${API_URL}/api/contacts/${contactId}/`,
-    {
-      method: 'DELETE',
-    }
-  );
+  async function(dispatch) {
+    dispatch({
+      type: DELETE_CONTACT,
+      contactId,
+    });
+
+    return await makeApiFetchActions(
+      DELETE_CONTACT,
+      `${API_URL}/api/contacts/${contactId}/`,
+      {
+        method: 'DELETE',
+      }
+    )(dispatch);
+  };
 
 export const DELETE_CONTACT_SKILL = 'DELETE_CONTACT_SKILL';
 export const DELETE_CONTACT_SKILL_API = fetchActionTypes(DELETE_CONTACT_SKILL);
@@ -494,16 +502,12 @@ export const contactsReducer = createReducer(
         ),
       };
     },
-    [DELETE_CONTACT_API.RESOLVE]: (state, action) => {
-      if (!action.body.data) {
-        return {};
-      } else {
-        let newState = {};
-        action.body.data.forEach(contact => {
-          newState[contact.id] = contact;
-        });
-        return newState;
-      }
+    [DELETE_CONTACT]: (state, action) => {
+      const contactId = action.contactId;
+      const newState = Object.values(state).filter(
+        contact => contact.id !== contactId
+      );
+      return newState;
     },
 
     [UPDATE_CONTACT_API.RESOLVE]: (state, action) => {
