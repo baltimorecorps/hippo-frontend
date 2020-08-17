@@ -22,6 +22,7 @@ const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
         aria-controls="panel1a-content"
         id="panel1a-header"
         className={classes.expansionHeader}
+        data-testid="apply-opportunities-header"
       >
         <Typography className={classes.expansionHeaderText}>
           <AssistantPhotoSharpIcon className={classes.headerIcon} /> Apply for

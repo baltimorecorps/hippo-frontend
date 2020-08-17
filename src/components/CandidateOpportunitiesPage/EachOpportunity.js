@@ -241,7 +241,6 @@ EachOpportunity.propTypes = {
     program_id: PropTypes.number.isRequired,
     id: PropTypes.string.isRequired,
     short_description: PropTypes.string.isRequired,
-    cycle_id: PropTypes.number.isRequired,
     gdoc_link: PropTypes.string.isRequired,
     org_name: PropTypes.string.isRequired,
   }),

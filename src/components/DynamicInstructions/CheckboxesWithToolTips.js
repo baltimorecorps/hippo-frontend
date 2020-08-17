@@ -96,6 +96,7 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
             style={{
               color: option.checked ? '#2f5be0' : '#c7c7c7',
             }}
+            data-testid="instructions-checkbox"
             checked={option.checked}
             name={option.content}
             checkedIcon={

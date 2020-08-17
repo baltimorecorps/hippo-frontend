@@ -103,6 +103,7 @@ const SubmitProfileExpansion = ({
         aria-controls="panel1a-content"
         id="panel1a-header"
         className={classes.expansionHeader}
+        data-testid="submit-profile-header"
       >
         <Typography className={classes.expansionHeaderText}>
           <AccountCircleSharpIcon className={classes.headerIcon} /> Complete and
@@ -129,8 +130,9 @@ const SubmitProfileExpansion = ({
             variant="contained"
             onClick={applyForRoles}
             className={classes.submitButton}
+            data-testid="apply-roles-button"
           >
-            Start Applying for Roles
+            Start applying for roles
           </Button>
         ) : (
           <Button
@@ -138,6 +140,7 @@ const SubmitProfileExpansion = ({
             onClick={handleSubmit}
             className={classes.submitButton}
             disabled={isDisabledSubmitButton}
+            data-testid="submit-button"
           >
             {submitButtonText}
           </Button>

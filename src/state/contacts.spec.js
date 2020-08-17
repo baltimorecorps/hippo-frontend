@@ -377,26 +377,6 @@ describe('Contacts state', () => {
       123: {id: 123},
     });
   });
-  // test('Get session', () => {
-  //   const contact = {id: 123};
-  //   const newState = contactsReducer(undefined, {
-  //     type: GET_SESSION_API.RESOLVE,
-  //     body: {status: 'success', data: {contact}},
-  //   });
-  //   expect(newState).toEqual({
-  //     123: {id: 123},
-  //   });
-  // });
-  // test('Create session', () => {
-  //   const contact = {id: 123};
-  //   const newState = contactsReducer(undefined, {
-  //     type: CREATE_SESSION_API.RESOLVE,
-  //     body: {status: 'success', data: {contact}},
-  //   });
-  //   expect(newState).toEqual({
-  //     123: {id: 123},
-  //   });
-  // });
 
   test('Add contact', () => {
     const contact = {id: 123};

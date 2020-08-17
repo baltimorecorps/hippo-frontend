@@ -27,6 +27,7 @@ const DynamicInstructions = ({
           style={{
             fontWeight: '700',
           }}
+          data-testid="instructions"
         >
           Instructions
         </Typography>

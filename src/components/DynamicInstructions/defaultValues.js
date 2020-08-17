@@ -44,4 +44,29 @@ const dynamicInstructionContents = {
   },
 };
 
-export {dynamicInstructionContents};
+const blankInstructions = {
+  about_me: {
+    is_complete: false,
+    components: {
+      candidate_information: false,
+      interests: false,
+      programs: false,
+      value_alignment: false,
+    },
+  },
+  profile: {
+    is_complete: false,
+    components: {
+      tag_skills: false,
+      add_education: false,
+      add_experience: {
+        is_complete: false,
+        components: {tag_skills: false, add_achievements: false},
+      },
+      add_portfolio: false,
+    },
+  },
+  submit: {is_complete: false},
+};
+
+export {dynamicInstructionContents, blankInstructions};
