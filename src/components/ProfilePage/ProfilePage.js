@@ -22,7 +22,7 @@ import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
 import CapabilityScores from 'components/CapabilityScores';
-import ProfileInstructions from '../DynamicInstructions';
+import DynamicInstructions from '../DynamicInstructions';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
@@ -35,6 +35,7 @@ import {ResumeViewer} from 'components/ResumeCreator';
 
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import {useParams} from 'react-router-dom';
 
 import CAPABILITIES from './capabilities.yml';
 
@@ -64,10 +65,8 @@ const useScroll = ref => {
 
 const ProfilePage = ({
   updateContact,
-  contactId,
+  myContactId,
   contactInfo,
-  haveExperience,
-  experiences,
   programs,
   myResume,
   getContact,
@@ -88,7 +87,8 @@ const ProfilePage = ({
 }) => {
   const wrapperRef = useRef();
   const scrollTo = useScroll(wrapperRef);
-
+  let {contactId} = useParams();
+  const contactIdParam = contactId;
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -99,6 +99,18 @@ const ProfilePage = ({
   const [editScores, setEditScores] = useState({});
   const [viewResume, setViewResume] = useState(false);
   const [resume, setResume] = useState({myResume: null});
+  let experiences = {work: [], education: [], portfolio: []};
+  if (
+    contactInfo &&
+    contactInfo.experiences &&
+    contactInfo.experiences.length > 0
+  )
+    contactInfo.experiences.forEach(exp => {
+      if (exp.type === 'Work') return experiences.work.push(exp);
+      if (exp.type === 'Education') return experiences.education.push(exp);
+      if (exp.type === 'Accomplishment') return experiences.portfolio.push(exp);
+    });
+  const haveExperience = experiences.work.length > 0;
 
   const updateEditScore = useCallback(
     expId => scores => {
@@ -132,24 +144,29 @@ const ProfilePage = ({
     if (
       (!loading &&
         typeof contactInfo == 'undefined' &&
-        contactId !== 'undefined') ||
+        myContactId !== 'undefined') ||
       (contactInfo && !contactInfo.email)
     ) {
       setLoading(true);
       (async () => {
-        // await getContact(contactId);
-        await getContactProfile(contactId);
+        await getContactProfile(myContactId);
         setLoading(false);
       })();
     }
   }, [
     loading,
     setLoading,
-    contactId,
+    myContactId,
     contactInfo,
     getContact,
     getContactProfile,
   ]);
+
+  useEffect(() => {
+    (async () => {
+      if (contactIdParam) await getContactProfile(contactIdParam);
+    })();
+  }, [contactIdParam, getContactProfile]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -230,14 +247,11 @@ const ProfilePage = ({
   const handleEditAboutMe = async () => {
     if (contactInfo.profile == null) {
       try {
-        await getAboutMe(contactInfo.id);
+        console.log('create profile');
+
+        await createAboutMe(contactInfo.id);
       } catch (error) {
-        console.error('Error getting new about-me', error);
-        try {
-          await createAboutMe(contactInfo.id);
-        } catch (error) {
-          console.error('Error creating new about-me', error);
-        }
+        console.error('Error creating new about-me', error);
       }
     }
     setOpenForm(true);
@@ -338,7 +352,13 @@ const ProfilePage = ({
                     </div>
                   )}
                 </Grid>
-                <ProfileInstructions />
+                {contactInfo && (
+                  <DynamicInstructions
+                    instructions={contactInfo.instructions}
+                    id={contactInfo.id}
+                    status={contactInfo.status}
+                  />
+                )}
 
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>

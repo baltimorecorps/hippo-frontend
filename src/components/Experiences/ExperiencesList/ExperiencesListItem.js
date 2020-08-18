@@ -244,8 +244,8 @@ ExperiencesListItem.propTypes = {
       'Doctoral',
       'Other',
     ]),
-    start_month: PropTypes.string.isRequired,
-    start_year: PropTypes.number.isRequired,
+    start_month: PropTypes.string,
+    start_year: PropTypes.number,
     end_month: PropTypes.string,
     end_year: PropTypes.number,
     type: PropTypes.oneOf(['Work', 'Service', 'Accomplishment', 'Education'])
