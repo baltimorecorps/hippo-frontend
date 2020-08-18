@@ -67,8 +67,6 @@ const ProfilePage = ({
   updateContact,
   myContactId,
   contactInfo,
-  haveExperience,
-  experiences,
   programs,
   myResume,
   getContact,
@@ -101,6 +99,18 @@ const ProfilePage = ({
   const [editScores, setEditScores] = useState({});
   const [viewResume, setViewResume] = useState(false);
   const [resume, setResume] = useState({myResume: null});
+  let experiences = {work: [], education: [], portfolio: []};
+  if (
+    contactInfo &&
+    contactInfo.experiences &&
+    contactInfo.experiences.length > 0
+  )
+    contactInfo.experiences.forEach(exp => {
+      if (exp.type === 'Work') return experiences.work.push(exp);
+      if (exp.type === 'Education') return experiences.education.push(exp);
+      if (exp.type === 'Accomplishment') return experiences.portfolio.push(exp);
+    });
+  const haveExperience = experiences.work.length > 0;
 
   const updateEditScore = useCallback(
     expId => scores => {
@@ -246,8 +256,6 @@ const ProfilePage = ({
     }
     setOpenForm(true);
   };
-
-  console.log(contactInfo);
 
   return (
     <React.Fragment>

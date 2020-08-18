@@ -93,8 +93,7 @@ const SkillsSection = ({
       contactId,
       capabilitySkills.concat(newOtherSkills || [])
     );
-    if (contactStatus === 'created')
-      await refreshDynamicInstructions(contactId);
+    await refreshDynamicInstructions(contactId);
   };
 
   const onClickMoreHandler = () => {
@@ -120,13 +119,11 @@ const SkillsSection = ({
 
   const addNewContactSkill = async (contactId, skill) => {
     await addContactSkill(contactId, skill);
-    if (contactStatus === 'created')
-      await refreshDynamicInstructions(contactId);
+    await refreshDynamicInstructions(contactId);
   };
   const deleteContactSkill = async (contactId, id, skill) => {
     await deleteSkillSuggestion(contactId, id, skill);
-    if (contactStatus === 'created')
-      await refreshDynamicInstructions(contactId);
+    await refreshDynamicInstructions(contactId);
   };
 
   return (
