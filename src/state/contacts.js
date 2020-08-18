@@ -58,6 +58,15 @@ export const getContactCapabilities = contactId =>
     `${API_URL}/api/contacts/${contactId}/capabilities/`
   );
 
+// Get a contact profile
+export const GET_CONTACT_PROFILE = 'GET_CONTACT_PROFILE';
+export const GET_CONTACT_PROFILE_API = fetchActionTypes(GET_CONTACT_PROFILE);
+export const getContactProfile = contactId =>
+  makeApiFetchActions(
+    GET_CONTACT_PROFILE,
+    `${API_URL}/api/contacts/${contactId}/profile/`
+  );
+
 export const refreshContacts = apiGetAllContacts();
 
 export const ADD_CONTACT = 'ADD_CONTACT';
@@ -109,15 +118,23 @@ export const addContactSkill = (contactId, skill) =>
     return result;
   };
 
-export const DELETE_CONTACT_API = fetchActionTypes('DELETE_CONTACT');
+const DELETE_CONTACT = 'DELETE_CONTACT';
+export const DELETE_CONTACT_API = fetchActionTypes(DELETE_CONTACT);
 export const deleteContact = contactId =>
-  makeApiFetchActions(
-    'DELETE_CONTACT',
-    `${API_URL}/api/contacts/${contactId}/`,
-    {
-      method: 'DELETE',
-    }
-  );
+  async function(dispatch) {
+    dispatch({
+      type: DELETE_CONTACT,
+      contactId,
+    });
+
+    return await makeApiFetchActions(
+      DELETE_CONTACT,
+      `${API_URL}/api/contacts/${contactId}/`,
+      {
+        method: 'DELETE',
+      }
+    )(dispatch);
+  };
 
 export const DELETE_CONTACT_SKILL = 'DELETE_CONTACT_SKILL';
 export const DELETE_CONTACT_SKILL_API = fetchActionTypes(DELETE_CONTACT_SKILL);
@@ -335,6 +352,96 @@ export const getDynamicInstructions = contactId =>
     `${API_URL}/api/contacts/${contactId}/instructions/`
   );
 
+// ---------------------------------------------------------------------------
+
+export const SUBMIT_PROFILE_FOR_REVIEW = 'SUBMIT_PROFILE_FOR_REVIEW';
+export const SUBMIT_PROFILE_FOR_REVIEW_API = fetchActionTypes(
+  SUBMIT_PROFILE_FOR_REVIEW
+);
+export const submitProfileForReview = contactId =>
+  async function(dispatch) {
+    dispatch({
+      type: SUBMIT_PROFILE_FOR_REVIEW,
+    });
+
+    return await makeApiFetchActions(
+      SUBMIT_PROFILE_FOR_REVIEW,
+      `${API_URL}/api/contacts/${contactId}/profile/submit/`,
+      {
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
+
+export const GET_EXPERIENCE = 'GET_EXPERIENCE';
+export const GET_EXPERIENCE_API = fetchActionTypes(GET_EXPERIENCE);
+export const getExperience = expId =>
+  makeApiFetchActions(GET_EXPERIENCE, `${API_URL}/api/experiences/${expId}/`);
+
+// ---------------------------------------------------------------------------
+export const ADD_EXPERIENCE = 'ADD_EXPERIENCE';
+export const ADD_EXPERIENCE_API = fetchActionTypes(ADD_EXPERIENCE);
+export const addExperience = experience =>
+  async function(dispatch) {
+    dispatch({
+      type: ADD_EXPERIENCE,
+      experience,
+    });
+
+    await makeApiFetchActions(
+      ADD_EXPERIENCE,
+      `${API_URL}/api/contacts/${experience.contact_id}/experiences/`,
+      {
+        body: JSON.stringify(experience),
+        method: 'POST',
+        credentials: 'include',
+      }
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
+export const REFRESH_EXPERIENCE_TYPE = 'REFRESH_EXPERIENCE_TYPE';
+export const REFRESH_EXPERIENCE_TYPE_API = fetchActionTypes(
+  REFRESH_EXPERIENCE_TYPE
+);
+export const refreshExperienceType = (contactId, expType) => {
+  expType = expType.toLowerCase();
+  return makeApiFetchActions(
+    REFRESH_EXPERIENCE_TYPE,
+    `${API_URL}/api/contacts/${contactId}/experiences/?type=${expType}`,
+    null,
+    {
+      onResolve: resolveAction => ({
+        ...resolveAction,
+        filter: expType,
+      }),
+    }
+  );
+};
+// ---------------------------------------------------------------------------
+
+export const DELETE_EXPERIENCE = 'DELETE_EXPERIENCE';
+export const DELETE_EXPERIENCE_API = fetchActionTypes(DELETE_EXPERIENCE);
+export const deleteExperience = experience =>
+  async function(dispatch) {
+    try {
+      await makeApiFetchActions(
+        DELETE_EXPERIENCE,
+        `${API_URL}/api/experiences/${experience.id}/`,
+        {
+          method: 'DELETE',
+        }
+      )(dispatch);
+      dispatch({
+        type: DELETE_EXPERIENCE,
+        experience: experience,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+// ---------------------------------------------------------------------------
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -371,6 +478,13 @@ export const contactsReducer = createReducer(
         ...contact,
       };
     },
+    [GET_CONTACT_PROFILE_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id] = {
+        ...state[contact.id],
+        ...contact,
+      };
+    },
 
     [GET_MY_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
@@ -379,16 +493,21 @@ export const contactsReducer = createReducer(
         ...contact,
       };
     },
-    [DELETE_CONTACT_API.RESOLVE]: (state, action) => {
-      if (!action.body.data) {
-        return {};
-      } else {
-        let newState = {};
-        action.body.data.forEach(contact => {
-          newState[contact.id] = contact;
-        });
-        return newState;
-      }
+    [DELETE_EXPERIENCE]: (state, action) => {
+      const experience = action.experience;
+      state[experience.contact_id] = {
+        ...state[experience.contact_id],
+        experiences: state[experience.contact_id].experiences.filter(
+          exp => exp.id !== experience.id
+        ),
+      };
+    },
+    [DELETE_CONTACT]: (state, action) => {
+      const contactId = action.contactId;
+      const newState = Object.values(state).filter(
+        contact => contact.id !== contactId
+      );
+      return newState;
     },
 
     [UPDATE_CONTACT_API.RESOLVE]: (state, action) => {
@@ -403,23 +522,28 @@ export const contactsReducer = createReducer(
       state[contact.id] = contact;
     },
     [GET_SESSION_API.RESOLVE]: (state, action) => {
-      const contact = action.body.data.contact;
-      state[contact.id] = {
-        ...state[contact.id],
-        ...contact,
-      };
+      // const contact = action.body.data.contact;
+      // state[contact.id] = {
+      //   ...state[contact.id],
+      //   id: contact.id,
+      // };
     },
     [CREATE_SESSION_API.RESOLVE]: (state, action) => {
-      const contact = action.body.data.contact;
-      state[contact.id] = {
-        ...state[contact.id],
-        ...contact,
-      };
+      // const contact = action.body.data.contact;
+      // state[contact.id] = {
+      //   ...state[contact.id],
+      //   ...contact,
+      // };
     },
 
     [GET_DYNAMIC_INSTRUCTIONS_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id].instructions = contact.instructions;
+    },
+    [SUBMIT_PROFILE_FOR_REVIEW_API.RESOLVE]: (state, action) => {
+      const contact = action.body.data;
+      state[contact.id].instructions = contact.instructions;
+      state[contact.id].status = contact.status;
     },
     [GET_ABOUT_ME_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
@@ -442,10 +566,26 @@ export const contactsReducer = createReducer(
       };
     },
 
+    [GET_EXPERIENCE_API.RESOLVE]: (state, action) => {
+      const experience = action.body.data;
+      state[experience.contact_id] = {
+        ...state[experience.contact_id],
+        experiences: state[experience.contact_id].experiences.map(exp => {
+          if (exp.id === experience.id) {
+            return experience;
+          } else {
+            return exp;
+          }
+        }),
+      };
+    },
+    [ADD_EXPERIENCE_API.RESOLVE]: (state, action) => {
+      const experience = action.body.data;
+      state[experience.contact_id].experiences.push(experience);
+    },
+
     [UPDATE_PROGRAM_APPS_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
-      console.log('updateProgramApps return payload', contact);
-
       state[contact.id].program_apps = contact.program_apps;
     },
 

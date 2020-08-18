@@ -8,12 +8,16 @@ import {
 import ExperiencesList from './ExperiencesList';
 
 import {
-  addExperience,
-  refreshExperienceType,
+  // addExperience,
+  // refreshExperienceType,
   updateExperience,
   deleteExperience,
 } from 'state/profile';
-import {getDynamicInstructions} from 'state/contacts';
+import {
+  getDynamicInstructions,
+  addExperience,
+  refreshExperienceType,
+} from 'state/contacts';
 
 const getExperiences = createSelector(['experiences'], experiences =>
   Object.keys(experiences).map(id => experiences[id])
@@ -22,16 +26,16 @@ const getExperiences = createSelector(['experiences'], experiences =>
 const getContact = (state, props) => props.contactId;
 const getTypeFilter = (state, props) => props.experienceType;
 
-const makeGetRelevantExperiences = () => {
-  const getRelevantExperiences = createSelector(
-    [getExperiences, getContact, getTypeFilter],
-    (exps, contactId, type) =>
-      exps
-        .filter(exp => exp.contact_id.toString() === contactId.toString())
-        .filter(exp => exp.type === type)
-  );
-  return getRelevantExperiences;
-};
+// const makeGetRelevantExperiences = () => {
+//   const getRelevantExperiences = createSelector(
+//     [getExperiences, getContact, getTypeFilter],
+//     (exps, contactId, type) =>
+//       exps
+//         .filter(exp => exp.contact_id.toString() === contactId.toString())
+//         .filter(exp => exp.type === type)
+//   );
+//   return getRelevantExperiences;
+// };
 
 const getCapabilities = (state, props) => {
   const contact = state.contacts[props.contactId];
@@ -59,10 +63,10 @@ const getCapabilities = (state, props) => {
 };
 
 export const makeMapStateToProps = () => {
-  const getRelevantExperiences = makeGetRelevantExperiences();
+  // const getRelevantExperiences = makeGetRelevantExperiences();
   const mapStateToProps = (state, ownProps) => {
     return {
-      experiences: getRelevantExperiences(state, ownProps),
+      // experiences: getRelevantExperiences(state, ownProps),
       capabilities: getCapabilities(state, ownProps),
       inSelectMode:
         state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,

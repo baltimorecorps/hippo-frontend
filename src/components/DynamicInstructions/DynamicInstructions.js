@@ -8,12 +8,14 @@ import ApplyOpportunitiesExpansion from './ApplyOpportunitiesExpansion';
 
 const DynamicInstructions = ({
   getDynamicInstructions,
+  submitProfileForReview,
   id,
   instructions,
+  status,
   classes,
 }) => {
   useEffect(() => {
-    if (!id || !instructions) getDynamicInstructions(id);
+    if (id == null || instructions == null) getDynamicInstructions(id);
   }, [id, instructions, getDynamicInstructions]);
 
   return (
@@ -25,19 +27,25 @@ const DynamicInstructions = ({
           style={{
             fontWeight: '700',
           }}
+          data-testid="instructions"
         >
           Instructions
         </Typography>
       </div>
-      <SubmitProfileExpansion instructions={instructions} />
-      <ApplyOpportunitiesExpansion />
+      <SubmitProfileExpansion
+        instructions={instructions}
+        status={status}
+        isExpanded={status !== 'approved'}
+        onSubmit={() => submitProfileForReview(id)}
+      />
+      <ApplyOpportunitiesExpansion isExpanded={status === 'approved'} />
     </Paper>
   );
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
   instructions: {
-    width: '80%',
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     padding: spacing(1.5, 1, 1),

@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
 import {
   getContact,
+  getContactProfile,
   updateContact,
   addContactSkill,
   getAboutMe,
@@ -126,17 +127,30 @@ const getResume = createSelector(
 //
 // The props to this container specify which particular contact we want to
 // display on the page, and we pull that contact's info out of the state
+
 export const mapStateToProps = (state, props) => {
   const contactId = props.contactId || props.match.params.contactId;
   const contactInfo = state.contacts[contactId];
-  const haveExperience = Object.values(state.experiences).some(
-    exp => exp.type === 'Work'
-  );
+
+  let experiences = {work: [], education: [], portfolio: []};
+  if (
+    contactInfo &&
+    contactInfo.experiences &&
+    contactInfo.experiences.length > 0
+  ) {
+    contactInfo.experiences.forEach(exp => {
+      if (exp.type === 'Work') return experiences.work.push(exp);
+      if (exp.type === 'Education') return experiences.education.push(exp);
+      if (exp.type === 'Accomplishment') return experiences.portfolio.push(exp);
+    });
+  }
+  const haveExperience = experiences.work.length > 0;
 
   return {
     contactId: Number(contactId),
     contactInfo,
     haveExperience,
+    experiences,
     showResumeDialog:
       state.resume.resumeCreationStep === RESUME_CREATION.CHOOSE_STYLE,
     inSelectMode:
@@ -157,6 +171,9 @@ export const mapDispatchToProps = dispatch => ({
   },
   getContact: async contactId => {
     await getContact(contactId)(dispatch);
+  },
+  getContactProfile: async contactId => {
+    await getContactProfile(contactId)(dispatch);
   },
   createAboutMe: async contactId => {
     await createAboutMe(contactId)(dispatch);

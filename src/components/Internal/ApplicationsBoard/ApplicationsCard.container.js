@@ -7,10 +7,10 @@ const mapStateToProps = (state, props) => {
   const {contactId} = props.match.params;
 
   const applications = Object.values(state.applications).filter(
-    app => app.contact.id == contactId
+    app => app.contact.id === Number(contactId)
   );
   const applicant = Object.values(state.contacts).filter(
-    contact => contact.id == contactId
+    contact => contact.id === Number(contactId)
   );
 
   return {

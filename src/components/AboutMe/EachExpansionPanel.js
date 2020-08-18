@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const EachExpansionPanel = ({PanelTextHeader, content, classes}) => {
   return (
-    <ExpansionPanel defaultExpanded={true} className={classes.expansionPanel}>
+    <ExpansionPanel defaultExpanded={false} className={classes.expansionPanel}>
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

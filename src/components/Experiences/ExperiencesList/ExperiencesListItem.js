@@ -162,7 +162,6 @@ const ExperiencesListItem = ({
     await onUpdate(values);
     setEditing(false);
   };
-
   const editExperienceHandler = () => {
     createClickTracking(
       'Experience',

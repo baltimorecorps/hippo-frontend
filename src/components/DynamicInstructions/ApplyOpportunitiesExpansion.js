@@ -11,14 +11,18 @@ import TodaySharpIcon from '@material-ui/icons/TodaySharp';
 import AssistantPhotoSharpIcon from '@material-ui/icons/AssistantPhotoSharp';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 
-const ApplyOpportunitiesExpansion = ({classes}) => {
+const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
   return (
-    <ExpansionPanel defaultExpanded={false} className={classes.expansionPanel}>
+    <ExpansionPanel
+      defaultExpanded={isExpanded}
+      className={classes.expansionPanel}
+    >
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
         className={classes.expansionHeader}
+        data-testid="apply-opportunities-header"
       >
         <Typography className={classes.expansionHeaderText}>
           <AssistantPhotoSharpIcon className={classes.headerIcon} /> Apply for
@@ -115,19 +119,28 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   headerIcon: {
     marginRight: '10px',
-    fontSize: '28px',
+    fontSize: '24px',
+    [breakpoints.up('sm')]: {
+      fontSize: '28px',
+    },
   },
   expansionHeaderText: {
     fontWeight: '500',
-    fontSize: '18px',
+    fontSize: '16px',
     display: 'flex',
     alignItems: 'center',
+    [breakpoints.up('sm')]: {
+      fontSize: '18px',
+    },
   },
   expansionDetails: {
-    padding: '30px 45px 20px 45px',
+    padding: '15px 25px 15px 25px',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#ffffff',
+    [breakpoints.up('sm')]: {
+      padding: '30px 45px 20px 45px',
+    },
   },
   headerContainer: {
     marginBottom: spacing(2),
@@ -161,6 +174,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
   checkbox: {
     width: '100%',
     textAlign: 'left',
+    fontSize: '15px',
+
+    [breakpoints.up('sm')]: {
+      fontSize: '16px',
+    },
     [breakpoints.up('md')]: {
       marginLeft: '20px',
     },

@@ -1,5 +1,9 @@
 import {connect} from 'react-redux';
-import {updateProgramApps, updateAboutMe} from 'state/contacts';
+import {
+  updateProgramApps,
+  updateAboutMe,
+  getDynamicInstructions,
+} from 'state/contacts';
 import {getAllProgramNames} from 'state/programs';
 import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
 
@@ -25,6 +29,8 @@ export const mapDispatchToProps = dispatch => ({
   updateAboutMe: async (contactId, aboutMe) => {
     await updateAboutMe(contactId, aboutMe)(dispatch);
   },
+  refreshDynamicInstructions: contactId =>
+    getDynamicInstructions(contactId)(dispatch),
 });
 
 export default connect(

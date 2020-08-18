@@ -67,9 +67,11 @@ const ProfilePage = ({
   contactId,
   contactInfo,
   haveExperience,
+  experiences,
   programs,
   myResume,
   getContact,
+  getContactProfile,
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
@@ -131,15 +133,23 @@ const ProfilePage = ({
       (!loading &&
         typeof contactInfo == 'undefined' &&
         contactId !== 'undefined') ||
-      (contactInfo && !contactInfo.email_primary)
+      (contactInfo && !contactInfo.email)
     ) {
       setLoading(true);
       (async () => {
-        await getContact(contactId);
+        // await getContact(contactId);
+        await getContactProfile(contactId);
         setLoading(false);
       })();
     }
-  }, [loading, setLoading, contactId, contactInfo, getContact]);
+  }, [
+    loading,
+    setLoading,
+    contactId,
+    contactInfo,
+    getContact,
+    getContactProfile,
+  ]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -148,10 +158,6 @@ const ProfilePage = ({
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }
-
-  const email = contactInfo.email_primary
-    ? contactInfo.email_primary.email
-    : '';
 
   const genResumeLocal = async () => {
     // TODO: How should we get the resume name for real?
@@ -188,12 +194,6 @@ const ProfilePage = ({
     setOpenDrawer2(true);
   };
 
-  const screeningQuestionLink = createExternalLink(
-    'questionnaire',
-    `https://www.tfaforms.com/4798338&tfa_2=${contactId}&tfa_3=1`,
-    classes.link
-  );
-
   const getContainerSize = breakpoint => {
     if (inSelectMode) {
       return 6;
@@ -224,17 +224,22 @@ const ProfilePage = ({
 
   const handleChange = event => {
     setViewResume(event.target.checked);
+    window.scrollTo(0, 0);
   };
 
   const handleEditAboutMe = async () => {
-    if (!contactInfo.profile || contactInfo.profile == null) {
-      let response = await createAboutMe(contactInfo.id);
-      console.log('response', response);
-      if (response && response.statusCode !== 201) {
-        console.error('Error starting new about-me', response);
+    if (contactInfo.profile == null) {
+      try {
+        await getAboutMe(contactInfo.id);
+      } catch (error) {
+        console.error('Error getting new about-me', error);
+        try {
+          await createAboutMe(contactInfo.id);
+        } catch (error) {
+          console.error('Error creating new about-me', error);
+        }
       }
     }
-
     setOpenForm(true);
   };
 
@@ -321,43 +326,60 @@ const ProfilePage = ({
                   </div>
 
                   {viewResume && (
-                    <ResumeViewer
-                      contactId={contactId}
-                      resume={resume}
-                      setResume={setResume}
-                      viewOnly={true}
-                      selected={null}
-                      page="profile"
-                    />
+                    <div style={{marginBottom: '20px'}}>
+                      <ResumeViewer
+                        contactId={contactId}
+                        resume={resume}
+                        setResume={setResume}
+                        viewOnly={true}
+                        selected={null}
+                        page="profile"
+                      />
+                    </div>
                   )}
                 </Grid>
                 <ProfileInstructions />
 
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>
-                    <div className={classes.headerContainer}>
-                      <Typography
-                        variant="h5"
-                        component="h1"
-                        style={{
-                          fontWeight: '700',
-                        }}
-                      >
-                        About Me
-                      </Typography>
-                      {openForm ? (
-                        <IconButton
-                          edge="end"
-                          aria-label="cancel form"
-                          onMouseDown={() => setOpenForm(false)}
-                          className={classes.iconButton}
+                    <Grid container className={classes.headerContainer}>
+                      <Grid container justify="space-between">
+                        <Grid item>
+                          <Typography
+                            variant="h5"
+                            component="h1"
+                            style={{
+                              fontWeight: '700',
+                            }}
+                          >
+                            About Me
+                          </Typography>
+                        </Grid>
+
+                        <Grid item>
+                          {openForm && (
+                            <IconButton
+                              edge="end"
+                              aria-label="cancel form"
+                              onMouseDown={() => setOpenForm(false)}
+                              className={classes.iconButton}
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                          )}
+                        </Grid>
+                      </Grid>
+                      <Grid container alignItems="center">
+                        <Typography
+                          variant="subtitle1"
+                          component="p"
+                          className={classes.helpText}
                         >
-                          <CloseIcon />
-                        </IconButton>
-                      ) : (
-                        <div style={{height: '45px'}}></div>
-                      )}
-                    </div>
+                          Candidate information, value alignment, interests and
+                          goals, programs and eligibility
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Grid container justify="center">
                       {openForm ? (
                         <AboutMeForms
@@ -383,27 +405,34 @@ const ProfilePage = ({
 
                 <SkillsSection
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   onClickMore={onClickMoreDetails}
                   splitScreen={inSelectMode}
                 />
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences && experiences.work}
                 />
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences && experiences.education}
                 />
 
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences && experiences.portfolio}
                 />
 
                 {/*<ResumesList />*/}
@@ -707,11 +736,26 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     },
   },
   headerContainer: {
-    // paddingBottom: spacing(2),
+    paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+  },
+  aboutMeAndCloseIcon: {
     display: 'flex',
-    justifyContent: 'space-between',
+  },
+  helpText: {
+    marginLeft: '3px',
+    color: '#5e5e5e',
+    fontSize: '15px',
+    fontWeight: 'normal',
+  },
+  iconButton: {
+    marginRight: '5px',
+    flexBasis: '60px',
+    padding: spacing(0.5),
+    '&:hover': {
+      color: 'black',
+    },
   },
   instructions: {
     padding: spacing(2, 3, 3),

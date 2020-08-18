@@ -43,6 +43,7 @@ const CAPABILITIES = [
 const SkillsSection = ({
   classes,
   contactId,
+  contactStatus,
   capabilities,
   contactCapabilities,
   allSkills,
@@ -52,7 +53,6 @@ const SkillsSection = ({
   addContactSkill,
   addSkillSuggestion,
   deleteSkillSuggestion,
-  deleteContactSkill,
   updateContactSkills,
   contactSkills,
   onClickMore,
@@ -93,7 +93,8 @@ const SkillsSection = ({
       contactId,
       capabilitySkills.concat(newOtherSkills || [])
     );
-    await refreshDynamicInstructions(contactId);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
   };
 
   const onClickMoreHandler = () => {
@@ -119,7 +120,13 @@ const SkillsSection = ({
 
   const addNewContactSkill = async (contactId, skill) => {
     await addContactSkill(contactId, skill);
-    await refreshDynamicInstructions(contactId);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
+  };
+  const deleteContactSkill = async (contactId, id, skill) => {
+    await deleteSkillSuggestion(contactId, id, skill);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
   };
 
   return (
@@ -183,7 +190,7 @@ const SkillsSection = ({
                       contactSkills={contactSkills}
                       addSkill={skill => addNewContactSkill(contactId, skill)}
                       deleteSkill={skill =>
-                        deleteSkillSuggestion(contactId, id, skill)
+                        deleteContactSkill(contactId, id, skill)
                       }
                       addSkillSuggestion={skill =>
                         addSkillSuggestion(contactId, id, skill)
