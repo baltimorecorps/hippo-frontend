@@ -23,6 +23,7 @@ const ApplicationsBoard = ({
   allApplicants,
   getAllContactsPrograms,
   approvedApplicants,
+  haveNotApprovedApplicants,
 }) => {
   useEffect(() => {
     if (approvedApplicants && approvedApplicants.length === 0)
@@ -46,8 +47,9 @@ const ApplicationsBoard = ({
   };
 
   let options = {};
-  if (allApplicants) {
-    options = allApplicants.map(contact => {
+
+  if (haveNotApprovedApplicants) {
+    options = haveNotApprovedApplicants.map(contact => {
       return {
         name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
         contact_id: contact.id,
@@ -248,27 +250,9 @@ const ApplicationsBoard = ({
 
 ApplicationsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
-  getAllContactsShort: PropTypes.func.isRequired,
+  getAllContactsPrograms: PropTypes.func.isRequired,
   approveNewApplicants: PropTypes.func.isRequired,
-  getAllInternalApplicants: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      email: PropTypes.string,
-      first_name: PropTypes.string,
-      id: PropTypes.number,
-      last_name: PropTypes.string,
-    })
-  ).isRequired,
-  // applicants: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     is_active: PropTypes.bool.Required,
-  //     applications: PropTypes.array,
-  //     contact: PropTypes.object.isRequired,
-  //     id: PropTypes.number.Required,
-  //     program_id: PropTypes.number.Required,
-  //     is_approved: PropTypes.bool.Required,
-  //   })
-  // ).isRequired,
+  approvedApplicants: PropTypes.array.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

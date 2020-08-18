@@ -4,16 +4,23 @@ import {getAllContactsPrograms, approveNewApplicants} from 'state/opportunity';
 
 const mapStateToProps = state => {
   const allApplicants = Object.values(state.applicants);
+  const haveNotApprovedApplicants = [];
+
   const approvedApplicants = allApplicants.filter(app => {
     const isApproved = app.programs.filter(
       program => program.is_approved === true
     );
-    return isApproved.length > 0;
+    if (isApproved.length > 0) {
+      return isApproved.length > 0;
+    } else {
+      haveNotApprovedApplicants.push(app);
+    }
   });
 
   return {
     allApplicants,
     approvedApplicants,
+    haveNotApprovedApplicants,
   };
 };
 
