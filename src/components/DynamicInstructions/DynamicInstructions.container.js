@@ -2,8 +2,6 @@ import {connect} from 'react-redux';
 import {getDynamicInstructions, submitProfileForReview} from 'state/contacts';
 import DynamicInstructions from './DynamicInstructions';
 
-export const mapStateToProps = state => {};
-
 export const mapDispatchToProps = dispatch => ({
   getDynamicInstructions: contactId =>
     getDynamicInstructions(contactId)(dispatch),
@@ -11,7 +9,4 @@ export const mapDispatchToProps = dispatch => ({
     submitProfileForReview(contactId)(dispatch),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DynamicInstructions);
+export default connect(null, mapDispatchToProps)(DynamicInstructions);
