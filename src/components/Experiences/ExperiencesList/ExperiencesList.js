@@ -20,6 +20,7 @@ import {sortExperiences} from './helpers';
 const ExperiencesList = ({
   onClickMore,
   contactId,
+  contactStatus,
   experienceType,
   experiences,
   capabilities,
@@ -31,17 +32,25 @@ const ExperiencesList = ({
   deselectExperience,
   updateEditScore,
   inSelectMode,
+  refreshDynamicInstructions,
   classes,
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    if (!loaded && experiences.length === 0) {
-      refreshExperiences();
-      setLoaded(true);
-    }
-  }, [experiences, refreshExperiences, loaded, setLoaded]);
+  // useEffect(() => {
+  //   if (!loaded && experiences.length === 0) {
+  //     refreshExperiences();
+  //     setLoaded(true);
+  //   }
+  // }, [
+  //   experiences,
+  //   refreshExperiences,
+  //   loaded,
+  //   setLoaded,
+  //   refreshDynamicInstructions,
+  //   contactId,
+  // ]);
 
   let blankExperience = {
     description: '',
@@ -65,7 +74,15 @@ const ExperiencesList = ({
 
   const submitNewExperience = async function(experience) {
     await addNewExperience(experience);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
+
     setShowForm(false);
+  };
+  const handleUpdateExperience = async function(experience) {
+    await updateExperience(experience);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
   };
 
   const header = headers[experienceType.toLowerCase()];
@@ -79,7 +96,7 @@ const ExperiencesList = ({
     }
   };
   let sortedExperiences = [];
-  if (experiences.length > 0) {
+  if (experiences && experiences.length > 0) {
     sortedExperiences = sortExperiences(experiences);
   }
 
@@ -172,8 +189,9 @@ const ExperiencesList = ({
           {sortedExperiences.map(experience => (
             <ExperiencesListItem
               key={experience.id}
-              onUpdate={updateExperience}
+              onUpdate={handleUpdateExperience}
               onDelete={deleteExperience}
+              refreshDynamicInstructions={refreshDynamicInstructions}
               onSelect={makeSelectExperience(experience)}
               onSkillsMore={handleOnSkillsMore}
               experience={experience}

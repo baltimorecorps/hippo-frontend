@@ -151,6 +151,7 @@ const ExperiencesListItem = ({
   onSkillsMore,
   updateEditScore,
   selectable,
+  refreshDynamicInstructions,
   classes,
 }) => {
   const config = configureForm(experience.type);
@@ -161,7 +162,6 @@ const ExperiencesListItem = ({
     await onUpdate(values);
     setEditing(false);
   };
-
   const editExperienceHandler = () => {
     createClickTracking(
       'Experience',
@@ -200,6 +200,7 @@ const ExperiencesListItem = ({
               onSubmit={submitUpdate}
               experience={experience}
               onDelete={onDelete}
+              refreshDynamicInstructions={refreshDynamicInstructions}
               onSkillsMore={onSkillsMore}
               updateEditScore={updateEditScore}
             />
@@ -288,8 +289,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
       textDecoration: 'none',
     },
   },
-  wrapper: {
-  },
+  wrapper: {},
 });
 
 export default withStyles(styles)(ExperiencesListItem);

@@ -94,10 +94,28 @@ export const updateProgram = program =>
 
     return await apiUpdateProgram(program)(dispatch);
   };
+// ---------------------------------------------------------------------------
+
+export const GET_ALL_PROGRAM_NAMES = 'GET_PROGRAM_NAMES';
+export const GET_ALL_PROGRAM_NAMES_API = fetchActionTypes(
+  GET_ALL_PROGRAM_NAMES
+);
+export const getAllProgramNames = () =>
+  makeApiFetchActions(GET_ALL_PROGRAM_NAMES, `${API_URL}/api/programs/`);
+
+// ---------------------------------------------------------------------------
 
 export const programsReducer = createReducer(
   {},
   {
+    [GET_ALL_PROGRAM_NAMES_API.RESOLVE]: (state, action) => {
+      const newState = {};
+      // clear out all old entries
+      action.body.data.forEach(program => {
+        newState[program.id] = program;
+      });
+      return newState;
+    },
     [ADD_NEW_PROGRAM_API.RESOLVE]: (state, action) => {
       const program = action.body.data;
       state[program.id] = program;

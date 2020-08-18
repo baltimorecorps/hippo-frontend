@@ -323,8 +323,12 @@ test('Delete skill suggestion', async function() {
   await deleteSkillSuggestion(contactId, capabilityId, skill)(dispatch);
 
   expect(dispatch.mock.calls.length).toBe(3);
-  expect(dispatch.mock.calls[0][0].type).toBe(DELETE_SKILL_SUGGESTION_API.REQUEST);
-  expect(dispatch.mock.calls[1][0].type).toBe(DELETE_SKILL_SUGGESTION_API.RESOLVE);
+  expect(dispatch.mock.calls[0][0].type).toBe(
+    DELETE_SKILL_SUGGESTION_API.REQUEST
+  );
+  expect(dispatch.mock.calls[1][0].type).toBe(
+    DELETE_SKILL_SUGGESTION_API.RESOLVE
+  );
   expect(dispatch.mock.calls[1][0].body).toEqual(response);
   expect(dispatch.mock.calls[2][0].type).toBe(DELETE_CONTACT_SKILL);
   expect(dispatch.mock.calls[2][0].payload).toEqual({
@@ -332,8 +336,6 @@ test('Delete skill suggestion', async function() {
     skillId: skill.id,
   });
 });
-
-
 
 describe('Contacts state', () => {
   const initialState = {};
@@ -370,26 +372,6 @@ describe('Contacts state', () => {
     const newState = contactsReducer(undefined, {
       type: ADD_CONTACT_API.RESOLVE,
       body: {status: 'success', data: contact},
-    });
-    expect(newState).toEqual({
-      123: {id: 123},
-    });
-  });
-  test('Get session', () => {
-    const contact = {id: 123};
-    const newState = contactsReducer(undefined, {
-      type: GET_SESSION_API.RESOLVE,
-      body: {status: 'success', data: {contact}},
-    });
-    expect(newState).toEqual({
-      123: {id: 123},
-    });
-  });
-  test('Create session', () => {
-    const contact = {id: 123};
-    const newState = contactsReducer(undefined, {
-      type: CREATE_SESSION_API.RESOLVE,
-      body: {status: 'success', data: {contact}},
     });
     expect(newState).toEqual({
       123: {id: 123},

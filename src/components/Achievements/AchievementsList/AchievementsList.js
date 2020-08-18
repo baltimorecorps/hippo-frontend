@@ -4,18 +4,21 @@ import List from '@material-ui/core/List';
 import AchievementsListItem from './AchievementsListItem';
 
 const AchievementsList = ({achievements, onSelect, selected}) => {
+  const sortedAchievements = Array.prototype.slice
+    .call(achievements)
+    .sort((ach1, ach2) => {
+      return ach1.id - ach2.id;
+    });
   return (
     <List dense disablePadding>
-      {achievements
-        .filter(item => item.description)
-        .map(item => (
-          <AchievementsListItem
-            key={item.id}
-            text={item.description}
-            onSelect={onSelect && onSelect(item.id)}
-            selected={selected && selected[item.id]}
-          />
-        ))}
+      {sortedAchievements.map(item => (
+        <AchievementsListItem
+          key={item.id}
+          text={item.description}
+          onSelect={onSelect && onSelect(item.id)}
+          selected={selected && selected[item.id]}
+        />
+      ))}
     </List>
   );
 };

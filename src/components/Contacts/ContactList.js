@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
@@ -7,14 +7,21 @@ import Typography from '@material-ui/core/Typography';
 import EachContact from './EachContact';
 
 const ContactList = ({
-  classes,
   contacts,
   getAllContactsShort,
   deleteContact,
+  classes,
 }) => {
+  let [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    if (!loaded && contacts.length === 0) getAllContactsShort();
+
+    setLoaded(true);
+  }, [loaded, contacts, getAllContactsShort]);
+
   return (
-    <List className={classes.container}>
-      {contacts.length > 0 ? (
+    <List>
+      {contacts ? (
         contacts.map((contact, index) => (
           <EachContact
             contact={contact}

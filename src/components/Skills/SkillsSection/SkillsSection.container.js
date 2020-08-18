@@ -6,6 +6,7 @@ import {
   deleteSkillSuggestion,
   updateContactSkills,
   getContactCapabilities,
+  getDynamicInstructions,
 } from 'state/contacts';
 import {getCapabilities} from 'state/capabilities';
 import SkillsSection from './SkillsSection';
@@ -42,6 +43,8 @@ export const mapStateToProps = (state, props) => {
 };
 
 export const mapDispatchToProps = dispatch => ({
+  refreshDynamicInstructions: contactId =>
+    getDynamicInstructions(contactId)(dispatch),
   getCapabilities: getCapabilities(dispatch),
   getContactCapabilities: contactId =>
     getContactCapabilities(contactId)(dispatch),

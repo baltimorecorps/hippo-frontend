@@ -75,6 +75,7 @@ const AddOrEditExperienceForm = ({
   handleCancel,
   classes,
   onDelete,
+  refreshDynamicInstructions,
   onSkillsMore,
   updateEditScore,
 }) => {
@@ -268,7 +269,6 @@ const AddOrEditExperienceForm = ({
 
       {config.showLink && (
         <Grid item xs={12}>
-        
           <TextField
             id="link"
             className={classes.formControl}
@@ -290,33 +290,30 @@ const AddOrEditExperienceForm = ({
             {errors.link_error || null}
           </FormHelperText>
 
-          {
-            link && (
-              <React.Fragment>
+          {link && (
+            <React.Fragment>
               <TextField
-            id="link_name"
-            className={classes.formControl}
-            label="Link Name"
-            placeholder="Name the link above (what will be displayed in place of the url)"
-            value={link_name || ''}
-            name="link_name"
-            onChange={handleChange}
-            InputLabelProps={{
-              classes: {
-                root: classes.labelRoot,
-                focused: classes.labelFocused,
-              },
-              shrink: true,
-            }}
-            InputProps={inputProps}
-          />
-          <FormHelperText className={classes.formHelperText}>
-            {errors.linkName_error || null}
-          </FormHelperText>
-          </React.Fragment>
-            )
-          }
-         
+                id="link_name"
+                className={classes.formControl}
+                label="Link Name"
+                placeholder="Name the link above (what will be displayed in place of the url)"
+                value={link_name || ''}
+                name="link_name"
+                onChange={handleChange}
+                InputLabelProps={{
+                  classes: {
+                    root: classes.labelRoot,
+                    focused: classes.labelFocused,
+                  },
+                  shrink: true,
+                }}
+                InputProps={inputProps}
+              />
+              <FormHelperText className={classes.formHelperText}>
+                {errors.linkName_error || null}
+              </FormHelperText>
+            </React.Fragment>
+          )}
         </Grid>
       )}
       {config.showLocation && (
@@ -491,6 +488,7 @@ const AddOrEditExperienceForm = ({
       {openDeleteDialog && (
         <DeleteExperience
           experience={experience}
+          refreshDynamicInstructions={refreshDynamicInstructions}
           onDelete={onDelete}
           handleCancel={() => setOpenDeleteDialog(false)}
         />

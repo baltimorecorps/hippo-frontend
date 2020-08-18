@@ -14,12 +14,15 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import BasicInfoDisplay from 'components/Users/BasicInfoDisplay';
-import BasicInfoForm from 'components/Users/BasicInfoForm';
+import ContactInfoDisplay from 'components/AboutMe/defaultDisplays/ContactInfoDisplay';
+import ContactInfoForm from 'components/AboutMe/forms/ContactInfoForm';
+import AboutMeForms from 'components/AboutMe/AboutMeForms';
+
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import ResumeCreator from 'components/ResumeCreator';
 import SkillsSection from 'components/Skills/SkillsSection';
 import CapabilityScores from 'components/CapabilityScores';
+import ProfileInstructions from '../DynamicInstructions';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
@@ -29,6 +32,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import {ResumeViewer} from 'components/ResumeCreator';
+
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 
 import CAPABILITIES from './capabilities.yml';
 
@@ -61,9 +67,11 @@ const ProfilePage = ({
   contactId,
   contactInfo,
   haveExperience,
+  experiences,
   programs,
   myResume,
   getContact,
+  getContactProfile,
   startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
@@ -73,6 +81,10 @@ const ProfilePage = ({
   showResumeDialog,
   showResumeSpinner,
   inSelectMode,
+  getAboutMe,
+  createAboutMe,
+  updateAboutMe,
+  refreshDynamicInstructions,
 }) => {
   const wrapperRef = useRef();
   const scrollTo = useScroll(wrapperRef);
@@ -104,6 +116,10 @@ const ProfilePage = ({
     await updateContact(values);
     setOpenForm(false);
   };
+  const handleUpdateAboutMe = async (contactId, values) => {
+    await updateAboutMe(contactId, values);
+    await refreshDynamicInstructions(contactId);
+  };
 
   const handleUpdateSkills = skills => {
     updateContact({
@@ -117,15 +133,23 @@ const ProfilePage = ({
       (!loading &&
         typeof contactInfo == 'undefined' &&
         contactId !== 'undefined') ||
-      (contactInfo && !contactInfo.email_primary)
+      (contactInfo && !contactInfo.email)
     ) {
       setLoading(true);
       (async () => {
-        await getContact(contactId);
+        // await getContact(contactId);
+        await getContactProfile(contactId);
         setLoading(false);
       })();
     }
-  }, [loading, setLoading, contactId, contactInfo, getContact]);
+  }, [
+    loading,
+    setLoading,
+    contactId,
+    contactInfo,
+    getContact,
+    getContactProfile,
+  ]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -134,10 +158,6 @@ const ProfilePage = ({
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }
-
-  const email = contactInfo.email_primary
-    ? contactInfo.email_primary.email
-    : '';
 
   const genResumeLocal = async () => {
     // TODO: How should we get the resume name for real?
@@ -156,7 +176,7 @@ const ProfilePage = ({
   // This page primarily serves as the top level container for the profile of
   // this person's employment-relevant experiences and skills.
   //
-  // The three main components it makes use of are BasicInfoDisplay,
+  // The three main components it makes use of are ContactInfoDisplay,
   // ExperiencesList, and SkillsList
 
   const onClickMoreDetails = header => {
@@ -173,12 +193,6 @@ const ProfilePage = ({
     setOpenDrawer1(false);
     setOpenDrawer2(true);
   };
-
-  const screeningQuestionLink = createExternalLink(
-    'questionnaire',
-    `https://www.tfaforms.com/4798338&tfa_2=${contactId}&tfa_3=1`,
-    classes.link
-  );
 
   const getContainerSize = breakpoint => {
     if (inSelectMode) {
@@ -210,6 +224,23 @@ const ProfilePage = ({
 
   const handleChange = event => {
     setViewResume(event.target.checked);
+    window.scrollTo(0, 0);
+  };
+
+  const handleEditAboutMe = async () => {
+    if (contactInfo.profile == null) {
+      try {
+        await getAboutMe(contactInfo.id);
+      } catch (error) {
+        console.error('Error getting new about-me', error);
+        try {
+          await createAboutMe(contactInfo.id);
+        } catch (error) {
+          console.error('Error creating new about-me', error);
+        }
+      }
+    }
+    setOpenForm(true);
   };
 
   return (
@@ -295,75 +326,78 @@ const ProfilePage = ({
                   </div>
 
                   {viewResume && (
-                    <ResumeViewer
-                      contactId={contactId}
-                      resume={resume}
-                      setResume={setResume}
-                      viewOnly={true}
-                      selected={null}
-                      page="profile"
-                    />
-                  )}
-
-                  <Paper className={classes.instructions}>
-                    <div className={classes.headerContainer}>
-                      <Typography
-                        variant="h5"
-                        component="h1"
-                        style={{
-                          fontWeight: '700',
-                        }}
-                      >
-                        Instructions
-                      </Typography>
+                    <div style={{marginBottom: '20px'}}>
+                      <ResumeViewer
+                        contactId={contactId}
+                        resume={resume}
+                        setResume={setResume}
+                        viewOnly={true}
+                        selected={null}
+                        page="profile"
+                      />
                     </div>
-                    <Typography
-                      variant="body1"
-                      component="h3"
-                      className={classes.steps}
-                    >
-                      <span className={classes.stepNum}>Step 1:</span> Answer a
-                      brief
-                      {screeningQuestionLink}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      component="h3"
-                      className={classes.steps}
-                    >
-                      <span className={classes.stepNum}>Step 2:</span> Complete
-                      your profile by filling out the sections below.
-                    </Typography>
-                  </Paper>
+                  )}
                 </Grid>
+                <ProfileInstructions />
+
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>
-                    <div className={classes.headerContainer}>
-                      <Typography
-                        variant="h5"
-                        component="h1"
-                        style={{
-                          fontWeight: '700',
-                        }}
-                      >
-                        About Me
-                      </Typography>
-                    </div>
+                    <Grid container className={classes.headerContainer}>
+                      <Grid container justify="space-between">
+                        <Grid item>
+                          <Typography
+                            variant="h5"
+                            component="h1"
+                            style={{
+                              fontWeight: '700',
+                            }}
+                          >
+                            About Me
+                          </Typography>
+                        </Grid>
+
+                        <Grid item>
+                          {openForm && (
+                            <IconButton
+                              edge="end"
+                              aria-label="cancel form"
+                              onMouseDown={() => setOpenForm(false)}
+                              className={classes.iconButton}
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                          )}
+                        </Grid>
+                      </Grid>
+                      <Grid container alignItems="center">
+                        <Typography
+                          variant="subtitle1"
+                          component="p"
+                          className={classes.helpText}
+                        >
+                          Candidate information, value alignment, interests and
+                          goals, programs and eligibility
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Grid container justify="center">
                       {openForm ? (
-                        <BasicInfoForm
+                        <AboutMeForms
                           contact={contactInfo}
-                          onSubmit={handleUpdateContact}
-                          onCloseForm={() => setOpenForm(false)}
+                          onSubmit={handleUpdateAboutMe}
                         />
                       ) : (
-                        <BasicInfoDisplay
-                          firstName={contactInfo.first_name}
-                          lastName={contactInfo.last_name}
-                          email={email}
-                          phone={contactInfo.phone_primary}
-                          onClickEdit={() => setOpenForm(true)}
-                        />
+                        <Grid container justify="center">
+                          <Grid item xs={12} md={9}>
+                            <div className={classes.extraPadding}>
+                              <ContactInfoDisplay
+                                contact={contactInfo}
+                                isOnEditMode={openForm}
+                                onClickEdit={handleEditAboutMe}
+                              />
+                            </div>
+                          </Grid>
+                        </Grid>
                       )}
                     </Grid>
                   </Paper>
@@ -371,27 +405,34 @@ const ProfilePage = ({
 
                 <SkillsSection
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   onClickMore={onClickMoreDetails}
                   splitScreen={inSelectMode}
                 />
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Work"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences && experiences.work}
                 />
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Education"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences && experiences.education}
                 />
 
                 <ExperiencesList
                   contactId={contactInfo.id}
+                  contactStatus={contactInfo.status}
                   experienceType="Accomplishment"
                   onClickMore={onClickMoreDetails}
                   updateEditScore={updateEditScore}
+                  experiences={experiences && experiences.portfolio}
                 />
 
                 {/*<ResumesList />*/}
@@ -699,6 +740,23 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
   },
+  aboutMeAndCloseIcon: {
+    display: 'flex',
+  },
+  helpText: {
+    marginLeft: '3px',
+    color: '#5e5e5e',
+    fontSize: '15px',
+    fontWeight: 'normal',
+  },
+  iconButton: {
+    marginRight: '5px',
+    flexBasis: '60px',
+    padding: spacing(0.5),
+    '&:hover': {
+      color: 'black',
+    },
+  },
   instructions: {
     padding: spacing(2, 3, 3),
     paddingBottom: spacing(3),
@@ -761,6 +819,10 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
 
       marginBottom: '20px',
     },
+  },
+  extraPadding: {
+    width: '100%',
+    padding: '0px 30px 0px 30px',
   },
 });
 

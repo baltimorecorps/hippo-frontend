@@ -43,6 +43,7 @@ const CAPABILITIES = [
 const SkillsSection = ({
   classes,
   contactId,
+  contactStatus,
   capabilities,
   contactCapabilities,
   allSkills,
@@ -52,11 +53,11 @@ const SkillsSection = ({
   addContactSkill,
   addSkillSuggestion,
   deleteSkillSuggestion,
-  deleteContactSkill,
   updateContactSkills,
   contactSkills,
   onClickMore,
   splitScreen,
+  refreshDynamicInstructions,
 }) => {
   useEffect(() => {
     if (!capabilities) {
@@ -83,16 +84,18 @@ const SkillsSection = ({
       capabilitySkills = capabilitySkills
         .concat(capability.skills)
         .concat(capability.suggested_skills)
-        .filter(skill => !isOtherSkill[skill.id])
+        .filter(skill => !isOtherSkill[skill.id]);
     });
   }
 
-  const updateOtherSkills = newOtherSkills => {
+  const updateOtherSkills = async newOtherSkills => {
     updateContactSkills(
       contactId,
       capabilitySkills.concat(newOtherSkills || [])
     );
-  }
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
+  };
 
   const onClickMoreHandler = () => {
     createClickTracking(
@@ -103,7 +106,7 @@ const SkillsSection = ({
     onClickMore('skills');
   };
 
-  const splitSize = (size) => {
+  const splitSize = size => {
     if (splitScreen) {
       if (size <= 4) {
         return 6;
@@ -113,8 +116,18 @@ const SkillsSection = ({
     } else {
       return size;
     }
-  }
-  
+  };
+
+  const addNewContactSkill = async (contactId, skill) => {
+    await addContactSkill(contactId, skill);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
+  };
+  const deleteContactSkill = async (contactId, id, skill) => {
+    await deleteSkillSuggestion(contactId, id, skill);
+    if (contactStatus === 'created')
+      await refreshDynamicInstructions(contactId);
+  };
 
   return (
     <Grid container>
@@ -129,7 +142,7 @@ const SkillsSection = ({
                   fontWeight: '700',
                 }}
               >
-                Get started with skills 
+                Get started with skills
               </Typography>
             </Grid>
             <Grid container alignItems="center">
@@ -161,11 +174,13 @@ const SkillsSection = ({
                   );
                 }
                 return (
-                  <Grid item 
-                    xs={splitSize(12)} 
-                    md={splitSize(6)} 
+                  <Grid
+                    item
+                    xs={splitSize(12)}
+                    md={splitSize(6)}
                     lg={splitSize(4)}
-                    key={name}>
+                    key={name}
+                  >
                     <CapabilitySkills
                       id={id}
                       name={name}
@@ -173,9 +188,9 @@ const SkillsSection = ({
                         obj => obj.skill
                       )}
                       contactSkills={contactSkills}
-                      addSkill={skill => addContactSkill(contactId, skill)}
+                      addSkill={skill => addNewContactSkill(contactId, skill)}
                       deleteSkill={skill =>
-                        deleteSkillSuggestion(contactId, id, skill)
+                        deleteContactSkill(contactId, id, skill)
                       }
                       addSkillSuggestion={skill =>
                         addSkillSuggestion(contactId, id, skill)
@@ -190,7 +205,7 @@ const SkillsSection = ({
                   Additional Skills
                 </Typography>
                 <SkillSelect
-                  id='other'
+                  id="other"
                   value={otherSkills || []}
                   onChange={updateOtherSkills}
                 />

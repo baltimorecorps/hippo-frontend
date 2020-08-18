@@ -57,7 +57,7 @@ const experienceValidator = values => {
     err.title_error = 'Required';
   }
 
-  if ((link && !link.startsWith("https://"))) {
+  if (link && !link.startsWith('https://')) {
     isError = true;
     err.link_error = 'Link must start with "https://"';
   }
@@ -65,7 +65,7 @@ const experienceValidator = values => {
     isError = true;
     err.link_error = 'Link must be less than 255 characters';
   }
-  if((link && !link_name ) || (link && (link_name && link_name.length < 1))) {
+  if ((link && !link_name) || (link && link_name && link_name.length < 1)) {
     isError = true;
     err.linkName_error = 'Link name is required when you enter URL';
   }
@@ -280,6 +280,178 @@ const interviewScheduledValidator = values => {
 
   return {isError, err};
 };
+const contactInfoValidator = values => {
+  const {first_name, last_name, email, email_primary, phone_primary} = values;
+  const {
+    street1,
+    city,
+    state,
+    zip_code,
+    country,
+  } = values.profile.address_primary;
+
+  let isError = false;
+  let err = {};
+  function isNumeric(value) {
+    return /^-{0,1}\d+$/.test(value);
+  }
+
+  if (!first_name) {
+    isError = true;
+    err.firstName_error = 'Required';
+  }
+
+  if (!last_name) {
+    isError = true;
+    err.lastName_error = 'Required';
+  }
+
+  if (!email && !email_primary) {
+    isError = true;
+    err.email_error = 'Required';
+  } else if (
+    email &&
+    !validateEmail(email) &&
+    email_primary && !validateEmail(email_primary)
+  ) {
+    isError = true;
+    err.email_error = 'Invalid email address';
+  }
+  if (!phone_primary || phone_primary.replace(/\D/g, '').length < 6) {
+    isError = true;
+    err.phonePrimary_error = 'Required';
+  }
+
+  if (!street1 || street1.length === 0) {
+    isError = true;
+    err.street1_error = 'Required';
+  }
+
+  if (!city || city.length === 0) {
+    isError = true;
+    err.city_error = 'Required';
+  }
+
+  if (!state || state.length === 0) {
+    isError = true;
+    err.state_error = 'Required';
+  }
+
+  if (!zip_code || zip_code.length === 0) {
+    isError = true;
+    err.zipCode_error = 'Required';
+  } else if (!isNumeric(zip_code)) {
+    isError = true;
+    err.zipCode_error = 'Invalid value. Please enter numbers only';
+  } else if (zip_code.length !== 5) {
+    isError = true;
+    err.zipCode_error = 'Invalid value. Please enter five-digit numbers only';
+  }
+  if (!country || country.length === 0) {
+    isError = true;
+    err.country_error = 'Required';
+  }
+
+  return {isError, err};
+};
+const interestsAndGoalsValidator = values => {
+  const {
+    job_search_status,
+    current_job_status,
+    current_edu_status,
+    years_exp,
+    previous_bcorps_program,
+    programs_completed,
+    hear_about_us,
+    hear_about_us_other,
+  } = values.profile;
+
+  const allValues = Object.values(programs_completed);
+
+  let isError = false;
+  let err = {};
+
+  if (!job_search_status || job_search_status.length === 0) {
+    isError = true;
+    err.jobSearchStatus_error = 'Required';
+  }
+  if (!current_job_status || current_job_status.length === 0) {
+    isError = true;
+    err.currentJobStatus_error = 'Required';
+  }
+  if (!current_edu_status || current_edu_status.length === 0) {
+    isError = true;
+    err.currentEduStatus_error = 'Required';
+  }
+
+  if (!years_exp || years_exp.length === 0) {
+    isError = true;
+    err.yearsExp_error = 'Required';
+  }
+  if (
+    previous_bcorps_program &&
+    previous_bcorps_program === 'Yes' &&
+    !allValues.includes(true)
+  ) {
+    isError = true;
+    err.programsCompleted_error = 'Required';
+  }
+  if (
+    hear_about_us &&
+    hear_about_us === 'Other' &&
+    (!hear_about_us_other || hear_about_us_other.length === 0)
+  ) {
+    isError = true;
+    err.hearAboutUsOther_error = 'Required';
+  }
+
+  return {isError, err};
+};
+const programsAndEligibilityValidator = values => {
+  const {program_apps} = values;
+
+  const allValues = Object.values(program_apps).map(
+    program => program.is_interested
+  );
+
+  allValues.push(values.profile.needs_help_programs);
+  console.log(allValues);
+  let isError = false;
+  let err = {};
+
+  if (!allValues.includes(true)) {
+    isError = true;
+    err.interestedPrograms_error = 'Required';
+  }
+
+  return {isError, err};
+};
+const valueAlignmentValidator = values => {
+  const {value_question1, value_question2} = values.profile;
+
+  let isError = false;
+  let err = {};
+  if (!value_question1 || value_question1.length === 0) {
+    isError = true;
+    err.valueQuestion1_error = 'Required';
+  }
+  if (value_question1 && value_question1.length > 1500) {
+    isError = true;
+    err.valueQuestion1_error =
+      'You have reached the maximum limit of 1,500 characters';
+  }
+  if (!value_question2 || value_question2.length === 0) {
+    isError = true;
+    err.valueQuestion2_error = 'Required';
+  }
+  if (value_question2 && value_question2.length > 2500) {
+    isError = true;
+    err.valueQuestion2_error =
+      'You have reached the maximum limit of 2,500 characters';
+  }
+
+  return {isError, err};
+};
 
 export {
   newProfileValidator,
@@ -287,4 +459,8 @@ export {
   opportunityValidator,
   interestValidator,
   interviewScheduledValidator,
+  contactInfoValidator,
+  interestsAndGoalsValidator,
+  programsAndEligibilityValidator,
+  valueAlignmentValidator,
 };
