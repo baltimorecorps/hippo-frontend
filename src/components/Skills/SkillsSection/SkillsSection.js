@@ -93,8 +93,7 @@ const SkillsSection = ({
       contactId,
       capabilitySkills.concat(newOtherSkills || [])
     );
-    if (contactStatus === 'created')
-      await refreshDynamicInstructions(contactId);
+    await refreshDynamicInstructions(contactId);
   };
 
   const onClickMoreHandler = () => {
