@@ -131,9 +131,6 @@ const getResume = createSelector(
 export const mapStateToProps = (state, props) => {
   const contactId = props.contactId || props.match.params.contactId;
   const contactInfo = state.contacts[contactId];
-  // const haveExperience = Object.values(state.experiences).some(
-  //   exp => exp.type === 'Work'
-  // );
 
   let experiences = {work: [], education: [], portfolio: []};
   if (
