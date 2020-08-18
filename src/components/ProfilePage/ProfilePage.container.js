@@ -132,24 +132,9 @@ export const mapStateToProps = (state, props) => {
   const contactId = props.contactId || props.match.params.contactId;
   const contactInfo = state.contacts[contactId];
 
-  let experiences = {work: [], education: [], portfolio: []};
-  if (
-    contactInfo &&
-    contactInfo.experiences &&
-    contactInfo.experiences.length > 0
-  )
-    contactInfo.experiences.forEach(exp => {
-      if (exp.type === 'Work') return experiences.work.push(exp);
-      if (exp.type === 'Education') return experiences.education.push(exp);
-      if (exp.type === 'Accomplishment') return experiences.portfolio.push(exp);
-    });
-
-  const haveExperience = experiences.work.length > 0;
   return {
     myContactId: Number(contactId),
     contactInfo,
-    haveExperience,
-    experiences,
     showResumeDialog:
       state.resume.resumeCreationStep === RESUME_CREATION.CHOOSE_STYLE,
     inSelectMode:
