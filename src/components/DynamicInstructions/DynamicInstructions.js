@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -14,10 +14,6 @@ const DynamicInstructions = ({
   status,
   classes,
 }) => {
-  useEffect(() => {
-    if (id == null || instructions == null) getDynamicInstructions(id);
-  }, [id, instructions, getDynamicInstructions]);
-
   return (
     <Paper className={classes.instructions}>
       <div className={classes.headerContainer}>
@@ -35,7 +31,7 @@ const DynamicInstructions = ({
       <SubmitProfileExpansion
         instructions={instructions}
         status={status}
-        isExpanded={status !== 'approved'}
+        isExpanded={status !== 'approved' || false}
         onSubmit={() => submitProfileForReview(id)}
       />
       <ApplyOpportunitiesExpansion isExpanded={status === 'approved'} />

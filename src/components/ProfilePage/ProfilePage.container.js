@@ -149,7 +149,7 @@ export const mapStateToProps = (state, props) => {
 
   const haveExperience = experiences.work.length > 0;
   return {
-    contactId: Number(contactId),
+    myContactId: Number(contactId),
     contactInfo,
     haveExperience,
     experiences,
