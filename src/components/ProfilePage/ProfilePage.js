@@ -338,29 +338,44 @@ const ProfilePage = ({
 
                 <Grid item xs={12}>
                   <Paper className={classes.BasicInfoPaper}>
-                    <div className={classes.headerContainer}>
-                      <Typography
-                        variant="h5"
-                        component="h1"
-                        style={{
-                          fontWeight: '700',
-                        }}
-                      >
-                        About Me
-                      </Typography>
-                      {openForm ? (
-                        <IconButton
-                          edge="end"
-                          aria-label="cancel form"
-                          onMouseDown={() => setOpenForm(false)}
-                          className={classes.iconButton}
+                    <Grid container className={classes.headerContainer}>
+                      <Grid container justify="space-between">
+                        <Grid item>
+                          <Typography
+                            variant="h5"
+                            component="h1"
+                            style={{
+                              fontWeight: '700',
+                            }}
+                          >
+                            About Me
+                          </Typography>
+                        </Grid>
+
+                        <Grid item>
+                          {openForm && (
+                            <IconButton
+                              edge="end"
+                              aria-label="cancel form"
+                              onMouseDown={() => setOpenForm(false)}
+                              className={classes.iconButton}
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                          )}
+                        </Grid>
+                      </Grid>
+                      <Grid container alignItems="center">
+                        <Typography
+                          variant="subtitle1"
+                          component="p"
+                          className={classes.helpText}
                         >
-                          <CloseIcon />
-                        </IconButton>
-                      ) : (
-                        <div style={{height: '45px'}}></div>
-                      )}
-                    </div>
+                          Candidate information, value alignment, interests and
+                          goals, programs and eligibility
+                        </Typography>
+                      </Grid>
+                    </Grid>
                     <Grid container justify="center">
                       {openForm ? (
                         <AboutMeForms
@@ -717,11 +732,26 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     },
   },
   headerContainer: {
-    // paddingBottom: spacing(2),
+    paddingBottom: spacing(2),
     marginBottom: spacing(2),
     borderBottom: 'solid #e0e0e0 1px',
+  },
+  aboutMeAndCloseIcon: {
     display: 'flex',
-    justifyContent: 'space-between',
+  },
+  helpText: {
+    marginLeft: '3px',
+    color: '#5e5e5e',
+    fontSize: '15px',
+    fontWeight: 'normal',
+  },
+  iconButton: {
+    marginRight: '5px',
+    flexBasis: '60px',
+    padding: spacing(0.5),
+    '&:hover': {
+      color: 'black',
+    },
   },
   instructions: {
     padding: spacing(2, 3, 3),
