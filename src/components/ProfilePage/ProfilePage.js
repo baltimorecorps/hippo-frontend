@@ -65,7 +65,7 @@ const useScroll = ref => {
 
 const ProfilePage = ({
   updateContact,
-  myContactId,
+  contactId,
   contactInfo,
   programs,
   myResume,
@@ -87,8 +87,6 @@ const ProfilePage = ({
 }) => {
   const wrapperRef = useRef();
   const scrollTo = useScroll(wrapperRef);
-  let {contactId} = useParams();
-  const contactIdParam = contactId;
   const [resumeLink, setResumeLink] = useState(null);
   const [openForm, setOpenForm] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -144,19 +142,19 @@ const ProfilePage = ({
     if (
       (!loading &&
         typeof contactInfo == 'undefined' &&
-        myContactId !== 'undefined') ||
+        contactId !== undefined) ||
       (contactInfo && !contactInfo.email)
     ) {
       setLoading(true);
       (async () => {
-        await getContactProfile(myContactId);
+        await getContactProfile(contactId);
         setLoading(false);
       })();
     }
   }, [
     loading,
     setLoading,
-    myContactId,
+    contactId,
     contactInfo,
     getContact,
     getContactProfile,
@@ -164,9 +162,9 @@ const ProfilePage = ({
 
   useEffect(() => {
     (async () => {
-      if (contactIdParam) await getContactProfile(contactIdParam);
+      await getContactProfile(contactId);
     })();
-  }, [contactIdParam, getContactProfile]);
+  }, [contactId, getContactProfile]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
