@@ -95,7 +95,7 @@ const SubmitProfileExpansion = ({
 
   return (
     <ExpansionPanel
-      defaultExpanded={isExpanded}
+      defaultExpanded={isExpanded || false}
       className={classes.expansionPanel}
     >
       <ExpansionPanelSummary
