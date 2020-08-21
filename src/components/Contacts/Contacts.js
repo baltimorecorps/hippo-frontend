@@ -12,8 +12,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
   useEffect(() => {
-    getAllContactsShort();
-  }, [getAllContactsShort]);
+    if (!contacts) getAllContactsShort();
+  }, [getAllContactsShort, contacts]);
 
   const [searchBy, setSearchBy] = useState('name');
   const [showContacts, setShowContacts] = useState(contacts || null);

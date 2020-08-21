@@ -129,11 +129,15 @@ const getResume = createSelector(
 // display on the page, and we pull that contact's info out of the state
 
 export const mapStateToProps = (state, props) => {
-  const contactId = props.contactId || props.match.params.contactId;
-  const contactInfo = state.contacts[contactId];
+  const myContactId = props.contactId;
+  const contactParamId =
+    props.match && props.match.params && props.match.params.contactId;
+
+  const contactInfo = state.contacts[myContactId || contactParamId];
 
   return {
-    contactId: Number(contactId),
+    myContactId: Number(myContactId),
+    contactParamId: Number(contactParamId),
     contactInfo,
     showResumeDialog:
       state.resume.resumeCreationStep === RESUME_CREATION.CHOOSE_STYLE,
