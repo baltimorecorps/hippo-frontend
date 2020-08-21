@@ -65,7 +65,8 @@ const useScroll = ref => {
 
 const ProfilePage = ({
   updateContact,
-  contactId,
+  myContactId,
+  contactParamId,
   contactInfo,
   programs,
   myResume,
@@ -138,33 +139,40 @@ const ProfilePage = ({
     });
   };
 
-  useEffect(() => {
-    if (
-      (!loading &&
-        typeof contactInfo == 'undefined' &&
-        contactId !== undefined) ||
-      (contactInfo && !contactInfo.email)
-    ) {
-      setLoading(true);
-      (async () => {
-        await getContactProfile(contactId);
-        setLoading(false);
-      })();
-    }
-  }, [
-    loading,
-    setLoading,
-    contactId,
-    contactInfo,
-    getContact,
-    getContactProfile,
-  ]);
+  // useEffect(() => {
+  //   if (
+  //     (!loading &&
+  //       typeof contactInfo == 'undefined' &&
+  //       myContactId !== undefined) ||
+  //     (contactInfo && !contactInfo.email)
+  //   ) {
+  //     setLoading(true);
+  //     (async () => {
+  //       await getContactProfile(myContactId);
+  //       setLoading(false);
+  //     })();
+  //   }
+  // }, [
+  //   loading,
+  //   setLoading,
+  //   myContactId,
+  //   contactInfo,
+  //   getContact,
+  //   getContactProfile,
+  // ]);
 
   useEffect(() => {
     (async () => {
-      await getContactProfile(contactId);
+      if (myContactId) {
+        if (!contactInfo || (contactInfo && !contactInfo.experiences))
+          await getContactProfile(myContactId);
+      }
+      if (contactParamId) {
+        if (!contactInfo || (contactInfo && !contactInfo.experiences))
+          await getContactProfile(contactParamId);
+      }
     })();
-  }, [contactId, getContactProfile]);
+  }, [myContactId, contactParamId, contactInfo, getContactProfile]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -173,6 +181,8 @@ const ProfilePage = ({
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }
+
+  const contactId = myContactId || contactParamId;
 
   const genResumeLocal = async () => {
     // TODO: How should we get the resume name for real?
@@ -254,7 +264,6 @@ const ProfilePage = ({
     }
     setOpenForm(true);
   };
-
   return (
     <React.Fragment>
       <ResumeDialog
