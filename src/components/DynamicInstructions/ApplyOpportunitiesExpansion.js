@@ -14,7 +14,7 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
   return (
     <ExpansionPanel
-      defaultExpanded={isExpanded}
+      defaultExpanded={isExpanded || false}
       className={classes.expansionPanel}
     >
       <ExpansionPanelSummary

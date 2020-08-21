@@ -133,7 +133,7 @@ export const mapStateToProps = (state, props) => {
   const contactInfo = state.contacts[contactId];
 
   return {
-    myContactId: Number(contactId),
+    contactId: Number(contactId),
     contactInfo,
     showResumeDialog:
       state.resume.resumeCreationStep === RESUME_CREATION.CHOOSE_STYLE,
