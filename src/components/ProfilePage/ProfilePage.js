@@ -68,9 +68,7 @@ const ProfilePage = ({
   myContactId,
   contactParamId,
   contactInfo,
-  programs,
   myResume,
-  getContact,
   getContactProfile,
   startResumeCreation,
   startResumeSelect,
@@ -81,7 +79,6 @@ const ProfilePage = ({
   showResumeDialog,
   showResumeSpinner,
   inSelectMode,
-  getAboutMe,
   createAboutMe,
   updateAboutMe,
   refreshDynamicInstructions,
@@ -94,7 +91,6 @@ const ProfilePage = ({
   const [isOpenDrawer1, setOpenDrawer1] = React.useState(false);
   const [isOpenDrawer2, setOpenDrawer2] = React.useState(false);
   const [sidebarType, setSidebarType] = useState('work');
-  const [loading, setLoading] = useState(false);
   const [editScores, setEditScores] = useState({});
   const [viewResume, setViewResume] = useState(false);
   const [resume, setResume] = useState({myResume: null});
@@ -138,28 +134,6 @@ const ProfilePage = ({
       skills: skills,
     });
   };
-
-  // useEffect(() => {
-  //   if (
-  //     (!loading &&
-  //       typeof contactInfo == 'undefined' &&
-  //       myContactId !== undefined) ||
-  //     (contactInfo && !contactInfo.email)
-  //   ) {
-  //     setLoading(true);
-  //     (async () => {
-  //       await getContactProfile(myContactId);
-  //       setLoading(false);
-  //     })();
-  //   }
-  // }, [
-  //   loading,
-  //   setLoading,
-  //   myContactId,
-  //   contactInfo,
-  //   getContact,
-  //   getContactProfile,
-  // ]);
 
   useEffect(() => {
     (async () => {
