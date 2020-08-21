@@ -157,18 +157,14 @@ export const mapDispatchToProps = dispatch => ({
   refreshPrograms: async contactId => {
     await refreshPrograms(contactId)(dispatch);
   },
-  getContact: async contactId => {
-    await getContact(contactId)(dispatch);
-  },
+
   getContactProfile: async contactId => {
     await getContactProfile(contactId)(dispatch);
   },
   createAboutMe: async contactId => {
     await createAboutMe(contactId)(dispatch);
   },
-  getAboutMe: async contactId => {
-    await getAboutMe(contactId)(dispatch);
-  },
+
   updateAboutMe: async (contactId, aboutMe) => {
     await updateAboutMe(contactId, aboutMe)(dispatch);
   },
