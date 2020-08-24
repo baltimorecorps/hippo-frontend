@@ -71,13 +71,6 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
         >
           {first_name} {last_name}
         </Typography>
-        <IconButton
-          onClick={() => onClickEdit()}
-          size="small"
-          aria-label="edit experience"
-        >
-          <EditIcon className={classes.editIcon} />
-        </IconButton>
       </Grid>
 
       <Typography
@@ -153,13 +146,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     alignItems: 'center',
     marginBottom: spacing(1),
   },
-  editIcon: {
-    flexBasis: '60px',
-    padding: spacing(0.5),
-    '&:hover': {
-      color: 'black',
-    },
-  },
+
   homeIcon: {marginRight: '15px', fontSize: '30px'},
   icon: {marginRight: '15px', fontSize: '30px'},
   textInfo: {display: 'flex', marginBottom: spacing(1)},

@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
+import EditIcon from '@material-ui/icons/Edit';
 
 import ContactInfoDisplay from 'components/AboutMe/defaultDisplays/ContactInfoDisplay';
 import ContactInfoForm from 'components/AboutMe/forms/ContactInfoForm';
@@ -375,14 +376,22 @@ const ProfilePage = ({
                         </Grid>
 
                         <Grid item>
-                          {openAboutMeSection && (
+                          {openAboutMeSection ? (
                             <IconButton
                               edge="end"
-                              aria-label="cancel form"
+                              aria-label="close about me section"
                               onMouseDown={() => setOpenAboutMeSection(false)}
                               className={classes.iconButton}
                             >
                               <CloseIcon />
+                            </IconButton>
+                          ) : (
+                            <IconButton
+                              onClick={() => handleEditAboutMe()}
+                              size="small"
+                              aria-label="open about me section"
+                            >
+                              <EditIcon className={classes.editButton} />
                             </IconButton>
                           )}
                         </Grid>
@@ -783,7 +792,7 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     fontWeight: 'normal',
   },
   iconButton: {
-    marginRight: '5px',
+    marginRight: '2px',
     flexBasis: '60px',
     padding: spacing(0.5),
     '&:hover': {
@@ -856,6 +865,13 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   extraPadding: {
     width: '100%',
     padding: '0px 30px 0px 30px',
+  },
+  editButton: {
+    flexBasis: '60px',
+    padding: spacing(0.5),
+    '&:hover': {
+      color: 'black',
+    },
   },
 });
 
