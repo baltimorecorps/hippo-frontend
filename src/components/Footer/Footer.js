@@ -10,7 +10,11 @@ import Logo from './img/logo_square.png';
 
 const Footer = ({classes, page}) => {
   const termsLink = createALink('Terms', terms, classes.link);
-  const policyLink = createALink('Privacy', policy, classes.link);
+  const policyLink = createALink(
+    'Privacy',
+    'https://www.baltimorecorps.org/privacy-policy',
+    classes.link
+  );
 
   let staffViewAppMatch = useRouteMatch(
     '/opportunities/:opportunityId/contacts/:contactId/internal-review'
