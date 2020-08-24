@@ -11,13 +11,22 @@ import {blankProfile} from '../defaultData';
 
 import get from 'lodash.get';
 
-const ValueAlignmentDisplay = ({contact, onClickEdit, classes}) => {
+const ValueAlignmentDisplay = ({
+  contact,
+  onClickEdit,
+  isSubmitted,
+  classes,
+}) => {
   const profile = get(contact, 'profile', blankProfile);
   const {value_question1, value_question2} = profile;
 
   return (
     <React.Fragment>
-      <Header header="Value Alignment" onClickEdit={onClickEdit} />
+      <Header
+        header="Value Alignment"
+        isSubmitted={isSubmitted}
+        onClickEdit={onClickEdit}
+      />
 
       <QuestionWithOneAnswer
         question="Why is racial equity work in Baltimore important to you? *"

@@ -83,6 +83,7 @@ const AboutMeForms = ({
           ) : (
             <div className={classes.extraPadding}>
               <ValueAlignmentDisplay
+                isSubmitted={contact.status !== 'created'}
                 contact={contact}
                 onClickEdit={() =>
                   setOpenAboutMeForms({

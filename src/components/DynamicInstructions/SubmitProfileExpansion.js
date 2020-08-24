@@ -43,7 +43,10 @@ const SubmitProfileExpansion = ({
               setOpenAboutMeSection(true);
               setOpenAboutMeForms({
                 ...openAboutMeForms,
-                [apiKey]: true,
+                [apiKey]:
+                  apiKey === 'value_alignment' && status !== 'created'
+                    ? false
+                    : true,
               });
             },
           });
