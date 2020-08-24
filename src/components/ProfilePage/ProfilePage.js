@@ -67,6 +67,7 @@ const ProfilePage = ({
   updateContact,
   myContactId,
   contactParamId,
+  contactId,
   contactInfo,
   myResume,
   getContactProfile,
@@ -135,18 +136,18 @@ const ProfilePage = ({
     });
   };
 
+  const getProfile = useCallback(
+    async contactId => {
+      if (contactInfo === undefined || !contactInfo.experiences) {
+        await getContactProfile(contactId);
+      }
+    },
+    [contactInfo, getContactProfile]
+  );
+
   useEffect(() => {
-    (async () => {
-      if (myContactId) {
-        if (!contactInfo || (contactInfo && !contactInfo.experiences))
-          await getContactProfile(myContactId);
-      }
-      if (contactParamId) {
-        if (!contactInfo || (contactInfo && !contactInfo.experiences))
-          await getContactProfile(contactParamId);
-      }
-    })();
-  }, [myContactId, contactParamId, contactInfo, getContactProfile]);
+    getProfile(contactId);
+  }, [contactId, getProfile]);
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be
@@ -155,8 +156,6 @@ const ProfilePage = ({
     // TODO: Ideally we have a better empty/error state here
     return <div />;
   }
-
-  const contactId = myContactId || contactParamId;
 
   const genResumeLocal = async () => {
     // TODO: How should we get the resume name for real?
@@ -514,7 +513,7 @@ const helpTextOptions = {
 };
 
 ProfilePage.propTypes = {
-  contactId: PropTypes.any.isRequired,
+  contactId: PropTypes.number,
   contactInfo: PropTypes.shape({
     first_name: PropTypes.string,
     last_name: PropTypes.string,
