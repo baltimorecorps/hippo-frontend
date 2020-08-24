@@ -373,8 +373,9 @@ const ProfilePage = ({
                             id="about-me-section"
                           >
                             About Me{' '}
-                            {contactInfo.instructions.about_me.is_complete ===
-                              false && <span style={{color: 'red'}}>*</span>}
+                            {contactInfo.instructions &&
+                              contactInfo.instructions.about_me.is_complete ===
+                                false && <span style={{color: 'red'}}>*</span>}
                           </Typography>
                         </Grid>
 

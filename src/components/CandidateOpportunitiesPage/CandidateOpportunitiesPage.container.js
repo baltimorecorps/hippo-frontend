@@ -14,9 +14,12 @@ const mapStateToProps = state => {
 
   const opportunities = Object.values(state.opportunities);
 
+  const contactId = state.accounts.contact.id;
+  const contact = state.contacts[contactId];
+
   return {
     opportunities,
-    contact: state.accounts.contact,
+    contact,
     submittedIds: submittedIds,
   };
 };

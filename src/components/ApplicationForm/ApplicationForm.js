@@ -156,7 +156,6 @@ ApplicationForm.propTypes = {
     program_id: PropTypes.number.isRequired,
     gdoc_link: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    cycle_id: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
   application: PropTypes.object,
