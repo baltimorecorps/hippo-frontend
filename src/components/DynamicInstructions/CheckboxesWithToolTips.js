@@ -13,12 +13,16 @@ import Checkbox from '@material-ui/core/Checkbox';
 const ContentWithHelpTextToolTipsTemplate = ({
   option,
   isSubContent,
-  hasCompleted,
+  isCompleted,
   openThisForm,
+  scrollToThisForm,
   classes,
 }) => {
   return (
-    <a href="#about-me-section" onClick={() => openThisForm()}>
+    <a
+      href={scrollToThisForm}
+      onClick={openThisForm ? () => openThisForm() : null}
+    >
       <Typography
         variant="body1"
         component="p"
@@ -27,8 +31,7 @@ const ContentWithHelpTextToolTipsTemplate = ({
         {isSubContent && (
           <ArrowForwardIosIcon className={classes.arrowRightIcon} />
         )}{' '}
-        {option.content}{' '}
-        {hasCompleted && <span style={{color: 'red'}}> *</span>}
+        {option.content} {isCompleted && <span style={{color: 'red'}}> *</span>}
         {option.helpText && (
           <Tooltip
             title={
@@ -41,6 +44,7 @@ const ContentWithHelpTextToolTipsTemplate = ({
                 }}
               >
                 {option.helpText}
+                {isCompleted && <span style={{color: 'red'}}> *</span>}
               </Typography>
             }
             placement="right"
@@ -113,8 +117,9 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
         label={
           <ContentWithHelpTextToolTips
             option={option}
-            hasCompleted={!option.checked}
-            openThisForm={() => option.setOpenThisForm()}
+            isCompleted={!option.checked}
+            openThisForm={option.setOpenThisForm || null}
+            scrollToThisForm={option.scrollToThisForm || '#'}
             isSubContent={false}
           />
         }
@@ -125,6 +130,7 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
             key={index}
             option={subOption}
             isSubContent={true}
+            isCompleted={!option.checked}
           />
         ))}
     </div>

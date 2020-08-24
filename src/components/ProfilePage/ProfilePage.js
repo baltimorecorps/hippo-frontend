@@ -247,6 +247,7 @@ const ProfilePage = ({
     }
     setOpenAboutMeSection(true);
   };
+
   return (
     <React.Fragment>
       <ResumeDialog
@@ -363,7 +364,7 @@ const ProfilePage = ({
                             component="h1"
                             style={{
                               fontWeight: '700',
-                              scrollMarginTop: '200px',
+                              scrollMarginTop: '100px',
                             }}
                             id="about-me-section"
                           >
@@ -423,12 +424,20 @@ const ProfilePage = ({
                 </Grid>
 
                 <SkillsSection
+                  isCompleted={
+                    contactInfo.instructions.profile.components.tag_skills
+                  }
                   contactId={contactInfo.id}
                   contactStatus={contactInfo.status}
                   onClickMore={onClickMoreDetails}
                   splitScreen={inSelectMode}
                 />
                 <ExperiencesList
+                  sectionName="work-section"
+                  isCompleted={
+                    contactInfo.instructions.profile.components.add_experience
+                      .is_complete
+                  }
                   contactId={contactInfo.id}
                   contactStatus={contactInfo.status}
                   experienceType="Work"
@@ -437,6 +446,10 @@ const ProfilePage = ({
                   experiences={experiences && experiences.work}
                 />
                 <ExperiencesList
+                  sectionName="education-section"
+                  isCompleted={
+                    contactInfo.instructions.profile.components.add_education
+                  }
                   contactId={contactInfo.id}
                   contactStatus={contactInfo.status}
                   experienceType="Education"
@@ -446,6 +459,7 @@ const ProfilePage = ({
                 />
 
                 <ExperiencesList
+                  sectionName="portfolio-section"
                   contactId={contactInfo.id}
                   contactStatus={contactInfo.status}
                   experienceType="Accomplishment"

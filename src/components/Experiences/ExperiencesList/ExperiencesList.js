@@ -19,6 +19,8 @@ import {sortExperiences} from './helpers';
 
 const ExperiencesList = ({
   onClickMore,
+  isCompleted,
+  sectionName,
   contactId,
   contactStatus,
   experienceType,
@@ -134,9 +136,14 @@ const ExperiencesList = ({
                   component="h1"
                   style={{
                     fontWeight: '700',
+                    scrollMarginTop: '100px',
                   }}
+                  id={sectionName}
                 >
-                  {header}
+                  {header}{' '}
+                  {isCompleted === false && (
+                    <span style={{color: 'red'}}>*</span>
+                  )}
                 </Typography>
               </Grid>
 

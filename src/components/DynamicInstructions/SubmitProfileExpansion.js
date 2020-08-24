@@ -38,6 +38,7 @@ const SubmitProfileExpansion = ({
             content: labelName.content,
             checked: apiValue,
             helpText: labelName.helpText || null,
+            scrollToThisForm: '#about-me-section',
             setOpenThisForm: () => {
               setOpenAboutMeSection(true);
               setOpenAboutMeForms({
@@ -49,6 +50,13 @@ const SubmitProfileExpansion = ({
       })
   );
 
+  const sectionIds = {
+    tag_skills: '#skills-section',
+    add_experience: '#work-section',
+    add_education: '#education-section',
+    add_portfolio: '#portfolio-section',
+  };
+
   const experienceChecks = [];
   Object.entries(dynamicInstructionContents.profile).forEach(
     ([labelKey, labelName]) =>
@@ -59,6 +67,7 @@ const SubmitProfileExpansion = ({
               content: labelName.is_complete.content,
               checked: apiValue.is_complete,
               helpText: labelName.is_complete.helpText,
+              scrollToThisForm: sectionIds[apiKey],
               components: Object.entries(labelName.components).map(
                 ([key, value]) => {
                   const components = {};
@@ -76,6 +85,7 @@ const SubmitProfileExpansion = ({
               content: labelName.content,
               checked: apiValue,
               helpText: labelName.helpText,
+              scrollToThisForm: sectionIds[apiKey],
             });
           }
         }
