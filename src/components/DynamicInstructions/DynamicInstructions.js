@@ -12,6 +12,9 @@ const DynamicInstructions = ({
   id,
   instructions,
   status,
+  openAboutMeSection,
+  openAboutMeForms,
+  setOpenAboutMeForms,
   classes,
 }) => {
   return (
@@ -33,6 +36,9 @@ const DynamicInstructions = ({
         status={status}
         isExpanded={status !== undefined ? status !== 'approved' : false}
         onSubmit={() => submitProfileForReview(id)}
+        openAboutMeSection={openAboutMeSection}
+        openAboutMeForms={openAboutMeForms}
+        setOpenAboutMeForms={setOpenAboutMeForms}
       />
       <ApplyOpportunitiesExpansion
         isExpanded={status !== undefined ? status === 'approved' : false}

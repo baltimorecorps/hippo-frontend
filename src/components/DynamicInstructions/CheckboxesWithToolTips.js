@@ -13,6 +13,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 const ContentWithHelpTextToolTipsTemplate = ({
   option,
   isSubContent,
+  hasCompleted,
   classes,
 }) => {
   return (
@@ -24,7 +25,7 @@ const ContentWithHelpTextToolTipsTemplate = ({
       {isSubContent && (
         <ArrowForwardIosIcon className={classes.arrowRightIcon} />
       )}{' '}
-      {option.content}{' '}
+      {option.content} {hasCompleted && <span style={{color: 'red'}}> *</span>}
       {option.helpText && (
         <Tooltip
           title={
@@ -106,7 +107,11 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
           />
         }
         label={
-          <ContentWithHelpTextToolTips option={option} isSubContent={false} />
+          <ContentWithHelpTextToolTips
+            option={option}
+            hasCompleted={!option.checked}
+            isSubContent={false}
+          />
         }
       />{' '}
       {option.components &&

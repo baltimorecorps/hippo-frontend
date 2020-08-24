@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-
+import _get from 'lodash.get';
 import ContactInfoDisplay from './defaultDisplays/ContactInfoDisplay';
 import ContactInfoForm from './forms/ContactInfoForm';
 import InterestsAndGoalsForm from './forms/InterestsAndGoalsForm';
@@ -13,25 +13,33 @@ import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm.conta
 import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
 import EachExpansionPanel from './EachExpansionPanel';
 
-const AboutMeForms = ({contact, onSubmit, classes}) => {
-  const [openForms, setOpenForms] = useState({
-    contact_info: false,
-    value_alignment: false,
-    interests_goals: false,
-    programs_eligibility: false,
-    demographic_info: false,
+const AboutMeForms = ({
+  contact,
+  onSubmit,
+  openAboutMeForms,
+  setOpenAboutMeForms,
+  classes,
+}) => {
+  const aboutMe = _get(contact.instructions.about_me, 'components', {
+    candidate_information: true,
+    interests: true,
+    programs: true,
+    value_alignment: true,
   });
+
+  const {candidate_information, interests, programs, value_alignment} = aboutMe;
   return (
     <Grid container justify="center" style={{width: '100%'}}>
       <EachExpansionPanel
         PanelTextHeader="Candidate Information"
+        neededAnswer={!candidate_information}
         content={
-          openForms.contact_info ? (
+          openAboutMeForms.contact_info ? (
             <ContactInfoForm
               contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
-                setOpenForms({...openForms, contact_info: false})
+                setOpenAboutMeForms({...openAboutMeForms, contact_info: false})
               }
             />
           ) : (
@@ -40,7 +48,7 @@ const AboutMeForms = ({contact, onSubmit, classes}) => {
                 contact={contact}
                 isOnEditMode={true}
                 onClickEdit={() =>
-                  setOpenForms({...openForms, contact_info: true})
+                  setOpenAboutMeForms({...openAboutMeForms, contact_info: true})
                 }
               />
             </div>
@@ -50,13 +58,17 @@ const AboutMeForms = ({contact, onSubmit, classes}) => {
 
       <EachExpansionPanel
         PanelTextHeader="Value Alignments"
+        neededAnswer={!value_alignment}
         content={
-          openForms.value_alignment ? (
+          openAboutMeForms.value_alignment ? (
             <ValueAlignmentForm
               contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
-                setOpenForms({...openForms, value_alignment: false})
+                setOpenAboutMeForms({
+                  ...openAboutMeForms,
+                  value_alignment: false,
+                })
               }
             />
           ) : (
@@ -64,7 +76,10 @@ const AboutMeForms = ({contact, onSubmit, classes}) => {
               <ValueAlignmentDisplay
                 contact={contact}
                 onClickEdit={() =>
-                  setOpenForms({...openForms, value_alignment: true})
+                  setOpenAboutMeForms({
+                    ...openAboutMeForms,
+                    value_alignment: true,
+                  })
                 }
               />
             </div>
@@ -74,13 +89,17 @@ const AboutMeForms = ({contact, onSubmit, classes}) => {
 
       <EachExpansionPanel
         PanelTextHeader="Interests and Goals"
+        neededAnswer={!interests}
         content={
-          openForms.interests_goals ? (
+          openAboutMeForms.interests_goals ? (
             <InterestsAndGoalsForm
               contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
-                setOpenForms({...openForms, interests_goals: false})
+                setOpenAboutMeForms({
+                  ...openAboutMeForms,
+                  interests_goals: false,
+                })
               }
             />
           ) : (
@@ -88,7 +107,10 @@ const AboutMeForms = ({contact, onSubmit, classes}) => {
               <InterestsAndGoalsDisplay
                 contact={contact}
                 onClickEdit={() =>
-                  setOpenForms({...openForms, interests_goals: true})
+                  setOpenAboutMeForms({
+                    ...openAboutMeForms,
+                    interests_goals: true,
+                  })
                 }
               />
             </div>
@@ -98,13 +120,17 @@ const AboutMeForms = ({contact, onSubmit, classes}) => {
 
       <EachExpansionPanel
         PanelTextHeader="Programs and Eligibility"
+        neededAnswer={!programs}
         content={
-          openForms.programs_eligibility ? (
+          openAboutMeForms.programs_eligibility ? (
             <ProgramsAndEligibilityForm
               contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
-                setOpenForms({...openForms, programs_eligibility: false})
+                setOpenAboutMeForms({
+                  ...openAboutMeForms,
+                  programs_eligibility: false,
+                })
               }
             />
           ) : (
@@ -112,7 +138,10 @@ const AboutMeForms = ({contact, onSubmit, classes}) => {
               <ProgramsAndEligibilityDisplay
                 contact={contact}
                 onClickEdit={() =>
-                  setOpenForms({...openForms, programs_eligibility: true})
+                  setOpenAboutMeForms({
+                    ...openAboutMeForms,
+                    programs_eligibility: true,
+                  })
                 }
               />
             </div>

@@ -7,7 +7,12 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const EachExpansionPanel = ({PanelTextHeader, content, classes}) => {
+const EachExpansionPanel = ({
+  PanelTextHeader,
+  content,
+  neededAnswer,
+  classes,
+}) => {
   return (
     <ExpansionPanel defaultExpanded={false} className={classes.expansionPanel}>
       <ExpansionPanelSummary
@@ -16,8 +21,9 @@ const EachExpansionPanel = ({PanelTextHeader, content, classes}) => {
         id="panel1a-header"
         className={classes.header}
       >
-        <Typography className={classes.headerText}>
+        <Typography>
           {PanelTextHeader}
+          {neededAnswer ? <span style={{color: 'red'}}> *</span> : null}
         </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>{content}</ExpansionPanelDetails>

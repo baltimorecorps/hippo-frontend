@@ -87,7 +87,9 @@ const ProfilePage = ({
   const wrapperRef = useRef();
   const scrollTo = useScroll(wrapperRef);
   const [resumeLink, setResumeLink] = useState(null);
-  const [openForm, setOpenForm] = useState(false);
+  // const [openForm, setOpenForm] = useState(false);
+  const [openAboutMeSection, setOpenAboutMeSection] = useState(false);
+
   const [openSidebar, setOpenSidebar] = useState(false);
   const [isOpenDrawer1, setOpenDrawer1] = React.useState(false);
   const [isOpenDrawer2, setOpenDrawer2] = React.useState(false);
@@ -95,6 +97,14 @@ const ProfilePage = ({
   const [editScores, setEditScores] = useState({});
   const [viewResume, setViewResume] = useState(false);
   const [resume, setResume] = useState({myResume: null});
+  const [openAboutMeForms, setOpenAboutMeForms] = useState({
+    contact_info: false,
+    value_alignment: false,
+    interests_goals: false,
+    programs_eligibility: false,
+    demographic_info: false,
+  });
+
   let experiences = {work: [], education: [], portfolio: []};
   if (
     contactInfo &&
@@ -122,7 +132,8 @@ const ProfilePage = ({
 
   const handleUpdateContact = async values => {
     await updateContact(values);
-    setOpenForm(false);
+    // setOpenForm(false);
+    setOpenAboutMeSection(false);
   };
   const handleUpdateAboutMe = async (contactId, values) => {
     await updateAboutMe(contactId, values);
@@ -235,7 +246,7 @@ const ProfilePage = ({
         console.error('Error creating new about-me', error);
       }
     }
-    setOpenForm(true);
+    setOpenAboutMeSection(true);
   };
   return (
     <React.Fragment>
@@ -337,6 +348,9 @@ const ProfilePage = ({
                     instructions={contactInfo.instructions}
                     id={contactInfo.id}
                     status={contactInfo.status}
+                    openAboutMeSection={() => setOpenAboutMeSection(true)}
+                    openAboutMeForms={openAboutMeForms}
+                    setOpenAboutMeForms={setOpenAboutMeForms}
                   />
                 )}
 
@@ -350,18 +364,22 @@ const ProfilePage = ({
                             component="h1"
                             style={{
                               fontWeight: '700',
+                              scrollMarginTop: '200px',
                             }}
+                            id="about-me-section"
                           >
-                            About Me
+                            About Me{' '}
+                            {contactInfo.instructions.about_me.is_complete ===
+                              false && <span style={{color: 'red'}}>*</span>}
                           </Typography>
                         </Grid>
 
                         <Grid item>
-                          {openForm && (
+                          {openAboutMeSection && (
                             <IconButton
                               edge="end"
                               aria-label="cancel form"
-                              onMouseDown={() => setOpenForm(false)}
+                              onMouseDown={() => setOpenAboutMeSection(false)}
                               className={classes.iconButton}
                             >
                               <CloseIcon />
@@ -381,10 +399,12 @@ const ProfilePage = ({
                       </Grid>
                     </Grid>
                     <Grid container justify="center">
-                      {openForm ? (
+                      {openAboutMeSection ? (
                         <AboutMeForms
                           contact={contactInfo}
                           onSubmit={handleUpdateAboutMe}
+                          openAboutMeForms={openAboutMeForms}
+                          setOpenAboutMeForms={setOpenAboutMeForms}
                         />
                       ) : (
                         <Grid container justify="center">
@@ -392,7 +412,7 @@ const ProfilePage = ({
                             <div className={classes.extraPadding}>
                               <ContactInfoDisplay
                                 contact={contactInfo}
-                                isOnEditMode={openForm}
+                                isOnEditMode={openAboutMeSection}
                                 onClickEdit={handleEditAboutMe}
                               />
                             </div>
