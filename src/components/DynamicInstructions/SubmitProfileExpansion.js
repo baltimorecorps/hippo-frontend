@@ -18,7 +18,7 @@ const SubmitProfileExpansion = ({
   status,
   onSubmit,
   isExpanded,
-  openAboutMeSection,
+  setOpenAboutMeSection,
   openAboutMeForms,
   setOpenAboutMeForms,
   classes,
@@ -38,6 +38,13 @@ const SubmitProfileExpansion = ({
             content: labelName.content,
             checked: apiValue,
             helpText: labelName.helpText || null,
+            setOpenThisForm: () => {
+              setOpenAboutMeSection(true);
+              setOpenAboutMeForms({
+                ...openAboutMeForms,
+                [apiKey]: true,
+              });
+            },
           });
       })
   );
@@ -113,7 +120,7 @@ const SubmitProfileExpansion = ({
         </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
-        <a href="#about-me-section" onClick={() => openAboutMeSection()}>
+        <a href="#about-me-section" onClick={() => setOpenAboutMeSection(true)}>
           <Typography
             variant="body1"
             component="h3"

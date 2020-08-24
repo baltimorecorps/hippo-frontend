@@ -98,11 +98,10 @@ const ProfilePage = ({
   const [viewResume, setViewResume] = useState(false);
   const [resume, setResume] = useState({myResume: null});
   const [openAboutMeForms, setOpenAboutMeForms] = useState({
-    contact_info: false,
+    candidate_information: false,
     value_alignment: false,
-    interests_goals: false,
-    programs_eligibility: false,
-    demographic_info: false,
+    interests: false,
+    programs: false,
   });
 
   let experiences = {work: [], education: [], portfolio: []};
@@ -348,7 +347,7 @@ const ProfilePage = ({
                     instructions={contactInfo.instructions}
                     id={contactInfo.id}
                     status={contactInfo.status}
-                    openAboutMeSection={() => setOpenAboutMeSection(true)}
+                    setOpenAboutMeSection={setOpenAboutMeSection}
                     openAboutMeForms={openAboutMeForms}
                     setOpenAboutMeForms={setOpenAboutMeForms}
                   />

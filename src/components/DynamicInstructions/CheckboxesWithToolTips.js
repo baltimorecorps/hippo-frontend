@@ -14,40 +14,44 @@ const ContentWithHelpTextToolTipsTemplate = ({
   option,
   isSubContent,
   hasCompleted,
+  openThisForm,
   classes,
 }) => {
   return (
-    <Typography
-      variant="body1"
-      component="p"
-      className={isSubContent ? classes.subContent : classes.content}
-    >
-      {isSubContent && (
-        <ArrowForwardIosIcon className={classes.arrowRightIcon} />
-      )}{' '}
-      {option.content} {hasCompleted && <span style={{color: 'red'}}> *</span>}
-      {option.helpText && (
-        <Tooltip
-          title={
-            <Typography
-              style={{
-                fontSize: '14px',
-                display: 'flex',
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}
-            >
-              {option.helpText}
-            </Typography>
-          }
-          placement="right"
-        >
-          <IconButton aria-label={option.helpText} style={{padding: '3px'}}>
-            <InfoIcon className={classes.infoIcon} />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Typography>
+    <a href="#about-me-section" onClick={() => openThisForm()}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={isSubContent ? classes.subContent : classes.content}
+      >
+        {isSubContent && (
+          <ArrowForwardIosIcon className={classes.arrowRightIcon} />
+        )}{' '}
+        {option.content}{' '}
+        {hasCompleted && <span style={{color: 'red'}}> *</span>}
+        {option.helpText && (
+          <Tooltip
+            title={
+              <Typography
+                style={{
+                  fontSize: '14px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}
+              >
+                {option.helpText}
+              </Typography>
+            }
+            placement="right"
+          >
+            <IconButton aria-label={option.helpText} style={{padding: '3px'}}>
+              <InfoIcon className={classes.infoIcon} />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Typography>
+    </a>
   );
 };
 
@@ -110,6 +114,7 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
           <ContentWithHelpTextToolTips
             option={option}
             hasCompleted={!option.checked}
+            openThisForm={() => option.setOpenThisForm()}
             isSubContent={false}
           />
         }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -11,15 +11,22 @@ const EachExpansionPanel = ({
   PanelTextHeader,
   content,
   neededAnswer,
+  isOnEditMode,
   classes,
 }) => {
+  const [expandPanel, setExpandPanel] = useState(isOnEditMode);
+
   return (
-    <ExpansionPanel defaultExpanded={false} className={classes.expansionPanel}>
+    <ExpansionPanel
+      expanded={isOnEditMode || expandPanel}
+      className={classes.expansionPanel}
+    >
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
         className={classes.header}
+        onClick={() => setExpandPanel(!expandPanel)}
       >
         <Typography>
           {PanelTextHeader}

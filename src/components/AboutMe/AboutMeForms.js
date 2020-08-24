@@ -28,18 +28,23 @@ const AboutMeForms = ({
   });
 
   const {candidate_information, interests, programs, value_alignment} = aboutMe;
+
   return (
     <Grid container justify="center" style={{width: '100%'}}>
       <EachExpansionPanel
         PanelTextHeader="Candidate Information"
+        isOnEditMode={openAboutMeForms.candidate_information}
         neededAnswer={!candidate_information}
         content={
-          openAboutMeForms.contact_info ? (
+          openAboutMeForms.candidate_information ? (
             <ContactInfoForm
               contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
-                setOpenAboutMeForms({...openAboutMeForms, contact_info: false})
+                setOpenAboutMeForms({
+                  ...openAboutMeForms,
+                  candidate_information: false,
+                })
               }
             />
           ) : (
@@ -48,7 +53,10 @@ const AboutMeForms = ({
                 contact={contact}
                 isOnEditMode={true}
                 onClickEdit={() =>
-                  setOpenAboutMeForms({...openAboutMeForms, contact_info: true})
+                  setOpenAboutMeForms({
+                    ...openAboutMeForms,
+                    candidate_information: true,
+                  })
                 }
               />
             </div>
@@ -58,6 +66,7 @@ const AboutMeForms = ({
 
       <EachExpansionPanel
         PanelTextHeader="Value Alignments"
+        isOnEditMode={openAboutMeForms.value_alignment}
         neededAnswer={!value_alignment}
         content={
           openAboutMeForms.value_alignment ? (
@@ -89,16 +98,17 @@ const AboutMeForms = ({
 
       <EachExpansionPanel
         PanelTextHeader="Interests and Goals"
+        isOnEditMode={openAboutMeForms.interests}
         neededAnswer={!interests}
         content={
-          openAboutMeForms.interests_goals ? (
+          openAboutMeForms.interests ? (
             <InterestsAndGoalsForm
               contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenAboutMeForms({
                   ...openAboutMeForms,
-                  interests_goals: false,
+                  interests: false,
                 })
               }
             />
@@ -109,7 +119,7 @@ const AboutMeForms = ({
                 onClickEdit={() =>
                   setOpenAboutMeForms({
                     ...openAboutMeForms,
-                    interests_goals: true,
+                    interests: true,
                   })
                 }
               />
@@ -120,16 +130,17 @@ const AboutMeForms = ({
 
       <EachExpansionPanel
         PanelTextHeader="Programs and Eligibility"
+        isOnEditMode={openAboutMeForms.programs}
         neededAnswer={!programs}
         content={
-          openAboutMeForms.programs_eligibility ? (
+          openAboutMeForms.programs ? (
             <ProgramsAndEligibilityForm
               contact={contact}
               onSubmit={onSubmit}
               onCloseForm={() =>
                 setOpenAboutMeForms({
                   ...openAboutMeForms,
-                  programs_eligibility: false,
+                  programs: false,
                 })
               }
             />
@@ -140,7 +151,7 @@ const AboutMeForms = ({
                 onClickEdit={() =>
                   setOpenAboutMeForms({
                     ...openAboutMeForms,
-                    programs_eligibility: true,
+                    programs: true,
                   })
                 }
               />
