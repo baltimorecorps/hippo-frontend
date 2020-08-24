@@ -17,7 +17,9 @@ test('App Footer: should display on certain pages', () => {
   expect(terms).toBeInTheDocument();
   expect(privacy).toBeInTheDocument();
   expect(terms.getAttribute('href')).toEqual('services-terms.pdf');
-  expect(privacy.getAttribute('href')).toEqual('privacy-policy.pdf');
+  expect(privacy.getAttribute('href')).toEqual(
+    'https://www.baltimorecorps.org/privacy-policy'
+  );
 });
 
 test('App Footer: should NOT display on certain pages', () => {
