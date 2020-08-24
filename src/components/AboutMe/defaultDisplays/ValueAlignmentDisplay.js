@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
 
 import {
   Header,
@@ -30,11 +29,11 @@ const ValueAlignmentDisplay = ({
 
       <QuestionWithOneAnswer
         question="Why is racial equity work in Baltimore important to you? *"
-        answer={value_question1}
+        answer={value_question1 || ''}
       />
       <QuestionWithOneAnswer
         question="How has your background and experiences prepared you for today’s work in Baltimore’s social impact sector? *"
-        answer={value_question2}
+        answer={value_question2 || ''}
       />
     </React.Fragment>
   );
