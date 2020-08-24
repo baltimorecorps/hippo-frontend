@@ -132,12 +132,13 @@ export const mapStateToProps = (state, props) => {
   const myContactId = props.contactId;
   const contactParamId =
     props.match && props.match.params && props.match.params.contactId;
+  const contactId = contactParamId || myContactId;
 
-  const contactInfo = state.contacts[myContactId || contactParamId];
-
+  const contactInfo = state.contacts[contactId];
   return {
     myContactId: Number(myContactId),
     contactParamId: Number(contactParamId),
+    contactId: Number(contactId),
     contactInfo,
     showResumeDialog:
       state.resume.resumeCreationStep === RESUME_CREATION.CHOOSE_STYLE,

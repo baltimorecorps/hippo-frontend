@@ -9,9 +9,12 @@ const addNewContact = dispatch =>
   };
 
 const mapStateToProps = state => {
-  const keys = Object.keys(state.contacts);
+  const contacts = state.contacts.short || null;
+  let sortedContacts = [];
+
+  if (contacts) sortedContacts = contacts.sort((a, b) => a.id - b.id);
   return {
-    contacts: keys.map(id => state.contacts[id]),
+    contacts: sortedContacts,
   };
 };
 
