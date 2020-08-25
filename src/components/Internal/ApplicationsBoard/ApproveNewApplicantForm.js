@@ -14,19 +14,21 @@ const ApproveNewApplicantForm = ({
   classes,
   options,
   approveNewApplicants,
+  approveNewApplicantsStatus,
   closeForm,
 }) => {
-  let selectedApplicants = [];
+  let applicantIds = [];
 
   const onChange = (event, values) => {
-    selectedApplicants = values.map(value => value.contact);
+    applicantIds = values.map(value => {
+      return {id: value.id};
+    });
   };
 
   const approve = async () => {
-    const programId = 1;
-    await approveNewApplicants(programId, selectedApplicants);
+    await approveNewApplicantsStatus(applicantIds);
     closeForm();
-    window.location.reload(false);
+    // window.location.reload(false);
   };
 
   const inputLabelProps = {

@@ -3,6 +3,7 @@ import ApplicationsBoard from './ApplicationsBoard';
 import {
   getAllContactsPrograms,
   approveNewApplicants,
+  approveNewApplicantsStatus,
   getAllApprovedApplicants,
 } from 'state/opportunity';
 
@@ -22,6 +23,7 @@ const mapStateToProps = state => {
     allApplicants,
     unapprovedApplicants,
     approvedApplicants,
+    approveNewApplicantsStatus,
   };
 };
 
@@ -30,6 +32,8 @@ const mapDispatchToProps = dispatch => ({
   getAllApprovedApplicants: () => getAllApprovedApplicants(dispatch),
   approveNewApplicants: (programId, applicants) =>
     approveNewApplicants(programId, applicants)(dispatch),
+  approveNewApplicantsStatus: applicantIds =>
+    approveNewApplicantsStatus(applicantIds)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationsBoard);

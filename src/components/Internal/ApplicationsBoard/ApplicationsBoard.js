@@ -20,6 +20,7 @@ import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgr
 const ApplicationsBoard = ({
   classes,
   approveNewApplicants,
+  approveNewApplicantsStatus,
   getAllContactsPrograms,
   getAllApprovedApplicants,
   allApplicants,
@@ -63,7 +64,7 @@ const ApplicationsBoard = ({
     unapprovedApplicants.map(contact => {
       return {
         name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
-        contact_id: contact.id,
+        id: contact.id,
         contact: contact,
       };
     });
@@ -154,6 +155,7 @@ const ApplicationsBoard = ({
         <ApproveNewApplicantForm
           options={options}
           approveNewApplicants={approveNewApplicants}
+          approveNewApplicantsStatus={approveNewApplicantsStatus}
           closeForm={() => setShowForm(false)}
         />
       ) : (
