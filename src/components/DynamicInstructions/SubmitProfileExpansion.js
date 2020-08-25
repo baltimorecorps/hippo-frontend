@@ -18,9 +18,10 @@ const SubmitProfileExpansion = ({
   status,
   onSubmit,
   isExpanded,
-  setOpenAboutMeSection,
   openAboutMeForms,
   setOpenAboutMeForms,
+  expandPanel,
+  setExpandPanel,
   classes,
 }) => {
   const isCompletedAboutMe = get(instructions, 'about_me.is_complete', false);
@@ -38,16 +39,19 @@ const SubmitProfileExpansion = ({
             content: labelName.content,
             checked: apiValue,
             helpText: labelName.helpText || null,
-            scrollToThisForm: '#about-me-section',
+            scrollToThisForm: `#${apiKey}`,
             setOpenThisForm: () => {
-              setOpenAboutMeSection(true);
-              setOpenAboutMeForms({
-                ...openAboutMeForms,
-                [apiKey]:
-                  apiKey === 'value_alignment' && status !== 'created'
-                    ? false
-                    : true,
+              setExpandPanel({
+                ...expandPanel,
+                [apiKey]: true,
               });
+              // setOpenAboutMeForms({
+              //   ...openAboutMeForms,
+              //   [apiKey]:
+              //     apiKey === 'value_alignment' && status !== 'created'
+              //       ? false
+              //       : true,
+              // });
             },
           });
       })
@@ -133,7 +137,7 @@ const SubmitProfileExpansion = ({
         </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
-        <a href="#about-me-section" onClick={() => setOpenAboutMeSection(true)}>
+        <a href="#about-me-section">
           <Typography
             variant="body1"
             component="h3"

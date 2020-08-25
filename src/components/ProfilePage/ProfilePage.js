@@ -13,10 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Modal from '@material-ui/core/Modal';
 import withStyles from '@material-ui/core/styles/withStyles';
-import EditIcon from '@material-ui/icons/Edit';
-
-import ContactInfoDisplay from 'components/AboutMe/defaultDisplays/ContactInfoDisplay';
-import ContactInfoForm from 'components/AboutMe/forms/ContactInfoForm';
 import AboutMeForms from 'components/AboutMe/AboutMeForms';
 
 import ExperiencesList from 'components/Experiences/ExperiencesList';
@@ -26,17 +22,13 @@ import CapabilityScores from 'components/CapabilityScores';
 import DynamicInstructions from '../DynamicInstructions';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
-import {createExternalLink} from 'lib/helperFunctions/helpers';
 import {sumScores} from 'lib/helperFunctions/scoreAchievements';
 
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import {ResumeViewer} from 'components/ResumeCreator';
-
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
-import {useParams} from 'react-router-dom';
+import {blankInstructions} from '../DynamicInstructions/defaultValues';
 
 import CAPABILITIES from './capabilities.yml';
 
@@ -88,8 +80,6 @@ const ProfilePage = ({
   const wrapperRef = useRef();
   const scrollTo = useScroll(wrapperRef);
   const [resumeLink, setResumeLink] = useState(null);
-  // const [openForm, setOpenForm] = useState(false);
-  const [openAboutMeSection, setOpenAboutMeSection] = useState(false);
 
   const [openSidebar, setOpenSidebar] = useState(false);
   const [isOpenDrawer1, setOpenDrawer1] = React.useState(false);
@@ -98,6 +88,12 @@ const ProfilePage = ({
   const [editScores, setEditScores] = useState({});
   const [viewResume, setViewResume] = useState(false);
   const [resume, setResume] = useState({myResume: null});
+  const [expandPanel, setExpandPanel] = useState({
+    candidate_information: true,
+    value_alignment: false,
+    interests: false,
+    programs: false,
+  });
   const [openAboutMeForms, setOpenAboutMeForms] = useState({
     candidate_information: false,
     value_alignment: false,
@@ -132,8 +128,6 @@ const ProfilePage = ({
 
   const handleUpdateContact = async values => {
     await updateContact(values);
-    // setOpenForm(false);
-    setOpenAboutMeSection(false);
   };
   const handleUpdateAboutMe = async (contactId, values) => {
     await updateAboutMe(contactId, values);
@@ -349,12 +343,13 @@ const ProfilePage = ({
                 </Grid>
                 {contactInfo && (
                   <DynamicInstructions
-                    instructions={contactInfo.instructions}
+                    instructions={contactInfo.instructions || blankInstructions}
                     id={contactInfo.id}
                     status={contactInfo.status}
-                    setOpenAboutMeSection={setOpenAboutMeSection}
                     openAboutMeForms={openAboutMeForms}
                     setOpenAboutMeForms={setOpenAboutMeForms}
+                    expandPanel={expandPanel}
+                    setExpandPanel={setExpandPanel}
                   />
                 )}
 
@@ -379,26 +374,7 @@ const ProfilePage = ({
                           </Typography>
                         </Grid>
 
-                        <Grid item>
-                          {openAboutMeSection ? (
-                            <IconButton
-                              edge="end"
-                              aria-label="close about me section"
-                              onMouseDown={() => setOpenAboutMeSection(false)}
-                              className={classes.iconButton}
-                            >
-                              <CloseIcon />
-                            </IconButton>
-                          ) : (
-                            <IconButton
-                              onClick={() => setOpenAboutMeSection(true)}
-                              size="small"
-                              aria-label="open about me section"
-                            >
-                              <EditIcon className={classes.editButton} />
-                            </IconButton>
-                          )}
-                        </Grid>
+                        <Grid item></Grid>
                       </Grid>
                       <Grid container alignItems="center">
                         <Typography
@@ -412,75 +388,66 @@ const ProfilePage = ({
                       </Grid>
                     </Grid>
                     <Grid container justify="center">
-                      {openAboutMeSection ? (
-                        <AboutMeForms
-                          contact={contactInfo}
-                          onSubmit={handleUpdateAboutMe}
-                          openAboutMeForms={openAboutMeForms}
-                          setOpenAboutMeForms={setOpenAboutMeForms}
-                        />
-                      ) : (
-                        <Grid container justify="center">
-                          <Grid item xs={12} md={9}>
-                            <div className={classes.extraPadding}>
-                              <ContactInfoDisplay
-                                contact={contactInfo}
-                                isOnEditMode={openAboutMeSection}
-                                onClickEdit={() => setOpenAboutMeSection(true)}
-                              />
-                            </div>
-                          </Grid>
-                        </Grid>
-                      )}
+                      <AboutMeForms
+                        contact={contactInfo}
+                        onSubmit={handleUpdateAboutMe}
+                        openAboutMeForms={openAboutMeForms}
+                        setOpenAboutMeForms={setOpenAboutMeForms}
+                        expandPanel={expandPanel}
+                        setExpandPanel={setExpandPanel}
+                      />
                     </Grid>
                   </Paper>
                 </Grid>
+                {contactInfo.instructions && (
+                  <React.Fragment>
+                    <SkillsSection
+                      isCompleted={
+                        contactInfo.instructions.profile.components.tag_skills
+                      }
+                      contactId={contactInfo.id}
+                      contactStatus={contactInfo.status}
+                      onClickMore={onClickMoreDetails}
+                      splitScreen={inSelectMode}
+                    />
+                    <ExperiencesList
+                      sectionName="work-section"
+                      isCompleted={
+                        contactInfo.instructions.profile.components
+                          .add_experience.is_complete
+                      }
+                      contactId={contactInfo.id}
+                      contactStatus={contactInfo.status}
+                      experienceType="Work"
+                      onClickMore={onClickMoreDetails}
+                      updateEditScore={updateEditScore}
+                      experiences={experiences && experiences.work}
+                    />
+                    <ExperiencesList
+                      sectionName="education-section"
+                      isCompleted={
+                        contactInfo.instructions.profile.components
+                          .add_education
+                      }
+                      contactId={contactInfo.id}
+                      contactStatus={contactInfo.status}
+                      experienceType="Education"
+                      onClickMore={onClickMoreDetails}
+                      updateEditScore={updateEditScore}
+                      experiences={experiences && experiences.education}
+                    />
 
-                <SkillsSection
-                  isCompleted={
-                    contactInfo.instructions.profile.components.tag_skills
-                  }
-                  contactId={contactInfo.id}
-                  contactStatus={contactInfo.status}
-                  onClickMore={onClickMoreDetails}
-                  splitScreen={inSelectMode}
-                />
-                <ExperiencesList
-                  sectionName="work-section"
-                  isCompleted={
-                    contactInfo.instructions.profile.components.add_experience
-                      .is_complete
-                  }
-                  contactId={contactInfo.id}
-                  contactStatus={contactInfo.status}
-                  experienceType="Work"
-                  onClickMore={onClickMoreDetails}
-                  updateEditScore={updateEditScore}
-                  experiences={experiences && experiences.work}
-                />
-                <ExperiencesList
-                  sectionName="education-section"
-                  isCompleted={
-                    contactInfo.instructions.profile.components.add_education
-                  }
-                  contactId={contactInfo.id}
-                  contactStatus={contactInfo.status}
-                  experienceType="Education"
-                  onClickMore={onClickMoreDetails}
-                  updateEditScore={updateEditScore}
-                  experiences={experiences && experiences.education}
-                />
-
-                <ExperiencesList
-                  sectionName="portfolio-section"
-                  contactId={contactInfo.id}
-                  contactStatus={contactInfo.status}
-                  experienceType="Accomplishment"
-                  onClickMore={onClickMoreDetails}
-                  updateEditScore={updateEditScore}
-                  experiences={experiences && experiences.portfolio}
-                />
-
+                    <ExperiencesList
+                      sectionName="portfolio-section"
+                      contactId={contactInfo.id}
+                      contactStatus={contactInfo.status}
+                      experienceType="Accomplishment"
+                      onClickMore={onClickMoreDetails}
+                      updateEditScore={updateEditScore}
+                      experiences={experiences && experiences.portfolio}
+                    />
+                  </React.Fragment>
+                )}
                 {/*<ResumesList />*/}
                 {/*inSelectMode ? null : (
                   <Grid

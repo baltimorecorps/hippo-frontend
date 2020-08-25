@@ -23,6 +23,7 @@ describe('ProfilePage', () => {
     skills: [],
     profile: blankProfile,
     instructions: blankInstructions,
+    program_apps: [],
     experiences: [
       {
         type: 'Work',

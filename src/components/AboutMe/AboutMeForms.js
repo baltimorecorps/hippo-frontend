@@ -18,9 +18,11 @@ const AboutMeForms = ({
   onSubmit,
   openAboutMeForms,
   setOpenAboutMeForms,
+  expandPanel,
+  setExpandPanel,
   classes,
 }) => {
-  const aboutMe = _get(contact.instructions.about_me, 'components', {
+  const aboutMe = _get(contact, 'instructions.about_me.components', {
     candidate_information: true,
     interests: true,
     programs: true,
@@ -28,12 +30,14 @@ const AboutMeForms = ({
   });
 
   const {candidate_information, interests, programs, value_alignment} = aboutMe;
-
   return (
     <Grid container justify="center" style={{width: '100%'}}>
       <EachExpansionPanel
         PanelTextHeader="Candidate Information"
+        name="candidate_information"
         isOnEditMode={openAboutMeForms.candidate_information}
+        expandPanel={expandPanel}
+        setExpandPanel={setExpandPanel}
         neededAnswer={!candidate_information}
         content={
           openAboutMeForms.candidate_information ? (
@@ -66,6 +70,9 @@ const AboutMeForms = ({
 
       <EachExpansionPanel
         PanelTextHeader="Value Alignments"
+        name="value_alignment"
+        expandPanel={expandPanel}
+        setExpandPanel={setExpandPanel}
         isOnEditMode={openAboutMeForms.value_alignment}
         neededAnswer={!value_alignment}
         content={
@@ -99,6 +106,9 @@ const AboutMeForms = ({
 
       <EachExpansionPanel
         PanelTextHeader="Interests and Goals"
+        name="interests"
+        expandPanel={expandPanel}
+        setExpandPanel={setExpandPanel}
         isOnEditMode={openAboutMeForms.interests}
         neededAnswer={!interests}
         content={
@@ -131,6 +141,9 @@ const AboutMeForms = ({
 
       <EachExpansionPanel
         PanelTextHeader="Programs and Eligibility"
+        name="programs"
+        expandPanel={expandPanel}
+        setExpandPanel={setExpandPanel}
         isOnEditMode={openAboutMeForms.programs}
         neededAnswer={!programs}
         content={

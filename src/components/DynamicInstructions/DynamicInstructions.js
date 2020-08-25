@@ -12,11 +12,15 @@ const DynamicInstructions = ({
   id,
   instructions,
   status,
-  setOpenAboutMeSection,
   openAboutMeForms,
   setOpenAboutMeForms,
+  expandPanel,
+  setExpandPanel,
   classes,
 }) => {
+  if (instructions == null) {
+    return <div>loading...</div>;
+  }
   return (
     <Paper className={classes.instructions}>
       <div className={classes.headerContainer}>
@@ -36,9 +40,10 @@ const DynamicInstructions = ({
         status={status}
         isExpanded={status !== undefined ? status !== 'approved' : false}
         onSubmit={() => submitProfileForReview(id)}
-        setOpenAboutMeSection={setOpenAboutMeSection}
         openAboutMeForms={openAboutMeForms}
         setOpenAboutMeForms={setOpenAboutMeForms}
+        expandPanel={expandPanel}
+        setExpandPanel={setExpandPanel}
       />
       <ApplyOpportunitiesExpansion
         isExpanded={status !== undefined ? status === 'approved' : false}

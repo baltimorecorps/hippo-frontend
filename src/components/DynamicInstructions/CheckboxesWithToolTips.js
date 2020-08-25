@@ -31,7 +31,8 @@ const ContentWithHelpTextToolTipsTemplate = ({
         {isSubContent && (
           <ArrowForwardIosIcon className={classes.arrowRightIcon} />
         )}{' '}
-        {option.content} {isCompleted && <span style={{color: 'red'}}> *</span>}
+        {option.content}{' '}
+        {!isCompleted && <span style={{color: 'red'}}> *</span>}
         {option.helpText && (
           <Tooltip
             title={
@@ -44,7 +45,7 @@ const ContentWithHelpTextToolTipsTemplate = ({
                 }}
               >
                 {option.helpText}
-                {isCompleted && <span style={{color: 'red'}}> *</span>}
+                {!isCompleted && <span style={{color: 'red'}}> *</span>}
               </Typography>
             }
             placement="right"
@@ -117,7 +118,9 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
         label={
           <ContentWithHelpTextToolTips
             option={option}
-            isCompleted={!option.checked}
+            isCompleted={
+              option.content.includes('(optional)') ? true : option.checked
+            }
             openThisForm={option.setOpenThisForm || null}
             scrollToThisForm={option.scrollToThisForm || '#'}
             isSubContent={false}
@@ -130,7 +133,7 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
             key={index}
             option={subOption}
             isSubContent={true}
-            isCompleted={!option.checked}
+            isCompleted={option.checked}
           />
         ))}
     </div>
