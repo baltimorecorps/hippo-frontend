@@ -438,6 +438,17 @@ const blankProfile = {
   value_question2: '',
   years_exp: '',
 };
+const defaultPrograms = [
+  {is_interested: false, program: {id: 1, name: 'Place for Purpose'}},
+  {is_interested: false, program: {id: 2, name: 'Mayoral Fellowship'}},
+
+  {is_interested: false, program: {id: 3, name: 'Fellowship'}},
+  {is_interested: false, program: {id: 4, name: 'Public Allies'}},
+  {
+    is_interested: false,
+    program: {id: 5, name: 'JHU Carey Humanities Fellowship'},
+  },
+];
 
 export {
   countryList,
@@ -454,4 +465,5 @@ export {
   programsCompletedLabels,
   hearAboutUsOptions,
   blankProfile,
+  defaultPrograms,
 };

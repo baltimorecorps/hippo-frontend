@@ -6,19 +6,26 @@ import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 
-const HeaderTemplate = ({header, onClickEdit, classes}) => {
+const HeaderTemplate = ({header, onClickEdit, isSubmitted, classes}) => {
   return (
     <Grid item xs={12} className={classes.justifyBetween}>
       <Typography variant="h6" component="h3" className={classes.header}>
-        {header}
+        {header}{' '}
+        {isSubmitted && (
+          <span style={{color: '#888', fontSize: '14px', fontWeight: 'normal'}}>
+            (read-only after submitted profile)
+          </span>
+        )}
       </Typography>
-      <IconButton
-        onClick={onClickEdit}
-        size="small"
-        aria-label="edit experience"
-      >
-        <EditIcon className={classes.editIcon} />
-      </IconButton>
+      {!isSubmitted && (
+        <IconButton
+          onClick={onClickEdit}
+          size="small"
+          aria-label="edit experience"
+        >
+          <EditIcon className={classes.editIcon} />
+        </IconButton>
+      )}
     </Grid>
   );
 };

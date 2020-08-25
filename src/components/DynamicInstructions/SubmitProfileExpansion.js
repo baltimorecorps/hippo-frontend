@@ -18,6 +18,10 @@ const SubmitProfileExpansion = ({
   status,
   onSubmit,
   isExpanded,
+  openAboutMeForms,
+  setOpenAboutMeForms,
+  expandPanel,
+  setExpandPanel,
   classes,
 }) => {
   const isCompletedAboutMe = get(instructions, 'about_me.is_complete', false);
@@ -35,9 +39,30 @@ const SubmitProfileExpansion = ({
             content: labelName.content,
             checked: apiValue,
             helpText: labelName.helpText || null,
+            scrollToThisForm: `#${apiKey}`,
+            setOpenThisForm: () => {
+              setExpandPanel({
+                ...expandPanel,
+                [apiKey]: true,
+              });
+              // setOpenAboutMeForms({
+              //   ...openAboutMeForms,
+              //   [apiKey]:
+              //     apiKey === 'value_alignment' && status !== 'created'
+              //       ? false
+              //       : true,
+              // });
+            },
           });
       })
   );
+
+  const sectionIds = {
+    tag_skills: '#skills-section',
+    add_experience: '#work-section',
+    add_education: '#education-section',
+    add_portfolio: '#portfolio-section',
+  };
 
   const experienceChecks = [];
   Object.entries(dynamicInstructionContents.profile).forEach(
@@ -49,6 +74,7 @@ const SubmitProfileExpansion = ({
               content: labelName.is_complete.content,
               checked: apiValue.is_complete,
               helpText: labelName.is_complete.helpText,
+              scrollToThisForm: sectionIds[apiKey],
               components: Object.entries(labelName.components).map(
                 ([key, value]) => {
                   const components = {};
@@ -66,6 +92,7 @@ const SubmitProfileExpansion = ({
               content: labelName.content,
               checked: apiValue,
               helpText: labelName.helpText,
+              scrollToThisForm: sectionIds[apiKey],
             });
           }
         }
@@ -92,7 +119,6 @@ const SubmitProfileExpansion = ({
   const applyForRoles = () => {
     history.push(`/opportunities/`);
   };
-
   return (
     <ExpansionPanel
       defaultExpanded={isExpanded}
@@ -107,20 +133,33 @@ const SubmitProfileExpansion = ({
       >
         <Typography className={classes.expansionHeaderText}>
           <AccountCircleSharpIcon className={classes.headerIcon} /> Complete and
-          Submit Your Profile
+          Submit Your Profile{' '}
         </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
-        <Typography variant="body1" component="h3" className={classes.stepText}>
-          <span className={classes.stepNum}>Step 1:</span> Complete About Me
-          section
-        </Typography>
+        <a href="#about-me-section">
+          <Typography
+            variant="body1"
+            component="h3"
+            className={classes.stepText}
+          >
+            <span className={classes.stepNum}>Step 1:</span> Complete About Me
+            section{' '}
+            {instructions.about_me.is_complete === false && (
+              <span style={{color: 'red'}}> *</span>
+            )}
+          </Typography>
+        </a>
+
         <div className={classes.checkboxesContainer}>
           <CheckboxesWithToolTips listOfOptions={aboutMeChecks} />
         </div>
         <Typography variant="body1" component="h3" className={classes.stepText}>
           <span className={classes.stepNum}>Step 2:</span> Complete your profile
-          by filling out the sections below
+          by filling out the sections below{' '}
+          {instructions.profile.is_complete === false && (
+            <span style={{color: 'red'}}> *</span>
+          )}
         </Typography>
         <div className={classes.checkboxesContainer}>
           <CheckboxesWithToolTips listOfOptions={experienceChecks} />

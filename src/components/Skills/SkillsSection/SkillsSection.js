@@ -43,6 +43,7 @@ const CAPABILITIES = [
 const SkillsSection = ({
   classes,
   contactId,
+  isCompleted,
   contactStatus,
   capabilities,
   contactCapabilities,
@@ -135,11 +136,16 @@ const SkillsSection = ({
               <Typography
                 variant="h5"
                 component="h1"
+                id="skills-section"
                 style={{
                   fontWeight: '700',
+                  scrollMarginTop: '100px',
                 }}
               >
                 Get started with skills
+                {isCompleted === false && (
+                  <span style={{color: 'red'}}> *</span>
+                )}
               </Typography>
             </Grid>
             <Grid container alignItems="center">

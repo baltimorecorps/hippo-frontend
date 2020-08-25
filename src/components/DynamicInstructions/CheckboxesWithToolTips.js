@@ -13,40 +13,50 @@ import Checkbox from '@material-ui/core/Checkbox';
 const ContentWithHelpTextToolTipsTemplate = ({
   option,
   isSubContent,
+  isCompleted,
+  openThisForm,
+  scrollToThisForm,
   classes,
 }) => {
   return (
-    <Typography
-      variant="body1"
-      component="p"
-      className={isSubContent ? classes.subContent : classes.content}
+    <a
+      href={scrollToThisForm}
+      onClick={openThisForm ? () => openThisForm() : null}
     >
-      {isSubContent && (
-        <ArrowForwardIosIcon className={classes.arrowRightIcon} />
-      )}{' '}
-      {option.content}{' '}
-      {option.helpText && (
-        <Tooltip
-          title={
-            <Typography
-              style={{
-                fontSize: '14px',
-                display: 'flex',
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}
-            >
-              {option.helpText}
-            </Typography>
-          }
-          placement="right"
-        >
-          <IconButton aria-label={option.helpText} style={{padding: '3px'}}>
-            <InfoIcon className={classes.infoIcon} />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Typography>
+      <Typography
+        variant="body1"
+        component="p"
+        className={isSubContent ? classes.subContent : classes.content}
+      >
+        {isSubContent && (
+          <ArrowForwardIosIcon className={classes.arrowRightIcon} />
+        )}{' '}
+        {option.content}{' '}
+        {!isCompleted && <span style={{color: 'red'}}> *</span>}
+        {option.helpText && (
+          <Tooltip
+            title={
+              <Typography
+                style={{
+                  fontSize: '14px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}
+              >
+                {option.helpText}
+                {!isCompleted && <span style={{color: 'red'}}> *</span>}
+              </Typography>
+            }
+            placement="right"
+          >
+            <IconButton aria-label={option.helpText} style={{padding: '3px'}}>
+              <InfoIcon className={classes.infoIcon} />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Typography>
+    </a>
   );
 };
 
@@ -106,7 +116,15 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
           />
         }
         label={
-          <ContentWithHelpTextToolTips option={option} isSubContent={false} />
+          <ContentWithHelpTextToolTips
+            option={option}
+            isCompleted={
+              option.content.includes('(optional)') ? true : option.checked
+            }
+            openThisForm={option.setOpenThisForm || null}
+            scrollToThisForm={option.scrollToThisForm || '#'}
+            isSubContent={false}
+          />
         }
       />{' '}
       {option.components &&
@@ -115,6 +133,7 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
             key={index}
             option={subOption}
             isSubContent={true}
+            isCompleted={option.checked}
           />
         ))}
     </div>
