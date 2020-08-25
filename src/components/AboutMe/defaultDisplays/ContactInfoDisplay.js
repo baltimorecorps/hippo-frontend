@@ -71,13 +71,15 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
         >
           {first_name} {last_name}
         </Typography>
-        <IconButton
-          onClick={() => onClickEdit()}
-          size="small"
-          aria-label="edit experience"
-        >
-          <EditIcon className={classes.editIcon} />
-        </IconButton>
+        {isOnEditMode && (
+          <IconButton
+            onClick={() => onClickEdit()}
+            size="small"
+            aria-label="edit experience"
+          >
+            <EditIcon className={classes.editIcon} />
+          </IconButton>
+        )}
       </Grid>
 
       <Typography

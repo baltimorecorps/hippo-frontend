@@ -10,6 +10,7 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import theme from '../../styles/theme';
 import ProfilePage from './ProfilePage';
 import {blankProfile} from '../AboutMe/defaultData';
+import {blankInstructions} from '../DynamicInstructions/defaultValues';
 
 describe('ProfilePage', () => {
   const contactInfo = {
@@ -21,10 +22,8 @@ describe('ProfilePage', () => {
     phone_primary: '(123) 456-7890',
     skills: [],
     profile: blankProfile,
-    instructions: {
-      id: 1,
-      instructions: {},
-    },
+    instructions: blankInstructions,
+    program_apps: [],
     experiences: [
       {
         type: 'Work',

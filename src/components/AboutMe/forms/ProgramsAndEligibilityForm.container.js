@@ -6,17 +6,21 @@ import {
 } from 'state/contacts';
 import {getAllProgramNames} from 'state/programs';
 import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
+import {defaultPrograms} from '../defaultData';
 
 export const mapStateToProps = state => {
-  let programs = Object.values(state.programs);
-  let defaultProgramApps = [];
-  if (programs)
-    programs.forEach(eachProgram => {
-      defaultProgramApps.push({
+  const programs = Object.values(state.programs);
+  let defaultProgramApps = defaultPrograms;
+
+  if (programs) {
+    programs.forEach((eachProgram, index) => {
+      defaultProgramApps[index] = {
         program: eachProgram,
         is_interested: false,
-      });
+      };
     });
+  }
+
   return {
     defaultProgramApps,
   };
