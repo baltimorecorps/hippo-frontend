@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
@@ -12,12 +12,26 @@ import Grid from '@material-ui/core/Grid';
 
 const ApproveNewApplicantForm = ({
   classes,
-  options,
+  unapprovedApplicants,
+  getAllNotApprovedApplicants,
   approveNewApplicantsStatus,
   closeForm,
 }) => {
+  useEffect(() => {
+    if (!unapprovedApplicants || unapprovedApplicants.length === 0)
+      getAllNotApprovedApplicants();
+  }, [unapprovedApplicants, getAllNotApprovedApplicants]);
+
   const [selectedValues, setSelectedValues] = useState([]);
   const [applicantIds, setApplicantIds] = useState([]);
+
+  const options = unapprovedApplicants.map(contact => {
+    return {
+      name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
+      id: contact.id,
+      contact: contact,
+    };
+  });
 
   const onChange = (event, values) => {
     setSelectedValues(values);

@@ -30,42 +30,31 @@ const ApplicationsBoard = ({
       getAllApprovedApplicants();
   }, [getAllApprovedApplicants, approvedApplicants]);
 
-  useEffect(() => {
-    if (!unapprovedApplicants || unapprovedApplicants.length === 0)
-      getAllNotApprovedApplicants();
-  }, [unapprovedApplicants, getAllNotApprovedApplicants]);
-
   let history = useHistory();
   const toProfile = contactId => {
     history.push(`/profile/${contactId}`);
   };
+
   const onClickView = contactId => {
     history.push(`${match.url}/${contactId}`);
   };
 
   const match = useRouteMatch();
+
   const [showForm, setShowForm] = useState(false);
-  const [showCard, setShowCard] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
   const [allPosts, setAllPosts] = useState();
   const [currentPosts, setCurrentPosts] = useState();
+
   let indexOfLastPost = currentPage * postsPerPage;
   let indexOfFirstPost = indexOfLastPost - postsPerPage;
   let pageCount = allPosts && Math.ceil(allPosts.length / postsPerPage);
   let pageNumbers = [];
+
   for (let i = 0; i <= pageCount; i++) {
     pageNumbers.push(i);
   }
-  const options =
-    unapprovedApplicants &&
-    unapprovedApplicants.map(contact => {
-      return {
-        name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
-        id: contact.id,
-        contact: contact,
-      };
-    });
 
   const sortApplicants =
     approvedApplicants &&
@@ -131,7 +120,8 @@ const ApplicationsBoard = ({
 
       {showForm ? (
         <ApproveNewApplicantForm
-          options={options}
+          unapprovedApplicants={unapprovedApplicants || []}
+          getAllNotApprovedApplicants={getAllNotApprovedApplicants}
           approveNewApplicantsStatus={approveNewApplicantsStatus}
           closeForm={() => setShowForm(false)}
         />
@@ -229,18 +219,16 @@ const ApplicationsBoard = ({
         </Typography>
       )}
 
-      {!showCard && (
-        <Pagination
-          defaultPage={1}
-          page={currentPage}
-          count={pageCount}
-          onClick={e => paginate(e)}
-          color="primary"
-          className={classes.pagination}
-          hideNextButton
-          hidePrevButton
-        />
-      )}
+      <Pagination
+        defaultPage={1}
+        page={currentPage}
+        count={pageCount}
+        onClick={e => paginate(e)}
+        color="primary"
+        className={classes.pagination}
+        hideNextButton
+        hidePrevButton
+      />
     </div>
   );
 };
