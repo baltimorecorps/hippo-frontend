@@ -50,17 +50,10 @@ const ApplicationsBoard = ({
   let indexOfLastPost = currentPage * postsPerPage;
   let indexOfFirstPost = indexOfLastPost - postsPerPage;
   let pageCount = allPosts && Math.ceil(allPosts.length / postsPerPage);
-  let pageNumbers = [];
 
-  for (let i = 0; i <= pageCount; i++) {
-    pageNumbers.push(i);
-  }
-
-  const sortApplicants =
-    approvedApplicants &&
-    approvedApplicants.sort((a, b) =>
-      a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
-    );
+  const sortApplicants = approvedApplicants.sort((a, b) =>
+    a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
+  );
 
   useEffect(() => {
     setAllPosts(sortApplicants);

@@ -7,8 +7,9 @@ import {
 } from 'state/opportunity';
 
 const mapStateToProps = state => {
-  const approvedApplicants = state.applicants['approved_applicants'];
-  const unapprovedApplicants = state.applicants['not_approved_applicants'];
+  const approvedApplicants = state.applicants['approved_applicants'] || [];
+  const unapprovedApplicants =
+    state.applicants['not_approved_applicants'] || [];
 
   return {
     unapprovedApplicants,
