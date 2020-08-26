@@ -28,7 +28,6 @@ const ApproveNewApplicantForm = ({
   const approve = async () => {
     await approveNewApplicantsStatus(applicantIds);
     closeForm();
-    // window.location.reload(false);
   };
 
   const inputLabelProps = {
@@ -89,7 +88,7 @@ ApproveNewApplicantForm.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      contact_id: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
       contact: PropTypes.shape({
         email: PropTypes.string.isRequired,
         first_name: PropTypes.string.isRequired,

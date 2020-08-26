@@ -21,9 +21,8 @@ const ApplicationsBoard = ({
   classes,
   approveNewApplicants,
   approveNewApplicantsStatus,
-  getAllContactsPrograms,
   getAllApprovedApplicants,
-  allApplicants,
+  getAllNotApprovedApplicants,
   approvedApplicants,
   unapprovedApplicants,
 }) => {
@@ -31,9 +30,11 @@ const ApplicationsBoard = ({
     if (!approvedApplicants || approvedApplicants.length === 0)
       getAllApprovedApplicants();
   }, [getAllApprovedApplicants, approvedApplicants]);
+
   useEffect(() => {
-    if (!allApplicants || allApplicants.length === 0) getAllContactsPrograms();
-  }, [getAllContactsPrograms, allApplicants]);
+    if (!unapprovedApplicants || unapprovedApplicants.length === 0)
+      getAllNotApprovedApplicants();
+  }, [unapprovedApplicants, getAllNotApprovedApplicants]);
 
   let history = useHistory();
   const toProfile = contactId => {
@@ -48,8 +49,6 @@ const ApplicationsBoard = ({
   const [showCard, setShowCard] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
-  const [programTabsValue, setProgramTabsValue] = useState(1);
-  const programs = ['Place for Purpose', 'Mayoral Fellowship', 'Fellowship'];
   const [allPosts, setAllPosts] = useState();
   const [currentPosts, setCurrentPosts] = useState();
   let indexOfLastPost = currentPage * postsPerPage;
@@ -78,23 +77,6 @@ const ApplicationsBoard = ({
   useEffect(() => {
     setAllPosts(sortApplicants);
   }, [sortApplicants]);
-
-  useEffect(() => {
-    let theApplicants = [];
-    if (approvedApplicants && programTabsValue !== 0) {
-      for (let i = 0; i < approvedApplicants.length; i++) {
-        let theApplicant = [];
-        approvedApplicants[i].programs.forEach(program => {
-          if (program.program.id === programTabsValue)
-            theApplicant.push(approvedApplicants[i]);
-        });
-        theApplicants.push(...theApplicant);
-      }
-      setAllPosts(theApplicants);
-    } else {
-      setAllPosts(approvedApplicants);
-    }
-  }, [approvedApplicants, programTabsValue]);
 
   useEffect(() => {
     setCurrentPosts(
@@ -129,9 +111,6 @@ const ApplicationsBoard = ({
       setCurrentPage(1);
       setAllPosts(searchNames);
     }
-  };
-  const handleChangeValueProgramTabs = (event, newValue) => {
-    setProgramTabsValue(newValue);
   };
 
   if (!currentPosts) {
@@ -203,16 +182,6 @@ const ApplicationsBoard = ({
               </div>
             </div>
           </Grid>
-          <div
-            className={classes.buttonContainer}
-            style={{justifyContent: 'center'}}
-          >
-            <FilterByProgramsTabs
-              handleChangeFilter={handleChangeValueProgramTabs}
-              value={programTabsValue}
-              programs={programs}
-            />
-          </div>
         </React.Fragment>
       )}
 
@@ -249,16 +218,6 @@ const ApplicationsBoard = ({
                 ({applicant.email})
               </Typography>
             </Link>
-            <div className={classes.programTagsContainer}>
-              {applicant.programs.map(
-                (program, index) =>
-                  program.is_approved && (
-                    <div className={classes.programTags} key={index}>
-                      {program.program.name}
-                    </div>
-                  )
-              )}
-            </div>
           </Paper>
         ))}
       {currentPosts.length === 0 && (
@@ -292,7 +251,6 @@ ApplicationsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
   approveNewApplicants: PropTypes.func.isRequired,
   getAllApprovedApplicants: PropTypes.func.isRequired,
-  getAllContactsPrograms: PropTypes.func.isRequired,
   allApplicants: PropTypes.array,
   approvedApplicants: PropTypes.array,
 };

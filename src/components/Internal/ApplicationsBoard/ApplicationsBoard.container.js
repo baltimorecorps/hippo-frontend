@@ -1,26 +1,17 @@
 import {connect} from 'react-redux';
 import ApplicationsBoard from './ApplicationsBoard';
 import {
-  getAllContactsPrograms,
   approveNewApplicants,
   approveNewApplicantsStatus,
   getAllApprovedApplicants,
+  getAllNotApprovedApplicants,
 } from 'state/opportunity';
 
 const mapStateToProps = state => {
-  const allApplicants = state.applicants['all_applicants'];
   const approvedApplicants = state.applicants['approved_applicants'];
-  const unapprovedApplicants =
-    allApplicants &&
-    allApplicants.filter(app => {
-      const isApproved = app.programs.filter(program => {
-        return program.is_approved === false;
-      });
-      return isApproved.length > 0;
-    });
+  const unapprovedApplicants = state.applicants['not_approved_applicants'];
 
   return {
-    allApplicants,
     unapprovedApplicants,
     approvedApplicants,
     approveNewApplicantsStatus,
@@ -28,8 +19,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getAllContactsPrograms: () => getAllContactsPrograms(dispatch),
   getAllApprovedApplicants: () => getAllApprovedApplicants(dispatch),
+  getAllNotApprovedApplicants: () => getAllNotApprovedApplicants(dispatch),
   approveNewApplicants: (programId, applicants) =>
     approveNewApplicants(programId, applicants)(dispatch),
   approveNewApplicantsStatus: applicantIds =>
