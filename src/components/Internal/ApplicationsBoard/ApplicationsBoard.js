@@ -16,13 +16,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsTabs';
+
 const ApplicationsBoard = ({
   classes,
-  approveNewApplicants,
-  getAllContactsPrograms,
+  approveNewApplicantsStatus,
   getAllApprovedApplicants,
-  allApplicants,
+  getAllNotApprovedApplicants,
   approvedApplicants,
   unapprovedApplicants,
 }) => {
@@ -30,70 +29,35 @@ const ApplicationsBoard = ({
     if (!approvedApplicants || approvedApplicants.length === 0)
       getAllApprovedApplicants();
   }, [getAllApprovedApplicants, approvedApplicants]);
-  useEffect(() => {
-    if (!allApplicants || allApplicants.length === 0) getAllContactsPrograms();
-  }, [getAllContactsPrograms, allApplicants]);
 
   let history = useHistory();
   const toProfile = contactId => {
     history.push(`/profile/${contactId}`);
   };
+
   const onClickView = contactId => {
     history.push(`${match.url}/${contactId}`);
   };
 
   const match = useRouteMatch();
+
   const [showForm, setShowForm] = useState(false);
-  const [showCard, setShowCard] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
-  const [programTabsValue, setProgramTabsValue] = useState(1);
-  const programs = ['Place for Purpose', 'Mayoral Fellowship', 'Fellowship'];
   const [allPosts, setAllPosts] = useState();
   const [currentPosts, setCurrentPosts] = useState();
+
   let indexOfLastPost = currentPage * postsPerPage;
   let indexOfFirstPost = indexOfLastPost - postsPerPage;
   let pageCount = allPosts && Math.ceil(allPosts.length / postsPerPage);
-  let pageNumbers = [];
-  for (let i = 0; i <= pageCount; i++) {
-    pageNumbers.push(i);
-  }
-  const options =
-    unapprovedApplicants &&
-    unapprovedApplicants.map(contact => {
-      return {
-        name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
-        contact_id: contact.id,
-        contact: contact,
-      };
-    });
 
-  const sortApplicants =
-    approvedApplicants &&
-    approvedApplicants.sort((a, b) =>
-      a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
-    );
+  const sortApplicants = approvedApplicants.sort((a, b) =>
+    a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
+  );
 
   useEffect(() => {
     setAllPosts(sortApplicants);
   }, [sortApplicants]);
-
-  useEffect(() => {
-    let theApplicants = [];
-    if (approvedApplicants && programTabsValue !== 0) {
-      for (let i = 0; i < approvedApplicants.length; i++) {
-        let theApplicant = [];
-        approvedApplicants[i].programs.forEach(program => {
-          if (program.program.id === programTabsValue)
-            theApplicant.push(approvedApplicants[i]);
-        });
-        theApplicants.push(...theApplicant);
-      }
-      setAllPosts(theApplicants);
-    } else {
-      setAllPosts(approvedApplicants);
-    }
-  }, [approvedApplicants, programTabsValue]);
 
   useEffect(() => {
     setCurrentPosts(
@@ -129,9 +93,6 @@ const ApplicationsBoard = ({
       setAllPosts(searchNames);
     }
   };
-  const handleChangeValueProgramTabs = (event, newValue) => {
-    setProgramTabsValue(newValue);
-  };
 
   if (!currentPosts) {
     return <div>...Loading</div>;
@@ -152,8 +113,9 @@ const ApplicationsBoard = ({
 
       {showForm ? (
         <ApproveNewApplicantForm
-          options={options}
-          approveNewApplicants={approveNewApplicants}
+          unapprovedApplicants={unapprovedApplicants || []}
+          getAllNotApprovedApplicants={getAllNotApprovedApplicants}
+          approveNewApplicantsStatus={approveNewApplicantsStatus}
           closeForm={() => setShowForm(false)}
         />
       ) : (
@@ -201,16 +163,6 @@ const ApplicationsBoard = ({
               </div>
             </div>
           </Grid>
-          <div
-            className={classes.buttonContainer}
-            style={{justifyContent: 'center'}}
-          >
-            <FilterByProgramsTabs
-              handleChangeFilter={handleChangeValueProgramTabs}
-              value={programTabsValue}
-              programs={programs}
-            />
-          </div>
         </React.Fragment>
       )}
 
@@ -247,16 +199,6 @@ const ApplicationsBoard = ({
                 ({applicant.email})
               </Typography>
             </Link>
-            <div className={classes.programTagsContainer}>
-              {applicant.programs.map(
-                (program, index) =>
-                  program.is_approved && (
-                    <div className={classes.programTags} key={index}>
-                      {program.program.name}
-                    </div>
-                  )
-              )}
-            </div>
           </Paper>
         ))}
       {currentPosts.length === 0 && (
@@ -270,29 +212,27 @@ const ApplicationsBoard = ({
         </Typography>
       )}
 
-      {!showCard && (
-        <Pagination
-          defaultPage={1}
-          page={currentPage}
-          count={pageCount}
-          onClick={e => paginate(e)}
-          color="primary"
-          className={classes.pagination}
-          hideNextButton
-          hidePrevButton
-        />
-      )}
+      <Pagination
+        defaultPage={1}
+        page={currentPage}
+        count={pageCount}
+        onClick={e => paginate(e)}
+        color="primary"
+        className={classes.pagination}
+        hideNextButton
+        hidePrevButton
+      />
     </div>
   );
 };
 
 ApplicationsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
-  approveNewApplicants: PropTypes.func.isRequired,
+  approveNewApplicantsStatus: PropTypes.func.isRequired,
   getAllApprovedApplicants: PropTypes.func.isRequired,
-  getAllContactsPrograms: PropTypes.func.isRequired,
-  allApplicants: PropTypes.array,
+  getAllNotApprovedApplicants: PropTypes.func.isRequired,
   approvedApplicants: PropTypes.array,
+  unapprovedApplicants: PropTypes.array,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

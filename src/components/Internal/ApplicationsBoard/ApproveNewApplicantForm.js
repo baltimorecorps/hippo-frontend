@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
@@ -12,21 +12,39 @@ import Grid from '@material-ui/core/Grid';
 
 const ApproveNewApplicantForm = ({
   classes,
-  options,
-  approveNewApplicants,
+  unapprovedApplicants,
+  getAllNotApprovedApplicants,
+  approveNewApplicantsStatus,
   closeForm,
 }) => {
-  let selectedApplicants = [];
+  useEffect(() => {
+    if (!unapprovedApplicants || unapprovedApplicants.length === 0)
+      getAllNotApprovedApplicants();
+  }, [unapprovedApplicants, getAllNotApprovedApplicants]);
+
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [applicantIds, setApplicantIds] = useState([]);
+
+  const options = unapprovedApplicants.map(contact => {
+    return {
+      name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
+      id: contact.id,
+      contact: contact,
+    };
+  });
 
   const onChange = (event, values) => {
-    selectedApplicants = values.map(value => value.contact);
+    setSelectedValues(values);
+    setApplicantIds(
+      values.map(value => {
+        return {id: value.id};
+      })
+    );
   };
 
   const approve = async () => {
-    const programId = 1;
-    await approveNewApplicants(programId, selectedApplicants);
+    await approveNewApplicantsStatus(applicantIds);
     closeForm();
-    window.location.reload(false);
   };
 
   const inputLabelProps = {
@@ -54,9 +72,10 @@ const ApproveNewApplicantForm = ({
       <div className={classes.searchBarContainer}>
         <Autocomplete
           multiple
-          id="tags-standard"
-          options={options}
+          id="approve-contact-text-field"
           getOptionLabel={option => option.name}
+          options={[...selectedValues, ...options]}
+          filterSelectedOptions
           className={classes.searchBar}
           onChange={onChange}
           renderInput={params => (
@@ -87,7 +106,7 @@ ApproveNewApplicantForm.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      contact_id: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired,
       contact: PropTypes.shape({
         email: PropTypes.string.isRequired,
         first_name: PropTypes.string.isRequired,
@@ -96,7 +115,7 @@ ApproveNewApplicantForm.propTypes = {
       }),
     })
   ).isRequired,
-  approveNewApplicants: PropTypes.func.isRequired,
+  approveNewApplicantsStatus: PropTypes.func.isRequired,
   closeForm: PropTypes.func.isRequired,
 };
 

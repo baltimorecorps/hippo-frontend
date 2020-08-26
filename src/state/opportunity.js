@@ -231,6 +231,29 @@ export const approveNewApplicants = (programId, applicants) =>
 
 // ---------------------------------------------------------------------------
 
+export const APPROVE_NEW_APPLICANTS_STATUS = 'APPROVE_NEW_APPLICANTS_STATUS';
+export const APPROVE_NEW_APPLICANTS_STATUS_API = fetchActionTypes(
+  APPROVE_NEW_APPLICANTS_STATUS
+);
+export const approveNewApplicantsStatus = applicantIds =>
+  async function(dispatch) {
+    dispatch({
+      type: APPROVE_NEW_APPLICANTS_STATUS,
+      applicantIds,
+    });
+
+    return await makeApiFetchActions(
+      APPROVE_NEW_APPLICANTS_STATUS,
+      `${API_URL}/api/contacts/approve/`,
+      {
+        body: JSON.stringify(applicantIds),
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+
+// ---------------------------------------------------------------------------
+
 export const GET_ALL_INTERNAL_APPLICANTS = 'GET_ALL_INTERNAL_APPLICANTS';
 export const GET_ALL_INTERNAL_APPLICANTS_API = fetchActionTypes(
   GET_ALL_INTERNAL_APPLICANTS
@@ -249,6 +272,18 @@ export const GET_ALL_APPROVED_APPLICANTS_API = fetchActionTypes(
 export const getAllApprovedApplicants = makeApiFetchActions(
   GET_ALL_APPROVED_APPLICANTS,
   `${API_URL}/api/contacts/programs/?is_approved=true`
+);
+
+// ---------------------------------------------------------------------------
+
+export const GET_ALL_NOT_APPROVED_APPLICANTS =
+  'GET_ALL_NOT_APPROVED_APPLICANTS';
+export const GET_ALL_NOT_APPROVED_APPLICANTS_API = fetchActionTypes(
+  GET_ALL_NOT_APPROVED_APPLICANTS
+);
+export const getAllNotApprovedApplicants = makeApiFetchActions(
+  GET_ALL_NOT_APPROVED_APPLICANTS,
+  `${API_URL}/api/contacts/programs/?is_approved=false`
 );
 
 // ---------------------------------------------------------------------------
@@ -484,8 +519,18 @@ export const applicantsReducer = createReducer(
   {},
   {
     [APPROVE_NEW_APPLICANTS_API.RESOLVE]: (state, action) => {
-      const application = action.body.data;
-      state[application.id] = application;
+      const applications = action.body.data;
+      state['approved_applicants'] = [
+        ...state['approved_applicants'],
+        ...applications,
+      ];
+    },
+    [APPROVE_NEW_APPLICANTS_STATUS_API.RESOLVE]: (state, action) => {
+      const applications = action.body.data;
+      state['approved_applicants'] = [
+        ...state['approved_applicants'],
+        ...applications,
+      ];
     },
     [GET_ALL_INTERNAL_APPLICANTS_API.RESOLVE]: (state, action) => {
       const newState = {};
@@ -501,6 +546,9 @@ export const applicantsReducer = createReducer(
     },
     [GET_ALL_APPROVED_APPLICANTS_API.RESOLVE]: (state, action) => {
       state['approved_applicants'] = action.body.data;
+    },
+    [GET_ALL_NOT_APPROVED_APPLICANTS_API.RESOLVE]: (state, action) => {
+      state['not_approved_applicants'] = action.body.data;
     },
   }
 );
