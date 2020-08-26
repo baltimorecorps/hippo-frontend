@@ -16,10 +16,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsTabs';
+
 const ApplicationsBoard = ({
   classes,
-  approveNewApplicants,
   approveNewApplicantsStatus,
   getAllApprovedApplicants,
   getAllNotApprovedApplicants,
@@ -133,7 +132,6 @@ const ApplicationsBoard = ({
       {showForm ? (
         <ApproveNewApplicantForm
           options={options}
-          approveNewApplicants={approveNewApplicants}
           approveNewApplicantsStatus={approveNewApplicantsStatus}
           closeForm={() => setShowForm(false)}
         />
@@ -249,10 +247,11 @@ const ApplicationsBoard = ({
 
 ApplicationsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
-  approveNewApplicants: PropTypes.func.isRequired,
+  approveNewApplicantsStatus: PropTypes.func.isRequired,
   getAllApprovedApplicants: PropTypes.func.isRequired,
-  allApplicants: PropTypes.array,
+  getAllNotApprovedApplicants: PropTypes.func.isRequired,
   approvedApplicants: PropTypes.array,
+  unapprovedApplicants: PropTypes.array,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

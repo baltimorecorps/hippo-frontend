@@ -13,16 +13,19 @@ import Grid from '@material-ui/core/Grid';
 const ApproveNewApplicantForm = ({
   classes,
   options,
-  approveNewApplicants,
   approveNewApplicantsStatus,
   closeForm,
 }) => {
-  let applicantIds = [];
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [applicantIds, setApplicantIds] = useState([]);
 
   const onChange = (event, values) => {
-    applicantIds = values.map(value => {
-      return {id: value.id};
-    });
+    setSelectedValues(values);
+    setApplicantIds(
+      values.map(value => {
+        return {id: value.id};
+      })
+    );
   };
 
   const approve = async () => {
@@ -55,9 +58,10 @@ const ApproveNewApplicantForm = ({
       <div className={classes.searchBarContainer}>
         <Autocomplete
           multiple
-          id="tags-standard"
-          options={options}
+          id="approve-contact-text-field"
           getOptionLabel={option => option.name}
+          options={[...selectedValues, ...options]}
+          filterSelectedOptions
           className={classes.searchBar}
           onChange={onChange}
           renderInput={params => (
@@ -97,7 +101,7 @@ ApproveNewApplicantForm.propTypes = {
       }),
     })
   ).isRequired,
-  approveNewApplicants: PropTypes.func.isRequired,
+  approveNewApplicantsStatus: PropTypes.func.isRequired,
   closeForm: PropTypes.func.isRequired,
 };
 
