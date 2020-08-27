@@ -179,33 +179,27 @@ const EachOpportunity = ({
         </div>
         {audience === 'candidates' ? (
           <div className={classes.applyButton}>
-            {contact
-              ? contact.programs.map((eachProgram, index) =>
-                  eachProgram.is_approved === true ? (
-                    submittedIds.includes(opportunity.id) ? (
-                      <Button
-                        onClick={() => onClickViewAppButton(opportunity.id)}
-                        variant="contained"
-                        color="primary"
-                        key={index}
-                        data-testid="view-app-btn"
-                      >
-                        View Application
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => onClickApplyButton(opportunity.id)}
-                        variant="contained"
-                        color="primary"
-                        key={index}
-                        data-testid="apply-btn"
-                      >
-                        Apply
-                      </Button>
-                    )
-                  ) : null
-                )
-              : null}
+            {contact && contact.status === 'approved' ? (
+              submittedIds.includes(opportunity.id) ? (
+                <Button
+                  onClick={() => onClickViewAppButton(opportunity.id)}
+                  variant="contained"
+                  color="primary"
+                  data-testid="view-app-btn"
+                >
+                  View Application
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => onClickApplyButton(opportunity.id)}
+                  variant="contained"
+                  color="primary"
+                  data-testid="apply-btn"
+                >
+                  Apply
+                </Button>
+              )
+            ) : null}
           </div>
         ) : (
           // audience === "internal"
