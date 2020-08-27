@@ -15,6 +15,7 @@ const CandidateOpportunitiesPage = ({
   classes,
   opportunities,
   getAllOpportunities,
+  getContactProfile,
   apps,
   getAllApplications,
   contactId,
@@ -25,10 +26,13 @@ const CandidateOpportunitiesPage = ({
   let history = useHistory();
 
   useEffect(() => {
+    if (!contact && contactId) {
+      getContactProfile(contactId);
+    }
     if (contact) {
       getAllApplications(contact.id);
     }
-  }, [apps, getAllApplications, contact]);
+  }, [apps, getAllApplications, contact, contactId, getContactProfile]);
 
   const toApply = opportunity_id => {
     history.push(`/application/${opportunity_id}`);

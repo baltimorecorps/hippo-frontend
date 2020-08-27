@@ -47,6 +47,7 @@ const opportunityArray = [
 const submittedIds = ['1a', '1b', '1c'];
 const contact = {
   id: 1,
+  status: 'approved',
   programs: [{program: {id: 1}, is_approved: true}],
 };
 const mockFunction = jest.fn();
