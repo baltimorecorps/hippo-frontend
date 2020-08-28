@@ -461,6 +461,28 @@ export const getApprovedContacts = makeApiFetchActions(
 
 // ---------------------------------------------------------------------------
 
+export const APPROVE_NEW_CONTACTS_STATUS = 'APPROVE_NEW_CONTACTS_STATUS';
+export const APPROVE_NEW_CONTACTS_STATUS_API = fetchActionTypes(
+  APPROVE_NEW_CONTACTS_STATUS
+);
+export const approveNewContactsStatus = applicantIds =>
+  async function(dispatch) {
+    dispatch({
+      type: APPROVE_NEW_CONTACTS_STATUS,
+      applicantIds,
+    });
+
+    return await makeApiFetchActions(
+      APPROVE_NEW_CONTACTS_STATUS,
+      `${API_URL}/api/contacts/approve/`,
+      {
+        body: JSON.stringify(applicantIds),
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -484,6 +506,25 @@ export const contactsReducer = createReducer(
       } else {
         state.short = action.body.data;
       }
+    },
+    [GET_SUBMITTED_CONTACTS_API.RESOLVE]: (state, action) => {
+      if (!action.body) {
+        return {};
+      } else {
+        state.submitted = action.body.data;
+      }
+    },
+    [GET_APPROVED_CONTACTS_API.RESOLVE]: (state, action) => {
+      if (!action.body) {
+        return {};
+      } else {
+        state.approved = action.body.data;
+      }
+    },
+
+    [APPROVE_NEW_CONTACTS_STATUS_API.RESOLVE]: (state, action) => {
+      const approvedContacts = action.body.data;
+      state['approved'] = [...state['approved'], ...approvedContacts];
     },
 
     [GET_CONTACT_API.RESOLVE]: (state, action) => {

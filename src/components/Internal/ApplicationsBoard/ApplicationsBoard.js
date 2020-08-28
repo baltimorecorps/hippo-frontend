@@ -19,16 +19,16 @@ import Select from '@material-ui/core/Select';
 
 const ApplicationsBoard = ({
   classes,
-  approveNewApplicantsStatus,
-  getAllApprovedApplicants,
-  getAllNotApprovedApplicants,
+  getSubmittedContacts,
+  getApprovedContacts,
+  approveNewContactsStatus,
   approvedApplicants,
-  unapprovedApplicants,
+  submittedApplicants,
 }) => {
   useEffect(() => {
     if (!approvedApplicants || approvedApplicants.length === 0)
-      getAllApprovedApplicants();
-  }, [getAllApprovedApplicants, approvedApplicants]);
+      getApprovedContacts();
+  }, [getApprovedContacts, approvedApplicants]);
 
   let history = useHistory();
   const toProfile = contactId => {
@@ -113,9 +113,9 @@ const ApplicationsBoard = ({
 
       {showForm ? (
         <ApproveNewApplicantForm
-          unapprovedApplicants={unapprovedApplicants || []}
-          getAllNotApprovedApplicants={getAllNotApprovedApplicants}
-          approveNewApplicantsStatus={approveNewApplicantsStatus}
+          submittedApplicants={submittedApplicants || []}
+          getSubmittedContacts={getSubmittedContacts}
+          approveNewContactsStatus={approveNewContactsStatus}
           closeForm={() => setShowForm(false)}
         />
       ) : (
@@ -228,7 +228,7 @@ const ApplicationsBoard = ({
 
 ApplicationsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
-  approveNewApplicantsStatus: PropTypes.func.isRequired,
+  approveNewContactsStatus: PropTypes.func.isRequired,
   getAllApprovedApplicants: PropTypes.func.isRequired,
   getAllNotApprovedApplicants: PropTypes.func.isRequired,
   approvedApplicants: PropTypes.array,

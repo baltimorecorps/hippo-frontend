@@ -1,27 +1,27 @@
 import {connect} from 'react-redux';
 import ApplicationsBoard from './ApplicationsBoard';
+
 import {
-  approveNewApplicantsStatus,
-  getAllApprovedApplicants,
-  getAllNotApprovedApplicants,
-} from 'state/opportunity';
+  getSubmittedContacts,
+  getApprovedContacts,
+  approveNewContactsStatus,
+} from 'state/contacts';
 
 const mapStateToProps = state => {
-  const approvedApplicants = state.applicants['approved_applicants'] || [];
-  const unapprovedApplicants =
-    state.applicants['not_approved_applicants'] || [];
+  const approvedApplicants = state.contacts['approved'] || [];
+  const submittedApplicants = state.contacts['submitted'] || [];
 
   return {
-    unapprovedApplicants,
+    submittedApplicants,
     approvedApplicants,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  getAllApprovedApplicants: () => getAllApprovedApplicants(dispatch),
-  getAllNotApprovedApplicants: () => getAllNotApprovedApplicants(dispatch),
-  approveNewApplicantsStatus: applicantIds =>
-    approveNewApplicantsStatus(applicantIds)(dispatch),
+  getSubmittedContacts: () => getSubmittedContacts(dispatch),
+  getApprovedContacts: () => getApprovedContacts(dispatch),
+  approveNewContactsStatus: applicantIds =>
+    approveNewContactsStatus(applicantIds)(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicationsBoard);
