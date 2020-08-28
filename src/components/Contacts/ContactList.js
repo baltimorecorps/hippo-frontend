@@ -6,18 +6,13 @@ import Typography from '@material-ui/core/Typography';
 
 import EachContact from './EachContact';
 
-const ContactList = ({
-  contacts,
-  getAllContactsShort,
-  deleteContact,
-  classes,
-}) => {
+const ContactList = ({contacts, getAllContacts, deleteContact, classes}) => {
   let [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    if (!loaded && contacts.length === 0) getAllContactsShort();
+    if (!loaded && contacts.length === 0) getAllContacts();
 
     setLoaded(true);
-  }, [loaded, contacts, getAllContactsShort]);
+  }, [loaded, contacts, getAllContacts]);
 
   return (
     <List>

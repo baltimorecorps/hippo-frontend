@@ -10,10 +10,10 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 
-const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
+const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
   useEffect(() => {
-    if (!contacts) getAllContactsShort();
-  }, [getAllContactsShort, contacts]);
+    if (!contacts) getAllContacts();
+  }, [getAllContacts, contacts]);
 
   const [searchBy, setSearchBy] = useState('name');
   const [showContacts, setShowContacts] = useState(contacts || null);
@@ -116,7 +116,7 @@ const Contacts = ({classes, contacts, getAllContactsShort, deleteContact}) => {
         <React.Fragment>
           <ContactList
             contacts={showContacts}
-            getAllContactsShort={getAllContactsShort}
+            getAllContactsShort={getAllContacts}
             deleteContact={deleteContact}
           />
         </React.Fragment>

@@ -12,24 +12,23 @@ import Grid from '@material-ui/core/Grid';
 
 const ApproveNewApplicantForm = ({
   classes,
-  unapprovedApplicants,
-  getAllNotApprovedApplicants,
-  approveNewApplicantsStatus,
+  submittedApplicants,
+  getSubmittedContacts,
+  approveNewContactsStatus,
   closeForm,
 }) => {
   useEffect(() => {
-    if (!unapprovedApplicants || unapprovedApplicants.length === 0)
-      getAllNotApprovedApplicants();
-  }, [unapprovedApplicants, getAllNotApprovedApplicants]);
+    if (!submittedApplicants || submittedApplicants.length === 0)
+      getSubmittedContacts();
+  }, [submittedApplicants, getSubmittedContacts]);
 
   const [selectedValues, setSelectedValues] = useState([]);
   const [applicantIds, setApplicantIds] = useState([]);
 
-  const options = unapprovedApplicants.map(contact => {
+  const options = submittedApplicants.map(contact => {
     return {
       name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
       id: contact.id,
-      contact: contact,
     };
   });
 
@@ -43,7 +42,7 @@ const ApproveNewApplicantForm = ({
   };
 
   const approve = async () => {
-    await approveNewApplicantsStatus(applicantIds);
+    await approveNewContactsStatus(applicantIds);
     closeForm();
   };
 
@@ -103,19 +102,8 @@ const ApproveNewApplicantForm = ({
 
 ApproveNewApplicantForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-      contact: PropTypes.shape({
-        email: PropTypes.string.isRequired,
-        first_name: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired,
-        last_name: PropTypes.string.isRequired,
-      }),
-    })
-  ).isRequired,
-  approveNewApplicantsStatus: PropTypes.func.isRequired,
+  getSubmittedContacts: PropTypes.func.isRequired,
+  approveNewContactsStatus: PropTypes.func.isRequired,
   closeForm: PropTypes.func.isRequired,
 };
 
