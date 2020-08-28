@@ -1,7 +1,7 @@
 import fetchMock from 'fetch-mock';
 import {
-  ALL_CONTACTS,
-  ALL_CONTACTS_API,
+  GET_ALL_CONTACTS,
+  GET_ALL_CONTACTS_API,
   GET_CONTACT_API,
   GET_MY_CONTACT,
   GET_MY_CONTACT_API,
@@ -347,14 +347,11 @@ describe('Contacts state', () => {
   test('Fetch all contacts', () => {
     const contacts = [{id: 1}, {id: 2}, {id: 3}, {id: 4}];
     const newState = contactsReducer(undefined, {
-      type: ALL_CONTACTS_API.RESOLVE,
+      type: GET_ALL_CONTACTS_API.RESOLVE,
       body: {status: 'success', data: contacts},
     });
     expect(newState).toEqual({
-      1: {id: 1},
-      2: {id: 2},
-      3: {id: 3},
-      4: {id: 4},
+      short: [{id: 1}, {id: 2}, {id: 3}, {id: 4}],
     });
   });
   test('Get single contact', () => {
@@ -458,15 +455,13 @@ describe('Contacts state', () => {
         5: {id: 5},
       },
       {
-        type: ALL_CONTACTS_API.RESOLVE,
+        type: GET_ALL_CONTACTS_API.RESOLVE,
         body: {status: 'success', data: contacts},
       }
     );
     expect(newState).toEqual({
-      1: {id: 1},
-      2: {id: 2},
-      3: {id: 3},
-      4: {id: 4},
+      5: {id: 5},
+      short: [{id: 1}, {id: 2}, {id: 3}, {id: 4}],
     });
   });
 
@@ -983,12 +978,11 @@ describe('accounts state', () => {
       {id: 4},
     ];
     const newState = accountsReducer(undefined, {
-      type: ALL_CONTACTS_API.RESOLVE,
+      type: GET_ALL_CONTACTS_API.RESOLVE,
       body: {status: 'success', data: contacts},
     });
     expect(newState).toEqual({
-      'auth|2': {id: 2, account_id: 'auth|2'},
-      'auth|3': {id: 3, account_id: 'auth|3'},
+      short: contacts,
     });
   });
   test('Get my contact', () => {
@@ -998,7 +992,7 @@ describe('accounts state', () => {
       body: {status: 'success', data: contact},
     });
     expect(newState).toEqual({
-      'auth|myid': contact,
+      [contact.account_id]: contact,
     });
   });
 });

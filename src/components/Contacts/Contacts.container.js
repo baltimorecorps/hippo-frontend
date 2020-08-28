@@ -1,11 +1,11 @@
 import {connect} from 'react-redux';
 import Contacts from './Contacts';
-import {addContact, getAllContactsShort, deleteContact} from 'state/contacts';
+import {addContact, getAllContacts, deleteContact} from 'state/contacts';
 
 const addNewContact = dispatch =>
   async function(contact) {
     await addContact(contact)(dispatch);
-    await getAllContactsShort(dispatch);
+    await getAllContacts(dispatch);
   };
 
 const mapStateToProps = state => {
@@ -20,7 +20,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   addNewContact: addNewContact(dispatch),
-  getAllContactsShort: () => getAllContactsShort(dispatch),
+  getAllContacts: () => getAllContacts(dispatch),
   deleteContact: contactId => deleteContact(contactId)(dispatch),
 });
 

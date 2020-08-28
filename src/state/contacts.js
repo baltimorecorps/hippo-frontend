@@ -28,10 +28,10 @@ export const deleteSession = () =>
     credentials: 'include',
   });
 
-export const ALL_CONTACTS = 'ALL_CONTACTS';
-export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
-const apiGetAllContacts = () =>
-  makeApiFetchActions(ALL_CONTACTS, `${API_URL}/api/contacts/`);
+// export const ALL_CONTACTS = 'ALL_CONTACTS';
+// export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
+// const apiGetAllContacts = () =>
+//   makeApiFetchActions(ALL_CONTACTS, `${API_URL}/api/contacts/`);
 
 // const apiGetContact = contactId =>
 //   makeApiFetchActions(CONTACT, `${API_URL}/api/contacts/${contactId}/`);
@@ -67,7 +67,7 @@ export const getContactProfile = contactId =>
     `${API_URL}/api/contacts/${contactId}/profile/`
   );
 
-export const refreshContacts = apiGetAllContacts();
+// export const refreshContacts = apiGetAllContacts();
 
 export const ADD_CONTACT = 'ADD_CONTACT';
 export const ADD_CONTACT_API = fetchActionTypes(ADD_CONTACT);
@@ -273,17 +273,6 @@ export const apiGetMyContact = authToken =>
 
 // ---------------------------------------------------------------------------
 
-export const GET_ALL_CONTACTS_SHORT = 'GET_ALL_CONTACTS_SHORT';
-export const GET_ALL_CONTACTS_SHORT_API = fetchActionTypes(
-  GET_ALL_CONTACTS_SHORT
-);
-export const getAllContactsShort = makeApiFetchActions(
-  GET_ALL_CONTACTS_SHORT,
-  `${API_URL}/api/contacts/short/`
-);
-
-// ---------------------------------------------------------------------------
-
 export const CREATE_ABOUT_ME = 'CREATE_ABOUT_ME';
 export const CREATE_ABOUT_ME_API = fetchActionTypes(CREATE_ABOUT_ME);
 export const createAboutMe = contactId =>
@@ -440,6 +429,58 @@ export const deleteExperience = experience =>
       console.error(error);
     }
   };
+
+// ---------------------------------------------------------------------------
+
+export const GET_ALL_CONTACTS = 'GET_ALL_CONTACTS';
+export const GET_ALL_CONTACTS_API = fetchActionTypes(GET_ALL_CONTACTS);
+export const getAllContacts = makeApiFetchActions(
+  GET_ALL_CONTACTS,
+  `${API_URL}/api/contacts/`
+);
+// ---------------------------------------------------------------------------
+
+export const GET_SUBMITTED_CONTACTS = 'GET_SUBMITTED_CONTACTS';
+export const GET_SUBMITTED_CONTACTS_API = fetchActionTypes(
+  GET_SUBMITTED_CONTACTS
+);
+export const getSubmittedContacts = makeApiFetchActions(
+  GET_SUBMITTED_CONTACTS,
+  `${API_URL}/api/contacts/?status=submitted`
+);
+// ---------------------------------------------------------------------------
+
+export const GET_APPROVED_CONTACTS = 'GET_APPROVED_CONTACTS';
+export const GET_APPROVED_CONTACTS_API = fetchActionTypes(
+  GET_APPROVED_CONTACTS
+);
+export const getApprovedContacts = makeApiFetchActions(
+  GET_APPROVED_CONTACTS,
+  `${API_URL}/api/contacts/?status=approved`
+);
+
+// ---------------------------------------------------------------------------
+
+export const APPROVE_NEW_CONTACTS_STATUS = 'APPROVE_NEW_CONTACTS_STATUS';
+export const APPROVE_NEW_CONTACTS_STATUS_API = fetchActionTypes(
+  APPROVE_NEW_CONTACTS_STATUS
+);
+export const approveNewContactsStatus = applicantIds =>
+  async function(dispatch) {
+    dispatch({
+      type: APPROVE_NEW_CONTACTS_STATUS,
+      applicantIds,
+    });
+
+    return await makeApiFetchActions(
+      APPROVE_NEW_CONTACTS_STATUS,
+      `${API_URL}/api/contacts/approve/`,
+      {
+        body: JSON.stringify(applicantIds),
+        method: 'POST',
+      }
+    )(dispatch);
+  };
 // ---------------------------------------------------------------------------
 
 /* eslint-enable no-unused-vars */
@@ -447,24 +488,43 @@ export const deleteExperience = experience =>
 export const contactsReducer = createReducer(
   {},
   {
-    [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
-      if (!action.body) {
-        return {};
-      } else {
-        let newState = {};
-        action.body.data.forEach(contact => {
-          newState[contact.id] = contact;
-        });
-        return newState;
-      }
-    },
+    // [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
+    //   if (!action.body) {
+    //     return {};
+    //   } else {
+    //     let newState = {};
+    //     action.body.data.forEach(contact => {
+    //       newState[contact.id] = contact;
+    //     });
+    //     return newState;
+    //   }
+    // },
 
-    [GET_ALL_CONTACTS_SHORT_API.RESOLVE]: (state, action) => {
+    [GET_ALL_CONTACTS_API.RESOLVE]: (state, action) => {
       if (!action.body) {
         return {};
       } else {
         state.short = action.body.data;
       }
+    },
+    [GET_SUBMITTED_CONTACTS_API.RESOLVE]: (state, action) => {
+      if (!action.body) {
+        return {};
+      } else {
+        state.submitted = action.body.data;
+      }
+    },
+    [GET_APPROVED_CONTACTS_API.RESOLVE]: (state, action) => {
+      if (!action.body) {
+        return {};
+      } else {
+        state.approved = action.body.data;
+      }
+    },
+
+    [APPROVE_NEW_CONTACTS_STATUS_API.RESOLVE]: (state, action) => {
+      const approvedContacts = action.body.data;
+      state['approved'] = [...state['approved'], ...approvedContacts];
     },
 
     [GET_CONTACT_API.RESOLVE]: (state, action) => {
@@ -701,20 +761,14 @@ export const contactsReducer = createReducer(
 export const accountsReducer = createReducer(
   {},
   {
-    [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
+    [GET_ALL_CONTACTS_API.RESOLVE]: (state, action) => {
       if (!action.body) {
         return {};
       } else {
-        let newState = {};
-        action.body.data.forEach(contact => {
-          if (!contact.account_id) {
-            return;
-          }
-          newState[contact.account_id] = contact;
-        });
-        return newState;
+        state.short = action.body.data;
       }
     },
+
     [GET_MY_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.account_id] = contact;
