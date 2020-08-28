@@ -434,7 +434,7 @@ export const deleteExperience = experience =>
 
 export const GET_ALL_CONTACTS = 'GET_ALL_CONTACTS';
 export const GET_ALL_CONTACTS_API = fetchActionTypes(GET_ALL_CONTACTS);
-export const getAllContactsShort = makeApiFetchActions(
+export const getAllContacts = makeApiFetchActions(
   GET_ALL_CONTACTS,
   `${API_URL}/api/contacts/`
 );
@@ -444,7 +444,7 @@ export const GET_SUBMITTED_CONTACTS = 'GET_SUBMITTED_CONTACTS';
 export const GET_SUBMITTED_CONTACTS_API = fetchActionTypes(
   GET_SUBMITTED_CONTACTS
 );
-export const getSubmittedContactsShort = makeApiFetchActions(
+export const getSubmittedContacts = makeApiFetchActions(
   GET_SUBMITTED_CONTACTS,
   `${API_URL}/api/contacts/?status=submitted`
 );
@@ -454,7 +454,7 @@ export const GET_APPROVED_CONTACTS = 'GET_APPROVED_CONTACTS';
 export const GET_APPROVED_CONTACTS_API = fetchActionTypes(
   GET_APPROVED_CONTACTS
 );
-export const getApprovedContactsShort = makeApiFetchActions(
+export const getApprovedContacts = makeApiFetchActions(
   GET_APPROVED_CONTACTS,
   `${API_URL}/api/contacts/?status=approved`
 );
