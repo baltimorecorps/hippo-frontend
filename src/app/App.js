@@ -39,6 +39,7 @@ import EmployerViewApplication from 'components/Employer/EmployerViewApplication
 import FAQPage from 'components/FAQPage';
 import ApplicationsCard from 'components/Internal/ApplicationsBoard/ApplicationsCard.container';
 import Questionnaire from 'components/Questionnaire';
+import ApplicantsOverview from 'components/Internal/ApplicantsOverview';
 
 const App = ({
   hasSession,
@@ -225,6 +226,11 @@ const App = ({
                 exact
                 path="/internal/applications-board/:contactId"
                 component={ApplicationsCard}
+              />
+              <Route
+                exact
+                path="/internal/applicants-overview"
+                component={ApplicantsOverview}
               />
               <Route
                 exact
