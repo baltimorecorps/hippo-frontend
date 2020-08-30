@@ -37,7 +37,7 @@ const columns = [
   {
     id: 'years_exp',
     label: 'Experience (years)',
-    minWidth: 100,
+    minWidth: 50,
     align: 'right',
   },
   {
@@ -48,25 +48,42 @@ const columns = [
   },
 ];
 
-function createData(
+function createData({
   status,
-  name,
+  first_name,
+  last_name,
   programs,
   years_exp,
   job_search_status,
   phone_primary,
   email,
-  contact
-) {
+  id,
+  // contact,
+}) {
+  const nameData = (
+    <Typography>
+      {first_name} {last_name}
+      <br />
+      <span style={{color: '#777'}}>
+        {email}
+        <br />
+        {phone_primary}
+      </span>
+    </Typography>
+  );
+  const programsData = programs.reduce(
+    (programA, programB) => (programA += `, ${programB}`)
+  );
   return {
     status,
-    name,
+    nameData,
     years_exp,
-    programs,
+    programsData,
     job_search_status,
     phone_primary,
     email,
-    contact,
+    id,
+    // contact,
   };
 }
 
@@ -135,7 +152,7 @@ const mockApplicants = [
     account_id: 'google-oauth2|117322007625596379889',
     email: 'amber2@baltimorecorps.org',
     first_name: 'Amber2',
-    id: 130,
+    id: 135,
     last_name: 'Sample',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose'],
@@ -147,7 +164,7 @@ const mockApplicants = [
     account_id: 'google-oauth2|117322007625596379889',
     email: 'bay2@baltimorecorps.org',
     first_name: 'Bay2',
-    id: 131,
+    id: 136,
     last_name: 'Chairangsaris',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose', 'Public Aliies'],
@@ -159,7 +176,7 @@ const mockApplicants = [
     account_id: 'google-oauth2|117322007625596379889',
     email: 'billy2@baltimorecorps.org',
     first_name: 'Billy2',
-    id: 132,
+    id: 137,
     last_name: 'Daly',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose'],
@@ -171,7 +188,7 @@ const mockApplicants = [
     account_id: 'google-oauth2|117322007625596379889',
     email: 'taylor2@baltimorecorps.org',
     first_name: 'Taylor2',
-    id: 133,
+    id: 138,
     last_name: 'Swift',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose', 'Mayoral Fellowship'],
@@ -183,7 +200,7 @@ const mockApplicants = [
     account_id: 'google-oauth2|117322007625596379889',
     email: 'hello2@baltimorecorps.org',
     first_name: 'Hello2',
-    id: 134,
+    id: 139,
     last_name: 'Kitty',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose', 'Baltimore Corps Fellowship'],
@@ -192,15 +209,6 @@ const mockApplicants = [
     job_search_status: 'Actively looking for a job',
   },
 ];
-
-// -------------------------------------------------------------------------//
-// -------------------------------------------------------------------------//
-// -------------------------------------------------------------------------//
-// -------------------------------------------------------------------------//
-// -------------------------------------------------------------------------//
-// -------------------------------------------------------------------------//
-// -------------------------------------------------------------------------//
-// -------------------------------------------------------------------------//
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -243,7 +251,7 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead style={{backgroundColor: '#e3eaff'}}>
+    <TableHead style={{backgroundColor: 'hsl(232, 57%, 26%)'}}>
       <TableRow>
         {/* <TableCell padding="checkbox">
           <Checkbox
@@ -266,7 +274,7 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              {headCell.label}
+              <Typography style={{color: '#fff'}}>{headCell.label}</Typography>
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -318,8 +326,8 @@ const EnhancedTableToolbar = props => {
         <Typography>Filters: Data Analysis</Typography>
       </div>
 
-      <Tooltip title="Print Table">
-        <IconButton aria-label="print table">{print}</IconButton>
+      <Tooltip title="Print">
+        <IconButton aria-label="print">{print}</IconButton>
       </Tooltip>
     </Toolbar>
   );
@@ -359,21 +367,22 @@ function EnhancedTable({classes}) {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const componentRef = React.useRef();
+  const tableRef = React.useRef();
+  const tablePaginationRef = React.useRef();
   const applicantsRows = mockApplicants.map(applicant => {
     const programs = applicant.programs.reduce((a, b) => {
       return (a += `, ${b}`);
     });
     return createData(
-      applicant.status,
-      `${applicant.first_name} ${applicant.last_name} (${applicant.email})`,
-      programs,
-      applicant.years_exp,
-      applicant.job_search_status,
-      applicant.phone_primary,
-      applicant.email,
+      // applicant.status,
+      // `${applicant.first_name} ${applicant.last_name} (${applicant.email}) ${applicant.phone_primary}`,
+      // programs,
+      // applicant.years_exp,
+      // applicant.job_search_status,
+      // applicant.phone_primary,
+      // applicant.email,
       applicant
     );
   });
@@ -424,15 +433,22 @@ function EnhancedTable({classes}) {
     setPage(0);
   };
 
-  const handleChangeDense = event => {
-    setDense(event.target.checked);
-  };
+  // const handleChangeDense = event => {
+  //   setDense(event.target.checked);
+  // };
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows =
     rowsPerPage -
     Math.min(rowsPerPage, applicantsRows.length - page * rowsPerPage);
+
+  const beforeGetContent = () => {
+    tablePaginationRef.current.style.display = 'none';
+  };
+  const beforePrint = () => {
+    tablePaginationRef.current.style.display = 'block';
+  };
   return (
     <div className={classes.container}>
       <EnhancedTableToolbar
@@ -440,16 +456,19 @@ function EnhancedTable({classes}) {
         print={
           <ReactToPrint
             trigger={() => <PrintIcon />}
-            content={() => componentRef.current}
+            content={() => tableRef.current}
+            onBeforeGetContent={() => beforeGetContent()}
+            onBeforePrint={() => beforePrint()}
           />
         }
       />
-      <Paper style={{width: '80%'}} ref={componentRef}>
-        <TableContainer>
+      <Paper ref={tableRef}>
+        <TableContainer style={{width: '100%'}}>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            // size={dense ? 'small' : 'medium'}
+            size={'small'}
             aria-label="enhanced table"
           >
             <EnhancedTableHead
@@ -461,6 +480,7 @@ function EnhancedTable({classes}) {
               onRequestSort={handleRequestSort}
               rowCount={applicantsRows.length}
             />
+
             <TableBody>
               {stableSort(applicantsRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -475,7 +495,7 @@ function EnhancedTable({classes}) {
                       // role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.id}
                       // selected={isItemSelected}
                     >
                       {/* <TableCell padding="checkbox">
@@ -485,19 +505,25 @@ function EnhancedTable({classes}) {
                         />
                       </TableCell> */}
                       <TableCell component="th" id={labelId} scope="row">
-                        {row.name}
+                        {row.nameData}
                       </TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
-                      <TableCell align="right">{row.programs}</TableCell>
-                      <TableCell align="right">{row.years_exp}</TableCell>
                       <TableCell align="right">
-                        {row.job_search_status}
+                        <Typography> {row.status} </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography> {row.programsData}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography> {row.years_exp}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography> {row.job_search_status}</Typography>
                       </TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{height: (dense ? 33 : 53) * emptyRows}}>
+                <TableRow style={{height: 33 * emptyRows}}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}
@@ -505,7 +531,8 @@ function EnhancedTable({classes}) {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          ref={tablePaginationRef}
+          rowsPerPageOptions={[5, 10, 20]}
           component="div"
           count={applicantsRows.length}
           rowsPerPage={rowsPerPage}
@@ -514,10 +541,10 @@ function EnhancedTable({classes}) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
+      {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
-      />
+      /> */}
     </div>
   );
 }
@@ -527,7 +554,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   container: {
     marginTop: spacing(1),
 
-    width: '100%',
+    width: '80%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

@@ -181,11 +181,11 @@ const ApplicantsOverview = ({
 
 ApplicantsOverview.propTypes = {
   classes: PropTypes.object.isRequired,
-  approveNewApplicantsStatus: PropTypes.func.isRequired,
-  getAllApprovedApplicants: PropTypes.func.isRequired,
-  getAllNotApprovedApplicants: PropTypes.func.isRequired,
+  getSubmittedContacts: PropTypes.func.isRequired,
+  getApprovedContacts: PropTypes.func.isRequired,
+  approveNewContactsStatus: PropTypes.func.isRequired,
   approvedApplicants: PropTypes.array,
-  unapprovedApplicants: PropTypes.array,
+  submittedApplicants: PropTypes.array,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -301,11 +301,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
   },
   approveButton: {
-    [breakpoints.up('lg')]: {
-      height: '55px',
-      width: '300px',
-    },
-    height: '40px',
+    // [breakpoints.up('lg')]: {
+    //   height: '55px',
+    //   width: '300px',
+    // },
+    height: '32px',
   },
   pagination: {
     margin: spacing(2),
