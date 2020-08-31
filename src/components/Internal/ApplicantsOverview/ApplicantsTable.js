@@ -24,7 +24,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 const columns = [
-  {id: 'fullName', label: 'Name', minWidth: 150, align: 'left'},
+  {id: 'fullName', label: 'Name', minWidth: 120, align: 'left'},
   {id: 'status', label: 'Status', minWidth: 50, align: 'right'},
   {
     id: 'programsData',
@@ -34,7 +34,7 @@ const columns = [
   },
   {
     id: 'years_exp',
-    label: 'Experience (years)',
+    label: 'Experience',
     minWidth: 50,
     align: 'right',
   },
@@ -62,7 +62,7 @@ function createData({
     <Typography>
       {fullName}
       <br />
-      <span style={{color: '#777'}}>
+      <span style={{color: '#777', fontSize: '14px'}}>
         {email}
         <br />
         {phone_primary}
