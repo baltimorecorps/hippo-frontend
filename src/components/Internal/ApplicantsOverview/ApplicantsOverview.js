@@ -3,19 +3,11 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {useHistory, useRouteMatch} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import ApproveNewApplicantForm from './ApproveNewApplicantForm';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import Link from '@material-ui/core/Link';
-import Pagination from '@material-ui/lab/Pagination';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
 import ApplicantsTable from './ApplicantsTable';
 
 const ApplicantsOverview = ({

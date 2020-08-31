@@ -37,7 +37,8 @@ import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'components/FAQPage';
-import ApplicationsCard from 'components/Internal/ApplicationsBoard/ApplicationsCard.container';
+import ApplicationsCardOld from 'components/Internal/ApplicationsBoard/ApplicationsCard.container';
+import ApplicationsCard from 'components/Internal/ApplicantsOverview/ApplicationsCard.container';
 import Questionnaire from 'components/Questionnaire';
 import ApplicantsOverview from 'components/Internal/ApplicantsOverview';
 
@@ -224,8 +225,13 @@ const App = ({
 
               <Route
                 exact
-                path="/internal/applications-board/:contactId"
+                path="/internal/applicants-overview/:contactId"
                 component={ApplicationsCard}
+              />
+              <Route
+                exact
+                path="/internal/applications-board/:contactId"
+                component={ApplicationsCardOld}
               />
               <Route
                 exact

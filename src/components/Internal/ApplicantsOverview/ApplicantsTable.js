@@ -14,15 +14,13 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {lighten, makeStyles} from '@material-ui/core/styles';
 
+import {useHistory, useRouteMatch} from 'react-router-dom';
+
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 const columns = [
@@ -58,7 +56,6 @@ function createData({
   phone_primary,
   email,
   id,
-  // contact,
 }) {
   const nameData = (
     <Typography>
@@ -83,7 +80,6 @@ function createData({
     phone_primary,
     email,
     id,
-    // contact,
   };
 }
 
@@ -92,7 +88,7 @@ const mockApplicants = [
     account_id: 'google-oauth2|117322007625596379889',
     email: 'amber@baltimorecorps.org',
     first_name: 'Amber',
-    id: 130,
+    id: 78,
     last_name: 'Sample',
     phone_primary: '+1 (240) 319-9783',
     programs: ['PFP', 'PA', 'BF', 'MF'],
@@ -237,15 +233,7 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-  const {
-    classes,
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const {classes, order, orderBy, onRequestSort} = props;
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
@@ -253,14 +241,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead style={{backgroundColor: 'hsl(232, 57%, 26%)'}}>
       <TableRow>
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{'aria-label': 'select all desserts'}}
-          />
-        </TableCell> */}
         {columns.map(headCell => (
           <TableCell
             style={{fontWeight: 'bold'}}
@@ -361,31 +341,24 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function EnhancedTable({classes}) {
-  // const classes = useStyles();
+function ApplicantsTable({classes}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  // const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const tableRef = React.useRef();
   const tablePaginationRef = React.useRef();
   const applicantsRows = mockApplicants.map(applicant => {
-    const programs = applicant.programs.reduce((a, b) => {
-      return (a += `, ${b}`);
-    });
-    return createData(
-      // applicant.status,
-      // `${applicant.first_name} ${applicant.last_name} (${applicant.email}) ${applicant.phone_primary}`,
-      // programs,
-      // applicant.years_exp,
-      // applicant.job_search_status,
-      // applicant.phone_primary,
-      // applicant.email,
-      applicant
-    );
+    return createData(applicant);
   });
+  let history = useHistory();
+  const match = useRouteMatch();
+
+  const onClickView = contactId => {
+    history.push(`${match.url}/${contactId}`);
+    console.log('get here');
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -404,26 +377,6 @@ function EnhancedTable({classes}) {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-  };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -432,10 +385,6 @@ function EnhancedTable({classes}) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  // const handleChangeDense = event => {
-  //   setDense(event.target.checked);
-  // };
 
   const isSelected = name => selected.indexOf(name) !== -1;
 
@@ -467,7 +416,6 @@ function EnhancedTable({classes}) {
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            // size={dense ? 'small' : 'medium'}
             size={'small'}
             aria-label="enhanced table"
           >
@@ -491,19 +439,11 @@ function EnhancedTable({classes}) {
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row)}
-                      // role="checkbox"
+                      onClick={() => onClickView(row.id)}
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
-                      // selected={isItemSelected}
                     >
-                      {/* <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{'aria-labelledby': labelId}}
-                        />
-                      </TableCell> */}
                       <TableCell component="th" id={labelId} scope="row">
                         {row.nameData}
                       </TableCell>
@@ -541,10 +481,6 @@ function EnhancedTable({classes}) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
     </div>
   );
 }
@@ -581,5 +517,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-// export default withStyles(styles)(ApplicantsTable);
-export default withStyles(styles)(EnhancedTable);
+export default withStyles(styles)(ApplicantsTable);
