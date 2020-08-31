@@ -309,6 +309,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                       name="race_other"
                       label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
                       onChange={handleRaceOther}
+                      error={errors.raceOther_error}
                     />
                   </div>
                 ) : (
@@ -332,6 +333,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                       name="gender_other"
                       label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
                       onChange={handleGenderAndPronounChange}
+                      error={errors.genderOther_error}
                     />
                   ) : (
                     <div style={{marginBottom: '15px'}}></div>
@@ -352,6 +354,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                       name="pronoun_other"
                       label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
                       onChange={handleGenderAndPronounChange}
+                      error={errors.pronounOther_error}
                     />
                   ) : (
                     <div style={{marginBottom: '15px'}}></div>
@@ -372,7 +375,11 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                   name="hear_about_us_other"
                   label="Please provide more details about how you find out about us:"
                   onChange={handleProfileChange}
-                  error={errors.hearAboutUsOther_error}
+                  error={
+                    values.profile.hear_about_us === 'Other'
+                      ? errors.hearAboutUsOther_error
+                      : null
+                  }
                 />
               </div>
               <FormSubmitButton onSubmit={submit} />

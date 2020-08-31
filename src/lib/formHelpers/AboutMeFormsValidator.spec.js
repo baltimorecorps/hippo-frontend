@@ -7,25 +7,51 @@ import {
   valueAlignmentValidator,
 } from './formValidator';
 
+import {blankProfile} from '../../components/AboutMe/defaultData';
+
 afterEach(cleanup);
 
 describe('About Me: Contact Info Form', () => {
+  const validValues = {
+    first_name: 'Katniss Everdeen',
+    last_name: 'Grape-Baby',
+    phone_primary: '9990001111',
+    email: 'bay@gmail.com',
+    profile: {
+      address_primary: {
+        street1: '123 Monday St.',
+        street2: 'Apt 3',
+        city: 'Baltimore',
+        state: 'Maryland',
+        zip_code: '12345',
+        country: 'United States',
+      },
+      race: {
+        american_indian: false,
+        asian: false,
+        black: false,
+        hawaiian: false,
+        hispanic: false,
+        not_listed: false,
+        race_other: '',
+        south_asian: false,
+        white: false,
+      },
+      gender: '',
+      gender_other: '',
+      pronoun: '',
+      pronoun_other: '',
+      hear_about_us: '',
+      hear_about_us_other: '',
+    },
+  };
   test('Contact Info Validator: empty values ', () => {
     const values = {
       first_name: '',
       last_name: '',
       phone_primary: '',
       email: '',
-      profile: {
-        address_primary: {
-          street1: '',
-          street2: '',
-          city: '',
-          state: '',
-          zip_code: '',
-          country: '',
-        },
-      },
+      profile: blankProfile,
     };
     const expectedErr = {
       firstName_error: 'Required',
@@ -46,22 +72,8 @@ describe('About Me: Contact Info Form', () => {
   });
 
   test('Contact Info Validator: valid values ', () => {
-    const values = {
-      first_name: 'Katniss Everdeen',
-      last_name: 'Grape-Baby',
-      phone_primary: '9990001111',
-      email: 'bay@gmail.com',
-      profile: {
-        address_primary: {
-          street1: '123 Monday St.',
-          street2: 'Apt 3',
-          city: 'Baltimore',
-          state: 'Maryland',
-          zip_code: '12345',
-          country: 'United States',
-        },
-      },
-    };
+    const values = validValues;
+
     let expectedErr = {};
 
     const {isError, err} = contactInfoValidator(values);
@@ -70,22 +82,9 @@ describe('About Me: Contact Info Form', () => {
   });
 
   test('Contact Info Validator: string zip code ', () => {
-    const values = {
-      first_name: 'Katniss Everdeen',
-      last_name: 'Grape-Baby',
-      phone_primary: '9990001111',
-      email: 'bay@gmail.com',
-      profile: {
-        address_primary: {
-          street1: '123 Monday St.',
-          street2: 'Apt 3',
-          city: 'Baltimore',
-          state: 'Maryland',
-          zip_code: 'abc123',
-          country: 'United States',
-        },
-      },
-    };
+    const values = validValues;
+    values.profile.address_primary.zip_code = 'abc123';
+
     let expectedErr = {
       zipCode_error: 'Invalid value. Please enter numbers only',
     };
@@ -96,22 +95,9 @@ describe('About Me: Contact Info Form', () => {
   });
 
   test('Contact Info Validator: too many digits zip code ', () => {
-    const values = {
-      first_name: 'Katniss Everdeen',
-      last_name: 'Grape-Baby',
-      phone_primary: '9990001111',
-      email: 'bay@gmail.com',
-      profile: {
-        address_primary: {
-          street1: '123 Monday St.',
-          street2: 'Apt 3',
-          city: 'Baltimore',
-          state: 'Maryland',
-          zip_code: '123456',
-          country: 'United States',
-        },
-      },
-    };
+    const values = validValues;
+    values.profile.address_primary.zip_code = '123456';
+
     let expectedErr = {
       zipCode_error: 'Invalid value. Please enter five-digit numbers only',
     };
@@ -122,27 +108,54 @@ describe('About Me: Contact Info Form', () => {
   });
 
   test('Contact Info Validator: too less digits zip code ', () => {
-    const values = {
-      first_name: 'Katniss Everdeen',
-      last_name: 'Grape-Baby',
-      phone_primary: '9990001111',
-      email: 'bay@gmail.com',
-      profile: {
-        address_primary: {
-          street1: '123 Monday St.',
-          street2: 'Apt 3',
-          city: 'Baltimore',
-          state: 'Maryland',
-          zip_code: '123',
-          country: 'United States',
-        },
-      },
-    };
+    const values = validValues;
+    values.profile.address_primary.zip_code = '123';
+
     let expectedErr = {
       zipCode_error: 'Invalid value. Please enter five-digit numbers only',
     };
+    let result = contactInfoValidator(values);
 
-    const {isError, err} = contactInfoValidator(values);
+    expect(result.isError).toBe(true);
+    expect(result.err).toEqual(expectedErr);
+
+    values.profile.address_primary.zip_code = '21111';
+    result = contactInfoValidator(values);
+    expect(result.isError).toBe(false);
+    expect(result.err).toEqual({});
+  });
+
+  test('Contact Info Validator: require hear_about_us_other ', () => {
+    const values = validValues;
+    values.profile.hear_about_us = 'Other';
+    values.profile.hear_about_us_other = '';
+
+    let expectedErr = {
+      hearAboutUsOther_error: 'Required',
+    };
+    let result = contactInfoValidator(values);
+
+    expect(result.isError).toBe(true);
+    expect(result.err).toEqual(expectedErr);
+
+    values.profile.hear_about_us_other = 'some place';
+    result = contactInfoValidator(values);
+
+    expect(result.isError).toBe(false);
+    expect(result.err).toEqual({});
+  });
+
+  test('Contact Info Validator: require race_other when race.not_listed is true ', () => {
+    const values = validValues;
+    values.profile.race.not_listed = true;
+    values.profile.race.race_other = '';
+    console.log('race', values.profile.race);
+
+    let expectedErr = {
+      raceOther_error: 'Required',
+    };
+    let {isError, err} = contactInfoValidator(values);
+
     expect(isError).toBe(true);
     expect(err).toEqual(expectedErr);
   });
@@ -150,23 +163,7 @@ describe('About Me: Contact Info Form', () => {
 
 describe('About Me: Interest and Goals Form', () => {
   const emptyValues = {
-    profile: {
-      job_search_status: '',
-      current_job_status: '',
-      current_edu_status: '',
-      years_exp: '',
-      previous_bcorps_program: '',
-      hear_about_us: '',
-      hear_about_us_other: '',
-      programs_completed: {
-        fellowship: false,
-        public_allies: false,
-        mayoral_fellowship: false,
-        kiva: false,
-        elevation_awards: false,
-        civic_innovators: false,
-      },
-    },
+    profile: blankProfile,
   };
 
   const validValues = {
@@ -219,21 +216,6 @@ describe('About Me: Interest and Goals Form', () => {
 
     let expectedErr = {
       programsCompleted_error: 'Required',
-    };
-    let {isError, err} = interestsAndGoalsValidator(values);
-
-    expect(isError).toBe(true);
-    expect(err).toEqual(expectedErr);
-  });
-
-  test('Interest and Goals Validator: require hear_about_us_other ', () => {
-    const values = validValues;
-    values.profile.programs_completed.mayoral_fellowship = true;
-    values.profile.hear_about_us = 'Other';
-    values.profile.hear_about_us_other = '';
-
-    let expectedErr = {
-      hearAboutUsOther_error: 'Required',
     };
     let {isError, err} = interestsAndGoalsValidator(values);
 
