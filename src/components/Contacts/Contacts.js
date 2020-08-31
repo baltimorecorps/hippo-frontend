@@ -116,7 +116,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
         <React.Fragment>
           <ContactList
             contacts={showContacts}
-            getAllContactsShort={getAllContacts}
+            getAllContacts={getAllContacts}
             deleteContact={deleteContact}
           />
         </React.Fragment>
@@ -128,7 +128,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
 Contacts.propTypes = {
   classes: PropTypes.object.isRequired,
   contacts: PropTypes.array.isRequired,
-  getAllContactsShort: PropTypes.func.isRequired,
+  getAllContacts: PropTypes.func.isRequired,
   addNewContact: PropTypes.func.isRequired,
 };
 
