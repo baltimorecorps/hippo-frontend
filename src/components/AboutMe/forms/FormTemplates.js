@@ -138,7 +138,7 @@ const FormSubmitButtonTemplate = ({onSubmit, classes}) => {
       <Button
         variant="contained"
         color="primary"
-        onClick={onSubmit}
+        onClick={() => onSubmit()}
         align="end"
       >
         Save

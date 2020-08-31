@@ -283,6 +283,15 @@ const interviewScheduledValidator = values => {
 const contactInfoValidator = values => {
   const {first_name, last_name, email, email_primary, phone_primary} = values;
   const {
+    gender,
+    gender_other,
+    pronoun,
+    pronoun_other,
+    hear_about_us,
+    hear_about_us_other,
+    race,
+  } = values.profile;
+  const {
     street1,
     city,
     state,
@@ -312,7 +321,8 @@ const contactInfoValidator = values => {
   } else if (
     email &&
     !validateEmail(email) &&
-    email_primary && !validateEmail(email_primary)
+    email_primary &&
+    !validateEmail(email_primary)
   ) {
     isError = true;
     err.email_error = 'Invalid email address';
@@ -352,6 +362,38 @@ const contactInfoValidator = values => {
     err.country_error = 'Required';
   }
 
+  if (race.not_listed && (!race.race_other || race.race_other.length === 0)) {
+    isError = true;
+    err.raceOther_error = 'Required';
+  }
+
+  if (
+    hear_about_us &&
+    hear_about_us === 'Other' &&
+    (!hear_about_us_other || hear_about_us_other.length === 0)
+  ) {
+    isError = true;
+    err.hearAboutUsOther_error = 'Required';
+  }
+
+  if (
+    gender &&
+    gender === 'Not Listed' &&
+    (!gender_other || gender_other.length === 0)
+  ) {
+    isError = true;
+    err.genderOther_error = 'Required';
+  }
+
+  if (
+    pronoun &&
+    pronoun === 'Not Listed' &&
+    (!pronoun_other || pronoun_other.length === 0)
+  ) {
+    isError = true;
+    err.pronounOther_error = 'Required';
+  }
+
   return {isError, err};
 };
 const interestsAndGoalsValidator = values => {
@@ -362,8 +404,6 @@ const interestsAndGoalsValidator = values => {
     years_exp,
     previous_bcorps_program,
     programs_completed,
-    hear_about_us,
-    hear_about_us_other,
   } = values.profile;
 
   const allValues = Object.values(programs_completed);
@@ -395,14 +435,6 @@ const interestsAndGoalsValidator = values => {
   ) {
     isError = true;
     err.programsCompleted_error = 'Required';
-  }
-  if (
-    hear_about_us &&
-    hear_about_us === 'Other' &&
-    (!hear_about_us_other || hear_about_us_other.length === 0)
-  ) {
-    isError = true;
-    err.hearAboutUsOther_error = 'Required';
   }
 
   return {isError, err};
