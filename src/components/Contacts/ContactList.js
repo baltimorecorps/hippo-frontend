@@ -46,7 +46,7 @@ ContactList.propTypes = {
       last_name: PropTypes.string.isRequired,
     })
   ),
-  getAllContactsShort: PropTypes.func.isRequired,
+  getAllContacts: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, spacing}) => ({
