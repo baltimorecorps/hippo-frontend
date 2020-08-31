@@ -24,10 +24,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 const columns = [
-  {id: 'name', label: 'Name', minWidth: 150, align: 'left'},
+  {id: 'fullName', label: 'Name', minWidth: 150, align: 'left'},
   {id: 'status', label: 'Status', minWidth: 50, align: 'right'},
   {
-    id: 'programs',
+    id: 'programsData',
     label: 'Programs',
     minWidth: 50,
     align: 'right',
@@ -57,9 +57,10 @@ function createData({
   email,
   id,
 }) {
+  const fullName = `${first_name} ${last_name}`;
   const nameData = (
     <Typography>
-      {first_name} {last_name}
+      {fullName}
       <br />
       <span style={{color: '#777'}}>
         {email}
@@ -73,6 +74,7 @@ function createData({
   );
   return {
     status,
+    fullName,
     nameData,
     years_exp,
     programsData,
@@ -92,7 +94,7 @@ const mockApplicants = [
     last_name: 'Sample',
     phone_primary: '+1 (240) 319-9783',
     programs: ['PFP', 'PA', 'BF', 'MF'],
-    status: 'approved',
+    status: 'created',
     years_exp: '0-2 years',
     job_search_status: 'Actively looking',
   },
@@ -116,7 +118,7 @@ const mockApplicants = [
     last_name: 'Daly',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose'],
-    status: 'approved',
+    status: 'submitted',
     years_exp: '5+ years',
     job_search_status: 'Just curious',
   },
@@ -152,7 +154,7 @@ const mockApplicants = [
     last_name: 'Sample',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose'],
-    status: 'approved',
+    status: 'submitted',
     years_exp: '0-2 years',
     job_search_status: 'Curious to see what opportunities are available',
   },
@@ -176,7 +178,7 @@ const mockApplicants = [
     last_name: 'Daly',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose'],
-    status: 'approved',
+    status: 'created',
     years_exp: '5+ years',
     job_search_status: 'Actively looking for a job',
   },
@@ -188,7 +190,7 @@ const mockApplicants = [
     last_name: 'Swift',
     phone_primary: '+1 (240) 319-9783',
     programs: ['Place for Purpose', 'Mayoral Fellowship'],
-    status: 'approved',
+    status: 'created',
     years_exp: '5+ years',
     job_search_status: 'Actively looking for a job',
   },
@@ -233,21 +235,23 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-  const {classes, order, orderBy, onRequestSort} = props;
+  const {order, orderBy, onRequestSort} = props;
   const createSortHandler = property => event => {
+    event.persist();
     onRequestSort(event, property);
   };
+  const classes = useStyles();
 
   return (
-    <TableHead style={{backgroundColor: 'hsl(232, 57%, 26%)'}}>
+    <TableHead style={{backgroundColor: 'hsl(232, 57%, 26%)', color: '#fff'}}>
       <TableRow>
         {columns.map(headCell => (
           <TableCell
-            style={{fontWeight: 'bold'}}
+            style={{fontWeight: 'bold', color: '#fff'}}
             key={headCell.id}
             align={headCell.align}
             padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
+            sortDirection={orderBy === headCell.nameData ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
@@ -270,9 +274,7 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -283,7 +285,7 @@ const useToolbarStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     display: 'flex',
     justifyContent: 'space-between',
-    width: '80%',
+    width: '100%',
   },
 }));
 
@@ -313,9 +315,7 @@ const EnhancedTableToolbar = props => {
   );
 };
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
+EnhancedTableToolbar.propTypes = {};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -343,8 +343,7 @@ const useStyles = makeStyles(theme => ({
 
 function ApplicantsTable({classes}) {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
+  const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const tableRef = React.useRef();
@@ -357,24 +356,13 @@ function ApplicantsTable({classes}) {
 
   const onClickView = contactId => {
     history.push(`${match.url}/${contactId}`);
-    console.log('get here');
   };
 
+  // learn this
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = event => {
-    if (event.target.checked) {
-      const newSelecteds = applicantsRows.map(n => n.contact);
-      setSelected(newSelecteds);
-      console.log('selected', selected);
-
-      return;
-    }
-    setSelected([]);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -385,8 +373,6 @@ function ApplicantsTable({classes}) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const isSelected = name => selected.indexOf(name) !== -1;
 
   const emptyRows =
     rowsPerPage -
@@ -401,7 +387,6 @@ function ApplicantsTable({classes}) {
   return (
     <div className={classes.container}>
       <EnhancedTableToolbar
-        numSelected={selected.length}
         print={
           <ReactToPrint
             trigger={() => <PrintIcon />}
@@ -421,26 +406,23 @@ function ApplicantsTable({classes}) {
           >
             <EnhancedTableHead
               classes={classes}
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={applicantsRows.length}
             />
 
             <TableBody>
+              {/* learn this code block */}
               {stableSort(applicantsRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
                       onClick={() => onClickView(row.id)}
-                      aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.id}
                     >
