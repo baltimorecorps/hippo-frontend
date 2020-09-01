@@ -38,16 +38,6 @@ const InternalOpportunityBoard = ({
     return (
       <div className={classes.container}>
         <PartnershipsNavBar />
-        <Paper className={classes.paper}>
-          <Typography
-            component="h1"
-            variant="h5"
-            align="center"
-            className={classes.header}
-          >
-            Internal Opportunities Board
-          </Typography>
-        </Paper>
         <div className={classes.filterAndFormContainer}>
           <FilterByProgramsTabs
             handleChangeFilter={handleChangeFilter}

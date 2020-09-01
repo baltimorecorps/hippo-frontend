@@ -70,27 +70,11 @@ const AddOrEditOpportunitiesPage = ({
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
-      <Paper className={classes.headerPaper}>
-        <Typography
-          component="h1"
-          variant="h5"
-          align="center"
-          className={classes.header}
-          data-testid="page-header"
-        >
-          Add or Edit Opportunities
-        </Typography>
-      </Paper>
 
       <div
         className={classes.filterAndFormContainer}
         style={showForm ? {flexDirection: 'column'} : null}
       >
-        <FilterByProgramsTabs
-          handleChangeFilter={handleChangeFilter}
-          value={value}
-          programs={programs}
-        />
         {showForm ? (
           <AddOrEditOpportunityForm
             type="add"
@@ -111,6 +95,11 @@ const AddOrEditOpportunitiesPage = ({
             </Button>
           </Grid>
         )}
+        <FilterByProgramsTabs
+          handleChangeFilter={handleChangeFilter}
+          value={value}
+          programs={programs}
+        />
       </div>
 
       {theOpportunities.map((opportunity, index) => (
@@ -232,6 +221,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
+    marginBottom: spacing(2),
   },
   addNewOppButton: {
     padding: '11px',

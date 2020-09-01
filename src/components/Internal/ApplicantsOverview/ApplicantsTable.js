@@ -29,7 +29,7 @@ const columns = [
   {
     id: 'programsData',
     label: 'Programs',
-    minWidth: 50,
+    minWidth: '100px',
     align: 'right',
   },
   {
@@ -129,7 +129,11 @@ function EnhancedTableHead(props) {
       <TableRow>
         {columns.map(headCell => (
           <TableCell
-            style={{fontWeight: 'bold', color: '#fff'}}
+            style={{
+              fontWeight: 'bold',
+              color: '#fff',
+              minWidth: headCell.minWidth,
+            }}
             key={headCell.id}
             align={headCell.align}
             padding={headCell.disablePadding ? 'none' : 'default'}
@@ -366,6 +370,7 @@ function ApplicantsTable({classes, mockApplicants}) {
 const styles = ({breakpoints, palette, spacing}) => ({
   container: {
     marginTop: spacing(1),
+    marginBottom: spacing(2),
 
     width: '80%',
     display: 'flex',

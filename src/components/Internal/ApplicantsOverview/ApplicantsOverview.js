@@ -9,6 +9,7 @@ import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import TextField from '@material-ui/core/TextField';
 import ApplicantsTable from './ApplicantsTable';
 import {mockApplicants} from './mockData';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
 
 const ApplicantsOverview = ({
   classes,
@@ -72,7 +73,7 @@ const ApplicantsOverview = ({
                 <TextField
                   id="search-applicants"
                   className={classes.searchBar}
-                  placeholder="Search by name or email"
+                  placeholder="&#128269; Search by name or email"
                   name="search-applicants"
                   onChange={handleChangeSearch}
                   InputProps={{
@@ -90,7 +91,7 @@ const ApplicantsOverview = ({
                 color="primary"
                 className={classes.approveButton}
               >
-                + Approve New Applicants
+                <GroupAddIcon style={{marginRight: '5px'}} /> Approve Applicants
               </Button>
             </div>
           )}
@@ -146,12 +147,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
   searchFilterContainer: {
     display: 'flex',
     alignItems: 'center',
-    margin: '40px 0px 0px 0px',
     justifyContent: 'center',
     padding: 0,
     width: '100%',
     flexDirection: 'column',
-
+    marginTop: spacing(1),
     [breakpoints.up('md')]: {
       flexDirection: 'row',
       justifyContent: 'space-between',
