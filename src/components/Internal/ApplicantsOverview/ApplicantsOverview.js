@@ -29,9 +29,7 @@ const ApplicantsOverview = ({
   // const sortApplicants = approvedApplicants.sort((a, b) =>
   //   a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
   // );
-  const sortApplicants = mockApplicants.sort((a, b) =>
-    a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
-  );
+  const sortApplicants = mockApplicants;
 
   useEffect(() => {
     setAllPosts(sortApplicants);
@@ -229,10 +227,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
   },
   approveButton: {
-    // [breakpoints.up('lg')]: {
-    //   height: '55px',
-    //   width: '300px',
-    // },
     height: '32px',
   },
   pagination: {
