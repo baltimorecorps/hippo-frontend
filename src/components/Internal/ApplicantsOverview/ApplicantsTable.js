@@ -69,9 +69,13 @@ function createData({
       </span>
     </Typography>
   );
-  const programsData = programs.reduce(
-    (programA, programB) => (programA += `, ${programB}`)
-  );
+  let programsData = '';
+  if (programs.length > 2)
+    programsData = programs.reduce(
+      (programA, programB) => (programA += `, ${programB}`)
+    );
+
+  if (programs.length === 1) programsData = programs[0];
   return {
     status,
     fullName,
