@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import {useHistory, useRouteMatch} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -9,6 +8,7 @@ import ApproveNewApplicantForm from './ApproveNewApplicantForm';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import TextField from '@material-ui/core/TextField';
 import ApplicantsTable from './ApplicantsTable';
+import {mockApplicants} from './mockData';
 
 const ApplicantsOverview = ({
   classes,
@@ -23,28 +23,13 @@ const ApplicantsOverview = ({
       getApprovedContacts();
   }, [getApprovedContacts, approvedApplicants]);
 
-  let history = useHistory();
-  const toProfile = contactId => {
-    history.push(`/profile/${contactId}`);
-  };
-
-  const onClickView = contactId => {
-    history.push(`${match.url}/${contactId}`);
-  };
-
-  const match = useRouteMatch();
-
   const [showForm, setShowForm] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(5);
   const [allPosts, setAllPosts] = useState();
-  const [currentPosts, setCurrentPosts] = useState();
 
-  let indexOfLastPost = currentPage * postsPerPage;
-  let indexOfFirstPost = indexOfLastPost - postsPerPage;
-  let pageCount = allPosts && Math.ceil(allPosts.length / postsPerPage);
-
-  const sortApplicants = approvedApplicants.sort((a, b) =>
+  // const sortApplicants = approvedApplicants.sort((a, b) =>
+  //   a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
+  // );
+  const sortApplicants = mockApplicants.sort((a, b) =>
     a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
   );
 
@@ -52,42 +37,22 @@ const ApplicantsOverview = ({
     setAllPosts(sortApplicants);
   }, [sortApplicants]);
 
-  useEffect(() => {
-    setCurrentPosts(
-      allPosts && allPosts.length > 2
-        ? allPosts.slice(indexOfFirstPost, indexOfLastPost)
-        : allPosts
-    );
-  }, [allPosts, indexOfFirstPost, indexOfLastPost]);
-
-  const paginate = event => {
-    event.persist();
-    setCurrentPage(Number(event.target.textContent));
-  };
-
-  const handleChangePostsPerPage = event => {
-    event.persist();
-    setPostsPerPage(event.target.value);
-    setCurrentPage(1);
-  };
-
   const handleChangeSearch = event => {
     event.persist();
     const name = event.target.value.toLowerCase();
     if (name != null) {
-      const searchNames = approvedApplicants.filter(applicant => {
+      const searchNames = mockApplicants.filter(applicant => {
         const applicantFullName = `${applicant.first_name} ${applicant.last_name}`.toLowerCase();
         const applicantEmail = applicant.email.toLowerCase();
         return (
           applicantFullName.includes(name) || applicantEmail.includes(name)
         );
       });
-      setCurrentPage(1);
       setAllPosts(searchNames);
     }
   };
 
-  if (!currentPosts) {
+  if (!allPosts) {
     return <div>...Loading</div>;
   }
   return (
@@ -134,39 +99,10 @@ const ApplicantsOverview = ({
         </Grid>
       </React.Fragment>
 
-      {/* <Paper className={`${classes.paper} ${classes.applicantsPaper}`}> */}
       <ApplicantsTable
-        currentPosts={currentPosts}
-        approvedApplicants={approvedApplicants}
+        // approvedApplicants={approvedApplicants}
+        mockApplicants={allPosts}
       />
-      {/* {currentPosts &&
-          currentPosts.map((applicant, index) => (
-            <div key={index}>
-              {' '}
-              {applicant.first_name} {applicant.last_name}
-            </div>
-          ))} */}
-      {/* </Paper> */}
-      {currentPosts.length === 0 && (
-        <Typography
-          component="p"
-          variant="body1"
-          align="center"
-          className={classes.noResult}
-        >
-          No result found
-        </Typography>
-      )}
-      {/* <Pagination
-        defaultPage={1}
-        page={currentPage}
-        count={pageCount}
-        onClick={e => paginate(e)}
-        color="primary"
-        className={classes.pagination}
-        hideNextButton
-        hidePrevButton
-      /> */}
     </div>
   );
 };
@@ -212,7 +148,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   searchFilterContainer: {
     display: 'flex',
     alignItems: 'center',
-    margin: '40px 0px 15px 0px',
+    margin: '40px 0px 0px 0px',
     justifyContent: 'center',
     padding: 0,
     width: '100%',
@@ -301,11 +237,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   pagination: {
     margin: spacing(2),
-  },
-  noResult: {
-    marginTop: '20px',
-    width: '100%',
-    fontSize: '20px',
   },
 });
 

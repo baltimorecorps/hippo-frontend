@@ -85,129 +85,6 @@ function createData({
   };
 }
 
-const mockApplicants = [
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'amber@baltimorecorps.org',
-    first_name: 'Amber',
-    id: 78,
-    last_name: 'Sample',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['PFP', 'PA', 'BF', 'MF'],
-    status: 'created',
-    years_exp: '0-2 years',
-    job_search_status: 'Actively looking',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'bay@baltimorecorps.org',
-    first_name: 'Bay',
-    id: 131,
-    last_name: 'Chairangsaris',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose', 'Public Aliies'],
-    status: 'approved',
-    years_exp: '3-5 years',
-    job_search_status: 'Looking in 2-6 months',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'billy@baltimorecorps.org',
-    first_name: 'Billy',
-    id: 132,
-    last_name: 'Daly',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose'],
-    status: 'submitted',
-    years_exp: '5+ years',
-    job_search_status: 'Just curious',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'taylor@baltimorecorps.org',
-    first_name: 'Taylor',
-    id: 133,
-    last_name: 'Swift',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose', 'Mayoral Fellowship'],
-    status: 'approved',
-    years_exp: '5+ years',
-    job_search_status: 'Curious to see what opportunities are available',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'hello@baltimorecorps.org',
-    first_name: 'Hello',
-    id: 134,
-    last_name: 'Kitty',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose', 'Baltimore Corps Fellowship'],
-    status: 'approved',
-    years_exp: '3-5 years',
-    job_search_status: 'Looking for a job in the next 2-6 months',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'amber2@baltimorecorps.org',
-    first_name: 'Amber2',
-    id: 135,
-    last_name: 'Sample',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose'],
-    status: 'submitted',
-    years_exp: '0-2 years',
-    job_search_status: 'Curious to see what opportunities are available',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'bay2@baltimorecorps.org',
-    first_name: 'Bay2',
-    id: 136,
-    last_name: 'Chairangsaris',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose', 'Public Aliies'],
-    status: 'approved',
-    years_exp: '3-5 years',
-    job_search_status: 'Actively looking for a job',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'billy2@baltimorecorps.org',
-    first_name: 'Billy2',
-    id: 137,
-    last_name: 'Daly',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose'],
-    status: 'created',
-    years_exp: '5+ years',
-    job_search_status: 'Actively looking for a job',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'taylor2@baltimorecorps.org',
-    first_name: 'Taylor2',
-    id: 138,
-    last_name: 'Swift',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose', 'Mayoral Fellowship'],
-    status: 'created',
-    years_exp: '5+ years',
-    job_search_status: 'Actively looking for a job',
-  },
-  {
-    account_id: 'google-oauth2|117322007625596379889',
-    email: 'hello2@baltimorecorps.org',
-    first_name: 'Hello2',
-    id: 139,
-    last_name: 'Kitty',
-    phone_primary: '+1 (240) 319-9783',
-    programs: ['Place for Purpose', 'Baltimore Corps Fellowship'],
-    status: 'approved',
-    years_exp: '3-5 years',
-    job_search_status: 'Actively looking for a job',
-  },
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -341,7 +218,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ApplicantsTable({classes}) {
+function ApplicantsTable({classes, mockApplicants}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
@@ -435,6 +312,7 @@ function ApplicantsTable({classes}) {
                       <TableCell align="right">
                         <Typography> {row.programsData}</Typography>
                       </TableCell>
+
                       <TableCell align="right">
                         <Typography> {row.years_exp}</Typography>
                       </TableCell>
@@ -444,9 +322,21 @@ function ApplicantsTable({classes}) {
                     </TableRow>
                   );
                 })}
+
               {emptyRows > 0 && (
                 <TableRow style={{height: 33 * emptyRows}}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={6}>
+                    {applicantsRows.length === 0 && (
+                      <Typography
+                        component="p"
+                        variant="body1"
+                        align="center"
+                        className={classes.noResult}
+                      >
+                        No result found
+                      </Typography>
+                    )}
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
@@ -496,6 +386,13 @@ const styles = ({breakpoints, palette, spacing}) => ({
     width: '95%',
     padding: spacing(2, 3, 3),
     margin: spacing(1.5),
+  },
+  noResult: {
+    marginTop: '20px',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    fontSize: '20px',
   },
 });
 
