@@ -24,12 +24,12 @@ const useForm = (initialValues, onSubmit, closeForm) => {
     onSubmit(values);
   };
 
-  const handleChangeLeft = event => {
+  const handleChange = (event, side) => {
     event.persist();
 
     let newValueOptions = [];
     let newValue = [];
-    newValue = values.left.map(value => {
+    newValue = values[side].map(value => {
       if (event.target.name.includes(value.key)) {
         newValueOptions = value.options.map(option => {
           if (option.name === event.target.name) {
@@ -49,37 +49,10 @@ const useForm = (initialValues, onSubmit, closeForm) => {
         return value;
       }
     });
-    update('left')(newValue);
-  };
-  const handleChangeRight = event => {
-    event.persist();
-
-    let newValueOptions = [];
-    let newValue = [];
-    newValue = values.right.map(value => {
-      if (event.target.name.includes(value.key)) {
-        newValueOptions = value.options.map(option => {
-          if (option.name === event.target.name) {
-            return {
-              ...option,
-              checked: event.target.checked,
-            };
-          } else {
-            return option;
-          }
-        });
-        return {
-          ...value,
-          options: newValueOptions,
-        };
-      } else {
-        return value;
-      }
-    });
-    update('right')(newValue);
+    update(side)(newValue);
   };
 
-  return [values, handleChangeLeft, handleChangeRight, handleSubmit];
+  return [values, handleChange, handleSubmit];
 };
 
 const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
@@ -92,10 +65,7 @@ const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
   const {gilad, jason, antoine} = state;
   const error = [gilad, jason, antoine].filter(v => v).length !== 2;
 
-  const [values, handleChangeLeft, handleChangeRight, handleSubmit] = useForm(
-    formData,
-    onSubmit
-  );
+  const [values, handleChange, handleSubmit] = useForm(formData, onSubmit);
   console.log('values', values);
 
   return (
@@ -114,11 +84,6 @@ const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
         </Typography>
       </DialogTitle>
       <DialogContent className={classes.dialogContent} dividers={true}>
-        {/* <FormControl
-          fullWidth={true}
-          component="fieldset"
-          className={classes.formControl}
-        > */}
         <div className={classes.checkboxContainer}>
           {values.left.map((form, index) => (
             <React.Fragment key={index}>
@@ -132,7 +97,7 @@ const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
                     control={
                       <Checkbox
                         checked={option.checked}
-                        onChange={handleChangeLeft}
+                        onChange={e => handleChange(e, 'left')}
                         name={option.name}
                       />
                     }
@@ -157,7 +122,7 @@ const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
                     control={
                       <Checkbox
                         checked={option.checked}
-                        onChange={handleChangeRight}
+                        onChange={e => handleChange(e, 'right')}
                         name={option.name}
                       />
                     }
@@ -169,7 +134,6 @@ const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
             </React.Fragment>
           ))}
         </div>
-        {/* </FormControl> */}
       </DialogContent>
       <DialogActions className={classes.dialogActionsContainer}>
         <Button onClick={handleClose} color="primary" variant="contained">
