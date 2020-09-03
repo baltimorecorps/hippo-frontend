@@ -185,7 +185,11 @@ const EnhancedTableToolbar = props => {
       })}
     >
       <div style={{display: 'flex', alignItems: 'center'}}>
-        <Tooltip title="Filter List" style={{marginRight: '10px'}}>
+        <Tooltip
+          title="Filter List"
+          style={{marginRight: '10px'}}
+          placement="left"
+        >
           <IconButton
             onClick={() => handleClickOpenFilterForm()}
             aria-label="filter list"
@@ -208,7 +212,7 @@ const EnhancedTableToolbar = props => {
         </Typography>
       </div>
 
-      <Tooltip title="Print">
+      <Tooltip title="Print" placement="right">
         <IconButton aria-label="print">{print}</IconButton>
       </Tooltip>
     </Toolbar>
