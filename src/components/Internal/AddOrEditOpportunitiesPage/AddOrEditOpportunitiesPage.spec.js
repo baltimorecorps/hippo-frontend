@@ -94,13 +94,8 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
         />
       </Router>
     );
-    const pageHeader = getByTestId('page-header');
     const openAddNewOppFormButton = getByTestId('open-add-new-opp-form-btn');
 
-    expect(pageHeader).toBeInTheDocument();
-    expect(pageHeader).toHaveTextContent('Add or Edit Opportunities');
-
-    //
     expect(openAddNewOppFormButton).toBeInTheDocument();
     fireEvent.click(openAddNewOppFormButton);
 

@@ -168,7 +168,6 @@ EnhancedTableHead.propTypes = {
 
 const useToolbarStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(1),
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
@@ -177,7 +176,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const {numSelected, print} = props;
+  const {numSelected, print, handleClickOpenFilterForm} = props;
 
   return (
     <Toolbar
@@ -187,7 +186,10 @@ const EnhancedTableToolbar = props => {
     >
       <div style={{display: 'flex', alignItems: 'center'}}>
         <Tooltip title="Filter List" style={{marginRight: '10px'}}>
-          <IconButton aria-label="filter list">
+          <IconButton
+            onClick={() => handleClickOpenFilterForm()}
+            aria-label="filter list"
+          >
             <FilterListIcon />
           </IconButton>
         </Tooltip>
@@ -227,7 +229,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ApplicantsTable({classes, mockApplicants}) {
+function ApplicantsTable({classes, mockApplicants, handleClickOpenFilterForm}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
@@ -281,6 +283,7 @@ function ApplicantsTable({classes, mockApplicants}) {
             onBeforePrint={() => beforePrint()}
           />
         }
+        handleClickOpenFilterForm={handleClickOpenFilterForm}
       />
       <Paper ref={tableRef}>
         <TableContainer style={{width: '100%'}}>

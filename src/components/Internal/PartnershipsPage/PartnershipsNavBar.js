@@ -18,12 +18,12 @@ const PartnershipsNavBar = ({classes, location}) => {
     },
     {
       key: 'opportunities_board',
-      name: 'Internal Opportunities Board',
+      name: 'Opportunities Board',
       url: 'opportunities-board',
     },
     {
       key: 'applicants_overview',
-      name: 'Internal Applicants Board',
+      name: 'Applicants Board',
       url: 'applicants-overview',
     },
   ];

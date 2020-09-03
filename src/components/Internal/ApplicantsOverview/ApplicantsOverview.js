@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import ApplicantsTable from './ApplicantsTable';
 import {mockApplicants} from './mockData';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import FilterApplicantsForm from './FilterApplicantsForm';
 
 const ApplicantsOverview = ({
   classes,
@@ -26,7 +27,15 @@ const ApplicantsOverview = ({
 
   const [showForm, setShowForm] = useState(false);
   const [allPosts, setAllPosts] = useState();
+  const [openFilterForm, setOpenFilterForm] = useState(false);
 
+  const handleClickOpenFilterForm = () => {
+    setOpenFilterForm(true);
+  };
+
+  const handleCloseFilterForm = () => {
+    setOpenFilterForm(false);
+  };
   // const sortApplicants = approvedApplicants.sort((a, b) =>
   //   a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
   // );
@@ -101,7 +110,14 @@ const ApplicantsOverview = ({
       <ApplicantsTable
         // approvedApplicants={approvedApplicants}
         mockApplicants={allPosts}
+        handleClickOpenFilterForm={handleClickOpenFilterForm}
       />
+      {openFilterForm && (
+        <FilterApplicantsForm
+          isOpen={openFilterForm}
+          handleClose={handleCloseFilterForm}
+        />
+      )}
     </div>
   );
 };
