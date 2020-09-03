@@ -28,6 +28,7 @@ const ApplicantsOverview = ({
   const [showForm, setShowForm] = useState(false);
   const [allPosts, setAllPosts] = useState();
   const [openFilterForm, setOpenFilterForm] = useState(false);
+  const [displayFilters, setDisplayFilters] = useState([]);
 
   const handleClickOpenFilterForm = () => {
     setOpenFilterForm(true);
@@ -59,6 +60,7 @@ const ApplicantsOverview = ({
       setAllPosts(searchNames);
     }
   };
+  console.log('displayFilters', displayFilters);
 
   if (!allPosts) {
     return <div>...Loading</div>;
@@ -111,11 +113,14 @@ const ApplicantsOverview = ({
         // approvedApplicants={approvedApplicants}
         mockApplicants={allPosts}
         handleClickOpenFilterForm={handleClickOpenFilterForm}
+        displayFilters={displayFilters}
       />
       {openFilterForm && (
         <FilterApplicantsForm
           isOpen={openFilterForm}
           handleClose={handleCloseFilterForm}
+          setDisplayFilters={setDisplayFilters}
+          displayFilters={displayFilters}
         />
       )}
     </div>

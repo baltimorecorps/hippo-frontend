@@ -17,8 +17,10 @@ import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 const useForm = (initialValues, onSubmit, closeForm) => {
   const [update, values] = useFormUpdate(initialValues);
 
+  const payload = {};
+
   const handleSubmit = () => {
-    onSubmit(values);
+    // onSubmit(payload);
   };
 
   const handleChange = (event, side) => {
@@ -52,18 +54,29 @@ const useForm = (initialValues, onSubmit, closeForm) => {
   return [values, handleChange, handleSubmit];
 };
 
-const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
-  const [state, setState] = React.useState({
-    gilad: true,
-    jason: false,
-    antoine: false,
+const FilterApplicantsForm = ({
+  classes,
+  isOpen,
+  handleClose,
+  onSubmit,
+  setDisplayFilters,
+  displayFilters,
+}) => {
+  const [values, handleChange] = useForm(formData, onSubmit);
+  let displayFiltersTemp = [];
+
+  values.left.forEach(value => {
+    value.options.forEach(option => {
+      if (option.checked === true) {
+        displayFiltersTemp.push({name: value.header, label: option.label});
+      }
+    });
   });
 
-  const {gilad, jason, antoine} = state;
-  const error = [gilad, jason, antoine].filter(v => v).length !== 2;
-
-  const [values, handleChange, handleSubmit] = useForm(formData, onSubmit);
-  console.log('values', values);
+  const handleSubmit = () => {
+    setDisplayFilters(displayFiltersTemp);
+    handleClose();
+  };
 
   return (
     <Dialog

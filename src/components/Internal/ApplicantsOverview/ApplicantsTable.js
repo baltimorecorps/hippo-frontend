@@ -176,7 +176,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const {numSelected, print, handleClickOpenFilterForm} = props;
+  const {numSelected, print, handleClickOpenFilterForm, displayFilters} = props;
 
   return (
     <Toolbar
@@ -193,7 +193,19 @@ const EnhancedTableToolbar = props => {
             <FilterListIcon />
           </IconButton>
         </Tooltip>
-        <Typography>Filters: Data Analysis</Typography>
+        <Typography>
+          Filters:{' '}
+          {displayFilters.length > 0 &&
+            displayFilters.map((filter, index) => {
+              return (
+                <span key={index}>
+                  <br />
+                  <span style={{fontWeight: 'bold'}}>{filter.name}:</span>{' '}
+                  {filter.label}
+                </span>
+              );
+            })}
+        </Typography>
       </div>
 
       <Tooltip title="Print">
@@ -229,7 +241,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ApplicantsTable({classes, mockApplicants, handleClickOpenFilterForm}) {
+function ApplicantsTable({
+  classes,
+  mockApplicants,
+  handleClickOpenFilterForm,
+  displayFilters,
+}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
@@ -284,6 +301,7 @@ function ApplicantsTable({classes, mockApplicants, handleClickOpenFilterForm}) {
           />
         }
         handleClickOpenFilterForm={handleClickOpenFilterForm}
+        displayFilters={displayFilters}
       />
       <Paper ref={tableRef}>
         <TableContainer style={{width: '100%'}}>
@@ -314,6 +332,7 @@ function ApplicantsTable({classes, mockApplicants, handleClickOpenFilterForm}) {
                       onClick={() => onClickView(row.id)}
                       tabIndex={-1}
                       key={row.id}
+                      className={classes.tableRow}
                     >
                       <TableCell component="th" id={labelId} scope="row">
                         {row.nameData}
@@ -406,6 +425,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'center',
     fontSize: '20px',
+  },
+  tableRow: {
+    cursor: 'pointer',
   },
 });
 
