@@ -18,9 +18,6 @@ const useForm = (initialValues, onSubmit, closeForm) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handleSubmit = () => {
-    if (!values.program_name) {
-      values.program_name = 'Place for Purpose';
-    }
     onSubmit(values);
   };
 
@@ -78,7 +75,11 @@ const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
       <DialogTitle id="form-dialog-title" style={{padding: '10px 20px'}}>
         <Typography className={classes.dialogTitle}>
           <span> Filter Applicants </span>
-          <IconButton aria-label="delete" style={{padding: '5px'}}>
+          <IconButton
+            onClick={handleClose}
+            aria-label="delete"
+            style={{padding: '5px'}}
+          >
             <CloseIcon />
           </IconButton>
         </Typography>
@@ -136,7 +137,7 @@ const FilterApplicantsForm = ({classes, isOpen, handleClose, onSubmit}) => {
         </div>
       </DialogContent>
       <DialogActions className={classes.dialogActionsContainer}>
-        <Button onClick={handleClose} color="primary" variant="contained">
+        <Button onClick={handleSubmit} color="primary" variant="contained">
           Save
         </Button>
         <Button onClick={handleClose} color="primary" variant="outlined">

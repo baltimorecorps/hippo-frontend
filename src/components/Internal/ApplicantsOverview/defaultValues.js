@@ -41,41 +41,58 @@ const formData = {
       ],
     },
     {
-      header: 'Interested Roles',
-      key: 'interested_roles',
+      header: 'Needs Help Programs',
+      key: 'needs_help_programs',
       options: [
         {
-          name: 'interested_roles-advocacy_public_policy',
+          name: 'needs_help_programs-yes',
+          label: 'Yes',
+          checked: false,
+        },
+        {
+          name: 'needs_help_programs-no',
+          label: 'No',
+          checked: false,
+        },
+      ],
+    },
+    {
+      header: 'Interested Roles',
+      key: 'roles',
+      options: [
+        {
+          name: 'roles-advocacy_public_policy',
           label: 'Advocacy and Public Policy',
           checked: false,
         },
         {
-          name: 'interested_roles-community_engagement_outreach',
+          name: 'roles-community_engagement_outreach',
           label: 'Community Engagement and Outreach',
           checked: false,
         },
         {
-          name: 'interested_roles-data_analysis',
+          name: 'roles-data_analysis',
           label: 'Data Analysis',
           checked: false,
         },
         {
-          name: 'interested_roles-fundraising_development',
+          name: 'roles-fundraising_development',
           label: 'Fundraising and Development',
           checked: false,
         },
         {
-          name: 'interested_roles-marketing_public_relations',
+          name: 'roles-marketing_public_relations',
           label: 'Marketing and Public Relations',
           checked: false,
         },
         {
-          name: 'interested_roles-program_management',
+          name: 'roles-program_management',
           label: 'Program Management',
           checked: false,
         },
       ],
     },
+
     {
       header: 'Years of Experience',
       key: 'years_of_exp',
@@ -184,10 +201,10 @@ const formData = {
     },
     {
       header: 'Currently Student',
-      key: 'currently-student',
+      key: 'current_edu_status',
       options: [
-        {name: 'currently-student-yes', label: 'Yes', checked: false},
-        {name: 'currently-student-no', label: 'No', checked: false},
+        {name: 'current_edu_status-yes', label: 'Yes', checked: false},
+        {name: 'current_edu_status-no', label: 'No', checked: false},
       ],
     },
 
