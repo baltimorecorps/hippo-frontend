@@ -22,24 +22,35 @@ const useForm = (initialValues, onSubmit, setFilterCount, filterCount) => {
     const allValues = values.left.concat(values.right);
 
     allValues.forEach(value => {
-      let tempValues = [];
-
+      let tempArrayValues = [];
+      let tempObjectValues = {};
+      const key = value.key;
       value.options.forEach(option => {
         if (option.checked === true) {
-          tempValues.push(option.payload_value || option.label);
+          if (key === 'roles' || key === 'programs_completed') {
+            tempObjectValues[option.payload_key] = option.checked;
+          } else {
+            tempArrayValues.push(option.payload_value || option.label);
+          }
         }
       });
-      if (tempValues.length > 0) {
+      if (tempArrayValues.length > 0) {
         payload = {
           ...payload,
-          [value.key]: tempValues,
+          [key]: tempArrayValues,
+        };
+      }
+      if (Object.keys(tempObjectValues).length > 0) {
+        payload = {
+          ...payload,
+          [key]: tempObjectValues,
         };
       }
     });
     setFilterCount(Object.keys(payload).length);
 
     console.log('payload', payload);
-    onSubmit(payload);
+    // onSubmit(payload);
   };
 
   const handleChange = (event, side) => {
