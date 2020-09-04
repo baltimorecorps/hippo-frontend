@@ -14,13 +14,32 @@ import IconButton from '@material-ui/core/IconButton';
 import {formData} from './defaultValues';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-const useForm = (initialValues, onSubmit, closeForm) => {
+const useForm = (initialValues, onSubmit, setFilterCount, filterCount) => {
   const [update, values] = useFormUpdate(initialValues);
 
-  const payload = {};
-
   const handleSubmit = () => {
-    // onSubmit(payload);
+    let payload = {};
+    const allValues = values.left.concat(values.right);
+
+    allValues.forEach(value => {
+      let tempValues = [];
+
+      value.options.forEach(option => {
+        if (option.checked === true) {
+          tempValues.push(option.payload_value || option.label);
+        }
+      });
+      if (tempValues.length > 0) {
+        payload = {
+          ...payload,
+          [value.key]: tempValues,
+        };
+      }
+    });
+    setFilterCount(Object.keys(payload).length);
+
+    console.log('payload', payload);
+    onSubmit(payload);
   };
 
   const handleChange = (event, side) => {
@@ -48,6 +67,7 @@ const useForm = (initialValues, onSubmit, closeForm) => {
         return value;
       }
     });
+
     update(side)(newValue);
   };
 
@@ -59,10 +79,16 @@ const FilterApplicantsForm = ({
   isOpen,
   handleClose,
   onSubmit,
-  setDisplayFilters,
-  displayFilters,
+  addContactsFilters,
+  setFilterCount,
+  filterCount,
 }) => {
-  const [values, handleChange] = useForm(formData, onSubmit);
+  const [values, handleChange, handleSubmit] = useForm(
+    formData,
+    addContactsFilters,
+    setFilterCount,
+    filterCount
+  );
   let displayFiltersTemp = [];
 
   values.left.forEach(value => {
@@ -73,8 +99,8 @@ const FilterApplicantsForm = ({
     });
   });
 
-  const handleSubmit = () => {
-    setDisplayFilters(displayFiltersTemp);
+  const submit = async () => {
+    await handleSubmit();
     handleClose();
   };
 
@@ -150,7 +176,7 @@ const FilterApplicantsForm = ({
         </div>
       </DialogContent>
       <DialogActions className={classes.dialogActionsContainer}>
-        <Button onClick={handleSubmit} color="primary" variant="contained">
+        <Button onClick={submit} color="primary" variant="contained">
           Save
         </Button>
         <Button onClick={handleClose} color="primary" variant="outlined">

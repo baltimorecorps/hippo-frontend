@@ -8,7 +8,6 @@ import ApproveNewApplicantForm from './ApproveNewApplicantForm';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import TextField from '@material-ui/core/TextField';
 import ApplicantsTable from './ApplicantsTable';
-import {mockApplicants} from './mockData';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import FilterApplicantsForm from './FilterApplicantsForm';
 
@@ -19,50 +18,39 @@ const ApplicantsOverview = ({
   approveNewContactsStatus,
   approvedApplicants,
   submittedApplicants,
+  addContactsFilters,
+  filteredContacts,
 }) => {
   useEffect(() => {
-    if (!approvedApplicants || approvedApplicants.length === 0)
-      getApprovedContacts();
-  }, [getApprovedContacts, approvedApplicants]);
+    if (!filteredContacts || filteredContacts.length === 0)
+      addContactsFilters({});
+  }, [addContactsFilters, filteredContacts]);
 
   const [showForm, setShowForm] = useState(false);
-  const [allPosts, setAllPosts] = useState();
+  const [presentApplicants, setPresentApplicants] = useState(filteredContacts);
   const [openFilterForm, setOpenFilterForm] = useState(false);
-  const [displayFilters, setDisplayFilters] = useState([]);
-
-  const handleClickOpenFilterForm = () => {
-    setOpenFilterForm(true);
-  };
-
-  const handleCloseFilterForm = () => {
-    setOpenFilterForm(false);
-  };
-  // const sortApplicants = approvedApplicants.sort((a, b) =>
-  //   a.first_name < b.first_name ? -1 : a.first_name < b.first_name ? 1 : 0
-  // );
-  const sortApplicants = mockApplicants;
+  const [filterCount, setFilterCount] = useState(0);
 
   useEffect(() => {
-    setAllPosts(sortApplicants);
-  }, [sortApplicants]);
+    setPresentApplicants(filteredContacts);
+  }, [filteredContacts]);
 
   const handleChangeSearch = event => {
     event.persist();
     const name = event.target.value.toLowerCase();
     if (name != null) {
-      const searchNames = mockApplicants.filter(applicant => {
+      const searchNames = filteredContacts.filter(applicant => {
         const applicantFullName = `${applicant.first_name} ${applicant.last_name}`.toLowerCase();
         const applicantEmail = applicant.email.toLowerCase();
         return (
           applicantFullName.includes(name) || applicantEmail.includes(name)
         );
       });
-      setAllPosts(searchNames);
+      setPresentApplicants(searchNames);
     }
   };
-  console.log('displayFilters', displayFilters);
 
-  if (!allPosts) {
+  if (!presentApplicants) {
     return <div>...Loading</div>;
   }
   return (
@@ -110,17 +98,17 @@ const ApplicantsOverview = ({
       </React.Fragment>
 
       <ApplicantsTable
-        // approvedApplicants={approvedApplicants}
-        mockApplicants={allPosts}
-        handleClickOpenFilterForm={handleClickOpenFilterForm}
-        displayFilters={displayFilters}
+        presentApplicants={presentApplicants}
+        handleClickOpenFilterForm={() => setOpenFilterForm(true)}
+        filterCount={filterCount}
       />
       {openFilterForm && (
         <FilterApplicantsForm
           isOpen={openFilterForm}
-          handleClose={handleCloseFilterForm}
-          setDisplayFilters={setDisplayFilters}
-          displayFilters={displayFilters}
+          handleClose={() => setOpenFilterForm(false)}
+          addContactsFilters={addContactsFilters}
+          setFilterCount={setFilterCount}
+          filterCount={filterCount}
         />
       )}
     </div>

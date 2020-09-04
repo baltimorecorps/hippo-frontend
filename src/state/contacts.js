@@ -483,6 +483,26 @@ export const approveNewContactsStatus = applicantIds =>
   };
 // ---------------------------------------------------------------------------
 
+export const ADD_CONTACTS_FILTERS = 'ADD_CONTACTS_FILTERS';
+export const ADD_CONTACTS_FILTERS_API = fetchActionTypes(ADD_CONTACTS_FILTERS);
+export const addContactsFilters = filters =>
+  async function(dispatch) {
+    dispatch({
+      type: ADD_CONTACTS_FILTERS,
+      filters,
+    });
+
+    return await makeApiFetchActions(
+      ADD_CONTACTS_FILTERS,
+      `${API_URL}/api/contacts/filter/`,
+      {
+        body: JSON.stringify(filters),
+        method: 'POST',
+      }
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -525,6 +545,10 @@ export const contactsReducer = createReducer(
     [APPROVE_NEW_CONTACTS_STATUS_API.RESOLVE]: (state, action) => {
       const approvedContacts = action.body.data;
       state['approved'] = [...state['approved'], ...approvedContacts];
+    },
+    [ADD_CONTACTS_FILTERS_API.RESOLVE]: (state, action) => {
+      const filteredContacts = action.body.data;
+      state['filtered'] = filteredContacts;
     },
 
     [GET_CONTACT_API.RESOLVE]: (state, action) => {

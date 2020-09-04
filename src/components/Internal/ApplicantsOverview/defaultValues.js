@@ -2,39 +2,49 @@ const formData = {
   left: [
     {
       header: 'Profile Status',
-      key: 'profile_status',
+      key: 'status',
       options: [
-        {name: 'profile_status-submitted', label: 'Submitted', checked: false},
-        {name: 'profile_status-approved', label: 'Approved', checked: false},
+        {
+          name: 'status-submitted',
+          payload_value: 'submitted',
+          label: 'Submitted',
+          checked: false,
+        },
+        {
+          name: 'status-approved',
+          payload_value: 'approved',
+          label: 'Approved',
+          checked: false,
+        },
       ],
     },
 
     {
       header: 'Interested Programs',
-      key: 'interested_programs',
+      key: 'programs',
       options: [
         {
-          name: 'interested_programs-place_for_purpose',
+          name: 'programs-place_for_purpose',
           label: 'Place for Purpose',
           checked: false,
         },
         {
-          name: 'interested_programs-fellowship',
+          name: 'programs-fellowship',
           label: 'Fellowship',
           checked: false,
         },
         {
-          name: 'interested_programs-public_allies',
+          name: 'programs-public_allies',
           label: 'Public Allies',
           checked: false,
         },
         {
-          name: 'interested_programs-mayoral_fellowship',
+          name: 'programs-mayoral_fellowship',
           label: 'Mayoral Fellowship',
           checked: false,
         },
         {
-          name: 'interested_programs-jhu_fellowship',
+          name: 'programs-jhu_fellowship',
           label: 'JHU Carey Humanities Fellowship',
           checked: false,
         },
@@ -62,31 +72,37 @@ const formData = {
       options: [
         {
           name: 'roles-advocacy_public_policy',
+          payload_key: 'advocacy_public_policy',
           label: 'Advocacy and Public Policy',
           checked: false,
         },
         {
           name: 'roles-community_engagement_outreach',
+          payload_key: 'community_engagement_outreach',
           label: 'Community Engagement and Outreach',
           checked: false,
         },
         {
           name: 'roles-data_analysis',
+          payload_key: 'data_analysis',
           label: 'Data Analysis',
           checked: false,
         },
         {
           name: 'roles-fundraising_development',
+          payload_key: 'fundraising_development',
           label: 'Fundraising and Development',
           checked: false,
         },
         {
           name: 'roles-marketing_public_relations',
+          payload_key: 'marketing_public_relations',
           label: 'Marketing and Public Relations',
           checked: false,
         },
         {
           name: 'roles-program_management',
+          payload_key: 'program_management',
           label: 'Program Management',
           checked: false,
         },
@@ -149,27 +165,37 @@ const formData = {
       options: [
         {
           name: 'programs_completed-fellowship',
+          payload_key: 'fellowship',
           label: 'Baltimore Corps Fellowship',
           checked: false,
         },
         {
           name: 'programs_completed-civic_innovators',
+          payload_key: 'civic_innovators',
           label: 'Civic Innovators Program',
           checked: false,
         },
         {
           name: 'programs_completed-elevation_awards',
+          payload_key: 'elevation_awards',
           label: 'Elevation Awards',
           checked: false,
         },
-        {name: 'programs_completed-kiva', label: 'Kiva', checked: false},
+        {
+          name: 'programs_completed-kiva',
+          payload_key: 'kiva',
+          label: 'Kiva',
+          checked: false,
+        },
         {
           name: 'programs_completed-mayoral_fellowship',
+          payload_key: 'mayoral_fellowship',
           label: 'Mayoral Fellowship',
           checked: false,
         },
         {
           name: 'programs_completed-public_allies',
+          payload_key: 'public_allies',
           label: 'Public Allies',
           checked: false,
         },
@@ -214,20 +240,52 @@ const formData = {
       options: [
         {
           name: 'race-american_indian',
+          payload_key: 'american_indian',
           label: 'American Indian or Alaskan Native',
           checked: false,
         },
-        {name: 'race-asian', label: 'Asian', checked: false},
-        {name: 'race-black', label: 'Black or African Descent', checked: false},
-        {name: 'race-hispanic', label: 'Hispanic or Latinx', checked: false},
+        {
+          name: 'race-asian',
+          payload_key: 'asian',
+          label: 'Asian',
+          checked: false,
+        },
+        {
+          name: 'race-black',
+          payload_key: 'black',
+          label: 'Black or African Descent',
+          checked: false,
+        },
+        {
+          name: 'race-hispanic',
+          payload_key: 'hispanic',
+          label: 'Hispanic or Latinx',
+          checked: false,
+        },
         {
           name: 'race-hawaiian',
+          payload_key: 'hawaiian',
           label: 'Native Hawaiian or Other Pacific Islander',
           checked: false,
         },
-        {name: 'race-south_asian', label: 'South Asian', checked: false},
-        {name: 'race-white', label: 'White', checked: false},
-        {name: 'race-not_listed', label: 'Not Listed', checked: false},
+        {
+          name: 'race-south_asian',
+          payload_key: 'south_asian',
+          label: 'South Asian',
+          checked: false,
+        },
+        {
+          name: 'race-white',
+          payload_key: 'white',
+          label: 'White',
+          checked: false,
+        },
+        {
+          name: 'race-not_listed',
+          payload_key: 'not_listed',
+          label: 'Not Listed',
+          checked: false,
+        },
       ],
     },
     {

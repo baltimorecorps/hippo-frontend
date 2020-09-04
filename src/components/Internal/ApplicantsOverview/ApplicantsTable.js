@@ -13,7 +13,7 @@ import PrintIcon from '@material-ui/icons/Print';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {lighten, makeStyles} from '@material-ui/core/styles';
-
+import Badge from '@material-ui/core/Badge';
 import {useHistory, useRouteMatch} from 'react-router-dom';
 
 import TableSortLabel from '@material-ui/core/TableSortLabel';
@@ -26,12 +26,12 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 const columns = [
   {id: 'fullName', label: 'Name', minWidth: 120, align: 'left'},
   {id: 'status', label: 'Status', minWidth: 50, align: 'right'},
-  {
-    id: 'programsData',
-    label: 'Programs',
-    minWidth: '100px',
-    align: 'right',
-  },
+  // {
+  //   id: 'programsData',
+  //   label: 'Programs',
+  //   minWidth: '100px',
+  //   align: 'right',
+  // },
   {
     id: 'years_exp',
     label: 'Experience',
@@ -41,7 +41,7 @@ const columns = [
   {
     id: 'job_search_status',
     label: 'Job Search Status',
-    minWidth: 150,
+    minWidth: 120,
     align: 'right',
   },
 ];
@@ -69,21 +69,21 @@ function createData({
       </span>
     </Typography>
   );
-  let programsData = '';
-  if (programs.length === 1) programsData = programs[0];
+  // let programsData = '-';
+  // if (programs.length === 1) programsData = programs[0];
 
-  if (programs.length >= 2)
-    programsData = programs.reduce(
-      (programA, programB) => (programA += `, ${programB}`)
-    );
+  // if (programs.length >= 2)
+  //   programsData = programs.reduce(
+  //     (programA, programB) => (programA += `, ${programB}`)
+  //   );
 
   return {
     status,
     fullName,
     nameData,
-    years_exp,
-    programsData,
-    job_search_status,
+    years_exp: years_exp || '-',
+    // programsData,
+    job_search_status: job_search_status || '-',
     phone_primary,
     email,
     id,
@@ -171,12 +171,14 @@ const useToolbarStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
+    backgroundColor: '#ffffff',
+    margin: '20px',
   },
 }));
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const {numSelected, print, handleClickOpenFilterForm, displayFilters} = props;
+  const {numSelected, print, handleClickOpenFilterForm, filterCount} = props;
 
   return (
     <Toolbar
@@ -194,22 +196,11 @@ const EnhancedTableToolbar = props => {
             onClick={() => handleClickOpenFilterForm()}
             aria-label="filter list"
           >
-            <FilterListIcon />
+            <Badge badgeContent={filterCount} color="primary">
+              <FilterListIcon />
+            </Badge>
           </IconButton>
         </Tooltip>
-        <Typography>
-          Filters:{' '}
-          {displayFilters.length > 0 &&
-            displayFilters.map((filter, index) => {
-              return (
-                <span key={index}>
-                  <br />
-                  <span style={{fontWeight: 'bold'}}>{filter.name}:</span>{' '}
-                  {filter.label}
-                </span>
-              );
-            })}
-        </Typography>
       </div>
 
       <Tooltip title="Print" placement="right">
@@ -247,17 +238,17 @@ const useStyles = makeStyles(theme => ({
 
 function ApplicantsTable({
   classes,
-  mockApplicants,
+  presentApplicants,
   handleClickOpenFilterForm,
-  displayFilters,
+  filterCount,
 }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const tableRef = React.useRef();
   const tablePaginationRef = React.useRef();
-  const applicantsRows = mockApplicants.map(applicant => {
+  const applicantsRows = presentApplicants.map(applicant => {
     return createData(applicant);
   });
   let history = useHistory();
@@ -305,7 +296,7 @@ function ApplicantsTable({
           />
         }
         handleClickOpenFilterForm={handleClickOpenFilterForm}
-        displayFilters={displayFilters}
+        filterCount={filterCount}
       />
       <Paper ref={tableRef}>
         <TableContainer style={{width: '100%'}}>
@@ -344,9 +335,9 @@ function ApplicantsTable({
                       <TableCell align="right">
                         <Typography> {row.status} </Typography>
                       </TableCell>
-                      <TableCell align="right">
+                      {/* <TableCell align="right">
                         <Typography> {row.programsData}</Typography>
-                      </TableCell>
+                      </TableCell> */}
 
                       <TableCell align="right">
                         <Typography> {row.years_exp}</Typography>
@@ -379,7 +370,7 @@ function ApplicantsTable({
         </TableContainer>
         <TablePagination
           ref={tablePaginationRef}
-          rowsPerPageOptions={[5, 10, 20]}
+          rowsPerPageOptions={[10, 20, 50]}
           component="div"
           count={applicantsRows.length}
           rowsPerPage={rowsPerPage}

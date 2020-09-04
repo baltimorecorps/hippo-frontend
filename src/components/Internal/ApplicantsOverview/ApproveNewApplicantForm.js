@@ -18,9 +18,8 @@ const ApproveNewApplicantForm = ({
   closeForm,
 }) => {
   useEffect(() => {
-    if (!submittedApplicants || submittedApplicants.length === 0)
-      getSubmittedContacts();
-  }, [submittedApplicants, getSubmittedContacts]);
+    getSubmittedContacts();
+  }, [getSubmittedContacts]);
 
   const [selectedValues, setSelectedValues] = useState([]);
   const [applicantIds, setApplicantIds] = useState([]);
