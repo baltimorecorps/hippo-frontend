@@ -16,7 +16,7 @@ const useToolbarStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',
-    backgroundColor: 'rgba(0, 0, 0,0.1)',
+    backgroundColor: 'rgba(140, 140, 140,0.3)',
 
     margin: '20px',
   },

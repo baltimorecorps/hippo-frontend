@@ -126,13 +126,13 @@ function EnhancedTableHead(props) {
   const classes = useStyles();
 
   return (
-    <TableHead style={{backgroundColor: 'hsl(232, 57%, 26%)', color: '#fff'}}>
+    <TableHead style={{backgroundColor: '#f0f6ff'}}>
       <TableRow>
         {columns.map(headCell => (
           <TableCell
             style={{
               fontWeight: 'bold',
-              color: '#fff',
+
               minWidth: headCell.minWidth,
             }}
             key={headCell.id}
@@ -145,7 +145,16 @@ function EnhancedTableHead(props) {
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
             >
-              <Typography style={{color: '#fff'}}>{headCell.label}</Typography>
+              <Typography
+                style={{
+                  fontWeight: 'bold',
+                  minHeight: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
+              >
+                {headCell.label}
+              </Typography>
               {orderBy === headCell.id ? (
                 <span className={classes.visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -188,6 +197,10 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     top: 20,
     width: 1,
+  },
+  tableSortLabel: {
+    color: '#ffffff',
+    opacity: 1,
   },
 }));
 

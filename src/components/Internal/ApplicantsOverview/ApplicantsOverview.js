@@ -68,9 +68,7 @@ const ApplicantsOverview = ({
 ApplicantsOverview.propTypes = {
   classes: PropTypes.object.isRequired,
   getSubmittedContacts: PropTypes.func.isRequired,
-  getApprovedContacts: PropTypes.func.isRequired,
   approveNewContactsStatus: PropTypes.func.isRequired,
-  approvedApplicants: PropTypes.array,
   submittedApplicants: PropTypes.array,
 };
 
