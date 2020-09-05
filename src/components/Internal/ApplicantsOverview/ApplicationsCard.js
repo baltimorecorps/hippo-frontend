@@ -59,8 +59,7 @@ const ApplicationsCard = ({
       app => app.status === 'considered_for_role' && app.is_active === true
     );
   }
-
-  if (!applications) {
+  if (!applications || !applicant) {
     return <div>loading...</div>;
   }
   return (

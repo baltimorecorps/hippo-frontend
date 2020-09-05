@@ -201,7 +201,6 @@ function ApplicantsTable({
   filteredContacts,
   setPresentApplicants,
   getSubmittedContacts,
-  getApprovedContacts,
   approveNewContactsStatus,
   submittedApplicants,
 }) {
@@ -257,7 +256,6 @@ function ApplicantsTable({
         filteredContacts={filteredContacts}
         setPresentApplicants={setPresentApplicants}
         getSubmittedContacts={getSubmittedContacts}
-        getApprovedContacts={getApprovedContacts}
         approveNewContactsStatus={approveNewContactsStatus}
         submittedApplicants={submittedApplicants}
         print={

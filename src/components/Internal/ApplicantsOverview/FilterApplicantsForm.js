@@ -188,7 +188,7 @@ const FilterApplicantsForm = ({
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
         <Button onClick={submit} color="primary" variant="contained">
-          Save
+          Add Filters
         </Button>
         <Button onClick={handleClose} color="primary" variant="outlined">
           Cancel

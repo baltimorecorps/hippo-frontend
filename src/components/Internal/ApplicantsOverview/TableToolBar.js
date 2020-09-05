@@ -66,7 +66,6 @@ const TableToolbar = ({
   filteredContacts,
   setPresentApplicants,
   getSubmittedContacts,
-  getApprovedContacts,
   approveNewContactsStatus,
   submittedApplicants,
 }) => {

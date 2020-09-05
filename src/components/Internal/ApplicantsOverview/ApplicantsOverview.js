@@ -14,9 +14,7 @@ import FilterApplicantsForm from './FilterApplicantsForm';
 const ApplicantsOverview = ({
   classes,
   getSubmittedContacts,
-  getApprovedContacts,
   approveNewContactsStatus,
-  approvedApplicants,
   submittedApplicants,
   addContactsFilters,
   filteredContacts,
@@ -35,67 +33,12 @@ const ApplicantsOverview = ({
     setPresentApplicants(filteredContacts);
   }, [filteredContacts]);
 
-  const handleChangeSearch = event => {
-    event.persist();
-    const name = event.target.value.toLowerCase();
-    if (name != null) {
-      const searchNames = filteredContacts.filter(applicant => {
-        const applicantFullName = `${applicant.first_name} ${applicant.last_name}`.toLowerCase();
-        const applicantEmail = applicant.email.toLowerCase();
-        return (
-          applicantFullName.includes(name) || applicantEmail.includes(name)
-        );
-      });
-      setPresentApplicants(searchNames);
-    }
-  };
-
   if (!presentApplicants) {
     return <div>...Loading</div>;
   }
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
-
-      {/* <React.Fragment>
-        <Grid className={classes.buttonContainer}>
-          {showForm ? (
-            <ApproveNewApplicantForm
-              submittedApplicants={submittedApplicants || []}
-              getSubmittedContacts={getSubmittedContacts}
-              approveNewContactsStatus={approveNewContactsStatus}
-              closeForm={() => setShowForm(false)}
-            />
-          ) : (
-            <div className={classes.searchFilterContainer}>
-              <div>
-                <TextField
-                  id="search-applicants"
-                  className={classes.searchBar}
-                  placeholder="&#128269; Search by name or email"
-                  name="search-applicants"
-                  onChange={handleChangeSearch}
-                  InputProps={{
-                    classes: {
-                      input: classes.resize,
-                    },
-                    disableUnderline: true,
-                  }}
-                />
-              </div>
-
-              <Button
-                onClick={() => setShowForm(true)}
-                variant="contained"
-                color="primary"
-                className={classes.approveButton}
-              >
-                <GroupAddIcon style={{marginRight: '5px'}} /> Approve Applicants
-              </Button>
-            </div>
-          )}
-        </Grid>
-      </React.Fragment> */}
 
       <ApplicantsTable
         presentApplicants={presentApplicants}
@@ -106,7 +49,6 @@ const ApplicantsOverview = ({
         filteredContacts={filteredContacts}
         setPresentApplicants={setPresentApplicants}
         getSubmittedContacts={getSubmittedContacts}
-        getApprovedContacts={getApprovedContacts}
         approveNewContactsStatus={approveNewContactsStatus}
         submittedApplicants={submittedApplicants}
       />
