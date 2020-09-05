@@ -17,8 +17,7 @@ const useToolbarStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
     width: '100%',
     backgroundColor: 'rgba(140, 140, 140,0.3)',
-
-    margin: '20px',
+    margin: '20px 0',
   },
   iconButton: {
     backgroundColor: theme.palette.primary.main,
@@ -31,24 +30,56 @@ const useToolbarStyles = makeStyles(theme => ({
   resize: {
     fontSize: 16,
   },
+  container: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+  },
+  filterIcon: {
+    margin: '10px',
+
+    [theme.breakpoints.up('md')]: {
+      // marginRight: '10px',
+    },
+  },
   searchBar: {
     backgroundColor: '#ffffff',
     padding: '0px 10px',
-    width: 310,
+    width: '100%',
     borderRadius: '10px',
-    marginBottom: '10px',
-    [theme.breakpoints.up('md')]: {
-      width: 380,
-      marginBottom: '0px',
+    marginTop: '10px',
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: '350px',
+      marginTop: '0px',
+      marginRight: '10px',
     },
-    [theme.breakpoints.up('lg')]: {
-      width: 500,
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '500px',
+
+      marginRight: '50px',
+    },
+  },
+  iconsContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: 'auto',
     },
   },
   approveButton: {
     height: '32px',
-    marginRight: '10px',
+    // marginRight: '10px',
   },
+
   customBadge: {
     top: '5px',
     right: '5px',
@@ -88,31 +119,8 @@ const TableToolbar = ({
   };
 
   return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div style={{display: 'flex', alignItems: 'center'}}>
-        <Tooltip
-          title="Filter Candidates"
-          style={{marginRight: '10px'}}
-          placement="top"
-        >
-          <Badge
-            badgeContent={filterCount}
-            color="secondary"
-            classes={{badge: classes.customBadge}}
-          >
-            <IconButton
-              onClick={() => handleClickOpenFilterForm()}
-              aria-label="filter candidates"
-              className={classes.iconButton}
-            >
-              <FilterListIcon />
-            </IconButton>
-          </Badge>
-        </Tooltip>
+    <Toolbar className={classes.root}>
+      <div className={classes.container}>
         <TextField
           id="search-applicants"
           className={classes.searchBar}
@@ -126,25 +134,45 @@ const TableToolbar = ({
             disableUnderline: true,
           }}
         />
-      </div>
-      <div style={{display: 'flex', alignItems: 'center'}}>
-        <Tooltip title="Approve Candidates" placement="top">
-          <Button
-            onClick={() => setShowApproveForm(true)}
-            variant="contained"
-            color="primary"
-            className={classes.approveButton}
+        <div className={classes.iconsContainer}>
+          <Tooltip title="Approve Candidates" placement="top">
+            <Button
+              onClick={() => setShowApproveForm(true)}
+              variant="contained"
+              color="primary"
+              className={classes.approveButton}
+            >
+              <GroupAddIcon style={{marginRight: '5px'}} /> Approve
+            </Button>
+          </Tooltip>
+          <Tooltip
+            title="Filter Candidates"
+            className={classes.filterIcon}
+            placement="top"
           >
-            <GroupAddIcon style={{marginRight: '5px'}} /> Approve
-          </Button>
-        </Tooltip>
+            <Badge
+              badgeContent={filterCount}
+              color="secondary"
+              classes={{badge: classes.customBadge}}
+            >
+              <IconButton
+                onClick={() => handleClickOpenFilterForm()}
+                aria-label="filter candidates"
+                className={classes.iconButton}
+              >
+                <FilterListIcon />
+              </IconButton>
+            </Badge>
+          </Tooltip>
 
-        <Tooltip title="Print" placement="top">
-          <IconButton className={classes.iconButton} aria-label="print">
-            {print}
-          </IconButton>
-        </Tooltip>
+          <Tooltip title="Print" placement="top">
+            <IconButton className={classes.iconButton} aria-label="print">
+              {print}
+            </IconButton>
+          </Tooltip>
+        </div>
       </div>
+
       {showApproveForm && (
         <ApproveNewApplicantForm
           submittedApplicants={submittedApplicants || ['loading...']}

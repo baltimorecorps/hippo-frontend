@@ -132,7 +132,6 @@ function EnhancedTableHead(props) {
           <TableCell
             style={{
               fontWeight: 'bold',
-
               minWidth: headCell.minWidth,
             }}
             key={headCell.id}
@@ -186,6 +185,7 @@ const useStyles = makeStyles(theme => ({
   },
   table: {
     minWidth: 750,
+    width: '100%',
   },
   visuallyHidden: {
     border: 0,
@@ -371,13 +371,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginTop: spacing(1),
     marginBottom: spacing(2),
 
-    width: '80%',
+    // width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-  },
-  paper: {
     flexGrow: 1,
 
     [breakpoints.up('sm')]: {
@@ -393,9 +391,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
       maxWidth: '50%',
     },
     width: '95%',
-    padding: spacing(2, 3, 3),
-    margin: spacing(1.5),
   },
+  paper: {},
   noResult: {
     marginTop: '20px',
     width: '100%',

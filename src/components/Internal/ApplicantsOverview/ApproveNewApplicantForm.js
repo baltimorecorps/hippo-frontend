@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
 const ApproveNewApplicantForm = ({
   classes,
   submittedApplicants,
@@ -28,7 +28,7 @@ const ApproveNewApplicantForm = ({
 
   const [selectedValues, setSelectedValues] = useState([]);
   const [applicantIds, setApplicantIds] = useState([]);
-
+  const [errors, setErrors] = useState({});
   const options = submittedApplicants.map(contact => {
     return {
       name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
@@ -47,8 +47,12 @@ const ApproveNewApplicantForm = ({
   };
 
   const approve = async () => {
-    await approveNewContactsStatus(applicantIds);
-    setShowApproveForm(false);
+    if (applicantIds.length === 0) {
+      setErrors({no_applicants_error: 'Please select applicant(s)'});
+    } else {
+      await approveNewContactsStatus(applicantIds);
+      setShowApproveForm(false);
+    }
   };
 
   const inputLabelProps = {
@@ -59,7 +63,6 @@ const ApproveNewApplicantForm = ({
   };
 
   return (
-    // <Paper className={classes.paper}>
     <Dialog
       maxWidth="md"
       open={showApproveForm}
@@ -67,9 +70,8 @@ const ApproveNewApplicantForm = ({
       aria-labelledby="form-dialog-title"
       className={classes.dialog}
     >
-      {/* <Grid container justify="space-between" className={classes.formHeader}> */}
       <DialogTitle id="form-dialog-title" style={{padding: '10px 20px'}}>
-        <Typography className={classes.dialogTitle}>
+        <Typography component="p" variant="h6" className={classes.dialogTitle}>
           <span> Approve New Applicants </span>
           <IconButton
             edge="end"
@@ -82,9 +84,6 @@ const ApproveNewApplicantForm = ({
         </Typography>
       </DialogTitle>
 
-      {/* </Grid> */}
-
-      {/* <div className={classes.searchBarContainer}> */}
       <DialogContent className={classes.dialogContent}>
         <Autocomplete
           multiple
@@ -104,6 +103,9 @@ const ApproveNewApplicantForm = ({
             />
           )}
         />
+        <FormHelperText className={classes.formHelperText}>
+          {errors.no_applicants_error || null}
+        </FormHelperText>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
         <Button
@@ -115,26 +117,12 @@ const ApproveNewApplicantForm = ({
           Approve
         </Button>
       </DialogActions>
-      {/* </div> */}
-      {/* </Paper> */}
     </Dialog>
   );
 };
 
 ApproveNewApplicantForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      id: PropTypes.number.isRequired,
-      contact: PropTypes.shape({
-        email: PropTypes.string.isRequired,
-        first_name: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired,
-        last_name: PropTypes.string.isRequired,
-      }),
-    })
-  ).isRequired,
   approveNewContactsStatus: PropTypes.func.isRequired,
   closeForm: PropTypes.func.isRequired,
 };
@@ -158,13 +146,26 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   dialog: {
     // padding: spacing(2, 3, 3),
-    marginTop: '20px',
+    // marginTop: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '350px',
+    margin: '20px auto 0px auto',
+    [breakpoints.up('sm')]: {
+      width: '700px',
+    },
   },
   dialogContent: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
-    width: '700px',
+    // alignItems: 'center',
+    width: '330px',
+    [breakpoints.up('sm')]: {
+      width: '500px',
+    },
     // margin: '0 auto',
   },
   dialogTitle: {
@@ -177,32 +178,29 @@ const styles = ({breakpoints, palette, spacing}) => ({
   dialogActions: {
     padding: '20px',
   },
-  searchBarContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    width: '100%',
-    padding: spacing(3),
-    backgroundColor: '#f7f7f7',
-    [breakpoints.down('sm')]: {
-      width: '95%',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: spacing(3, 2),
-    },
-    [breakpoints.down('xs')]: {
-      padding: spacing(2, 1),
-    },
-  },
+  // searchBarContainer: {
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'flex-start',
+  //   width: '100%',
+  //   padding: spacing(3),
+  //   backgroundColor: '#f7f7f7',
+  //   [breakpoints.down('sm')]: {
+  //     width: '95%',
+  //     flexDirection: 'column',
+  //     justifyContent: 'center',
+  //     alignItems: 'center',
+  //     padding: spacing(3, 2),
+  //   },
+  //   [breakpoints.down('xs')]: {
+  //     padding: spacing(2, 1),
+  //   },
+  // },
   formHeader: {
     marginBottom: spacing(2.5),
   },
   searchBar: {
-    width: '95%',
-    [breakpoints.down('sm')]: {
-      width: '100%',
-    },
+    width: '100%',
   },
   approveButton: {
     marginTop: spacing(2),
@@ -213,6 +211,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     '&:hover': {
       color: 'black',
     },
+  },
+  formHelperText: {
+    color: palette.error.main,
+    marginTop: '2px',
   },
 });
 
