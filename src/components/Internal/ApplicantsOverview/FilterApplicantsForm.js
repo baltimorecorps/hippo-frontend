@@ -127,7 +127,7 @@ const FilterApplicantsForm = ({
           <span> Filter Applicants </span>
           <IconButton
             onClick={handleClose}
-            aria-label="delete"
+            aria-label="close filter form"
             style={{padding: '5px'}}
           >
             <CloseIcon />
@@ -186,7 +186,7 @@ const FilterApplicantsForm = ({
           ))}
         </div>
       </DialogContent>
-      <DialogActions className={classes.dialogActionsContainer}>
+      <DialogActions className={classes.dialogActions}>
         <Button onClick={submit} color="primary" variant="contained">
           Save
         </Button>

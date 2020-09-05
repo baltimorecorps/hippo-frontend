@@ -9,13 +9,18 @@ import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 const ApproveNewApplicantForm = ({
   classes,
   submittedApplicants,
   getSubmittedContacts,
   approveNewContactsStatus,
-  closeForm,
+  showApproveForm,
+  setShowApproveForm,
+  // closeForm,
 }) => {
   useEffect(() => {
     getSubmittedContacts();
@@ -43,7 +48,7 @@ const ApproveNewApplicantForm = ({
 
   const approve = async () => {
     await approveNewContactsStatus(applicantIds);
-    closeForm();
+    setShowApproveForm(false);
   };
 
   const inputLabelProps = {
@@ -54,21 +59,33 @@ const ApproveNewApplicantForm = ({
   };
 
   return (
-    <Paper className={classes.paper}>
-      <Grid container justify="space-between" className={classes.formHeader}>
-        <Typography variant="h5" component="h1">
-          Approve New Applicants
+    // <Paper className={classes.paper}>
+    <Dialog
+      maxWidth="md"
+      open={showApproveForm}
+      onClose={() => setShowApproveForm(false)}
+      aria-labelledby="form-dialog-title"
+      className={classes.dialog}
+    >
+      {/* <Grid container justify="space-between" className={classes.formHeader}> */}
+      <DialogTitle id="form-dialog-title" style={{padding: '10px 20px'}}>
+        <Typography className={classes.dialogTitle}>
+          <span> Approve New Applicants </span>
+          <IconButton
+            edge="end"
+            aria-label="close approve form"
+            onMouseDown={() => setShowApproveForm(false)}
+            style={{padding: '5px'}}
+          >
+            <CloseIcon />
+          </IconButton>
         </Typography>
-        <IconButton
-          edge="end"
-          aria-label="cancel form"
-          onMouseDown={closeForm}
-          className={classes.iconButton}
-        >
-          <CloseIcon />
-        </IconButton>
-      </Grid>
-      <div className={classes.searchBarContainer}>
+      </DialogTitle>
+
+      {/* </Grid> */}
+
+      {/* <div className={classes.searchBarContainer}> */}
+      <DialogContent className={classes.dialogContent}>
         <Autocomplete
           multiple
           id="approve-contact-text-field"
@@ -87,6 +104,8 @@ const ApproveNewApplicantForm = ({
             />
           )}
         />
+      </DialogContent>
+      <DialogActions className={classes.dialogActions}>
         <Button
           className={classes.approveButton}
           onClick={approve}
@@ -95,8 +114,10 @@ const ApproveNewApplicantForm = ({
         >
           Approve
         </Button>
-      </div>
-    </Paper>
+      </DialogActions>
+      {/* </div> */}
+      {/* </Paper> */}
+    </Dialog>
   );
 };
 
@@ -135,10 +156,26 @@ const styles = ({breakpoints, palette, spacing}) => ({
       fontSize: 15,
     },
   },
-  paper: {
-    width: '100%',
-    padding: spacing(2, 3, 3),
+  dialog: {
+    // padding: spacing(2, 3, 3),
     marginTop: '20px',
+  },
+  dialogContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '700px',
+    // margin: '0 auto',
+  },
+  dialogTitle: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '5px',
+  },
+  dialogActions: {
+    padding: '20px',
   },
   searchBarContainer: {
     display: 'flex',

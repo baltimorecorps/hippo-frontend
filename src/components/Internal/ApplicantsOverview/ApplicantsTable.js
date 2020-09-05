@@ -22,6 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import TableToolBar from './TableToolBar';
 
 const columns = [
   {id: 'fullName', label: 'Name', minWidth: 120, align: 'left'},
@@ -166,52 +167,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const useToolbarStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '100%',
-    backgroundColor: '#ffffff',
-    margin: '20px',
-  },
-}));
-
-const EnhancedTableToolbar = props => {
-  const classes = useToolbarStyles();
-  const {numSelected, print, handleClickOpenFilterForm, filterCount} = props;
-
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      <div style={{display: 'flex', alignItems: 'center'}}>
-        <Tooltip
-          title="Filter List"
-          style={{marginRight: '10px'}}
-          placement="left"
-        >
-          <IconButton
-            onClick={() => handleClickOpenFilterForm()}
-            aria-label="filter list"
-          >
-            <Badge badgeContent={filterCount} color="primary">
-              <FilterListIcon />
-            </Badge>
-          </IconButton>
-        </Tooltip>
-      </div>
-
-      <Tooltip title="Print" placement="right">
-        <IconButton aria-label="print">{print}</IconButton>
-      </Tooltip>
-    </Toolbar>
-  );
-};
-
-EnhancedTableToolbar.propTypes = {};
-
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
@@ -241,6 +196,14 @@ function ApplicantsTable({
   presentApplicants,
   handleClickOpenFilterForm,
   filterCount,
+  setShowApproveForm,
+  showApproveForm,
+  filteredContacts,
+  setPresentApplicants,
+  getSubmittedContacts,
+  getApprovedContacts,
+  approveNewContactsStatus,
+  submittedApplicants,
 }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
@@ -286,7 +249,17 @@ function ApplicantsTable({
   };
   return (
     <div className={classes.container}>
-      <EnhancedTableToolbar
+      <TableToolBar
+        handleClickOpenFilterForm={handleClickOpenFilterForm}
+        filterCount={filterCount}
+        setShowApproveForm={setShowApproveForm}
+        showApproveForm={showApproveForm}
+        filteredContacts={filteredContacts}
+        setPresentApplicants={setPresentApplicants}
+        getSubmittedContacts={getSubmittedContacts}
+        getApprovedContacts={getApprovedContacts}
+        approveNewContactsStatus={approveNewContactsStatus}
+        submittedApplicants={submittedApplicants}
         print={
           <ReactToPrint
             trigger={() => <PrintIcon />}
@@ -295,8 +268,6 @@ function ApplicantsTable({
             onBeforePrint={() => beforePrint()}
           />
         }
-        handleClickOpenFilterForm={handleClickOpenFilterForm}
-        filterCount={filterCount}
       />
       <Paper ref={tableRef}>
         <TableContainer style={{width: '100%'}}>

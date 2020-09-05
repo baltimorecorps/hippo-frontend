@@ -26,7 +26,7 @@ const ApplicantsOverview = ({
       addContactsFilters({});
   }, [addContactsFilters, filteredContacts]);
 
-  const [showForm, setShowForm] = useState(false);
+  const [showApproveForm, setShowApproveForm] = useState(false);
   const [presentApplicants, setPresentApplicants] = useState(filteredContacts);
   const [openFilterForm, setOpenFilterForm] = useState(false);
   const [filterCount, setFilterCount] = useState(0);
@@ -57,7 +57,7 @@ const ApplicantsOverview = ({
     <div className={classes.container}>
       <PartnershipsNavBar />
 
-      <React.Fragment>
+      {/* <React.Fragment>
         <Grid className={classes.buttonContainer}>
           {showForm ? (
             <ApproveNewApplicantForm
@@ -95,12 +95,20 @@ const ApplicantsOverview = ({
             </div>
           )}
         </Grid>
-      </React.Fragment>
+      </React.Fragment> */}
 
       <ApplicantsTable
         presentApplicants={presentApplicants}
         handleClickOpenFilterForm={() => setOpenFilterForm(true)}
         filterCount={filterCount}
+        setShowApproveForm={setShowApproveForm}
+        showApproveForm={showApproveForm}
+        filteredContacts={filteredContacts}
+        setPresentApplicants={setPresentApplicants}
+        getSubmittedContacts={getSubmittedContacts}
+        getApprovedContacts={getApprovedContacts}
+        approveNewContactsStatus={approveNewContactsStatus}
+        submittedApplicants={submittedApplicants}
       />
       {openFilterForm && (
         <FilterApplicantsForm

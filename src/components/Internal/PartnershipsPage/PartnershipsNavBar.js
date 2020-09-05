@@ -42,7 +42,7 @@ const PartnershipsNavBar = ({classes, location}) => {
           align="center"
           style={
             currentPage === link.key
-              ? {backgroundColor: '#242424', color: '#ffd24a'}
+              ? {backgroundColor: '#2b6eff', color: '#ffffff'}
               : null
           }
           className={classes.partnershipsHome}
