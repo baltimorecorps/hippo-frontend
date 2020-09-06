@@ -1,12 +1,10 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import RoleCards from './RoleCards';
 import PartnershipsNavBar from 'components/Internal/PartnershipsPage/PartnershipsNavBar';
 import {filterOpportunitiesByPrograms} from 'lib/helperFunctions/opportunitiesHelpers';
-import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsTabs';
+import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsSelector';
 
 const InternalOpportunityBoard = ({
   classes,
@@ -17,8 +15,13 @@ const InternalOpportunityBoard = ({
     getAllInternalOpportunities();
   }, [getAllInternalOpportunities]);
 
-  const [value, setValue] = React.useState(1);
-  const programs = ['Fellowship', 'Mayoral Fellowship', 'Place for Purpose'];
+  const [value, setValue] = React.useState('Fellowship');
+  const programs = [
+    'All Programs',
+    'Fellowship',
+    'Mayoral Fellowship',
+    'Place for Purpose',
+  ];
 
   let theOpportunities = filterOpportunitiesByPrograms(
     opportunities,
@@ -26,8 +29,9 @@ const InternalOpportunityBoard = ({
     programs
   );
 
-  const handleChangeFilter = (event, newValue) => {
-    setValue(newValue);
+  const handleChangeFilter = event => {
+    event.persist();
+    setValue(event.target.value);
   };
 
   if (theOpportunities.length === 0) return <div>loading...</div>;
@@ -38,7 +42,7 @@ const InternalOpportunityBoard = ({
     return (
       <div className={classes.container}>
         <PartnershipsNavBar />
-        <div className={classes.filterAndFormContainer}>
+        <div className={classes.filterByProgramsContainer}>
           <FilterByProgramsTabs
             handleChangeFilter={handleChangeFilter}
             value={value}
@@ -84,26 +88,18 @@ const styles = ({breakpoints, palette, spacing}) => ({
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-
-  paper: {
     flexGrow: 1,
 
     [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
+      padding: spacing(2, 3, 3),
+      margin: spacing(1.5),
     },
+  },
+  filterByProgramsContainer: {
     [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
+      alignSelf: 'flex-start',
+      marginLeft: '15%',
     },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '95%',
-    padding: spacing(2, 3, 3),
-    margin: spacing(1.5),
   },
   header: {
     [breakpoints.up('sm')]: {

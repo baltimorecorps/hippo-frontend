@@ -201,9 +201,13 @@ const RoleCards = ({
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {
     padding: spacing(2, 3, 3),
-    margin: spacing(0, 1, 2, 1),
     width: '360px',
+    marginBottom: spacing(1),
+
     borderTop: '4px solid #262626',
+    [breakpoints.up('sm')]: {
+      margin: spacing(0, 1, 2, 1),
+    },
   },
   mayoralContainerTop: {
     borderTop: '4px solid #ef4aff',

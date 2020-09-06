@@ -222,20 +222,27 @@ describe('Opportunities Page', () => {
       'https://docs.google.com/document/d/PFP'
     );
 
-    const filterOptions = getByTestId('filter-options');
-    expect(filterOptions).toBeInTheDocument();
+    const select = getByTestId('programs_selectors');
+    expect(select).toBeInTheDocument();
+    expect(select.value).toBe('All Programs');
 
-    const filterAllPrograms = getByTestId('filter-all');
-    const filterFellowshipPrograms = getByTestId('filter-Fellowship');
-    const filterPlaceForPurposePrograms = getByTestId(
-      'filter-Place for Purpose'
-    );
-    expect(filterAllPrograms).toBeInTheDocument();
-    expect(filterFellowshipPrograms).toBeInTheDocument();
-    expect(filterPlaceForPurposePrograms).toBeInTheDocument();
+    // const filterOptions = getByTestId('programs_selectors');
+    // expect(filterOptions).toBeInTheDocument();
 
-    // Test filter only opportunities in Place for Purpose program
-    fireEvent.click(filterPlaceForPurposePrograms);
+    // const filterAllPrograms = getByTestId('filter-All-Programs');
+    // const filterFellowshipPrograms = getByTestId('filter-Fellowship');
+    // const filterPlaceForPurposePrograms = getByTestId(
+    //   'filter-Place-for-Purpose'
+    // );
+    // expect(filterAllPrograms).toBeInTheDocument();
+    // expect(filterFellowshipPrograms).toBeInTheDocument();
+    // expect(filterPlaceForPurposePrograms).toBeInTheDocument();
+
+    // // Test filter only opportunities in Place for Purpose program
+    // fireEvent.click(filterPlaceForPurposePrograms);
+
+    fireEvent.change(select, {target: {value: 'Place for Purpose'}});
+    expect(select.value).toBe('Place for Purpose');
 
     expect(getAllByTestId('opportunity').length).toBe(1);
     expect(titles[0]).toHaveTextContent('Test Title 2');
@@ -249,7 +256,8 @@ describe('Opportunities Page', () => {
     );
 
     // Test filter only opportunities in Place for Purpose program
-    fireEvent.click(filterFellowshipPrograms);
+    fireEvent.change(select, {target: {value: 'Fellowship'}});
+    expect(select.value).toBe('Fellowship');
     expect(getAllByTestId('opportunity').length).toBe(1);
 
     expect(titles[0]).toHaveTextContent('Test Title');
@@ -263,7 +271,8 @@ describe('Opportunities Page', () => {
     );
 
     // Test filter all opportunities in PFP and FS program
-    fireEvent.click(filterAllPrograms);
+    fireEvent.change(select, {target: {value: 'All Programs'}});
+    expect(select.value).toBe('All Programs');
     expect(getAllByTestId('opportunity').length).toBe(2);
   });
 });

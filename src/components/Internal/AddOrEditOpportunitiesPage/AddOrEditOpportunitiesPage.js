@@ -10,7 +10,8 @@ import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 import EachOpportunity from '../../CandidateOpportunitiesPage/EachOpportunity';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
 import {filterOpportunitiesByPrograms} from 'lib/helperFunctions/opportunitiesHelpers';
-import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsTabs';
+import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsSelector';
+import AddIcon from '@material-ui/icons/Add';
 
 const AddOrEditOpportunitiesPage = ({
   classes,
@@ -51,8 +52,13 @@ const AddOrEditOpportunitiesPage = ({
       history.push('/internal/add-or-edit-opportunities');
     }
   };
-  const [value, setValue] = React.useState(1);
-  const programs = ['Fellowship', 'Mayoral Fellowship', 'Place for Purpose'];
+  const [value, setValue] = React.useState('Fellowship');
+  const programs = [
+    'All Programs',
+    'Fellowship',
+    'Mayoral Fellowship',
+    'Place for Purpose',
+  ];
 
   let theOpportunities = filterOpportunitiesByPrograms(
     opportunities,
@@ -60,8 +66,9 @@ const AddOrEditOpportunitiesPage = ({
     programs
   );
 
-  const handleChangeFilter = (event, newValue) => {
-    setValue(newValue);
+  const handleChangeFilter = event => {
+    event.persist();
+    setValue(event.target.value);
   };
 
   if (!theOpportunities || theOpportunities.length === 0)
@@ -75,6 +82,11 @@ const AddOrEditOpportunitiesPage = ({
         className={classes.filterAndFormContainer}
         style={showForm ? {flexDirection: 'column'} : null}
       >
+        <FilterByProgramsTabs
+          handleChangeFilter={handleChangeFilter}
+          value={value}
+          programs={programs}
+        />
         {showForm ? (
           <AddOrEditOpportunityForm
             type="add"
@@ -88,18 +100,12 @@ const AddOrEditOpportunitiesPage = ({
               onClick={() => setShowForm(true)}
               variant="contained"
               color="primary"
-              className={classes.addNewOppButton}
               data-testid="open-add-new-opp-form-btn"
             >
-              + Add New Opportunity
+              <AddIcon style={{margin: '5px'}} /> Add New Opportunity
             </Button>
           </Grid>
         )}
-        <FilterByProgramsTabs
-          handleChangeFilter={handleChangeFilter}
-          value={value}
-          programs={programs}
-        />
       </div>
 
       {theOpportunities.map((opportunity, index) => (
@@ -128,80 +134,28 @@ const styles = ({breakpoints, palette, spacing}) => ({
   container: {
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
     marginTop: spacing(1),
-  },
-
-  headerPaper: {
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '95%',
-    padding: spacing(2, 3, 3),
-    margin: spacing(2),
-  },
-  header: {
-    [breakpoints.up('sm')]: {
-      fontSize: '24px',
-    },
-    fontSize: '20px',
-  },
-  opportunityPaper: {
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '100%',
-    padding: spacing(2, 3, 3),
-    marginBottom: spacing(2),
-  },
-  opportunityContent: {
-    display: 'flex',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    [breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  },
-  opportunityDescription: {
-    width: '100%',
-
-    display: 'flex',
-    flexDirection: 'column',
-    [breakpoints.down('sm')]: {
-      marginBottom: spacing(2),
-      marginRight: spacing(0),
-      alignSelf: 'center',
-    },
-    [breakpoints.down('xs')]: {
-      marginBottom: spacing(1),
-      width: 'auto',
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginBottom: spacing(2),
+    flexGrow: 1,
+    [breakpoints.up('sm')]: {
+      flexBasis: '83.333333%',
+      maxWidth: '83.333333%',
     },
     [breakpoints.up('md')]: {
-      marginRight: spacing(2),
+      flexBasis: '66.666667%',
+      maxWidth: '66.666667%',
+    },
+
+    [breakpoints.up('xl')]: {
+      flexBasis: '50%',
+      maxWidth: '50%',
     },
   },
+
   headerContainer: {
     paddingBottom: spacing(2),
     marginBottom: spacing(2),
@@ -221,69 +175,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: spacing(2),
+    marginBottom: '20px',
   },
-  addNewOppButton: {
-    padding: '11px',
-  },
-  link: {
-    color: palette.primary.link,
-    textIndent: '25px',
-    alignSelf: 'flex-end',
-    marginTop: spacing(1),
-    [breakpoints.down('xs')]: {
-      alignSelf: 'center',
-      marginTop: spacing(0),
-      textIndent: '0px',
-    },
-  },
-  description: {
-    textAlign: 'justify',
-    textIndent: '25px',
-  },
-  applyButton: {
-    [breakpoints.down('sm')]: {
-      alignSelf: 'flex-end',
-    },
-    [breakpoints.down('xs')]: {
-      alignSelf: 'center',
-    },
-  },
-  title: {
-    fontWeight: 700,
-    fontSize: '22px',
-    [breakpoints.down('xs')]: {
-      fontSize: '20px',
-    },
-  },
-  organization: {
-    fontSize: '14px',
-    verticalAlign: 'text-bottom',
-    color: palette.primary.midGray,
-  },
+
   filterAndFormContainer: {
     display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
+
+    justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'column',
-    marginBottom: spacing(2),
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up(1340)]: {
-      flexDirection: 'row',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
+
     width: '100%',
   },
 });

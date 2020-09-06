@@ -145,8 +145,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   dialog: {
-    // padding: spacing(2, 3, 3),
-    // marginTop: '20px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -161,12 +159,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    // alignItems: 'center',
     width: '330px',
     [breakpoints.up('sm')]: {
       width: '500px',
     },
-    // margin: '0 auto',
   },
   dialogTitle: {
     width: '100%',
@@ -178,24 +174,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   dialogActions: {
     padding: '20px',
   },
-  // searchBarContainer: {
-  //   display: 'flex',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'flex-start',
-  //   width: '100%',
-  //   padding: spacing(3),
-  //   backgroundColor: '#f7f7f7',
-  //   [breakpoints.down('sm')]: {
-  //     width: '95%',
-  //     flexDirection: 'column',
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //     padding: spacing(3, 2),
-  //   },
-  //   [breakpoints.down('xs')]: {
-  //     padding: spacing(2, 1),
-  //   },
-  // },
+
   formHeader: {
     marginBottom: spacing(2.5),
   },

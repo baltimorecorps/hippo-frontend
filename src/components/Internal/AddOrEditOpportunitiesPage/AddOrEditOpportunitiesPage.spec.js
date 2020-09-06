@@ -260,22 +260,14 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
       'https://docs.google.com/document/d/FS'
     );
 
-    const filterOptions = getByTestId('filter-options');
-    expect(filterOptions).toBeInTheDocument();
-
-    const filterAllPrograms = getByTestId('filter-all');
-    const filterFellowshipPrograms = getByTestId('filter-Fellowship');
-    const filterMayoralPrograms = getByTestId('filter-Mayoral Fellowship');
-    const filterPlaceForPurposePrograms = getByTestId(
-      'filter-Place for Purpose'
-    );
-    expect(filterAllPrograms).toBeInTheDocument();
-    expect(filterFellowshipPrograms).toBeInTheDocument();
-    expect(filterMayoralPrograms).toBeInTheDocument();
-    expect(filterPlaceForPurposePrograms).toBeInTheDocument();
+    const select = getByTestId('programs_selectors');
+    expect(select).toBeInTheDocument();
+    console.log('select', select);
+    expect(select.value).toBe('Fellowship');
 
     // Test filter only opportunities in Mayoral Fellowship program
-    fireEvent.click(filterMayoralPrograms);
+    fireEvent.change(select, {target: {value: 'Mayoral Fellowship'}});
+    expect(select.value).toBe('Mayoral Fellowship');
 
     expect(getAllByTestId('opportunity').length).toBe(1);
     expect(title).toHaveTextContent('MF Title');
@@ -289,8 +281,8 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
     );
 
     // Test filter only opportunities in Place for Purpose program
-    fireEvent.click(filterPlaceForPurposePrograms);
-    expect(getAllByTestId('opportunity').length).toBe(2);
+    fireEvent.change(select, {target: {value: 'Place for Purpose'}});
+    expect(select.value).toBe('Place for Purpose');
 
     const titles = getAllByTestId('title');
     const orgNames = getAllByTestId('org-name');
@@ -318,7 +310,8 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
     );
 
     // Test filter all opportunities in all program
-    fireEvent.click(filterAllPrograms);
+    fireEvent.change(select, {target: {value: 'All Programs'}});
+    expect(select.value).toBe('All Programs');
     expect(getAllByTestId('opportunity').length).toBe(4);
   });
 
@@ -344,11 +337,12 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
 
     // default only show opportunities from fellowship program
     expect(getAllByTestId('opportunity').length).toBe(1);
+    const select = getByTestId('programs_selectors');
+    expect(select).toBeInTheDocument();
+    expect(select.value).toBe('Fellowship');
 
-    const filterAllPrograms = getByTestId('filter-all');
-
-    // Filter all opportunities in all program
-    fireEvent.click(filterAllPrograms);
+    fireEvent.change(select, {target: {value: 'All Programs'}});
+    expect(select.value).toBe('All Programs');
     expect(getAllByTestId('opportunity').length).toBe(4);
 
     const titles = getAllByTestId('title');
@@ -397,10 +391,20 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
     // default only show opportunities from fellowship program
     expect(getAllByTestId('opportunity').length).toBe(1);
 
-    const filterAllPrograms = getByTestId('filter-all');
+    const select = getByTestId('programs_selectors');
+    expect(select).toBeInTheDocument();
+    console.log('select', select);
+    expect(select.value).toBe('Fellowship');
+
+    fireEvent.change(select, {target: {value: 'All Programs'}});
+    expect(select.value).toBe('All Programs');
+
+    // const programsSelectors = getByTestId('programs_selectors');
 
     // Test filter all opportunities in all program
-    fireEvent.click(filterAllPrograms);
+    // fireEvent.click(programsSelectors);
+    // const filterAllPrograms = getByTestId('filter-All-Programs');
+
     expect(getAllByTestId('opportunity').length).toBe(4);
 
     expect(getAllByTestId('title')[0]).toHaveTextContent('FS Title');
