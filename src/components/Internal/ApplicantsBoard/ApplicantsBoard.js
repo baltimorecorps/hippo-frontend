@@ -1,17 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import ApproveNewApplicantForm from './ApproveNewApplicantForm';
 import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
-import TextField from '@material-ui/core/TextField';
 import ApplicantsTable from './ApplicantsTable';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import FilterApplicantsForm from './FilterApplicantsForm';
 
-const ApplicantsOverview = ({
+const ApplicantsBoard = ({
   classes,
   getSubmittedContacts,
   approveNewContactsStatus,
@@ -65,7 +59,7 @@ const ApplicantsOverview = ({
   );
 };
 
-ApplicantsOverview.propTypes = {
+ApplicantsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
   getSubmittedContacts: PropTypes.func.isRequired,
   approveNewContactsStatus: PropTypes.func.isRequired,
@@ -191,4 +185,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(ApplicantsOverview);
+export default withStyles(styles)(ApplicantsBoard);

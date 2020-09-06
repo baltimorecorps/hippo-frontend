@@ -38,9 +38,9 @@ import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'components/FAQPage';
 import ApplicationsCardOld from 'components/Internal/ApplicationsBoard/ApplicationsCard.container';
-import ApplicationsCard from 'components/Internal/ApplicantsOverview/ApplicationsCard.container';
+import ApplicationsCard from 'components/Internal/ApplicantsBoard/ApplicationsCard.container';
 import Questionnaire from 'components/Questionnaire';
-import ApplicantsOverview from 'components/Internal/ApplicantsOverview';
+import ApplicantsOverview from 'components/Internal/ApplicantsBoard';
 
 const App = ({
   hasSession,
@@ -225,7 +225,7 @@ const App = ({
 
               <Route
                 exact
-                path="/internal/applicants-overview/:contactId"
+                path="/internal/applicants/:contactId"
                 component={ApplicationsCard}
               />
               <Route
@@ -235,7 +235,7 @@ const App = ({
               />
               <Route
                 exact
-                path="/internal/applicants-overview"
+                path="/internal/applicants-board"
                 component={ApplicantsOverview}
               />
               <Route

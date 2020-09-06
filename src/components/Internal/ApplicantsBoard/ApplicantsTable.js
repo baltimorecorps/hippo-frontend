@@ -13,15 +13,10 @@ import PrintIcon from '@material-ui/icons/Print';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {lighten, makeStyles} from '@material-ui/core/styles';
-import Badge from '@material-ui/core/Badge';
 import {useHistory, useRouteMatch} from 'react-router-dom';
 
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import TableToolBar from './TableToolBar';
 
 const columns = [
@@ -241,10 +236,9 @@ function ApplicantsTable({
     return createData(applicant);
   });
   let history = useHistory();
-  const match = useRouteMatch();
 
   const onClickView = contactId => {
-    history.push(`${match.url}/${contactId}`);
+    history.push(`/internal/applicants/${contactId}`);
   };
 
   // learn this

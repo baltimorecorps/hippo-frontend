@@ -22,9 +22,9 @@ const PartnershipsNavBar = ({classes, location}) => {
       url: 'opportunities-board',
     },
     {
-      key: 'applicants_overview',
+      key: 'applicants_board',
       name: 'Applicants Board',
-      url: 'applicants-overview',
+      url: 'applicants-board',
     },
   ];
 
