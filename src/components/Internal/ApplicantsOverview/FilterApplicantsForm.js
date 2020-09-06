@@ -123,7 +123,7 @@ const FilterApplicantsForm = ({
       aria-labelledby="form-dialog-title"
     >
       <DialogTitle id="form-dialog-title" style={{padding: '10px 20px'}}>
-        <Typography className={classes.dialogTitle}>
+        <Typography component="p" variant="h6" className={classes.dialogTitle}>
           <span> Filter Applicants </span>
           <IconButton
             onClick={handleClose}
@@ -227,10 +227,15 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   checkboxContainer: {
     margin: 0,
+    position: 'relative',
+    top: '390px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+    [breakpoints.up('sm')]: {
+      top: '0px',
+    },
   },
 });
 export default withStyles(styles)(FilterApplicantsForm);
