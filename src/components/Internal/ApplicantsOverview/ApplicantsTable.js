@@ -25,25 +25,37 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import TableToolBar from './TableToolBar';
 
 const columns = [
-  {id: 'fullName', label: 'Name', minWidth: 120, align: 'left'},
-  {id: 'status', label: 'Status', minWidth: 50, align: 'right'},
-  // {
-  //   id: 'programsData',
-  //   label: 'Programs',
-  //   minWidth: '100px',
-  //   align: 'right',
-  // },
+  {
+    id: 'fullName',
+    label: 'Name',
+    minWidth: 100,
+    align: 'left',
+    paddingLeft: '18px',
+  },
+  {id: 'status', label: 'Status', minWidth: 50, align: 'center'},
+  {
+    id: 'race',
+    label: 'Race',
+    minWidth: 80,
+    align: 'center',
+  },
+  {
+    id: 'gender',
+    label: 'Gender',
+    minWidth: 50,
+    align: 'center',
+  },
   {
     id: 'years_exp',
     label: 'Experience',
     minWidth: 50,
-    align: 'right',
+    align: 'center',
   },
   {
     id: 'job_search_status',
     label: 'Job Search Status',
-    minWidth: 120,
-    align: 'right',
+    minWidth: 80,
+    align: 'center',
   },
 ];
 
@@ -51,7 +63,8 @@ function createData({
   status,
   first_name,
   last_name,
-  programs,
+  // race,
+  // gender,
   years_exp,
   job_search_status,
   phone_primary,
@@ -70,20 +83,20 @@ function createData({
       </span>
     </Typography>
   );
-  // let programsData = '-';
-  // if (programs.length === 1) programsData = programs[0];
+  const race = ['White', 'Black'];
+  let raceData = '-';
+  if (race.length === 1) raceData = race[0];
 
-  // if (programs.length >= 2)
-  //   programsData = programs.reduce(
-  //     (programA, programB) => (programA += `, ${programB}`)
-  //   );
-
+  if (race.length >= 2)
+    raceData = race.reduce((raceA, raceB) => (raceA += `, ${raceB}`));
+  const gender = 'Female';
   return {
     status,
     fullName,
     nameData,
     years_exp: years_exp || '-',
-    // programsData,
+    raceData,
+    gender,
     job_search_status: job_search_status || '-',
     phone_primary,
     email,
@@ -133,10 +146,11 @@ function EnhancedTableHead(props) {
             style={{
               fontWeight: 'bold',
               minWidth: headCell.minWidth,
+              paddingLeft: headCell.paddingLeft || null,
             }}
             key={headCell.id}
             align={headCell.align}
-            padding={headCell.disablePadding ? 'none' : 'default'}
+            padding="none"
             sortDirection={orderBy === headCell.nameData ? order : false}
           >
             <TableSortLabel
@@ -314,17 +328,20 @@ function ApplicantsTable({
                       <TableCell component="th" id={labelId} scope="row">
                         {row.nameData}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Typography> {row.status} </Typography>
                       </TableCell>
-                      {/* <TableCell align="right">
-                        <Typography> {row.programsData}</Typography>
-                      </TableCell> */}
+                      <TableCell align="center">
+                        <Typography> {row.raceData}</Typography>
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography> {row.gender}</Typography>
+                      </TableCell>
 
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Typography> {row.years_exp}</Typography>
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Typography> {row.job_search_status}</Typography>
                       </TableCell>
                     </TableRow>
@@ -368,10 +385,8 @@ function ApplicantsTable({
 // -------------------------------------------------------------------------//
 const styles = ({breakpoints, palette, spacing}) => ({
   container: {
-    marginTop: spacing(1),
     marginBottom: spacing(2),
 
-    // width: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',

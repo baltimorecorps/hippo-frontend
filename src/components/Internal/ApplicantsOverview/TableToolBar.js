@@ -18,6 +18,7 @@ const useToolbarStyles = makeStyles(theme => ({
     width: '100%',
     backgroundColor: 'rgba(140, 140, 140,0.3)',
     margin: '20px 0',
+    borderRadius: '1px',
   },
   iconButton: {
     backgroundColor: theme.palette.primary.main,
@@ -44,10 +45,6 @@ const useToolbarStyles = makeStyles(theme => ({
   },
   filterIcon: {
     margin: '10px',
-
-    [theme.breakpoints.up('md')]: {
-      // marginRight: '10px',
-    },
   },
   searchBar: {
     backgroundColor: '#ffffff',
