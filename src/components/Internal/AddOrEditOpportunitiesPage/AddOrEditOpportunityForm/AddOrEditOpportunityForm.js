@@ -189,7 +189,6 @@ const AddOrEditOpportunityForm = ({
             onChange={handleChange}
             className={classes.textField}
             InputLabelProps={inputLabelProps}
-            // InputProps={inputProps}
             inputProps={{
               classes: {input: classes.resize},
               autoComplete: 'off',
@@ -210,9 +209,6 @@ const AddOrEditOpportunityForm = ({
           variant="contained"
           color="primary"
           className={classes.createButton}
-          // inputProps={{
-          //   'data-testid': 'form-submit-button',
-          // }}
           data-testid="form-submit-button"
         >
           {type === 'add' ? 'Add New Opportunity' : 'Update'}
@@ -290,30 +286,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     fontWeight: 600,
     margin: spacing(2, 0, 0, 0),
   },
-  link: {
-    color: palette.primary.link,
 
-    '&:hover': {
-      color: '#2556f7',
-    },
-  },
-  checkbox: {
-    display: 'inline',
-    margin: 0,
-    padding: 0,
-  },
-  checkboxContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkboxLabel: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: '0 17px 0 0',
-    fontSize: '14px',
-  },
   iconButton: {
     flexBasis: '50px',
     padding: spacing(0.2),

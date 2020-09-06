@@ -21,7 +21,6 @@ const FilterByProgramsSelector = ({
         borderRadius: '2px',
         alignSelf: 'flex-start',
         marginBottom: '20px',
-        backgroundColor: '#yellow',
       }}
     >
       <FormControl className={classes.formControl} variant="outlined">
@@ -56,7 +55,7 @@ const FilterByProgramsSelector = ({
 FilterByProgramsSelector.propTypes = {
   classes: PropTypes.object.isRequired,
   handleChangeFilter: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
   programs: PropTypes.array.isRequired,
 };
 

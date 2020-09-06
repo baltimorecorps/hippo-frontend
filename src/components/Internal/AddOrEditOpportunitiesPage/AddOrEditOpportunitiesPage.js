@@ -156,22 +156,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
 
-  headerContainer: {
-    paddingBottom: spacing(2),
-    marginBottom: spacing(2),
-    borderBottom: 'solid #e0e0e0 1px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    [breakpoints.down('xs')]: {
-      paddingBottom: spacing(1),
-      marginBottom: spacing(1),
-    },
-    [breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  },
   buttonContainer: {
     display: 'flex',
     justifyContent: 'center',
@@ -180,10 +164,8 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
   filterAndFormContainer: {
     display: 'flex',
-
     justifyContent: 'space-between',
     alignItems: 'center',
-
     width: '100%',
   },
 });
