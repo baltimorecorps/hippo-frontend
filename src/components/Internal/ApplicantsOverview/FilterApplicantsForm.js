@@ -202,9 +202,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
   dialog: {},
   dialogContent: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     width: '100%',
+    [breakpoints.up('sm')]: {
+      flexDirection: 'row',
+    },
   },
   dialogTitle: {
     width: '100%',
