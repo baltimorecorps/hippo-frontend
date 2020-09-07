@@ -267,6 +267,10 @@ function ApplicantsTable({
   const beforePrint = () => {
     tablePaginationRef.current.style.display = 'block';
   };
+
+  const date = new Date().toLocaleDateString().replace(/\//g, '-');
+  const printTitle = `applicants_${date}`;
+
   return (
     <div className={classes.container}>
       <TableToolBar
@@ -285,6 +289,7 @@ function ApplicantsTable({
             content={() => tableRef.current}
             onBeforeGetContent={() => beforeGetContent()}
             onBeforePrint={() => beforePrint()}
+            documentTitle={printTitle}
           />
         }
       />
