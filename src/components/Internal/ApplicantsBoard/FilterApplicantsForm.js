@@ -49,8 +49,7 @@ const useForm = (initialValues, onSubmit, setFilterCount, filterCount) => {
     });
     setFilterCount(Object.keys(payload).length);
 
-    console.log('payload', payload);
-    // onSubmit(payload);
+    onSubmit(payload, values);
   };
 
   const handleChange = (event, side) => {
@@ -93,9 +92,10 @@ const FilterApplicantsForm = ({
   addContactsFilters,
   setFilterCount,
   filterCount,
+  filterFormData,
 }) => {
   const [values, handleChange, handleSubmit] = useForm(
-    formData,
+    filterFormData,
     addContactsFilters,
     setFilterCount,
     filterCount

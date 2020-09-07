@@ -12,11 +12,11 @@ const ApplicantsBoard = ({
   submittedApplicants,
   addContactsFilters,
   filteredContacts,
+  filterFormData,
 }) => {
   useEffect(() => {
-    if (!filteredContacts || filteredContacts.length === 0)
-      addContactsFilters({});
-  }, [addContactsFilters, filteredContacts]);
+    addContactsFilters({}, filterFormData);
+  }, [addContactsFilters, filterFormData]);
 
   const [showApproveForm, setShowApproveForm] = useState(false);
   const [presentApplicants, setPresentApplicants] = useState(filteredContacts);
@@ -24,12 +24,13 @@ const ApplicantsBoard = ({
   const [filterCount, setFilterCount] = useState(0);
 
   useEffect(() => {
-    setPresentApplicants(filteredContacts);
+    setPresentApplicants(filteredContacts, {});
   }, [filteredContacts]);
 
   if (!presentApplicants) {
     return <div>...Loading</div>;
   }
+
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
@@ -53,6 +54,7 @@ const ApplicantsBoard = ({
           addContactsFilters={addContactsFilters}
           setFilterCount={setFilterCount}
           filterCount={filterCount}
+          filterFormData={filterFormData}
         />
       )}
     </div>

@@ -183,14 +183,7 @@ const formData = {
         },
       ],
     },
-    // {
-    //   header: 'Currently Student',
-    //   key: 'current_edu_status',
-    //   options: [
-    //     {name: 'current_edu_status-yes', label: 'Yes', checked: false},
-    //     {name: 'current_edu_status-no', label: 'No', checked: false},
-    //   ],
-    // },
+
     {
       header: 'Interested Roles',
       key: 'roles',
@@ -234,6 +227,14 @@ const formData = {
       ],
     },
 
+    // {
+    //   header: 'Currently Student',
+    //   key: 'current_edu_status',
+    //   options: [
+    //     {name: 'current_edu_status-yes', label: 'Yes', checked: false},
+    //     {name: 'current_edu_status-no', label: 'No', checked: false},
+    //   ],
+    // },
     // {
     //   header: 'Race',
     //   key: 'race',

@@ -472,7 +472,7 @@ export const approveNewContactsStatus = applicantIds =>
       applicantIds,
     });
 
-    return await makeApiFetchActions(
+    await makeApiFetchActions(
       APPROVE_NEW_CONTACTS_STATUS,
       `${API_URL}/api/contacts/approve/`,
       {
@@ -485,21 +485,25 @@ export const approveNewContactsStatus = applicantIds =>
 
 export const ADD_CONTACTS_FILTERS = 'ADD_CONTACTS_FILTERS';
 export const ADD_CONTACTS_FILTERS_API = fetchActionTypes(ADD_CONTACTS_FILTERS);
-export const addContactsFilters = filters =>
+export const addContactsFilters = (filtersPayload, filterFormData) =>
   async function(dispatch) {
-    dispatch({
-      type: ADD_CONTACTS_FILTERS,
-      filters,
-    });
-
-    return await makeApiFetchActions(
-      ADD_CONTACTS_FILTERS,
-      `${API_URL}/api/contacts/filter/`,
-      {
-        body: JSON.stringify(filters),
-        method: 'POST',
-      }
-    )(dispatch);
+    try {
+      const result = await makeApiFetchActions(
+        ADD_CONTACTS_FILTERS,
+        `${API_URL}/api/contacts/filter/`,
+        {
+          body: JSON.stringify(filtersPayload),
+          method: 'POST',
+        }
+      )(dispatch);
+      dispatch({
+        type: ADD_CONTACTS_FILTERS,
+        data: result.body.data,
+        filterFormData,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 // ---------------------------------------------------------------------------
 
@@ -546,9 +550,17 @@ export const contactsReducer = createReducer(
       const approvedContacts = action.body.data;
       state['approved'] = [...state['approved'], ...approvedContacts];
     },
-    [ADD_CONTACTS_FILTERS_API.RESOLVE]: (state, action) => {
-      const filteredContacts = action.body.data;
-      state['filtered'] = filteredContacts;
+    // [ADD_CONTACTS_FILTERS_API.RESOLVE]: (state, action) => {
+    //   const filteredContacts = action.body.data;
+    //   console.log('action', action);
+    //   console.log('filteredContacts', filteredContacts);
+    //   state['filtered'] = filteredContacts;
+    // },
+    [ADD_CONTACTS_FILTERS]: (state, action) => {
+      const {data, filterFormData} = action;
+      console.log('action', action);
+      state['filtered'] = data;
+      state['filter_form_data'] = filterFormData;
     },
 
     [GET_CONTACT_API.RESOLVE]: (state, action) => {
