@@ -66,6 +66,7 @@ ApplicantsBoard.propTypes = {
   getSubmittedContacts: PropTypes.func.isRequired,
   approveNewContactsStatus: PropTypes.func.isRequired,
   submittedApplicants: PropTypes.array,
+  filterFormData: PropTypes.object,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

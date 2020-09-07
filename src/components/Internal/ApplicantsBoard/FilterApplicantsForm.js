@@ -11,7 +11,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import {formData} from './defaultValues';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
 const useForm = (initialValues, onSubmit, setFilterCount, filterCount) => {
@@ -88,7 +87,6 @@ const FilterApplicantsForm = ({
   classes,
   isOpen,
   handleClose,
-  onSubmit,
   addContactsFilters,
   setFilterCount,
   filterCount,

@@ -550,15 +550,9 @@ export const contactsReducer = createReducer(
       const approvedContacts = action.body.data;
       state['approved'] = [...state['approved'], ...approvedContacts];
     },
-    // [ADD_CONTACTS_FILTERS_API.RESOLVE]: (state, action) => {
-    //   const filteredContacts = action.body.data;
-    //   console.log('action', action);
-    //   console.log('filteredContacts', filteredContacts);
-    //   state['filtered'] = filteredContacts;
-    // },
+
     [ADD_CONTACTS_FILTERS]: (state, action) => {
       const {data, filterFormData} = action;
-      console.log('action', action);
       state['filtered'] = data;
       state['filter_form_data'] = filterFormData;
     },
