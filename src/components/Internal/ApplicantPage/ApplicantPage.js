@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
@@ -8,9 +8,9 @@ import {useHistory} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import ApplicationsCard from './ApplicationsCard';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-
 import ApplicantDetails from './ApplicantDetails';
 import DescriptionIcon from '@material-ui/icons/Description';
+import ApplicantValueAlignment from './ApplicantValueAlignment';
 
 const ApplicantPage = ({
   classes,
@@ -28,10 +28,11 @@ const ApplicantPage = ({
   }, [getContact, contactId]);
 
   let history = useHistory();
-
   const backToApplicantsBoard = () => {
     history.push(`/internal/applicants-board`);
   };
+
+  const [openValueAlignment, setOpenValueAlignment] = useState(false);
 
   if (!applications || !applicant) {
     return <div>loading...</div>;
@@ -40,36 +41,49 @@ const ApplicantPage = ({
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
-      <Grid className={classes.buttonContainer}>
-        <Button
-          onClick={() => backToApplicantsBoard()}
-          variant="contained"
-          color="primary"
-          className={classes.backButton}
-        >
-          <ArrowBackIosIcon /> Back to Applicants Board
-        </Button>
-      </Grid>
-      <Paper className={classes.paper}>
-        <div className={classes.subContainer}>
-          <ApplicantDetails applicant={applicant} />
-          <div className={classes.rightDetails}>
+      {!openValueAlignment && (
+        <React.Fragment>
+          <Grid className={classes.buttonContainer}>
             <Button
               onClick={() => backToApplicantsBoard()}
               variant="contained"
               color="primary"
-              className={classes.valueAlignmentButton}
+              className={classes.backButton}
             >
-              <DescriptionIcon style={{marginRight: '10px'}} /> Value Alignment
+              <ArrowBackIosIcon /> Back to Applicants Board
             </Button>
-            <ApplicationsCard
-              applicant={applicant}
-              applications={applications}
-              contactId={contactId}
-            />
-          </div>
-        </div>
-      </Paper>
+          </Grid>
+
+          <Paper className={classes.paper}>
+            <div className={classes.subContainer}>
+              <ApplicantDetails applicant={applicant} />
+              <div className={classes.rightDetails}>
+                <Button
+                  onClick={() => setOpenValueAlignment(true)}
+                  variant="contained"
+                  color="primary"
+                  className={classes.valueAlignmentButton}
+                >
+                  <DescriptionIcon style={{marginRight: '10px'}} /> Value
+                  Alignment
+                </Button>
+                <ApplicationsCard
+                  applicant={applicant}
+                  applications={applications}
+                  contactId={contactId}
+                />
+              </div>
+            </div>
+          </Paper>
+        </React.Fragment>
+      )}
+
+      {openValueAlignment && (
+        <ApplicantValueAlignment
+          applicant={applicant}
+          handleClose={() => setOpenValueAlignment(false)}
+        />
+      )}
     </div>
   );
 };

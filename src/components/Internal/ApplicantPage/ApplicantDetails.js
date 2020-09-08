@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-import {useHistory} from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import ApplicantContactShort from './ApplicantContactShort';
+
 import {
   raceLabels,
   roleLabels,
@@ -12,12 +12,6 @@ import {
 import {getListOfAnswers} from 'lib/helperFunctions/helpers';
 
 const ApplicantPage = ({classes, applicant}) => {
-  let history = useHistory();
-
-  const toProfile = contactId => {
-    history.push(`/profile/${contactId}`);
-  };
-
   if (!applicant) {
     return <div>loading...</div>;
   }
@@ -67,30 +61,8 @@ const ApplicantPage = ({classes, applicant}) => {
 
   return (
     <div className={classes.detailsContainer}>
-      <div className={classes.headerContainer}>
-        <div className={classes.titleAndOrgContainer}>
-          <Typography variant="body1" component="p" className={classes.name}>
-            {`${applicant && applicant.first_name} ${applicant &&
-              applicant.last_name}`}
-          </Typography>
-          <Typography variant="body1" component="p" className={classes.email}>
-            {(applicant && applicant.email) ||
-              (applicant && applicant.email_primary.email)}
-          </Typography>
-          <Typography variant="body1" component="p" className={classes.email}>
-            {applicant && applicant.phone_primary}
-          </Typography>
-        </div>
-
-        <Link
-          onClick={() => toProfile(applicant.id)}
-          className={classes.seeProfileLink}
-        >
-          <Typography variant="body1" component="h1">
-            See Profile
-          </Typography>
-        </Link>
-      </div>
+      <ApplicantContactShort applicant={applicant} />
+      <div style={{marginTop: '10px'}}></div>
       <Typography variant="body1" component="p" className={classes.content}>
         <strong>Profile status:</strong>{' '}
         {status[0].toUpperCase() + status.slice(1)}
@@ -175,6 +147,8 @@ ApplicantPage.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   detailsContainer: {
+    width: '100%',
+
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
