@@ -15,7 +15,6 @@ const ApplicantValueAlignment = ({classes, applicant, handleClose}) => {
   if (!applicant) {
     return <div>loading...</div>;
   }
-  console.log('applicant', applicant);
   return (
     <React.Fragment>
       <Grid className={classes.topContainer}>

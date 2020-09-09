@@ -11,12 +11,16 @@ const ApplicantsBoard = ({
   approveNewContactsStatus,
   submittedApplicants,
   addContactsFilters,
+  allFilteredContacts,
+  getAllFilteredContacts,
   filteredContacts,
   filterFormData,
 }) => {
+  console.log('allFilteredContacts', allFilteredContacts);
   useEffect(() => {
-    addContactsFilters({}, filterFormData);
-  }, [addContactsFilters, filterFormData]);
+    if (!allFilteredContacts || allFilteredContacts.length === 0)
+      getAllFilteredContacts({}, filterFormData);
+  }, [getAllFilteredContacts, filterFormData, allFilteredContacts]);
 
   const [showApproveForm, setShowApproveForm] = useState(false);
   const [presentApplicants, setPresentApplicants] = useState(filteredContacts);
@@ -24,8 +28,12 @@ const ApplicantsBoard = ({
   const [filterCount, setFilterCount] = useState(0);
 
   useEffect(() => {
-    setPresentApplicants(filteredContacts, {});
-  }, [filteredContacts]);
+    if (filteredContacts) {
+      setPresentApplicants(filteredContacts);
+    } else {
+      setPresentApplicants(allFilteredContacts);
+    }
+  }, [filteredContacts, allFilteredContacts]);
 
   if (!presentApplicants) {
     return <div>...Loading</div>;

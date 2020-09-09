@@ -114,7 +114,7 @@ const ApplicantPage = ({classes, applicant}) => {
         {previous_bcorps_program ? 'Yes' : 'No'}
         <br />
         <strong>Completed programs:</strong>{' '}
-        {programsCompletedAnswer.length > 0
+        {programsCompletedAnswer && programsCompletedAnswer.length > 0
           ? programsCompletedAnswer.reduce((programA, programB) => {
               return (programA += `, ${programB}`);
             })
