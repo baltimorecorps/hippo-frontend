@@ -13,7 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-const useForm = (initialValues, onSubmit, setFilterCount, filterCount) => {
+const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handleSubmit = () => {
@@ -46,9 +46,9 @@ const useForm = (initialValues, onSubmit, setFilterCount, filterCount) => {
         };
       }
     });
-    setFilterCount(Object.keys(payload).length);
+    const filterCount = Object.keys(payload).length;
 
-    onSubmit(payload, values);
+    onSubmit(payload, values, filterCount);
   };
 
   const handleChange = (event, side) => {
@@ -88,15 +88,11 @@ const FilterApplicantsForm = ({
   isOpen,
   handleClose,
   addContactsFilters,
-  setFilterCount,
-  filterCount,
   filterFormData,
 }) => {
   const [values, handleChange, handleSubmit] = useForm(
     filterFormData,
-    addContactsFilters,
-    setFilterCount,
-    filterCount
+    addContactsFilters
   );
   let displayFiltersTemp = [];
 

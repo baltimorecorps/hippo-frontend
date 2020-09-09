@@ -488,14 +488,14 @@ export const GET_ALL_FILTERED_CONTACTS = 'GET_ALL_FILTERED_CONTACTS';
 export const GET_ALL_FILTERED_CONTACTS_API = fetchActionTypes(
   GET_ALL_FILTERED_CONTACTS
 );
-export const getAllFilteredContacts = (filtersPayload, filterFormData) =>
+export const getAllFilteredContacts = filterFormData =>
   async function(dispatch) {
     try {
       const result = await makeApiFetchActions(
         GET_ALL_FILTERED_CONTACTS,
         `${API_URL}/api/contacts/filter/`,
         {
-          body: JSON.stringify(filtersPayload),
+          body: JSON.stringify({}),
           method: 'POST',
         }
       )(dispatch);
@@ -503,6 +503,7 @@ export const getAllFilteredContacts = (filtersPayload, filterFormData) =>
         type: GET_ALL_FILTERED_CONTACTS,
         data: result.body.data,
         filterFormData,
+        filterCount: 0,
       });
     } catch (error) {
       console.error(error);
@@ -512,7 +513,11 @@ export const getAllFilteredContacts = (filtersPayload, filterFormData) =>
 
 export const ADD_CONTACTS_FILTERS = 'ADD_CONTACTS_FILTERS';
 export const ADD_CONTACTS_FILTERS_API = fetchActionTypes(ADD_CONTACTS_FILTERS);
-export const addContactsFilters = (filtersPayload, filterFormData) =>
+export const addContactsFilters = (
+  filtersPayload,
+  filterFormData,
+  filterCount
+) =>
   async function(dispatch) {
     try {
       const result = await makeApiFetchActions(
@@ -527,6 +532,7 @@ export const addContactsFilters = (filtersPayload, filterFormData) =>
         type: ADD_CONTACTS_FILTERS,
         data: result.body.data,
         filterFormData,
+        filterCount,
       });
     } catch (error) {
       console.error(error);
@@ -579,14 +585,16 @@ export const contactsReducer = createReducer(
     },
 
     [GET_ALL_FILTERED_CONTACTS]: (state, action) => {
-      const {data, filterFormData} = action;
+      const {data, filterFormData, filterCount} = action;
       state['all_filtered_contacts'] = data;
       state['filter_form_data'] = filterFormData;
+      state['filter_count'] = filterCount;
     },
     [ADD_CONTACTS_FILTERS]: (state, action) => {
-      const {data, filterFormData} = action;
+      const {data, filterFormData, filterCount} = action;
       state['filtered'] = data;
       state['filter_form_data'] = filterFormData;
+      state['filter_count'] = filterCount;
     },
 
     [GET_CONTACT_API.RESOLVE]: (state, action) => {

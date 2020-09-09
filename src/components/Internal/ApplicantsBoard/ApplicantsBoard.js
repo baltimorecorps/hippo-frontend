@@ -15,17 +15,16 @@ const ApplicantsBoard = ({
   getAllFilteredContacts,
   filteredContacts,
   filterFormData,
+  filterCount,
 }) => {
-  console.log('allFilteredContacts', allFilteredContacts);
   useEffect(() => {
     if (!allFilteredContacts || allFilteredContacts.length === 0)
-      getAllFilteredContacts({}, filterFormData);
+      getAllFilteredContacts(filterFormData);
   }, [getAllFilteredContacts, filterFormData, allFilteredContacts]);
 
   const [showApproveForm, setShowApproveForm] = useState(false);
   const [presentApplicants, setPresentApplicants] = useState(filteredContacts);
   const [openFilterForm, setOpenFilterForm] = useState(false);
-  const [filterCount, setFilterCount] = useState(0);
 
   useEffect(() => {
     if (filteredContacts) {
@@ -60,8 +59,6 @@ const ApplicantsBoard = ({
           isOpen={openFilterForm}
           handleClose={() => setOpenFilterForm(false)}
           addContactsFilters={addContactsFilters}
-          setFilterCount={setFilterCount}
-          filterCount={filterCount}
           filterFormData={filterFormData}
         />
       )}
