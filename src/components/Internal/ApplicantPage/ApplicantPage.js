@@ -21,11 +21,11 @@ const ApplicantPage = ({
   getContact,
 }) => {
   useEffect(() => {
-    getContactApplications(contactId);
-  }, [getContactApplications, contactId]);
+    if (!applications) getContactApplications(contactId);
+  }, [getContactApplications, contactId, applications]);
   useEffect(() => {
-    getContact(contactId);
-  }, [getContact, contactId]);
+    if (!applicant) getContact(contactId);
+  }, [getContact, contactId, applicant]);
 
   let history = useHistory();
   const backToApplicantsBoard = () => {
