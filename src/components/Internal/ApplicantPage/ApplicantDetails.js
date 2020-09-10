@@ -110,13 +110,13 @@ const ApplicantPage = ({classes, applicant}) => {
       </Typography>
 
       <Typography variant="body1" component="p" className={classes.content}>
-        {/* <strong> Needs help about programs:</strong>{' '}
+        <strong> Needs help about programs:</strong>{' '}
         {needs_help_programs === true
           ? 'Yes'
           : needs_help_programs === false
           ? 'No'
           : '-'}
-        <br /> */}
+        <br />
         <strong> Interested programs:</strong>{' '}
         {interestedPrograms.length > 0
           ? interestedPrograms.reduce((raceA, raceB) => {
@@ -130,7 +130,7 @@ const ApplicantPage = ({classes, applicant}) => {
         <strong>Have participated programs:</strong>{' '}
         {previous_bcorps_program || '-'}
         <br />
-        <strong>Completed programs:</strong>{' '}
+        <strong>Previously participated programs:</strong>{' '}
         {programsCompletedAnswer && programsCompletedAnswer.length > 0
           ? programsCompletedAnswer.reduce((programA, programB) => {
               return (programA += `, ${programB}`);
