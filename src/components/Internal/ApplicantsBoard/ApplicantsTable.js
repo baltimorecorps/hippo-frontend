@@ -28,9 +28,15 @@ const columns = [
     paddingLeft: '18px',
   },
   {id: 'status', label: 'Status', minWidth: 50, align: 'center'},
+  // {
+  //   id: 'race',
+  //   label: 'Race',
+  //   minWidth: 80,
+  //   align: 'center',
+  // },
   {
-    id: 'race',
-    label: 'Race',
+    id: 'location',
+    label: 'Location',
     minWidth: 80,
     align: 'center',
   },
@@ -59,7 +65,9 @@ function createData({
   first_name,
   last_name,
   // race,
-  // gender,
+  gender,
+  city,
+  state,
   years_exp,
   job_search_status,
   phone_primary,
@@ -78,20 +86,24 @@ function createData({
       </span>
     </Typography>
   );
-  const race = ['White', 'Black'];
-  let raceData = '-';
-  if (race.length === 1) raceData = race[0];
+  // const race = ['White', 'Black'];
+  // let raceData = '-';
+  // if (race.length === 1) raceData = race[0];
 
-  if (race.length >= 2)
-    raceData = race.reduce((raceA, raceB) => (raceA += `, ${raceB}`));
-  const gender = 'Female';
+  // if (race.length >= 2)
+  //   raceData = race.reduce((raceA, raceB) => (raceA += `, ${raceB}`));
+
+  let location = '-';
+  if (city && state) location = `${city}, ${state}`;
+
   return {
     status,
     fullName,
     nameData,
+    location,
     years_exp: years_exp || '-',
-    raceData,
-    gender,
+    // raceData,
+    gender: gender || '-',
     job_search_status: job_search_status || '-',
     phone_primary,
     email,
@@ -268,8 +280,8 @@ function ApplicantsTable({
     tablePaginationRef.current.style.display = 'block';
   };
 
-  const date = new Date().toLocaleDateString().replace(/\//g, '-');
-  const printTitle = `applicants_${date}`;
+  const today = new Date().toLocaleDateString().replace(/\//g, '-');
+  const printTitle = `applicants_${today}`;
 
   return (
     <div className={classes.container}>
@@ -331,8 +343,11 @@ function ApplicantsTable({
                         <Typography> {row.status} </Typography>
                       </TableCell>
                       <TableCell align="center">
-                        <Typography> {row.raceData}</Typography>
+                        <Typography> {row.location}</Typography>
                       </TableCell>
+                      {/* <TableCell align="center">
+                        <Typography> {row.raceData}</Typography>
+                      </TableCell> */}
                       <TableCell align="center">
                         <Typography> {row.gender}</Typography>
                       </TableCell>
