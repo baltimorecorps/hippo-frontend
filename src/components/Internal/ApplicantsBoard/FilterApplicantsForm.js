@@ -28,11 +28,18 @@ const useForm = (initialValues, onSubmit) => {
         if (option.checked === true) {
           if (key === 'roles' || key === 'programs_completed') {
             tempObjectValues[option.payload_key] = option.checked;
+          } else if (key === 'program_apps') {
+            tempArrayValues.push({
+              program: {name: option.label, id: option.id},
+            });
+          } else if (key === 'needs_help_programs') {
+            tempArrayValues.push(option.label === 'Yes' ? true : false);
           } else {
             tempArrayValues.push(option.payload_value || option.label);
           }
         }
       });
+
       if (tempArrayValues.length > 0) {
         payload = {
           ...payload,
@@ -47,7 +54,7 @@ const useForm = (initialValues, onSubmit) => {
       }
     });
     const filterCount = Object.keys(payload).length;
-
+    console.log('payload', payload);
     onSubmit(payload, values, filterCount);
   };
 

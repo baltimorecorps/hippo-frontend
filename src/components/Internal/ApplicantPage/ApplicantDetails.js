@@ -110,26 +110,30 @@ const ApplicantPage = ({classes, applicant}) => {
       </Typography>
 
       <Typography variant="body1" component="p" className={classes.content}>
-        <strong>Have participated programs:</strong>{' '}
-        {previous_bcorps_program ? 'Yes' : 'No'}
-        <br />
-        <strong>Completed programs:</strong>{' '}
-        {programsCompletedAnswer && programsCompletedAnswer.length > 0
-          ? programsCompletedAnswer.reduce((programA, programB) => {
-              return (programA += `, ${programB}`);
+        {/* <strong> Needs help about programs:</strong>{' '}
+        {needs_help_programs === true
+          ? 'Yes'
+          : needs_help_programs === false
+          ? 'No'
+          : '-'}
+        <br /> */}
+        <strong> Interested programs:</strong>{' '}
+        {interestedPrograms.length > 0
+          ? interestedPrograms.reduce((raceA, raceB) => {
+              return (raceA += `, ${raceB}`);
             })
           : '-'}
         <br />
       </Typography>
 
       <Typography variant="body1" component="p" className={classes.content}>
-        <strong> Needs help about programs:</strong>{' '}
-        {needs_help_programs ? 'Yes' : 'No'}
+        <strong>Have participated programs:</strong>{' '}
+        {previous_bcorps_program || '-'}
         <br />
-        <strong> Interested programs:</strong>{' '}
-        {interestedPrograms.length > 0
-          ? interestedPrograms.reduce((raceA, raceB) => {
-              return (raceA += `, ${raceB}`);
+        <strong>Completed programs:</strong>{' '}
+        {programsCompletedAnswer && programsCompletedAnswer.length > 0
+          ? programsCompletedAnswer.reduce((programA, programB) => {
+              return (programA += `, ${programB}`);
             })
           : '-'}
         <br />

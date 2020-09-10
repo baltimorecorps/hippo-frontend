@@ -24,48 +24,53 @@ const formData = {
       key: 'program_apps',
       options: [
         {
+          id: 1,
           name: 'program_apps-place_for_purpose',
           label: 'Place for Purpose',
           checked: false,
         },
         {
-          name: 'program_apps-fellowship',
-          label: 'Fellowship',
-          checked: false,
-        },
-        {
-          name: 'program_apps-public_allies',
-          label: 'Public Allies',
-          checked: false,
-        },
-        {
+          id: 2,
           name: 'program_apps-mayoral_fellowship',
           label: 'Mayoral Fellowship',
           checked: false,
         },
         {
+          id: 3,
+          name: 'program_apps-fellowship',
+          label: 'Fellowship',
+          checked: false,
+        },
+        {
+          id: 4,
+          name: 'program_apps-public_allies',
+          label: 'Public Allies',
+          checked: false,
+        },
+        {
+          id: 5,
           name: 'program_apps-jhu_fellowship',
           label: 'JHU Carey Humanities Fellowship',
           checked: false,
         },
       ],
     },
-    {
-      header: 'Needs Help Programs',
-      key: 'needs_help_programs',
-      options: [
-        {
-          name: 'needs_help_programs-yes',
-          label: 'Yes',
-          checked: false,
-        },
-        {
-          name: 'needs_help_programs-no',
-          label: 'No',
-          checked: false,
-        },
-      ],
-    },
+    // {
+    //   header: 'Needs Help Programs',
+    //   key: 'needs_help_programs',
+    //   options: [
+    //     {
+    //       name: 'needs_help_programs-yes',
+    //       label: 'Yes',
+    //       checked: false,
+    //     },
+    //     {
+    //       name: 'needs_help_programs-no',
+    //       label: 'No',
+    //       checked: false,
+    //     },
+    //   ],
+    // },
 
     {
       header: 'Participated Programs Before',
