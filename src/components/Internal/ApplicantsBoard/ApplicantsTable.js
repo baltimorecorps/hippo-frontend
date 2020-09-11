@@ -21,7 +21,7 @@ import TableToolBar from './TableToolBar';
 
 const columns = [
   {
-    id: 'fullName',
+    id: 'name',
     label: 'Name',
     minWidth: 100,
     align: 'left',
@@ -74,10 +74,10 @@ function createData({
   email,
   id,
 }) {
-  const fullName = `${first_name} ${last_name}`;
+  const name = `${first_name} ${last_name}`;
   const nameData = (
     <Typography>
-      {fullName}
+      {name}
       <br />
       <span style={{color: '#777', fontSize: '14px'}}>
         {email}
@@ -98,7 +98,7 @@ function createData({
 
   return {
     status,
-    fullName,
+    name,
     nameData,
     location,
     years_exp: years_exp || '-',
@@ -166,6 +166,7 @@ function EnhancedTableHead(props) {
               onClick={createSortHandler(headCell.id)}
             >
               <Typography
+                data-testid="table-head"
                 style={{
                   fontWeight: 'bold',
                   minHeight: '40px',
@@ -335,27 +336,33 @@ function ApplicantsTable({
                       tabIndex={-1}
                       key={row.id}
                       className={classes.tableRow}
+                      data-testid="table-row"
                     >
-                      <TableCell component="th" id={labelId} scope="row">
+                      <TableCell
+                        data-testid="name"
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                      >
                         {row.nameData}
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell data-testid="status" align="center">
                         <Typography> {row.status} </Typography>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell data-testid="location" align="center">
                         <Typography> {row.location}</Typography>
                       </TableCell>
                       {/* <TableCell align="center">
                         <Typography> {row.raceData}</Typography>
                       </TableCell> */}
-                      <TableCell align="center">
+                      <TableCell data-testid="gender" align="center">
                         <Typography> {row.gender}</Typography>
                       </TableCell>
 
-                      <TableCell align="center">
+                      <TableCell data-testid="experience" align="center">
                         <Typography> {row.years_exp}</Typography>
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell data-testid="job_search" align="center">
                         <Typography> {row.job_search_status}</Typography>
                       </TableCell>
                     </TableRow>

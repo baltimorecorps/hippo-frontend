@@ -173,7 +173,6 @@ describe('Filter Applicants Form', () => {
     expect(payload.status[1]).toBe('approved');
     expect(payload.years_exp[0]).toBe('0-2 years');
 
-    console.log('formValues', formValues);
     expect(filterCount).toBe(2);
     expect(formValues.left[0].options[0].checked).toBe(true);
     expect(formValues.left[0].options[1].checked).toBe(true);
