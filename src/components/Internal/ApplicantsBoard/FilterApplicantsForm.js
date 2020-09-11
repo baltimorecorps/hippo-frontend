@@ -54,7 +54,6 @@ const useForm = (initialValues, onSubmit) => {
       }
     });
     const filterCount = Object.keys(payload).length;
-    console.log('payload', payload);
     onSubmit(payload, values, filterCount);
   };
 
@@ -125,11 +124,12 @@ const FilterApplicantsForm = ({
     >
       <DialogTitle id="form-dialog-title" style={{padding: '10px 20px'}}>
         <Typography component="p" variant="h6" className={classes.dialogTitle}>
-          <span> Filter Applicants </span>
+          <span data-testid="form-header"> Filter Applicants </span>
           <IconButton
             onClick={handleClose}
             aria-label="close filter form"
             style={{padding: '5px'}}
+            data-testid="close-form-button"
           >
             <CloseIcon />
           </IconButton>
@@ -148,6 +148,7 @@ const FilterApplicantsForm = ({
                     key={index}
                     control={
                       <Checkbox
+                        data-testid={option.name}
                         checked={option.checked}
                         onChange={e => handleChange(e, 'left')}
                         name={option.name}
@@ -173,6 +174,7 @@ const FilterApplicantsForm = ({
                     key={index}
                     control={
                       <Checkbox
+                        data-testid={option.name}
                         checked={option.checked}
                         onChange={e => handleChange(e, 'right')}
                         name={option.name}
@@ -188,7 +190,12 @@ const FilterApplicantsForm = ({
         </div>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-        <Button onClick={submit} color="primary" variant="contained">
+        <Button
+          data-testid="add-filter-button"
+          onClick={submit}
+          color="primary"
+          variant="contained"
+        >
           Add Filters
         </Button>
         <Button onClick={handleClose} color="primary" variant="outlined">

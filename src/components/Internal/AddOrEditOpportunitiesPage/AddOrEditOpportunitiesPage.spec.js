@@ -262,7 +262,6 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
 
     const select = getByTestId('programs_selectors');
     expect(select).toBeInTheDocument();
-    console.log('select', select);
     expect(select.value).toBe('Fellowship');
 
     // Test filter only opportunities in Mayoral Fellowship program
@@ -393,7 +392,6 @@ describe('AddOrEditOpportunitiesPage: Integration Tests', () => {
 
     const select = getByTestId('programs_selectors');
     expect(select).toBeInTheDocument();
-    console.log('select', select);
     expect(select.value).toBe('Fellowship');
 
     fireEvent.change(select, {target: {value: 'All Programs'}});
