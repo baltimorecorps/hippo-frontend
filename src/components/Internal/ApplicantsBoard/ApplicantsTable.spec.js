@@ -3,6 +3,9 @@ import {render, cleanup, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ApplicantsTable from './ApplicantsTable';
 import {formData} from './defaultValues';
+import {MemoryRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
+import {createMemoryHistory} from 'history';
 
 beforeEach(() => {
   jest.resetAllMocks();
@@ -275,5 +278,38 @@ describe('Applicants Table', () => {
     expect(getAllByTestId('job_search')[2]).toHaveTextContent(
       'Actively looking for a job'
     );
+  });
+
+  test('Applicants Table: Clicking on an applicant row to go to ApplicantPage', () => {
+    const mockHistoryPush = jest.fn();
+
+    jest.mock('react-router-dom', () => ({
+      ...jest.requireActual('react-router-dom'),
+      useHistory: () => ({
+        push: mockHistoryPush,
+      }),
+    }));
+    const history = createMemoryHistory();
+
+    const {getAllByTestId} = render(
+      <Router history={history}>
+        <ApplicantsTable
+          presentApplicants={filteredContacts}
+          handleClickOpenFilterForm={() => jest.fn()}
+          filterCount={0}
+          setShowApproveForm={() => jest.fn()}
+          showApproveForm={false}
+          filteredContacts={filteredContacts}
+          setPresentApplicants={() => jest.fn()}
+          getSubmittedContacts={() => jest.fn()}
+          approveNewContactsStatus={() => jest.fn()}
+          submittedApplicants={() => jest.fn()}
+        />
+      </Router>
+    );
+
+    const tableRows = getAllByTestId('table-row');
+    fireEvent.click(tableRows[0]);
+    expect(history.location.pathname).toBe('/internal/applicants/1');
   });
 });

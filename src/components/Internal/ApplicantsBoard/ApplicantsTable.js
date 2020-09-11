@@ -327,12 +327,14 @@ function ApplicantsTable({
               {stableSort(applicantsRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  const labelId = `table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={() => onClickView(row.id)}
+                      onClick={() =>
+                        history.push(`/internal/applicants/${row.id}`)
+                      }
                       tabIndex={-1}
                       key={row.id}
                       className={classes.tableRow}
