@@ -23,7 +23,7 @@ const PartnershipsPage = ({classes}) => {
     },
     {
       name: 'Internal Applicants Board',
-      url: 'applications-board',
+      url: 'applicants-board',
     },
   ];
   return (
