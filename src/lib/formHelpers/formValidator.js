@@ -312,7 +312,8 @@ const contactInfoValidator = values => {
   } else if (
     email &&
     !validateEmail(email) &&
-    email_primary && !validateEmail(email_primary)
+    email_primary &&
+    !validateEmail(email_primary)
   ) {
     isError = true;
     err.email_error = 'Invalid email address';
@@ -415,7 +416,6 @@ const programsAndEligibilityValidator = values => {
   );
 
   allValues.push(values.profile.needs_help_programs);
-  console.log(allValues);
   let isError = false;
   let err = {};
 

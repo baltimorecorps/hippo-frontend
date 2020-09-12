@@ -116,7 +116,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
         <React.Fragment>
           <ContactList
             contacts={showContacts}
-            getAllContactsShort={getAllContacts}
+            getAllContacts={getAllContacts}
             deleteContact={deleteContact}
           />
         </React.Fragment>

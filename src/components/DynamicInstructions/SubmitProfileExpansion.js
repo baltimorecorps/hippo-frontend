@@ -112,7 +112,6 @@ const SubmitProfileExpansion = ({
   }
 
   const handleSubmit = () => {
-    console.log('submit profile for review');
     onSubmit();
   };
 

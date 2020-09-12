@@ -20,7 +20,6 @@ const ApproveNewApplicantForm = ({
   approveNewContactsStatus,
   showApproveForm,
   setShowApproveForm,
-  // closeForm,
 }) => {
   useEffect(() => {
     getSubmittedContacts();
@@ -62,6 +61,7 @@ const ApproveNewApplicantForm = ({
     },
   };
 
+  // console.log('submittedApplicants', submittedApplicants);
   return (
     <Dialog
       maxWidth="md"
@@ -72,7 +72,7 @@ const ApproveNewApplicantForm = ({
     >
       <DialogTitle id="form-dialog-title" style={{padding: '10px 20px'}}>
         <Typography component="p" variant="h6" className={classes.dialogTitle}>
-          <span> Approve New Applicants </span>
+          <span data-testid="form-header">Approve New Applicants</span>
           <IconButton
             edge="end"
             aria-label="close approve form"
@@ -86,6 +86,7 @@ const ApproveNewApplicantForm = ({
 
       <DialogContent className={classes.dialogContent}>
         <Autocomplete
+          data-testid="autocomplete"
           multiple
           id="approve-contact-text-field"
           getOptionLabel={option => option.name}
@@ -95,6 +96,7 @@ const ApproveNewApplicantForm = ({
           onChange={onChange}
           renderInput={params => (
             <TextField
+              data-testid="autocomplete-text"
               {...params}
               variant="standard"
               label="Search by applicant's name or email"
@@ -109,6 +111,7 @@ const ApproveNewApplicantForm = ({
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
         <Button
+          data-testid="approve-button"
           className={classes.approveButton}
           onClick={approve}
           variant="contained"

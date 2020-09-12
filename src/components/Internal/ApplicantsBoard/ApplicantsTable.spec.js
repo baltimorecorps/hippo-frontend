@@ -2,8 +2,6 @@ import React from 'react';
 import {render, cleanup, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ApplicantsTable from './ApplicantsTable';
-import {formData} from './defaultValues';
-import {MemoryRouter} from 'react-router-dom';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
@@ -14,9 +12,6 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
 });
-
-// TO DO
-// add test on click on the table row and link to ApplicantPage
 
 const filteredContacts = [
   {
@@ -280,15 +275,7 @@ describe('Applicants Table', () => {
     );
   });
 
-  test('Applicants Table: Clicking on an applicant row to go to ApplicantPage', () => {
-    const mockHistoryPush = jest.fn();
-
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useHistory: () => ({
-        push: mockHistoryPush,
-      }),
-    }));
+  test('Applicants Table: Clicking on applicant row to go to ApplicantPage', () => {
     const history = createMemoryHistory();
 
     const {getAllByTestId} = render(
