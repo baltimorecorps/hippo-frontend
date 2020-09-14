@@ -5,6 +5,7 @@ import {
   approveNewContactsStatus,
   addContactsFilters,
   getAllFilteredContacts,
+  resetFilterCount,
 } from 'state/contacts';
 import {formData} from './defaultValues';
 
@@ -32,6 +33,7 @@ const mapDispatchToProps = dispatch => ({
     addContactsFilters(filtersPayload, filterFormData, filterCount)(dispatch),
   getAllFilteredContacts: filterFormData =>
     getAllFilteredContacts(filterFormData)(dispatch),
+  resetFilterCount: () => resetFilterCount(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplicantsOverview);

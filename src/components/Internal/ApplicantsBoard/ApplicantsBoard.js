@@ -16,6 +16,7 @@ const ApplicantsBoard = ({
   filteredContacts,
   filterFormData,
   filterCount,
+  resetFilterCount,
 }) => {
   useEffect(() => {
     if (!allFilteredContacts || allFilteredContacts.length === 0)
@@ -23,14 +24,23 @@ const ApplicantsBoard = ({
   }, [getAllFilteredContacts, filterFormData, allFilteredContacts]);
 
   const [showApproveForm, setShowApproveForm] = useState(false);
-  const [presentApplicants, setPresentApplicants] = useState(filteredContacts);
+  const [presentApplicants, setPresentApplicants] = useState(
+    allFilteredContacts
+  );
   const [openFilterForm, setOpenFilterForm] = useState(false);
+  const [searchableApplicants, setSearchableApplicants] = useState(
+    allFilteredContacts
+  );
+
+  // add searchableContacts
 
   useEffect(() => {
     if (filteredContacts) {
       setPresentApplicants(filteredContacts);
+      setSearchableApplicants(filteredContacts);
     } else {
       setPresentApplicants(allFilteredContacts);
+      setSearchableApplicants(allFilteredContacts);
     }
   }, [filteredContacts, allFilteredContacts]);
 
@@ -46,13 +56,15 @@ const ApplicantsBoard = ({
         presentApplicants={presentApplicants}
         handleClickOpenFilterForm={() => setOpenFilterForm(true)}
         filterCount={filterCount}
+        allFilteredContacts={allFilteredContacts}
         setShowApproveForm={setShowApproveForm}
         showApproveForm={showApproveForm}
-        filteredContacts={filteredContacts}
+        searchableApplicants={searchableApplicants}
         setPresentApplicants={setPresentApplicants}
         getSubmittedContacts={getSubmittedContacts}
         approveNewContactsStatus={approveNewContactsStatus}
         submittedApplicants={submittedApplicants}
+        resetFilterCount={resetFilterCount}
       />
       {openFilterForm && (
         <FilterApplicantsForm

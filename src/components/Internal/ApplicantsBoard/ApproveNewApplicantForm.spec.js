@@ -51,6 +51,8 @@ describe('Approve New Applicants Form', () => {
         approveNewContactsStatus={approveNewContactsStatus}
         showApproveForm={true}
         setShowApproveForm={() => jest.fn()}
+        setPresentApplicants={() => jest.fn()}
+        resetFilterCount={() => jest.fn()}
       />
     );
 

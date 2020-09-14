@@ -154,21 +154,19 @@ const ProfilePage = ({
     getProfile(contactId);
   }, [contactId, getProfile]);
 
-  useEffect(() => {
-    if (
-      contactInfo !== undefined &&
-      contactInfo.experiences &&
-      contactInfo.profile == null
-    ) {
-      (async () => {
-        try {
-          await createAboutMe(contactInfo.id);
-        } catch (error) {
-          console.error('Error creating new about-me', error);
-        }
-      })();
-    }
-  }, [contactInfo, createAboutMe]);
+  if (
+    contactInfo !== undefined &&
+    contactInfo.experiences &&
+    contactInfo.profile === null
+  ) {
+    (async () => {
+      try {
+        await createAboutMe(contactInfo.id);
+      } catch (error) {
+        console.error('Error creating new about-me', error);
+      }
+    })();
+  }
 
   // If the state for this contact hasn't been loaded yet, we try and reload
   // that state from the API. If this load goes well, this page should be

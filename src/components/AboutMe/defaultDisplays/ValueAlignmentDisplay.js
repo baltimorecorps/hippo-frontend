@@ -6,18 +6,16 @@ import {
   QuestionWithOneAnswer,
 } from './QuestionAnswerDisplayTemplates.js';
 
-import {blankProfile} from '../defaultData';
-
-import get from 'lodash.get';
-
 const ValueAlignmentDisplay = ({
   contact,
   onClickEdit,
   isSubmitted,
   classes,
 }) => {
-  const profile = get(contact, 'profile', blankProfile);
-  const {value_question1, value_question2} = profile;
+  if (!contact.profile) {
+    return <div>Loading...</div>;
+  }
+  const {value_question1, value_question2} = contact.profile;
 
   return (
     <React.Fragment>

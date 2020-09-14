@@ -18,6 +18,9 @@ const ApproveNewApplicantForm = ({
   submittedApplicants,
   getSubmittedContacts,
   approveNewContactsStatus,
+  allFilteredContacts,
+  setPresentApplicants,
+  resetFilterCount,
   showApproveForm,
   setShowApproveForm,
 }) => {
@@ -54,6 +57,8 @@ const ApproveNewApplicantForm = ({
     } else {
       await approveNewContactsStatus(applicantIds);
       setShowApproveForm(false);
+      resetFilterCount();
+      setPresentApplicants(allFilteredContacts);
     }
   };
 

@@ -230,14 +230,16 @@ function ApplicantsTable({
   classes,
   presentApplicants,
   handleClickOpenFilterForm,
+  allFilteredContacts,
   filterCount,
+  resetFilterCount,
   setShowApproveForm,
   showApproveForm,
-  filteredContacts,
   setPresentApplicants,
   getSubmittedContacts,
   approveNewContactsStatus,
   submittedApplicants,
+  searchableApplicants,
 }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
@@ -285,9 +287,11 @@ function ApplicantsTable({
       <TableToolBar
         handleClickOpenFilterForm={handleClickOpenFilterForm}
         filterCount={filterCount}
+        resetFilterCount={resetFilterCount}
+        allFilteredContacts={allFilteredContacts}
         setShowApproveForm={setShowApproveForm}
         showApproveForm={showApproveForm}
-        filteredContacts={filteredContacts}
+        searchableApplicants={searchableApplicants}
         setPresentApplicants={setPresentApplicants}
         getSubmittedContacts={getSubmittedContacts}
         approveNewContactsStatus={approveNewContactsStatus}
