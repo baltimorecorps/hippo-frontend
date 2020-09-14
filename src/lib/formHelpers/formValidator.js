@@ -361,7 +361,6 @@ const contactInfoValidator = values => {
     isError = true;
     err.country_error = 'Required';
   }
-  console.log('race form', race);
 
   if (race.not_listed && (!race.race_other || race.race_other.length === 0)) {
     isError = true;
