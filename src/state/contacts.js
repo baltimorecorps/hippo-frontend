@@ -2,6 +2,7 @@ import {createReducer} from 'redux-starter-kit';
 import {fetchActionTypes} from 'redux-fetch-wrapper';
 import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
 import {makeAuthFetchActions} from 'lib/Auth0/auth0';
+import {formData} from '../components/Internal/ApplicantsBoard/defaultValues';
 
 import {API_URL} from 'app/constants';
 
@@ -472,7 +473,7 @@ export const approveNewContactsStatus = applicantIds =>
       applicantIds,
     });
 
-    return await makeApiFetchActions(
+    await makeApiFetchActions(
       APPROVE_NEW_CONTACTS_STATUS,
       `${API_URL}/api/contacts/approve/`,
       {
@@ -481,6 +482,73 @@ export const approveNewContactsStatus = applicantIds =>
       }
     )(dispatch);
   };
+
+// ---------------------------------------------------------------------------
+
+export const GET_ALL_FILTERED_CONTACTS = 'GET_ALL_FILTERED_CONTACTS';
+export const GET_ALL_FILTERED_CONTACTS_API = fetchActionTypes(
+  GET_ALL_FILTERED_CONTACTS
+);
+export const getAllFilteredContacts = filterFormData =>
+  async function(dispatch) {
+    try {
+      const result = await makeApiFetchActions(
+        GET_ALL_FILTERED_CONTACTS,
+        `${API_URL}/api/contacts/filter/`,
+        {
+          body: JSON.stringify({}),
+          method: 'POST',
+        }
+      )(dispatch);
+      dispatch({
+        type: GET_ALL_FILTERED_CONTACTS,
+        data: result.body.data,
+        filterFormData,
+        filterCount: 0,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+// ---------------------------------------------------------------------------
+
+export const ADD_CONTACTS_FILTERS = 'ADD_CONTACTS_FILTERS';
+export const ADD_CONTACTS_FILTERS_API = fetchActionTypes(ADD_CONTACTS_FILTERS);
+export const addContactsFilters = (
+  filtersPayload,
+  filterFormData,
+  filterCount
+) =>
+  async function(dispatch) {
+    try {
+      const result = await makeApiFetchActions(
+        ADD_CONTACTS_FILTERS,
+        `${API_URL}/api/contacts/filter/`,
+        {
+          body: JSON.stringify(filtersPayload),
+          method: 'POST',
+        }
+      )(dispatch);
+      dispatch({
+        type: ADD_CONTACTS_FILTERS,
+        data: result.body.data,
+        filterFormData,
+        filterCount,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+// ---------------------------------------------------------------------------
+
+export const RESET_FILTER_COUNT = 'RESET_FILTER_COUNT';
+export const resetFilterCount = dispatch =>
+  dispatch({
+    type: RESET_FILTER_COUNT,
+    filterFormData: formData,
+    count: 0,
+  });
+
 // ---------------------------------------------------------------------------
 
 /* eslint-enable no-unused-vars */
@@ -524,7 +592,28 @@ export const contactsReducer = createReducer(
 
     [APPROVE_NEW_CONTACTS_STATUS_API.RESOLVE]: (state, action) => {
       const approvedContacts = action.body.data;
-      state['approved'] = [...state['approved'], ...approvedContacts];
+      state['all_filtered_contacts'] = [
+        ...state['all_filtered_contacts'],
+        ...approvedContacts,
+      ];
+    },
+
+    [RESET_FILTER_COUNT]: (state, action) => {
+      const {count, filterFormData} = action;
+      state['filter_form_data'] = filterFormData;
+      state['filter_count'] = count;
+    },
+    [GET_ALL_FILTERED_CONTACTS]: (state, action) => {
+      const {data, filterFormData, filterCount} = action;
+      state['all_filtered_contacts'] = data;
+      state['filter_form_data'] = filterFormData;
+      state['filter_count'] = filterCount;
+    },
+    [ADD_CONTACTS_FILTERS]: (state, action) => {
+      const {data, filterFormData, filterCount} = action;
+      state['filtered'] = data;
+      state['filter_form_data'] = filterFormData;
+      state['filter_count'] = filterCount;
     },
 
     [GET_CONTACT_API.RESOLVE]: (state, action) => {

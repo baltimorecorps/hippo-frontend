@@ -112,47 +112,15 @@ const filterOpportunitiesByPrograms = (opportunities, value, programs) => {
     );
   }
 
-  let theOpportunities;
-
-  // Each value represent each program to filter by program
-  switch (value) {
-    case 0: // All
-      theOpportunities = sortedOpportunities;
-      break;
-
-    case 1:
-      theOpportunities = filterByProgramAndSortByCategory(
-        opportunities,
-        programs[0],
-        'title'
-      );
-      break;
-    case 2:
-      theOpportunities = filterByProgramAndSortByCategory(
-        opportunities,
-        programs[1],
-        'title'
-      );
-      break;
-    case 3:
-      theOpportunities = filterByProgramAndSortByCategory(
-        opportunities,
-        programs[2],
-        'title'
-      );
-      break;
-    case 4:
-      theOpportunities = filterByProgramAndSortByCategory(
-        opportunities,
-        programs[3],
-        'title'
-      );
-      break;
-    default:
-      // All
-      theOpportunities = sortedOpportunities;
-      break;
+  let theOpportunities = sortedOpportunities;
+  if (value !== 'All Programs') {
+    theOpportunities = filterByProgramAndSortByCategory(
+      opportunities,
+      value,
+      'title'
+    );
   }
+
   return theOpportunities;
 };
 

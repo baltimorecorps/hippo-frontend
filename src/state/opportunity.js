@@ -81,11 +81,23 @@ export const GET_CONTACT_APPLICATIONS = 'GET_CONTACT_APPLICATIONS';
 export const GET_CONTACT_APPLICATIONS_API = fetchActionTypes(
   GET_CONTACT_APPLICATIONS
 );
-export const getContactApplications = contactId =>
-  makeApiFetchActions(
-    GET_CONTACT_APPLICATIONS,
-    `${API_URL}/api/contacts/${contactId}/app/`
-  );
+export const getContactApplications = contactId => {
+  return async function(dispatch) {
+    try {
+      const result = await makeApiFetchActions(
+        GET_CONTACT_APPLICATIONS,
+        `${API_URL}/api/contacts/${contactId}/app/`
+      )(dispatch);
+      dispatch({
+        type: GET_CONTACT_APPLICATIONS,
+        data: result.body.data,
+        contactId,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 
 export const UPDATE_APPLICATION = 'UPDATE_APPLICATION';
 export const UPDATE_APPLICATION_API = fetchActionTypes(UPDATE_APPLICATION);
@@ -124,6 +136,7 @@ export const submitApplication = application =>
     )(dispatch);
   };
 
+// duplicated with Get contact applications
 export const GET_ALL_SUBMITTED_APPLICATIONS = 'GET_ALL_SUBMITTED_APPLICATIONS';
 export const GET_ALL_SUBMITTED_APPLICATIONS_API = fetchActionTypes(
   GET_ALL_SUBMITTED_APPLICATIONS
@@ -230,7 +243,7 @@ export const approveNewApplicants = (programId, applicants) =>
   };
 
 // ---------------------------------------------------------------------------
-
+// not using anymore
 export const GET_ALL_INTERNAL_APPLICANTS = 'GET_ALL_INTERNAL_APPLICANTS';
 export const GET_ALL_INTERNAL_APPLICANTS_API = fetchActionTypes(
   GET_ALL_INTERNAL_APPLICANTS
@@ -241,7 +254,7 @@ export const getAllInternalApplicants = makeApiFetchActions(
 );
 
 // ---------------------------------------------------------------------------
-
+// not using here. moved to contacts state
 export const GET_ALL_APPROVED_APPLICANTS = 'GET_ALL_APPROVED_APPLICANTS';
 export const GET_ALL_APPROVED_APPLICANTS_API = fetchActionTypes(
   GET_ALL_APPROVED_APPLICANTS
@@ -252,7 +265,7 @@ export const getAllApprovedApplicants = makeApiFetchActions(
 );
 
 // ---------------------------------------------------------------------------
-
+// not using here. moved to contacts state
 export const GET_ALL_NOT_APPROVED_APPLICANTS =
   'GET_ALL_NOT_APPROVED_APPLICANTS';
 export const GET_ALL_NOT_APPROVED_APPLICANTS_API = fetchActionTypes(
@@ -380,7 +393,7 @@ export const internalActivateRole = opportunityId =>
   };
 
 // ---------------------------------------------------------------------------
-
+// not using anywhere
 export const GET_ALL_CONTACTS_PROGRAMS = 'GET_ALL_CONTACTS_PROGRAMS';
 export const GET_ALL_CONTACTS_PROGRAMS_API = fetchActionTypes(
   GET_ALL_CONTACTS_PROGRAMS
@@ -447,11 +460,11 @@ export const applicationsReducer = createReducer(
       state[application.id] = application;
     },
 
-    [GET_CONTACT_APPLICATIONS_API.RESOLVE]: (state, action) => {
-      action.body.data.forEach(app => {
-        state[app.id] = app;
-      });
+    [GET_CONTACT_APPLICATIONS]: (state, action) => {
+      const {data, contactId} = action;
+      state[contactId] = data;
     },
+
     [GET_ALL_SUBMITTED_APPLICATIONS_API.RESOLVE]: (state, action) => {
       action.body.data.forEach(app => {
         state[app.id] = app;

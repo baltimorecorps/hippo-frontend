@@ -248,19 +248,6 @@ EachOpportunity.propTypes = {
 
 const styles = ({breakpoints, palette, spacing}) => ({
   opportunityPaper: {
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
     width: '100%',
     padding: spacing(2, 3, 3),
     marginBottom: spacing(2),

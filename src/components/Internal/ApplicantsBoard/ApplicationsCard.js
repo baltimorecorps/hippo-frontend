@@ -34,8 +34,8 @@ const ApplicationsCard = ({
   const toProfile = contactId => {
     history.push(`/profile/${contactId}`);
   };
-  const backToApplicationsBoard = contactId => {
-    history.push(`/internal/applications-board`);
+  const backToApplicantsBoard = contactId => {
+    history.push(`/internal/applicants-board`);
   };
 
   let submittedApps = [];
@@ -59,8 +59,7 @@ const ApplicationsCard = ({
       app => app.status === 'considered_for_role' && app.is_active === true
     );
   }
-
-  if (!applications) {
+  if (!applications || !applicant) {
     return <div>loading...</div>;
   }
   return (
@@ -78,7 +77,7 @@ const ApplicationsCard = ({
       </Paper>
       <Grid className={classes.buttonContainer}>
         <Button
-          onClick={() => backToApplicationsBoard()}
+          onClick={() => backToApplicantsBoard()}
           variant="contained"
           color="primary"
           className={classes.backButton}

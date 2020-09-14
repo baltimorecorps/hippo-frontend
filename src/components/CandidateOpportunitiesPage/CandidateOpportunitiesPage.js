@@ -9,7 +9,7 @@ import {
   filterOpportunitiesByPrograms,
   sortByCategory,
 } from 'lib/helperFunctions/opportunitiesHelpers';
-import FilterByProgramsTabs from '../CandidateOpportunitiesPage/FilterByProgramsTabs';
+import FilterByProgramsTabs from './FilterByProgramsSelector';
 
 const CandidateOpportunitiesPage = ({
   classes,
@@ -65,8 +65,8 @@ const CandidateOpportunitiesPage = ({
   let header = '';
   let renderedOpportunities = [];
 
-  const [value, setValue] = React.useState(0);
-  const programs = ['Place for Purpose', 'Fellowship'];
+  const [value, setValue] = React.useState('All Programs');
+  const programs = ['All Programs', 'Place for Purpose', 'Fellowship'];
 
   renderedOpportunities = filterOpportunitiesByPrograms(
     opportunities,
@@ -82,8 +82,9 @@ const CandidateOpportunitiesPage = ({
     renderedOpportunities = sortByCategory(MF_opportunities, 'title');
   }
 
-  const handleChangeFilter = (event, newValue) => {
-    setValue(newValue);
+  const handleChangeFilter = event => {
+    event.persist();
+    setValue(event.target.value);
   };
 
   if (!renderedOpportunities || renderedOpportunities.length === 0)
@@ -138,11 +139,6 @@ const styles = ({breakpoints, palette, spacing}) => ({
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: spacing(1),
-  },
-  header: {
-    textAlign: 'center',
-  },
-  headerPaper: {
     flexGrow: 1,
     [breakpoints.up('sm')]: {
       flexBasis: '83.333333%',
@@ -156,6 +152,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
       flexBasis: '50%',
       maxWidth: '50%',
     },
+  },
+  header: {
+    textAlign: 'center',
+  },
+  headerPaper: {
     width: '100%',
     padding: spacing(2, 3, 3),
     marginBottom: spacing(2),
