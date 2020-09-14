@@ -88,13 +88,15 @@ const TableToolbar = ({
   print,
   handleClickOpenFilterForm,
   filterCount,
+  resetFilterCount,
   setShowApproveForm,
+  allFilteredContacts,
   showApproveForm,
-  filteredContacts,
   setPresentApplicants,
   getSubmittedContacts,
   approveNewContactsStatus,
   submittedApplicants,
+  searchableApplicants,
 }) => {
   const classes = useToolbarStyles();
 
@@ -102,7 +104,7 @@ const TableToolbar = ({
     event.persist();
     const name = event.target.value.toLowerCase();
     if (name != null) {
-      const searchNames = filteredContacts.filter(applicant => {
+      const searchNames = searchableApplicants.filter(applicant => {
         const applicantFullName = `${applicant.first_name} ${applicant.last_name}`.toLowerCase();
         const applicantEmail = applicant.email.toLowerCase();
         return (
@@ -183,6 +185,9 @@ const TableToolbar = ({
           closeForm={() => setShowApproveForm(false)}
           showApproveForm={showApproveForm}
           setShowApproveForm={setShowApproveForm}
+          allFilteredContacts={allFilteredContacts}
+          setPresentApplicants={setPresentApplicants}
+          resetFilterCount={resetFilterCount}
         />
       )}
     </Toolbar>

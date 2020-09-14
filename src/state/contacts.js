@@ -2,6 +2,7 @@ import {createReducer} from 'redux-starter-kit';
 import {fetchActionTypes} from 'redux-fetch-wrapper';
 import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
 import {makeAuthFetchActions} from 'lib/Auth0/auth0';
+import {formData} from '../components/Internal/ApplicantsBoard/defaultValues';
 
 import {API_URL} from 'app/constants';
 
@@ -540,6 +541,16 @@ export const addContactsFilters = (
   };
 // ---------------------------------------------------------------------------
 
+export const RESET_FILTER_COUNT = 'RESET_FILTER_COUNT';
+export const resetFilterCount = dispatch =>
+  dispatch({
+    type: RESET_FILTER_COUNT,
+    filterFormData: formData,
+    count: 0,
+  });
+
+// ---------------------------------------------------------------------------
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -581,9 +592,17 @@ export const contactsReducer = createReducer(
 
     [APPROVE_NEW_CONTACTS_STATUS_API.RESOLVE]: (state, action) => {
       const approvedContacts = action.body.data;
-      state['approved'] = [...state['approved'], ...approvedContacts];
+      state['all_filtered_contacts'] = [
+        ...state['all_filtered_contacts'],
+        ...approvedContacts,
+      ];
     },
 
+    [RESET_FILTER_COUNT]: (state, action) => {
+      const {count, filterFormData} = action;
+      state['filter_form_data'] = filterFormData;
+      state['filter_count'] = count;
+    },
     [GET_ALL_FILTERED_CONTACTS]: (state, action) => {
       const {data, filterFormData, filterCount} = action;
       state['all_filtered_contacts'] = data;
