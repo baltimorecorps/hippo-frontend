@@ -59,13 +59,6 @@ const filteredContacts = [
   },
 ];
 
-// To do
-
-// search by name test
-// search by email
-// filter
-// print
-
 describe('Applicants Board', () => {
   test('Render Applicants Board Components', () => {
     const {getByTestId, getAllByTestId} = render(
@@ -162,27 +155,43 @@ describe('Applicants Board', () => {
     expect(queryByText('Approve New Applicants')).toBeInTheDocument();
   });
 
-  // test('Applicants Board: Filter Applicants', () => {
-  //   const {getByTestId, getAllByTestId} = render(
-  //     <ApplicantsBoard
-  //       getSubmittedContacts={() => jest.fn()}
-  //       approveNewContactsStatus={() => jest.fn()}
-  //       submittedApplicants={[]}
-  //       addContactsFilters={() => jest.fn()}
-  //       allFilteredContacts={filteredContacts}
-  //       getAllFilteredContacts={() => jest.fn()}
-  //       filteredContacts={filteredContacts}
-  //       filterFormData={formData}
-  //       filterCount={0}
-  //     />
-  //   );
+  test('Applicants Board: Filter Applicants', () => {
+    const addContactsFilters = jest.fn();
+    const {getByTestId, getAllByTestId, queryByText} = render(
+      <ApplicantsBoard
+        getSubmittedContacts={() => jest.fn()}
+        approveNewContactsStatus={() => jest.fn()}
+        submittedApplicants={[]}
+        addContactsFilters={addContactsFilters}
+        allFilteredContacts={filteredContacts}
+        getAllFilteredContacts={() => jest.fn()}
+        filteredContacts={filteredContacts}
+        filterFormData={formData}
+        filterCount={0}
+      />
+    );
 
-  // const filterButton = getByTestId('filter-icon-button');
-  // expect(queryByText('Filter Applicants')).not.toBeInTheDocument();
-  // fireEvent.click(filterButton);
-  // expect(queryByText('Filter Applicants')).toBeInTheDocument();
+    const filterButton = getByTestId('filter-icon-button');
+    expect(queryByText('Filter Applicants')).not.toBeInTheDocument();
+    fireEvent.click(filterButton);
+    expect(queryByText('Filter Applicants')).toBeInTheDocument();
 
-  // });
+    const checkboxStatusApproved = getByTestId('status-approved').querySelector(
+      'input[type="checkbox"]'
+    );
+
+    expect(checkboxStatusApproved).toHaveProperty('checked', false);
+
+    fireEvent.click(checkboxStatusApproved);
+    expect(checkboxStatusApproved).toHaveProperty('checked', true);
+
+    fireEvent.click(getByTestId('add-filter-button'));
+
+    expect(addContactsFilters.mock.calls.length).toBe(1);
+    expect(addContactsFilters.mock.calls[0].length).toBe(3);
+    expect(addContactsFilters.mock.calls[0][0].status.length).toBe(1);
+    expect(addContactsFilters.mock.calls[0][0].status[0]).toBe('approved');
+  });
 
   // test('Applicants Board: Print Applicants', () => {
   //   const {getByTestId, getAllByTestId} = render(
