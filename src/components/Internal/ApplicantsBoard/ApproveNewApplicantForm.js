@@ -61,7 +61,6 @@ const ApproveNewApplicantForm = ({
     },
   };
 
-  // console.log('submittedApplicants', submittedApplicants);
   return (
     <Dialog
       maxWidth="md"

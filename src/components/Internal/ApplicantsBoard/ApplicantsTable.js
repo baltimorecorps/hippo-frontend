@@ -285,7 +285,7 @@ function ApplicantsTable({
   const printTitle = `applicants_${today}`;
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="applicants-table">
       <TableToolBar
         handleClickOpenFilterForm={handleClickOpenFilterForm}
         filterCount={filterCount}

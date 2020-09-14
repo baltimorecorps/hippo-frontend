@@ -74,7 +74,6 @@ const useToolbarStyles = makeStyles(theme => ({
   },
   approveButton: {
     height: '32px',
-    // marginRight: '10px',
   },
 
   customBadge: {
@@ -98,7 +97,6 @@ const TableToolbar = ({
   submittedApplicants,
 }) => {
   const classes = useToolbarStyles();
-  // const {numSelected, print, handleClickOpenFilterForm, filterCount} = props;
 
   const handleChangeSearch = event => {
     event.persist();
@@ -116,9 +114,10 @@ const TableToolbar = ({
   };
 
   return (
-    <Toolbar className={classes.root}>
+    <Toolbar className={classes.root} data-testid="table-toolbar">
       <div className={classes.container}>
         <TextField
+          data-testid="search-bar-input"
           id="search-applicants"
           className={classes.searchBar}
           placeholder="&#128269; Search by name or email"
@@ -134,6 +133,7 @@ const TableToolbar = ({
         <div className={classes.iconsContainer}>
           <Tooltip title="Approve Candidates" placement="top">
             <Button
+              data-testid="open-approve-form-button"
               onClick={() => setShowApproveForm(true)}
               variant="contained"
               color="primary"
@@ -153,6 +153,7 @@ const TableToolbar = ({
               classes={{badge: classes.customBadge}}
             >
               <IconButton
+                data-testid="filter-icon-button"
                 onClick={() => handleClickOpenFilterForm()}
                 aria-label="filter candidates"
                 className={classes.iconButton}
@@ -163,7 +164,11 @@ const TableToolbar = ({
           </Tooltip>
 
           <Tooltip title="Print" placement="top">
-            <IconButton className={classes.iconButton} aria-label="print">
+            <IconButton
+              data-testid="print-icon-button"
+              className={classes.iconButton}
+              aria-label="print"
+            >
               {print}
             </IconButton>
           </Tooltip>
