@@ -28,13 +28,16 @@ const ApproveNewApplicantForm = ({
   const [selectedValues, setSelectedValues] = useState([]);
   const [applicantIds, setApplicantIds] = useState([]);
   const [errors, setErrors] = useState({});
-  const options = submittedApplicants.map(contact => {
-    return {
-      name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
-      id: contact.id,
-      contact: contact,
-    };
-  });
+  let options = [];
+
+  if (submittedApplicants.length > 0)
+    options = submittedApplicants.map(contact => {
+      return {
+        name: `${contact.first_name} ${contact.last_name} (${contact.email})`,
+        id: contact.id,
+        contact: contact,
+      };
+    });
 
   const onChange = (event, values) => {
     setSelectedValues(values);

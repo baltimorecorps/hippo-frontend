@@ -117,6 +117,7 @@ const FilterApplicantsForm = ({
 
   return (
     <Dialog
+      data-testid="filter-applicants-form"
       maxWidth="md"
       open={isOpen}
       onClose={handleClose}

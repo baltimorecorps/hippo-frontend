@@ -72,7 +72,7 @@ describe('Applicants Board', () => {
       <ApplicantsBoard
         getSubmittedContacts={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
-        submittedApplicants={{}}
+        submittedApplicants={[]}
         addContactsFilters={() => jest.fn()}
         allFilteredContacts={filteredContacts}
         getAllFilteredContacts={() => jest.fn()}
@@ -105,7 +105,7 @@ describe('Applicants Board', () => {
       <ApplicantsBoard
         getSubmittedContacts={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
-        submittedApplicants={{}}
+        submittedApplicants={[]}
         addContactsFilters={() => jest.fn()}
         allFilteredContacts={filteredContacts}
         getAllFilteredContacts={() => jest.fn()}
@@ -140,31 +140,34 @@ describe('Applicants Board', () => {
     expect(getByTestId('no-result')).toBeInTheDocument();
   });
 
-  // test('Applicants Board: Open approve applicants form', () => {
-  //   const {getByTestId, getAllByTestId} = render(
-  //     <ApplicantsBoard
-  //       getSubmittedContacts={() => jest.fn()}
-  //       approveNewContactsStatus={() => jest.fn()}
-  //       submittedApplicants={{}}
-  //       addContactsFilters={() => jest.fn()}
-  //       allFilteredContacts={filteredContacts}
-  //       getAllFilteredContacts={() => jest.fn()}
-  //       filteredContacts={filteredContacts}
-  //       filterFormData={formData}
-  //       filterCount={0}
-  //     />
-  //   );
+  test('Applicants Board: Open approve applicants form', () => {
+    const {getByTestId, queryByText} = render(
+      <ApplicantsBoard
+        getSubmittedContacts={() => jest.fn()}
+        approveNewContactsStatus={() => jest.fn()}
+        submittedApplicants={() => jest.fn()}
+        addContactsFilters={() => jest.fn()}
+        allFilteredContacts={filteredContacts}
+        getAllFilteredContacts={() => jest.fn()}
+        filteredContacts={filteredContacts}
+        filterFormData={formData}
+        filterCount={0}
+      />
+    );
 
-  //   const filterButton = getByTestId('filter-icon-button');
-  //   fireEvent.click(filterButton);
-  // });
+    const openApproveFormButton = getByTestId('open-approve-form-button');
+
+    expect(queryByText('Approve New Applicants')).not.toBeInTheDocument();
+    fireEvent.click(openApproveFormButton);
+    expect(queryByText('Approve New Applicants')).toBeInTheDocument();
+  });
 
   // test('Applicants Board: Filter Applicants', () => {
   //   const {getByTestId, getAllByTestId} = render(
   //     <ApplicantsBoard
   //       getSubmittedContacts={() => jest.fn()}
   //       approveNewContactsStatus={() => jest.fn()}
-  //       submittedApplicants={{}}
+  //       submittedApplicants={[]}
   //       addContactsFilters={() => jest.fn()}
   //       allFilteredContacts={filteredContacts}
   //       getAllFilteredContacts={() => jest.fn()}
@@ -173,6 +176,11 @@ describe('Applicants Board', () => {
   //       filterCount={0}
   //     />
   //   );
+
+  // const filterButton = getByTestId('filter-icon-button');
+  // expect(queryByText('Filter Applicants')).not.toBeInTheDocument();
+  // fireEvent.click(filterButton);
+  // expect(queryByText('Filter Applicants')).toBeInTheDocument();
 
   // });
 
@@ -181,7 +189,7 @@ describe('Applicants Board', () => {
   //     <ApplicantsBoard
   //       getSubmittedContacts={() => jest.fn()}
   //       approveNewContactsStatus={() => jest.fn()}
-  //       submittedApplicants={{}}
+  //       submittedApplicants={[]}
   //       addContactsFilters={() => jest.fn()}
   //       allFilteredContacts={filteredContacts}
   //       getAllFilteredContacts={() => jest.fn()}
