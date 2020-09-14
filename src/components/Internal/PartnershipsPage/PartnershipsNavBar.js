@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 
-const PartnershipsNavBar = ({classes}) => {
+const PartnershipsNavBar = ({classes, location}) => {
   let history = useHistory();
 
   const handleClickLink = linkURL => {
@@ -12,19 +12,25 @@ const PartnershipsNavBar = ({classes}) => {
 
   const links = [
     {
-      name: 'Partnerships',
-      url: 'partnerships',
+      key: 'add_or_edit_opportunities',
+      name: 'Add or Edit Opportunities',
+      url: 'add-or-edit-opportunities',
     },
-    {name: 'Add or Edit Opportunities', url: 'add-or-edit-opportunities'},
     {
-      name: 'Internal Opportunities Board',
+      key: 'opportunities_board',
+      name: 'Opportunities Board',
       url: 'opportunities-board',
     },
     {
-      name: 'Internal Applications Board',
-      url: 'applications-board',
+      key: 'applicants_board',
+      name: 'Applicants Board',
+      url: 'applicants-board',
     },
   ];
+
+  const currentPage = window.location.pathname
+    .replace('/internal/', '')
+    .replace(/-/g, '_');
 
   return (
     <div className={classes.linkContainer}>
@@ -34,6 +40,11 @@ const PartnershipsNavBar = ({classes}) => {
           component="button"
           variant="body1"
           align="center"
+          style={
+            currentPage === link.key
+              ? {backgroundColor: '#2b6eff', color: '#ffffff'}
+              : null
+          }
           className={classes.partnershipsHome}
           onClick={() => handleClickLink(link.url)}
         >
@@ -50,16 +61,16 @@ const styles = ({breakpoints, palette, spacing}) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    border: 'none',
+    marginTop: spacing(2),
+    marginBottom: spacing(2),
   },
   partnershipsHome: {
     display: 'flex',
     justifyContent: 'center',
-    alignSelf: 'center',
-    marginTop: spacing(2),
-    marginLeft: '2%',
-    [breakpoints.up('sm')]: {
-      alignSelf: 'flex-start',
-    },
+    padding: '5px 15px',
+    border: '1px solid #ddd',
+
     '&:hover': {
       cursor: 'pointer',
     },

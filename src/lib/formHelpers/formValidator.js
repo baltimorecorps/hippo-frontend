@@ -448,7 +448,6 @@ const programsAndEligibilityValidator = values => {
   );
 
   allValues.push(values.profile.needs_help_programs);
-  console.log(allValues);
   let isError = false;
   let err = {};
 

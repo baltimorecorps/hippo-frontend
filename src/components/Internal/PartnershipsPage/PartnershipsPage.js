@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from 'react-router-dom';
@@ -22,8 +21,8 @@ const PartnershipsPage = ({classes}) => {
       url: 'opportunities-board',
     },
     {
-      name: 'Internal Applications Board',
-      url: 'applications-board',
+      name: 'Internal Applicants Board',
+      url: 'applicants-board',
     },
   ];
   return (

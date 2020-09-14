@@ -30,15 +30,16 @@ import InternalOpportunitiesPage from 'components/Internal/AddOrEditOpportunitie
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';
-import InternalApplicationsBoard from 'components/Internal/ApplicationsBoard';
 import StaffViewApplication from 'components/Internal/StaffViewApplication/StaffViewApplication.container';
 import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
 import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'components/FAQPage';
-import ApplicationsCard from 'components/Internal/ApplicationsBoard/ApplicationsCard.container';
+import ApplicationsCard from 'components/Internal/ApplicantsBoard/ApplicationsCard.container';
 import Questionnaire from 'components/Questionnaire';
+import ApplicantsBoard from 'components/Internal/ApplicantsBoard';
+import ApplicantPage from 'components/Internal/ApplicantPage';
 
 const App = ({
   hasSession,
@@ -220,16 +221,15 @@ const App = ({
                 path="/internal/opportunities-board"
                 component={InternalOpportunitiesBoard}
               />
-
               <Route
                 exact
-                path="/internal/applications-board/:contactId"
-                component={ApplicationsCard}
+                path="/internal/applicants/:contactId"
+                component={ApplicantPage}
               />
               <Route
                 exact
-                path="/internal/applications-board"
-                component={InternalApplicationsBoard}
+                path="/internal/applicants-board"
+                component={ApplicantsBoard}
               />
               <Route
                 path="/opportunities/:opportunityId/contacts/:contactId/internal-review"
@@ -267,8 +267,6 @@ const App = ({
             </Switch>
             <Footer />
           </div>
-          {/* <div className={classes.footerContainer}> */}
-          {/* </div> */}
         </Router>
       </MuiThemeProvider>
     </ErrorBoundary>
