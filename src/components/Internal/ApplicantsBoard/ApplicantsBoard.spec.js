@@ -2,8 +2,6 @@ import React from 'react';
 import {render, cleanup, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ApplicantsBoard from './ApplicantsBoard';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
 import {formData} from './defaultValues';
 
 beforeEach(() => {
@@ -138,7 +136,7 @@ describe('Applicants Board', () => {
       <ApplicantsBoard
         getSubmittedContacts={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
-        submittedApplicants={() => jest.fn()}
+        submittedApplicants={[]}
         addContactsFilters={() => jest.fn()}
         allFilteredContacts={filteredContacts}
         getAllFilteredContacts={() => jest.fn()}
@@ -157,7 +155,7 @@ describe('Applicants Board', () => {
 
   test('Applicants Board: Filter Applicants', () => {
     const addContactsFilters = jest.fn();
-    const {getByTestId, getAllByTestId, queryByText} = render(
+    const {getByTestId, queryByText} = render(
       <ApplicantsBoard
         getSubmittedContacts={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
@@ -193,20 +191,25 @@ describe('Applicants Board', () => {
     expect(addContactsFilters.mock.calls[0][0].status[0]).toBe('approved');
   });
 
-  // test('Applicants Board: Print Applicants', () => {
-  //   const {getByTestId, getAllByTestId} = render(
-  //     <ApplicantsBoard
-  //       getSubmittedContacts={() => jest.fn()}
-  //       approveNewContactsStatus={() => jest.fn()}
-  //       submittedApplicants={[]}
-  //       addContactsFilters={() => jest.fn()}
-  //       allFilteredContacts={filteredContacts}
-  //       getAllFilteredContacts={() => jest.fn()}
-  //       filteredContacts={filteredContacts}
-  //       filterFormData={formData}
-  //       filterCount={0}
-  //     />
-  //   );
+  test('Applicants Board: Print Applicants', () => {
+    const {getByTestId} = render(
+      <ApplicantsBoard
+        getSubmittedContacts={() => jest.fn()}
+        approveNewContactsStatus={() => jest.fn()}
+        submittedApplicants={[]}
+        addContactsFilters={() => jest.fn()}
+        allFilteredContacts={filteredContacts}
+        getAllFilteredContacts={() => jest.fn()}
+        filteredContacts={filteredContacts}
+        filterFormData={formData}
+        filterCount={0}
+      />
+    );
 
-  // });
+    const printButton = getByTestId('print-icon-button');
+    fireEvent.click(printButton);
+
+    // const printWindow = document.getElementById('printWindow');
+    // expect(printWindow).toBeInTheDocument();
+  });
 });

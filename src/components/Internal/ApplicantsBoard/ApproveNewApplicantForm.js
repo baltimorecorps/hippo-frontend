@@ -129,7 +129,6 @@ const ApproveNewApplicantForm = ({
 ApproveNewApplicantForm.propTypes = {
   classes: PropTypes.object.isRequired,
   approveNewContactsStatus: PropTypes.func.isRequired,
-  closeForm: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

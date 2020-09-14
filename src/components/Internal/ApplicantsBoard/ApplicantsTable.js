@@ -250,10 +250,6 @@ function ApplicantsTable({
   });
   let history = useHistory();
 
-  const onClickView = contactId => {
-    history.push(`/internal/applicants/${contactId}`);
-  };
-
   // learn this
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
