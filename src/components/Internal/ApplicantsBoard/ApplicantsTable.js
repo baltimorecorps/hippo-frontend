@@ -376,6 +376,7 @@ function ApplicantsTable({
                   <TableCell colSpan={6}>
                     {applicantsRows.length === 0 && (
                       <Typography
+                        data-testid="no-result"
                         component="p"
                         variant="body1"
                         align="center"

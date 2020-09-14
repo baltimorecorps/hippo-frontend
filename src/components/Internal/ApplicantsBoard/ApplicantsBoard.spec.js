@@ -61,7 +61,6 @@ const filteredContacts = [
 
 // To do
 
-// Test that all things are rendered (Nav, toolbar (stuff inside toolbar), data table)
 // search by name test
 // search by email
 // filter
@@ -87,7 +86,7 @@ describe('Applicants Board', () => {
     const applicantsTable = getByTestId('applicants-table');
     const searchBar = getByTestId('search-bar-input');
     const openApproveFormButton = getByTestId('open-approve-form-button');
-    const FilterButton = getByTestId('filter-icon-button');
+    const filterButton = getByTestId('filter-icon-button');
     const printButton = getByTestId('print-icon-button');
     const tableRow = getAllByTestId('table-row');
 
@@ -95,9 +94,102 @@ describe('Applicants Board', () => {
     expect(applicantsTable).toBeInTheDocument();
     expect(searchBar).toBeInTheDocument();
     expect(openApproveFormButton).toBeInTheDocument();
-    expect(FilterButton).toBeInTheDocument();
+    expect(filterButton).toBeInTheDocument();
     expect(printButton).toBeInTheDocument();
 
     expect(tableRow.length).toBe(3);
   });
+
+  test('Applicants Board: Search by name or email', () => {
+    const {getByTestId, getAllByTestId, getByRole} = render(
+      <ApplicantsBoard
+        getSubmittedContacts={() => jest.fn()}
+        approveNewContactsStatus={() => jest.fn()}
+        submittedApplicants={{}}
+        addContactsFilters={() => jest.fn()}
+        allFilteredContacts={filteredContacts}
+        getAllFilteredContacts={() => jest.fn()}
+        filteredContacts={filteredContacts}
+        filterFormData={formData}
+        filterCount={0}
+      />
+    );
+
+    const searchBar = getByRole('textbox');
+
+    expect(getAllByTestId('table-row').length).toBe(3);
+
+    // Search by name
+    fireEvent.change(searchBar, {target: {value: 'first1'}});
+    expect(getAllByTestId('table-row').length).toBe(1);
+
+    fireEvent.change(searchBar, {target: {value: 'first'}});
+    expect(getAllByTestId('table-row').length).toBe(3);
+
+    fireEvent.change(searchBar, {target: {value: 'David'}});
+    expect(getByTestId('no-result')).toBeInTheDocument();
+
+    // Search by email
+    fireEvent.change(searchBar, {target: {value: 'test2'}});
+    expect(getAllByTestId('table-row').length).toBe(1);
+
+    fireEvent.change(searchBar, {target: {value: 'test.com'}});
+    expect(getAllByTestId('table-row').length).toBe(3);
+
+    fireEvent.change(searchBar, {target: {value: 'gmail.com'}});
+    expect(getByTestId('no-result')).toBeInTheDocument();
+  });
+
+  // test('Applicants Board: Open approve applicants form', () => {
+  //   const {getByTestId, getAllByTestId} = render(
+  //     <ApplicantsBoard
+  //       getSubmittedContacts={() => jest.fn()}
+  //       approveNewContactsStatus={() => jest.fn()}
+  //       submittedApplicants={{}}
+  //       addContactsFilters={() => jest.fn()}
+  //       allFilteredContacts={filteredContacts}
+  //       getAllFilteredContacts={() => jest.fn()}
+  //       filteredContacts={filteredContacts}
+  //       filterFormData={formData}
+  //       filterCount={0}
+  //     />
+  //   );
+
+  //   const filterButton = getByTestId('filter-icon-button');
+  //   fireEvent.click(filterButton);
+  // });
+
+  // test('Applicants Board: Filter Applicants', () => {
+  //   const {getByTestId, getAllByTestId} = render(
+  //     <ApplicantsBoard
+  //       getSubmittedContacts={() => jest.fn()}
+  //       approveNewContactsStatus={() => jest.fn()}
+  //       submittedApplicants={{}}
+  //       addContactsFilters={() => jest.fn()}
+  //       allFilteredContacts={filteredContacts}
+  //       getAllFilteredContacts={() => jest.fn()}
+  //       filteredContacts={filteredContacts}
+  //       filterFormData={formData}
+  //       filterCount={0}
+  //     />
+  //   );
+
+  // });
+
+  // test('Applicants Board: Print Applicants', () => {
+  //   const {getByTestId, getAllByTestId} = render(
+  //     <ApplicantsBoard
+  //       getSubmittedContacts={() => jest.fn()}
+  //       approveNewContactsStatus={() => jest.fn()}
+  //       submittedApplicants={{}}
+  //       addContactsFilters={() => jest.fn()}
+  //       allFilteredContacts={filteredContacts}
+  //       getAllFilteredContacts={() => jest.fn()}
+  //       filteredContacts={filteredContacts}
+  //       filterFormData={formData}
+  //       filterCount={0}
+  //     />
+  //   );
+
+  // });
 });
