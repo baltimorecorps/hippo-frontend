@@ -149,7 +149,6 @@ describe('About Me: Contact Info Form', () => {
     const values = validValues;
     values.profile.race.not_listed = true;
     values.profile.race.race_other = '';
-    console.log('race', values.profile.race);
 
     let expectedErr = {
       raceOther_error: 'Required',

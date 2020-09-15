@@ -16,6 +16,7 @@ import SkillSelect from '../../Skills/SkillSelect';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
+
   const handleSubmit = () => {
     let payload = {};
     const allCheckboxValues = values.checkboxes.left.concat(
@@ -54,7 +55,11 @@ const useForm = (initialValues, onSubmit) => {
           [key]: tempObjectValues,
         };
       }
+
+      if (values.skills.length > 0)
+        payload.skills = values.skills.map(skill => skill.name);
     });
+
     const filterCount = Object.keys(payload).length;
     onSubmit(payload, values, filterCount);
   };
@@ -92,7 +97,6 @@ const useForm = (initialValues, onSubmit) => {
     });
   };
   const handleChangeSkills = newSkills => {
-    console.log('newSkills', newSkills);
     update('skills')(newSkills);
   };
   return [values, handleChangeCheckbox, handleChangeSkills, handleSubmit];
@@ -112,14 +116,10 @@ const FilterApplicantsForm = ({
     handleSubmit,
   ] = useForm(filterFormData, addContactsFilters);
 
-  console.log('values', values);
-
   const submit = async () => {
     await handleSubmit();
     handleClose();
   };
-
-  console.log('skills', values.skills);
 
   return (
     <Dialog
