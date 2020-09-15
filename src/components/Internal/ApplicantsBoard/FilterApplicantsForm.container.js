@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import ApplicantsBoard from './ApplicantsBoard';
+import FilterApplicantsForm from './FilterApplicantsForm';
 import {
   getSubmittedContacts,
   approveNewContactsStatus,
@@ -26,14 +26,13 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getSubmittedContacts: () => getSubmittedContacts(dispatch),
-  approveNewContactsStatus: applicantIds =>
-    approveNewContactsStatus(applicantIds)(dispatch),
   addContactsFilters: (filtersPayload, filterFormData, filterCount) =>
     addContactsFilters(filtersPayload, filterFormData, filterCount)(dispatch),
-  getAllFilteredContacts: filterFormData =>
-    getAllFilteredContacts(filterFormData)(dispatch),
+
   resetFilterCount: () => resetFilterCount(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApplicantsBoard);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FilterApplicantsForm);
