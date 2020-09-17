@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,15 +12,18 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
+import SkillSelect from '../../Skills/SkillSelect';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
   const handleSubmit = () => {
     let payload = {};
-    const allValues = values.left.concat(values.right);
+    const allCheckboxValues = values.checkboxes.left.concat(
+      values.checkboxes.right
+    );
 
-    allValues.forEach(value => {
+    allCheckboxValues.forEach(value => {
       let tempArrayValues = [];
       let tempObjectValues = {};
       const key = value.key;
@@ -52,17 +55,21 @@ const useForm = (initialValues, onSubmit) => {
           [key]: tempObjectValues,
         };
       }
+
+      if (values.skills.length > 0)
+        payload.skills = values.skills.map(skill => skill.name);
     });
+
     const filterCount = Object.keys(payload).length;
     onSubmit(payload, values, filterCount);
   };
 
-  const handleChange = (event, side) => {
+  const handleChangeCheckbox = (event, side) => {
     event.persist();
 
     let newValueOptions = [];
     let newValue = [];
-    newValue = values[side].map(value => {
+    newValue = values.checkboxes[side].map(value => {
       if (event.target.name.includes(value.key)) {
         newValueOptions = value.options.map(option => {
           if (option.name === event.target.name) {
@@ -82,11 +89,17 @@ const useForm = (initialValues, onSubmit) => {
         return value;
       }
     });
+    const otherSide = side === 'left' ? 'right' : 'left';
 
-    update(side)(newValue);
+    update('checkboxes')({
+      [otherSide]: values.checkboxes[otherSide],
+      [side]: newValue,
+    });
   };
-
-  return [values, handleChange, handleSubmit];
+  const handleChangeSkills = newSkills => {
+    update('skills')(newSkills);
+  };
+  return [values, handleChangeCheckbox, handleChangeSkills, handleSubmit];
 };
 
 const FilterApplicantsForm = ({
@@ -96,19 +109,12 @@ const FilterApplicantsForm = ({
   addContactsFilters,
   filterFormData,
 }) => {
-  const [values, handleChange, handleSubmit] = useForm(
-    filterFormData,
-    addContactsFilters
-  );
-  let displayFiltersTemp = [];
-
-  values.left.forEach(value => {
-    value.options.forEach(option => {
-      if (option.checked === true) {
-        displayFiltersTemp.push({name: value.header, label: option.label});
-      }
-    });
-  });
+  const [
+    values,
+    handleChangeCheckbox,
+    handleChangeSkills,
+    handleSubmit,
+  ] = useForm(filterFormData, addContactsFilters);
 
   const submit = async () => {
     await handleSubmit();
@@ -138,57 +144,68 @@ const FilterApplicantsForm = ({
       </DialogTitle>
       <DialogContent className={classes.dialogContent} dividers={true}>
         <div className={classes.checkboxContainer}>
-          {values.left.map((form, index) => (
-            <React.Fragment key={index}>
-              <Typography style={{fontWeight: 'bold'}}>
-                {form.header}
-              </Typography>
-              <FormGroup>
-                {form.options.map((option, index) => (
-                  <FormControlLabel
-                    key={index}
-                    control={
-                      <Checkbox
-                        data-testid={option.name}
-                        checked={option.checked}
-                        onChange={e => handleChange(e, 'left')}
-                        name={option.name}
-                      />
-                    }
-                    label={option.label}
-                  />
-                ))}
-              </FormGroup>
-              <div style={{marginBottom: '10px'}}></div>
-            </React.Fragment>
-          ))}
+          <div className={classes.checkboxesHalf}>
+            {values.checkboxes.left.map((form, index) => (
+              <React.Fragment key={index}>
+                <Typography style={{fontWeight: 'bold'}}>
+                  {form.header}
+                </Typography>
+                <FormGroup>
+                  {form.options.map((option, index) => (
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          data-testid={option.name}
+                          checked={option.checked}
+                          onChange={e => handleChangeCheckbox(e, 'left')}
+                          name={option.name}
+                        />
+                      }
+                      label={option.label}
+                    />
+                  ))}
+                </FormGroup>
+                <div style={{marginBottom: '10px'}}></div>
+              </React.Fragment>
+            ))}
+          </div>
+          <div className={classes.checkboxesHalf}>
+            {values.checkboxes.right.map((form, index) => (
+              <React.Fragment key={index}>
+                <Typography style={{fontWeight: 'bold'}}>
+                  {form.header}
+                </Typography>
+                <FormGroup>
+                  {form.options.map((option, index) => (
+                    <FormControlLabel
+                      key={index}
+                      control={
+                        <Checkbox
+                          data-testid={option.name}
+                          checked={option.checked}
+                          onChange={e => handleChangeCheckbox(e, 'right')}
+                          name={option.name}
+                        />
+                      }
+                      label={option.label}
+                    />
+                  ))}
+                </FormGroup>
+                <div style={{marginBottom: '10px'}}></div>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
-        <div className={classes.checkboxContainer}>
-          {values.right.map((form, index) => (
-            <React.Fragment key={index}>
-              <Typography style={{fontWeight: 'bold'}}>
-                {form.header}
-              </Typography>
-              <FormGroup>
-                {form.options.map((option, index) => (
-                  <FormControlLabel
-                    key={index}
-                    control={
-                      <Checkbox
-                        data-testid={option.name}
-                        checked={option.checked}
-                        onChange={e => handleChange(e, 'right')}
-                        name={option.name}
-                      />
-                    }
-                    label={option.label}
-                  />
-                ))}
-              </FormGroup>
-              <div style={{marginBottom: '10px'}}></div>
-            </React.Fragment>
-          ))}
-        </div>
+
+        <Typography variant="body1" component="p" style={{fontWeight: 'bold'}}>
+          Filter by Skills
+        </Typography>
+        <SkillSelect
+          id="other"
+          value={values.skills || []}
+          onChange={newSkill => handleChangeSkills(newSkill)}
+        />
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
         <Button
@@ -209,7 +226,7 @@ const FilterApplicantsForm = ({
 
 const styles = ({breakpoints, palette, spacing}) => ({
   dialog: {},
-  dialogContent: {
+  checkboxContainer: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -234,7 +251,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
       width: '900px',
     },
   },
-  checkboxContainer: {
+  checkboxesHalf: {
     margin: 0,
     position: 'relative',
     top: '390px',
