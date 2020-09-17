@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import ApplicantsOverview from './ApplicantsBoard';
+import ApplicantsBoard from './ApplicantsBoard';
 import {
   getSubmittedContacts,
   approveNewContactsStatus,
@@ -36,4 +36,4 @@ const mapDispatchToProps = dispatch => ({
   resetFilterCount: () => resetFilterCount(dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApplicantsOverview);
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicantsBoard);

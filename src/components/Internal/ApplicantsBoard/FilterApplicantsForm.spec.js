@@ -110,7 +110,7 @@ describe('Filter Applicants Form', () => {
     expect(payload.status.length).toBe(1);
     expect(payload.status[0]).toBe('submitted');
     expect(filterCount).toBe(1);
-    expect(formValues.left[0].options[0].checked).toBe(true);
+    expect(formValues.checkboxes.left[0].options[0].checked).toBe(true);
   });
 
   test('Add multiple filters: with array of string payload', () => {
@@ -174,9 +174,9 @@ describe('Filter Applicants Form', () => {
     expect(payload.years_exp[0]).toBe('0-2 years');
 
     expect(filterCount).toBe(2);
-    expect(formValues.left[0].options[0].checked).toBe(true);
-    expect(formValues.left[0].options[1].checked).toBe(true);
-    expect(formValues.right[0].options[0].checked).toBe(true);
+    expect(formValues.checkboxes.left[0].options[0].checked).toBe(true);
+    expect(formValues.checkboxes.left[0].options[1].checked).toBe(true);
+    expect(formValues.checkboxes.right[0].options[0].checked).toBe(true);
   });
 
   test('Add multiple filters: with object of boolean payload', () => {
@@ -243,8 +243,8 @@ describe('Filter Applicants Form', () => {
 
     expect(filterCount).toBe(2);
 
-    expect(formValues.left[3].options[0].checked).toBe(true);
-    expect(formValues.left[3].options[3].checked).toBe(true);
-    expect(formValues.right[3].options[5].checked).toBe(true);
+    expect(formValues.checkboxes.left[3].options[0].checked).toBe(true);
+    expect(formValues.checkboxes.left[3].options[3].checked).toBe(true);
+    expect(formValues.checkboxes.right[3].options[5].checked).toBe(true);
   });
 });
