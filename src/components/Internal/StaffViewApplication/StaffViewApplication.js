@@ -51,10 +51,10 @@ const StaffViewApplication = ({
     history.push('/internal/opportunities-board');
   };
   const toInternalApplicationsBoard = () => {
-    history.push('/internal/applications-board');
+    history.push('/internal/applicants-board');
   };
   const toApplicantApplicationsCard = () => {
-    history.push(`/internal/applications-board/${contactId}`);
+    history.push(`/internal/applicants/${contactId}`);
   };
 
   const handleClickRecommend = () => {
@@ -95,13 +95,13 @@ const StaffViewApplication = ({
     classes.buttons
   );
   const toInternalApplicationsButton = createAButton(
-    'To Applications Board >',
+    'To Applicants Board >',
     toInternalApplicationsBoard,
     true,
     classes.buttons
   );
   const toApplicantApplicationsCardButton = createAButton(
-    "To This Applicant's Overview",
+    "To This Applicant's Page",
     toApplicantApplicationsCard,
     true,
     classes.buttons
