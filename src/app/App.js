@@ -36,7 +36,6 @@ import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'components/FAQPage';
-import ApplicationsCard from 'components/Internal/ApplicantsBoard/ApplicationsCard.container';
 import Questionnaire from 'components/Questionnaire';
 import ApplicantsBoard from 'components/Internal/ApplicantsBoard';
 import ApplicantPage from 'components/Internal/ApplicantPage';

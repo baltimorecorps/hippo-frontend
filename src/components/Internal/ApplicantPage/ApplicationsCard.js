@@ -74,7 +74,7 @@ const ApplicationsCard = ({classes, contactId, applications, applicant}) => {
         page="internal-applications-board"
       />
       <ApplicationStateAccordion
-        header="Considered for Role"
+        header="Finalists for Role"
         applications={consideredApps}
         iconName="consideredForRole"
         expanded={expanded}
