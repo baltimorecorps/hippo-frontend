@@ -87,13 +87,13 @@ function createData({
       </span>
     </Typography>
   );
-  // const race = ['White', 'Black'];
   let raceData = '-';
-  // if (race.length === 1) raceData = race[0];
 
-  // if (race.length >= 2)
-  raceData = race.reduce((raceA, raceB) => (raceA += `, ${raceB}`));
-  if (race[0] === 'No Response') raceData = '-';
+  if (race[0] === 'No Response') {
+    raceData = '-';
+  } else {
+    raceData = race.reduce((raceA, raceB) => (raceA += `, ${raceB}`));
+  }
 
   let location = '-';
   if (city && state) location = `${city}, ${state}`;
@@ -254,7 +254,6 @@ function ApplicantsTable({
   });
   let history = useHistory();
 
-  // learn this
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -325,7 +324,6 @@ function ApplicantsTable({
             />
 
             <TableBody>
-              {/* learn this code block */}
               {stableSort(applicantsRows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
