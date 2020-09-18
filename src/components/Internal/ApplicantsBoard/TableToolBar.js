@@ -141,7 +141,10 @@ const TableToolbar = ({
               color="primary"
               className={classes.approveButton}
             >
-              <GroupAddIcon style={{marginRight: '5px'}} /> Approve
+              <GroupAddIcon style={{marginRight: '5px'}} />
+              <span style={{textTransform: 'capitalize', fontSize: '15px'}}>
+                Approve
+              </span>
             </Button>
           </Tooltip>
           <Tooltip
@@ -154,14 +157,19 @@ const TableToolbar = ({
               color="secondary"
               classes={{badge: classes.customBadge}}
             >
-              <IconButton
+              <Button
                 data-testid="filter-icon-button"
                 onClick={() => handleClickOpenFilterForm()}
                 aria-label="filter candidates"
-                className={classes.iconButton}
+                variant="contained"
+                color="primary"
+                className={classes.approveButton}
               >
-                <FilterListIcon />
-              </IconButton>
+                <FilterListIcon style={{marginRight: '5px'}} />{' '}
+                <span style={{textTransform: 'capitalize', fontSize: '16px'}}>
+                  Filters
+                </span>
+              </Button>
             </Badge>
           </Tooltip>
 
