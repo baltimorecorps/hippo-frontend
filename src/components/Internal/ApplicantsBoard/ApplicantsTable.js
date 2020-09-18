@@ -441,6 +441,12 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   tableRow: {
     cursor: 'pointer',
+    '&:nth-of-type(odd)': {
+      backgroundColor: palette.action.hover,
+    },
+    '&:hover': {
+      backgroundColor: '#ffedb5 !important',
+    },
   },
 });
 
