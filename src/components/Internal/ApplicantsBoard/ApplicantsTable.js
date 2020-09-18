@@ -28,15 +28,16 @@ const columns = [
     paddingLeft: '18px',
   },
   {id: 'status', label: 'Status', minWidth: 50, align: 'center'},
-  // {
-  //   id: 'race',
-  //   label: 'Race',
-  //   minWidth: 80,
-  //   align: 'center',
-  // },
+
   {
     id: 'location',
     label: 'Location',
+    minWidth: 80,
+    align: 'center',
+  },
+  {
+    id: 'raceData',
+    label: 'Race',
     minWidth: 80,
     align: 'center',
   },
@@ -64,7 +65,7 @@ function createData({
   status,
   first_name,
   last_name,
-  // race,
+  race,
   gender,
   city,
   state,
@@ -87,11 +88,12 @@ function createData({
     </Typography>
   );
   // const race = ['White', 'Black'];
-  // let raceData = '-';
+  let raceData = '-';
   // if (race.length === 1) raceData = race[0];
 
   // if (race.length >= 2)
-  //   raceData = race.reduce((raceA, raceB) => (raceA += `, ${raceB}`));
+  raceData = race.reduce((raceA, raceB) => (raceA += `, ${raceB}`));
+  if (race[0] === 'No Response') raceData = '-';
 
   let location = '-';
   if (city && state) location = `${city}, ${state}`;
@@ -102,7 +104,7 @@ function createData({
     nameData,
     location,
     years_exp: years_exp || '-',
-    // raceData,
+    raceData,
     gender: gender || '-',
     job_search_status: job_search_status || '-',
     phone_primary,
@@ -244,7 +246,7 @@ function ApplicantsTable({
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const tableRef = React.useRef();
   const tablePaginationRef = React.useRef();
   const applicantsRows = presentApplicants.map(applicant => {
@@ -354,9 +356,9 @@ function ApplicantsTable({
                       <TableCell data-testid="location" align="center">
                         <Typography> {row.location}</Typography>
                       </TableCell>
-                      {/* <TableCell align="center">
+                      <TableCell data-testid="race" align="center">
                         <Typography> {row.raceData}</Typography>
-                      </TableCell> */}
+                      </TableCell>
                       <TableCell data-testid="gender" align="center">
                         <Typography> {row.gender}</Typography>
                       </TableCell>
@@ -393,7 +395,7 @@ function ApplicantsTable({
         </TableContainer>
         <TablePagination
           ref={tablePaginationRef}
-          rowsPerPageOptions={[10, 20, 50]}
+          rowsPerPageOptions={[50, 75, 100]}
           component="div"
           count={applicantsRows.length}
           rowsPerPage={rowsPerPage}

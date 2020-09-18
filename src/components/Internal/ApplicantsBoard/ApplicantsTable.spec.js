@@ -37,7 +37,7 @@ const filteredContacts = [
     job_search_status: 'Looking for a job in the next 2-6 months',
     last_name: 'last2',
     phone_primary: '+2 (222) 222-2222',
-    race: ['No Response'],
+    race: ['White', 'Black'],
     state: 'Virginia',
     status: 'approved',
     years_exp: '3-5 years',
@@ -51,7 +51,7 @@ const filteredContacts = [
     job_search_status: 'Actively looking for a job',
     last_name: 'last3',
     phone_primary: '+3 (333) 333-3333',
-    race: ['No Response'],
+    race: ['Asian'],
     state: 'Maryland',
     status: 'submitted',
     years_exp: '5+ years',
@@ -78,18 +78,20 @@ describe('Applicants Table', () => {
     // test table head data
     const tableHead = getAllByTestId('table-head');
 
-    expect(tableHead.length).toBe(6);
+    expect(tableHead.length).toBe(7);
 
     const head_name = tableHead[0];
     const head_status = tableHead[1];
     const head_location = tableHead[2];
-    const head_gender = tableHead[3];
-    const head_experience = tableHead[4];
-    const head_job_search = tableHead[5];
+    const head_race = tableHead[3];
+    const head_gender = tableHead[4];
+    const head_experience = tableHead[5];
+    const head_job_search = tableHead[6];
 
     expect(head_name).toHaveTextContent('Name');
     expect(head_status).toHaveTextContent('Status');
     expect(head_location).toHaveTextContent('Location');
+    expect(head_race).toHaveTextContent('Race');
     expect(head_gender).toHaveTextContent('Gender');
     expect(head_experience).toHaveTextContent('Experience');
     expect(head_job_search).toHaveTextContent('Job Search Status');
@@ -105,9 +107,10 @@ describe('Applicants Table', () => {
     );
     expect(tableRow[0].children[1]).toHaveTextContent('approved');
     expect(tableRow[0].children[2]).toHaveTextContent('Baltimore, Maryland');
-    expect(tableRow[0].children[3]).toHaveTextContent('Male');
-    expect(tableRow[0].children[4]).toHaveTextContent('0-2 years');
-    expect(tableRow[0].children[5]).toHaveTextContent(
+    expect(tableRow[0].children[3]).toHaveTextContent('-');
+    expect(tableRow[0].children[4]).toHaveTextContent('Male');
+    expect(tableRow[0].children[5]).toHaveTextContent('0-2 years');
+    expect(tableRow[0].children[6]).toHaveTextContent(
       'Curious to see what opportunities are available'
     );
 
@@ -117,9 +120,10 @@ describe('Applicants Table', () => {
     );
     expect(tableRow[1].children[1]).toHaveTextContent('approved');
     expect(tableRow[1].children[2]).toHaveTextContent('Arlington, Virginia');
-    expect(tableRow[1].children[3]).toHaveTextContent('Female');
-    expect(tableRow[1].children[4]).toHaveTextContent('3-5 years');
-    expect(tableRow[1].children[5]).toHaveTextContent(
+    expect(tableRow[1].children[3]).toHaveTextContent('White, Black');
+    expect(tableRow[1].children[4]).toHaveTextContent('Female');
+    expect(tableRow[1].children[5]).toHaveTextContent('3-5 years');
+    expect(tableRow[1].children[6]).toHaveTextContent(
       'Looking for a job in the next 2-6 months'
     );
 
@@ -129,9 +133,10 @@ describe('Applicants Table', () => {
     );
     expect(tableRow[2].children[1]).toHaveTextContent('submitted');
     expect(tableRow[2].children[2]).toHaveTextContent('Towson, Maryland');
-    expect(tableRow[2].children[3]).toHaveTextContent('Non-Binary');
-    expect(tableRow[2].children[4]).toHaveTextContent('5+ years');
-    expect(tableRow[2].children[5]).toHaveTextContent(
+    expect(tableRow[2].children[3]).toHaveTextContent('Asian');
+    expect(tableRow[2].children[4]).toHaveTextContent('Non-Binary');
+    expect(tableRow[2].children[5]).toHaveTextContent('5+ years');
+    expect(tableRow[2].children[6]).toHaveTextContent(
       'Actively looking for a job'
     );
   });
@@ -155,18 +160,20 @@ describe('Applicants Table', () => {
     // test table head data
     const tableHead = getAllByTestId('table-head');
 
-    expect(tableHead.length).toBe(6);
+    expect(tableHead.length).toBe(7);
 
     const head_name = tableHead[0];
     const head_status = tableHead[1];
     const head_location = tableHead[2];
-    const head_gender = tableHead[3];
-    const head_experience = tableHead[4];
-    const head_job_search = tableHead[5];
+    const head_race = tableHead[3];
+    const head_gender = tableHead[4];
+    const head_experience = tableHead[5];
+    const head_job_search = tableHead[6];
 
     expect(head_name).toHaveTextContent('Name');
     expect(head_status).toHaveTextContent('Status');
     expect(head_location).toHaveTextContent('Location');
+    expect(head_race).toHaveTextContent('Race');
     expect(head_gender).toHaveTextContent('Gender');
     expect(head_experience).toHaveTextContent('Experience');
     expect(head_job_search).toHaveTextContent('Job Search Status');
@@ -228,6 +235,17 @@ describe('Applicants Table', () => {
     expect(getAllByTestId('location')[2]).toHaveTextContent(
       'Arlington, Virginia'
     );
+
+    // sort race descending
+    fireEvent.click(head_race);
+    expect(getAllByTestId('race')[0]).toHaveTextContent('-');
+    expect(getAllByTestId('race')[1]).toHaveTextContent('Asian');
+    expect(getAllByTestId('race')[2]).toHaveTextContent('White, Black');
+    // sort race descending
+    fireEvent.click(head_race);
+    expect(getAllByTestId('race')[0]).toHaveTextContent('White, Black');
+    expect(getAllByTestId('race')[1]).toHaveTextContent('Asian');
+    expect(getAllByTestId('race')[2]).toHaveTextContent('-');
 
     // sort gender ascending
     fireEvent.click(head_gender);
