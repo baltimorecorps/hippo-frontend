@@ -34,16 +34,6 @@ import {
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
-  console.log('values', values);
-  // if (values.email_primary.type == null) {
-  //   const updatedEmail = {
-  //     ...values.email_primary,
-  //     type: 'Personal',
-  //   };
-  //   update('email_primary')(updatedEmail);
-  //   update('emails')([updatedEmail]);
-  // }
-
   const handlers = {
     handleChange: event => {
       event.persist();
