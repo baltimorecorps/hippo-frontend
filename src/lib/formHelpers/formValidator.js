@@ -281,7 +281,7 @@ const interviewScheduledValidator = values => {
   return {isError, err};
 };
 const contactInfoValidator = values => {
-  const {first_name, last_name, email, email_primary, phone_primary} = values;
+  const {first_name, last_name, email, phone_primary} = values;
   const {
     gender,
     gender_other,
@@ -315,18 +315,14 @@ const contactInfoValidator = values => {
     err.lastName_error = 'Required';
   }
 
-  if (!email && !email_primary) {
+  if (!email) {
     isError = true;
     err.email_error = 'Required';
-  } else if (
-    email &&
-    !validateEmail(email) &&
-    email_primary &&
-    !validateEmail(email_primary)
-  ) {
+  } else if (email && !validateEmail(email)) {
     isError = true;
     err.email_error = 'Invalid email address';
   }
+
   if (!phone_primary || phone_primary.replace(/\D/g, '').length < 6) {
     isError = true;
     err.phonePrimary_error = 'Required';
