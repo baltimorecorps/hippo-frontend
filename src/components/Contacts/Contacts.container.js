@@ -11,7 +11,6 @@ const addNewContact = dispatch =>
 const mapStateToProps = state => {
   const contacts = state.contacts.short || null;
   let sortedContacts = [];
-
   if (contacts) sortedContacts = contacts.sort((a, b) => a.id - b.id);
   return {
     contacts: sortedContacts,

@@ -30,7 +30,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
 
   useEffect(() => {
     let searchContacts = [];
-    if (searchValue != null && contacts) {
+    if (searchValue != null && contacts && contacts.length > 0) {
       switch (searchBy) {
         case 'name':
           searchContacts = contacts.filter(contact => {

@@ -2,20 +2,7 @@ export default {
   id: 1,
   first_name: 'Taylor',
   last_name: 'Swift',
-  email: [
-    {
-      email: 'taylor@swift.com',
-      id: 560,
-      is_primary: true,
-      type: 'Personal',
-    },
-  ],
-  email_primary: {
-    email: 'taylor@swift.com',
-    id: 560,
-    is_primary: true,
-    type: 'Personal',
-  },
+  email: 'taylor@swift.com',
   phone_primary: '+1 (555) 555-9999',
   profile: {
     gender: '',
@@ -59,54 +46,3 @@ export default {
     value_question2: '',
   },
 };
-
-// const idealProgramsAPI = {
-//   programs: [
-//     {
-//       name: 'JHU Carey Humanities Fellowship',
-//       is_interested: false,
-//       is_approved: false,
-//       date_approved: '',
-//       status: 'No response', // default value
-//       // is_active: true, // is_expired
-//       card_id: 'abc123',
-//     },
-//     {
-//       name: 'Baltimore Corps Fellowship', // key can be name or label
-//       is_interested: true,
-//       is_approved: false,
-//       date_approved: '',
-//       status: 'Considering for approval', // after interested waiting for approval
-//       // is_active: true,
-//       card_id: 'abc123',
-//     },
-//     {
-//       name: 'Place for Purpose',
-//       is_interested: true,
-//       is_approved: true,
-//       date_approved: 'Return Date',
-//       status: 'Decision made', // after staff made a decision (approve/not approve)
-//       // is_active: true,
-//       card_id: 'abc123',
-//     },
-
-//     {
-//       name: 'Public Allies',
-//       is_interested: false,
-//       is_approved: false,
-//       date_approved: '',
-//       status: 'Not interested', // submit the form without checking this program checkbox
-//       // is_active: true,
-//       card_id: 'abc123',
-//     },
-//     {
-//       name: "I'd like some help figuring this out", // label
-//       is_interested: true, // checked
-//       is_approved: false, // always false
-//       date_approved: '', // always false
-//       status: 'Need help', // when checked true on this checkbox
-//       // is_active: true,
-//       card_id: 'abc123',
-//     },
-//   ],
-// };

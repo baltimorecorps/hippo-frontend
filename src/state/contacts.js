@@ -123,18 +123,24 @@ const DELETE_CONTACT = 'DELETE_CONTACT';
 export const DELETE_CONTACT_API = fetchActionTypes(DELETE_CONTACT);
 export const deleteContact = contactId =>
   async function(dispatch) {
-    dispatch({
-      type: DELETE_CONTACT,
-      contactId,
-    });
+    let response;
+    try {
+      response = await makeApiFetchActions(
+        DELETE_CONTACT,
+        `${API_URL}/api/contacts/${contactId}/`,
+        {
+          method: 'DELETE',
+        }
+      )(dispatch);
+      dispatch({
+        type: DELETE_CONTACT,
+        contactId,
+      });
+    } catch (err) {
+      console.error(err);
+    }
 
-    return await makeApiFetchActions(
-      DELETE_CONTACT,
-      `${API_URL}/api/contacts/${contactId}/`,
-      {
-        method: 'DELETE',
-      }
-    )(dispatch);
+    return response;
   };
 
 export const DELETE_CONTACT_SKILL = 'DELETE_CONTACT_SKILL';
@@ -556,18 +562,6 @@ export const resetFilterCount = dispatch =>
 export const contactsReducer = createReducer(
   {},
   {
-    // [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
-    //   if (!action.body) {
-    //     return {};
-    //   } else {
-    //     let newState = {};
-    //     action.body.data.forEach(contact => {
-    //       newState[contact.id] = contact;
-    //     });
-    //     return newState;
-    //   }
-    // },
-
     [GET_ALL_CONTACTS_API.RESOLVE]: (state, action) => {
       if (!action.body) {
         return {};
@@ -649,10 +643,12 @@ export const contactsReducer = createReducer(
     },
     [DELETE_CONTACT]: (state, action) => {
       const contactId = action.contactId;
-      const newState = Object.values(state).filter(
+
+      const newState = Object.values(state.short).filter(
         contact => contact.id !== contactId
       );
-      return newState;
+      state.short = newState;
+      return state;
     },
 
     [UPDATE_CONTACT_API.RESOLVE]: (state, action) => {
@@ -665,20 +661,6 @@ export const contactsReducer = createReducer(
     [ADD_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id] = contact;
-    },
-    [GET_SESSION_API.RESOLVE]: (state, action) => {
-      // const contact = action.body.data.contact;
-      // state[contact.id] = {
-      //   ...state[contact.id],
-      //   id: contact.id,
-      // };
-    },
-    [CREATE_SESSION_API.RESOLVE]: (state, action) => {
-      // const contact = action.body.data.contact;
-      // state[contact.id] = {
-      //   ...state[contact.id],
-      //   ...contact,
-      // };
     },
 
     [GET_DYNAMIC_INSTRUCTIONS_API.RESOLVE]: (state, action) => {
