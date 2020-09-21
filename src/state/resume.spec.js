@@ -496,26 +496,30 @@ describe('Resume selection state', () => {
 
   test('move resume item', () => {
     initialState.resumeCreationStep = RESUME_CREATION.SELECT_HIGHLIGHTS;
-    initialState.selected.experience = [0, 1, 222, 3, 4, 5]
+    initialState.selected.experience = [0, 1, 222, 3, 4, 5];
 
-    const newState = resumeReducer(initialState, moveResumeItem(
-      222,
-      { // destination
-        section: 'experience',
-        index: 4,
-      },
-      { // source
-        section: 'experience',
-        index: 2,
-      }
-    ));
+    const newState = resumeReducer(
+      initialState,
+      moveResumeItem(
+        222,
+        {
+          // destination
+          section: 'experience',
+          index: 4,
+        },
+        {
+          // source
+          section: 'experience',
+          index: 2,
+        }
+      )
+    );
     expect(newState.resumeCreationStep).toBe(RESUME_CREATION.SELECT_HIGHLIGHTS);
     expect(newState.resumes.length).toBe(0);
     expect(newState.inProgress).toBe(false);
     expect(newState.selected.experience.length).toBe(6);
-    expect(newState.selected.experience).toEqual([0, 1, 3, 4, 222, 5])
+    expect(newState.selected.experience).toEqual([0, 1, 3, 4, 222, 5]);
   });
-
 });
 
 describe.skip('Resumes state', () => {
@@ -590,9 +594,7 @@ describe.skip('Resumes state', () => {
       contact: {
         name: 'Test Person',
         id: 333,
-        email_primary: {
-          email: 'testperson@testperson.test',
-        },
+        email: 'testperson@testperson.test',
       },
       sections: [
         {

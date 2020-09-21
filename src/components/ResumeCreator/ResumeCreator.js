@@ -566,9 +566,9 @@ const ResumeCreator = ({
     name: contact ? `${contact.first_name} ${contact.last_name}` : '',
     //TODO: re-add once we have these
     //vocation: '',
-    //address: '',
+    // address: '',
     phone: contact ? contact.phone_primary : '',
-    email: contact && contact.email_primary ? contact.email_primary.email : '',
+    email: contact ? contact.email : '',
   };
 
   const updateSelected = newSelected => {
