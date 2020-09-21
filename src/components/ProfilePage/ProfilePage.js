@@ -528,7 +528,7 @@ ProfilePage.propTypes = {
   contactInfo: PropTypes.shape({
     first_name: PropTypes.string,
     last_name: PropTypes.string,
-    email_primary: PropTypes.object,
+    email: PropTypes.string,
     phone_primary: PropTypes.string,
   }),
   getContact: PropTypes.func,
