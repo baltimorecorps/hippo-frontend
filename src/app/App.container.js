@@ -3,7 +3,7 @@ import {getSession, createSession, deleteSession} from 'state/contacts';
 import App from './App';
 
 export const mapStateToProps = state => {
-  const keys = Object.keys(state.programs);
+  // const keys = Object.keys(state.programs);
   return {
     hasSession: state.accounts.has_session || false,
     contact: state.accounts.contact || null,

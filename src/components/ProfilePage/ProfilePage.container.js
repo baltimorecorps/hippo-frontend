@@ -11,7 +11,7 @@ import {
   getDynamicInstructions,
 } from 'state/contacts';
 
-import {refreshPrograms, addNewProgram} from 'state/programs';
+// import {refreshPrograms, addNewProgram} from 'state/programs';
 import {
   startResumeCreation,
   startResumeSelect,
@@ -136,8 +136,8 @@ export const mapStateToProps = (state, props) => {
 
   const contactInfo = state.contacts[contactId];
   return {
-    myContactId: Number(myContactId),
-    contactParamId: Number(contactParamId),
+    // myContactId: Number(myContactId),
+    // contactParamId: Number(contactParamId),
     contactId: Number(contactId),
     contactInfo,
     showResumeDialog:
@@ -155,9 +155,12 @@ export const mapDispatchToProps = dispatch => ({
   updateContact: contact => updateContact(contact)(dispatch),
   refreshDynamicInstructions: contactId =>
     getDynamicInstructions(contactId)(dispatch),
-  refreshPrograms: async contactId => {
-    await refreshPrograms(contactId)(dispatch);
-  },
+  // refreshPrograms: async contactId => {
+  //   await refreshPrograms(contactId)(dispatch);
+  // },
+  // addNewProgram: async program => {
+  //   await addNewProgram(program)(dispatch);
+  // },
 
   getContactProfile: async contactId => {
     await getContactProfile(contactId)(dispatch);
@@ -170,9 +173,6 @@ export const mapDispatchToProps = dispatch => ({
     await updateAboutMe(contactId, aboutMe)(dispatch);
   },
 
-  addNewProgram: async program => {
-    await addNewProgram(program)(dispatch);
-  },
   addContactSkill: (contactId, skill) =>
     addContactSkill(contactId, skill)(dispatch),
   startResumeCreation: () => dispatch(startResumeCreation()),

@@ -13,14 +13,14 @@ const LOADING_STATE = {
 };
 
 const Profile = ({
-  programs,
+  // programs,
   hasSession,
   contact,
   addContact,
   getSession,
   createSession,
-  addNewProgram,
-  refreshPrograms,
+  // addNewProgram,
+  // refreshPrograms,
 }) => {
   const {getTokenSilently, loading, user, isAuthenticated} = useAuth0();
   const loadingSession = useRef(false);

@@ -57,17 +57,17 @@ const useScroll = ref => {
 };
 
 const ProfilePage = ({
-  updateContact,
-  myContactId,
-  contactParamId,
+  // updateContact,
+
+  // contactParamId,
   contactId,
   contactInfo,
   myResume,
   getContactProfile,
-  startResumeCreation,
+  // startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
-  addContactSkill,
+  // addContactSkill,
   generateResume,
   classes,
   showResumeDialog,
@@ -126,20 +126,20 @@ const ProfilePage = ({
 
   //const editScore = sumScores(Object.values(editScores));
 
-  const handleUpdateContact = async values => {
-    await updateContact(values);
-  };
+  // const handleUpdateContact = async values => {
+  //   await updateContact(values);
+  // };
   const handleUpdateAboutMe = async (contactId, values) => {
     await updateAboutMe(contactId, values);
     await refreshDynamicInstructions(contactId);
   };
 
-  const handleUpdateSkills = skills => {
-    updateContact({
-      id: contactId,
-      skills: skills,
-    });
-  };
+  // const handleUpdateSkills = skills => {
+  //   updateContact({
+  //     id: contactId,
+  //     skills: skills,
+  //   });
+  // };
 
   const getProfile = useCallback(
     async contactId => {
