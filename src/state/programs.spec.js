@@ -25,30 +25,7 @@ describe('Programs', () => {
   test('Create new program action - success', async function() {
     const dispatch = jest.fn();
     const contactId = 1234;
-    // const data = {
-    //   program_id: 1,
-    //   contact_id: contactId,
-    //   card_id: 'card',
-    //   is_approved: false,
-    //   is_active: true,
-    //   stage: 1,
-    //   responses: [
-    //     {
-    //       program_contact_id: 1,
-    //       question_id: 1,
-    //       response_text: 'Race and equity answer',
-    //     },
-    //     {
-    //       program_contact_id: 1,
-    //       question_id: 2,
-    //       response_text: 'Race and equity answer',
-    //     },
-    //   ],
-    // };
 
-    // const program = data;
-
-    // ---------------------------------------------------------------------
     const program = {data: 'test', contact_id: contactId};
     const response = {response: 'win'};
 
