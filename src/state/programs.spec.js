@@ -1,6 +1,6 @@
 import fetchMock from 'fetch-mock';
 
-import {experiencesReducer, tagReducer, tagItemReducer} from './profile';
+import {experiencesReducer} from './profile';
 import {
   ADD_NEW_PROGRAM,
   ADD_NEW_PROGRAM_API,
@@ -14,12 +14,12 @@ import {
   GET_PROGRAM_QUESTIONS,
   GET_PROGRAM_QUESTIONS_API,
   refreshQuestions,
-  programsReducer} from './programs';
+  programsReducer,
+} from './programs';
 
 afterEach(() => {
   fetchMock.restore();
 });
-
 
 describe('Programs', () => {
   test('Create new program action - success', async function() {
@@ -64,9 +64,6 @@ describe('Programs', () => {
     expect(dispatch.mock.calls[2][0].body).toEqual(response);
   });
 });
-
-
-
 
 describe('Program state', () => {
   let initialState = {};

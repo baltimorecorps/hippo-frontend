@@ -4,8 +4,8 @@ import {RESUME_CREATION} from 'state/resume';
 const blankState = {
   contacts: [],
   experiences: {},
-  tags: {},
-  tagItems: {},
+  // tags: {},
+  // tagItems: {},
   resume: {},
 };
 
@@ -30,6 +30,6 @@ test('test resume state mapping', () => {
   const props = mapStateToProps(state, {});
   expect(props).toHaveProperty('sections');
   expect(props.sections).toHaveProperty('experience');
-  expect(props.sections.experience[0]).toEqual(state.experiences[13])
-  expect(props.sections.experience[1]).toEqual(state.experiences[10])
+  expect(props.sections.experience[0]).toEqual(state.experiences[13]);
+  expect(props.sections.experience[1]).toEqual(state.experiences[10]);
 });

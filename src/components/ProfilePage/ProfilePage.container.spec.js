@@ -4,8 +4,8 @@ import {RESUME_CREATION} from 'state/resume';
 const blankState = {
   contacts: [],
   experiences: {},
-  tags: {},
-  tagItems: {},
+  // tags: {},
+  // tagItems: {},
   resume: {},
 };
 

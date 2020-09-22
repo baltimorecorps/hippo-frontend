@@ -1,8 +1,8 @@
 import fetchMock from 'fetch-mock';
 import {
   experiencesReducer,
-  tagReducer,
-  tagItemReducer,
+  // tagReducer,
+  // tagItemReducer,
   GET_EXPERIENCE,
   GET_EXPERIENCE_API,
   ADD_EXPERIENCE,
@@ -19,23 +19,23 @@ import {
   updateExperience,
   deleteExperience,
   refreshExperienceType,
-  ADD_TAG,
-  ADD_TAG_API,
-  REFRESH_TAGS,
-  REFRESH_TAGS_API,
-  ADD_TAG_ITEM,
-  ADD_TAG_ITEM_API,
-  UPDATE_TAG_ITEM,
-  UPDATE_TAG_ITEM_API,
-  DELETE_TAG_ITEM,
-  DELETE_TAG_ITEM_API,
-  REFRESH_TAG_ITEMS,
-  REFRESH_TAG_ITEMS_API,
-  refreshTags,
-  addTagItem,
-  updateTagItem,
-  deleteTagItem,
-  refreshTagItems,
+  // ADD_TAG,
+  // ADD_TAG_API,
+  // REFRESH_TAGS,
+  // REFRESH_TAGS_API,
+  // ADD_TAG_ITEM,
+  // ADD_TAG_ITEM_API,
+  // UPDATE_TAG_ITEM,
+  // UPDATE_TAG_ITEM_API,
+  // DELETE_TAG_ITEM,
+  // DELETE_TAG_ITEM_API,
+  // REFRESH_TAG_ITEMS,
+  // REFRESH_TAG_ITEMS_API,
+  // refreshTags,
+  // addTagItem,
+  // updateTagItem,
+  // deleteTagItem,
+  // refreshTagItems,
 } from './profile';
 
 import {GET_CONTACT_CAPABILITIES_API} from './contacts';
@@ -172,180 +172,180 @@ describe('Experiences', () => {
   });
 });
 
-describe('Tags and Tag Items', () => {
-  test('Refresh tags', async function() {
-    const dispatch = jest.fn();
-    const tagId = 9876;
-    const tag = {data: 'test', id: tagId};
-    const response = {data: [tag]};
+// describe('Tags and Tag Items', () => {
+//   test('Refresh tags', async function() {
+//     const dispatch = jest.fn();
+//     const tagId = 9876;
+//     const tag = {data: 'test', id: tagId};
+//     const response = {data: [tag]};
 
-    fetchMock.get(`path:/api/tags/`, {body: response});
+//     fetchMock.get(`path:/api/tags/`, {body: response});
 
-    await refreshTags(tag)(dispatch);
+//     await refreshTags(tag)(dispatch);
 
-    expect(dispatch.mock.calls.length).toBe(2);
-    expect(dispatch.mock.calls[0][0].type).toBe(REFRESH_TAGS_API.REQUEST);
-    expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_TAGS_API.RESOLVE);
-    expect(dispatch.mock.calls[1][0].body).toEqual(response);
-  });
+//     expect(dispatch.mock.calls.length).toBe(2);
+//     expect(dispatch.mock.calls[0][0].type).toBe(REFRESH_TAGS_API.REQUEST);
+//     expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_TAGS_API.RESOLVE);
+//     expect(dispatch.mock.calls[1][0].body).toEqual(response);
+//   });
 
-  test('Add new tag item with tag id', async function() {
-    const dispatch = jest.fn();
-    const contactId = 1234;
-    const tagId = 9876;
-    const tag = {data: 'test', contact_id: contactId, tag_id: tagId};
-    const response = {data: tag};
+// test('Add new tag item with tag id', async function() {
+//   const dispatch = jest.fn();
+//   const contactId = 1234;
+//   const tagId = 9876;
+//   const tag = {data: 'test', contact_id: contactId, tag_id: tagId};
+//   const response = {data: tag};
 
-    fetchMock.post(`path:/api/contacts/${contactId}/tags/`, {body: response});
+//   fetchMock.post(`path:/api/contacts/${contactId}/tags/`, {body: response});
 
-    await addTagItem(tag)(dispatch);
+//   await addTagItem(tag)(dispatch);
 
-    expect(dispatch.mock.calls.length).toBe(3);
-    expect(dispatch.mock.calls[0][0].type).toBe(ADD_TAG_ITEM);
-    expect(dispatch.mock.calls[0][0].tag).toEqual(tag);
-    expect(dispatch.mock.calls[1][0].type).toBe(ADD_TAG_ITEM_API.REQUEST);
-    expect(dispatch.mock.calls[2][0].type).toBe(ADD_TAG_ITEM_API.RESOLVE);
-    expect(dispatch.mock.calls[2][0].body).toEqual(response);
-  });
+//   expect(dispatch.mock.calls.length).toBe(3);
+//   expect(dispatch.mock.calls[0][0].type).toBe(ADD_TAG_ITEM);
+//   expect(dispatch.mock.calls[0][0].tag).toEqual(tag);
+//   expect(dispatch.mock.calls[1][0].type).toBe(ADD_TAG_ITEM_API.REQUEST);
+//   expect(dispatch.mock.calls[2][0].type).toBe(ADD_TAG_ITEM_API.RESOLVE);
+//   expect(dispatch.mock.calls[2][0].body).toEqual(response);
+// });
 
-  test('Add new tag item without tag id', async function() {
-    const dispatch = jest.fn();
-    const contactId = 1234;
-    const tagId = 9876;
-    const tag = {
-      name: 'test',
-      type: 'Function',
-      id: tagId,
-    };
-    const tagItem = {
-      name: 'test',
-      type: 'Function',
-      contact_id: contactId,
-      score: 2,
-    };
-    const tagResponse = {data: tag};
-    const tagItemResponse = {
-      data: {
-        ...tagItem,
-        tag_id: tagId,
-      },
-    };
+// test('Add new tag item without tag id', async function() {
+//   const dispatch = jest.fn();
+//   const contactId = 1234;
+//   const tagId = 9876;
+//   const tag = {
+//     name: 'test',
+//     type: 'Function',
+//     id: tagId,
+//   };
+//   const tagItem = {
+//     name: 'test',
+//     type: 'Function',
+//     contact_id: contactId,
+//     score: 2,
+//   };
+//   const tagResponse = {data: tag};
+//   const tagItemResponse = {
+//     data: {
+//       ...tagItem,
+//       tag_id: tagId,
+//     },
+//   };
 
-    fetchMock.post(`path:/api/tags/`, {body: tagResponse});
+//   fetchMock.post(`path:/api/tags/`, {body: tagResponse});
 
-    fetchMock.post(`path:/api/contacts/${contactId}/tags/`, {
-      body: tagItemResponse,
-    });
+//   fetchMock.post(`path:/api/contacts/${contactId}/tags/`, {
+//     body: tagItemResponse,
+//   });
 
-    await addTagItem(tagItem)(dispatch);
+//   await addTagItem(tagItem)(dispatch);
 
-    expect(dispatch.mock.calls.length).toBe(5);
-    expect(dispatch.mock.calls[0][0].type).toBe(ADD_TAG_ITEM);
-    expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
-    expect(dispatch.mock.calls[1][0].type).toBe(ADD_TAG_API.REQUEST);
-    expect(dispatch.mock.calls[2][0].type).toBe(ADD_TAG_API.RESOLVE);
-    expect(dispatch.mock.calls[2][0].body).toEqual(tagResponse);
-    expect(dispatch.mock.calls[3][0].type).toBe(ADD_TAG_ITEM_API.REQUEST);
-    expect(dispatch.mock.calls[4][0].type).toBe(ADD_TAG_ITEM_API.RESOLVE);
-    expect(dispatch.mock.calls[4][0].body).toEqual(tagItemResponse);
+//   expect(dispatch.mock.calls.length).toBe(5);
+//   expect(dispatch.mock.calls[0][0].type).toBe(ADD_TAG_ITEM);
+//   expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
+//   expect(dispatch.mock.calls[1][0].type).toBe(ADD_TAG_API.REQUEST);
+//   expect(dispatch.mock.calls[2][0].type).toBe(ADD_TAG_API.RESOLVE);
+//   expect(dispatch.mock.calls[2][0].body).toEqual(tagResponse);
+//   expect(dispatch.mock.calls[3][0].type).toBe(ADD_TAG_ITEM_API.REQUEST);
+//   expect(dispatch.mock.calls[4][0].type).toBe(ADD_TAG_ITEM_API.RESOLVE);
+//   expect(dispatch.mock.calls[4][0].body).toEqual(tagItemResponse);
 
-    const request = fetchMock.lastCall(`path:/api/contacts/${contactId}/tags/`);
-    const requestTag = JSON.parse(request[1].body);
-    expect(requestTag).toHaveProperty('tag_id');
-    expect(requestTag.tag_id).toBe(tagId);
-  });
+//   const request = fetchMock.lastCall(`path:/api/contacts/${contactId}/tags/`);
+//   const requestTag = JSON.parse(request[1].body);
+//   expect(requestTag).toHaveProperty('tag_id');
+//   expect(requestTag.tag_id).toBe(tagId);
+// });
 
-  test('Update tag item ', async function() {
-    const dispatch = jest.fn();
-    const contactId = 1234;
-    const tagId = 9876;
-    const tagItem = {
-      name: 'test',
-      type: 'Function',
-      contact_id: contactId,
-      tag_id: tagId,
-      score: 2,
-    };
+// test('Update tag item ', async function() {
+//   const dispatch = jest.fn();
+//   const contactId = 1234;
+//   const tagId = 9876;
+//   const tagItem = {
+//     name: 'test',
+//     type: 'Function',
+//     contact_id: contactId,
+//     tag_id: tagId,
+//     score: 2,
+//   };
 
-    const response = {data: tagItem};
+//   const response = {data: tagItem};
 
-    fetchMock.put(`path:/api/contacts/${contactId}/tags/${tagId}/`, {
-      body: response,
-    });
+//   fetchMock.put(`path:/api/contacts/${contactId}/tags/${tagId}/`, {
+//     body: response,
+//   });
 
-    await updateTagItem(tagItem)(dispatch);
+//   await updateTagItem(tagItem)(dispatch);
 
-    expect(dispatch.mock.calls.length).toBe(3);
-    expect(dispatch.mock.calls[0][0].type).toBe(UPDATE_TAG_ITEM);
-    expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
-    expect(dispatch.mock.calls[1][0].type).toBe(UPDATE_TAG_ITEM_API.REQUEST);
-    expect(dispatch.mock.calls[2][0].type).toBe(UPDATE_TAG_ITEM_API.RESOLVE);
-    expect(dispatch.mock.calls[2][0].body).toEqual(response);
-  });
+//   expect(dispatch.mock.calls.length).toBe(3);
+//   expect(dispatch.mock.calls[0][0].type).toBe(UPDATE_TAG_ITEM);
+//   expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
+//   expect(dispatch.mock.calls[1][0].type).toBe(UPDATE_TAG_ITEM_API.REQUEST);
+//   expect(dispatch.mock.calls[2][0].type).toBe(UPDATE_TAG_ITEM_API.RESOLVE);
+//   expect(dispatch.mock.calls[2][0].body).toEqual(response);
+// });
 
-  test('Delete tag item ', async function() {
-    const dispatch = jest.fn();
-    const contactId = 1234;
-    const tagId = 9876;
-    const tagItem = {
-      name: 'test',
-      type: 'Function',
-      contact_id: contactId,
-      tag_id: tagId,
-      score: 2,
-    };
+// test('Delete tag item ', async function() {
+//   const dispatch = jest.fn();
+//   const contactId = 1234;
+//   const tagId = 9876;
+//   const tagItem = {
+//     name: 'test',
+//     type: 'Function',
+//     contact_id: contactId,
+//     tag_id: tagId,
+//     score: 2,
+//   };
 
-    const response = {stuff: 'win'};
+//   const response = {stuff: 'win'};
 
-    fetchMock.delete(`path:/api/contacts/${contactId}/tags/${tagId}/`, {
-      body: response,
-    });
+//   fetchMock.delete(`path:/api/contacts/${contactId}/tags/${tagId}/`, {
+//     body: response,
+//   });
 
-    fetchMock.get(
-      `path:/api/contacts/${contactId}/tags/`,
-      {body: response},
-      {
-        query: {type: 'function'},
-      }
-    );
+//   fetchMock.get(
+//     `path:/api/contacts/${contactId}/tags/`,
+//     {body: response},
+//     {
+//       query: {type: 'function'},
+//     }
+//   );
 
-    await deleteTagItem(tagItem)(dispatch);
+//     await deleteTagItem(tagItem)(dispatch);
 
-    expect(dispatch.mock.calls.length).toBe(5);
-    expect(dispatch.mock.calls[0][0].type).toBe(DELETE_TAG_ITEM);
-    expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
-    expect(dispatch.mock.calls[1][0].type).toBe(DELETE_TAG_ITEM_API.REQUEST);
-    expect(dispatch.mock.calls[2][0].type).toBe(DELETE_TAG_ITEM_API.RESOLVE);
-    expect(dispatch.mock.calls[2][0].body).toEqual(response);
-    expect(dispatch.mock.calls[3][0].type).toBe(REFRESH_TAG_ITEMS_API.REQUEST);
-    expect(dispatch.mock.calls[4][0].type).toBe(REFRESH_TAG_ITEMS_API.RESOLVE);
-    fetchMock.called(`path:/api/contacts/${contactId}/tags/`, {
-      query: {type: 'function'},
-    });
-  });
+//     expect(dispatch.mock.calls.length).toBe(5);
+//     expect(dispatch.mock.calls[0][0].type).toBe(DELETE_TAG_ITEM);
+//     expect(dispatch.mock.calls[0][0].tag).toEqual(tagItem);
+//     expect(dispatch.mock.calls[1][0].type).toBe(DELETE_TAG_ITEM_API.REQUEST);
+//     expect(dispatch.mock.calls[2][0].type).toBe(DELETE_TAG_ITEM_API.RESOLVE);
+//     expect(dispatch.mock.calls[2][0].body).toEqual(response);
+//     expect(dispatch.mock.calls[3][0].type).toBe(REFRESH_TAG_ITEMS_API.REQUEST);
+//     expect(dispatch.mock.calls[4][0].type).toBe(REFRESH_TAG_ITEMS_API.RESOLVE);
+//     fetchMock.called(`path:/api/contacts/${contactId}/tags/`, {
+//       query: {type: 'function'},
+//     });
+//   });
 
-  test('Refresh tag items', async function() {
-    const dispatch = jest.fn();
-    const contactId = 1234;
-    const tagType = 'Test';
-    const response = {body: {stuff: 'win'}};
+//   test('Refresh tag items', async function() {
+//     const dispatch = jest.fn();
+//     const contactId = 1234;
+//     const tagType = 'Test';
+//     const response = {body: {stuff: 'win'}};
 
-    fetchMock.get(`path:/api/contacts/${contactId}/tags/`, response, {
-      query: {type: 'test'},
-    });
+//     fetchMock.get(`path:/api/contacts/${contactId}/tags/`, response, {
+//       query: {type: 'test'},
+//     });
 
-    await refreshTagItems(contactId, tagType)(dispatch);
+//     await refreshTagItems(contactId, tagType)(dispatch);
 
-    expect(dispatch.mock.calls.length).toBe(2);
-    expect(dispatch.mock.calls[0][0].type).toBe(REFRESH_TAG_ITEMS_API.REQUEST);
-    expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_TAG_ITEMS_API.RESOLVE);
-    expect(dispatch.mock.calls[1][0].filter).toBe('test');
-    expect(dispatch.mock.calls[1][0].contactId).toBe(1234);
-    fetchMock.called(`path:/api/contacts/${contactId}/tags/`, {
-      query: {type: 'test'},
-    });
-  });
-});
+//     expect(dispatch.mock.calls.length).toBe(2);
+//     expect(dispatch.mock.calls[0][0].type).toBe(REFRESH_TAG_ITEMS_API.REQUEST);
+//     expect(dispatch.mock.calls[1][0].type).toBe(REFRESH_TAG_ITEMS_API.RESOLVE);
+//     expect(dispatch.mock.calls[1][0].filter).toBe('test');
+//     expect(dispatch.mock.calls[1][0].contactId).toBe(1234);
+//     fetchMock.called(`path:/api/contacts/${contactId}/tags/`, {
+//       query: {type: 'test'},
+//     });
+//   });
+// });
 
 describe('Experience state', () => {
   let initialState = {};
@@ -456,155 +456,155 @@ describe('Experience state', () => {
   });
 });
 
-describe('Tag state', () => {
-  let initialState = {};
-  beforeEach(() => {
-    initialState = {};
-  });
-  test('initial state', () => {
-    const newState = tagReducer(undefined, {});
-    expect(newState).toEqual(initialState);
-  });
-  test('Add new tag - request resolved', () => {
-    const tag = {id: 4321, other_stuff: 'data'};
-    const newState = tagReducer(initialState, {
-      type: ADD_TAG_API.RESOLVE,
-      body: {data: tag},
-    });
-    expect(newState).toHaveProperty('4321');
-    expect(newState[4321]).toEqual(tag);
-  });
+// describe('Tag state', () => {
+//   let initialState = {};
+//   beforeEach(() => {
+//     initialState = {};
+//   });
+//   test('initial state', () => {
+//     const newState = tagReducer(undefined, {});
+//     expect(newState).toEqual(initialState);
+//   });
+// test('Add new tag - request resolved', () => {
+//   const tag = {id: 4321, other_stuff: 'data'};
+//   const newState = tagReducer(initialState, {
+//     type: ADD_TAG_API.RESOLVE,
+//     body: {data: tag},
+//   });
+//   expect(newState).toHaveProperty('4321');
+//   expect(newState[4321]).toEqual(tag);
+// });
 
-  test('Refresh all tags', () => {
-    const tags = [
-      {id: 11, title: 'tag 1'},
-      {id: 15, title: 'tag 5'},
-    ];
+// test('Refresh all tags', () => {
+//   const tags = [
+//     {id: 11, title: 'tag 1'},
+//     {id: 15, title: 'tag 5'},
+//   ];
 
-    initialState = {
-      10: {id: 10, title: 'tag 0'},
-    };
-    const newState = tagReducer(initialState, {
-      type: REFRESH_TAGS_API.RESOLVE,
-      body: {status: 'success', data: tags},
-    });
-    expect(newState).toEqual({
-      11: {id: 11, title: 'tag 1'},
-      15: {id: 15, title: 'tag 5'},
-    });
-  });
-});
+//   initialState = {
+//     10: {id: 10, title: 'tag 0'},
+//   };
+//   const newState = tagReducer(initialState, {
+//     type: REFRESH_TAGS_API.RESOLVE,
+//     body: {status: 'success', data: tags},
+//   });
+//   expect(newState).toEqual({
+//     11: {id: 11, title: 'tag 1'},
+//     15: {id: 15, title: 'tag 5'},
+//   });
+// });
+// });
 
-describe('TagItem state', () => {
-  let initialState = {};
-  beforeEach(() => {
-    initialState = {};
-  });
-  test('initial state', () => {
-    const newState = tagItemReducer(undefined, {});
-    expect(newState).toEqual(initialState);
-  });
-  test('Add new tagItem blank contact', () => {
-    const tagItem = {contact_id: 4321, tag_id: 1234, other_stuff: 'data'};
-    const newState = tagItemReducer(initialState, {
-      type: ADD_TAG_ITEM_API.RESOLVE,
-      body: {data: tagItem},
-    });
-    expect(newState).toHaveProperty('4321');
-    expect(newState[4321]).toEqual({1234: tagItem});
-  });
-  test('Add new tagItem existing contact', () => {
-    const tagItem = {contact_id: 4321, tag_id: 1234, other_stuff: 'data'};
-    initialState[4321] = [{contact_id: 4321, tag_id: 1111}];
-    const newState = tagItemReducer(initialState, {
-      type: ADD_TAG_ITEM_API.RESOLVE,
-      body: {data: tagItem},
-    });
-    expect(newState).toHaveProperty('4321');
-    expect(newState[4321]).toHaveProperty('1234');
-    expect(newState[4321][1234]).toEqual(tagItem);
-  });
+// describe('TagItem state', () => {
+//   let initialState = {};
+//   beforeEach(() => {
+//     initialState = {};
+//   });
+//   test('initial state', () => {
+//     const newState = tagItemReducer(undefined, {});
+//     expect(newState).toEqual(initialState);
+//   });
+// test('Add new tagItem blank contact', () => {
+//   const tagItem = {contact_id: 4321, tag_id: 1234, other_stuff: 'data'};
+//   const newState = tagItemReducer(initialState, {
+//     type: ADD_TAG_ITEM_API.RESOLVE,
+//     body: {data: tagItem},
+//   });
+//   expect(newState).toHaveProperty('4321');
+//   expect(newState[4321]).toEqual({1234: tagItem});
+// });
+// test('Add new tagItem existing contact', () => {
+//   const tagItem = {contact_id: 4321, tag_id: 1234, other_stuff: 'data'};
+//   initialState[4321] = [{contact_id: 4321, tag_id: 1111}];
+//   const newState = tagItemReducer(initialState, {
+//     type: ADD_TAG_ITEM_API.RESOLVE,
+//     body: {data: tagItem},
+//   });
+//   expect(newState).toHaveProperty('4321');
+//   expect(newState[4321]).toHaveProperty('1234');
+//   expect(newState[4321][1234]).toEqual(tagItem);
+// });
 
-  test('Refresh tagItem by type', () => {
-    const tagItems = [
-      {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
-      {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
-    ];
+// test('Refresh tagItem by type', () => {
+//   const tagItems = [
+//     {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
+//     {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
+//   ];
 
-    initialState = {
-      1: {
-        10: {contact_id: 1, tag_id: 10, title: 'exp 0', type: 'Stay'},
-        12: {contact_id: 1, tag_id: 12, title: 'exp 2', type: 'Test'},
-      },
-      2: {
-        12: {contact_id: 2, tag_id: 12, title: 'exp 2', type: 'Test'},
-      },
-    };
-    const newState = tagItemReducer(initialState, {
-      type: REFRESH_TAG_ITEMS_API.RESOLVE,
-      body: {status: 'success', data: tagItems},
-      contactId: 1,
-      filter: 'test',
-    });
-    expect(newState).toEqual({
-      1: {
-        10: {contact_id: 1, tag_id: 10, title: 'exp 0', type: 'Stay'},
-        11: {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
-        15: {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
-      },
-      2: {
-        12: {contact_id: 2, tag_id: 12, title: 'exp 2', type: 'Test'},
-      },
-    });
-  });
+//   initialState = {
+//     1: {
+//       10: {contact_id: 1, tag_id: 10, title: 'exp 0', type: 'Stay'},
+//       12: {contact_id: 1, tag_id: 12, title: 'exp 2', type: 'Test'},
+//     },
+//     2: {
+//       12: {contact_id: 2, tag_id: 12, title: 'exp 2', type: 'Test'},
+//     },
+//   };
+//   const newState = tagItemReducer(initialState, {
+//     type: REFRESH_TAG_ITEMS_API.RESOLVE,
+//     body: {status: 'success', data: tagItems},
+//     contactId: 1,
+//     filter: 'test',
+//   });
+// expect(newState).toEqual({
+//   1: {
+//     10: {contact_id: 1, tag_id: 10, title: 'exp 0', type: 'Stay'},
+//     11: {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
+//     15: {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
+//   },
+//   2: {
+//     12: {contact_id: 2, tag_id: 12, title: 'exp 2', type: 'Test'},
+//   },
+// });
+// });
 
-  test('Refresh tagItem by type empty state', () => {
-    const tagItems = [
-      {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
-      {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
-    ];
+// test('Refresh tagItem by type empty state', () => {
+//   const tagItems = [
+//     {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
+//     {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
+//   ];
 
-    const newState = tagItemReducer(initialState, {
-      type: REFRESH_TAG_ITEMS_API.RESOLVE,
-      body: {status: 'success', data: tagItems},
-      contactId: 1,
-      filter: 'test',
-    });
-    expect(newState).toEqual({
-      1: {
-        11: {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
-        15: {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
-      },
-    });
-  });
+//   const newState = tagItemReducer(initialState, {
+//     type: REFRESH_TAG_ITEMS_API.RESOLVE,
+//     body: {status: 'success', data: tagItems},
+//     contactId: 1,
+//     filter: 'test',
+//   });
+//   expect(newState).toEqual({
+//     1: {
+//       11: {contact_id: 1, tag_id: 11, title: 'exp 1', type: 'Test'},
+//       15: {contact_id: 1, tag_id: 15, title: 'exp 5', type: 'Test'},
+//     },
+//   });
+// });
 
-  test('Update one tagItem', () => {
-    const tagItem = {contact_id: 1, tag_id: 11, data: 'exp data'};
+// test('Update one tagItem', () => {
+//   const tagItem = {contact_id: 1, tag_id: 11, data: 'exp data'};
 
-    const oldTagItem = {contact_id: 1, tag_id: 11, data: 'old exp data'};
-    const bystander1 = {contact_id: 1, tag_id: 12, data: 'bystander 1'};
-    const bystander2 = {contact_id: 2, tag_id: 11, data: 'bystander 2'};
-    initialState = {
-      1: {
-        11: oldTagItem,
-        12: bystander1,
-      },
-      2: {
-        11: bystander2,
-      },
-    };
-    const newState = tagItemReducer(initialState, {
-      type: UPDATE_TAG_ITEM_API.RESOLVE,
-      body: {status: 'success', data: tagItem},
-    });
-    expect(newState).toEqual({
-      1: {
-        11: tagItem,
-        12: bystander1,
-      },
-      2: {
-        11: bystander2,
-      },
-    });
-  });
-});
+//   const oldTagItem = {contact_id: 1, tag_id: 11, data: 'old exp data'};
+//   const bystander1 = {contact_id: 1, tag_id: 12, data: 'bystander 1'};
+//   const bystander2 = {contact_id: 2, tag_id: 11, data: 'bystander 2'};
+//   initialState = {
+//     1: {
+//       11: oldTagItem,
+//       12: bystander1,
+//     },
+//     2: {
+//       11: bystander2,
+//     },
+//   };
+//   const newState = tagItemReducer(initialState, {
+//     type: UPDATE_TAG_ITEM_API.RESOLVE,
+//     body: {status: 'success', data: tagItem},
+//   });
+//   expect(newState).toEqual({
+//     1: {
+//       11: tagItem,
+//       12: bystander1,
+//     },
+//     2: {
+//       11: bystander2,
+//     },
+// });
+// });
+// });
