@@ -38,21 +38,6 @@ const ExperiencesList = ({
   classes,
 }) => {
   const [showForm, setShowForm] = useState(false);
-  // const [loaded, setLoaded] = useState(false);
-
-  // useEffect(() => {
-  //   if (!loaded && experiences.length === 0) {
-  //     refreshExperiences();
-  //     setLoaded(true);
-  //   }
-  // }, [
-  //   experiences,
-  //   refreshExperiences,
-  //   loaded,
-  //   setLoaded,
-  //   refreshDynamicInstructions,
-  //   contactId,
-  // ]);
 
   let blankExperience = {
     description: '',

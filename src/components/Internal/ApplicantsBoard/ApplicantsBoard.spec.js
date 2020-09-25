@@ -1,8 +1,11 @@
 import React from 'react';
 import {render, cleanup, fireEvent} from '@testing-library/react';
+// import {render as render2, unmountComponentAtNode} from 'react-dom';
 import '@testing-library/jest-dom/extend-expect';
 import ApplicantsBoard from './ApplicantsBoard';
 import {formData} from './defaultValues';
+// import {act} from 'react-dom/test-utils';
+// import ReactDOM from 'react-dom';
 
 beforeEach(() => {
   jest.resetAllMocks();
@@ -11,6 +14,18 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
 });
+
+// let container;
+
+// beforeEach(() => {
+//   container = document.createElement('div');
+//   document.body.appendChild(container);
+// });
+
+// afterEach(() => {
+//   document.body.removeChild(container);
+//   container = null;
+// });
 
 const filteredContacts = [
   {
@@ -153,8 +168,9 @@ describe('Applicants Board', () => {
     expect(queryByText('Approve New Applicants')).toBeInTheDocument();
   });
 
-  test('Applicants Board: Filter Applicants', () => {
+  test('Applicants Board: Filter Applicants', async () => {
     const addContactsFilters = jest.fn();
+
     const {getByTestId, queryByText} = render(
       <ApplicantsBoard
         getFilteredContactsSubmitted={() => jest.fn()}
@@ -169,6 +185,35 @@ describe('Applicants Board', () => {
       />
     );
 
+    // act(() => {
+    //   ReactDOM.render(
+    //     <ApplicantsBoard
+    //       getFilteredContactsSubmitted={() => jest.fn()}
+    //       approveNewContactsStatus={() => jest.fn()}
+    //       submittedApplicants={[]}
+    //       addContactsFilters={addContactsFilters}
+    //       allFilteredContacts={filteredContacts}
+    //       getAllFilteredContacts={() => jest.fn()}
+    //       filteredContacts={filteredContacts}
+    //       filterFormData={formData}
+    //       filterCount={0}
+    //     />,
+    //     container
+    //   );
+    // });
+
+    // const button = container.querySelector(
+    //   '[data-testid="filter-icon-button"]'
+    // );
+    // expect(button.textContent).toBe(' Filters');
+    // act(() => {
+    //   button.dispatchEvent(new MouseEvent('click'));
+    // });
+    // const filterApplicantsForm = container.querySelector(
+    //   '[data-testid="filter-applicants-form"]'
+    // );
+    // expect(filterApplicantsForm).toBeInTheDocument();
+
     const filterButton = getByTestId('filter-icon-button');
     expect(queryByText('Filter Applicants')).not.toBeInTheDocument();
     fireEvent.click(filterButton);
@@ -179,8 +224,8 @@ describe('Applicants Board', () => {
     );
 
     expect(checkboxStatusApproved).toHaveProperty('checked', false);
-
     fireEvent.click(checkboxStatusApproved);
+
     expect(checkboxStatusApproved).toHaveProperty('checked', true);
 
     fireEvent.click(getByTestId('add-filter-button'));

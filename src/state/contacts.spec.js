@@ -35,8 +35,6 @@ import {
   accountsReducer,
 } from './contacts';
 
-import {CREATE_RESUME_API} from './resume';
-
 afterEach(() => {
   fetchMock.restore();
 });
