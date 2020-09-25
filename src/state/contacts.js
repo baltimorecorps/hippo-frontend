@@ -29,14 +29,6 @@ export const deleteSession = () =>
     credentials: 'include',
   });
 
-// export const ALL_CONTACTS = 'ALL_CONTACTS';
-// export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
-// const apiGetAllContacts = () =>
-//   makeApiFetchActions(ALL_CONTACTS, `${API_URL}/api/contacts/`);
-
-// const apiGetContact = contactId =>
-//   makeApiFetchActions(CONTACT, `${API_URL}/api/contacts/${contactId}/`);
-
 const apiAddContact = (authToken, contact) =>
   makeAuthFetchActions(authToken, ADD_CONTACT, `${API_URL}/api/contacts/`, {
     body: JSON.stringify(contact),
@@ -472,21 +464,26 @@ export const APPROVE_NEW_CONTACTS_STATUS = 'APPROVE_NEW_CONTACTS_STATUS';
 export const APPROVE_NEW_CONTACTS_STATUS_API = fetchActionTypes(
   APPROVE_NEW_CONTACTS_STATUS
 );
-export const approveNewContactsStatus = applicantIds =>
+export const approveNewContactsStatus = (applicantIds, approvedContacts) =>
   async function(dispatch) {
-    dispatch({
-      type: APPROVE_NEW_CONTACTS_STATUS,
-      applicantIds,
-    });
-
-    await makeApiFetchActions(
-      APPROVE_NEW_CONTACTS_STATUS,
-      `${API_URL}/api/contacts/approve/`,
-      {
-        body: JSON.stringify(applicantIds),
-        method: 'POST',
-      }
-    )(dispatch);
+    try {
+      const result = await makeApiFetchActions(
+        APPROVE_NEW_CONTACTS_STATUS,
+        `${API_URL}/api/contacts/approve/`,
+        {
+          body: JSON.stringify(applicantIds),
+          method: 'POST',
+        }
+      )(dispatch);
+      dispatch({
+        type: APPROVE_NEW_CONTACTS_STATUS,
+        data: result.body.data,
+        applicantIds,
+        approvedContacts,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
 // ---------------------------------------------------------------------------
@@ -557,6 +554,31 @@ export const resetFilterCount = dispatch =>
 
 // ---------------------------------------------------------------------------
 
+export const GET_FILTERED_CONTACTS_SUBMITTED =
+  'GET_FILTERED_CONTACTS_SUBMITTED';
+export const GET_FILTERED_CONTACTS_SUBMITTED_API = fetchActionTypes(
+  GET_FILTERED_CONTACTS_SUBMITTED
+);
+export const getFilteredContactsSubmitted = () =>
+  async function(dispatch) {
+    try {
+      const result = await makeApiFetchActions(
+        GET_FILTERED_CONTACTS_SUBMITTED,
+        `${API_URL}/api/contacts/filter/`,
+        {
+          body: JSON.stringify({status: ['submitted']}),
+          method: 'POST',
+        }
+      )(dispatch);
+      dispatch({
+        type: GET_FILTERED_CONTACTS_SUBMITTED,
+        data: result.body.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
@@ -586,10 +608,19 @@ export const contactsReducer = createReducer(
 
     [APPROVE_NEW_CONTACTS_STATUS_API.RESOLVE]: (state, action) => {
       const approvedContacts = action.body.data;
-      state['all_filtered_contacts'] = [
-        ...state['all_filtered_contacts'],
-        ...approvedContacts,
-      ];
+      const allFilteredContacts = state['all_filtered_contacts'];
+      const newState = approvedContacts.map(approvedContact => {
+        return allFilteredContacts.map(filteredContact => {
+          if (filteredContact.id === approvedContact.id) {
+            filteredContact.status = 'approved';
+            return filteredContact;
+          } else {
+            return filteredContact;
+          }
+        });
+      });
+
+      state['all_filtered_contacts'] = newState[0];
     },
 
     [RESET_FILTER_COUNT]: (state, action) => {
@@ -608,6 +639,11 @@ export const contactsReducer = createReducer(
       state['filtered'] = data;
       state['filter_form_data'] = filterFormData;
       state['filter_count'] = filterCount;
+    },
+
+    [GET_FILTERED_CONTACTS_SUBMITTED]: (state, action) => {
+      const {data} = action;
+      state['filtered_submitted'] = data;
     },
 
     [GET_CONTACT_API.RESOLVE]: (state, action) => {

@@ -1,17 +1,14 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
 import {
-  getContact,
   getContactProfile,
   updateContact,
   addContactSkill,
-  getAboutMe,
   createAboutMe,
   updateAboutMe,
   getDynamicInstructions,
 } from 'state/contacts';
 
-// import {refreshPrograms, addNewProgram} from 'state/programs';
 import {
   startResumeCreation,
   startResumeSelect,
@@ -136,8 +133,6 @@ export const mapStateToProps = (state, props) => {
 
   const contactInfo = state.contacts[contactId];
   return {
-    // myContactId: Number(myContactId),
-    // contactParamId: Number(contactParamId),
     contactId: Number(contactId),
     contactInfo,
     showResumeDialog:
@@ -155,13 +150,6 @@ export const mapDispatchToProps = dispatch => ({
   updateContact: contact => updateContact(contact)(dispatch),
   refreshDynamicInstructions: contactId =>
     getDynamicInstructions(contactId)(dispatch),
-  // refreshPrograms: async contactId => {
-  //   await refreshPrograms(contactId)(dispatch);
-  // },
-  // addNewProgram: async program => {
-  //   await addNewProgram(program)(dispatch);
-  // },
-
   getContactProfile: async contactId => {
     await getContactProfile(contactId)(dispatch);
   },

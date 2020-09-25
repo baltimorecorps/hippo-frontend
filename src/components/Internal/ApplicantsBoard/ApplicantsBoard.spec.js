@@ -61,7 +61,7 @@ describe('Applicants Board', () => {
   test('Render Applicants Board Components', () => {
     const {getByTestId, getAllByTestId} = render(
       <ApplicantsBoard
-        getSubmittedContacts={() => jest.fn()}
+        getFilteredContactsSubmitted={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
         submittedApplicants={[]}
         addContactsFilters={() => jest.fn()}
@@ -94,7 +94,7 @@ describe('Applicants Board', () => {
   test('Applicants Board: Search by name or email', () => {
     const {getByTestId, getAllByTestId, getByRole} = render(
       <ApplicantsBoard
-        getSubmittedContacts={() => jest.fn()}
+        getFilteredContactsSubmitted={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
         submittedApplicants={[]}
         addContactsFilters={() => jest.fn()}
@@ -134,7 +134,7 @@ describe('Applicants Board', () => {
   test('Applicants Board: Open approve applicants form', () => {
     const {getByTestId, queryByText} = render(
       <ApplicantsBoard
-        getSubmittedContacts={() => jest.fn()}
+        getFilteredContactsSubmitted={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
         submittedApplicants={[]}
         addContactsFilters={() => jest.fn()}
@@ -157,7 +157,7 @@ describe('Applicants Board', () => {
     const addContactsFilters = jest.fn();
     const {getByTestId, queryByText} = render(
       <ApplicantsBoard
-        getSubmittedContacts={() => jest.fn()}
+        getFilteredContactsSubmitted={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
         submittedApplicants={[]}
         addContactsFilters={addContactsFilters}
@@ -194,7 +194,7 @@ describe('Applicants Board', () => {
   test('Applicants Board: Print Applicants', () => {
     const {getByTestId} = render(
       <ApplicantsBoard
-        getSubmittedContacts={() => jest.fn()}
+        getFilteredContactsSubmitted={() => jest.fn()}
         approveNewContactsStatus={() => jest.fn()}
         submittedApplicants={[]}
         addContactsFilters={() => jest.fn()}

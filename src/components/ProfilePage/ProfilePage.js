@@ -57,17 +57,12 @@ const useScroll = ref => {
 };
 
 const ProfilePage = ({
-  // updateContact,
-
-  // contactParamId,
   contactId,
   contactInfo,
   myResume,
   getContactProfile,
-  // startResumeCreation,
   startResumeSelect,
   cancelResumeSelect,
-  // addContactSkill,
   generateResume,
   classes,
   showResumeDialog,
@@ -124,22 +119,10 @@ const ProfilePage = ({
     [setEditScores]
   );
 
-  //const editScore = sumScores(Object.values(editScores));
-
-  // const handleUpdateContact = async values => {
-  //   await updateContact(values);
-  // };
   const handleUpdateAboutMe = async (contactId, values) => {
     await updateAboutMe(contactId, values);
     await refreshDynamicInstructions(contactId);
   };
-
-  // const handleUpdateSkills = skills => {
-  //   updateContact({
-  //     id: contactId,
-  //     skills: skills,
-  //   });
-  // };
 
   const getProfile = useCallback(
     async contactId => {
@@ -688,7 +671,6 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
     paddingBottom: spacing(5),
     width: '100%',
     flex: 1,
-    // height: `calc(100vh - ${spacing(8)}px - 40px)`,
     height: 'auto',
     paddingLeft: '2vw',
     paddingRight: '2vw',
@@ -705,7 +687,6 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
 
     marginBottom: spacing(5),
     width: '100%',
-    // height: `calc(100vh - ${spacing(8)}px - 40px)`,
     height: 'auto',
 
     paddingLeft: '8vw',
@@ -715,7 +696,6 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
 
     marginBottom: spacing(5),
     width: '100%',
-    // height: `calc(100vh - ${spacing(8)}px - 40px)`,
     height: 'auto',
 
     overflow: 'auto',

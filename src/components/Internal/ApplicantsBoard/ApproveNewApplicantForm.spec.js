@@ -47,7 +47,7 @@ describe('Approve New Applicants Form', () => {
     const {getByTestId, getByText, getByRole} = render(
       <ApproveNewApplicantForm
         submittedApplicants={submittedApplicants}
-        getSubmittedContacts={() => jest.fn()}
+        getFilteredContactsSubmitted={() => jest.fn()}
         approveNewContactsStatus={approveNewContactsStatus}
         showApproveForm={true}
         setShowApproveForm={() => jest.fn()}

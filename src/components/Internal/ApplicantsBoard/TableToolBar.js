@@ -93,7 +93,7 @@ const TableToolbar = ({
   allFilteredContacts,
   showApproveForm,
   setPresentApplicants,
-  getSubmittedContacts,
+  getFilteredContactsSubmitted,
   approveNewContactsStatus,
   submittedApplicants,
   searchableApplicants,
@@ -103,7 +103,7 @@ const TableToolbar = ({
   const handleChangeSearch = event => {
     event.persist();
     const name = event.target.value.toLowerCase();
-    if (name != null) {
+    if (name != null && searchableApplicants) {
       const searchNames = searchableApplicants.filter(applicant => {
         const applicantFullName = `${applicant.first_name} ${applicant.last_name}`.toLowerCase();
         const applicantEmail = applicant.email.toLowerCase();
@@ -187,8 +187,8 @@ const TableToolbar = ({
 
       {showApproveForm && (
         <ApproveNewApplicantForm
-          submittedApplicants={submittedApplicants || ['loading...']}
-          getSubmittedContacts={getSubmittedContacts}
+          submittedApplicants={submittedApplicants}
+          getFilteredContactsSubmitted={getFilteredContactsSubmitted}
           approveNewContactsStatus={approveNewContactsStatus}
           closeForm={() => setShowApproveForm(false)}
           showApproveForm={showApproveForm}
