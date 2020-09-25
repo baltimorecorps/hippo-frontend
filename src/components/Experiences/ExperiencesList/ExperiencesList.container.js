@@ -1,10 +1,10 @@
 import {connect} from 'react-redux';
 import {createSelector} from 'redux-starter-kit';
-import {
-  RESUME_CREATION,
-  selectResumeExperience,
-  deselectResumeExperience,
-} from 'state/resume';
+// import {
+//   RESUME_CREATION,
+//   selectResumeExperience,
+//   deselectResumeExperience,
+// } from 'state/resume';
 import ExperiencesList from './ExperiencesList';
 
 import {
@@ -19,12 +19,12 @@ import {
   refreshExperienceType,
 } from 'state/contacts';
 
-const getExperiences = createSelector(['experiences'], experiences =>
-  Object.keys(experiences).map(id => experiences[id])
-);
+// const getExperiences = createSelector(['experiences'], experiences =>
+//   Object.keys(experiences).map(id => experiences[id])
+// );
 
-const getContact = (state, props) => props.contactId;
-const getTypeFilter = (state, props) => props.experienceType;
+// const getContact = (state, props) => props.contactId;
+// const getTypeFilter = (state, props) => props.experienceType;
 
 // const makeGetRelevantExperiences = () => {
 //   const getRelevantExperiences = createSelector(
@@ -68,8 +68,8 @@ export const makeMapStateToProps = () => {
     return {
       // experiences: getRelevantExperiences(state, ownProps),
       capabilities: getCapabilities(state, ownProps),
-      inSelectMode:
-        state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
+      // inSelectMode:
+      //   state.resume.resumeCreationStep === RESUME_CREATION.SELECT_HIGHLIGHTS,
     };
   };
   return mapStateToProps;
@@ -84,10 +84,10 @@ const mapDispatchToProps = (dispatch, props) => {
     deleteExperience: experience => deleteExperience(experience)(dispatch),
     refreshExperiences: () =>
       refreshExperienceType(props.contactId, props.experienceType)(dispatch),
-    selectExperience: experience =>
-      dispatch(selectResumeExperience(experience)),
-    deselectExperience: experience =>
-      dispatch(deselectResumeExperience(experience)),
+    // selectExperience: experience =>
+    //   dispatch(selectResumeExperience(experience)),
+    // deselectExperience: experience =>
+    //   dispatch(deselectResumeExperience(experience)),
   };
 };
 

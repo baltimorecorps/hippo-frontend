@@ -424,7 +424,7 @@ const ResumeCreator = ({
   contactId,
   resume,
   setResume,
-  moveResumeItem,
+  // moveResumeItem,
   refreshExperiences,
   getContact,
   getContactCapabilities,
@@ -549,17 +549,17 @@ const ResumeCreator = ({
       return;
     }
 
-    moveResumeItem(
-      parseInt(draggableId),
-      {
-        section: destination.droppableId,
-        index: destination.index,
-      },
-      {
-        section: source.droppableId,
-        index: source.index,
-      }
-    );
+    // moveResumeItem(
+    //   parseInt(draggableId),
+    //   {
+    //     section: destination.droppableId,
+    //     index: destination.index,
+    //   },
+    //   {
+    //     section: source.droppableId,
+    //     index: source.index,
+    //   }
+    // );
   };
 
   const header = {

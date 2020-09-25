@@ -5,10 +5,15 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import ResumesListItem from './ResumesListItem';
 
-const ResumesList = ({contactId, refreshResumes, resumes, classes}) => {
-  useEffect(() => {
-    refreshResumes(contactId);
-  }, [refreshResumes, contactId]);
+const ResumesList = ({
+  contactId,
+  // refreshResumes,
+  resumes,
+  classes,
+}) => {
+  // useEffect(() => {
+  //   refreshResumes(contactId);
+  // }, [refreshResumes, contactId]);
 
   return (
     <Grid container justify="center">
