@@ -1,5 +1,4 @@
 import {connect} from 'react-redux';
-// import {createSelector} from 'redux-starter-kit';
 import {
   getContactProfile,
   updateContact,
