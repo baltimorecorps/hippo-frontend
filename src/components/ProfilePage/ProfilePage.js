@@ -26,13 +26,8 @@ import CAPABILITIES from './capabilities.yml';
 const ProfilePage = ({
   contactId,
   contactInfo,
-  myResume,
   getContactProfile,
-  startResumeSelect,
-  cancelResumeSelect,
   classes,
-  showResumeDialog,
-  showResumeSpinner,
   inSelectMode,
   createAboutMe,
   updateAboutMe,
