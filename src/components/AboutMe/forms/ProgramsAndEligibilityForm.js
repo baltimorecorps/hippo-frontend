@@ -71,12 +71,12 @@ const ProgramsAndEligibilityForm = ({
     setErrors(err);
 
     if (!isError) {
-      const {first_name, last_name, email_primary, id, program_apps} = values;
+      const {first_name, last_name, email, id, program_apps} = values;
 
       const programApps = {
         first_name,
         last_name,
-        email: email_primary.email,
+        email,
         id,
         program_apps,
       };
@@ -84,7 +84,7 @@ const ProgramsAndEligibilityForm = ({
       const aboutMeInfo = {
         first_name,
         last_name,
-        email: email_primary.email,
+        email,
         id,
         profile: {...values.profile},
       };

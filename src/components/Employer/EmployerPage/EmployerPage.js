@@ -50,7 +50,6 @@ EmployerPage.propTypes = {
     id: PropTypes.string.isRequired,
     gdoc_link: PropTypes.string.isRequired,
     org_name: PropTypes.string.isRequired,
-    cycle_id: PropTypes.number.isRequired,
   }),
   getOrgOpportunity: PropTypes.func.isRequired,
 };

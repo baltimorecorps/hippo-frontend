@@ -424,7 +424,6 @@ const ResumeCreator = ({
   contactId,
   resume,
   setResume,
-  moveResumeItem,
   refreshExperiences,
   getContact,
   getContactCapabilities,
@@ -548,27 +547,15 @@ const ResumeCreator = ({
     ) {
       return;
     }
-
-    moveResumeItem(
-      parseInt(draggableId),
-      {
-        section: destination.droppableId,
-        index: destination.index,
-      },
-      {
-        section: source.droppableId,
-        index: source.index,
-      }
-    );
   };
 
   const header = {
     name: contact ? `${contact.first_name} ${contact.last_name}` : '',
     //TODO: re-add once we have these
     //vocation: '',
-    //address: '',
+    // address: '',
     phone: contact ? contact.phone_primary : '',
-    email: contact && contact.email_primary ? contact.email_primary.email : '',
+    email: contact ? contact.email : '',
   };
 
   const updateSelected = newSelected => {

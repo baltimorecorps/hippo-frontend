@@ -7,7 +7,7 @@ import FilterApplicantsForm from './FilterApplicantsForm';
 
 const ApplicantsBoard = ({
   classes,
-  getSubmittedContacts,
+  getFilteredContactsSubmitted,
   approveNewContactsStatus,
   submittedApplicants,
   addContactsFilters,
@@ -23,17 +23,6 @@ const ApplicantsBoard = ({
       getAllFilteredContacts(filterFormData);
   }, [getAllFilteredContacts, filterFormData, allFilteredContacts]);
 
-  const [showApproveForm, setShowApproveForm] = useState(false);
-  const [presentApplicants, setPresentApplicants] = useState(
-    allFilteredContacts
-  );
-  const [openFilterForm, setOpenFilterForm] = useState(false);
-  const [searchableApplicants, setSearchableApplicants] = useState(
-    allFilteredContacts
-  );
-
-  // add searchableContacts
-
   useEffect(() => {
     if (filteredContacts) {
       setPresentApplicants(filteredContacts);
@@ -44,10 +33,18 @@ const ApplicantsBoard = ({
     }
   }, [filteredContacts, allFilteredContacts]);
 
+  const [showApproveForm, setShowApproveForm] = useState(false);
+  const [presentApplicants, setPresentApplicants] = useState(
+    allFilteredContacts
+  );
+  const [openFilterForm, setOpenFilterForm] = useState(false);
+  const [searchableApplicants, setSearchableApplicants] = useState(
+    allFilteredContacts
+  );
+
   if (!presentApplicants) {
     return <div>...Loading</div>;
   }
-
   return (
     <div className={classes.container}>
       <PartnershipsNavBar />
@@ -61,7 +58,7 @@ const ApplicantsBoard = ({
         showApproveForm={showApproveForm}
         searchableApplicants={searchableApplicants}
         setPresentApplicants={setPresentApplicants}
-        getSubmittedContacts={getSubmittedContacts}
+        getFilteredContactsSubmitted={getFilteredContactsSubmitted}
         approveNewContactsStatus={approveNewContactsStatus}
         submittedApplicants={submittedApplicants}
         resetFilterCount={resetFilterCount}
@@ -80,7 +77,6 @@ const ApplicantsBoard = ({
 
 ApplicantsBoard.propTypes = {
   classes: PropTypes.object.isRequired,
-  getSubmittedContacts: PropTypes.func.isRequired,
   approveNewContactsStatus: PropTypes.func.isRequired,
   submittedApplicants: PropTypes.array,
   filterFormData: PropTypes.object,

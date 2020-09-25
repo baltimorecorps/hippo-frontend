@@ -18,7 +18,6 @@ describe('ProfilePage', () => {
     first_name: 'Alice',
     last_name: 'Tester',
     email: 'alice@example.com',
-    email_primary: {email: 'alice@example.com'},
     phone_primary: '(123) 456-7890',
     skills: [],
     profile: blankProfile,
@@ -123,72 +122,72 @@ describe('ProfilePage', () => {
     //expect(start.mock.calls.length).toBe(1);
   });
 
-  test.skip('render resume dialog', () => {
-    const start = jest.fn();
-    const {queryByText} = render(
-      <Provider store={store}>
-        <Router>
-          <ProfilePage
-            contactId={contactInfo.contactId}
-            contactInfo={contactInfo}
-            refreshDynamicInstructions={jest.fn()}
-            startResumeCreation={jest.fn()}
-            startResumeSelect={start}
-            cancelResumeSelect={jest.fn()}
-            showResumeDialog={true}
-            showResumeSpinner={false}
-            inSelectMode={false}
-            experiences={contactInfo.experiences}
-            getContactProfile={jest.fn()}
-          />
-        </Router>
-      </Provider>
-    );
-    expect(queryByText(/choose resume style/i)).not.toBeNull();
-    expect(queryByText(/select the experiences/i)).toBeNull();
+  // test.skip('render resume dialog', () => {
+  //   const start = jest.fn();
+  //   const {queryByText} = render(
+  //     <Provider store={store}>
+  //       <Router>
+  //         <ProfilePage
+  //           contactId={contactInfo.contactId}
+  //           contactInfo={contactInfo}
+  //           refreshDynamicInstructions={jest.fn()}
+  //           startResumeCreation={jest.fn()}
+  //           startResumeSelect={start}
+  //           cancelResumeSelect={jest.fn()}
+  //           showResumeDialog={true}
+  //           showResumeSpinner={false}
+  //           inSelectMode={false}
+  //           experiences={contactInfo.experiences}
+  //           getContactProfile={jest.fn()}
+  //         />
+  //       </Router>
+  //     </Provider>
+  //   );
+  //   expect(queryByText(/choose resume style/i)).not.toBeNull();
+  //   expect(queryByText(/select the experiences/i)).toBeNull();
 
-    const button = queryByText(/highlight experiences/i);
-    expect(button).not.toBeNull();
+  //   const button = queryByText(/highlight experiences/i);
+  //   expect(button).not.toBeNull();
 
-    expect(start.mock.calls.length).toBe(0);
-    fireEvent.click(button);
-    expect(start.mock.calls.length).toBe(1);
-  });
+  //   expect(start.mock.calls.length).toBe(0);
+  //   fireEvent.click(button);
+  //   expect(start.mock.calls.length).toBe(1);
+  // });
 
-  test('render select drawer', () => {
-    const cancel = jest.fn();
-    const {queryByText} = render(
-      <Provider store={store}>
-        <Router>
-          <ProfilePage
-            contactId={contactInfo.contactId}
-            contactInfo={contactInfo}
-            refreshDynamicInstructions={jest.fn()}
-            startResumeCreation={jest.fn()}
-            startResumeSelect={jest.fn()}
-            cancelResumeSelect={cancel}
-            showResumeDialog={false}
-            showResumeSpinner={false}
-            inSelectMode={true}
-            experiences={contactInfo.experiences}
-            getContactProfile={jest.fn()}
-          />
-        </Router>
-      </Provider>
-    );
-    expect(queryByText(/create resume/i)).toBeNull();
-    expect(queryByText(/choose resume style/i)).toBeNull();
-    expect(queryByText(/select the experiences/i)).not.toBeNull();
+  // test('render select drawer', () => {
+  //   const cancel = jest.fn();
+  //   const {queryByText} = render(
+  //     <Provider store={store}>
+  //       <Router>
+  //         <ProfilePage
+  //           contactId={contactInfo.contactId}
+  //           contactInfo={contactInfo}
+  //           refreshDynamicInstructions={jest.fn()}
+  //           startResumeCreation={jest.fn()}
+  //           startResumeSelect={jest.fn()}
+  //           cancelResumeSelect={cancel}
+  //           showResumeDialog={false}
+  //           showResumeSpinner={false}
+  //           inSelectMode={true}
+  //           experiences={contactInfo.experiences}
+  //           getContactProfile={jest.fn()}
+  //         />
+  //       </Router>
+  //     </Provider>
+  //   );
+  //   expect(queryByText(/create resume/i)).toBeNull();
+  //   expect(queryByText(/choose resume style/i)).toBeNull();
+  //   expect(queryByText(/select the experiences/i)).not.toBeNull();
 
-    const nextButton = queryByText(/next/i);
-    const cancelButton = queryByText(/cancel/i);
-    expect(nextButton).not.toBeNull();
-    expect(cancelButton).not.toBeNull();
+  //   const nextButton = queryByText(/next/i);
+  //   const cancelButton = queryByText(/cancel/i);
+  //   expect(nextButton).not.toBeNull();
+  //   expect(cancelButton).not.toBeNull();
 
-    expect(cancel.mock.calls.length).toBe(0);
-    fireEvent.click(cancelButton);
-    expect(cancel.mock.calls.length).toBe(1);
-  });
+  //   expect(cancel.mock.calls.length).toBe(0);
+  //   fireEvent.click(cancelButton);
+  //   expect(cancel.mock.calls.length).toBe(1);
+  // });
 
   test('integration - render base page', () => {
     const {queryByText} = render(

@@ -36,12 +36,12 @@ describe('/Contacts Page: Integration Tests', () => {
     const history = createMemoryHistory();
 
     const deleteContact = jest.fn();
-    const {getByTestId, getAllByTestId} = render(
+    const {getAllByTestId} = render(
       <Router history={history}>
         <ContactList
           contacts={contacts}
           deleteContact={deleteContact}
-          getAllContactsShort={() => jest.fn()}
+          getAllContacts={() => jest.fn()}
         />
       </Router>
     );
@@ -62,7 +62,7 @@ describe('/Contacts Page: Integration Tests', () => {
         <ContactList
           contacts={contacts}
           deleteContact={deleteContact}
-          getAllContactsShort={() => jest.fn()}
+          getAllContacts={() => jest.fn()}
         />
       </Router>
     );
@@ -103,7 +103,7 @@ describe('/Contacts Page: Integration Tests', () => {
         <ContactList
           contacts={contacts}
           deleteContact={deleteContact}
-          getAllContactsShort={() => jest.fn()}
+          getAllContacts={() => jest.fn()}
         />
       </Router>
     );

@@ -89,7 +89,7 @@ function createData({
   );
   let raceData = '-';
 
-  if (race[0] === 'No Response') {
+  if (!race || race[0] === 'No Response') {
     raceData = '-';
   } else {
     raceData = race.reduce((raceA, raceB) => (raceA += `, ${raceB}`));
@@ -238,7 +238,7 @@ function ApplicantsTable({
   setShowApproveForm,
   showApproveForm,
   setPresentApplicants,
-  getSubmittedContacts,
+  getFilteredContactsSubmitted,
   approveNewContactsStatus,
   submittedApplicants,
   searchableApplicants,
@@ -294,7 +294,7 @@ function ApplicantsTable({
         showApproveForm={showApproveForm}
         searchableApplicants={searchableApplicants}
         setPresentApplicants={setPresentApplicants}
-        getSubmittedContacts={getSubmittedContacts}
+        getFilteredContactsSubmitted={getFilteredContactsSubmitted}
         approveNewContactsStatus={approveNewContactsStatus}
         submittedApplicants={submittedApplicants}
         print={

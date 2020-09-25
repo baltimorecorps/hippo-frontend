@@ -9,7 +9,7 @@ class ContactInfo extends React.Component {
   state = {
     last_name: '',
     first_name: '',
-    email_primary: '',
+    email: '',
     phone_primary: '',
     gender: '',
     race_all: '',
