@@ -16,7 +16,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 const ApproveNewApplicantForm = ({
   classes,
   submittedApplicants,
-  getSubmittedContacts,
+  getFilteredContactsSubmitted,
   approveNewContactsStatus,
   allFilteredContacts,
   setPresentApplicants,
@@ -25,15 +25,15 @@ const ApproveNewApplicantForm = ({
   setShowApproveForm,
 }) => {
   useEffect(() => {
-    getSubmittedContacts();
-  }, [getSubmittedContacts]);
+    getFilteredContactsSubmitted();
+  }, [getFilteredContactsSubmitted]);
 
   const [selectedValues, setSelectedValues] = useState([]);
   const [applicantIds, setApplicantIds] = useState([]);
   const [errors, setErrors] = useState({});
   let options = [];
 
-  if (submittedApplicants.length > 0)
+  if (submittedApplicants && submittedApplicants.length > 0)
     options = submittedApplicants.map(contact => {
       return {
         name: `${contact.first_name} ${contact.last_name} (${contact.email})`,

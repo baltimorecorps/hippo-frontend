@@ -19,15 +19,13 @@ const ApplicantPage = ({classes, applicant}) => {
     <div className={classes.headerContainer}>
       <div className={classes.titleAndOrgContainer}>
         <Typography variant="body1" component="p" className={classes.name}>
-          {`${applicant && applicant.first_name} ${applicant &&
-            applicant.last_name}`}
+          {`${applicant.first_name} ${applicant.last_name}`}
         </Typography>
         <Typography variant="body1" component="p" className={classes.email}>
-          {(applicant && applicant.email) ||
-            (applicant && applicant.email_primary.email)}
+          {applicant.email}
         </Typography>
         <Typography variant="body1" component="p" className={classes.email}>
-          {applicant && applicant.phone_primary}
+          {applicant.phone_primary}
         </Typography>
       </div>
 

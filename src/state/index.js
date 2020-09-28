@@ -4,12 +4,7 @@ import {
   accountsReducer as accounts,
 } from './contacts';
 import {capabilitiesReducer as capabilities} from './capabilities';
-import {
-  experiencesReducer as experiences,
-  tagReducer as tags,
-  tagItemReducer as tagItems,
-} from './profile';
-import resume from './resume';
+import {experiencesReducer as experiences} from './profile';
 import {
   opportunitiesReducer as opportunities,
   applicationsReducer as applications,
@@ -24,9 +19,6 @@ const rootReducer = combineReducers({
   capabilities,
   programs,
   experiences,
-  resume,
-  tags,
-  tagItems,
   opportunities,
   applications,
   applicants,

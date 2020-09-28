@@ -226,7 +226,6 @@ const ExperiencesListItem = ({
 ExperiencesListItem.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  selectable: PropTypes.bool.isRequired,
   experience: PropTypes.shape({
     id: PropTypes.number.isRequired,
     host: PropTypes.string.isRequired,

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import ApplicantsBoard from './ApplicantsBoard';
 import {
-  getSubmittedContacts,
+  getFilteredContactsSubmitted,
   approveNewContactsStatus,
   addContactsFilters,
   getAllFilteredContacts,
@@ -10,7 +10,7 @@ import {
 import {formData} from './defaultValues';
 
 const mapStateToProps = state => {
-  const submittedApplicants = state.contacts['submitted'] || [];
+  const submittedApplicants = state.contacts['filtered_submitted'] || [];
   const filteredContacts = state.contacts['filtered'];
   const filterCount = state.contacts['filter_count'];
   const allFilteredContacts = state.contacts['all_filtered_contacts'];
@@ -26,7 +26,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  getSubmittedContacts: () => getSubmittedContacts(dispatch),
+  getFilteredContactsSubmitted: () => getFilteredContactsSubmitted()(dispatch),
   approveNewContactsStatus: applicantIds =>
     approveNewContactsStatus(applicantIds)(dispatch),
   addContactsFilters: (filtersPayload, filterFormData, filterCount) =>

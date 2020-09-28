@@ -20,31 +20,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import {newProfileValidator} from 'lib/formHelpers/formValidator';
 
-// const RACES = [
-//   {
-//     value: 'asian',
-//     label: 'Asian',
-//   },
-//   {
-//     value: 'african-american',
-//     label: 'African-american',
-//   },
-// ];
-// const GENDERS = [
-//   {
-//     value: 'female',
-//     label: 'Female',
-//   },
-//   {
-//     value: 'male',
-//     label: 'Male',
-//   },
-//   {
-//     value: 'other',
-//     label: 'Other',
-//   },
-// ];
-
 const useForm = (addNewContact, accountId, emailSuggest) => {
   const initValues = {};
   if (accountId) {
@@ -57,14 +32,7 @@ const useForm = (addNewContact, accountId, emailSuggest) => {
   const [values, setValues] = useState(initValues);
 
   const handleSubmit = () => {
-    let submission = Object.assign({}, values);
-    submission.email_primary = {
-      is_primary: true,
-      email: values.email,
-      type: 'Personal',
-    };
-    delete submission.email;
-    addNewContact(submission);
+    addNewContact(values);
   };
 
   const handleChange = event => {
@@ -204,7 +172,7 @@ const AddContact = ({
         <TextField
           required
           id="email"
-          label="Primary Email"
+          label="Email"
           name="email"
           value={values.email || ''}
           onChange={handleChange}
@@ -217,7 +185,7 @@ const AddContact = ({
         </FormHelperText>
         <MuiPhoneNumber
           name="phone_primary"
-          label="Primary Phone"
+          label="Phone"
           defaultCountry={'us'}
           value={values.phone_primary}
           onChange={handlePhoneInput}

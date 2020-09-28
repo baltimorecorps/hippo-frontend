@@ -393,17 +393,6 @@ export const internalActivateRole = opportunityId =>
   };
 
 // ---------------------------------------------------------------------------
-// not using anywhere
-export const GET_ALL_CONTACTS_PROGRAMS = 'GET_ALL_CONTACTS_PROGRAMS';
-export const GET_ALL_CONTACTS_PROGRAMS_API = fetchActionTypes(
-  GET_ALL_CONTACTS_PROGRAMS
-);
-export const getAllContactsPrograms = makeApiFetchActions(
-  GET_ALL_CONTACTS_PROGRAMS,
-  `${API_URL}/api/contacts/programs/`
-);
-
-// ---------------------------------------------------------------------------
 
 export const opportunitiesReducer = createReducer(
   {},
@@ -525,9 +514,7 @@ export const applicantsReducer = createReducer(
       });
       return newState;
     },
-    [GET_ALL_CONTACTS_PROGRAMS_API.RESOLVE]: (state, action) => {
-      state['all_applicants'] = action.body.data;
-    },
+
     [GET_ALL_APPROVED_APPLICANTS_API.RESOLVE]: (state, action) => {
       state['approved_applicants'] = action.body.data;
     },

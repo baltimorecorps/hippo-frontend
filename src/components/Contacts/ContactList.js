@@ -8,6 +8,7 @@ import EachContact from './EachContact';
 
 const ContactList = ({contacts, getAllContacts, deleteContact, classes}) => {
   let [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
     if (!loaded && contacts.length === 0) getAllContacts();
 

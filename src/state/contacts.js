@@ -29,14 +29,6 @@ export const deleteSession = () =>
     credentials: 'include',
   });
 
-// export const ALL_CONTACTS = 'ALL_CONTACTS';
-// export const ALL_CONTACTS_API = fetchActionTypes(ALL_CONTACTS);
-// const apiGetAllContacts = () =>
-//   makeApiFetchActions(ALL_CONTACTS, `${API_URL}/api/contacts/`);
-
-// const apiGetContact = contactId =>
-//   makeApiFetchActions(CONTACT, `${API_URL}/api/contacts/${contactId}/`);
-
 const apiAddContact = (authToken, contact) =>
   makeAuthFetchActions(authToken, ADD_CONTACT, `${API_URL}/api/contacts/`, {
     body: JSON.stringify(contact),
@@ -123,18 +115,24 @@ const DELETE_CONTACT = 'DELETE_CONTACT';
 export const DELETE_CONTACT_API = fetchActionTypes(DELETE_CONTACT);
 export const deleteContact = contactId =>
   async function(dispatch) {
-    dispatch({
-      type: DELETE_CONTACT,
-      contactId,
-    });
+    let response;
+    try {
+      response = await makeApiFetchActions(
+        DELETE_CONTACT,
+        `${API_URL}/api/contacts/${contactId}/`,
+        {
+          method: 'DELETE',
+        }
+      )(dispatch);
+      dispatch({
+        type: DELETE_CONTACT,
+        contactId,
+      });
+    } catch (err) {
+      console.error(err);
+    }
 
-    return await makeApiFetchActions(
-      DELETE_CONTACT,
-      `${API_URL}/api/contacts/${contactId}/`,
-      {
-        method: 'DELETE',
-      }
-    )(dispatch);
+    return response;
   };
 
 export const DELETE_CONTACT_SKILL = 'DELETE_CONTACT_SKILL';
@@ -466,21 +464,26 @@ export const APPROVE_NEW_CONTACTS_STATUS = 'APPROVE_NEW_CONTACTS_STATUS';
 export const APPROVE_NEW_CONTACTS_STATUS_API = fetchActionTypes(
   APPROVE_NEW_CONTACTS_STATUS
 );
-export const approveNewContactsStatus = applicantIds =>
+export const approveNewContactsStatus = (applicantIds, approvedContacts) =>
   async function(dispatch) {
-    dispatch({
-      type: APPROVE_NEW_CONTACTS_STATUS,
-      applicantIds,
-    });
-
-    await makeApiFetchActions(
-      APPROVE_NEW_CONTACTS_STATUS,
-      `${API_URL}/api/contacts/approve/`,
-      {
-        body: JSON.stringify(applicantIds),
-        method: 'POST',
-      }
-    )(dispatch);
+    try {
+      const result = await makeApiFetchActions(
+        APPROVE_NEW_CONTACTS_STATUS,
+        `${API_URL}/api/contacts/approve/`,
+        {
+          body: JSON.stringify(applicantIds),
+          method: 'POST',
+        }
+      )(dispatch);
+      dispatch({
+        type: APPROVE_NEW_CONTACTS_STATUS,
+        data: result.body.data,
+        applicantIds,
+        approvedContacts,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
 // ---------------------------------------------------------------------------
@@ -551,23 +554,36 @@ export const resetFilterCount = dispatch =>
 
 // ---------------------------------------------------------------------------
 
+export const GET_FILTERED_CONTACTS_SUBMITTED =
+  'GET_FILTERED_CONTACTS_SUBMITTED';
+export const GET_FILTERED_CONTACTS_SUBMITTED_API = fetchActionTypes(
+  GET_FILTERED_CONTACTS_SUBMITTED
+);
+export const getFilteredContactsSubmitted = () =>
+  async function(dispatch) {
+    try {
+      const result = await makeApiFetchActions(
+        GET_FILTERED_CONTACTS_SUBMITTED,
+        `${API_URL}/api/contacts/filter/`,
+        {
+          body: JSON.stringify({status: ['submitted']}),
+          method: 'POST',
+        }
+      )(dispatch);
+      dispatch({
+        type: GET_FILTERED_CONTACTS_SUBMITTED,
+        data: result.body.data,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 /* eslint-enable no-unused-vars */
 
 export const contactsReducer = createReducer(
   {},
   {
-    // [ALL_CONTACTS_API.RESOLVE]: (state, action) => {
-    //   if (!action.body) {
-    //     return {};
-    //   } else {
-    //     let newState = {};
-    //     action.body.data.forEach(contact => {
-    //       newState[contact.id] = contact;
-    //     });
-    //     return newState;
-    //   }
-    // },
-
     [GET_ALL_CONTACTS_API.RESOLVE]: (state, action) => {
       if (!action.body) {
         return {};
@@ -592,10 +608,19 @@ export const contactsReducer = createReducer(
 
     [APPROVE_NEW_CONTACTS_STATUS_API.RESOLVE]: (state, action) => {
       const approvedContacts = action.body.data;
-      state['all_filtered_contacts'] = [
-        ...state['all_filtered_contacts'],
-        ...approvedContacts,
-      ];
+      const allFilteredContacts = state['all_filtered_contacts'];
+      const newState = approvedContacts.map(approvedContact => {
+        return allFilteredContacts.map(filteredContact => {
+          if (filteredContact.id === approvedContact.id) {
+            filteredContact.status = 'approved';
+            return filteredContact;
+          } else {
+            return filteredContact;
+          }
+        });
+      });
+
+      state['all_filtered_contacts'] = newState[0];
     },
 
     [RESET_FILTER_COUNT]: (state, action) => {
@@ -614,6 +639,11 @@ export const contactsReducer = createReducer(
       state['filtered'] = data;
       state['filter_form_data'] = filterFormData;
       state['filter_count'] = filterCount;
+    },
+
+    [GET_FILTERED_CONTACTS_SUBMITTED]: (state, action) => {
+      const {data} = action;
+      state['filtered_submitted'] = data;
     },
 
     [GET_CONTACT_API.RESOLVE]: (state, action) => {
@@ -649,10 +679,12 @@ export const contactsReducer = createReducer(
     },
     [DELETE_CONTACT]: (state, action) => {
       const contactId = action.contactId;
-      const newState = Object.values(state).filter(
+
+      const newState = Object.values(state.short).filter(
         contact => contact.id !== contactId
       );
-      return newState;
+      state.short = newState;
+      return state;
     },
 
     [UPDATE_CONTACT_API.RESOLVE]: (state, action) => {
@@ -665,20 +697,6 @@ export const contactsReducer = createReducer(
     [ADD_CONTACT_API.RESOLVE]: (state, action) => {
       const contact = action.body.data;
       state[contact.id] = contact;
-    },
-    [GET_SESSION_API.RESOLVE]: (state, action) => {
-      // const contact = action.body.data.contact;
-      // state[contact.id] = {
-      //   ...state[contact.id],
-      //   id: contact.id,
-      // };
-    },
-    [CREATE_SESSION_API.RESOLVE]: (state, action) => {
-      // const contact = action.body.data.contact;
-      // state[contact.id] = {
-      //   ...state[contact.id],
-      //   ...contact,
-      // };
     },
 
     [GET_DYNAMIC_INSTRUCTIONS_API.RESOLVE]: (state, action) => {

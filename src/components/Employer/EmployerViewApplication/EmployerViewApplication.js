@@ -85,7 +85,7 @@ const EmployerViewApplication = ({
     }
   };
   const toEmployerBoardButton = createAButton(
-    "To Employer's Opportunity Board",
+    "To Employer's Page",
     toEmployerBoard,
     true,
     classes.buttons
@@ -142,7 +142,6 @@ EmployerViewApplication.propTypes = {
       program_id: PropTypes.number.isRequired,
       id: PropTypes.string.isRequired,
       short_description: PropTypes.string.isRequired,
-      cycle_id: PropTypes.number.isRequired,
       gdoc_link: PropTypes.string.isRequired,
       org_name: PropTypes.string.isRequired,
     }),

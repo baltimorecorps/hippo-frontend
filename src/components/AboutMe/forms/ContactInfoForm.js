@@ -34,15 +34,6 @@ import {
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);
 
-  if (values.email_primary.type == null) {
-    const updatedEmail = {
-      ...values.email_primary,
-      type: 'Personal',
-    };
-    update('email_primary')(updatedEmail);
-    update('emails')([updatedEmail]);
-  }
-
   const handlers = {
     handleChange: event => {
       event.persist();
@@ -203,7 +194,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
             <FormTextField
               isLabelInside={true}
-              value={values.email || values.email_primary.email}
+              value={values.email}
               name="email"
               label="Email"
               onChange={handleChange}
