@@ -31,7 +31,7 @@ const EmployerViewApplication = ({
   getApplication,
   employerInterviewApplication,
   employerNotAFitApplication,
-  employerConsiderApplication,
+  employerFinalistsApplication,
 }) => {
   const [confirmed, setConfirmed] = useState(false);
   const [decision, setDecision] = useState('');
@@ -60,8 +60,12 @@ const EmployerViewApplication = ({
     setDecision('interview completed');
     setConfirmed(true);
   };
-  const handleClickReconsider = () => {
-    setDecision('reconsider');
+  const handleClickReconsiderFinalists = () => {
+    setDecision('reconsider: finalists');
+    setConfirmed(true);
+  };
+  const handleClickReconsiderNotAFit = () => {
+    setDecision('reconsider: not a fit');
     setConfirmed(true);
   };
   const handleClickNotAFit = () => {
@@ -75,8 +79,8 @@ const EmployerViewApplication = ({
       toEmployerBoard();
     }
   };
-  const considerApplication = async () => {
-    const response = await employerConsiderApplication(
+  const finalistsApplication = async () => {
+    const response = await employerFinalistsApplication(
       contactId,
       opportunityId
     );
@@ -102,7 +106,8 @@ const EmployerViewApplication = ({
         interviewScheduled={handleClickInterViewScheduled}
         interviewCompleted={handleClickInterViewCompleted}
         employerNotAFit={handleClickNotAFit}
-        employerReconsider={handleClickReconsider}
+        employerReconsiderFinalists={handleClickReconsiderFinalists}
+        employerReconsiderNotAFit={handleClickReconsiderNotAFit}
         applicantId={application && application.contact.id}
         opportunityId={opportunityId}
       />
@@ -112,7 +117,7 @@ const EmployerViewApplication = ({
         decision={decision}
         closeDialog={() => setConfirmed(false)}
         notAFitApplication={notAFitApplication}
-        considerApplication={considerApplication}
+        finalistsApplication={finalistsApplication}
         employerInterviewApplication={employerInterviewApplication}
         toEmployerBoard={toEmployerBoard}
       />
@@ -332,7 +337,7 @@ const ConfirmDialog = withStyles(styles)(
     decision,
     closeDialog,
     notAFitApplication,
-    considerApplication,
+    finalistsApplication,
     employerInterviewApplication,
     toEmployerBoard,
   }) => {
@@ -374,7 +379,7 @@ const ConfirmDialog = withStyles(styles)(
           'Click Confirm Consider Application',
           'Click Confirm Consider Application'
         );
-        considerApplication();
+        finalistsApplication();
       } else if (decision === 'employer: not a fit') {
         createClickTracking(
           'Employer Making Decision',
@@ -396,21 +401,25 @@ const ConfirmDialog = withStyles(styles)(
       case 'interview completed':
         confirmText = `Would ${application.contact.first_name} ${application.contact.last_name} be a finalist for this role?`;
         break;
-      case 'reconsider':
+      case 'reconsider: finalists':
         confirmText = `Do you want to reconsider ${application.contact.first_name} ${application.contact.last_name} as a finalist?`;
+        break;
+      case 'reconsider: not a fit':
+        confirmText = `Do you want to reconsider ${application.contact.first_name} ${application.contact.last_name} as not a fit?`;
         break;
       default:
         confirmText = <span></span>;
     }
 
-    const consideredForRoleButton = createAButton(
-      'Yes',
-      considerApplication,
+    const finalistsButton = createAButton(
+      'Make this candidate a finalist',
+      finalistsApplication,
       true,
       classes.greenButtons
     );
+
     const notAFitButton = createAButton(
-      'No',
+      'This candidate is not a fit',
       notAFitApplication,
       true,
       classes.redButtons
@@ -483,7 +492,9 @@ const ConfirmDialog = withStyles(styles)(
               </React.Fragment>
             </DialogActions>
           </React.Fragment>
-        ) : decision === 'interview completed' || decision === 'reconsider' ? (
+        ) : decision === 'interview completed' ||
+          decision === 'reconsider: finalists' ||
+          decision === 'reconsider: not a fit' ? (
           <React.Fragment>
             <DialogContent className={classes.dialogContent}>
               <div className={classes.dialogHeaderContainer}>
@@ -511,7 +522,10 @@ const ConfirmDialog = withStyles(styles)(
                   ? notAFitButton
                   : noCancelButton}
 
-                {consideredForRoleButton}
+                {decision === 'reconsider: finalists' ||
+                decision === 'interview completed'
+                  ? finalistsButton
+                  : notAFitButton}
               </React.Fragment>
             </DialogActions>
           </React.Fragment>
