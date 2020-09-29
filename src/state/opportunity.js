@@ -254,29 +254,6 @@ export const getAllInternalApplicants = makeApiFetchActions(
 );
 
 // ---------------------------------------------------------------------------
-// not using here. moved to contacts state
-export const GET_ALL_APPROVED_APPLICANTS = 'GET_ALL_APPROVED_APPLICANTS';
-export const GET_ALL_APPROVED_APPLICANTS_API = fetchActionTypes(
-  GET_ALL_APPROVED_APPLICANTS
-);
-export const getAllApprovedApplicants = makeApiFetchActions(
-  GET_ALL_APPROVED_APPLICANTS,
-  `${API_URL}/api/contacts/programs/?is_approved=true`
-);
-
-// ---------------------------------------------------------------------------
-// not using here. moved to contacts state
-export const GET_ALL_NOT_APPROVED_APPLICANTS =
-  'GET_ALL_NOT_APPROVED_APPLICANTS';
-export const GET_ALL_NOT_APPROVED_APPLICANTS_API = fetchActionTypes(
-  GET_ALL_NOT_APPROVED_APPLICANTS
-);
-export const getAllNotApprovedApplicants = makeApiFetchActions(
-  GET_ALL_NOT_APPROVED_APPLICANTS,
-  `${API_URL}/api/contacts/programs/?is_approved=false`
-);
-
-// ---------------------------------------------------------------------------
 
 export const GET_ORG_OPPORTUNITY = 'GET_ORG_OPPORTUNITY';
 export const GET_ORG_OPPORTUNITY_API = fetchActionTypes(GET_ORG_OPPORTUNITY);
@@ -318,7 +295,7 @@ export const EMPLOYER_CONSIDER_APPLICATION = 'EMPLOYER_CONSIDER_APPLICATION';
 export const EMPLOYER_CONSIDER_APPLICATION_API = fetchActionTypes(
   EMPLOYER_CONSIDER_APPLICATION
 );
-export const employerConsiderApplication = (contactId, opportunityId) =>
+export const employerFinalistsApplication = (contactId, opportunityId) =>
   async function(dispatch) {
     dispatch({
       type: EMPLOYER_CONSIDER_APPLICATION,
@@ -513,13 +490,6 @@ export const applicantsReducer = createReducer(
         newState[applicant.id] = applicant;
       });
       return newState;
-    },
-
-    [GET_ALL_APPROVED_APPLICANTS_API.RESOLVE]: (state, action) => {
-      state['approved_applicants'] = action.body.data;
-    },
-    [GET_ALL_NOT_APPROVED_APPLICANTS_API.RESOLVE]: (state, action) => {
-      state['not_approved_applicants'] = action.body.data;
     },
   }
 );
