@@ -10,7 +10,8 @@ const StickyFooter = ({
   recommend,
   notAFit,
   employerNotAFit,
-  employerReconsider,
+  employerReconsiderFinalists,
+  employerReconsiderNotAFit,
   reopen,
   interviewScheduled,
   interviewCompleted,
@@ -63,11 +64,17 @@ const StickyFooter = ({
     true,
     classes.purpleButtons
   );
-  const reconsiderButton = createAButton(
-    'Reconsider for Role',
-    employerReconsider,
+  const reconsiderFinalistsButton = createAButton(
+    'Reconsider for Finalists',
+    employerReconsiderFinalists,
     true,
     classes.greenButtons
+  );
+  const reconsiderNotAFitButton = createAButton(
+    'Reconsider for Not a Fit',
+    employerReconsiderNotAFit,
+    true,
+    classes.redButtons
   );
   const interviewCompletedButton = createAButton(
     'Interview Completed',
@@ -192,7 +199,19 @@ const StickyFooter = ({
       application.is_active === false
     ) {
       leftButton = interviewRescheduledButton;
-      rightButton = reconsiderButton;
+      rightButton = reconsiderFinalistsButton;
+    } else if (
+      application.status === 'considered_for_role' &&
+      application.is_active === true
+    ) {
+      leftButton = backButton;
+      rightButton = reconsiderNotAFitButton;
+    } else if (
+      application.status === 'considered_for_role' &&
+      application.is_active === false
+    ) {
+      leftButton = backButton;
+      rightButton = reconsiderFinalistsButton;
     } else {
       leftButton = backButton;
     }

@@ -6,7 +6,7 @@ import {
   getApplication,
   employerInterviewApplication,
   employerNotAFitApplication,
-  employerConsiderApplication,
+  employerFinalistsApplication,
 } from 'state/opportunity';
 
 const mapStateToProps = (state, props) => {
@@ -40,8 +40,8 @@ const mapDispatchToProps = dispatch => ({
     )(dispatch),
   employerNotAFitApplication: (contactId, opportunityId) =>
     employerNotAFitApplication(contactId, opportunityId)(dispatch),
-  employerConsiderApplication: (contactId, opportunityId) =>
-    employerConsiderApplication(contactId, opportunityId)(dispatch),
+  employerFinalistsApplication: (contactId, opportunityId) =>
+    employerFinalistsApplication(contactId, opportunityId)(dispatch),
 });
 
 export default connect(
