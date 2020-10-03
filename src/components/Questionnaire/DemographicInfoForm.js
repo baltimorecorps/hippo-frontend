@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import {genders, pronouns, raceLabels} from '../AboutMe/defaultData';

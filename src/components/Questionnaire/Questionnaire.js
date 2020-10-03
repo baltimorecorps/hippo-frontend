@@ -1,27 +1,19 @@
 import React, {useState} from 'react';
-import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 
 import ContactInfoForm from './ContactInfoForm';
 import ValueQuestionForm from './ValueQuestionForm';
 import InterestsAndGoalsForm from './InterestsAndGoalsForm';
 import DemographicInfoForm from './DemographicInfoForm';
 
-import mockData from '../AboutMe/mockData';
 import mockDataEmpty from '../AboutMe/mockDataEmpty';
 import Logo from '../../lib/images/long.png';
 import {interestsAndGoalsValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-import {
-  FormCheckboxes,
-  FormTextField,
-  FormDropDownSelector,
-  FormSubmitButton,
-} from '../AboutMe/forms/FormTemplates';
+import {FormSubmitButton} from '../AboutMe/forms/FormTemplates';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);

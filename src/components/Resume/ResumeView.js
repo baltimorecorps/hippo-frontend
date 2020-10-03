@@ -1,6 +1,5 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {ResumeViewer} from 'components/ResumeCreator';
-import Button from '@material-ui/core/Button';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const ResumeView = ({classes, match}) => {

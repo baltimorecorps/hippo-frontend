@@ -5,7 +5,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Badge from '@material-ui/core/Badge';
-import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';

@@ -1,42 +1,12 @@
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import Typography from '@material-ui/core/Typography';
-
-import mockData from '../AboutMe/mockData';
-import mockDataEmpty from '../AboutMe/mockDataEmpty';
-import Logo from '../../lib/images/long.png';
-import {contactInfoValidator} from 'lib/formHelpers/formValidator';
-import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-
-import {
-  states,
-  countryList,
-  jobSearchStatus,
-  yearsOfExperience,
-  roleLabels,
-  genders,
-  pronouns,
-  raceLabels,
-} from '../AboutMe/defaultData';
-
-import {
-  FormHeader,
-  FormRadioButtons,
-  FormCheckboxes,
-  FormSubmitButton,
-  FormTextField,
-  FormDropDownSelector,
-} from '../AboutMe/forms/FormTemplates';
+import {states, countryList} from '../AboutMe/defaultData';
 
 const ContactInfoForm = ({values, handleAddress, errors, classes}) => {
   const inputLabelProps = {
@@ -171,12 +141,7 @@ const ContactInfoForm = ({values, handleAddress, errors, classes}) => {
   );
 };
 
-ContactInfoForm.propTypes = {
-  //   contact: PropTypes.object.isRequired,
-  //   onSubmit: PropTypes.func.isRequired,
-  //   onCloseAllForms: PropTypes.func.isRequired,
-  //   onClickEdit: PropTypes.func.isRequired,
-};
+ContactInfoForm.propTypes = {};
 
 const styles = ({breakpoints, palette, spacing}) => ({
   formControl: {
