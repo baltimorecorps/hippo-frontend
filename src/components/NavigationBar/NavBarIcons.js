@@ -12,7 +12,6 @@ import {
 const NavBarIcons = ({logout, classes}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openIcon, setOpenIcon] = useState(0);
-  const [isWarning, setIsWarning] = useState(false);
   const wrapperRef = useRef(null);
 
   let history = useHistory();

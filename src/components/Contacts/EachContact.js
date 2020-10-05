@@ -38,7 +38,7 @@ const ContactList = ({classes, contact, deleteContact}) => {
 
   const onDelete = async contactId => {
     const response = await deleteContact(contactId);
-    if (response && response.statusCode == 200) {
+    if (response && Number(response.statusCode) === 200) {
       setAnchorEl(null);
       setOpenDeleteDialog(false);
     }

@@ -75,7 +75,7 @@ const EmployerViewApplication = ({
 
   const notAFitApplication = async () => {
     const response = await employerNotAFitApplication(contactId, opportunityId);
-    if (response.statusCode == 200) {
+    if (Number(response.statusCode) === 200) {
       toEmployerBoard();
     }
   };
@@ -84,7 +84,7 @@ const EmployerViewApplication = ({
       contactId,
       opportunityId
     );
-    if (response.statusCode == 200) {
+    if (Number(response.statusCode) === 200) {
       toEmployerBoard();
     }
   };
@@ -156,7 +156,7 @@ EmployerViewApplication.propTypes = {
   getApplication: PropTypes.func.isRequired,
   employerInterviewApplication: PropTypes.func.isRequired,
   employerNotAFitApplication: PropTypes.func.isRequired,
-  employerConsiderApplication: PropTypes.func.isRequired,
+  employerFinalistsApplication: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -313,7 +313,7 @@ const useForm = (initialValues, onSubmit, toEmployerBoard) => {
       values.opportunity_id,
       interviewDetails
     );
-    if (response.statusCode == 200) {
+    if (Number(response.statusCode) === 200) {
       toEmployerBoard();
     }
   };

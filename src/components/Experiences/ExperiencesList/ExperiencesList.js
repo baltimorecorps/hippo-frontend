@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import PropTypes from 'prop-types';
@@ -27,12 +27,10 @@ const ExperiencesList = ({
   experiences,
   capabilities,
   addNewExperience,
-  refreshExperiences,
   updateExperience,
   deleteExperience,
   selectExperience,
   deselectExperience,
-  updateEditScore,
   inSelectMode,
   refreshDynamicInstructions,
   classes,
@@ -173,7 +171,6 @@ const ExperiencesList = ({
                 handleCancel={() => setShowForm(false)}
                 onDelete={null}
                 onSkillsMore={handleOnSkillsMore}
-                updateEditScore={updateEditScore('new')}
               />
             </Grid>
           )}
@@ -189,7 +186,6 @@ const ExperiencesList = ({
               experience={experience}
               capabilities={capabilities}
               selectable={inSelectMode}
-              updateEditScore={updateEditScore(experience.id)}
             />
           ))}
         </Paper>
@@ -210,7 +206,6 @@ ExperiencesList.propTypes = {
   addNewExperience: PropTypes.func.isRequired,
   updateExperience: PropTypes.func.isRequired,
   deleteExperience: PropTypes.func.isRequired,
-  refreshExperiences: PropTypes.func.isRequired,
 };
 
 const headers = {

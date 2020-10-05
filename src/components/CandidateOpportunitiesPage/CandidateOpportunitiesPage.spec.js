@@ -56,7 +56,7 @@ describe('Opportunities Page', () => {
   const history = createMemoryHistory();
 
   test('Page render correctly: Main Page', () => {
-    const {getAllByTestId, getByTestId, getByText, getAllByText} = render(
+    const {getAllByTestId, getByTestId, getAllByText} = render(
       <Router history={history}>
         <CandidateOpportunitiesPage
           opportunities={opportunityArray}
@@ -183,7 +183,7 @@ describe('Opportunities Page', () => {
   test('Filter Opportunities', () => {
     const history = createMemoryHistory();
 
-    const {getByTestId, getAllByTestId, getByText, getAllByText} = render(
+    const {getByTestId, getAllByTestId, getAllByText} = render(
       <Router history={history}>
         <CandidateOpportunitiesPage
           opportunities={opportunityArray}

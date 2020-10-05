@@ -73,7 +73,7 @@ const EachOpportunity = ({
       response = await activateRole(opportunityId);
     }
 
-    if (response && response.statusCode == 200) {
+    if (response && Number(response.statusCode) === 200) {
       setAnchorEl(null);
     }
   };
