@@ -14,7 +14,6 @@ import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 import HomeIcon from '@material-ui/icons/Home';
 
 import ErrorBoundary from 'lib/atoms/ErrorBoundary';
-import Resume from 'components/Resume/Resume';
 
 import {ProfileAuth, ProfileStaff} from 'components/ProfilePage';
 import theme from 'styles/theme';
@@ -23,7 +22,6 @@ import {useAuth0} from 'lib/Auth0/auth0';
 
 import Home from 'components/Home/Home';
 import Contacts from 'components/Contacts/Contacts.container';
-import ResumeView from 'components/Resume/ResumeView';
 
 import CandidateOpportunitiesPage from 'components/CandidateOpportunitiesPage';
 import InternalOpportunitiesPage from 'components/Internal/AddOrEditOpportunitiesPage';
@@ -36,7 +34,6 @@ import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'components/FAQPage';
-import Questionnaire from 'components/Questionnaire';
 import ApplicantsBoard from 'components/Internal/ApplicantsBoard';
 import ApplicantPage from 'components/Internal/ApplicantPage';
 
@@ -180,10 +177,6 @@ const App = ({
               <Route exact path="/" component={Home} />
 
               <Route exact path="/contacts" component={Contacts} />
-              <Route exact path="/questionnaire" component={Questionnaire} />
-
-              <Route exact path="/resume/:contactId" component={ResumeView} />
-              <Route exact path="/resume/:gdocId" component={Resume} />
 
               <Route exact path="/profile/" component={ProfileAuth} />
               <Route
@@ -247,16 +240,6 @@ const App = ({
                 exact
                 path="/profile/:contactId"
                 component={ProfileStaff}
-              />
-              <Route
-                exact
-                path="/profile/:contactId/resume/:resumeId"
-                component={Resume}
-              />
-              <Route
-                exact
-                path="/contacts/:contactId/resume/:resumeId"
-                component={Resume}
               />
               {/* Employer Pages */}
               <Route
