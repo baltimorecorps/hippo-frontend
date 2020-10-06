@@ -11,9 +11,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import PrintIcon from '@material-ui/icons/Print';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import {lighten, makeStyles} from '@material-ui/core/styles';
-import {useHistory, useRouteMatch} from 'react-router-dom';
+import {makeStyles} from '@material-ui/core/styles';
+import {useHistory} from 'react-router-dom';
 
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Typography from '@material-ui/core/Typography';

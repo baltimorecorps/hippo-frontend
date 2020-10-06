@@ -154,7 +154,6 @@ const ExperiencesListItem = ({
   refreshDynamicInstructions,
   classes,
 }) => {
-  const config = configureForm(experience.type);
   const initial = experience.host ? experience.host[0] : experience.title[0];
 
   const [editing, setEditing] = useState(false);

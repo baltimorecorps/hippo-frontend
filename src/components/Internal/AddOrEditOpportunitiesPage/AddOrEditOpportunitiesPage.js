@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
@@ -41,14 +39,14 @@ const AddOrEditOpportunitiesPage = ({
 
   const addNewOpportunity = async values => {
     const result = await addOpportunity(values);
-    if (result && result.statusCode == 201) {
+    if (result && Number(result.statusCode) === 201) {
       history.push('/internal/add-or-edit-opportunities');
     }
   };
 
   const updateExistingOpportunity = async values => {
     const result = await updateOpportunity(values);
-    if (result && result.statusCode == 200) {
+    if (result && Number(result.statusCode) === 200) {
       history.push('/internal/add-or-edit-opportunities');
     }
   };

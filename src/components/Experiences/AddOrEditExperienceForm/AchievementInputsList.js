@@ -1,7 +1,6 @@
 import React from 'react';
 import {useRef, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
 import AchievementInput from './AchievementInput';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';

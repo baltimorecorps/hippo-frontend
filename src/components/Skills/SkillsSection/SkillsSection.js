@@ -10,36 +10,6 @@ import SkillSelect from 'components/Skills/SkillSelect';
 
 import Link from '@material-ui/core/Link';
 
-// TODO: Eventually this info will need to find a home on the backend
-const CAPABILITIES = [
-  {
-    name: 'Project Management',
-    skills: ['Budgeting', 'Scheduling', 'Project Planning', 'Leadership'],
-  },
-  {
-    name: 'Communication',
-    skills: [
-      'Report Writing',
-      'Presenting',
-      'Documentation',
-      'Technical Requirements',
-    ],
-  },
-  {
-    name: 'Data Analysis',
-    skills: ['Metrics', 'Statistics', 'Microsoft Excel', 'SQL', 'R'],
-  },
-  {
-    name: 'Software Development',
-    skills: [
-      'Scripting',
-      'Web Development',
-      'Python',
-      'Database Administration',
-    ],
-  },
-];
-
 const SkillsSection = ({
   classes,
   contactId,

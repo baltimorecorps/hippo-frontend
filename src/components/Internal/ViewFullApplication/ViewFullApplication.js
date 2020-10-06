@@ -14,7 +14,7 @@ const ReviewApplication = ({
   opportunityId,
   getApplication,
 }) => {
-  const [nothing, setNothing] = useState();
+  const [resume, setResume] = useState(application && application.resume);
 
   useEffect(() => {
     if (!application || application.length === 0) {
@@ -77,8 +77,8 @@ const ReviewApplication = ({
       {application && application.resume && (
         <ResumeViewer
           contactId={application && application.contact.id}
-          resume={application && application.resume}
-          setResume={setNothing}
+          resume={resume}
+          setResume={setResume}
           viewOnly={true}
           page="staff"
         />

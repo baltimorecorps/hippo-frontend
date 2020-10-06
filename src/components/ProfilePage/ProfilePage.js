@@ -38,7 +38,6 @@ const ProfilePage = ({
   const [isOpenDrawer1, setOpenDrawer1] = React.useState(false);
   const [isOpenDrawer2, setOpenDrawer2] = React.useState(false);
   const [sidebarType, setSidebarType] = useState('work');
-  const [editScores, setEditScores] = useState({});
   const [viewResume, setViewResume] = useState(false);
   const [resume, setResume] = useState({myResume: null});
   const [expandPanel, setExpandPanel] = useState({
@@ -66,16 +65,6 @@ const ProfilePage = ({
       if (exp.type === 'Accomplishment') return experiences.portfolio.push(exp);
     });
   const haveExperience = experiences.work.length > 0;
-
-  const updateEditScore = useCallback(
-    expId => scores => {
-      setEditScores(existing => ({
-        ...existing,
-        [expId]: scores,
-      }));
-    },
-    [setEditScores]
-  );
 
   const handleUpdateAboutMe = async (contactId, values) => {
     await updateAboutMe(contactId, values);
@@ -321,7 +310,6 @@ const ProfilePage = ({
                       contactStatus={contactInfo.status}
                       experienceType="Work"
                       onClickMore={onClickMoreDetails}
-                      updateEditScore={updateEditScore}
                       experiences={experiences && experiences.work}
                     />
                     <ExperiencesList
@@ -334,7 +322,6 @@ const ProfilePage = ({
                       contactStatus={contactInfo.status}
                       experienceType="Education"
                       onClickMore={onClickMoreDetails}
-                      updateEditScore={updateEditScore}
                       experiences={experiences && experiences.education}
                     />
 
@@ -344,7 +331,6 @@ const ProfilePage = ({
                       contactStatus={contactInfo.status}
                       experienceType="Accomplishment"
                       onClickMore={onClickMoreDetails}
-                      updateEditScore={updateEditScore}
                       experiences={experiences && experiences.portfolio}
                     />
                   </React.Fragment>

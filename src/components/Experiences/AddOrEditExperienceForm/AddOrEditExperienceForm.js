@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React from 'react';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import PropTypes from 'prop-types';
@@ -16,10 +16,6 @@ import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {experienceValidator} from 'lib/formHelpers/formValidator';
-import {
-  scoreAchievements,
-  relativeScores,
-} from 'lib/helperFunctions/scoreAchievements';
 import {configureForm} from 'components/Experiences/ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';
@@ -77,23 +73,12 @@ const AddOrEditExperienceForm = ({
   onDelete,
   refreshDynamicInstructions,
   onSkillsMore,
-  updateEditScore,
 }) => {
   const config = configureForm(experience.type);
   if (!config.showEndDate) {
     experience['end_year'] = 0;
     experience['end_month'] = 'none';
   }
-
-  /*
-  const initialScore = useRef(0);
-  useEffect(() => {
-    initialScore.current = scoreAchievements(experience.achievements);
-    return (() => {
-      updateEditScore({});
-    })
-  }, [experience]);
-  */
 
   const [
     values,
@@ -175,13 +160,6 @@ const AddOrEditExperienceForm = ({
   };
 
   const handleAchievementsLocal = achievements => {
-    /* prohibitively expensive performance-wise right now
-     * need to optimize
-    updateEditScore(relativeScores(
-      scoreAchievements(achievements),
-      initialScore.current,
-    ));
-    */
     handleAchievements(achievements);
   };
 

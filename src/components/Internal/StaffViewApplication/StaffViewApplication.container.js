@@ -9,20 +9,18 @@ import {
   staffReopenApplication,
 } from 'state/opportunity';
 
-import {useParams} from 'react-router-dom';
-
 const mapStateToProps = (state, props) => {
   const {opportunityId, contactId} = props.match.params;
 
   const opportunities = Object.values(state.opportunities);
 
-  const matchingApplications = Object.values(state.applications).filter(app => {
-    if (app.contact && app.opportunity)
-      return (
-        app.contact.id === Number(contactId) &&
-        app.opportunity.id === opportunityId
-      );
-  });
+  const matchingApplications = Object.values(state.applications).filter(
+    app =>
+      app.contact &&
+      app.opportunity &&
+      app.contact.id === Number(contactId) &&
+      app.opportunity.id === opportunityId
+  );
 
   return {
     contactId,
