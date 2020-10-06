@@ -15,7 +15,10 @@ const mapStateToProps = (state, props) => {
   const opportunities = Object.values(state.opportunities);
 
   const matchingApplications = Object.values(state.applications).filter(
-    app => app.contact.id === contactId && app.opportunity.id === opportunityId
+    app =>
+      app.contact &&
+      app.contact.id === contactId &&
+      app.opportunity.id === opportunityId
   );
 
   return {
