@@ -9,7 +9,7 @@ import {getContactProfile} from 'state/contacts';
 const mapStateToProps = state => {
   const submittedIds = Object.values(state.applications)
     .filter(app => app.status !== 'draft')
-    .map(app => app.opportunity.id);
+    .map(app => app.opportunity && app.opportunity.id);
 
   const opportunities = Object.values(state.opportunities);
 
