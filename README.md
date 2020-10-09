@@ -1,23 +1,38 @@
 # Baltimore Corps Hippo Web App
 
-## Structure
+## Frontend File Structure
 
 - app
 - components
-  - Achievements
+  - AboutMe
   - ApplicationForm
+  - CandidateOpportunitiesPage
   - CapabilityScores
   - Contacts
+  - DynamicInstructions
+  - Employer
+    - EmployerPage
+    - EmployerViewApplication
   - Experiences
+  - FAQPage
+  - Footers
+    - DecisionsFooter
+    - MainFooter
   - Home
+  - Internal
+    - AddOrEditOpportunitiesPage
+    - ApplicantPage
+    - ApplicantsBoard
+    - Cards
+    - OpportunitiesBoard
+    - PartnershipsPage
+    - StaffViewApplication
   - NavigationBar
-  - OpportunityPage
   - Profile Page
-  - Resume
   - ResumeCreator
   - SideBarDrawer
   - Skills
-  - Users
+  - ViewFullApplication
 - lib
 - state
 - styles
