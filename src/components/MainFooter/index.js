@@ -1,3 +1,3 @@
-import Footer from './Footer';
+import MainFooter from './MainFooter';
 
-export default Footer;
+export default MainFooter;

@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-import Footer from 'components/MainFooter';
+import MainFooter from 'components/MainFooter';
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -247,7 +247,7 @@ const App = ({
                 component={EmployerPage}
               />
             </Switch>
-            <Footer />
+            <MainFooter />
           </div>
         </Router>
       </MuiThemeProvider>
