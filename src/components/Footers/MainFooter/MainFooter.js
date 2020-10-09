@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import {useRouteMatch} from 'react-router-dom';
 import Logo from './img/logo_square.png';
 
-const Footer = ({classes, page}) => {
+const MainFooter = ({classes, page}) => {
   const termsLink = createALink('Terms', terms, classes.link);
   const policyLink = createALink(
     'Privacy',
@@ -62,7 +62,7 @@ const Footer = ({classes, page}) => {
   }
 };
 
-Footer.propTypes = {
+MainFooter.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -142,4 +142,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(Footer);
+export default withStyles(styles)(MainFooter);

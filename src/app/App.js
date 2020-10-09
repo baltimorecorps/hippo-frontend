@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
-import Footer from 'components/Footer';
+import MainFooter from 'components/Footers/MainFooter';
 import NavBarIcons from 'components/NavigationBar/NavBarIcons';
 import HomeIcon from '@material-ui/icons/Home';
 
@@ -29,7 +29,6 @@ import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';
 import StaffViewApplication from 'components/Internal/StaffViewApplication/StaffViewApplication.container';
-import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
 import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
@@ -233,10 +232,6 @@ const App = ({
               />
 
               <Route
-                path="/staff-confirmation-page"
-                component={StaffConfirmationPage}
-              />
-              <Route
                 exact
                 path="/profile/:contactId"
                 component={ProfileStaff}
@@ -247,7 +242,7 @@ const App = ({
                 component={EmployerPage}
               />
             </Switch>
-            <Footer />
+            <MainFooter />
           </div>
         </Router>
       </MuiThemeProvider>

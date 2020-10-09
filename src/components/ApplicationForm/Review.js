@@ -7,7 +7,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
-import StickyFooter from './StickyFooter';
+import DecisionsFooter from '../Footers/DecisionsFooter';
 import {ResumeViewer} from 'components/ResumeCreator';
 import {
   createExternalLink,
@@ -94,7 +94,7 @@ const Review = ({
         viewOnly={true}
       />
 
-      <StickyFooter
+      <DecisionsFooter
         page="review"
         back={back}
         toOpportunities={toOpportunities}
