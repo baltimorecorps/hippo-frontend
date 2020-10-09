@@ -7,7 +7,7 @@ import {
   createExternalLink,
   createClickTracking,
 } from 'lib/helperFunctions/helpers';
-import StickyFooter from './StickyFooter';
+import DecisionsFooter from '../Footers/DecisionsFooter';
 import {ResumeViewer} from 'components/ResumeCreator';
 
 const AddResume = ({
@@ -84,7 +84,7 @@ const AddResume = ({
         resume={resume}
         setResume={setResume}
       />
-      <StickyFooter
+      <DecisionsFooter
         page="resume"
         back={back}
         handleNext={() => onClickNext(resume)}
@@ -108,7 +108,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    paddingBottom: spacing(3)
+    paddingBottom: spacing(3),
   },
   spacer: {
     minWidth: '400px',

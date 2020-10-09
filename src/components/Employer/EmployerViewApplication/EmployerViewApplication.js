@@ -7,7 +7,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
-import StickyFooter from 'components/ApplicationForm/StickyFooter';
+import DecisionsFooter from 'components/Footers/DecisionsFooter';
 import IconButton from '@material-ui/core/IconButton';
 import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
 import ViewFullApplication from '../../Internal/ViewFullApplication';
@@ -99,7 +99,7 @@ const EmployerViewApplication = ({
     <div className={classes.container}>
       {toEmployerBoardButton}
       <ViewFullApplication application={application} />
-      <StickyFooter
+      <DecisionsFooter
         application={application}
         page="employer-review-application"
         back={toEmployerBoard}

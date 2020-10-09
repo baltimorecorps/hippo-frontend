@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
-import StickyFooter from 'components/ApplicationForm/StickyFooter';
+import DecisionsFooter from 'components/Footers/DecisionsFooter';
 import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
 import ViewFullApplication from '../ViewFullApplication';
 
@@ -102,7 +102,7 @@ const StaffViewApplication = ({
         {toInternalApplicationsButton}
       </div>
       <ViewFullApplication application={application} />
-      <StickyFooter
+      <DecisionsFooter
         applicationStatus={application.status}
         page="staff-review-application"
         back={back}
