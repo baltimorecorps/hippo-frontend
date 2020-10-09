@@ -13,7 +13,7 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ClearIcon from '@material-ui/icons/Clear';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import {formatDate, formatTime} from '../../../lib/helperFunctions/helpers';
+import {formatDate, formatTime} from 'lib/helperFunctions/helpers';
 
 import {useHistory} from 'react-router-dom';
 

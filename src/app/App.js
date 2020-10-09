@@ -29,7 +29,6 @@ import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';
 import StaffViewApplication from 'components/Internal/StaffViewApplication/StaffViewApplication.container';
-// import StaffConfirmationPage from 'components/Internal/OpportunitiesBoard/StaffConfirmationPage';
 import PartnershipsPage from 'components/Internal/PartnershipsPage/';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
@@ -232,10 +231,6 @@ const App = ({
                 component={EmployerViewApplication}
               />
 
-              {/* <Route
-                path="/staff-confirmation-page"
-                component={StaffConfirmationPage}
-              /> */}
               <Route
                 exact
                 path="/profile/:contactId"
