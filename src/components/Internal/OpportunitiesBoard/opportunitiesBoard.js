@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import RoleCards from './RoleCards';
+import RoleCards from '../Cards/RoleCards';
 import PartnershipsNavBar from 'components/Internal/PartnershipsPage/PartnershipsNavBar';
 import {filterOpportunitiesByPrograms} from 'lib/helperFunctions/opportunitiesHelpers';
-import FilterByProgramsTabs from '../../CandidateOpportunitiesPage/FilterByProgramsSelector';
+import FilterByProgramsTabs from 'components/CandidateOpportunitiesPage/FilterByProgramsSelector';
 
 const InternalOpportunityBoard = ({
   classes,

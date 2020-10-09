@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import ApplicationStateAccordion from '../OpportunitiesBoard/ApplicationStateAccordion';
+import ApplicationStateAccordion from './ApplicationStateAccordion';
 
 const ApplicationsCard = ({classes, contactId, applications, applicant}) => {
   const [expanded, setExpanded] = React.useState(false);

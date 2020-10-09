@@ -99,14 +99,7 @@ const ApplicationStateAccordion = ({
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${panelName}-content`}
         id={`${panelName}-header`}
-        className={
-          // totalApps > 0
-          //   ? header === 'Not a Fit'
-          //     ? classes.notAFitHighLightHead
-          //     : classes.highLightHead
-          //   : null
-          highlightHead
-        }
+        className={highlightHead}
       >
         {icon}
         <Typography
