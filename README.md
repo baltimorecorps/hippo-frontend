@@ -1,61 +1,74 @@
 # Baltimore Corps Hippo Web App
 
-## Structure
+## Frontend File Structure
 
-- actions
-- reducers
-- lib
-- atoms
-- modules
-  - Achievements
+- app
+- components
+  - AboutMe
+  - ApplicationForm
+  - CandidateOpportunitiesPage
+  - CapabilityScores
+  - Contacts
+  - DynamicInstructions
+  - Employer
+    - EmployerPage
+    - EmployerViewApplication
   - Experiences
-  - Resumes
-  - Tags
-  - Users
-- pages
+  - FAQPage
+  - Footers
+    - DecisionsFooter
+    - MainFooter
+  - Home
+  - Internal
+    - AddOrEditOpportunitiesPage
+    - ApplicantPage
+    - ApplicantsBoard
+    - Cards
+    - OpportunitiesBoard
+    - PartnershipsPage
+    - StaffViewApplication
+  - NavigationBar
+  - Profile Page
+  - ResumeCreator
+  - SideBarDrawer
+  - Skills
+  - ViewFullApplication
+- lib
+- state
 - styles
 
-### actions and reducers
+### app
 
-Redux related actions and reducers to manage application state belong here.
+This is where we keep App.js
 
-Future considerations: placing these actions / reducers within their relevant modules.
-
-### lib
-
-Various utilities and globally (or semi-globally) used functions.
-
-### atoms
-
-Small custom components that are used in a variety of places with no specific module relation.
-
-### modules
+### components
 
 Large components that correspond to entities represented in the database.
 
 These are built with `atoms` and existing Material UI components.
 
-### pages
+### lib
 
-Page components built primarily with modules, some parts with `atoms`, and some with existing Material UI components.
+Various utilities and globally (or semi-globally) used functions.
+
+### state
+
+Redux related actions and reducers to manage application state belong here.
 
 ### styles
 
 Currently contains the theme for Material UI.
 
-### Other
-
-Both `components/` and `api/` are remnants of a previous structure. Code within these folders should be checked and moved to the appropriate place in the new structure.
-
-
 ## Packages used (with justification)
 
 ### Redux
+
 - Manage application state
 - https://redux.js.org/introduction/motivation
 - https://react-redux.js.org/
 
 ### Redux Starter Kit
+
 - https://redux-starter-kit.js.org/introduction/quick-start
 - Includes various patterns/libraries so here is some supplementary reading to understand them
   - https://github.com/erikras/ducks-modular-redux
@@ -63,17 +76,19 @@ Both `components/` and `api/` are remnants of a previous structure. Code within 
   - https://github.com/reduxjs/reselect
 
 ### Fetch Action Creator
+
 - Links Redux actions to our API.
 - https://medium.com/@Charles_Stover/the-fetch-api-and-asynchronous-redux-state-203270a540d4
 
 ### Jest
+
 - Unit testing
 - https://jestjs.io/
 
 ### Fetch mock
+
 - Unit testing of the Redux action creators which call the API
 - http://www.wheresrhys.co.uk/fetch-mock/
-
 
 ## Available Scripts
 
@@ -111,7 +126,6 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
 
 ## Learn More
 
