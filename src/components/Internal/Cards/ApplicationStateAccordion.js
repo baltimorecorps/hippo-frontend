@@ -13,7 +13,7 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ClearIcon from '@material-ui/icons/Clear';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import {formatDate, formatTime} from '../../../lib/helperFunctions/helpers';
+import {formatDate, formatTime} from 'lib/helperFunctions/helpers';
 
 import {useHistory} from 'react-router-dom';
 
@@ -99,14 +99,7 @@ const ApplicationStateAccordion = ({
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${panelName}-content`}
         id={`${panelName}-header`}
-        className={
-          // totalApps > 0
-          //   ? header === 'Not a Fit'
-          //     ? classes.notAFitHighLightHead
-          //     : classes.highLightHead
-          //   : null
-          highlightHead
-        }
+        className={highlightHead}
       >
         {icon}
         <Typography

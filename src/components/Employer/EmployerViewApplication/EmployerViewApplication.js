@@ -7,10 +7,10 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
-import StickyFooter from 'components/ApplicationForm/StickyFooter';
+import DecisionsFooter from 'components/Footers/DecisionsFooter';
 import IconButton from '@material-ui/core/IconButton';
 import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
-import ViewFullApplication from '../../Internal/ViewFullApplication';
+import ViewFullApplication from 'components/ViewFullApplication';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -20,7 +20,7 @@ import {
 } from '@material-ui/pickers';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 import CloseIcon from '@material-ui/icons/Close';
-import {interviewScheduledValidator} from '../../../lib/formHelpers/formValidator';
+import {interviewScheduledValidator} from 'lib/formHelpers/formValidator';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 const EmployerViewApplication = ({
@@ -99,7 +99,7 @@ const EmployerViewApplication = ({
     <div className={classes.container}>
       {toEmployerBoardButton}
       <ViewFullApplication application={application} />
-      <StickyFooter
+      <DecisionsFooter
         application={application}
         page="employer-review-application"
         back={toEmployerBoard}

@@ -11,7 +11,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import {interestValidator} from 'lib/formHelpers/formValidator';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import StickyFooter from './StickyFooter';
+import DecisionsFooter from '../Footers/DecisionsFooter';
 
 const InterestForm = ({
   classes,
@@ -115,7 +115,7 @@ const InterestForm = ({
           </Grid>
         )}
       </Paper>
-      <StickyFooter
+      <DecisionsFooter
         page="interest"
         back={back}
         handleNext={() => onClickNext(text)}
