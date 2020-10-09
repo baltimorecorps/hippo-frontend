@@ -5,7 +5,7 @@ import {useParams} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import RoleCards from 'components/Internal/OpportunitiesBoard/RoleCards';
+import RoleCards from 'components/Internal/Cards/RoleCards';
 
 const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {
   let {opportunityId} = useParams();
