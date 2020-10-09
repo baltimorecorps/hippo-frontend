@@ -8,7 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
 import DecisionsFooter from 'components/Footers/DecisionsFooter';
 import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
-import ViewFullApplication from '../ViewFullApplication';
+import ViewFullApplication from 'components/ViewFullApplication';
 
 const StaffViewApplication = ({
   classes,
