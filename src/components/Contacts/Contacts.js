@@ -17,7 +17,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
 
   const [searchBy, setSearchBy] = useState('name');
   const [showContacts, setShowContacts] = useState(contacts || null);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState(null);
   const searchBarPlaceholder = `Search by ${searchBy}`;
 
   useEffect(() => {
@@ -71,7 +71,10 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
     setSearchValue(event.target.value.toLowerCase());
   };
 
-  if (!showContacts) return <div>Loading...</div>;
+  if (showContacts == null) return <div>Loading...</div>;
+
+  const totalContacts = showContacts.length;
+
   return (
     <main className={classes.layout}>
       <Paper className={classes.paper}>
@@ -113,13 +116,19 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
             />
           </div>
         </div>
-        <React.Fragment>
-          <ContactList
-            contacts={showContacts}
-            getAllContacts={getAllContacts}
-            deleteContact={deleteContact}
-          />
-        </React.Fragment>
+        <Typography
+          component="p"
+          variant="body1"
+          align="center"
+          className={classes.contactsFound}
+        >
+          (Found {totalContacts} contacts)
+        </Typography>
+        <ContactList
+          contacts={showContacts}
+          getAllContacts={getAllContacts}
+          deleteContact={deleteContact}
+        />
       </Paper>
     </main>
   );
@@ -127,7 +136,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
 
 Contacts.propTypes = {
   classes: PropTypes.object.isRequired,
-  contacts: PropTypes.array.isRequired,
+  contacts: PropTypes.array,
   getAllContacts: PropTypes.func.isRequired,
   addNewContact: PropTypes.func.isRequired,
 };
@@ -191,6 +200,12 @@ const styles = ({breakpoints, spacing}) => ({
     backgroundColor: '#ffffff',
     width: '100%',
     borderRadius: '40%',
+  },
+  contactsFound: {
+    marginTop: '20px',
+    marginBottom: '10px',
+    color: '#878787',
+    fontSize: '14px',
   },
 });
 
