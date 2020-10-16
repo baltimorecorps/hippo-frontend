@@ -10,6 +10,8 @@ import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import {mockContacts} from './mockContacts';
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
 
 const Contacts = ({
   classes,
@@ -36,7 +38,21 @@ const Contacts = ({
     setSearchValue('');
   }, [searchBy]);
 
-  useEffect(() => {
+  const handleChangeSearchBy = event => {
+    event.persist();
+    setSearchBy(event.target.value);
+  };
+
+  const handleChangeSearch = event => {
+    event.persist();
+    setSearchValue(event.target.value.toLowerCase());
+  };
+
+  if (showContacts == null) return <div>Loading...</div>;
+
+  const totalContacts = showContacts.length;
+
+  const handleClickOrEnterSearch = () => {
     let searchContacts = [];
     if (searchValue != null && contacts && contacts.length > 0) {
       switch (searchBy) {
@@ -67,21 +83,7 @@ const Contacts = ({
           break;
       }
     }
-  }, [searchValue, searchBy, contacts]);
-
-  const handleChangeSearchBy = event => {
-    event.persist();
-    setSearchBy(event.target.value);
   };
-
-  const handleChangeSearch = event => {
-    event.persist();
-    setSearchValue(event.target.value.toLowerCase());
-  };
-
-  if (showContacts == null) return <div>Loading...</div>;
-
-  const totalContacts = showContacts.length;
 
   return (
     <main className={classes.layout}>
@@ -115,6 +117,9 @@ const Contacts = ({
               name="search-contacts"
               value={searchValue || ''}
               onChange={handleChangeSearch}
+              onKeyPress={e => {
+                if (e.key === 'Enter') handleClickOrEnterSearch();
+              }}
               variant="outlined"
               InputProps={{
                 classes: {
@@ -122,6 +127,14 @@ const Contacts = ({
                 },
               }}
             />
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.searchButton}
+              onClick={() => handleClickOrEnterSearch()}
+            >
+              <SearchIcon /> Search
+            </Button>
           </div>
         </div>
         <Typography
@@ -185,7 +198,8 @@ const styles = ({breakpoints, spacing}) => ({
     display: 'flex',
     marginTop: '10px',
     padding: 0,
-
+    alignItems: 'center',
+    justifyContent: 'center',
     [breakpoints.up('sm')]: {
       width: '85%',
     },
@@ -195,25 +209,33 @@ const styles = ({breakpoints, spacing}) => ({
   },
   searchByContainer: {
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: '20%',
   },
   searchBarContainer: {
-    width: '100%',
+    width: '80%',
     display: 'flex',
     marginLeft: spacing(1.5),
-    alignItems: 'flex-end',
-    borderRadius: '40%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   searchBar: {
     backgroundColor: '#ffffff',
-    width: '100%',
-    borderRadius: '40%',
+    width: '70%',
+  },
+  resize: {
+    padding: '9px',
   },
   contactsFound: {
     marginTop: '20px',
     marginBottom: '10px',
     color: '#878787',
     fontSize: '14px',
+  },
+  searchButton: {
+    marginLeft: '10px',
+    height: '100%',
   },
 });
 
