@@ -6,29 +6,61 @@ import Typography from '@material-ui/core/Typography';
 
 import EachContact from './EachContact';
 
-const ContactList = ({contacts, getAllContacts, deleteContact, classes}) => {
-  let [loaded, setLoaded] = useState(false);
+const ContactList = ({contacts, deleteContact, classes}) => {
+  const totalContacts = contacts.length;
+
+  let [isLoading, setIsLoading] = useState(false);
+  const [loadMoreContactsCount, setLoadMoreContactsCount] = useState(1);
+  const [showContacts, setShowContacts] = useState(
+    contacts.slice(0, 100) || null
+  );
 
   useEffect(() => {
-    if (!loaded && contacts.length === 0) getAllContacts();
+    setShowContacts(contacts.slice(0, 100 * loadMoreContactsCount));
+    setIsLoading(false);
+  }, [loadMoreContactsCount, setShowContacts, contacts]);
 
-    setLoaded(true);
-  }, [loaded, contacts, getAllContacts]);
+  const onClickLoadMoreContacts = () => {
+    setIsLoading(true);
+    setLoadMoreContactsCount(loadMoreContactsCount + 1);
+  };
 
   return (
     <List>
-      {contacts ? (
-        contacts.map((contact, index) => (
-          <EachContact
-            contact={contact}
-            key={index}
-            deleteContact={deleteContact}
-          />
-        ))
+      {showContacts ? (
+        <React.Fragment>
+          {showContacts.map((contact, index) => (
+            <EachContact
+              contact={contact}
+              key={index}
+              deleteContact={deleteContact}
+            />
+          ))}
+          {isLoading ? (
+            <Typography
+              component="p"
+              variant="body1"
+              align="center"
+              className={classes.loading}
+            >
+              Loading contacts....
+            </Typography>
+          ) : showContacts.length < totalContacts ? (
+            <Typography
+              component="p"
+              variant="body1"
+              align="center"
+              className={classes.loadMoreContacts}
+              onClick={() => onClickLoadMoreContacts()}
+            >
+              Load more contacts
+            </Typography>
+          ) : null}
+        </React.Fragment>
       ) : (
         <Typography
           component="p"
-          variant="body"
+          variant="body1"
           align="center"
           className={classes.noResult}
         >
@@ -62,6 +94,16 @@ const styles = ({breakpoints, spacing}) => ({
     marginTop: '20px',
     width: '100%',
     fontSize: '20px',
+  },
+  loadMoreContacts: {
+    marginTop: '20px',
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+  loading: {
+    marginTop: '20px',
+    color: '#878787',
   },
 });
 

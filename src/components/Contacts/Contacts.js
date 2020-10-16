@@ -9,14 +9,22 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import {mockContacts} from './mockContacts';
 
-const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
+const Contacts = ({
+  classes,
+  // contacts,
+  getAllContacts,
+  deleteContact,
+}) => {
+  const contacts = mockContacts;
+
   useEffect(() => {
     if (!contacts) getAllContacts();
   }, [getAllContacts, contacts]);
 
   const [searchBy, setSearchBy] = useState('name');
-  const [showContacts, setShowContacts] = useState(contacts || null);
+  const [showContacts, setShowContacts] = useState(contacts || '');
   const [searchValue, setSearchValue] = useState(null);
   const searchBarPlaceholder = `Search by ${searchBy}`;
 
@@ -105,7 +113,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
               className={classes.searchBar}
               placeholder={searchBarPlaceholder}
               name="search-contacts"
-              value={searchValue}
+              value={searchValue || ''}
               onChange={handleChangeSearch}
               variant="outlined"
               InputProps={{
@@ -122,7 +130,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
           align="center"
           className={classes.contactsFound}
         >
-          (Found {totalContacts} contacts)
+          (Found {totalContacts} {totalContacts > 1 ? 'contacts' : 'contact'})
         </Typography>
         <ContactList
           contacts={showContacts}
