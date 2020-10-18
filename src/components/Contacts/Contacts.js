@@ -12,6 +12,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import {mockContacts} from './mockContacts';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const Contacts = ({
   classes,
@@ -26,13 +28,28 @@ const Contacts = ({
   }, [getAllContacts, contacts]);
 
   const [searchBy, setSearchBy] = useState('name');
-  const [showContacts, setShowContacts] = useState(contacts || '');
+  const [filteredContacts, setFilteredContacts] = useState();
+  const [searchedContacts, setSearchedContacts] = useState(contacts || '');
   const [searchValue, setSearchValue] = useState(null);
   const searchBarPlaceholder = `Search by ${searchBy}`;
+  const [showStatus, setShowStatus] = useState(0);
+  const [totalContacts, setTotalContacts] = useState();
+
+  const handleFilterByStatus = (event, newValue) => {
+    setShowStatus(newValue);
+  };
 
   useEffect(() => {
-    setShowContacts(contacts);
+    setFilteredContacts(searchedContacts);
+  }, [searchedContacts]);
+
+  useEffect(() => {
+    setSearchedContacts(contacts);
   }, [contacts]);
+
+  useEffect(() => {
+    if (filteredContacts) setTotalContacts(filteredContacts.length);
+  }, [filteredContacts]);
 
   useEffect(() => {
     setSearchValue('');
@@ -48,9 +65,34 @@ const Contacts = ({
     setSearchValue(event.target.value.toLowerCase());
   };
 
-  if (showContacts == null) return <div>Loading...</div>;
+  useEffect(() => {
+    switch (showStatus) {
+      case 1:
+        const createdContacts = searchedContacts.filter(
+          contact => contact.status === 'created'
+        );
+        setFilteredContacts(createdContacts);
+        break;
+      case 2:
+        const submittedContacts = searchedContacts.filter(
+          contact => contact.status === 'submitted'
+        );
+        setFilteredContacts(submittedContacts);
+        break;
+      case 3:
+        const approvedContacts = searchedContacts.filter(
+          contact => contact.status === 'approved'
+        );
+        setFilteredContacts(approvedContacts);
+        break;
 
-  const totalContacts = showContacts.length;
+      default:
+        setFilteredContacts(searchedContacts);
+        break;
+    }
+  }, [showStatus, searchedContacts]);
+
+  if (filteredContacts == null) return <div>Loading...</div>;
 
   const handleClickOrEnterSearch = () => {
     let searchContacts = [];
@@ -63,21 +105,27 @@ const Contacts = ({
             const contactFullName = `${contactName} ${contactLastName}`;
             return contactFullName.includes(searchValue);
           });
-          setShowContacts(searchContacts);
+          setSearchedContacts(searchContacts);
+          setShowStatus(0);
+
           break;
         case 'email':
           searchContacts = contacts.filter(contact => {
             const contactEmail = contact.email.toLowerCase();
             return contactEmail.includes(searchValue);
           });
-          setShowContacts(searchContacts);
+          setSearchedContacts(searchContacts);
+          setShowStatus(0);
+
           break;
         case 'id':
           searchContacts = contacts.filter(contact => {
             const contactId = String(contact.id);
             return contactId.includes(searchValue);
           });
-          setShowContacts(searchContacts);
+          setSearchedContacts(searchContacts);
+          setShowStatus(0);
+
           break;
         default:
           break;
@@ -137,6 +185,20 @@ const Contacts = ({
             </Button>
           </div>
         </div>
+        <Tabs
+          style={{marginTop: '20px', backgroundColor: '#f5f9ff'}}
+          value={showStatus}
+          indicatorColor="secondary"
+          textColor="secondary"
+          onChange={handleFilterByStatus}
+          aria-label="Filter by contacts' status"
+        >
+          <Tab style={{width: '25%'}} label="All" />
+          <Tab style={{width: '25%'}} label="Created" />
+          <Tab style={{width: '25%'}} label="Submitted" />
+          <Tab style={{width: '25%'}} label="Approved" />
+        </Tabs>
+
         <Typography
           component="p"
           variant="body1"
@@ -146,9 +208,12 @@ const Contacts = ({
           (Found {totalContacts} {totalContacts > 1 ? 'contacts' : 'contact'})
         </Typography>
         <ContactList
-          contacts={showContacts}
+          setTotalContacts={setTotalContacts}
+          contacts={filteredContacts}
           getAllContacts={getAllContacts}
           deleteContact={deleteContact}
+          showStatus={showStatus}
+          setShowStatus={setShowStatus}
         />
       </Paper>
     </main>

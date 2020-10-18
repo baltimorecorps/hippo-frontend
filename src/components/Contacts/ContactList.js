@@ -87,7 +87,7 @@ const styles = ({breakpoints, spacing}) => ({
     width: '100%',
 
     [breakpoints.up('sm')]: {
-      width: '85%',
+      width: '95%',
     },
   },
   noResult: {
@@ -97,8 +97,10 @@ const styles = ({breakpoints, spacing}) => ({
   },
   loadMoreContacts: {
     marginTop: '20px',
+    fontWeight: 'bold',
     '&:hover': {
       cursor: 'pointer',
+      textDecoration: 'underline',
     },
   },
   loading: {
