@@ -42,7 +42,7 @@ const contacts = [
     last_name: 'Swift2',
     email: 'taylor2@yahoo.com',
 
-    status: 'submitted',
+    status: 'created',
   },
   {
     id: 25,
@@ -50,7 +50,7 @@ const contacts = [
     last_name: 'Doe2',
     email: 'jane2@gmail.com',
 
-    status: 'created',
+    status: 'submitted',
   },
   {
     id: 26,
@@ -62,7 +62,6 @@ const contacts = [
   },
 ];
 
-// search
 // filter by status
 
 describe('/contacts Page', () => {
@@ -206,5 +205,36 @@ describe('/contacts Page', () => {
 
     expect(getAllByTestId('each-contact').length).toBe(4);
     expect(getByTestId('total_found')).toHaveTextContent('Found 4 contacts');
+  });
+
+  test("Filter by contacts' status", () => {
+    const history = createMemoryHistory();
+    const {getAllByTestId, getByTestId} = render(
+      <Router history={history}>
+        <Contacts
+          contacts={contacts}
+          getAllContacts={() => jest.fn()}
+          deleteContact={() => jest.fn()}
+        />
+      </Router>
+    );
+
+    expect(getAllByTestId('each-contact').length).toBe(6);
+
+    fireEvent.click(getByTestId('filter_created_contacts_tab'));
+    expect(getAllByTestId('each-contact').length).toBe(3);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 3 contacts');
+
+    fireEvent.click(getByTestId('filter_submitted_contacts_tab'));
+    expect(getAllByTestId('each-contact').length).toBe(2);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 2 contacts');
+
+    fireEvent.click(getByTestId('filter_approved_contacts_tab'));
+    expect(getAllByTestId('each-contact').length).toBe(1);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 1 contact');
+
+    fireEvent.click(getByTestId('filter_all_contacts_tab'));
+    expect(getAllByTestId('each-contact').length).toBe(6);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 6 contacts');
   });
 });

@@ -157,7 +157,6 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
           </div>
           <div className={classes.searchBarContainer}>
             <TextField
-              // data-testid="search_bar"
               id="search_contacts"
               className={classes.searchBar}
               placeholder={searchBarPlaceholder}
