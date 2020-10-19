@@ -155,7 +155,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
           </div>
           <div className={classes.searchBarContainer}>
             <TextField
-              data-testid="search_bar"
+              // data-testid="search_bar"
               id="search_contacts"
               className={classes.searchBar}
               placeholder={searchBarPlaceholder}
@@ -166,7 +166,8 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
                 if (e.key === 'Enter') handleClickOrEnterSearch();
               }}
               variant="outlined"
-              InputProps={{
+              inputProps={{
+                'data-testid': 'search_bar',
                 classes: {
                   input: classes.resize,
                 },

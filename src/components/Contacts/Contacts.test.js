@@ -52,7 +52,6 @@ const contacts = [
   },
 ];
 
-// render page
 // search
 // filter by status
 
@@ -90,5 +89,28 @@ describe('/contacts Page', () => {
     expect(searchBar).toBeInTheDocument();
     expect(searchButton).toBeInTheDocument();
     expect(filterByStatusTabs).toBeInTheDocument();
+  });
+
+  test('Search by name', () => {
+    const history = createMemoryHistory();
+    const {getAllByTestId, getByTestId} = render(
+      <Router history={history}>
+        <Contacts
+          contacts={contacts}
+          getAllContacts={() => jest.fn()}
+          deleteContact={() => jest.fn()}
+        />
+      </Router>
+    );
+
+    expect(getAllByTestId('each-contact').length).toBe(6);
+
+    fireEvent.change(getByTestId('search_bar'), {
+      target: {value: 'Jane'},
+    });
+    fireEvent.click(getByTestId('search_button'));
+
+    expect(getAllByTestId('each-contact').length).toBe(3);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 3 contacts');
   });
 });
