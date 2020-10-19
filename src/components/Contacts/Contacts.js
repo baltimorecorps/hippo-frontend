@@ -9,15 +9,12 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
-import {mockContacts} from './mockContacts';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
 const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
-  // const contacts = mockContacts;
-
   useEffect(() => {
     if (!contacts) getAllContacts();
   }, [getAllContacts, contacts]);
