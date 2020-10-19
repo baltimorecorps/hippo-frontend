@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, cleanup, fireEvent, waitFor} from '@testing-library/react';
+import {render, cleanup, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Contacts from './Contacts';
 import {Router} from 'react-router-dom';
@@ -61,8 +61,6 @@ const contacts = [
     status: 'created',
   },
 ];
-
-// filter by status
 
 describe('/contacts Page', () => {
   test('Render Page', () => {
@@ -236,5 +234,43 @@ describe('/contacts Page', () => {
     fireEvent.click(getByTestId('filter_all_contacts_tab'));
     expect(getAllByTestId('each-contact').length).toBe(6);
     expect(getByTestId('total_found')).toHaveTextContent('Found 6 contacts');
+  });
+
+  test("Search + Filter by contacts' status", () => {
+    const history = createMemoryHistory();
+    const {getAllByTestId, getByTestId} = render(
+      <Router history={history}>
+        <Contacts
+          contacts={contacts}
+          getAllContacts={() => jest.fn()}
+          deleteContact={() => jest.fn()}
+        />
+      </Router>
+    );
+
+    expect(getAllByTestId('each-contact').length).toBe(6);
+
+    fireEvent.change(getByTestId('search_bar'), {
+      target: {value: 'Jane'},
+    });
+    fireEvent.click(getByTestId('search_button'));
+
+    expect(getAllByTestId('each-contact').length).toBe(3);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 3 contacts');
+
+    expect(getAllByTestId('each-contact').length).toBe(3);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 3 contacts');
+
+    fireEvent.click(getByTestId('filter_created_contacts_tab'));
+    expect(getAllByTestId('each-contact').length).toBe(2);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 2 contacts');
+
+    fireEvent.click(getByTestId('filter_submitted_contacts_tab'));
+    expect(getAllByTestId('each-contact').length).toBe(1);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 1 contact');
+
+    fireEvent.click(getByTestId('filter_all_contacts_tab'));
+    expect(getAllByTestId('each-contact').length).toBe(3);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 3 contacts');
   });
 });
