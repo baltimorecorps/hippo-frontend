@@ -9,6 +9,10 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
+import SearchIcon from '@material-ui/icons/Search';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
   useEffect(() => {
@@ -16,50 +20,32 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
   }, [getAllContacts, contacts]);
 
   const [searchBy, setSearchBy] = useState('name');
-  const [showContacts, setShowContacts] = useState(contacts || null);
-  const [searchValue, setSearchValue] = useState('');
+  const [filteredContacts, setFilteredContacts] = useState();
+  const [searchedContacts, setSearchedContacts] = useState(contacts || '');
+  const [searchValue, setSearchValue] = useState(null);
   const searchBarPlaceholder = `Search by ${searchBy}`;
+  const [showStatus, setShowStatus] = useState(0);
+  const [totalContacts, setTotalContacts] = useState();
+
+  const handleFilterByStatus = (event, newValue) => {
+    setShowStatus(newValue);
+  };
 
   useEffect(() => {
-    setShowContacts(contacts);
+    setFilteredContacts(searchedContacts);
+  }, [searchedContacts]);
+
+  useEffect(() => {
+    setSearchedContacts(contacts);
   }, [contacts]);
+
+  useEffect(() => {
+    if (filteredContacts) setTotalContacts(filteredContacts.length);
+  }, [filteredContacts]);
 
   useEffect(() => {
     setSearchValue('');
   }, [searchBy]);
-
-  useEffect(() => {
-    let searchContacts = [];
-    if (searchValue != null && contacts && contacts.length > 0) {
-      switch (searchBy) {
-        case 'name':
-          searchContacts = contacts.filter(contact => {
-            const contactName = contact.first_name.toLowerCase();
-            const contactLastName = contact.last_name.toLowerCase();
-            const contactFullName = `${contactName} ${contactLastName}`;
-            return contactFullName.includes(searchValue);
-          });
-          setShowContacts(searchContacts);
-          break;
-        case 'email':
-          searchContacts = contacts.filter(contact => {
-            const contactEmail = contact.email.toLowerCase();
-            return contactEmail.includes(searchValue);
-          });
-          setShowContacts(searchContacts);
-          break;
-        case 'id':
-          searchContacts = contacts.filter(contact => {
-            const contactId = String(contact.id);
-            return contactId.includes(searchValue);
-          });
-          setShowContacts(searchContacts);
-          break;
-        default:
-          break;
-      }
-    }
-  }, [searchValue, searchBy, contacts]);
 
   const handleChangeSearchBy = event => {
     event.persist();
@@ -71,7 +57,74 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
     setSearchValue(event.target.value.toLowerCase());
   };
 
-  if (!showContacts) return <div>Loading...</div>;
+  useEffect(() => {
+    switch (showStatus) {
+      case 1:
+        const createdContacts = searchedContacts.filter(
+          contact => contact.status === 'created'
+        );
+        setFilteredContacts(createdContacts);
+        break;
+      case 2:
+        const submittedContacts = searchedContacts.filter(
+          contact => contact.status === 'submitted'
+        );
+        setFilteredContacts(submittedContacts);
+        break;
+      case 3:
+        const approvedContacts = searchedContacts.filter(
+          contact => contact.status === 'approved'
+        );
+        setFilteredContacts(approvedContacts);
+        break;
+
+      default:
+        setFilteredContacts(searchedContacts);
+        break;
+    }
+  }, [showStatus, searchedContacts]);
+
+  if (filteredContacts == null) return <div>Loading...</div>;
+
+  const handleClickOrEnterSearch = () => {
+    let searchContacts = [];
+    if (searchValue != null && contacts && contacts.length > 0) {
+      switch (searchBy) {
+        case 'name':
+          searchContacts = contacts.filter(contact => {
+            const contactName = contact.first_name.toLowerCase();
+            const contactLastName = contact.last_name.toLowerCase();
+            const contactFullName = `${contactName} ${contactLastName}`;
+            return contactFullName.includes(searchValue);
+          });
+          setSearchedContacts(searchContacts);
+          setShowStatus(0);
+
+          break;
+        case 'email':
+          searchContacts = contacts.filter(contact => {
+            const contactEmail = contact.email.toLowerCase();
+            return contactEmail.includes(searchValue);
+          });
+          setSearchedContacts(searchContacts);
+          setShowStatus(0);
+
+          break;
+        case 'id':
+          searchContacts = contacts.filter(contact => {
+            const contactId = String(contact.id);
+            return contactId.includes(searchValue);
+          });
+          setSearchedContacts(searchContacts);
+          setShowStatus(0);
+
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
   return (
     <main className={classes.layout}>
       <Paper className={classes.paper}>
@@ -85,10 +138,13 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
                 Search by
               </InputLabel>
               <Select
-                id="search-by"
+                id="search_by"
                 value={searchBy}
                 onChange={handleChangeSearchBy}
                 className={classes.searchBySelector}
+                inputProps={{
+                  'data-testid': 'search_by_selector',
+                }}
               >
                 <MenuItem value="name">Name</MenuItem>
                 <MenuItem value="email">Email</MenuItem>
@@ -98,28 +154,82 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
           </div>
           <div className={classes.searchBarContainer}>
             <TextField
-              id="search-contacts"
+              id="search_contacts"
               className={classes.searchBar}
               placeholder={searchBarPlaceholder}
-              name="search-contacts"
-              value={searchValue}
+              name="search_contacts"
+              value={searchValue || ''}
               onChange={handleChangeSearch}
+              onKeyPress={e => {
+                if (e.key === 'Enter') handleClickOrEnterSearch();
+              }}
               variant="outlined"
-              InputProps={{
+              inputProps={{
+                'data-testid': 'search_bar',
                 classes: {
                   input: classes.resize,
                 },
               }}
             />
+            <Button
+              data-testid="search_button"
+              variant="contained"
+              color="primary"
+              className={classes.searchButton}
+              onClick={() => handleClickOrEnterSearch()}
+            >
+              <SearchIcon /> Search
+            </Button>
           </div>
         </div>
-        <React.Fragment>
-          <ContactList
-            contacts={showContacts}
-            getAllContacts={getAllContacts}
-            deleteContact={deleteContact}
+        <Tabs
+          data-testid="filter_by_status_tabs"
+          style={{marginTop: '20px', backgroundColor: '#f5f9ff'}}
+          value={showStatus}
+          indicatorColor="secondary"
+          textColor="secondary"
+          onChange={handleFilterByStatus}
+          aria-label="Filter by contacts' status"
+        >
+          <Tab
+            data-testid="filter_all_contacts_tab"
+            style={{width: '25%'}}
+            label="All"
           />
-        </React.Fragment>
+          <Tab
+            data-testid="filter_created_contacts_tab"
+            style={{width: '25%'}}
+            label="Created"
+          />
+          <Tab
+            data-testid="filter_submitted_contacts_tab"
+            style={{width: '25%'}}
+            label="Submitted"
+          />
+          <Tab
+            data-testid="filter_approved_contacts_tab"
+            style={{width: '25%'}}
+            label="Approved"
+          />
+        </Tabs>
+
+        <Typography
+          data-testid="total_found"
+          component="p"
+          variant="body1"
+          align="center"
+          className={classes.contactsFound}
+        >
+          (Found {totalContacts} {totalContacts > 1 ? 'contacts' : 'contact'})
+        </Typography>
+        <ContactList
+          setTotalContacts={setTotalContacts}
+          contacts={filteredContacts}
+          getAllContacts={getAllContacts}
+          deleteContact={deleteContact}
+          showStatus={showStatus}
+          setShowStatus={setShowStatus}
+        />
       </Paper>
     </main>
   );
@@ -127,7 +237,7 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
 
 Contacts.propTypes = {
   classes: PropTypes.object.isRequired,
-  contacts: PropTypes.array.isRequired,
+  contacts: PropTypes.array,
   getAllContacts: PropTypes.func.isRequired,
   addNewContact: PropTypes.func.isRequired,
 };
@@ -168,7 +278,8 @@ const styles = ({breakpoints, spacing}) => ({
     display: 'flex',
     marginTop: '10px',
     padding: 0,
-
+    alignItems: 'center',
+    justifyContent: 'center',
     [breakpoints.up('sm')]: {
       width: '85%',
     },
@@ -178,19 +289,33 @@ const styles = ({breakpoints, spacing}) => ({
   },
   searchByContainer: {
     display: 'flex',
-    alignItems: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    width: '20%',
   },
   searchBarContainer: {
-    width: '100%',
+    width: '80%',
     display: 'flex',
     marginLeft: spacing(1.5),
-    alignItems: 'flex-end',
-    borderRadius: '40%',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   searchBar: {
     backgroundColor: '#ffffff',
-    width: '100%',
-    borderRadius: '40%',
+    width: '70%',
+  },
+  resize: {
+    padding: '9px',
+  },
+  contactsFound: {
+    marginTop: '20px',
+    marginBottom: '10px',
+    color: '#878787',
+    fontSize: '14px',
+  },
+  searchButton: {
+    marginLeft: '10px',
+    height: '100%',
   },
 });
 

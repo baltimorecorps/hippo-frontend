@@ -184,6 +184,7 @@ const AddContact = ({
           {errors.email_error || null}
         </FormHelperText>
         <MuiPhoneNumber
+          required
           name="phone_primary"
           label="Phone"
           defaultCountry={'us'}
