@@ -18,20 +18,23 @@ const contacts = [
     id: 1,
     first_name: 'John',
     last_name: 'Doe',
+    status: 'approved',
   },
   {
     id: 2,
     first_name: 'Jane',
     last_name: 'Doe',
+    status: 'created',
   },
   {
     id: 3,
     first_name: 'Taylor',
     last_name: 'Swift',
+    status: 'submitted',
   },
 ];
 
-describe('/Contacts Page: Integration Tests', () => {
+describe('ContactList', () => {
   test('Render all contacts', () => {
     const history = createMemoryHistory();
 

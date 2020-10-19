@@ -219,6 +219,7 @@ const FormDropDownSelectorTemplate = ({
 };
 
 const FormTextFieldTemplate = ({
+  isRequired,
   isLabelInside,
   value,
   name,
@@ -243,7 +244,7 @@ const FormTextFieldTemplate = ({
   const textFieldAndError = (
     <React.Fragment>
       <TextField
-        required
+        required={isRequired}
         id={name}
         label={isLabelInside ? label : null}
         className={isLabelInside ? classes.formControl : classes.formControl50}

@@ -49,6 +49,9 @@ const ContactList = ({classes, contact, deleteContact}) => {
     setOpenDeleteDialog(false);
   };
 
+  const contactStatus =
+    contact.status[0].toUpperCase() + contact.status.slice(1);
+
   return (
     <div className={classes.container}>
       <ListItem
@@ -80,6 +83,14 @@ const ContactList = ({classes, contact, deleteContact}) => {
             {contact.email}
           </Typography>
         </div>
+        <Typography
+          component="p"
+          variant="caption"
+          align="center"
+          className={classes.listItemStatus}
+        >
+          {`${contactStatus}`}
+        </Typography>
       </ListItem>
 
       <IconButton
@@ -187,6 +198,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     [breakpoints.up('sm')]: {
       fontSize: '14px',
     },
+  },
+  listItemStatus: {
+    color: '#878787',
+    fontSize: '14px',
   },
   deleteButton: {
     margin: spacing(1),

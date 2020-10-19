@@ -176,6 +176,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
         <form noValidate autoComplete="off">
           <Grid container justify="space-between">
             <FormTextField
+              isRequired={true}
               isLabelInside={true}
               value={values.first_name}
               name="first_name"
@@ -184,6 +185,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               error={errors.firstName_error}
             />
             <FormTextField
+              isRequired={true}
               isLabelInside={true}
               value={values.last_name}
               name="last_name"
@@ -193,6 +195,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             />
 
             <FormTextField
+              isRequired={true}
               isLabelInside={true}
               value={values.email}
               name="email"
@@ -219,6 +222,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
             <Grid container align="center" justify="space-between">
               <FormTextField
+                isRequired={true}
                 isLabelInside={true}
                 value={values.profile.address_primary.street1}
                 name="street1"
@@ -227,6 +231,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 error={errors.street1_error}
               />
               <FormTextField
+                isRequired={false}
                 isLabelInside={true}
                 value={values.profile.address_primary.street2}
                 name="street2"
@@ -238,6 +243,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
             <Grid container align="center" justify="space-between">
               <FormTextField
+                isRequired={true}
                 isLabelInside={true}
                 value={values.profile.address_primary.city}
                 name="city"
@@ -258,6 +264,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
               <Grid container align="center" justify="space-between">
                 <FormTextField
+                  isRequired={true}
                   isLabelInside={true}
                   value={values.profile.address_primary.zip_code}
                   name="zip_code"
@@ -296,6 +303,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {values.profile.race.not_listed ? (
                   <div className={classes.otherRace}>
                     <FormTextField
+                      isRequired={true}
                       value={values.profile.race.race_other}
                       name="race_other"
                       label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
@@ -320,6 +328,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
                   {values.profile.gender === 'Not Listed' ? (
                     <FormTextField
+                      isRequired={true}
                       value={values.profile.gender_other}
                       name="gender_other"
                       label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"
@@ -341,6 +350,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
                   {values.profile.pronoun === 'Not Listed' ? (
                     <FormTextField
+                      isRequired={false}
                       value={values.profile.pronoun_other}
                       name="pronoun_other"
                       label="We understand that the options listed above are not exhaustive. If you use a set of pronouns that aren't listed above, please let us know what they are:"
@@ -362,6 +372,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 />
 
                 <FormTextField
+                  isRequired={false}
                   value={values.profile.hear_about_us_other}
                   name="hear_about_us_other"
                   label="Please provide more details about how you find out about us:"
