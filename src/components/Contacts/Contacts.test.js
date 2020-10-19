@@ -37,7 +37,7 @@ const contacts = [
     status: 'submitted',
   },
   {
-    id: 4,
+    id: 23,
     first_name: 'Taylor2',
     last_name: 'Swift2',
     email: 'taylor2@yahoo.com',
@@ -45,7 +45,7 @@ const contacts = [
     status: 'submitted',
   },
   {
-    id: 5,
+    id: 25,
     first_name: 'Jane2',
     last_name: 'Doe2',
     email: 'jane2@gmail.com',
@@ -53,7 +53,7 @@ const contacts = [
     status: 'created',
   },
   {
-    id: 6,
+    id: 26,
     first_name: 'Jane3',
     last_name: 'Doe3',
     email: 'jane3@gmail.com',
@@ -150,5 +150,61 @@ describe('/contacts Page', () => {
 
     expect(getAllByTestId('each-contact').length).toBe(2);
     expect(getByTestId('total_found')).toHaveTextContent('Found 2 contacts');
+  });
+
+  test('Search contacts by email', () => {
+    const history = createMemoryHistory();
+    const {getAllByTestId, getByTestId} = render(
+      <Router history={history}>
+        <Contacts
+          contacts={contacts}
+          getAllContacts={() => jest.fn()}
+          deleteContact={() => jest.fn()}
+        />
+      </Router>
+    );
+
+    const searchBySelector = getByTestId('search_by_selector');
+
+    expect(getAllByTestId('each-contact').length).toBe(6);
+
+    fireEvent.change(searchBySelector, {target: {value: 'email'}});
+    expect(searchBySelector.value).toBe('email');
+
+    fireEvent.change(getByTestId('search_bar'), {
+      target: {value: 'yahoo.com'},
+    });
+    fireEvent.click(getByTestId('search_button'));
+
+    expect(getAllByTestId('each-contact').length).toBe(2);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 2 contacts');
+  });
+
+  test('Search contacts by id', () => {
+    const history = createMemoryHistory();
+    const {getAllByTestId, getByTestId} = render(
+      <Router history={history}>
+        <Contacts
+          contacts={contacts}
+          getAllContacts={() => jest.fn()}
+          deleteContact={() => jest.fn()}
+        />
+      </Router>
+    );
+
+    const searchBySelector = getByTestId('search_by_selector');
+
+    expect(getAllByTestId('each-contact').length).toBe(6);
+
+    fireEvent.change(searchBySelector, {target: {value: 'id'}});
+    expect(searchBySelector.value).toBe('id');
+
+    fireEvent.change(getByTestId('search_bar'), {
+      target: {value: '2'},
+    });
+    fireEvent.click(getByTestId('search_button'));
+
+    expect(getAllByTestId('each-contact').length).toBe(4);
+    expect(getByTestId('total_found')).toHaveTextContent('Found 4 contacts');
   });
 });
