@@ -141,11 +141,13 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
                 Search by
               </InputLabel>
               <Select
-                data-testid="search_by_selector"
                 id="search_by"
                 value={searchBy}
                 onChange={handleChangeSearchBy}
                 className={classes.searchBySelector}
+                inputProps={{
+                  'data-testid': 'search_by_selector',
+                }}
               >
                 <MenuItem value="name">Name</MenuItem>
                 <MenuItem value="email">Email</MenuItem>
