@@ -15,13 +15,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-const Contacts = ({
-  classes,
-  // contacts,
-  getAllContacts,
-  deleteContact,
-}) => {
-  const contacts = mockContacts;
+const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
+  // const contacts = mockContacts;
 
   useEffect(() => {
     if (!contacts) getAllContacts();
@@ -146,7 +141,8 @@ const Contacts = ({
                 Search by
               </InputLabel>
               <Select
-                id="search-by"
+                data-testid="search_by_selector"
+                id="search_by"
                 value={searchBy}
                 onChange={handleChangeSearchBy}
                 className={classes.searchBySelector}
@@ -159,10 +155,11 @@ const Contacts = ({
           </div>
           <div className={classes.searchBarContainer}>
             <TextField
-              id="search-contacts"
+              data-testid="search_bar"
+              id="search_contacts"
               className={classes.searchBar}
               placeholder={searchBarPlaceholder}
-              name="search-contacts"
+              name="search_contacts"
               value={searchValue || ''}
               onChange={handleChangeSearch}
               onKeyPress={e => {
@@ -176,6 +173,7 @@ const Contacts = ({
               }}
             />
             <Button
+              data-testid="search_button"
               variant="contained"
               color="primary"
               className={classes.searchButton}
@@ -186,6 +184,7 @@ const Contacts = ({
           </div>
         </div>
         <Tabs
+          data-testid="filter_by_status_tabs"
           style={{marginTop: '20px', backgroundColor: '#f5f9ff'}}
           value={showStatus}
           indicatorColor="secondary"
@@ -193,13 +192,30 @@ const Contacts = ({
           onChange={handleFilterByStatus}
           aria-label="Filter by contacts' status"
         >
-          <Tab style={{width: '25%'}} label="All" />
-          <Tab style={{width: '25%'}} label="Created" />
-          <Tab style={{width: '25%'}} label="Submitted" />
-          <Tab style={{width: '25%'}} label="Approved" />
+          <Tab
+            data-testid="filter_all_contacts_tab"
+            style={{width: '25%'}}
+            label="All"
+          />
+          <Tab
+            data-testid="filter_created_contacts_tab"
+            style={{width: '25%'}}
+            label="Created"
+          />
+          <Tab
+            data-testid="filter_submitted_contacts_tab"
+            style={{width: '25%'}}
+            label="Submitted"
+          />
+          <Tab
+            data-testid="filter_approved_contacts_tab"
+            style={{width: '25%'}}
+            label="Approved"
+          />
         </Tabs>
 
         <Typography
+          data-testid="total_found"
           component="p"
           variant="body1"
           align="center"

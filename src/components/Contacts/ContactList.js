@@ -47,6 +47,7 @@ const ContactList = ({contacts, deleteContact, classes}) => {
             </Typography>
           ) : showContacts.length < totalContacts ? (
             <Typography
+              data-testid="load_more_contacts_button"
               component="p"
               variant="body1"
               align="center"

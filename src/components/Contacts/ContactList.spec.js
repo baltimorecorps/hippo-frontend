@@ -34,7 +34,7 @@ const contacts = [
   },
 ];
 
-describe('/Contacts Page: Integration Tests', () => {
+describe('ContactList', () => {
   test('Render all contacts', () => {
     const history = createMemoryHistory();
 
