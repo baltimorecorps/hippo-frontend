@@ -25,6 +25,27 @@ const submittedApps = [
   },
 ];
 
+const interviewingApps = [
+  {
+    contact: {
+      account_id: 'auth0|5f7cc9220077930068fb3c16',
+      email: 'test1111r@test.com',
+      first_name: 'test',
+      id: 244,
+      last_name: '1111r',
+      phone_primary: '+1 (111) 111-1111',
+      status: 'approved',
+    },
+    id: '5d956e0c-13aa-408a-89f0-478695a67fba',
+    interest_statement: 'dfhhgfgh',
+    interview_completed: true,
+    interview_date: '2020-10-22',
+    interview_time: '13:10:17',
+    is_active: true,
+    status: 'interviewed',
+  },
+];
+
 const opportunity = {
   gdoc_link: 'https://docs.google.com/document/d/Fellowship',
   id: '53129550-5784-400b-9529-a28e45a60e45',
@@ -39,7 +60,7 @@ const opportunity = {
 
 describe('Application State Accordion Component: page = internal-opportunities-board', () => {
   const history = createMemoryHistory();
-  let expanded = false;
+
   test('Render and Click View App on Submitted Applications', () => {
     const {getByTestId} = render(
       <Router history={history}>
@@ -47,7 +68,7 @@ describe('Application State Accordion Component: page = internal-opportunities-b
           header="Submitted"
           applications={submittedApps}
           iconName="submitted"
-          expanded={expanded}
+          expanded={false}
           handleChange={() => jest.fn()}
           panelName="Submitted"
           opportunityId={opportunity.id}
@@ -80,7 +101,7 @@ describe('Application State Accordion Component: page = internal-opportunities-b
           header="Recommended"
           applications={recommendedApps}
           iconName="recommended"
-          expanded={expanded}
+          expanded={false}
           handleChange={() => jest.fn()}
           panelName="Recommended"
           opportunityId={opportunity.id}
@@ -105,27 +126,6 @@ describe('Application State Accordion Component: page = internal-opportunities-b
     );
   });
 
-  const interviewingApps = [
-    {
-      contact: {
-        account_id: 'auth0|5f7cc9220077930068fb3c16',
-        email: 'test1111r@test.com',
-        first_name: 'test',
-        id: 244,
-        last_name: '1111r',
-        phone_primary: '+1 (111) 111-1111',
-        status: 'approved',
-      },
-      id: '5d956e0c-13aa-408a-89f0-478695a67fba',
-      interest_statement: 'dfhhgfgh',
-      interview_completed: true,
-      interview_date: '2020-10-22',
-      interview_time: '13:10:17',
-      is_active: true,
-      status: 'interviewed',
-    },
-  ];
-
   test('Render and Click View App on Interviewing Applications', () => {
     const {getByTestId} = render(
       <Router history={history}>
@@ -133,7 +133,7 @@ describe('Application State Accordion Component: page = internal-opportunities-b
           header="Interviewing"
           applications={interviewingApps}
           iconName="interviewing"
-          expanded={expanded}
+          expanded={false}
           handleChange={() => jest.fn()}
           panelName="Interviewing"
           opportunityId={opportunity.id}
@@ -151,6 +151,9 @@ describe('Application State Accordion Component: page = internal-opportunities-b
     fireEvent.click(applicationStage);
     expect(getByTestId('title_or_name')).toBeInTheDocument();
     expect(getByTestId('view_application_button')).toBeInTheDocument();
+    expect(getByTestId('interview_date')).toBeInTheDocument();
+    expect(getByTestId('interview_time')).toBeInTheDocument();
+    expect(getByTestId('interview_status')).toBeInTheDocument();
 
     fireEvent.click(getByTestId('view_application_button'));
     expect(history.location.pathname).toBe(
@@ -168,7 +171,7 @@ describe('Application State Accordion Component: page = internal-opportunities-b
           header="Finalists for Role"
           applications={consideredApps}
           iconName="Finalists for Role"
-          expanded={expanded}
+          expanded={false}
           handleChange={() => jest.fn()}
           panelName="Finalists for Role"
           opportunityId={opportunity.id}
@@ -186,6 +189,9 @@ describe('Application State Accordion Component: page = internal-opportunities-b
     fireEvent.click(applicationStage);
     expect(getByTestId('title_or_name')).toBeInTheDocument();
     expect(getByTestId('view_application_button')).toBeInTheDocument();
+    expect(getByTestId('interview_date')).toBeInTheDocument();
+    expect(getByTestId('interview_time')).toBeInTheDocument();
+    expect(getByTestId('interview_status')).toBeInTheDocument();
 
     fireEvent.click(getByTestId('view_application_button'));
     expect(history.location.pathname).toBe(
@@ -201,7 +207,7 @@ describe('Application State Accordion Component: page = internal-opportunities-b
           header="Not a Fit"
           applications={consideredApps}
           iconName="notAFit"
-          expanded={expanded}
+          expanded={false}
           handleChange={() => jest.fn()}
           panelName="notAFit"
           opportunityId={opportunity.id}
@@ -223,6 +229,149 @@ describe('Application State Accordion Component: page = internal-opportunities-b
     fireEvent.click(getByTestId('view_application_button'));
     expect(history.location.pathname).toBe(
       '/opportunities/53129550-5784-400b-9529-a28e45a60e45/contacts/244/internal-review'
+    );
+  });
+});
+
+describe('Application State Accordion Component: page = employer', () => {
+  const history = createMemoryHistory();
+  test('Render and Click View App on Recommended Applications', () => {
+    const recommendedApps = [{...submittedApps[0], status: 'recommended'}];
+    const {getByTestId} = render(
+      <Router history={history}>
+        <ApplicationStateAccordion
+          header="Recommended"
+          applications={recommendedApps}
+          iconName="recommended"
+          expanded={false}
+          handleChange={() => jest.fn()}
+          panelName="Recommended"
+          opportunityId={opportunity.id}
+          page="employer"
+          isActive={opportunity.is_active}
+        />
+      </Router>
+    );
+
+    const applicationStage = getByTestId('application_stage');
+
+    expect(applicationStage).toBeInTheDocument();
+    expect(applicationStage).toHaveTextContent('Recommended (1)');
+
+    fireEvent.click(applicationStage);
+    expect(getByTestId('title_or_name')).toBeInTheDocument();
+    expect(getByTestId('view_application_button')).toBeInTheDocument();
+
+    fireEvent.click(getByTestId('view_application_button'));
+    expect(history.location.pathname).toBe(
+      '/opportunities/53129550-5784-400b-9529-a28e45a60e45/contacts/78/employer-review'
+    );
+  });
+
+  test('Render and Click View App on Interviewing Applications', () => {
+    const {getByTestId} = render(
+      <Router history={history}>
+        <ApplicationStateAccordion
+          header="Interviewing"
+          applications={interviewingApps}
+          iconName="interviewing"
+          expanded={false}
+          handleChange={() => jest.fn()}
+          panelName="Interviewing"
+          opportunityId={opportunity.id}
+          page="employer"
+          isActive={opportunity.is_active}
+        />
+      </Router>
+    );
+
+    const applicationStage = getByTestId('application_stage');
+
+    expect(applicationStage).toBeInTheDocument();
+
+    expect(applicationStage).toHaveTextContent('Interviewing (1)');
+
+    fireEvent.click(applicationStage);
+    expect(getByTestId('title_or_name')).toBeInTheDocument();
+    expect(getByTestId('view_application_button')).toBeInTheDocument();
+    expect(getByTestId('interview_date')).toBeInTheDocument();
+    expect(getByTestId('interview_time')).toBeInTheDocument();
+    expect(getByTestId('interview_status')).toBeInTheDocument();
+
+    fireEvent.click(getByTestId('view_application_button'));
+    expect(history.location.pathname).toBe(
+      '/opportunities/53129550-5784-400b-9529-a28e45a60e45/contacts/244/employer-review'
+    );
+  });
+
+  test('Render and Click View App on Finalists Applications', () => {
+    const consideredApps = [
+      {...interviewingApps[0], status: 'considered_for_role'},
+    ];
+    const {getByTestId} = render(
+      <Router history={history}>
+        <ApplicationStateAccordion
+          header="Finalists for Role"
+          applications={consideredApps}
+          iconName="Finalists for Role"
+          expanded={false}
+          handleChange={() => jest.fn()}
+          panelName="Finalists for Role"
+          opportunityId={opportunity.id}
+          page="employer"
+          isActive={opportunity.is_active}
+        />
+      </Router>
+    );
+
+    const applicationStage = getByTestId('application_stage');
+
+    expect(applicationStage).toBeInTheDocument();
+    expect(applicationStage).toHaveTextContent('Finalists for Role (1)');
+
+    fireEvent.click(applicationStage);
+    expect(getByTestId('title_or_name')).toBeInTheDocument();
+    expect(getByTestId('view_application_button')).toBeInTheDocument();
+    expect(getByTestId('interview_date')).toBeInTheDocument();
+    expect(getByTestId('interview_time')).toBeInTheDocument();
+    expect(getByTestId('interview_status')).toBeInTheDocument();
+
+    fireEvent.click(getByTestId('view_application_button'));
+    expect(history.location.pathname).toBe(
+      '/opportunities/53129550-5784-400b-9529-a28e45a60e45/contacts/244/employer-review'
+    );
+  });
+
+  test('Render and Click View App on Not a Fit Applications', () => {
+    const consideredApps = [{...interviewingApps[0], is_active: false}];
+    const {getByTestId} = render(
+      <Router history={history}>
+        <ApplicationStateAccordion
+          header="Not a Fit"
+          applications={consideredApps}
+          iconName="notAFit"
+          expanded={false}
+          handleChange={() => jest.fn()}
+          panelName="notAFit"
+          opportunityId={opportunity.id}
+          page="employer"
+          isActive={opportunity.is_active}
+        />
+      </Router>
+    );
+
+    const applicationStage = getByTestId('application_stage');
+
+    expect(applicationStage).toBeInTheDocument();
+    expect(applicationStage).toHaveTextContent('Not a Fit (1)');
+
+    fireEvent.click(applicationStage);
+    expect(getByTestId('title_or_name')).toBeInTheDocument();
+    expect(getByTestId('view_application_button')).toBeInTheDocument();
+
+    fireEvent.click(getByTestId('view_application_button'));
+    expect(history.location.pathname).toBe(
+      '/opportunities/53129550-5784-400b-9529-a28e45a60e45/contacts/244/employer-review'
     );
   });
 });

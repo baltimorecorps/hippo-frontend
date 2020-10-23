@@ -168,6 +168,7 @@ const ApplicationStateAccordion = ({
                         variant="body1"
                         component="p"
                         className={classes.notAFit}
+                        data-testid="interview_date"
                       >
                         Interview Date:
                         <span className={classes.status}>
@@ -178,6 +179,7 @@ const ApplicationStateAccordion = ({
                         variant="body1"
                         component="p"
                         className={classes.notAFit}
+                        data-testid="interview_time"
                       >
                         Interview Time:
                         <span className={classes.status}>
@@ -188,6 +190,7 @@ const ApplicationStateAccordion = ({
                         variant="body1"
                         component="p"
                         className={classes.notAFit}
+                        data-testid="interview_status"
                       >
                         Interview Status:
                         <span
