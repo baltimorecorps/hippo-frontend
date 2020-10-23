@@ -103,6 +103,7 @@ const ApplicationStateAccordion = ({
       >
         {icon}
         <Typography
+          data-testid="application_stage"
           className={
             totalApps > 0
               ? header === 'Not a Fit'
@@ -135,6 +136,7 @@ const ApplicationStateAccordion = ({
                       variant="body1"
                       component="p"
                       className={classes.name}
+                      data-testid="title_or_name"
                     >
                       {page === 'internal-applications-board'
                         ? app.opportunity.title
@@ -241,6 +243,7 @@ const ApplicationStateAccordion = ({
                 }
                 variant="contained"
                 color="primary"
+                data-testid="view_application_button"
               >
                 View
               </Button>

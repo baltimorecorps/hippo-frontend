@@ -25,6 +25,7 @@ const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {
             variant="h5"
             align="center"
             className={classes.header}
+            data-testid="employer_page_header"
           >
             {opportunity.org_name}
           </Typography>
