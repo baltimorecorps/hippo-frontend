@@ -15,7 +15,9 @@ const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {
   }, [getOrgOpportunity, opportunityId]);
 
   if (!opportunity) {
-    return <div>...Loading Employer Page</div>;
+    return (
+      <div data-testid="loading_employer_page">Loading Employer Page...</div>
+    );
   } else {
     return (
       <div className={classes.container}>

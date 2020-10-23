@@ -83,4 +83,14 @@ describe('Employer Page', () => {
       '/opportunities/d00d6b43-0b12-4d7f-8099-b105f637b5a5/contacts/78/employer-review'
     );
   });
+
+  test('Page render Loading...', () => {
+    const {getByTestId} = render(
+      <Router history={history}>
+        <EmployerPage opportunity={null} getOrgOpportunity={() => jest.fn()} />
+      </Router>
+    );
+
+    expect(getByTestId('loading_employer_page')).toBeInTheDocument();
+  });
 });
