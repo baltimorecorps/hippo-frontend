@@ -9,14 +9,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import Tooltip from '@material-ui/core/Tooltip';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-const RoleCards = ({
-  classes,
-  page,
-  opportunity,
-  getAllOpportunities,
-
-  applications,
-}) => {
+const RoleCards = ({classes, page, opportunity, applications}) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);

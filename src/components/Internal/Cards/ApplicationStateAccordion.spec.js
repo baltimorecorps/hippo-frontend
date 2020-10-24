@@ -4,6 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import ApplicationStateAccordion from './ApplicationStateAccordion';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
+
 const submittedApps = [
   {
     contact: {
