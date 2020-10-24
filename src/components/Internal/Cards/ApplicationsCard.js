@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ApplicationStateAccordion from './ApplicationStateAccordion';
 
-const ApplicationsCard = ({classes, contactId, applications, applicant}) => {
+const ApplicationsCard = ({classes, contactId, applications}) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -32,12 +32,17 @@ const ApplicationsCard = ({classes, contactId, applications, applicant}) => {
       app => app.status === 'considered_for_role' && app.is_active === true
     );
   }
-  if (!applications || !applicant) {
-    return <div>loading...</div>;
+  if (!applications) {
+    return <div data-testid="loading">Loading...</div>;
   }
   return (
     <Paper className={classes.card}>
-      <Typography variant="h6" component="h1" className={classes.title}>
+      <Typography
+        variant="h6"
+        component="h1"
+        className={classes.title}
+        data-testid="application_card_header"
+      >
         Applications
       </Typography>
       <ApplicationStateAccordion
@@ -101,7 +106,6 @@ ApplicationsCard.propTypes = {
   classes: PropTypes.object,
   contactId: PropTypes.number,
   applications: PropTypes.arrayOf(PropTypes.object),
-  applicant: PropTypes.object,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
