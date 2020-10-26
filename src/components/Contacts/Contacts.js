@@ -239,7 +239,6 @@ Contacts.propTypes = {
   classes: PropTypes.object.isRequired,
   contacts: PropTypes.array,
   getAllContacts: PropTypes.func.isRequired,
-  addNewContact: PropTypes.func.isRequired,
 };
 
 const styles = ({breakpoints, spacing}) => ({
