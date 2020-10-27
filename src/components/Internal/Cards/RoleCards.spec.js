@@ -132,6 +132,7 @@ describe('Role Card', () => {
         />
       </Router>
     );
+
     expect(getByTestId('title')).toBeInTheDocument();
     expect(getByTestId('title')).toHaveTextContent('Web Developer');
 
@@ -282,6 +283,60 @@ describe('Role Card', () => {
     fireEvent.click(getByTestId('link_to_employer_page'));
     expect(history.location.pathname).toBe(
       '/org/opportunity/d00d6b43-0b12-4d7f-8099-b105f637b5a5'
+    );
+  });
+
+  test('Render Card Header Color for Mayoral Fellowship Opportunity', () => {
+    const MayoralOpp = {...opportunity, program_name: 'Mayoral Fellowship'};
+    const {getByTestId} = render(
+      <Router history={history}>
+        <RoleCards
+          page="internal-opportunities-board"
+          opportunity={MayoralOpp}
+          getAllOpportunities={() => jest.fn()}
+          applications={applications}
+        />
+      </Router>
+    );
+
+    expect(getByTestId('role_card_paper')).toHaveClass(
+      'RoleCards-mayoralContainerTop-104'
+    );
+  });
+
+  test('Render Card Header Color for Fellowship Opportunity', () => {
+    const FellowshipOpp = {...opportunity, program_name: 'Fellowship'};
+    const {getByTestId} = render(
+      <Router history={history}>
+        <RoleCards
+          page="internal-opportunities-board"
+          opportunity={FellowshipOpp}
+          getAllOpportunities={() => jest.fn()}
+          applications={applications}
+        />
+      </Router>
+    );
+
+    expect(getByTestId('role_card_paper')).toHaveClass(
+      'RoleCards-fellowshipContainerTop-139'
+    );
+  });
+
+  test('Render Card Header Color for Inactive Opportunity', () => {
+    const InactiveOpp = {...opportunity, is_active: false};
+    const {getByTestId} = render(
+      <Router history={history}>
+        <RoleCards
+          page="internal-opportunities-board"
+          opportunity={InactiveOpp}
+          getAllOpportunities={() => jest.fn()}
+          applications={applications}
+        />
+      </Router>
+    );
+
+    expect(getByTestId('role_card_paper')).toHaveClass(
+      'RoleCards-inactive-174'
     );
   });
 });

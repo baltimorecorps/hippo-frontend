@@ -72,7 +72,7 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
   }
 
   return (
-    <Paper className={paperStyles}>
+    <Paper className={paperStyles} data-testid="role_card_paper">
       <div className={classes.headerContainer}>
         <div className={classes.titleAndOrgContainer}>
           <Typography
@@ -122,7 +122,7 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
             className={classes.programName}
             data-testid="program_name"
           >
-            {opportunity.program_name || ''}
+            {opportunity.program_name}
           </Typography>
           <Link
             component="button"
