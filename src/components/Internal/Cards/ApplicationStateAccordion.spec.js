@@ -202,6 +202,8 @@ describe('Application State Accordion Component: page = internal-opportunities-b
 
   test('Render and Click View App on Not a Fit Applications', () => {
     const consideredApps = [{...interviewingApps[0], is_active: false}];
+    const notAFitOpp = {...opportunity, is_active: false};
+
     const {getByTestId} = render(
       <Router history={history}>
         <ApplicationStateAccordion
@@ -211,9 +213,9 @@ describe('Application State Accordion Component: page = internal-opportunities-b
           expanded={false}
           handleChange={() => jest.fn()}
           panelName="notAFit"
-          opportunityId={opportunity.id}
+          opportunityId={notAFitOpp.id}
           page="internal-opportunities-board"
-          isActive={opportunity.is_active}
+          isActive={notAFitOpp.is_active}
         />
       </Router>
     );
@@ -226,6 +228,10 @@ describe('Application State Accordion Component: page = internal-opportunities-b
     fireEvent.click(applicationStage);
     expect(getByTestId('title_or_name')).toBeInTheDocument();
     expect(getByTestId('view_application_button')).toBeInTheDocument();
+
+    expect(getByTestId('notAFit-header')).toHaveClass(
+      'ApplicationStateAccordion-inactive-75 ApplicationStateAccordion-notAFitHighlightHead-78'
+    );
 
     fireEvent.click(getByTestId('view_application_button'));
     expect(history.location.pathname).toBe(
@@ -345,6 +351,7 @@ describe('Application State Accordion Component: page = employer', () => {
 
   test('Render and Click View App on Not a Fit Applications', () => {
     const consideredApps = [{...interviewingApps[0], is_active: false}];
+    const notAFitOpp = {...opportunity, is_active: false};
     const {getByTestId} = render(
       <Router history={history}>
         <ApplicationStateAccordion
@@ -354,9 +361,9 @@ describe('Application State Accordion Component: page = employer', () => {
           expanded={false}
           handleChange={() => jest.fn()}
           panelName="notAFit"
-          opportunityId={opportunity.id}
+          opportunityId={notAFitOpp.id}
           page="employer"
-          isActive={opportunity.is_active}
+          isActive={notAFitOpp.is_active}
         />
       </Router>
     );

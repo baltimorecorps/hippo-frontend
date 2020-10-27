@@ -99,6 +99,7 @@ const ApplicationStateAccordion = ({
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${panelName}-content`}
         id={`${panelName}-header`}
+        data-testid={`${panelName}-header`}
         className={highlightHead}
       >
         {icon}
