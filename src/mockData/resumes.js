@@ -1,38 +1,47 @@
 const resume = {
-  271: {727: true, 728: true, selected: true},
-  272: {781: true, selected: false},
-  273: {selected: true},
-  274: {730: true, selected: false},
-  275: {
-    731: true,
-    732: true,
-    733: true,
-    734: true,
-    735: true,
-    selected: false,
-  },
-  276: {737: true, selected: false},
-  282: {782: true, selected: true},
-  'cap:advocacy': {selected: true, '74BgThI2os9wEdyArofEKA==': true},
-  'cap:analysis': {selected: true, '-PmqNY7802oljpcsgL0ZLQ==': true},
-  'cap:fundraising': {selected: true, 'ZjcmI1kzC_Nm0MBejLPhDQ==': true},
-  'cap:marketing': {
+  '509': {
     selected: true,
-    '8Z8qGXdVMDR2Q7OH3lkueA==': true,
-    'yVS1QETw9RUEEGVo3ho0_Q==': true,
   },
-  'cap:other': {
+  '510': {
     selected: true,
-    'heOakHcOb91s0PbgM1D3wg==': true,
-    '0EAz_3ubRMMLiE1SyWCaAA==': true,
+  },
+  '511': {
+    selected: true,
+  },
+  'cap:advocacy': {
+    selected: true,
+    '74BgThI2os9wEdyArofEKA==': true,
+    'zrcgco7DyYvpDjHhNdTu_Q==': true,
   },
   'cap:outreach': {
     selected: true,
-    'H21TF8Coos-eXV9X_8h3YQ==': true,
     '74BgThI2os9wEdyArofEKA==': true,
-    'f0q_zzUfoHshbwYUZvkJ8w==': true,
   },
-  'cap:prog_mgmt': {selected: true, 'FsleYWdpSaCA_qO3nkdMVw==': true},
+  'cap:analysis': {
+    selected: true,
+    '4R9tqGuK2672PavRTJrN_A==': true,
+  },
+  'cap:operations': {
+    selected: true,
+    '_c_wCpVUpNKCzOMPlCf4rg==': true,
+    '7UXqvxNuqa3pQIL7g7zFCA==': true,
+  },
+  'cap:prog_mgmt': {
+    selected: true,
+    'zRLazQM7TqcqklcKyocfNw==': true,
+    '2gfVtvRJnBqSvosUIaOtEg==': true,
+  },
+  'cap:other': {
+    selected: true,
+    'niywDwbgzzw68YwfA_Kauw==': true,
+    'NetduSnS0IbDu6kzg2d3sw==': true,
+    'ebCw2QPHrjAu4viJ6eNEOA==': true,
+    'FWyI7kKdh75vaSwsL1CsOw==': true,
+    'Ja7FLGs0ujs8PLCetxERDw==': true,
+    'fFzn_sdL8xjzz1EneHoBcg==': true,
+    'OsTbgclVfYGvyKc2O9hC3Q==': true,
+    '9dBHORKXF1t41fcz9n1LYQ==': true,
+    'pIlO6f6uHLWAs5PHn8RTWg==': true,
+  },
 };
-
 export {resume};
