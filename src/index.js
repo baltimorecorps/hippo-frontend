@@ -9,14 +9,19 @@ import config from 'app/authConfig.json';
 import {API_URL} from 'app/constants';
 
 import * as serviceWorker from 'app/serviceWorker';
-import logger from 'redux-logger';
 
 
-const middleware = [logger]
+const middleware = []
 
+if (process.env.NODE_ENV === `development`) {
+  const { logger } = require(`redux-logger`);
+
+  middleware.push(logger);
+
+}
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [...getDefaultMiddleware(),...middleware]
+  middleware: [...getDefaultMiddleware(), ...middleware]
 });
 
 // A function that routes the user to the right place
