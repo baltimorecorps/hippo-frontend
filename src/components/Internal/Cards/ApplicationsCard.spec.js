@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import ApplicationsCard from './ApplicationsCard';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import {mixedAllApplications as applications} from 'mockData/applications';
+import {mixedFullApplications as applications} from 'mockData/applications';
 
 describe('Applications Card', () => {
   const history = createMemoryHistory();
