@@ -69,7 +69,7 @@ describe('ApplicantValueAlignment Component', () => {
     expect(getByTestId('contact_name')).toBeInTheDocument();
     expect(getByTestId('contact_email')).toBeInTheDocument();
     expect(getByTestId('contact_phone')).toBeInTheDocument();
-    expect(getByTestId('contact_profile')).toBeInTheDocument();
+    expect(getByTestId('contact_profile_link')).toBeInTheDocument();
 
     expect(getByTestId('question1')).toBeInTheDocument();
     expect(getByTestId('question1')).toHaveTextContent(

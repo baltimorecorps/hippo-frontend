@@ -12,7 +12,7 @@ const ApplicantPage = ({classes, applicant}) => {
     history.push(`/profile/${contactId}`);
   };
   if (!applicant) {
-    return <div>loading...</div>;
+    return <div data-testid="loading">loading...</div>;
   }
 
   return (
@@ -47,9 +47,12 @@ const ApplicantPage = ({classes, applicant}) => {
       <Link
         onClick={() => toProfile(applicant.id)}
         className={classes.seeProfileLink}
-        data-testid="contact_profile"
       >
-        <Typography variant="body1" component="h1">
+        <Typography
+          variant="body1"
+          component="h1"
+          data-testid="contact_profile_link"
+        >
           See Profile
         </Typography>
       </Link>
