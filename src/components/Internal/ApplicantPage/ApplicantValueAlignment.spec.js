@@ -127,7 +127,7 @@ describe('ApplicantValueAlignment Component', () => {
 
   test('Render empty values', () => {
     const handleClose = jest.fn();
-    const noAnswerAppliant = {
+    const noAnswerApplicant = {
       ...applicantProfile,
       profile: {
         ...applicantProfile.profile,
@@ -138,7 +138,7 @@ describe('ApplicantValueAlignment Component', () => {
     const {getByTestId} = render(
       <Router history={history}>
         <ApplicantValueAlignment
-          applicant={noAnswerAppliant}
+          applicant={noAnswerApplicant}
           handleClose={handleClose}
         />
       </Router>
