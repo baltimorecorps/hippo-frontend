@@ -16,15 +16,30 @@ const ApplicantPage = ({classes, applicant}) => {
   }
 
   return (
-    <div className={classes.headerContainer}>
+    <div className={classes.headerContainer} data-testid="contact_short">
       <div className={classes.titleAndOrgContainer}>
-        <Typography variant="body1" component="p" className={classes.name}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.name}
+          data-testid="contact_name"
+        >
           {`${applicant.first_name} ${applicant.last_name}`}
         </Typography>
-        <Typography variant="body1" component="p" className={classes.email}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.email}
+          data-testid="contact_email"
+        >
           {applicant.email}
         </Typography>
-        <Typography variant="body1" component="p" className={classes.email}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.email}
+          data-testid="contact_phone"
+        >
           {applicant.phone_primary}
         </Typography>
       </div>
@@ -32,6 +47,7 @@ const ApplicantPage = ({classes, applicant}) => {
       <Link
         onClick={() => toProfile(applicant.id)}
         className={classes.seeProfileLink}
+        data-testid="contact_profile"
       >
         <Typography variant="body1" component="h1">
           See Profile
