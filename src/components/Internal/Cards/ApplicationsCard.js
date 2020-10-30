@@ -36,7 +36,7 @@ const ApplicationsCard = ({classes, contactId, applications}) => {
     return <div data-testid="loading">Loading...</div>;
   }
   return (
-    <Paper className={classes.card}>
+    <Paper className={classes.card} data-testid="applications_card">
       <Typography
         variant="h6"
         component="h1"
