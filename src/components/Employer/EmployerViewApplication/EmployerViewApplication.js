@@ -96,7 +96,7 @@ const EmployerViewApplication = ({
   );
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="employer_view_app_page">
       {toEmployerBoardButton}
       <ViewFullApplication application={application} />
       <DecisionsFooter
@@ -431,7 +431,7 @@ const ConfirmDialog = withStyles(styles)(
     );
 
     return (
-      <Dialog open={open}>
+      <Dialog open={open} data-testid="confirm_dialog">
         {decision === 'interview scheduled' ? (
           <React.Fragment>
             <DialogContent>

@@ -225,7 +225,7 @@ const StickyFooter = ({
           ? {width: 'calc(100vw+400px)', left: '400px'}
           : {width: '100vw'}
       }
-      data-testid="buttons-footer"
+      data-testid="decisions_footer"
     >
       <div className={classes.buttonContainer}>
         {leftButton}

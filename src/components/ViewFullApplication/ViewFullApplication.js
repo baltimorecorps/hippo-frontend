@@ -27,7 +27,7 @@ const ViewFullApplication = ({
   }
   return (
     <React.Fragment>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} data-testid="view_full_app_component">
         <div className={classes.headerContainer}>
           <Typography
             variant="h5"
@@ -46,7 +46,7 @@ const ViewFullApplication = ({
             data-testid="title"
           >
             <strong>Title:</strong>
-            {(application && application.opportunity.title) || ''}
+            {application && application.opportunity.title}
           </Typography>
           <Typography
             variant="body2"
@@ -55,7 +55,7 @@ const ViewFullApplication = ({
             data-testid="organization"
           >
             <strong>Organization:</strong>{' '}
-            {(application && application.opportunity.org_name) || ''}
+            {application && application.opportunity.org_name}
           </Typography>
         </div>
         <div className={classes.opportunityDescription}>
