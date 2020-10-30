@@ -11,9 +11,9 @@ import {
 } from '../../AboutMe/defaultData';
 import {getListOfAnswers} from 'lib/helperFunctions/helpers';
 
-const ApplicantPage = ({classes, applicant}) => {
+const ApplicantDetails = ({classes, applicant}) => {
   if (!applicant) {
-    return <div>loading...</div>;
+    return <div data-testid="loading">loading...</div>;
   }
 
   const {status, program_apps, profile} = applicant;
@@ -60,10 +60,15 @@ const ApplicantPage = ({classes, applicant}) => {
     getListOfAnswers(programs_completed, programsCompletedLabels);
 
   return (
-    <div className={classes.detailsContainer}>
+    <div className={classes.detailsContainer} data-testid="applicant_details">
       <ApplicantContactShort applicant={applicant} />
       <div style={{marginTop: '10px'}}></div>
-      <Typography variant="body1" component="p" className={classes.content}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.content}
+        data-testid="status_and_location"
+      >
         <strong>Profile status:</strong>{' '}
         {status[0].toUpperCase() + status.slice(1)}
         <br />
@@ -73,7 +78,12 @@ const ApplicantPage = ({classes, applicant}) => {
           : '-'}
       </Typography>
 
-      <Typography variant="body1" component="p" className={classes.content}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.content}
+        data-testid="profile_values1"
+      >
         <strong>Race:</strong>{' '}
         {applicantRace.length > 0
           ? applicantRace.reduce((raceA, raceB) => {
@@ -89,7 +99,12 @@ const ApplicantPage = ({classes, applicant}) => {
         <br />
         <strong>Hear about us:</strong> {hearAboutUs || '-'}{' '}
       </Typography>
-      <Typography variant="body1" component="p" className={classes.content}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.content}
+        data-testid="profile_values2"
+      >
         <strong>Experience:</strong> {years_exp || '-'}
         <br />
         <strong>Student:</strong> {current_edu_status || '-'}
@@ -100,7 +115,12 @@ const ApplicantPage = ({classes, applicant}) => {
         <br />
       </Typography>
 
-      <Typography variant="body1" component="p" className={classes.content}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.content}
+        data-testid="interested_roles"
+      >
         <strong> Interested roles:</strong>{' '}
         {roleAnswer.length > 0
           ? roleAnswer.reduce((roleA, roleB) => {
@@ -109,7 +129,12 @@ const ApplicantPage = ({classes, applicant}) => {
           : '-'}
       </Typography>
 
-      <Typography variant="body1" component="p" className={classes.content}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.content}
+        data-testid="interested_programs"
+      >
         <strong> Needs help about programs:</strong>{' '}
         {needs_help_programs === true
           ? 'Yes'
@@ -119,14 +144,19 @@ const ApplicantPage = ({classes, applicant}) => {
         <br />
         <strong> Interested programs:</strong>{' '}
         {interestedPrograms.length > 0
-          ? interestedPrograms.reduce((raceA, raceB) => {
-              return (raceA += `, ${raceB}`);
+          ? interestedPrograms.reduce((programs, nextProgram) => {
+              return (programs += `, ${nextProgram}`);
             })
           : '-'}
         <br />
       </Typography>
 
-      <Typography variant="body1" component="p" className={classes.content}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.content}
+        data-testid="have_participated_programs"
+      >
         <strong>Have participated programs:</strong>{' '}
         {previous_bcorps_program || '-'}
         <br />
@@ -142,7 +172,7 @@ const ApplicantPage = ({classes, applicant}) => {
   );
 };
 
-ApplicantPage.propTypes = {
+ApplicantDetails.propTypes = {
   classes: PropTypes.object,
   contactId: PropTypes.number,
   applications: PropTypes.arrayOf(PropTypes.object),
@@ -209,4 +239,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(ApplicantPage);
+export default withStyles(styles)(ApplicantDetails);

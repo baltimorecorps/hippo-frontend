@@ -1,3 +1,9 @@
+import {
+  program_apps_two_Interested,
+  program_apps_not_interested,
+} from './programApps';
+import {skills} from './skills';
+
 const applicantProfile = {
   account_id: '22',
   email: 'bayBC1@baltimorecorps.org',
@@ -5,6 +11,7 @@ const applicantProfile = {
   id: 78,
   last_name: 'Chairangsaris',
   phone_primary: '+1 (555) 555-9999',
+  status: 'approved',
   profile: {
     address_primary: {
       city: 'Baltimore',
@@ -19,7 +26,7 @@ const applicantProfile = {
     current_job_status: 'Employed part-time',
     gender: 'Not Listed',
     gender_other: 'ss',
-    hear_about_us: 'Indeed',
+    hear_about_us: 'School',
     hear_about_us_other: '',
     id: 1,
     job_search_status: 'Looking for a job in the next 2-6 months',
@@ -60,4 +67,15 @@ const applicantProfile = {
   },
 };
 
-export {applicantProfile};
+const applicantFull = {
+  ...applicantProfile,
+  program_apps: program_apps_two_Interested,
+  skills,
+};
+const applicantFullNoProgramsInterested = {
+  ...applicantProfile,
+  program_apps: program_apps_not_interested,
+  skills,
+};
+
+export {applicantProfile, applicantFull, applicantFullNoProgramsInterested};
