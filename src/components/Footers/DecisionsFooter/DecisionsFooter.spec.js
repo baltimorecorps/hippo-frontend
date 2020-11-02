@@ -580,3 +580,65 @@ describe('DecisionsFooter Component on StaffViewApplication Page', () => {
     );
   });
 });
+
+describe('DecisionsFooter Component on Applicant Review Application Page (on Application Process)', () => {
+  const history = createMemoryHistory();
+
+  test('Render and click Edit Profile to a Submitted Application', () => {
+    const toOpportunities = jest.fn();
+    const submit = jest.fn();
+    const back = jest.fn();
+
+    const {getByTestId, queryByText} = render(
+      <Router history={history}>
+        <DecisionsFooter
+          page="review"
+          back={back}
+          toOpportunities={toOpportunities}
+          submit={submit}
+          application={fullSubmittedApp}
+        />
+      </Router>
+    );
+
+    expect(getByTestId('left_button')).toBeInTheDocument();
+    expect(getByTestId('left_button')).toHaveTextContent('Edit Profile');
+
+    expect(getByTestId('right_button')).toBeInTheDocument();
+    expect(getByTestId('right_button')).toHaveTextContent(
+      'View More Opportunities'
+    );
+
+    fireEvent.click(queryByText('Edit Profile'));
+    expect(history.location.pathname).toBe('/profile');
+  });
+
+  test('Render and click View More Opportunities to a Submitted Application', () => {
+    const toOpportunities = jest.fn();
+    const submit = jest.fn();
+    const back = jest.fn();
+
+    const {getByTestId, queryByText} = render(
+      <Router history={history}>
+        <DecisionsFooter
+          page="review"
+          back={back}
+          toOpportunities={toOpportunities}
+          submit={submit}
+          application={fullSubmittedApp}
+        />
+      </Router>
+    );
+
+    expect(getByTestId('left_button')).toBeInTheDocument();
+    expect(getByTestId('left_button')).toHaveTextContent('Edit Profile');
+
+    expect(getByTestId('right_button')).toBeInTheDocument();
+    expect(getByTestId('right_button')).toHaveTextContent(
+      'View More Opportunities'
+    );
+
+    fireEvent.click(queryByText('View More Opportunities'));
+    expect(toOpportunities.mock.calls.length).toBe(1);
+  });
+});
