@@ -228,11 +228,15 @@ const StickyFooter = ({
       data-testid="decisions_footer"
     >
       <div className={classes.buttonContainer}>
-        {leftButton}
-        {middleLeftButton || null}
+        <span data-testid="left_button">{leftButton}</span>
+        <span data-testid="middle_left_button">{middleLeftButton || null}</span>
+
         <div className={classes.printButton} />
-        {middleRightButton || null}
-        {rightButton}
+
+        <span data-testid="middle_right_button">
+          {middleRightButton || null}
+        </span>
+        <span data-testid="right_button">{rightButton}</span>
       </div>
     </Paper>
   );

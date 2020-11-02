@@ -104,10 +104,27 @@ const fullConsideredApp = {
   opportunity: PFPOpportunities[3],
   resume,
 };
-const fullNotAFitApp = {
+
+const fullNotAFitFromRecommendedApp = {
+  contact,
+  ...consideredApplication,
+  status: 'recommended',
+  is_active: false,
+  opportunity: PFPOpportunities[4],
+  resume,
+};
+const fullNotAFitFromInterviewApp = {
   contact,
   ...consideredApplication,
   status: 'interviewed',
+  is_active: false,
+  opportunity: PFPOpportunities[4],
+  resume,
+};
+const fullNotAFitFromFinalistsApp = {
+  contact,
+  ...consideredApplication,
+  status: 'considered_for_role',
   is_active: false,
   opportunity: PFPOpportunities[4],
   resume,
@@ -126,7 +143,7 @@ const mixedFullApplications = [
   fullRecommendedApp,
   fullInterviewingApp,
   fullConsideredApp,
-  fullNotAFitApp,
+  fullNotAFitFromInterviewApp,
 ];
 
 export {
@@ -140,6 +157,8 @@ export {
   fullRecommendedApp,
   fullConsideredApp,
   fullInterviewingApp,
-  fullNotAFitApp,
+  fullNotAFitFromInterviewApp,
   mixedFullApplications,
+  fullNotAFitFromFinalistsApp,
+  fullNotAFitFromRecommendedApp,
 };
