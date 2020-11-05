@@ -59,19 +59,19 @@ const StaffViewApplication = ({
 
   const recommendApplication = async () => {
     const response = await staffRecommendApplication(contactId, opportunityId);
-    if (Number(response.statusCode) === 200) {
+    if (response && Number(response.statusCode) === 200) {
       setConfirmed(false);
     }
   };
   const notAFitApplication = async () => {
     const response = await staffNotAFitApplication(contactId, opportunityId);
-    if (Number(response.statusCode) === 200) {
+    if (response && Number(response.statusCode) === 200) {
       setConfirmed(false);
     }
   };
   const reopenApplication = async () => {
     const response = await staffReopenApplication(contactId, opportunityId);
-    if (Number(response.statusCode) === 200) {
+    if (response && Number(response.statusCode) === 200) {
       setConfirmed(false);
     }
   };
@@ -95,7 +95,7 @@ const StaffViewApplication = ({
   );
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="staff_view_app_page">
       <div className={classes.headerButtonContainer}>
         {toInternalOpportunitiesButton}
         {toApplicantApplicationsCardButton}
@@ -251,9 +251,9 @@ const ConfirmDialog = withStyles(styles)(
       }
     };
     return (
-      <Dialog open={open}>
+      <Dialog open={open} data-testid="confirm_dialog">
         <DialogContent>
-          <Typography>
+          <Typography data-testid="confirm_dialog_content">
             {decision === 'recommend'
               ? `Are you sure you want to recommend this application?`
               : decision === 'staff: not a fit'
@@ -262,13 +262,19 @@ const ConfirmDialog = withStyles(styles)(
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDialog} variant="contained" color="secondary">
+          <Button
+            onClick={closeDialog}
+            variant="contained"
+            color="secondary"
+            data-testid="no_button"
+          >
             No
           </Button>
           <Button
             onClick={onClickConfirmDecision}
             variant="contained"
             color="primary"
+            data-testid="yes_button"
           >
             Yes
           </Button>
