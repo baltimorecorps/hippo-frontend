@@ -75,7 +75,7 @@ const EmployerViewApplication = ({
 
   const notAFitApplication = async () => {
     const response = await employerNotAFitApplication(contactId, opportunityId);
-    if (Number(response.statusCode) === 200) {
+    if (response && Number(response.statusCode) === 200) {
       toEmployerBoard();
     }
   };
@@ -84,7 +84,7 @@ const EmployerViewApplication = ({
       contactId,
       opportunityId
     );
-    if (Number(response.statusCode) === 200) {
+    if (response && Number(response.statusCode) === 200) {
       toEmployerBoard();
     }
   };
@@ -395,9 +395,7 @@ const ConfirmDialog = withStyles(styles)(
       case 'employer: not a fit':
         confirmText = 'Are you sure this application is not a fit?';
         break;
-      case 'consider':
-        confirmText = `Are you sure you want to consider ${application.contact.first_name} ${application.contact.last_name} for the role?`;
-        break;
+
       case 'interview completed':
         confirmText = `Would ${application.contact.first_name} ${application.contact.last_name} be a finalist for this role?`;
         break;
@@ -425,7 +423,12 @@ const ConfirmDialog = withStyles(styles)(
       classes.redButtons
     );
     const noCancelButton = (
-      <Button onClick={closeDialog} variant="outlined" color="secondary">
+      <Button
+        onClick={closeDialog}
+        variant="outlined"
+        color="secondary"
+        data-testid="cancel_confirm_dialog_button"
+      >
         Cancel
       </Button>
     );
@@ -499,9 +502,10 @@ const ConfirmDialog = withStyles(styles)(
             <DialogContent className={classes.dialogContent}>
               <div className={classes.dialogHeaderContainer}>
                 <IconButton
-                  aria-label="close form"
+                  aria-label="close confirm dialog button"
                   onMouseDown={closeDialog}
                   className={classes.closeIcon}
+                  data-testid="close_confirm_dialog_button"
                 >
                   <CloseIcon />
                 </IconButton>
@@ -512,6 +516,7 @@ const ConfirmDialog = withStyles(styles)(
                 component="h2"
                 align="center"
                 className={classes.dialogContentText}
+                data-testid="confirm_dialog_text_content"
               >
                 {confirmText}
               </Typography>
@@ -532,7 +537,9 @@ const ConfirmDialog = withStyles(styles)(
         ) : (
           <React.Fragment>
             <DialogContent>
-              <Typography>{confirmText}</Typography>
+              <Typography data-testid="confirm_dialog_text_content">
+                {confirmText}
+              </Typography>
             </DialogContent>
             <DialogActions className={classes.buttonsContainer}>
               {noCancelButton}
