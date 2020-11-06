@@ -55,7 +55,6 @@ const AboutMeForms = ({
             <div className={classes.extraPadding}>
               <ContactInfoDisplay
                 contact={contact}
-                isOnEditMode={true}
                 onClickEdit={() =>
                   setOpenAboutMeForms({
                     ...openAboutMeForms,
