@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import {
   QuestionWithOneAnswer,
-  QuestionWithMultipleAnswersArray,
+  QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
 import {getListOfAnswers} from 'lib/helperFunctions/helpers';
 import {raceLabels, blankProfile} from '../defaultData';
@@ -124,10 +124,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
       ) : null}
       {isOnEditMode && contact && contact.profile && (
         <React.Fragment>
-          <QuestionWithMultipleAnswersArray
-            question="Race:"
-            answers={theRace}
-          />
+          <QuestionWithMultipleAnswers question="Race:" answers={theRace} />
           <QuestionWithOneAnswer question="Gender:" answer={theGender} />
           <QuestionWithOneAnswer question="Pronoun:" answer={thePronoun} />
           <QuestionWithOneAnswer

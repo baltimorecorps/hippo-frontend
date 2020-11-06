@@ -9,7 +9,12 @@ import IconButton from '@material-ui/core/IconButton';
 const HeaderTemplate = ({header, onClickEdit, isSubmitted, classes}) => {
   return (
     <Grid item xs={12} className={classes.justifyBetween}>
-      <Typography variant="h6" component="h3" className={classes.header}>
+      <Typography
+        variant="h6"
+        component="h3"
+        className={classes.header}
+        data-testid="header_content"
+      >
         {header}{' '}
         {isSubmitted && (
           <span style={{color: '#888', fontSize: '14px', fontWeight: 'normal'}}>
@@ -22,6 +27,7 @@ const HeaderTemplate = ({header, onClickEdit, isSubmitted, classes}) => {
           onClick={onClickEdit}
           size="small"
           aria-label="edit experience"
+          data-testid="edit_button"
         >
           <EditIcon className={classes.editIcon} />
         </IconButton>
@@ -33,16 +39,31 @@ const HeaderTemplate = ({header, onClickEdit, isSubmitted, classes}) => {
 const QuestionWithOneAnswerTemplate = ({question, answer, classes}) => {
   return (
     <div className={classes.item}>
-      <Typography variant="body1" component="p" className={classes.question}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.question}
+        data-testid="question"
+      >
         {question}
       </Typography>
 
       {answer && answer.length > 0 ? (
-        <Typography variant="body1" component="p" className={classes.answer}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.answer}
+          data-testid="answer"
+        >
           - {answer}
         </Typography>
       ) : (
-        <Typography variant="body1" component="p" className={classes.answer}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.answer}
+          data-testid="please_answer"
+        >
           * Please answer *
         </Typography>
       )}
@@ -53,7 +74,12 @@ const QuestionWithOneAnswerTemplate = ({question, answer, classes}) => {
 const QuestionWithMultipleAnswersTemplate = ({question, answers, classes}) => {
   return (
     <div className={classes.item}>
-      <Typography variant="body1" component="p" className={classes.question}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.question}
+        data-testid="question"
+      >
         {question}
       </Typography>
 
@@ -64,38 +90,18 @@ const QuestionWithMultipleAnswersTemplate = ({question, answers, classes}) => {
             variant="body1"
             component="p"
             className={classes.answer}
+            data-testid="answer"
           >
             - {answer}
           </Typography>
         ))
       ) : (
-        <Typography variant="body1" component="p" className={classes.answer}>
-          * Please answer *
-        </Typography>
-      )}
-    </div>
-  );
-};
-const QATemplate3 = ({question, answers, classes}) => {
-  return (
-    <div className={classes.item}>
-      <Typography variant="body1" component="p" className={classes.question}>
-        {question}
-      </Typography>
-
-      {answers && answers.length > 0 ? (
-        answers.map((answer, index) => (
-          <Typography
-            key={index}
-            variant="body1"
-            component="p"
-            className={classes.answer}
-          >
-            - {answer}
-          </Typography>
-        ))
-      ) : (
-        <Typography variant="body1" component="p" className={classes.answer}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.answer}
+          data-testid="please_answer"
+        >
           * Please answer *
         </Typography>
       )}
@@ -112,10 +118,6 @@ QuestionWithOneAnswerTemplate.propTypes = {
   answer: PropTypes.string,
 };
 QuestionWithMultipleAnswersTemplate.propTypes = {
-  question: PropTypes.string,
-  answers: PropTypes.array,
-};
-QATemplate3.propTypes = {
   question: PropTypes.string,
   answers: PropTypes.array,
 };
@@ -158,12 +160,6 @@ const QuestionWithOneAnswer = withStyles(styles)(QuestionWithOneAnswerTemplate);
 const QuestionWithMultipleAnswers = withStyles(styles)(
   QuestionWithMultipleAnswersTemplate
 );
-const QuestionWithMultipleAnswersArray = withStyles(styles)(QATemplate3);
 const Header = withStyles(styles)(HeaderTemplate);
 
-export {
-  QuestionWithOneAnswer,
-  QuestionWithMultipleAnswers,
-  QuestionWithMultipleAnswersArray,
-  Header,
-};
+export {QuestionWithOneAnswer, QuestionWithMultipleAnswers, Header};
