@@ -69,7 +69,7 @@ const ProgramsAndEligibilityForm = ({
   const submit = () => {
     const {isError, err} = programsAndEligibilityValidator(values);
     setErrors(err);
-
+    console.log('err', err);
     if (!isError) {
       const {first_name, last_name, email, id, program_apps} = values;
 
@@ -129,7 +129,12 @@ const ProgramsAndEligibilityForm = ({
   ];
 
   return (
-    <Grid item xs={12} className={classes.form}>
+    <Grid
+      item
+      xs={12}
+      className={classes.form}
+      data-testid="programs_eligibility_form"
+    >
       <FormHeader
         header=" Programs and Eligibility"
         descriptions={descriptions}

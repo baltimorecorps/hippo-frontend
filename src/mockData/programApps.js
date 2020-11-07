@@ -77,4 +77,20 @@ const program_apps_not_interested = [
   JHUProgramApp,
 ];
 
-export {program_apps_two_Interested, program_apps_not_interested};
+const default_program_apps = [
+  {is_interested: false, program: {id: 1, name: 'Place for Purpose'}},
+  {is_interested: false, program: {id: 2, name: 'Mayoral Fellowship'}},
+
+  {is_interested: false, program: {id: 3, name: 'Fellowship'}},
+  {is_interested: false, program: {id: 4, name: 'Public Allies'}},
+  {
+    is_interested: false,
+    program: {id: 5, name: 'JHU Carey Humanities Fellowship'},
+  },
+];
+
+export {
+  program_apps_two_Interested,
+  program_apps_not_interested,
+  default_program_apps,
+};
