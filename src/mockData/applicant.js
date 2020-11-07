@@ -4,6 +4,69 @@ import {
 } from './programApps';
 import {skills} from './skills';
 
+const applicantEmptyProfile = {
+  account_id: '22',
+  email: 'bayBC1@baltimorecorps.org',
+  first_name: 'Bay1',
+  id: 78,
+  last_name: 'Chairangsaris',
+  phone_primary: '+1 (555) 555-9999',
+  status: 'approved',
+  profile: {
+    address_primary: {
+      city: '',
+      country: '',
+      is_primary: true,
+      state: '',
+      street1: '',
+      street2: '',
+      zip_code: '',
+    },
+    current_edu_status: '',
+    current_job_status: '',
+    gender: '',
+    gender_other: '',
+    hear_about_us: '',
+    hear_about_us_other: '',
+    id: 1,
+    job_search_status: '',
+    needs_help_programs: false,
+    previous_bcorps_program: '',
+    pronoun: '',
+    pronoun_other: '',
+    value_question1: '',
+    value_question2: '',
+    years_exp: '',
+    programs_completed: {
+      civic_innovators: false,
+      elevation_awards: false,
+      fellowship: false,
+      kiva: false,
+      mayoral_fellowship: false,
+      public_allies: false,
+    },
+    race: {
+      american_indian: false,
+      asian: false,
+      black: false,
+      hawaiian: false,
+      hispanic: false,
+      not_listed: false,
+      race_other: '',
+      south_asian: false,
+      white: false,
+    },
+    roles: {
+      advocacy_public_policy: false,
+      community_engagement_outreach: false,
+      data_analysis: false,
+      fundraising_development: false,
+      marketing_public_relations: false,
+      program_management: false,
+    },
+  },
+};
+
 const applicantProfile = {
   account_id: '22',
   email: 'bayBC1@baltimorecorps.org',
@@ -78,4 +141,9 @@ const applicantFullNoProgramsInterested = {
   skills,
 };
 
-export {applicantProfile, applicantFull, applicantFullNoProgramsInterested};
+export {
+  applicantEmptyProfile,
+  applicantProfile,
+  applicantFull,
+  applicantFullNoProgramsInterested,
+};
