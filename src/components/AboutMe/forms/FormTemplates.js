@@ -22,7 +22,12 @@ const FormHeaderTemplate = ({header, descriptions, onCloseForm, classes}) => {
   return (
     <React.Fragment>
       <div className={classes.headerContainer}>
-        <Typography variant="h3" component="h3" className={classes.formHeader}>
+        <Typography
+          variant="h3"
+          component="h3"
+          className={classes.formHeader}
+          data-testid="form_header"
+        >
           {header}
         </Typography>
         {onCloseForm && (
@@ -32,6 +37,7 @@ const FormHeaderTemplate = ({header, descriptions, onCloseForm, classes}) => {
               aria-label="cancel form"
               onMouseDown={onCloseForm}
               className={classes.iconButton}
+              data-testid="close_form_button"
             >
               <CloseIcon />
             </IconButton>
@@ -45,6 +51,7 @@ const FormHeaderTemplate = ({header, descriptions, onCloseForm, classes}) => {
             variant="body1"
             component="p"
             className={classes.sectionInfo}
+            data-testid="form_description"
           >
             {description}
           </Typography>
@@ -67,7 +74,12 @@ const FormRadioButtonsTemplate = ({
   return (
     <div className={classes.eachQuestionContainer}>
       <FormControl component="fieldset">
-        <Typography variant="body1" component="p" className={classes.question}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.question}
+          data-testid="question"
+        >
           {question}
         </Typography>
         <RadioGroup
@@ -76,6 +88,7 @@ const FormRadioButtonsTemplate = ({
           value={value || ''}
           onChange={onChange}
           className={classes.radioGroup}
+          data-testid="radio_buttons"
         >
           {options.map((option, index) => (
             <FormControlLabel
@@ -84,10 +97,11 @@ const FormRadioButtonsTemplate = ({
               value={option}
               control={<Radio />}
               label={option}
+              data-testid="radio_button_option"
             />
           ))}
         </RadioGroup>
-        <FormHelperText className={classes.formHelperText}>
+        <FormHelperText className={classes.formHelperText} data-testid="error">
           {error || null}
         </FormHelperText>
       </FormControl>
@@ -105,7 +119,12 @@ const FormCheckboxesTemplate = ({
   return (
     <React.Fragment>
       {question && (
-        <Typography variant="body1" component="p" className={classes.question}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.question}
+          data-testid="question"
+        >
           {question}
         </Typography>
       )}
@@ -123,10 +142,11 @@ const FormCheckboxesTemplate = ({
             }
             className={classes.checkbox}
             label={option.label}
+            data-testid="checkbox_option"
           />
         ))}
       </div>
-      <FormHelperText className={classes.formHelperText}>
+      <FormHelperText className={classes.formHelperText} data-testid="error">
         {error || null}
       </FormHelperText>
     </React.Fragment>
@@ -140,6 +160,7 @@ const FormSubmitButtonTemplate = ({onSubmit, classes}) => {
         color="primary"
         onClick={() => onSubmit()}
         align="end"
+        data-testid="submit_button"
       >
         Save
       </Button>
@@ -169,11 +190,11 @@ const FormDropDownSelectorTemplate = ({
           name: name,
           id: name,
           classes: {select: !isLabelInside ? classes.dropdownSelector : null},
-          'data-testid': name,
+          'data-testid': 'dropdown_selector',
         }}
       >
         {options.map(option => (
-          <MenuItem value={option} key={option}>
+          <MenuItem value={option} key={option} data-testid="selector_option">
             {option}
           </MenuItem>
         ))}
@@ -186,12 +207,16 @@ const FormDropDownSelectorTemplate = ({
     </React.Fragment>
   );
   const labelOutsideDropdown = (
-    <div className={classes.dropdownContainer}>
+    <div
+      className={classes.dropdownContainer}
+      data-testid="label_outside_dropdown_selector"
+    >
       <FormControl>
         <Typography
           variant="body1"
           component="p"
           className={classes.dropdownLabel}
+          data-testid="question"
         >
           {question}
         </Typography>
@@ -201,9 +226,19 @@ const FormDropDownSelectorTemplate = ({
     </div>
   );
   const labelInsideDropdown = (
-    <Grid item xs={12} md={6} align="center">
+    <Grid
+      item
+      xs={12}
+      md={6}
+      align="center"
+      data-testid="label_inside_dropdown_selector"
+    >
       <div className={classes.dropdownContainerLabelInside}>
-        <InputLabel htmlFor={name} className={classes.dropdownInputLabel}>
+        <InputLabel
+          htmlFor={name}
+          className={classes.dropdownInputLabel}
+          data-testid="question"
+        >
           {question}
         </InputLabel>
         {theDropdownSelector}
@@ -239,6 +274,7 @@ const FormTextFieldTemplate = ({
   const inputProps = {
     classes: {input: classes.resize},
     autoComplete: 'off',
+    'data-testid': 'text_field',
   };
 
   const textFieldAndError = (
@@ -252,26 +288,38 @@ const FormTextFieldTemplate = ({
         value={value || ''}
         onChange={onChange}
         InputLabelProps={inputLabelProps}
-        InputProps={inputProps}
+        inputProps={inputProps}
       />
-      <FormHelperText className={classes.formHelperText}>
+      <FormHelperText className={classes.formHelperText} data-testid="error">
         {error || null}
       </FormHelperText>
     </React.Fragment>
   );
 
   const labelInsideTextField = (
-    <Grid item xs={12} md={6} align="center">
+    <Grid
+      item
+      xs={12}
+      md={6}
+      align="center"
+      data-testid="label_inside_text_field"
+    >
       {textFieldAndError}
     </Grid>
   );
 
   const labelOutsideTextField = (
-    <Grid container style={{marginBottom: '10px'}} direction="column">
+    <Grid
+      container
+      style={{marginBottom: '10px'}}
+      direction="column"
+      data-testid="label_outside_text_field"
+    >
       <Typography
         variant="body1"
         component="p"
         className={classes.textFieldLabel}
+        data-testid="label"
       >
         {label}
       </Typography>
@@ -297,7 +345,12 @@ const FormMultiRowsTextFieldTemplate = ({
 }) => {
   return (
     <Grid container style={{marginBottom: '10px'}} direction="column">
-      <Typography variant="body1" component="p" className={classes.question}>
+      <Typography
+        variant="body1"
+        component="p"
+        className={classes.question}
+        data-testid="question"
+      >
         {question}
       </Typography>
       <TextField
@@ -310,8 +363,11 @@ const FormMultiRowsTextFieldTemplate = ({
         onChange={onChange}
         variant="outlined"
         style={{width: '100%'}}
+        inputProps={{
+          'data-testid': 'text_field',
+        }}
       />
-      <FormHelperText className={classes.formHelperText}>
+      <FormHelperText className={classes.formHelperText} data-testid="error">
         {error || null}
       </FormHelperText>
     </Grid>
