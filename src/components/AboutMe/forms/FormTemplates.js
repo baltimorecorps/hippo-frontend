@@ -35,7 +35,7 @@ const FormHeaderTemplate = ({header, descriptions, onCloseForm, classes}) => {
             <IconButton
               edge="end"
               aria-label="cancel form"
-              onMouseDown={onCloseForm}
+              onClick={() => onCloseForm()}
               className={classes.iconButton}
               data-testid="close_form_button"
             >

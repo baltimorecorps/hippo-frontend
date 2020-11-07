@@ -26,9 +26,12 @@ describe('FormTemplates', () => {
     expect(getByTestId('form_header')).toBeInTheDocument();
     expect(getByTestId('form_description')).toBeInTheDocument();
     expect(getByTestId('close_form_button')).toBeInTheDocument();
+
+    fireEvent.click(getByTestId('close_form_button'));
+    expect(onCloseForm.mock.calls.length).toBe(1);
   });
 
-  test('Render FormHeader', () => {
+  test('Render FormRadioButtons', () => {
     const onChange = jest.fn();
 
     const {getAllByTestId, getByTestId} = render(

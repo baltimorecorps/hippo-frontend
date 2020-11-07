@@ -85,7 +85,7 @@ const ValueAlignmentForm = ({contact, onSubmit, onCloseForm, classes}) => {
       <FormHeader
         header="Value Alignment"
         descriptions={descriptions}
-        onCloseForm={() => onCloseForm()}
+        onCloseForm={onCloseForm}
       />
 
       <Grid item xs={12} align="center">

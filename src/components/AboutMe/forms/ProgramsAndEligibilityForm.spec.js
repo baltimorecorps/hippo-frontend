@@ -65,6 +65,7 @@ describe('ProgramsAndEligibilityForm', () => {
     const options = getAllByTestId('checkbox_option');
 
     fireEvent.click(options[1]);
+    fireEvent.click(options[2]);
     fireEvent.click(getByTestId('submit_button'));
 
     expect(updateProgramApps.mock.calls.length).toBe(1);
