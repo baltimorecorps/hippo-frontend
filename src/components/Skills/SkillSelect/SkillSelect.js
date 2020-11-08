@@ -76,6 +76,8 @@ const ListboxComponent = React.forwardRef(function ListboxComponent(
 const SkillSelect = ({classes, id, load, value, onChange}) => {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  // const [errors, setErrors] = useState(false)
+  // const [charLimit,setCharLimit] = useState("")
 
   const isNotSelected = candidate =>
     findIndex(value, element => element.name === candidate.name) === -1;
@@ -85,8 +87,22 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
 
     if (inputValue === '') {
       setOptions([]);
+    
       return undefined;
     }
+
+    // // if(inputValue.length >= 15){
+    // //   setErrors(true)
+    // //   setCharLimit(`${15 - inputValue.length} characters left`)
+    // // }
+
+    // if(inputValue.length > 0){
+    //   // setErrors(true)
+    //   setCharLimit(`${15 - inputValue.length} characters left`)
+    // }
+
+    
+
 
     // Redefine this inside useEffect to avoid dependency issues
     const isNotSelected = candidate =>
@@ -134,7 +150,11 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
 
   const handleInputChange = event => {
     if (event) {
-      setInputValue(event.target.value);
+      // if(event.target.value.length >= 15){
+      //   setErrors(true)
+      //   setCharLimit(`${15 - event.target.value.length} characters left`)}
+        setInputValue(event.target.value)
+  
     }
   };
 
@@ -180,6 +200,9 @@ const SkillSelect = ({classes, id, load, value, onChange}) => {
           renderInput={params => (
             <TextField
               {...params}
+              // // inputProps={{...params, maxLength:10}}
+              // error = {errors}
+              // helperText= {charLimit}
               placeholder="Add New Skill"
               fullWidth
               variant="outlined"
