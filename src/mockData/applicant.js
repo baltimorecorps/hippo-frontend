@@ -6,8 +6,8 @@ import {skills} from './skills';
 
 const applicantEmptyProfile = {
   account_id: '22',
-  email: 'bayBC1@baltimorecorps.org',
-  first_name: 'Bay1',
+  email: 'bay@baltimorecorps.org',
+  first_name: 'Bay',
   id: 78,
   last_name: 'Chairangsaris',
   phone_primary: '+1 (555) 555-9999',

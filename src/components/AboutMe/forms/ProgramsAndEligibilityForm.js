@@ -69,7 +69,6 @@ const ProgramsAndEligibilityForm = ({
   const submit = () => {
     const {isError, err} = programsAndEligibilityValidator(values);
     setErrors(err);
-    console.log('err', err);
     if (!isError) {
       const {first_name, last_name, email, id, program_apps} = values;
 
