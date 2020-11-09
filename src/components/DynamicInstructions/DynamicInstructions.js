@@ -19,7 +19,7 @@ const DynamicInstructions = ({
   classes,
 }) => {
   if (instructions == null) {
-    return <div>loading...</div>;
+    return <div data-testid="loading">loading...</div>;
   }
   return (
     <Paper className={classes.instructions}>
