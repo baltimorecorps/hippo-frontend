@@ -11,7 +11,7 @@ const applicantEmptyProfile = {
   id: 78,
   last_name: 'Chairangsaris',
   phone_primary: '+1 (555) 555-9999',
-  status: 'approved',
+  status: 'created',
   profile: {
     address_primary: {
       city: '',

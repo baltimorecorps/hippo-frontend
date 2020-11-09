@@ -42,6 +42,7 @@ const EachExpansionPanel = ({
     <ExpansionPanel
       expanded={expandPanel[name]}
       className={classes.expansionPanel}
+      data-testid="expansion_panel"
     >
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}

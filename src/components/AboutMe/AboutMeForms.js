@@ -31,7 +31,12 @@ const AboutMeForms = ({
 
   const {candidate_information, interests, programs, value_alignment} = aboutMe;
   return (
-    <Grid container justify="center" style={{width: '100%'}}>
+    <Grid
+      container
+      justify="center"
+      style={{width: '100%'}}
+      data-testid="about_me_forms"
+    >
       <EachExpansionPanel
         PanelTextHeader="Candidate Information"
         name="candidate_information"
