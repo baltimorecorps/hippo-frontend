@@ -90,17 +90,6 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
     let searchContacts = [];
     if (searchValue != null && contacts && contacts.length > 0) {
       switch (searchBy) {
-        case 'name':
-          searchContacts = contacts.filter(contact => {
-            const contactName = contact.first_name.toLowerCase();
-            const contactLastName = contact.last_name.toLowerCase();
-            const contactFullName = `${contactName} ${contactLastName}`;
-            return contactFullName.includes(searchValue);
-          });
-          setSearchedContacts(searchContacts);
-          setShowStatus(0);
-
-          break;
         case 'email':
           searchContacts = contacts.filter(contact => {
             const contactEmail = contact.email.toLowerCase();
@@ -117,9 +106,17 @@ const Contacts = ({classes, contacts, getAllContacts, deleteContact}) => {
           });
           setSearchedContacts(searchContacts);
           setShowStatus(0);
-
           break;
         default:
+          searchContacts = contacts.filter(contact => {
+            const contactName = contact.first_name.toLowerCase();
+            const contactLastName = contact.last_name.toLowerCase();
+            const contactFullName = `${contactName} ${contactLastName}`;
+            return contactFullName.includes(searchValue);
+          });
+          setSearchedContacts(searchContacts);
+          setShowStatus(0);
+
           break;
       }
     }
