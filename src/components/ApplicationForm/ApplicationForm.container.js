@@ -11,14 +11,14 @@ import {getAllOpportunities} from 'state/opportunity';
 const mapStateToProps = (state, props) => {
   const {opportunityId} = props.match.params;
 
-  const contactId = state.accounts.contact ? state.accounts.contact.id : null;
+  const contactId = state.auth.contact ? state.auth.contact.id : null;
   const matchingApplications = Object.values(state.applications).filter(
     app => app.contact.id === contactId && app.opportunity.id === opportunityId
   );
   const application = matchingApplications[0] || null;
 
   return {
-    contact: state.accounts.contact,
+    contact: state.auth.contact,
     opportunity: state.opportunities[opportunityId],
     application,
   };
