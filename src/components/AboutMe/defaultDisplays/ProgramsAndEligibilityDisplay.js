@@ -13,10 +13,11 @@ const ProgramsAndEligibilityDisplay = ({contact, onClickEdit}) => {
     'profile.needs_help_programs',
     false
   );
-
-  const checkedPrograms = contact.program_apps
-    .filter(program => program.is_interested === true)
-    .map(program => program.program.name);
+  const checkedPrograms =
+    contact &&
+    contact.program_apps
+      .filter(program => program.is_interested === true)
+      .map(program => program.program.name);
 
   if (needs_help_programs === true)
     checkedPrograms.push("I'd like some help figuring this out");

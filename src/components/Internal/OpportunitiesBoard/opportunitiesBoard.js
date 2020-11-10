@@ -12,8 +12,9 @@ const InternalOpportunityBoard = ({
   getAllInternalOpportunities,
 }) => {
   useEffect(() => {
-    getAllInternalOpportunities();
-  }, [getAllInternalOpportunities]);
+    if (!opportunities || opportunities.length === 0)
+      getAllInternalOpportunities();
+  }, [getAllInternalOpportunities, opportunities]);
 
   const [value, setValue] = React.useState('Fellowship');
   const programs = [
@@ -34,10 +35,8 @@ const InternalOpportunityBoard = ({
     setValue(event.target.value);
   };
 
-  if (theOpportunities.length === 0) return <div>loading...</div>;
-
-  if (!theOpportunities) {
-    return <div>...Loading</div>;
+  if (!theOpportunities || theOpportunities.length === 0) {
+    return <div data-testid="loading">...Loading</div>;
   } else {
     return (
       <div className={classes.container}>

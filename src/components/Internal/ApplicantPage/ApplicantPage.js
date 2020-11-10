@@ -35,11 +35,11 @@ const ApplicantPage = ({
   const [openValueAlignment, setOpenValueAlignment] = useState(false);
 
   if (!applications || !applicant) {
-    return <div>loading...</div>;
+    return <div data-testid="loading">loading...</div>;
   }
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="applicant_page">
       <PartnershipsNavBar />
       {!openValueAlignment && (
         <React.Fragment>
@@ -49,12 +49,13 @@ const ApplicantPage = ({
               variant="contained"
               color="primary"
               className={classes.backButton}
+              data-testid="back_to_applicants_board_button"
             >
               <ArrowBackIosIcon /> Back to Applicants Board
             </Button>
           </Grid>
 
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} data-testid="applicant_page_content">
             <div className={classes.subContainer}>
               <ApplicantDetails applicant={applicant} />
               <div className={classes.rightDetails}>
@@ -63,6 +64,7 @@ const ApplicantPage = ({
                   variant="contained"
                   color="primary"
                   className={classes.valueAlignmentButton}
+                  data-testid="see_value_alignment_button"
                 >
                   <DescriptionIcon style={{marginRight: '10px'}} /> Value
                   Alignment

@@ -38,10 +38,20 @@ const ConfirmationPage = ({classes}) => {
   return (
     <Paper className={classes.paper}>
       <CheckCircleOutlineSharpIcon className={classes.icon} />
-      <Typography variant="h4" component="h2" className={classes.header}>
+      <Typography
+        variant="h4"
+        component="h2"
+        className={classes.header}
+        data-testid="header"
+      >
         Your application has been submitted.
       </Typography>
-      <Typography variant="body1" component="h2" className={classes.content}>
+      <Typography
+        variant="body1"
+        component="h2"
+        className={classes.content}
+        data-testid="content"
+      >
         Thank you for submitting your expression of interest for this position.
         We will be reviewing your submission and will be in touch soon with the
         status of this application. In the meantime feel free to reach out to us
@@ -53,6 +63,7 @@ const ConfirmationPage = ({classes}) => {
           onClick={onClickBackToProfile}
           variant="contained"
           color="secondary"
+          data-testid="to_profile_button"
         >
           Back to Profile
         </Button>
@@ -60,6 +71,7 @@ const ConfirmationPage = ({classes}) => {
           onClick={onClickViewMoreOpportunities}
           variant="contained"
           color="primary"
+          data-testid="to_opportunities_button"
         >
           View More Opportunities
         </Button>

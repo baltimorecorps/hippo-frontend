@@ -9,14 +9,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import Tooltip from '@material-ui/core/Tooltip';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
-const RoleCards = ({
-  classes,
-  page,
-  opportunity,
-  getAllOpportunities,
-
-  applications,
-}) => {
+const RoleCards = ({classes, page, opportunity, applications}) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -79,10 +72,15 @@ const RoleCards = ({
   }
 
   return (
-    <Paper className={paperStyles}>
+    <Paper className={paperStyles} data-testid="role_card_paper">
       <div className={classes.headerContainer}>
         <div className={classes.titleAndOrgContainer}>
-          <Typography variant="h6" component="h1" className={classes.title}>
+          <Typography
+            variant="h6"
+            component="h1"
+            className={classes.title}
+            data-testid="title"
+          >
             {opportunity.title}
           </Typography>
           {page !== 'employer' && (
@@ -90,6 +88,7 @@ const RoleCards = ({
               variant="h6"
               component="h2"
               className={classes.organization}
+              data-testid="org_name"
             >
               {opportunity.org_name}
             </Typography>
@@ -100,6 +99,7 @@ const RoleCards = ({
               variant="h6"
               component="h2"
               className={classes.shortDescription}
+              data-testid="short_description"
             >
               {opportunity.short_description}
             </Typography>
@@ -107,7 +107,11 @@ const RoleCards = ({
         </div>
         <div className={classes.headerBottomContainer}>
           <Tooltip title="Job Description">
-            <a href={opportunity.gdoc_link} className={classes.linkContainer}>
+            <a
+              href={opportunity.gdoc_link}
+              className={classes.linkContainer}
+              data-testid="google_doc_link"
+            >
               <DescriptionIcon className={classes.gDocIcon} />
             </a>
           </Tooltip>
@@ -116,13 +120,15 @@ const RoleCards = ({
             variant="h5"
             component="p"
             className={classes.programName}
+            data-testid="program_name"
           >
-            {opportunity.program_name || ''}
+            {opportunity.program_name}
           </Typography>
           <Link
             component="button"
             variant="body1"
             onClick={() => toEmployerPage(opportunity.id)}
+            data-testid="link_to_employer_page"
             className={classes.linkContainer}
           >
             {page === 'internal-opportunities-board' && (
