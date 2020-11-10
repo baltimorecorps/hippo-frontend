@@ -47,5 +47,10 @@ describe('AddResume', () => {
     expect(queryByText('Next')).toBeInTheDocument();
     fireEvent.click(queryByText('Next'));
     expect(next.mock.calls.length).toBe(1);
+
+    expect(getByTestId('left_button')).toBeInTheDocument();
+    expect(queryByText('Back')).toBeInTheDocument();
+    fireEvent.click(queryByText('Back'));
+    expect(back.mock.calls.length).toBe(1);
   });
 });
