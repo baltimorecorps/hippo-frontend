@@ -1,15 +1,14 @@
 import React from 'react';
-import {render, cleanup, fireEvent, waitFor} from '@testing-library/react';
+import {render, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ConfirmationPage from './ConfirmationPage';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
 describe('ConfirmationPage', () => {
-  test('Render all contacts', () => {
+  test('Render ConfirmationPage', () => {
     const history = createMemoryHistory();
 
-    const deleteContact = jest.fn();
     const {getByTestId} = render(
       <Router history={history}>
         <ConfirmationPage />
