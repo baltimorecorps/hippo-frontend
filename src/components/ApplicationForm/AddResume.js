@@ -30,7 +30,7 @@ const AddResume = ({
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testid="add_resume">
       <div className={classes.container}>
         <div className={classes.spacer} />
         <div className={classes.center}>
@@ -50,6 +50,7 @@ const AddResume = ({
                   variant="h6"
                   component="h2"
                   className={classes.title}
+                  data-testid="opp_title"
                 >
                   {opportunity.title}
                 </Typography>
@@ -57,12 +58,16 @@ const AddResume = ({
                   variant="h5"
                   component="h1"
                   className={classes.organization}
+                  data-testid="opp_org"
                 >
-                  {opportunity.org_name || ''}
+                  {opportunity.org_name}
                 </Typography>
               </div>
               <div className={classes.opportunityDescription}>
-                <Typography className={classes.description}>
+                <Typography
+                  className={classes.description}
+                  data-testid="opp_description"
+                >
                   {opportunity.short_description}
                   <br />
                 </Typography>
