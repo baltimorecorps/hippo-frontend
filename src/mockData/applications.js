@@ -3,6 +3,15 @@ import {resume} from './resumes';
 import {contact} from './contact';
 
 // console.log('PFPOpportunities', PFPOpportunities);
+const draftApplication = {
+  id: '2f2dd765-1b99-431b-b833-88ea51399efb',
+  interest_statement: '',
+  interview_completed: false,
+  interview_date: null,
+  interview_time: null,
+  is_active: true,
+  status: 'draft',
+};
 
 const submittedApplication = {
   id: '2f2dd765-1b99-431b-b833-88ea51399efb',
@@ -66,6 +75,18 @@ for (let i = 0; i < 5; i++) {
   });
 }
 
+const fullDraftApp = {
+  id: '2f2dd765-1b99-431b-b833-88ea51399efb',
+  interest_statement: '',
+  interview_completed: false,
+  interview_date: '',
+  interview_time: '',
+  is_active: true,
+  status: 'draft',
+  contact,
+  opportunity: PFPOpportunities[0],
+  resume: null,
+};
 const fullSubmittedApp = {
   id: '2f2dd765-1b99-431b-b833-88ea51399efb',
   interest_statement: 'My interested statement.',
@@ -147,12 +168,14 @@ const mixedFullApplications = [
 ];
 
 export {
+  draftApplication,
   submittedApplication,
   recommendedApplication,
   interviewingApplication,
   consideredApplication,
   notAFitApplication,
   mixedApplications,
+  fullDraftApp,
   fullSubmittedApp,
   fullRecommendedApp,
   fullConsideredApp,
