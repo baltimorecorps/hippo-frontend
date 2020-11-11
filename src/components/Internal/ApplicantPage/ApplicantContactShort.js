@@ -12,19 +12,34 @@ const ApplicantPage = ({classes, applicant}) => {
     history.push(`/profile/${contactId}`);
   };
   if (!applicant) {
-    return <div>loading...</div>;
+    return <div data-testid="loading">loading...</div>;
   }
 
   return (
-    <div className={classes.headerContainer}>
+    <div className={classes.headerContainer} data-testid="contact_short">
       <div className={classes.titleAndOrgContainer}>
-        <Typography variant="body1" component="p" className={classes.name}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.name}
+          data-testid="contact_name"
+        >
           {`${applicant.first_name} ${applicant.last_name}`}
         </Typography>
-        <Typography variant="body1" component="p" className={classes.email}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.email}
+          data-testid="contact_email"
+        >
           {applicant.email}
         </Typography>
-        <Typography variant="body1" component="p" className={classes.email}>
+        <Typography
+          variant="body1"
+          component="p"
+          className={classes.email}
+          data-testid="contact_phone"
+        >
           {applicant.phone_primary}
         </Typography>
       </div>
@@ -33,7 +48,11 @@ const ApplicantPage = ({classes, applicant}) => {
         onClick={() => toProfile(applicant.id)}
         className={classes.seeProfileLink}
       >
-        <Typography variant="body1" component="h1">
+        <Typography
+          variant="body1"
+          component="h1"
+          data-testid="contact_profile_link"
+        >
           See Profile
         </Typography>
       </Link>

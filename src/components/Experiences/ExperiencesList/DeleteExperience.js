@@ -22,7 +22,10 @@ const DeleteExperience = ({
     experienceName = (
       <React.Fragment>
         <br />
-        <span className={classes.experienceName}>
+        <span
+          className={classes.experienceName}
+          data-testid="exp_host_and_title"
+        >
           {experience.host} &mdash; {experience.title}
         </span>
       </React.Fragment>
@@ -37,7 +40,7 @@ const DeleteExperience = ({
   return (
     <Dialog open={true}>
       <DialogContent className={classes.dialogContent}>
-        <Typography align="center">
+        <Typography align="center" data-testid="confirm_delete_message">
           Are you sure you want to delete {experienceName}?
         </Typography>
       </DialogContent>
@@ -46,11 +49,17 @@ const DeleteExperience = ({
           className={classes.delete}
           variant="outlined"
           onClick={() => deleteAndRefreshInstructions(experience)}
+          data-testid="confirm_delete_button"
         >
           Yes, Delete
         </Button>
 
-        <Button variant="contained" color="secondary" onClick={handleCancel}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleCancel}
+          data-testid="cancel_delete_button"
+        >
           No, Go Back
         </Button>
       </DialogActions>

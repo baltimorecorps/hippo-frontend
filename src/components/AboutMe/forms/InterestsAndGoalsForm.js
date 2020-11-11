@@ -134,7 +134,12 @@ const InterestsAndGoalsForm = ({contact, onSubmit, onCloseForm, classes}) => {
     getCheckboxOptions(programsCompletedLabels, programs_completed);
 
   return (
-    <Grid item xs={12} className={classes.form}>
+    <Grid
+      item
+      xs={12}
+      className={classes.form}
+      data-testid="interests_goals_form"
+    >
       <FormHeader
         header="Interests and Goals"
         descriptions={descriptions}

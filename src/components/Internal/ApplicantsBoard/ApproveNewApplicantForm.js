@@ -76,6 +76,7 @@ const ApproveNewApplicantForm = ({
       onClose={() => setShowApproveForm(false)}
       aria-labelledby="form-dialog-title"
       className={classes.dialog}
+      data-testid="approve_new_app_form"
     >
       <DialogTitle id="form-dialog-title" style={{padding: '10px 20px'}}>
         <Typography component="p" variant="h6" className={classes.dialogTitle}>

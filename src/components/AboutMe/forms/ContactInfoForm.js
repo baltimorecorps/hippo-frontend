@@ -148,9 +148,11 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
     shrink: true,
   };
 
-  const inputProps = {
+  const phoneInputProps = {
     classes: {input: classes.resize},
     autoComplete: 'off',
+    'data-testid': 'phone_primary',
+    name: 'phone_primary',
   };
 
   const descriptions = [
@@ -161,13 +163,14 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const raceOptions = getCheckboxOptions(raceLabels, profile.race, 'race');
 
   return (
-    <Grid item xs={12} className={classes.form}>
+    <Grid item xs={12} className={classes.form} data-testid="contact_info_form">
       <Grid item xs={12} align="end">
         <IconButton
           edge="end"
           aria-label="cancel form"
-          onMouseDown={onCloseForm}
+          onClick={() => onCloseForm()}
           className={classes.iconButton}
+          data-testid="close_form_button"
         >
           <CloseIcon />
         </IconButton>
@@ -205,13 +208,12 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             />
             <Grid item xs={12} md={6} align="center">
               <MuiPhoneNumber
-                name="phone_primary"
                 label="Primary Phone *"
                 defaultCountry={'us'}
                 value={values.phone_primary}
                 onChange={handlePhoneChange}
                 InputLabelProps={inputLabelProps}
-                InputProps={inputProps}
+                inputProps={phoneInputProps}
                 inputClass={classes.formControl}
                 disableAreaCodes={true}
               />

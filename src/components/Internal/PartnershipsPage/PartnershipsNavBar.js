@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import {useHistory} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 
-const PartnershipsNavBar = ({classes, location}) => {
+const PartnershipsNavBar = ({classes}) => {
   let history = useHistory();
 
   const handleClickLink = linkURL => {
@@ -33,7 +33,7 @@ const PartnershipsNavBar = ({classes, location}) => {
     .replace(/-/g, '_');
 
   return (
-    <div className={classes.linkContainer}>
+    <div className={classes.linkContainer} data-testid="partnerships_navbar">
       {links.map((link, index) => (
         <Typography
           key={index}
@@ -47,6 +47,7 @@ const PartnershipsNavBar = ({classes, location}) => {
           }
           className={classes.partnershipsHome}
           onClick={() => handleClickLink(link.url)}
+          data-testid="links"
         >
           {link.name}
         </Typography>

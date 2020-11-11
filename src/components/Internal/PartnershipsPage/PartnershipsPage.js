@@ -33,6 +33,7 @@ const PartnershipsPage = ({classes}) => {
           variant="h5"
           align="left"
           className={classes.header}
+          data-testid="page_header"
         >
           Partnerships Team Page
         </Typography>
@@ -44,6 +45,7 @@ const PartnershipsPage = ({classes}) => {
             variant="body1"
             onClick={() => handleClickLink(link.url)}
             className={classes.linkText}
+            data-testid="links_to_internal_page"
           >
             <ArrowForwardIcon className={classes.icons} /> {link.name}
           </Link>
