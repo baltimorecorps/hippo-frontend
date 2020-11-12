@@ -102,8 +102,6 @@ const ApplicationForm = ({
     }
   };
 
-  console.log('contact', contact);
-
   if (!application) {
     return <div>Loading...</div>;
   }
