@@ -12,9 +12,8 @@ const InternalOpportunityBoard = ({
   getAllInternalOpportunities,
 }) => {
   useEffect(() => {
-    if (!opportunities || opportunities.length === 0)
-      getAllInternalOpportunities();
-  }, [getAllInternalOpportunities, opportunities]);
+    getAllInternalOpportunities();
+  }, [getAllInternalOpportunities]);
 
   const [value, setValue] = React.useState('Fellowship');
   const programs = [
