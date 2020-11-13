@@ -68,11 +68,15 @@ describe('Employer Page', () => {
 
     const applicationStages = getAllByTestId('application_stage');
 
-    expect(applicationStages.length).toBe(4);
+    expect(applicationStages.length).toBe(6);
     expect(applicationStages[0]).toHaveTextContent('Recommended (1)');
-    expect(applicationStages[1]).toHaveTextContent('Interviewing (0)');
-    expect(applicationStages[2]).toHaveTextContent('Finalists for Role (0)');
-    expect(applicationStages[3]).toHaveTextContent('Not a Fit (0)');
+    expect(applicationStages[1]).toHaveTextContent(
+      'Interested in Interview (0)'
+    );
+    expect(applicationStages[2]).toHaveTextContent('Interviewing (0)');
+    expect(applicationStages[3]).toHaveTextContent('Finalists for Role (0)');
+    expect(applicationStages[4]).toHaveTextContent('Matched (0)');
+    expect(applicationStages[5]).toHaveTextContent('Inactive (0)');
 
     fireEvent.click(applicationStages[0]);
     expect(getByTestId('title_or_name')).toBeInTheDocument();

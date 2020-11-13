@@ -32,7 +32,7 @@ const ApplicationsCard = ({classes, contactId, applications}) => {
       app => app.status === 'recommended' && app.is_active === true
     );
     interestedApps = applications.filter(
-      app => app.status === 'recommended' && app.is_active === true
+      app => app.status === 'interested_in_interview' && app.is_active === true
     );
     interviewingApps = applications.filter(
       app => app.status === 'interviewed' && app.is_active === true
@@ -98,7 +98,7 @@ const ApplicationsCard = ({classes, contactId, applications}) => {
       />
 
       <ApplicationStateAccordion
-        header="Interested"
+        header="Interested in Interview"
         applications={interestedApps}
         iconName="interested"
         expanded={expanded}

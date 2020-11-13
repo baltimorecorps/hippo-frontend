@@ -26,7 +26,7 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
   let recommendedApps = [];
   let interestedApps = [];
   let interviewingApps = [];
-  let notAFitApps = [];
+  let inactiveApps = [];
   let consideredApps = [];
   let finalistApps = [];
   let matchedApps = [];
@@ -42,12 +42,11 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
       app => app.status === 'recommended' && app.is_active === true
     );
     interestedApps = applications.filter(
-      app => app.status === 'recommended' && app.is_active === true
+      app => app.status === 'interested_in_interview' && app.is_active === true
     );
     interviewingApps = applications.filter(
       app => app.status === 'interviewed' && app.is_active === true
     );
-    notAFitApps = applications.filter(app => app.is_active === false);
 
     consideredApps = applications.filter(
       app => app.status === 'considered_for_role' && app.is_active === true
@@ -61,6 +60,7 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
     matchedApps = applications.filter(
       app => app.status === 'matched' && app.is_active === true
     );
+    inactiveApps = applications.filter(app => app.is_active === false);
   }
 
   let paperStyles = '';
@@ -240,7 +240,7 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
 
       <ApplicationStateAccordion
         header="Inactive"
-        applications={notAFitApps}
+        applications={inactiveApps}
         iconName="inactive"
         expanded={expanded}
         handleChange={handleChange}

@@ -230,7 +230,7 @@ describe('Application State Accordion Component: page = internal-opportunities-b
     expect(getByTestId('view_application_button')).toBeInTheDocument();
 
     expect(getByTestId('notAFit-header')).toHaveClass(
-      'ApplicationStateAccordion-inactive-75 ApplicationStateAccordion-notAFitHighlightHead-78'
+      'MuiButtonBase-root MuiExpansionPanelSummary-root ApplicationStateAccordion-inactive-75 ApplicationStateAccordion-highlightHead-76'
     );
 
     fireEvent.click(getByTestId('view_application_button'));

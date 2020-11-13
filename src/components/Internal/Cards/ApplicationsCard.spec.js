@@ -32,12 +32,17 @@ describe('Applications Card', () => {
 
     const applicationStages = getAllByTestId('application_stage');
 
-    expect(applicationStages.length).toBe(5);
-    expect(applicationStages[0]).toHaveTextContent('Submitted (1)');
-    expect(applicationStages[1]).toHaveTextContent('Recommended (1)');
-    expect(applicationStages[2]).toHaveTextContent('Interviewing (1)');
-    expect(applicationStages[3]).toHaveTextContent('Finalists for Role (1)');
-    expect(applicationStages[4]).toHaveTextContent('Not a Fit (1)');
+    expect(applicationStages.length).toBe(8);
+    expect(applicationStages[0]).toHaveTextContent('Started (0)');
+    expect(applicationStages[1]).toHaveTextContent('Submitted (1)');
+    expect(applicationStages[2]).toHaveTextContent('Recommended (1)');
+    expect(applicationStages[3]).toHaveTextContent(
+      'Interested in Interview (0)'
+    );
+    expect(applicationStages[4]).toHaveTextContent('Interviewing (1)');
+    expect(applicationStages[5]).toHaveTextContent('Finalists for Role (1)');
+    expect(applicationStages[6]).toHaveTextContent('Matched (0)');
+    expect(applicationStages[7]).toHaveTextContent('Inactive (1)');
 
     // fireEvent.click(applicationStages[0]);
 
