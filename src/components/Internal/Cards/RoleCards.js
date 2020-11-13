@@ -21,31 +21,45 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
     history.push(`/org/opportunity/${opportunityId}`);
   };
 
+  let startedApps = [];
   let submittedApps = [];
   let recommendedApps = [];
+  let interestedApps = [];
   let interviewingApps = [];
   let notAFitApps = [];
   let consideredApps = [];
+  let finalistApps = [];
+  let matchedApps = [];
 
-  if (applications) {
+  if (applications && applications.length > 0) {
+    startedApps = applications.filter(
+      app => app.status === 'started' && app.is_active === true
+    );
     submittedApps = applications.filter(
       app => app.status === 'submitted' && app.is_active === true
     );
     recommendedApps = applications.filter(
       app => app.status === 'recommended' && app.is_active === true
     );
+    interestedApps = applications.filter(
+      app => app.status === 'recommended' && app.is_active === true
+    );
     interviewingApps = applications.filter(
       app => app.status === 'interviewed' && app.is_active === true
     );
-    if (page === 'employer') {
-      notAFitApps = applications.filter(
-        app => app.is_active === false && app.status !== 'submitted'
-      );
-    } else {
-      notAFitApps = applications.filter(app => app.is_active === false);
-    }
+    notAFitApps = applications.filter(app => app.is_active === false);
+
     consideredApps = applications.filter(
       app => app.status === 'considered_for_role' && app.is_active === true
+    );
+
+    // will replace consideredApps
+    finalistApps = applications.filter(
+      app => app.status === 'finalist' && app.is_active === true
+    );
+
+    matchedApps = applications.filter(
+      app => app.status === 'matched' && app.is_active === true
     );
   }
 
@@ -140,18 +154,30 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
         </div>
       </div>
       {page === 'internal-opportunities-board' && (
-        <ApplicationStateAccordion
-          header="Submitted"
-          applications={submittedApps}
-          totalApps={submittedApps.length}
-          iconName="submitted"
-          expanded={expanded}
-          handleChange={handleChange}
-          panelName="Submitted"
-          opportunityId={opportunity.id}
-          page={page}
-          isActive={opportunity.is_active}
-        />
+        <React.Fragment>
+          <ApplicationStateAccordion
+            header="Started"
+            applications={startedApps}
+            iconName="started"
+            expanded={expanded}
+            handleChange={handleChange}
+            panelName="Started"
+            opportunityId={opportunity.id}
+            page={page}
+            isActive={opportunity.is_active}
+          />
+          <ApplicationStateAccordion
+            header="Submitted"
+            applications={submittedApps}
+            iconName="submitted"
+            expanded={expanded}
+            handleChange={handleChange}
+            panelName="Submitted"
+            opportunityId={opportunity.id}
+            page={page}
+            isActive={opportunity.is_active}
+          />
+        </React.Fragment>
       )}
 
       <ApplicationStateAccordion
@@ -161,6 +187,18 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
         expanded={expanded}
         handleChange={handleChange}
         panelName="Recommended"
+        opportunityId={opportunity.id}
+        page={page}
+        isActive={opportunity.is_active}
+      />
+
+      <ApplicationStateAccordion
+        header="Interested in Interview"
+        applications={interestedApps}
+        iconName="interested"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="interested"
         opportunityId={opportunity.id}
         page={page}
         isActive={opportunity.is_active}
@@ -188,14 +226,25 @@ const RoleCards = ({classes, page, opportunity, applications}) => {
         page={page}
         isActive={opportunity.is_active}
       />
-
       <ApplicationStateAccordion
-        header="Not a Fit"
-        applications={notAFitApps}
-        iconName="notAFit"
+        header="Matched"
+        applications={matchedApps}
+        iconName="matched"
         expanded={expanded}
         handleChange={handleChange}
-        panelName="notAFit"
+        panelName="matched"
+        opportunityId={opportunity.id}
+        page={page}
+        isActive={opportunity.is_active}
+      />
+
+      <ApplicationStateAccordion
+        header="Inactive"
+        applications={notAFitApps}
+        iconName="inactive"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="inactive"
         opportunityId={opportunity.id}
         page={page}
         isActive={opportunity.is_active}

@@ -7,12 +7,14 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import PeopleIcon from '@material-ui/icons/People';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ClearIcon from '@material-ui/icons/Clear';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import StarIcon from '@material-ui/icons/Star';
+import DoneIcon from '@material-ui/icons/Done';
 import {formatDate, formatTime} from 'lib/helperFunctions/helpers';
 
 import {useHistory} from 'react-router-dom';
@@ -56,20 +58,29 @@ const ApplicationStateAccordion = ({
   };
   let icon;
   switch (iconName) {
+    case 'started':
+      icon = <InsertDriveFileIcon />;
+      break;
     case 'submitted':
       icon = <PeopleIcon />;
       break;
     case 'recommended':
       icon = <AssignmentTurnedInIcon />;
       break;
+    case 'interested':
+      icon = <StarIcon />;
+      break;
     case 'interviewing':
       icon = <QuestionAnswerIcon />;
       break;
-    case 'notAFit':
+    case 'inactive':
       icon = <ClearIcon />;
       break;
     case 'consideredForRole':
       icon = <FavoriteIcon />;
+      break;
+    case 'matched':
+      icon = <DoneIcon />;
       break;
     default:
       icon = <span></span>;
@@ -79,7 +90,7 @@ const ApplicationStateAccordion = ({
 
   let highlightHead = '';
   if (totalApps > 0) {
-    if (header === 'Not a Fit') highlightHead = classes.notAFitHighlightHead;
+    if (header === 'Inactive') highlightHead = classes.notAFitHighlightHead;
     else highlightHead = classes.highlightHead;
   }
 
@@ -107,7 +118,7 @@ const ApplicationStateAccordion = ({
           data-testid="application_stage"
           className={
             totalApps > 0
-              ? header === 'Not a Fit'
+              ? header === 'Inactive'
                 ? `${classes.categoryName} ${classes.notAFitHighLightHead}`
                 : `${classes.categoryName} ${classes.highLightHead}`
               : classes.categoryName
@@ -116,7 +127,7 @@ const ApplicationStateAccordion = ({
       </ExpansionPanelSummary>
       <ExpansionPanelDetails
         className={
-          header === 'Not a Fit'
+          header === 'Inactive'
             ? `${classes.applicationContainer} ${classes.notAFitHighLightBody}`
             : `${classes.applicationContainer} ${classes.highLightBody}`
         }
@@ -153,7 +164,7 @@ const ApplicationStateAccordion = ({
                         : `(${app.contact.email})`}
                     </Typography>
                   </div>
-                  {header === 'Not a Fit' && (
+                  {header === 'Inactive' && (
                     <Typography
                       variant="body1"
                       component="p"
@@ -224,7 +235,7 @@ const ApplicationStateAccordion = ({
                   >
                     {app.opportunity.org_name}
                   </Typography>
-                  {header === 'Not a Fit' && (
+                  {header === 'Inactive' && (
                     <Typography
                       variant="body1"
                       component="p"

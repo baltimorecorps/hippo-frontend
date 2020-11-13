@@ -11,26 +11,46 @@ const ApplicationsCard = ({classes, contactId, applications}) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  let startedApps = [];
   let submittedApps = [];
   let recommendedApps = [];
+  let interestedApps = [];
   let interviewingApps = [];
-  let notAFitApps = [];
+  let inactiveApps = [];
   let consideredApps = [];
+  let finalistApps = [];
+  let matchedApps = [];
 
   if (applications && applications.length > 0) {
+    startedApps = applications.filter(
+      app => app.status === 'started' && app.is_active === true
+    );
     submittedApps = applications.filter(
       app => app.status === 'submitted' && app.is_active === true
     );
     recommendedApps = applications.filter(
       app => app.status === 'recommended' && app.is_active === true
     );
+    interestedApps = applications.filter(
+      app => app.status === 'recommended' && app.is_active === true
+    );
     interviewingApps = applications.filter(
       app => app.status === 'interviewed' && app.is_active === true
     );
-    notAFitApps = applications.filter(app => app.is_active === false);
+
     consideredApps = applications.filter(
       app => app.status === 'considered_for_role' && app.is_active === true
     );
+
+    // will replace consideredApps
+    finalistApps = applications.filter(
+      app => app.status === 'finalist' && app.is_active === true
+    );
+
+    matchedApps = applications.filter(
+      app => app.status === 'matched' && app.is_active === true
+    );
+    inactiveApps = applications.filter(app => app.is_active === false);
   }
   if (!applications) {
     return <div data-testid="loading">Loading...</div>;
@@ -46,9 +66,18 @@ const ApplicationsCard = ({classes, contactId, applications}) => {
         Applications
       </Typography>
       <ApplicationStateAccordion
+        header="Started"
+        applications={startedApps}
+        iconName="started"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="Started"
+        contactId={contactId}
+        page="internal-applications-board"
+      />
+      <ApplicationStateAccordion
         header="Submitted"
         applications={submittedApps}
-        totalApps={submittedApps.length}
         iconName="submitted"
         expanded={expanded}
         handleChange={handleChange}
@@ -64,6 +93,17 @@ const ApplicationsCard = ({classes, contactId, applications}) => {
         expanded={expanded}
         handleChange={handleChange}
         panelName="Recommended"
+        contactId={contactId}
+        page="internal-applications-board"
+      />
+
+      <ApplicationStateAccordion
+        header="Interested"
+        applications={interestedApps}
+        iconName="interested"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="Interested"
         contactId={contactId}
         page="internal-applications-board"
       />
@@ -89,12 +129,22 @@ const ApplicationsCard = ({classes, contactId, applications}) => {
         page="internal-applications-board"
       />
       <ApplicationStateAccordion
-        header="Not a Fit"
-        applications={notAFitApps}
-        iconName="notAFit"
+        header="Matched"
+        applications={matchedApps}
+        iconName="matched"
         expanded={expanded}
         handleChange={handleChange}
-        panelName="notAFit"
+        panelName="matched"
+        contactId={contactId}
+        page="internal-applications-board"
+      />
+      <ApplicationStateAccordion
+        header="Inactive"
+        applications={inactiveApps}
+        iconName="inactive"
+        expanded={expanded}
+        handleChange={handleChange}
+        panelName="inactive"
         contactId={contactId}
         page="internal-applications-board"
       />
