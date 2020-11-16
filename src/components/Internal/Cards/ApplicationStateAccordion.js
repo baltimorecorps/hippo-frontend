@@ -165,13 +165,26 @@ const ApplicationStateAccordion = ({
                     </Typography>
                   </div>
                   {header === 'Inactive' && (
-                    <Typography
-                      variant="body1"
-                      component="p"
-                      className={classes.notAFit}
-                    >
-                      From:<span className={classes.status}>{app.status}</span>
-                    </Typography>
+                    <React.Fragment>
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        className={classes.notAFit}
+                      >
+                        Inactive reason :{' '}
+                        <span className={classes.inactiveReason}>
+                          {app.inactive_reason || 'not a fit'}
+                        </span>
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        className={classes.notAFit}
+                      >
+                        From:
+                        <span className={classes.status}>{app.status}</span>
+                      </Typography>
+                    </React.Fragment>
                   )}
                   {header === 'Interviewing' ||
                   header === 'Finalists for Role' ? (
@@ -184,7 +197,9 @@ const ApplicationStateAccordion = ({
                       >
                         Interview Date:
                         <span className={classes.status}>
-                          {formatDate(app.interview_date)}
+                          {app.interview_date
+                            ? formatDate(app.interview_date)
+                            : ''}
                         </span>
                       </Typography>
                       <Typography
@@ -195,7 +210,9 @@ const ApplicationStateAccordion = ({
                       >
                         Interview Time:
                         <span className={classes.status}>
-                          {formatTime(app.interview_time)}
+                          {app.interview_time
+                            ? formatTime(app.interview_time)
+                            : ''}
                         </span>
                       </Typography>
                       <Typography
@@ -236,14 +253,26 @@ const ApplicationStateAccordion = ({
                     {app.opportunity.org_name}
                   </Typography>
                   {header === 'Inactive' && (
-                    <Typography
-                      variant="body1"
-                      component="p"
-                      className={classes.notAFit}
-                    >
-                      From :{' '}
-                      <span className={classes.status}>{app.status}</span>
-                    </Typography>
+                    <React.Fragment>
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        className={classes.notAFit}
+                      >
+                        Inactive Reason :{' '}
+                        <span className={classes.inactiveReason}>
+                          {app.inactive_reason || 'not a fit'}
+                        </span>
+                      </Typography>
+                      <Typography
+                        variant="body1"
+                        component="p"
+                        className={classes.notAFit}
+                      >
+                        From :{' '}
+                        <span className={classes.status}>{app.status}</span>
+                      </Typography>
+                    </React.Fragment>
                   )}
                 </div>
               )}
@@ -325,6 +354,9 @@ const styles = ({breakpoints, palette, spacing}) => ({
   notAFit: {
     display: 'block',
     fontSize: '15px',
+  },
+  inactiveReason: {
+    color: '#e00d65',
   },
   status: {
     color: '#0047c9',

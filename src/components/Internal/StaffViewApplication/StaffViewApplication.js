@@ -33,23 +33,44 @@ const StaffViewApplication = ({
     history.push(`/internal/applicants/${contactId}`);
   };
 
+  const toApplicantApplicationsProfile = () => {
+    history.push(`/profile/${contactId}`);
+  };
+
   const toInternalOpportunitiesButton = createAButton(
-    '< To Opportunities Board',
+    '< Opportunities Board',
     toInternalOpportunitiesBoard,
     true,
     classes.buttons
   );
   const toInternalApplicationsButton = createAButton(
-    'To Applicants Board >',
+    'Applicants Board >',
     toInternalApplicationsBoard,
     true,
     classes.buttons
   );
   const toApplicantApplicationsCardButton = createAButton(
-    "To This Applicant's Page",
+    "This Applicant's Page",
     toApplicantApplicationsCard,
     true,
     classes.buttons
+  );
+
+  const seeProfileButton = createAButton(
+    'See Profile',
+    toApplicantApplicationsProfile,
+    true,
+    classes.profileButton
+  );
+
+  const openFeedback = () => {
+    console.log('open employer feedback');
+  };
+  const EmployerFeedbackButton = createAButton(
+    "Employer's Feedback",
+    openFeedback,
+    true,
+    classes.feedbackButton
   );
 
   return (
@@ -58,6 +79,10 @@ const StaffViewApplication = ({
         {toInternalOpportunitiesButton}
         {toApplicantApplicationsCardButton}
         {toInternalApplicationsButton}
+      </div>
+      <div className={classes.headerButtonContainer2}>
+        {seeProfileButton}
+        {EmployerFeedbackButton}
       </div>
       <ViewFullApplication application={application} />
       <DecisionsFooter
@@ -102,61 +127,39 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
     width: '100%',
     padding: spacing(2, 3, 3),
-    marginBottom: spacing(2),
-  },
-  paper: {
-    flexGrow: 1,
-    [breakpoints.up('sm')]: {
-      flexBasis: '83.333333%',
-      maxWidth: '83.333333%',
-    },
-    [breakpoints.up('md')]: {
-      flexBasis: '66.666667%',
-      maxWidth: '66.666667%',
-    },
-    [breakpoints.up('xl')]: {
-      flexBasis: '50%',
-      maxWidth: '50%',
-    },
-    width: '100%',
-    padding: spacing(2, 3, 3),
-    marginBottom: spacing(2),
-  },
-  headerContainer: {
-    paddingBottom: spacing(2),
-    marginBottom: spacing(2),
-    borderBottom: 'solid #e0e0e0 1px',
-  },
-  header: {
-    fontWeight: 700,
-    textAlign: 'center',
-  },
-  title: {
-    fontSize: '17px',
-  },
-  organization: {
-    fontSize: '14px',
-    verticalAlign: 'text-bottom',
-    color: palette.primary.midGray,
-  },
-  link: {
-    color: palette.primary.link,
-    marginTop: spacing(1),
-  },
-  description: {
-    textAlign: 'justify',
-    textIndent: '25px',
-  },
-  opportunityContent: {
-    marginBottom: spacing(2),
-  },
-  interestStatement: {
-    textIndent: '25px',
-    textAlign: 'justify',
   },
   buttons: {
     marginBottom: spacing(1.5),
     marginRight: '20px',
+  },
+  profileButton: {
+    marginBottom: spacing(1.5),
+    marginRight: '20px',
+    backgroundColor: '#ff8af3',
+    '&:hover': {
+      backgroundColor: '#fc62ed',
+    },
+  },
+  headerButtonContainer2: {
+    width: '63%',
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  feedbackButton: {
+    marginBottom: spacing(1.5),
+    marginRight: '20px',
+    backgroundColor: '#ff8af3',
+    '&:hover': {
+      backgroundColor: '#fc62ed',
+    },
+  },
+  applicantPageButton: {
+    marginBottom: spacing(1.5),
+    marginRight: '20px',
+    backgroundColor: '#ff8d4f',
+    '&:hover': {
+      backgroundColor: '#a95eff',
+    },
   },
 });
 
