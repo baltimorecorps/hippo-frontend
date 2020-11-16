@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
+// import withStyles from '@material-ui/core/styles/withStyles';
+import {withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import {createAButton, createClickTracking} from 'lib/helperFunctions/helpers';
 import {useHistory} from 'react-router-dom';
 
+import Button from '@material-ui/core/Button';
+
+import DecisionsMenu from './DecisionsMenu.container';
+
 const StickyFooter = ({
   classes,
-  recommend,
-  notAFit,
-  employerNotAFit,
-  employerReconsiderFinalists,
-  employerReconsiderNotAFit,
-  reopen,
-  interviewScheduled,
-  interviewCompleted,
   back,
   handleNext,
   submit,
@@ -26,65 +23,10 @@ const StickyFooter = ({
   const toMyProfile = opportunity_id => {
     history.push('/profile');
   };
-  const toApplicantProfile = contact_id => {
-    history.push(`/profile/${contact_id}`);
-  };
-
-  const toViewStaffOpportunities = () => {
-    history.push('/internal/opportunities-board');
-  };
 
   const backButton = createAButton('Back', back, false, classes.buttons);
   const nextButton = createAButton('Next', handleNext, true, classes.buttons);
   const submitButton = createAButton('Submit', submit, true, classes.buttons);
-  const recommendButton = createAButton(
-    'Recommend',
-    recommend,
-    true,
-    classes.greenButtons
-  );
-  const notAFitButton = createAButton(
-    'Not a Fit',
-    notAFit,
-    true,
-    classes.redButtons
-  );
-
-  const reopenButton = createAButton('Reopen', reopen, false, classes.buttons);
-
-  const interviewScheduledButton = createAButton(
-    'Interview Scheduled',
-    interviewScheduled,
-    true,
-    classes.blueButtons
-  );
-  const interviewRescheduledButton = createAButton(
-    'Interview Rescheduled',
-    interviewScheduled,
-    true,
-    classes.purpleButtons
-  );
-  const reconsiderFinalistsButton = createAButton(
-    'Reconsider for Finalists',
-    employerReconsiderFinalists,
-    true,
-    classes.greenButtons
-  );
-  const reconsiderNotAFitButton = createAButton(
-    'Reconsider for Not a Fit',
-    employerReconsiderNotAFit,
-    true,
-    classes.redButtons
-  );
-  const interviewCompletedButton = createAButton(
-    'Interview Completed',
-    interviewCompleted,
-    true,
-    classes.blueButtons
-  );
-
-  //TODO: add GA trackings on decision buttons
-  // fix /profile error
 
   const onClickEditProfile = () => {
     createClickTracking(
@@ -104,55 +46,21 @@ const StickyFooter = ({
     toOpportunities();
   };
 
-  const onClickSeeProfile = () => {
-    createClickTracking(
-      'Staff Review Application',
-      'Click to See Applicant Profile',
-      'Click to See Applicant Profile'
-    );
-    toApplicantProfile(application.contact.id);
-  };
-  const onClickViewStaffOpportunities = () => {
-    createClickTracking(
-      'Staff Review Application',
-      'Click View Staff Opportunities',
-      'Click View Staff Opportunities'
-    );
-    toViewStaffOpportunities();
-  };
-
   const toMyProfileButton = createAButton(
     'Edit Profile',
     onClickEditProfile,
     false,
     classes.buttons
   );
-  const toApplicantProfileButton = createAButton(
-    'See Profile',
-    onClickSeeProfile,
-    false,
-    classes.blueButtons
-  );
+
   const toOpportunitiesButton = createAButton(
     'View More Opportunities',
     onClickViewMoreOpportunities,
     true,
     classes.buttons
   );
-  const toStaffOpportunitiesButton = createAButton(
-    'Opportunities',
-    onClickViewStaffOpportunities,
-    false,
-    classes.buttons
-  );
-  const employerNotAFitButton = createAButton(
-    'Not a Fit',
-    employerNotAFit,
-    true,
-    classes.redButtons
-  );
 
-  let leftButton, rightButton, middleLeftButton, middleRightButton;
+  let leftButton, rightButton;
   if (page === 'interest' || page === 'resume') {
     leftButton = backButton;
     rightButton = nextButton;
@@ -164,58 +72,10 @@ const StickyFooter = ({
       leftButton = toMyProfileButton;
       rightButton = toOpportunitiesButton;
     }
-  } else if (page === 'staff-review-application') {
-    if (application.status === 'submitted' && application.is_active === true) {
-      leftButton = reopenButton;
-      middleLeftButton = toApplicantProfileButton;
-      middleRightButton = notAFitButton;
-      rightButton = recommendButton;
-    } else {
-      leftButton = toStaffOpportunitiesButton;
-      rightButton = toApplicantProfileButton;
-    }
-  } else if (page === 'employer-review-application') {
-    if (
-      application.status === 'recommended' &&
-      application.is_active === true
-    ) {
-      leftButton = employerNotAFitButton;
-      rightButton = interviewScheduledButton;
-    } else if (
-      application.status === 'interviewed' &&
-      application.is_active === true
-    ) {
-      leftButton = interviewRescheduledButton;
-      rightButton = interviewCompletedButton;
-    } else if (
-      application.status === 'recommended' &&
-      application.is_active === false
-    ) {
-      leftButton = backButton;
-
-      rightButton = interviewScheduledButton;
-    } else if (
-      application.status === 'interviewed' &&
-      application.is_active === false
-    ) {
-      leftButton = interviewRescheduledButton;
-      rightButton = reconsiderFinalistsButton;
-    } else if (
-      application.status === 'considered_for_role' &&
-      application.is_active === true
-    ) {
-      leftButton = backButton;
-      rightButton = reconsiderNotAFitButton;
-    } else if (
-      application.status === 'considered_for_role' &&
-      application.is_active === false
-    ) {
-      leftButton = backButton;
-      rightButton = reconsiderFinalistsButton;
-    } else {
-      leftButton = backButton;
-    }
   }
+
+  const [isOpenStaffMenu, setIsOpenStaffMenu] = React.useState(false);
+  const [isOpenEmployerMenu, setIsOpenEmployerMenu] = React.useState(false);
 
   return (
     <Paper
@@ -228,15 +88,45 @@ const StickyFooter = ({
       data-testid="decisions_footer"
     >
       <div className={classes.buttonContainer}>
-        <span data-testid="left_button">{leftButton}</span>
-        <span data-testid="middle_left_button">{middleLeftButton || null}</span>
+        {page === 'employer-review-application' ? (
+          <Button
+            aria-controls={isOpenStaffMenu ? 'menu-list-grow' : undefined}
+            aria-haspopup="true"
+            onClick={() => console.log('Open Employer Feedback Form')}
+            style={{
+              color: '#000000',
+              backgroundColor: '#ff91da',
+              padding: '7px 15px',
+            }}
+          >
+            Feedback
+          </Button>
+        ) : page === 'staff-review-application' ? (
+          <DecisionsMenu
+            page={page}
+            menuName="Staff Decisions"
+            isOpen={isOpenStaffMenu}
+            setIsOpen={setIsOpenStaffMenu}
+            application={application}
+          />
+        ) : (
+          <span data-testid="left_button">{leftButton}</span>
+        )}
 
         <div className={classes.printButton} />
 
-        <span data-testid="middle_right_button">
-          {middleRightButton || null}
-        </span>
-        <span data-testid="right_button">{rightButton}</span>
+        {page === 'employer-review-application' ||
+        page === 'staff-review-application' ? (
+          <DecisionsMenu
+            page={page}
+            menuName="Employer Decisions"
+            isOpen={isOpenEmployerMenu}
+            setIsOpen={setIsOpenEmployerMenu}
+            application={application}
+          />
+        ) : (
+          <span data-testid="right_button">{rightButton}</span>
+        )}
       </div>
     </Paper>
   );

@@ -128,9 +128,9 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
         }
       />{' '}
       {option.components &&
-        option.components.map((subOption, index) => (
+        option.components.map((subOption, indx) => (
           <ContentWithHelpTextToolTips
-            key={index}
+            key={indx}
             option={subOption}
             isSubContent={true}
             isCompleted={option.checked}

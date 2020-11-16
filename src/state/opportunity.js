@@ -370,6 +370,28 @@ export const internalActivateRole = opportunityId =>
   };
 
 // ---------------------------------------------------------------------------
+// `/contacts/<int:contact_id>/app/<string:opportunity_id>/status`
+export const UPDATE_APPLICATION_STATUS = 'UPDATE_APPLICATION_STATUS';
+export const UPDATE_APPLICATION_STATUS_API = fetchActionTypes(
+  UPDATE_APPLICATION_STATUS
+);
+export const updateApplicationStatus = (application, payload) =>
+  async function(dispatch) {
+    dispatch({
+      type: UPDATE_APPLICATION_STATUS,
+      payload,
+    });
+
+    return await makeApiFetchActions(
+      UPDATE_APPLICATION_STATUS,
+      `${API_URL}/api/contacts/${application.contact.id}/app/${application.opportunity.id}/status`,
+      {
+        body: JSON.stringify(payload),
+        method: 'PUT',
+      }
+    )(dispatch);
+  };
+// ---------------------------------------------------------------------------
 
 export const opportunitiesReducer = createReducer(
   {},
@@ -437,6 +459,10 @@ export const applicationsReducer = createReducer(
       });
     },
     [UPDATE_APPLICATION_API.RESOLVE]: (state, action) => {
+      const application = action.body.data;
+      state[application.id] = application;
+    },
+    [UPDATE_APPLICATION_STATUS_API.RESOLVE]: (state, action) => {
       const application = action.body.data;
       state[application.id] = application;
     },

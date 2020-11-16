@@ -1,13 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
+
 import {useHistory} from 'react-router-dom';
 import DecisionsFooter from 'components/Footers/DecisionsFooter';
-import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
+import {createAButton} from 'lib/helperFunctions/helpers';
 import ViewFullApplication from 'components/ViewFullApplication';
 
 const StaffViewApplication = ({
@@ -17,13 +13,7 @@ const StaffViewApplication = ({
   opportunityId,
   back,
   getApplication,
-  staffRecommendApplication,
-  staffNotAFitApplication,
-  staffReopenApplication,
 }) => {
-  const [confirmed, setConfirmed] = useState(false);
-  const [decision, setDecision] = useState('');
-
   let history = useHistory();
 
   useEffect(() => {
@@ -44,37 +34,6 @@ const StaffViewApplication = ({
     history.push(`/internal/applicants/${contactId}`);
   };
 
-  const handleClickRecommend = () => {
-    setDecision('recommend');
-    setConfirmed(true);
-  };
-  const handleClickNotAFit = () => {
-    setDecision('staff: not a fit');
-    setConfirmed(true);
-  };
-  const handleClickReopen = () => {
-    setDecision('reopen');
-    setConfirmed(true);
-  };
-
-  const recommendApplication = async () => {
-    const response = await staffRecommendApplication(contactId, opportunityId);
-    if (response && Number(response.statusCode) === 200) {
-      setConfirmed(false);
-    }
-  };
-  const notAFitApplication = async () => {
-    const response = await staffNotAFitApplication(contactId, opportunityId);
-    if (response && Number(response.statusCode) === 200) {
-      setConfirmed(false);
-    }
-  };
-  const reopenApplication = async () => {
-    const response = await staffReopenApplication(contactId, opportunityId);
-    if (response && Number(response.statusCode) === 200) {
-      setConfirmed(false);
-    }
-  };
   const toInternalOpportunitiesButton = createAButton(
     '< To Opportunities Board',
     toInternalOpportunitiesBoard,
@@ -103,23 +62,10 @@ const StaffViewApplication = ({
       </div>
       <ViewFullApplication application={application} />
       <DecisionsFooter
-        applicationStatus={application.status}
         page="staff-review-application"
         back={back}
-        recommend={handleClickRecommend}
-        notAFit={handleClickNotAFit}
-        reopen={handleClickReopen}
         application={application}
-        applicantId={application && application.contact.id}
         opportunityId={opportunityId}
-      />
-      <ConfirmDialog
-        open={confirmed}
-        decision={decision}
-        closeDialog={() => setConfirmed(false)}
-        recommendApplication={recommendApplication}
-        notAFitApplication={notAFitApplication}
-        reopenApplication={reopenApplication}
       />
     </div>
   );
@@ -214,74 +160,5 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginRight: '20px',
   },
 });
-
-const ConfirmDialog = withStyles(styles)(
-  ({
-    classes,
-    open,
-    decision,
-    closeDialog,
-    notAFitApplication,
-    reopenApplication,
-    recommendApplication,
-  }) => {
-    const onClickConfirmDecision = () => {
-      if (decision === 'recommend') {
-        createClickTracking(
-          'Staff Making Decision',
-          'Click Confirm Recommend Application',
-          'Click Confirm Recommend Application'
-        );
-        recommendApplication();
-      } else if (decision === 'staff: not a fit') {
-        createClickTracking(
-          'Staff Making Decision',
-          'Click Confirm Not a Fit Application',
-          'Click Confirm Not a Fit Application'
-        );
-        notAFitApplication();
-      }
-      if (decision === 'reopen') {
-        createClickTracking(
-          'Staff Making Decision',
-          'Click Confirm Reopen Application',
-          'Click Confirm Reopen Application'
-        );
-        reopenApplication();
-      }
-    };
-    return (
-      <Dialog open={open} data-testid="confirm_dialog">
-        <DialogContent>
-          <Typography data-testid="confirm_dialog_content">
-            {decision === 'recommend'
-              ? `Are you sure you want to recommend this application?`
-              : decision === 'staff: not a fit'
-              ? `Are you sure this application is not a fit?`
-              : `Are you sure you want to reopen this application?`}
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={closeDialog}
-            variant="contained"
-            color="secondary"
-            data-testid="no_button"
-          >
-            No
-          </Button>
-          <Button
-            onClick={onClickConfirmDecision}
-            variant="contained"
-            color="primary"
-            data-testid="yes_button"
-          >
-            Yes
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-);
 
 export default withStyles(styles)(StaffViewApplication);

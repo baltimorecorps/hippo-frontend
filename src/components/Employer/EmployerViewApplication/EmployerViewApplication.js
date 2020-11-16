@@ -1,27 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
+
 import {useHistory} from 'react-router-dom';
 import DecisionsFooter from 'components/Footers/DecisionsFooter';
-import IconButton from '@material-ui/core/IconButton';
-import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
+import {createAButton} from 'lib/helperFunctions/helpers';
 import ViewFullApplication from 'components/ViewFullApplication';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-import CloseIcon from '@material-ui/icons/Close';
-import {interviewScheduledValidator} from 'lib/formHelpers/formValidator';
-import FormHelperText from '@material-ui/core/FormHelperText';
 
 const EmployerViewApplication = ({
   classes,
@@ -29,13 +13,7 @@ const EmployerViewApplication = ({
   contactId,
   opportunityId,
   getApplication,
-  employerInterviewApplication,
-  employerNotAFitApplication,
-  employerFinalistsApplication,
 }) => {
-  const [confirmed, setConfirmed] = useState(false);
-  const [decision, setDecision] = useState('');
-
   let history = useHistory();
 
   useEffect(() => {
@@ -52,42 +30,6 @@ const EmployerViewApplication = ({
     history.push(`/org/opportunity/${opportunityId}/`);
   };
 
-  const handleClickInterViewScheduled = () => {
-    setDecision('interview scheduled');
-    setConfirmed(true);
-  };
-  const handleClickInterViewCompleted = () => {
-    setDecision('interview completed');
-    setConfirmed(true);
-  };
-  const handleClickReconsiderFinalists = () => {
-    setDecision('reconsider: finalists');
-    setConfirmed(true);
-  };
-  const handleClickReconsiderNotAFit = () => {
-    setDecision('reconsider: not a fit');
-    setConfirmed(true);
-  };
-  const handleClickNotAFit = () => {
-    setDecision('employer: not a fit');
-    setConfirmed(true);
-  };
-
-  const notAFitApplication = async () => {
-    const response = await employerNotAFitApplication(contactId, opportunityId);
-    if (response && Number(response.statusCode) === 200) {
-      toEmployerBoard();
-    }
-  };
-  const finalistsApplication = async () => {
-    const response = await employerFinalistsApplication(
-      contactId,
-      opportunityId
-    );
-    if (response && Number(response.statusCode) === 200) {
-      toEmployerBoard();
-    }
-  };
   const toEmployerBoardButton = createAButton(
     "To Employer's Page",
     toEmployerBoard,
@@ -103,23 +45,8 @@ const EmployerViewApplication = ({
         application={application}
         page="employer-review-application"
         back={toEmployerBoard}
-        interviewScheduled={handleClickInterViewScheduled}
-        interviewCompleted={handleClickInterViewCompleted}
-        employerNotAFit={handleClickNotAFit}
-        employerReconsiderFinalists={handleClickReconsiderFinalists}
-        employerReconsiderNotAFit={handleClickReconsiderNotAFit}
         applicantId={application && application.contact.id}
         opportunityId={opportunityId}
-      />
-      <ConfirmDialog
-        application={application}
-        open={confirmed}
-        decision={decision}
-        closeDialog={() => setConfirmed(false)}
-        notAFitApplication={notAFitApplication}
-        finalistsApplication={finalistsApplication}
-        employerInterviewApplication={employerInterviewApplication}
-        toEmployerBoard={toEmployerBoard}
       />
     </div>
   );
@@ -290,272 +217,5 @@ const styles = ({breakpoints, palette, spacing}) => ({
     marginBottom: spacing(1),
   },
 });
-
-const useForm = (initialValues, onSubmit, toEmployerBoard) => {
-  const [update, values] = useFormUpdate(initialValues);
-
-  const handleSubmit = async () => {
-    createClickTracking(
-      'Employer Making Decision',
-      'Click Confirm Interview Application',
-      'Click Confirm Interview Application'
-    );
-    const date = values.interview_date.toISOString().substring(0, 10);
-    const time = values.interview_time.toString().substring(16, 24);
-
-    const interviewDetails = {
-      interview_date: date,
-      interview_time: time,
-    };
-
-    const response = await onSubmit(
-      values.contact_id,
-      values.opportunity_id,
-      interviewDetails
-    );
-    if (Number(response.statusCode) === 200) {
-      toEmployerBoard();
-    }
-  };
-
-  const handleDateChange = dateTime => {
-    update('interview_date')(dateTime);
-  };
-
-  const handleTimeChange = dateTime => {
-    update('interview_time')(dateTime);
-  };
-
-  return [values, handleDateChange, handleTimeChange, handleSubmit];
-};
-
-const ConfirmDialog = withStyles(styles)(
-  ({
-    classes,
-    application,
-    open,
-    decision,
-    closeDialog,
-    notAFitApplication,
-    finalistsApplication,
-    employerInterviewApplication,
-    toEmployerBoard,
-  }) => {
-    let dateTime = null;
-    // convert string to JS Date
-    if (application.interview_date && application.interview_time) {
-      dateTime = new Date(
-        `${application.interview_date}T${application.interview_time}`
-      );
-    }
-
-    const initialValues = {
-      contact_id: application.contact.id,
-      opportunity_id: application.opportunity.id,
-      interview_date: dateTime,
-      interview_time: dateTime,
-    };
-    const [values, handleDateChange, handleTimeChange, handleSubmit] = useForm(
-      initialValues,
-      employerInterviewApplication,
-      toEmployerBoard
-    );
-
-    const [errors, setErrors] = useState({});
-
-    const submit = () => {
-      const {isError, err} = interviewScheduledValidator(values);
-      if (isError) {
-        setErrors(err);
-      } else {
-        handleSubmit(values);
-      }
-    };
-
-    const onClickConfirmDecision = () => {
-      if (decision === 'consider') {
-        createClickTracking(
-          'Employer Making Decision',
-          'Click Confirm Consider Application',
-          'Click Confirm Consider Application'
-        );
-        finalistsApplication();
-      } else if (decision === 'employer: not a fit') {
-        createClickTracking(
-          'Employer Making Decision',
-          'Click Confirm Not a Fit Application',
-          'Click Confirm Not a Fit Application'
-        );
-        notAFitApplication();
-      }
-    };
-
-    let confirmText;
-    switch (decision) {
-      case 'employer: not a fit':
-        confirmText = 'Are you sure this application is not a fit?';
-        break;
-
-      case 'interview completed':
-        confirmText = `Would ${application.contact.first_name} ${application.contact.last_name} be a finalist for this role?`;
-        break;
-      case 'reconsider: finalists':
-        confirmText = `Do you want to reconsider ${application.contact.first_name} ${application.contact.last_name} as a finalist?`;
-        break;
-      case 'reconsider: not a fit':
-        confirmText = `Do you want to reconsider ${application.contact.first_name} ${application.contact.last_name} as not a fit?`;
-        break;
-      default:
-        confirmText = <span></span>;
-    }
-
-    const finalistsButton = createAButton(
-      'Make this candidate a finalist',
-      finalistsApplication,
-      true,
-      classes.greenButtons
-    );
-
-    const notAFitButton = createAButton(
-      'This candidate is not a fit',
-      notAFitApplication,
-      true,
-      classes.redButtons
-    );
-    const noCancelButton = (
-      <Button
-        onClick={closeDialog}
-        variant="outlined"
-        color="secondary"
-        data-testid="cancel_confirm_dialog_button"
-      >
-        Cancel
-      </Button>
-    );
-
-    return (
-      <Dialog open={open} data-testid="confirm_dialog">
-        {decision === 'interview scheduled' ? (
-          <React.Fragment>
-            <DialogContent>
-              <Typography>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <KeyboardDatePicker
-                      margin="normal"
-                      id="interview_date"
-                      label="Interview Date"
-                      format="MM/dd/yyyy"
-                      name="interview_date"
-                      value={values.interview_date || null}
-                      onChange={handleDateChange}
-                      KeyboardButtonProps={{
-                        'aria-label': 'change date',
-                      }}
-                    />
-                    <FormHelperText className={classes.formHelperText}>
-                      {errors.interviewDate_error || null}
-                    </FormHelperText>
-                    <KeyboardTimePicker
-                      margin="normal"
-                      id="interview_time"
-                      label="Interview Time"
-                      name="interview_time"
-                      value={values.interview_time || null}
-                      onChange={handleTimeChange}
-                      minutesStep={5}
-                      KeyboardButtonProps={{
-                        'aria-label': 'change time',
-                      }}
-                    />
-                    <FormHelperText className={classes.formHelperText}>
-                      {errors.interviewTime_error || null}
-                    </FormHelperText>
-                  </Grid>
-                </MuiPickersUtilsProvider>
-              </Typography>
-            </DialogContent>
-            <DialogActions className={classes.buttonsContainer}>
-              <React.Fragment>
-                <Button
-                  onClick={closeDialog}
-                  variant="outlined"
-                  color="secondary"
-                >
-                  Cancel
-                </Button>
-                <Button onClick={submit} variant="contained" color="primary">
-                  Submit
-                </Button>
-              </React.Fragment>
-            </DialogActions>
-          </React.Fragment>
-        ) : decision === 'interview completed' ||
-          decision === 'reconsider: finalists' ||
-          decision === 'reconsider: not a fit' ? (
-          <React.Fragment>
-            <DialogContent className={classes.dialogContent}>
-              <div className={classes.dialogHeaderContainer}>
-                <IconButton
-                  aria-label="close confirm dialog button"
-                  onMouseDown={closeDialog}
-                  className={classes.closeIcon}
-                  data-testid="close_confirm_dialog_button"
-                >
-                  <CloseIcon />
-                </IconButton>
-              </div>
-
-              <Typography
-                variant="body1"
-                component="h2"
-                align="center"
-                className={classes.dialogContentText}
-                data-testid="confirm_dialog_text_content"
-              >
-                {confirmText}
-              </Typography>
-            </DialogContent>
-            <DialogActions className={classes.buttonsContainer}>
-              <React.Fragment>
-                {decision === 'interview completed'
-                  ? notAFitButton
-                  : noCancelButton}
-
-                {decision === 'reconsider: finalists' ||
-                decision === 'interview completed'
-                  ? finalistsButton
-                  : notAFitButton}
-              </React.Fragment>
-            </DialogActions>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <DialogContent>
-              <Typography data-testid="confirm_dialog_text_content">
-                {confirmText}
-              </Typography>
-            </DialogContent>
-            <DialogActions className={classes.buttonsContainer}>
-              {noCancelButton}
-              <Button
-                onClick={onClickConfirmDecision}
-                variant="contained"
-                color="primary"
-              >
-                Yes
-              </Button>
-            </DialogActions>
-          </React.Fragment>
-        )}
-      </Dialog>
-    );
-  }
-);
 
 export default withStyles(styles)(EmployerViewApplication);
