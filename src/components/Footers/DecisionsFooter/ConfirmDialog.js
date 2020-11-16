@@ -281,6 +281,16 @@ const ConfirmDialog = ({
   );
 };
 
+ConfirmDialog.propTypes = {
+  page: PropTypes.string.isRequired,
+  classes: PropTypes.object,
+  updateApplicationStatus: PropTypes.func.isRequired,
+  application: PropTypes.object,
+  decision: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
+  closeDialog: PropTypes.func.isRequired,
+};
+
 const styles = ({breakpoints, palette, spacing}) => ({
   container: {
     width: '100%',

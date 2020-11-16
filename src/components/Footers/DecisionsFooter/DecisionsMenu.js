@@ -1,9 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-// import withStyles from '@material-ui/core/styles/withStyles';
-import {withStyles} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
-
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -179,7 +177,15 @@ const DecisionsMenu = ({
   );
 };
 
-DecisionsMenu.propTypes = {};
+DecisionsMenu.propTypes = {
+  page: PropTypes.string.isRequired,
+  classes: PropTypes.object,
+  menuName: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  setIsOpen: PropTypes.func.isRequired,
+  updateApplicationStatus: PropTypes.func.isRequired,
+  application: PropTypes.object,
+};
 
 const styles = ({breakpoints, palette, spacing}) => ({});
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import withStyles from '@material-ui/core/styles/withStyles';
-import {withStyles} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import {createAButton, createClickTracking} from 'lib/helperFunctions/helpers';
 import {useHistory} from 'react-router-dom';
