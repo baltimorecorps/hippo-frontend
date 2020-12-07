@@ -4,7 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import {createAButton, createClickTracking} from 'lib/helperFunctions/helpers';
 import {useHistory} from 'react-router-dom';
-
+import EmployerFeedbackFormDialog from '../../Employer/EmployerFeedback/EmployerFeedbackFormDialog';
 import Button from '@material-ui/core/Button';
 
 import DecisionsMenu from './DecisionsMenu.container';
@@ -75,6 +75,7 @@ const StickyFooter = ({
 
   const [isOpenStaffMenu, setIsOpenStaffMenu] = React.useState(false);
   const [isOpenEmployerMenu, setIsOpenEmployerMenu] = React.useState(false);
+  const [isFeedbackDialogOpen, setIsFeedbackDialogOpen] = React.useState(false);
 
   return (
     <Paper
@@ -91,14 +92,14 @@ const StickyFooter = ({
           <Button
             aria-controls={isOpenStaffMenu ? 'menu-list-grow' : undefined}
             aria-haspopup="true"
-            onClick={() => console.log('Open Employer Feedback Form')}
+            onClick={() => setIsFeedbackDialogOpen(true)}
             style={{
               color: '#000000',
               backgroundColor: '#ff91da',
               padding: '7px 15px',
             }}
           >
-            Feedback
+            Give Feedback
           </Button>
         ) : page === 'staff-review-application' ? (
           <DecisionsMenu
@@ -127,6 +128,12 @@ const StickyFooter = ({
           <span data-testid="right_button">{rightButton}</span>
         )}
       </div>
+      {isFeedbackDialogOpen && (
+        <EmployerFeedbackFormDialog
+          isOpen={isFeedbackDialogOpen}
+          closeDialog={() => setIsFeedbackDialogOpen(false)}
+        />
+      )}
     </Paper>
   );
 };
