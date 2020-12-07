@@ -4,7 +4,7 @@ import {
   getAllOpportunities,
   getAllSubmittedApplications,
 } from 'state/opportunity';
-import {getContactProfile} from 'state/contacts';
+import {getContactProfile} from 'state/contacts/contacts.actions';
 
 const mapStateToProps = state => {
   const submittedIds = Object.values(state.applications)
@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 
   const opportunities = Object.values(state.opportunities);
 
-  const contactId = state.accounts.contact && state.accounts.contact.id;
+  const contactId = state.auth.contact && state.auth.contact.id;
 
   const contact = contactId && state.contacts[contactId];
 

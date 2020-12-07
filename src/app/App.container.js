@@ -1,11 +1,11 @@
 import {connect} from 'react-redux';
-import {getSession, createSession, deleteSession} from 'state/contacts';
+import {getSession, createSession, deleteSession} from 'state/auth/auth.actions.js';
 import App from './App';
 
 export const mapStateToProps = state => {
   return {
-    hasSession: state.accounts.has_session || false,
-    contact: state.accounts.contact || null,
+    hasSession: state.auth.has_session || false,
+    contact: state.auth.contact || null,
   };
 };
 

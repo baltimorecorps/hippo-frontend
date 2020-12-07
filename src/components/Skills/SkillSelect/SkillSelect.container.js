@@ -6,7 +6,10 @@ import throttle from 'lodash/throttle';
 
 import SkillSelect from './SkillSelect';
 
+ 
+
 const loadOptions = async query => {
+ 
   const url = `${API_URL}/api/skills/autocomplete/?q=${encodeURIComponent(
     query
   )}`;
@@ -40,6 +43,12 @@ const loadOptions = async query => {
 
 const load = throttle(inputValue => loadOptions(inputValue), 200);
 
-const SkillSelectApi = props => <SkillSelect load={load} {...props} />;
+const SkillSelectApi = props => {
+return(
+<>
+{/* <span>test</span> */}
+<SkillSelect load={load} {...props} />
+</>
+)};
 
 export default SkillSelectApi;

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import ApplicantPage from './ApplicantPage';
 import {getContactApplications} from 'state/opportunity';
-import {getContact} from 'state/contacts';
+import {getContact} from 'state/contacts/contacts.actions';
 
 const mapStateToProps = (state, props) => {
   const {contactId} = props.match.params;

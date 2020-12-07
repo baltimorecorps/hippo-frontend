@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Contacts from './Contacts';
-import {addContact, getAllContacts, deleteContact} from 'state/contacts';
+import {addContact, getAllContacts, deleteContact} from 'state/contacts/contacts.actions';
 
 const addNewContact = dispatch =>
   async function(contact) {

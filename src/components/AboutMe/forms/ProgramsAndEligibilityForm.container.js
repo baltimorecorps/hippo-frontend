@@ -3,7 +3,7 @@ import {
   updateProgramApps,
   updateAboutMe,
   getDynamicInstructions,
-} from 'state/contacts';
+} from 'state/contacts/contacts.actions';
 import {getAllProgramNames} from 'state/programs';
 import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
 import {defaultPrograms} from '../defaultData';

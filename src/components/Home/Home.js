@@ -155,7 +155,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
 export const mapStateToProps = state => {
   return {
-    hasSession: state.accounts.has_session || false,
+    hasSession: state.auth.has_session || false,
   };
 };
 

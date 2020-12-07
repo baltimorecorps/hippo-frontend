@@ -7,7 +7,7 @@ import {
   getDynamicInstructions,
   addExperience,
   refreshExperienceType,
-} from 'state/contacts';
+} from 'state/contacts/contacts.actions';
 
 const getCapabilities = (state, props) => {
   const contact = state.contacts[props.contactId];

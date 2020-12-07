@@ -6,7 +6,7 @@ import {
   createAboutMe,
   updateAboutMe,
   getDynamicInstructions,
-} from 'state/contacts';
+} from 'state/contacts/contacts.actions';
 
 import ProfilePage from './ProfilePage';
 

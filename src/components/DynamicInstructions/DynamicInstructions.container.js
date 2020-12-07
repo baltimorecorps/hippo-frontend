@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {getDynamicInstructions, submitProfileForReview} from 'state/contacts';
+import {getDynamicInstructions, submitProfileForReview} from 'state/contacts/contacts.actions';
 import DynamicInstructions from './DynamicInstructions';
 
 export const mapDispatchToProps = dispatch => ({
