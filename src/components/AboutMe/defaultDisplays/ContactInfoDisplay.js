@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import {
   QuestionWithOneAnswer,
-  QuestionWithMultipleAnswersArray,
+  QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
 import {getListOfAnswers} from 'lib/helperFunctions/helpers';
 import {raceLabels, blankProfile} from '../defaultData';
@@ -66,18 +66,19 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
           style={{
             fontWeight: '600',
           }}
+          data-testid="name"
         >
           {first_name} {last_name}
         </Typography>
-        {isOnEditMode && (
-          <IconButton
-            onClick={() => onClickEdit()}
-            size="small"
-            aria-label="edit experience"
-          >
-            <EditIcon className={classes.editIcon} />
-          </IconButton>
-        )}
+
+        <IconButton
+          onClick={() => onClickEdit()}
+          size="small"
+          aria-label="edit contact info"
+          data-testid="edit_button"
+        >
+          <EditIcon className={classes.editIcon} />
+        </IconButton>
       </Grid>
 
       <Typography
@@ -85,6 +86,7 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
         variant="body1"
         component="p"
         className={classes.textInfo}
+        data-testid="email"
       >
         <Icon className={classes.homeIcon}>mail</Icon>
         {email}
@@ -95,39 +97,37 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
         variant="body1"
         component="p"
         className={classes.textInfo}
+        data-testid="phone"
       >
         <Icon className={classes.icon}>phone</Icon> {phone_primary}
       </Typography>
 
-      {isOnEditMode ? (
-        theAddress ? (
-          <Typography
-            gutterBottom
-            variant="body1"
-            component="p"
-            className={classes.textInfo}
-          >
-            <HomeIcon className={classes.homeIcon} />
-            {theAddress}
-          </Typography>
-        ) : (
-          <Typography
-            gutterBottom
-            variant="body1"
-            component="p"
-            className={classes.textInfo}
-          >
-            <HomeIcon className={classes.homeIcon} />* Please Enter *
-            <Icon className={classes.icon}>home</Icon>
-          </Typography>
-        )
-      ) : null}
-      {isOnEditMode && contact && contact.profile && (
+      {theAddress ? (
+        <Typography
+          gutterBottom
+          variant="body1"
+          component="p"
+          className={classes.textInfo}
+          data-testid="address"
+        >
+          <HomeIcon className={classes.homeIcon} />
+          {theAddress}
+        </Typography>
+      ) : (
+        <Typography
+          gutterBottom
+          variant="body1"
+          component="p"
+          className={classes.textInfo}
+          data-testid="address"
+        >
+          <HomeIcon className={classes.homeIcon} />* Please Enter *
+          <Icon className={classes.icon}>home</Icon>
+        </Typography>
+      )}
+      {contact && contact.profile && (
         <React.Fragment>
-          <QuestionWithMultipleAnswersArray
-            question="Race:"
-            answers={theRace}
-          />
+          <QuestionWithMultipleAnswers question="Race:" answers={theRace} />
           <QuestionWithOneAnswer question="Gender:" answer={theGender} />
           <QuestionWithOneAnswer question="Pronoun:" answer={thePronoun} />
           <QuestionWithOneAnswer
@@ -142,7 +142,6 @@ const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
 
 ContactInfoDisplay.propTypes = {
   contact: PropTypes.object,
-  isOnEditMode: PropTypes.bool,
   onClickEdit: PropTypes.func,
 };
 

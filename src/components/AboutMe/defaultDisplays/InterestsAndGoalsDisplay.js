@@ -10,7 +10,7 @@ import {roleLabels, programsCompletedLabels} from '../defaultData';
 
 const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
   if (!contact.profile) {
-    return <div>Loading...</div>;
+    return <div data-testid="loading">Loading...</div>;
   }
 
   const {

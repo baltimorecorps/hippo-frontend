@@ -76,7 +76,12 @@ const ValueAlignmentForm = ({contact, onSubmit, onCloseForm, classes}) => {
   const descriptions = [descriptionWithLink];
 
   return (
-    <Grid item xs={12} className={classes.form}>
+    <Grid
+      item
+      xs={12}
+      className={classes.form}
+      data-testid="value_alignment_form"
+    >
       <FormHeader
         header="Value Alignment"
         descriptions={descriptions}

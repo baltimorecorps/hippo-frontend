@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import {ResumeViewer} from 'components/ResumeCreator';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
 
-const ReviewApplication = ({
+const ViewFullApplication = ({
   page,
   classes,
   application,
@@ -23,33 +23,50 @@ const ReviewApplication = ({
   }, [application, getApplication, contactId, opportunityId]);
 
   if (!application) {
-    return <div>Loading...</div>;
+    return <div data-testid="page_loading">Loading...</div>;
   }
-
   return (
     <React.Fragment>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} data-testid="view_full_app_component">
         <div className={classes.headerContainer}>
-          <Typography variant="h5" component="h1" className={classes.header}>
+          <Typography
+            variant="h5"
+            component="h1"
+            className={classes.header}
+            data-testid="page_header"
+          >
             Review Application
           </Typography>
         </div>
         <div>
-          <Typography variant="body2" component="h2" className={classes.title}>
+          <Typography
+            variant="body2"
+            component="h2"
+            className={classes.title}
+            data-testid="title"
+          >
             <strong>Title:</strong>
-            {(application && application.opportunity.title) || ''}
+            {application && application.opportunity.title}
           </Typography>
-          <Typography variant="body2" component="h2" className={classes.title}>
+          <Typography
+            variant="body2"
+            component="h2"
+            className={classes.title}
+            data-testid="organization"
+          >
             <strong>Organization:</strong>{' '}
-            {(application && application.opportunity.org_name) || ''}
+            {application && application.opportunity.org_name}
           </Typography>
         </div>
         <div className={classes.opportunityDescription}>
-          <Typography className={classes.description}>
+          <Typography
+            className={classes.description}
+            data-testid="short_description"
+          >
             {application && application.opportunity.short_description}
             <br />
           </Typography>
-          <Typography className={classes.link}>
+          <Typography className={classes.link} data-testid="google_doc_link">
             {createExternalLink(
               'View full description',
               application && application.opportunity.gdoc_link,
@@ -70,7 +87,10 @@ const ReviewApplication = ({
             Interest Statement
           </Typography>
         </div>
-        <Typography className={classes.interestStatement}>
+        <Typography
+          className={classes.interestStatement}
+          data-testid="interest_statement"
+        >
           {application && application.interest_statement}
         </Typography>
       </Paper>
@@ -81,6 +101,7 @@ const ReviewApplication = ({
           setResume={setResume}
           viewOnly={true}
           page="staff"
+          setResume={() => {}}
         />
       )}
     </React.Fragment>
@@ -140,4 +161,4 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
 });
 
-export default withStyles(styles)(ReviewApplication);
+export default withStyles(styles)(ViewFullApplication);

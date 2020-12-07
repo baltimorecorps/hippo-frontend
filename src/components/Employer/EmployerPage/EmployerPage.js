@@ -15,7 +15,9 @@ const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {
   }, [getOrgOpportunity, opportunityId]);
 
   if (!opportunity) {
-    return <div>...Loading Employer Page</div>;
+    return (
+      <div data-testid="loading_employer_page">Loading Employer Page...</div>
+    );
   } else {
     return (
       <div className={classes.container}>
@@ -25,6 +27,7 @@ const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {
             variant="h5"
             align="center"
             className={classes.header}
+            data-testid="employer_page_header"
           >
             {opportunity.org_name}
           </Typography>

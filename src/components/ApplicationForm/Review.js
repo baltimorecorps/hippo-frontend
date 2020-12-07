@@ -34,13 +34,13 @@ const Review = ({
 
   const submitApplication = async () => {
     const response = await submit();
-    if (Number(response.statusCode) === 200) {
+    if (response && Number(response.statusCode) === 200) {
       toConfirmationPage();
     }
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="review_application">
       <Paper className={classes.paper}>
         <div className={classes.headerContainer}>
           <Typography variant="h5" component="h1" className={classes.header}>
@@ -50,15 +50,28 @@ const Review = ({
           </Typography>
         </div>
         <div>
-          <Typography variant="body2" component="h2" className={classes.title}>
+          <Typography
+            variant="body2"
+            component="h2"
+            className={classes.title}
+            data-testid="opp_title"
+          >
             <strong>Title:</strong> {opportunity.title}
           </Typography>
-          <Typography variant="body2" component="h2" className={classes.title}>
+          <Typography
+            variant="body2"
+            component="h2"
+            className={classes.title}
+            data-testid="opp_org"
+          >
             <strong>Organization:</strong> {opportunity.org_name || ''}
           </Typography>
         </div>
         <div className={classes.opportunityDescription}>
-          <Typography className={classes.description}>
+          <Typography
+            className={classes.description}
+            data-testid="opp_description"
+          >
             {opportunity.short_description}
             <br />
           </Typography>
@@ -182,17 +195,27 @@ const ConfirmDialog = withStyles(styles)(
       submitApplication();
     };
     return (
-      <Dialog open={open}>
+      <Dialog open={open} data-testid="confirm_dialog">
         <DialogContent>
-          <Typography>
+          <Typography data-testid="dialog_content">
             Are you sure you want to submit this application?
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeDialog} variant="contained" color="secondary">
+          <Button
+            data-testid="cancel_button"
+            onClick={closeDialog}
+            variant="contained"
+            color="secondary"
+          >
             No
           </Button>
-          <Button onClick={onClickSubmit} variant="contained" color="primary">
+          <Button
+            data-testid="submit_button"
+            onClick={onClickSubmit}
+            variant="contained"
+            color="primary"
+          >
             Yes
           </Button>
         </DialogActions>
