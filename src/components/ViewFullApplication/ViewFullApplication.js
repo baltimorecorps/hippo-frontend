@@ -101,6 +101,7 @@ const ViewFullApplication = ({
           setResume={setResume}
           viewOnly={true}
           page="staff"
+          setResume={() => {}}
         />
       )}
     </React.Fragment>
