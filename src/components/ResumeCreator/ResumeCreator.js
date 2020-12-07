@@ -228,7 +228,12 @@ const PageLayout = ({
   return (
     <Grid container className={classes.page}>
       {header && (
-        <Grid item xs={12} className={classes.header}>
+        <Grid
+          item
+          xs={12}
+          className={classes.header}
+          data-testid="resume_header"
+        >
           <Grid container>
             <Grid item xs={9} className={classes.vertical}>
               <span className={classes.name}>{header.name}</span>
@@ -244,7 +249,13 @@ const PageLayout = ({
       )}
       <Grid item xs={12} className={bodyClass}>
         <Grid container className={classes.overflow}>
-          <Grid item xs={8} className={classes.overflow} ref={leftRef}>
+          <Grid
+            item
+            xs={8}
+            className={classes.overflow}
+            ref={leftRef}
+            data-testid="resume_left"
+          >
             {sections.experience.length ? (
               <ResumeSection
                 sectionId={`experience${index}`}
@@ -262,7 +273,13 @@ const PageLayout = ({
               </ResumeSection>
             ) : null}
           </Grid>
-          <Grid item xs={4} className={classes.overflow} ref={rightRef}>
+          <Grid
+            item
+            xs={4}
+            className={classes.overflow}
+            ref={rightRef}
+            data-testid="resume_right"
+          >
             {sections.capabilities.length ? (
               <ResumeSection
                 sectionId={'capabilities'} // must match state key
@@ -571,9 +588,8 @@ const ResumeCreator = ({
       'Click Print Resume'
     );
   };
-
   const viewComponent = (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="view_resume">
       {!hidePrint ? (
         <div className={classes.buttonContainer}>
           <ReactToPrint

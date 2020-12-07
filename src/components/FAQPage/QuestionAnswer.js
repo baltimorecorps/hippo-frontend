@@ -16,21 +16,30 @@ const QuestionAnswer = ({classes, question, answer, subContent}) => {
         id="panel1a-header"
         className={classes.questionContainer}
       >
-        <Typography className={classes.questions}>
+        <Typography className={classes.questions} data-testid="question">
           <span style={{marginRight: '10px'}}>❖</span> {question}
         </Typography>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.answerContainer}>
-        <Typography className={classes.answer}>{answer}</Typography>
+        <Typography className={classes.answer} data-testid="answer">
+          {answer}
+        </Typography>
 
         {subContent &&
           subContent.map((content, index) => (
             <div key={index}>
-              <Typography className={classes.subHeader}>
+              <Typography
+                className={classes.subHeader}
+                data-testid="sub_content_header"
+              >
                 {content.header}
               </Typography>
               {content.content.map((content, index) => (
-                <Typography className={classes.subContent} key={index}>
+                <Typography
+                  className={classes.subContent}
+                  key={index}
+                  data-testid="sub_content_content"
+                >
                   {content}
                 </Typography>
               ))}
@@ -45,6 +54,7 @@ QuestionAnswer.propTypes = {
   classes: PropTypes.object.isRequired,
   question: PropTypes.string.isRequired,
   answer: PropTypes.string.isRequired,
+  subContent: PropTypes.array,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

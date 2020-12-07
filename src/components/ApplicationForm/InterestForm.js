@@ -45,7 +45,7 @@ const InterestForm = ({
 
   return (
     <div className={classes.container}>
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} data-testid="interest_statement">
         <div className={classes.opportunityContent}>
           <div className={classes.headerContainer}>
             <Typography variant="h5" component="h1" className={classes.header}>
@@ -53,19 +53,28 @@ const InterestForm = ({
             </Typography>
           </div>
           <div className={classes.titleContainer}>
-            <Typography variant="h6" component="h2" className={classes.title}>
+            <Typography
+              variant="h6"
+              component="h2"
+              className={classes.title}
+              data-testid="opp_title"
+            >
               {opportunity.title}
             </Typography>
             <Typography
               variant="h5"
               component="h1"
               className={classes.organization}
+              data-testid="opp_org"
             >
               {opportunity.org_name || ''}
             </Typography>
           </div>
           <div className={classes.opportunityDescription}>
-            <Typography className={classes.description}>
+            <Typography
+              className={classes.description}
+              data-testid="opp_description"
+            >
               {opportunity.short_description}
               <br />
             </Typography>
@@ -94,7 +103,10 @@ const InterestForm = ({
           </Typography>
         </div>
         {application.status === 'submitted' ? (
-          <Typography className={classes.interestStatement}>
+          <Typography
+            className={classes.interestStatement}
+            data-testid="interest_statement_display"
+          >
             {application.interest_statement}
           </Typography>
         ) : (
@@ -108,8 +120,12 @@ const InterestForm = ({
               multiline
               rows={10}
               className={classes.interest}
+              inputProps={{'data-testid': 'interest_statement_text_field'}}
             />
-            <FormHelperText className={classes.formHelperText}>
+            <FormHelperText
+              className={classes.formHelperText}
+              data-testid="error"
+            >
               {errors.interestText_error || null}
             </FormHelperText>
           </Grid>

@@ -13,7 +13,7 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const ApplicantValueAlignment = ({classes, applicant, handleClose}) => {
   if (!applicant) {
-    return <div>loading...</div>;
+    return <div data-testid="loading">loading...</div>;
   }
   return (
     <React.Fragment>
@@ -23,6 +23,7 @@ const ApplicantValueAlignment = ({classes, applicant, handleClose}) => {
           variant="contained"
           color="primary"
           className={classes.backButton}
+          data-testid="back_button"
         >
           <ArrowBackIosIcon /> Back
         </Button>
@@ -33,13 +34,19 @@ const ApplicantValueAlignment = ({classes, applicant, handleClose}) => {
 
       <Paper className={classes.paper}>
         <div className={classes.headerContainer}>
-          <Typography variant="h6" component="h2" className={classes.header}>
+          <Typography
+            variant="h6"
+            component="h2"
+            className={classes.header}
+            data-testid="page_header"
+          >
             Value Alignment{' '}
           </Typography>
           <IconButton
             onClick={handleClose}
             aria-label="close filter form"
             style={{padding: '5px'}}
+            data-testid="close_button"
           >
             <CloseIcon />
           </IconButton>
@@ -51,10 +58,16 @@ const ApplicantValueAlignment = ({classes, applicant, handleClose}) => {
             variant="body1"
             component="p"
             className={classes.questions}
+            data-testid="question1"
           >
             Why is racial equity work in Baltimore important to you?
           </Typography>
-          <Typography variant="body1" component="p" className={classes.answers}>
+          <Typography
+            variant="body1"
+            component="p"
+            className={classes.answers}
+            data-testid="answer1"
+          >
             {applicant.profile.value_question1 || '-'}
           </Typography>
         </div>
@@ -64,11 +77,17 @@ const ApplicantValueAlignment = ({classes, applicant, handleClose}) => {
             variant="body1"
             component="p"
             className={classes.questions}
+            data-testid="question2"
           >
             How has your background and experiences prepared you for today’s
             work in Baltimore’s social impact sector? *
           </Typography>
-          <Typography variant="body1" component="p" className={classes.answers}>
+          <Typography
+            variant="body1"
+            component="p"
+            className={classes.answers}
+            data-testid="answer2"
+          >
             {applicant.profile.value_question2 || '-'}
           </Typography>
         </div>

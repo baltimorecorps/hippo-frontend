@@ -90,7 +90,11 @@ const AddContact = ({
     shrink: true,
   };
 
-  const inputProps = {classes: {input: classes.resize}, autoComplete: 'off'};
+  const inputProps = {
+    classes: {input: classes.resize},
+    autoComplete: 'off',
+    'data-testid': 'text_field',
+  };
 
   const handlePhoneInput = value => {
     values.phone_primary = value;
@@ -142,6 +146,7 @@ const AddContact = ({
     <form noValidate autoComplete="off">
       <Grid container direction="column">
         <TextField
+          data-testid="first_name"
           required
           id="first-name"
           label="First Name"
@@ -150,12 +155,13 @@ const AddContact = ({
           value={values.first_name || ''}
           onChange={handleChange}
           InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
+          inputProps={inputProps}
         />
         <FormHelperText className={classes.formHelperText}>
           {errors.firstName_error || null}
         </FormHelperText>
         <TextField
+          data-testid="last_name"
           required
           id="last-name"
           label="Last Name"
@@ -164,12 +170,13 @@ const AddContact = ({
           value={values.last_name || ''}
           onChange={handleChange}
           InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
+          inputProps={inputProps}
         />
         <FormHelperText className={classes.formHelperText}>
           {errors.lastName_error || null}
         </FormHelperText>
         <TextField
+          data-testid="email"
           required
           id="email"
           label="Email"
@@ -178,7 +185,7 @@ const AddContact = ({
           onChange={handleChange}
           className={classes.textField}
           InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
+          inputProps={inputProps}
         />
         <FormHelperText className={classes.formHelperText}>
           {errors.email_error || null}
@@ -191,7 +198,7 @@ const AddContact = ({
           value={values.phone_primary}
           onChange={handlePhoneInput}
           InputLabelProps={inputLabelProps}
-          InputProps={inputProps}
+          inputProps={inputProps}
           className={classes.textField}
           disableAreaCodes={true}
         />
@@ -206,6 +213,8 @@ const AddContact = ({
                 checked={values.terms_agreement || false}
                 onChange={termsAndPrivacyHandler}
                 value={values.terms_agreement || false}
+                inputProps={{'data-testid': `clickable_terms_agreement`}}
+                data-testid="terms_agreement"
               />
             }
             className={classes.checkbox}
@@ -225,15 +234,18 @@ const AddContact = ({
     </form>
   );
 
-  let showThis = <div>Creating your profile....</div>;
+  let showThis = (
+    <div data-testid="creating_profile">Creating your profile....</div>
+  );
   if (!creatingContact) {
     showThis = (
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} data-testid="add_contact_form">
         <Typography
           component="h1"
           variant="h5"
           align="left"
           className={classes.paperHeader}
+          data-testid="add_contact_form_header"
         >
           Profile Basics
         </Typography>
@@ -243,6 +255,7 @@ const AddContact = ({
           variant="contained"
           color="primary"
           className={classes.createButton}
+          data-testid="create_profile_button"
         >
           Create Profile
         </Button>

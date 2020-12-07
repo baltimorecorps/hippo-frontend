@@ -25,7 +25,7 @@ const EachExpansionPanel = ({
   const toggleExpansionPanel = () => {
     if (isOnEditMode) {
       setHelpText(
-        <span className={classes.helpText}>
+        <span className={classes.helpText} data-testid="help_text">
           *Please save or close this form to collapse*
         </span>
       );
@@ -42,6 +42,7 @@ const EachExpansionPanel = ({
     <ExpansionPanel
       expanded={expandPanel[name]}
       className={classes.expansionPanel}
+      data-testid="expansion_panel"
     >
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
@@ -49,6 +50,7 @@ const EachExpansionPanel = ({
         id={`${name}`}
         className={classes.header}
         onClick={() => toggleExpansionPanel()}
+        data-testid="panel_summary"
       >
         <div className={classes.headerText}>
           <Typography>
