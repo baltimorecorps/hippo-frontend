@@ -35,6 +35,7 @@ import EmployerViewApplication from 'components/Employer/EmployerViewApplication
 import FAQPage from 'components/FAQPage';
 import ApplicantsBoard from 'components/Internal/ApplicantsBoard';
 import ApplicantPage from 'components/Internal/ApplicantPage';
+import Error404Page from 'components//Error404Page';
 
 const App = ({
   hasSession,
@@ -51,7 +52,6 @@ const App = ({
   } = useAuth0();
   const loadingSession = useRef(false);
   const creatingSession = useRef(false);
-
   // Attempts to load the session if we don't currently have one
   useEffect(() => {
     const loadSession = async () => {
@@ -137,7 +137,7 @@ const App = ({
   };
 
   return (
-    <ErrorBoundary fileName="src/App.js">
+    <ErrorBoundary fileName="src/app/App.js">
       <MuiThemeProvider theme={theme}>
         <Router>
           <div className={classes.page}>
@@ -176,8 +176,8 @@ const App = ({
               <Route exact path="/" component={Home} />
 
               <Route exact path="/contacts" component={Contacts} />
-
               <Route exact path="/profile/" component={ProfileAuth} />
+
               <Route
                 exact
                 path="/opportunities/"
@@ -236,11 +236,13 @@ const App = ({
                 path="/profile/:contactId"
                 component={ProfileStaff}
               />
+
               {/* Employer Pages */}
               <Route
                 path="/org/opportunity/:opportunityId/"
                 component={EmployerPage}
               />
+              <Route path="*" component={Error404Page} />
             </Switch>
             <MainFooter />
           </div>
