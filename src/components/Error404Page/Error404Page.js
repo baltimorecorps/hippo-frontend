@@ -8,16 +8,22 @@ const Error404Page = ({classes}) => {
   let history = useHistory();
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} data-testid="404_page">
       <Typography
         variant="h1"
         component="h2"
         align="center"
         style={{marginTop: '20%'}}
+        data-testid="404_text"
       >
         404
       </Typography>
-      <Typography variant="h3" component="h1" align="center">
+      <Typography
+        variant="h3"
+        component="h1"
+        align="center"
+        data-testid="pageNotFound_text"
+      >
         Page Not Found
       </Typography>
       <Button
@@ -25,6 +31,7 @@ const Error404Page = ({classes}) => {
         color="primary"
         className={classes.homeButton}
         onClick={() => history.push(`/`)}
+        data-testid="homepage_button"
       >
         Home Page
       </Button>
