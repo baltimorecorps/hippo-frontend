@@ -47,7 +47,8 @@ export const makeApiFetchActions = (
 ) => {
   return async dispatch => {
     init = Object.assign({credentials: 'include'}, init);
-    return await makeFetchActions(
+
+    const result = await makeFetchActions(
       action,
       url,
       init,
@@ -55,6 +56,24 @@ export const makeApiFetchActions = (
       abortController,
       conditional
     )(dispatch);
+
+    // 404 500 503 => Alert the error
+    if (result.statusCode >= 400) {
+      console.error('Fetch Error', result);
+      const {type, statusCode, error} = result;
+      if (type !== 'GET_SESSION_REJECT') {
+        let errorMessage = '';
+        if (error && error.message) {
+          errorMessage = `${error.message}`;
+        }
+
+        alert(
+          `ERROR: ${statusCode} ${type}\n${errorMessage}\n\nRedirecting to Home page.`
+        );
+        window.location = '/';
+      }
+    }
+    return result;
   };
 };
 
