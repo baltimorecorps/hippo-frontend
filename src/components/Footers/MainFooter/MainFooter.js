@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {createALink} from 'lib/helperFunctions/helpers';
-import terms from 'lib/pdf_files/services-terms.pdf';
+import terms from 'assets/pdf/services-terms.pdf';
 import Typography from '@material-ui/core/Typography';
 import {useRouteMatch} from 'react-router-dom';
 import Logo from './img/logo_square.png';

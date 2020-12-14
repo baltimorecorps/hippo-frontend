@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {createClickTracking, createALink} from 'lib/helperFunctions/helpers';
-import terms from 'lib/pdf_files/services-terms.pdf';
+import terms from 'assets/pdf/services-terms.pdf';
 import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';

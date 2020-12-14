@@ -21,7 +21,7 @@ import Switch from '@material-ui/core/Switch';
 import {ResumeViewer} from 'components/ResumeCreator';
 import {blankInstructions} from '../DynamicInstructions/defaultValues';
 
-import CAPABILITIES from './capabilities.yml';
+import CAPABILITIES from '../../assets/yml/capabilities.yml';
 
 const ProfilePage = ({
   contactId,
