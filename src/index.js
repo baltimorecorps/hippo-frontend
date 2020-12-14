@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {configureStore} from 'redux-starter-kit';
-import rootReducer from 'state';
+
+
+import store from './state/store.js';
 import App from 'app/App.container';
 import {Auth0Provider} from 'lib/Auth0/auth0';
 import config from 'app/authConfig.json';
@@ -10,9 +11,7 @@ import {API_URL} from 'app/constants';
 
 import * as serviceWorker from 'app/serviceWorker';
 
-const store = configureStore({
-  reducer: rootReducer,
-});
+
 
 // A function that routes the user to the right place
 // after login

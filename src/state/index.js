@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import {
-  contactsReducer as contacts,
-  accountsReducer as accounts,
-} from './contacts';
+// import {
+//   contactsReducer as contacts,
+//   // accountsReducer as accounts,
+// } from './contacts';
 import {capabilitiesReducer as capabilities} from './capabilities';
 import {experiencesReducer as experiences} from './profile';
 import {
@@ -13,8 +13,12 @@ import {
 
 import {programsReducer as programs} from './programs';
 
+import {authReducer as auth} from './auth/auth.reducer'
+import {contactsReducer as contacts } from './contacts/contacts.reducer'
+
+
 const rootReducer = combineReducers({
-  accounts,
+  auth,
   contacts,
   capabilities,
   programs,

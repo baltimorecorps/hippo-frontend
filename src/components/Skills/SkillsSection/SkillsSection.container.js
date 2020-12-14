@@ -7,7 +7,7 @@ import {
   updateContactSkills,
   getContactCapabilities,
   getDynamicInstructions,
-} from 'state/contacts';
+} from 'state/contacts/contacts.actions';
 import {getCapabilities} from 'state/capabilities';
 import SkillsSection from './SkillsSection';
 
@@ -15,8 +15,8 @@ export const mapStateToProps = (state, props) => {
   let contactId = null;
   if (props.contactId) {
     contactId = props.contactId;
-  } else if (!props.contactId && state.accounts.contact) {
-    contactId = state.accounts.contact.id;
+  } else if (!props.contactId && state.auth.contact) {
+    contactId = state.auth.contact.id;
   }
 
   const contact = contactId ? state.contacts[contactId] : null;

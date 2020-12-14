@@ -6,7 +6,7 @@ import {
   addContactsFilters,
   getAllFilteredContacts,
   resetFilterCount,
-} from 'state/contacts';
+} from 'state/contacts/contacts.actions';
 import {formData} from './defaultValues';
 
 const mapStateToProps = state => {

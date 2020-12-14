@@ -1,11 +1,11 @@
 import {connect} from 'react-redux';
-import {addContact} from 'state/contacts';
+import {addContact} from 'state/contacts/contacts.actions';
 import Profile from './Profile';
 
 export const mapStateToProps = state => {
   return {
-    hasSession: state.accounts.has_session || false,
-    contact: state.accounts.contact || null,
+    hasSession: state.auth.has_session || false,
+    contact: state.auth.contact || null,
   };
 };
 

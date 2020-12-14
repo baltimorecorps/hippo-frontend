@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {refreshExperiences} from 'state/profile';
-import {getContact, getContactCapabilities} from 'state/contacts';
+import {getContact, getContactCapabilities} from 'state/contacts/contacts.actions';
 import ResumeCreator from './ResumeCreator';
 
 export const mapStateToProps = (state, props) => {
