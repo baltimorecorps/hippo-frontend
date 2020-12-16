@@ -1,26 +1,26 @@
 import React, {useEffect, useRef} from 'react';
 import ReactGA from 'react-ga';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {MuiThemeProvider} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import MenuItem from '@material-ui/core/MenuItem';
+
 import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
+
 import MainFooter from 'components/Footers/MainFooter';
-import NavBarIcons from 'components/navbarComponents/mainNav/mainNavComponents/NavBarIcons';
-import HomeIcon from '@material-ui/icons/Home';
+
 
 import ErrorBoundary from 'lib/atoms/ErrorBoundary';
 
-import {ProfileAuth, ProfileStaff} from 'components/ProfilePage';
+import UserProfilePage from "../pages/userPages/userProfilePage";
+
+import ProfileAuth from '../pages/utilityPages/authProfileLoader'
+
 import theme from 'styles/theme';
 
 import {useAuth0} from 'lib/Auth0/auth0';
 
-import Home from 'pages/userPages/homePage/Home';
+import Home from 'pages/utilityPages/homePage/Home';
 import Contacts from 'components/Contacts/Contacts.container';
 
 import CandidateOpportunitiesPage from 'components/CandidateOpportunitiesPage';
@@ -32,10 +32,10 @@ import StaffViewApplication from 'components/Internal/StaffViewApplication/Staff
 import PartnershipsPage from 'pages/adminPages/adminPartnershipPage';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
-import FAQPage from 'components/FAQPage';
+import FAQPage from 'pages/utilityPages/faqPage';
 import ApplicantsBoard from 'components/Internal/ApplicantsBoard';
 import ApplicantPage from 'components/Internal/ApplicantPage';
-import Error404Page from 'components//Error404Page';
+import Error404Page from 'pages/utilityPages/error404Page';
 
 import MainNav from '../components/navbarComponents/mainNav'
 
@@ -209,7 +209,7 @@ const App = ({
               <Route
                 exact
                 path="/profile/:contactId"
-                component={ProfileStaff}
+                component={UserProfilePage}
               />
 
               {/* Employer Pages */}

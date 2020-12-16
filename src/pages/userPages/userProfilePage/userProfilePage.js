@@ -11,7 +11,7 @@ import AboutMeForms from 'components/AboutMe/forms/AboutMeForms';
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import SkillsSection from 'components/Skills/SkillsSection';
 import CapabilityScores from 'components/CapabilityScores';
-import DynamicInstructions from '../DynamicInstructions';
+import DynamicInstructions from '../../../components/DynamicInstructions';
 
 import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
 
@@ -19,11 +19,11 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import {ResumeViewer} from 'components/ResumeCreator';
-import {blankInstructions} from '../DynamicInstructions/defaultValues';
+import {blankInstructions} from '../../../components/DynamicInstructions/defaultValues';
 
-import CAPABILITIES from '../../assets/yml/capabilities.yml';
+import CAPABILITIES from '../../../assets/yml/capabilities.yml';
 
-const ProfilePage = ({
+const UserProfilePage = ({
   contactId,
   contactInfo,
   getContactProfile,
@@ -386,7 +386,7 @@ const helpTextOptions = {
   },
 };
 
-ProfilePage.propTypes = {
+UserProfilePage.propTypes = {
   contactId: PropTypes.number,
   contactInfo: PropTypes.shape({
     first_name: PropTypes.string,
@@ -563,4 +563,4 @@ const styles = ({breakpoints, palette, spacing, shadows}) => ({
   },
 });
 
-export default withStyles(styles)(ProfilePage);
+export default withStyles(styles)(UserProfilePage);

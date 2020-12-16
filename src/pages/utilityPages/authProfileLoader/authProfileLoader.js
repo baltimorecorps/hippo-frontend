@@ -4,9 +4,9 @@ import {useAuth0} from 'lib/Auth0/auth0';
 import Grid from '@material-ui/core/Grid';
 
 import AddContact from 'components/Contacts/AddContact';
-import ProfilePage from './ProfilePage.container';
+import UserProfilePage from "../../userPages/userProfilePage";
 
-const Profile = ({
+const AuthProfileLoader = ({
   hasSession,
   contact,
   addContact,
@@ -17,7 +17,7 @@ const Profile = ({
 
   const addContactLocal = contact => addContact(getTokenSilently, contact);
   if (contact) {
-    return <ProfilePage contactId={contact.id} />;
+    return <UserProfilePage contactId={contact.id} />;
   }
 
   // Show this page if we're not yet authenticated
@@ -42,7 +42,7 @@ const Profile = ({
   );
 };
 
-Profile.propTypes = {
+AuthProfileLoader.propTypes = {
   addContact: PropTypes.func.isRequired,
   contact: PropTypes.object,
 };
@@ -59,4 +59,4 @@ const Delayed = ({children, waitBeforeShow = 2000}) => {
   return isShown ? children : <div>Loading...</div>;
 };
 
-export default Profile;
+export default AuthProfileLoader;

@@ -25,7 +25,6 @@ import {
   addSkillSuggestion,
   DELETE_SKILL_SUGGESTION_API,
   deleteSkillSuggestion,
-
 } from './contacts.actions';
 
 import { contactsReducer } from './contacts.reducer'

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import QuestionAnswer from './QuestionAnswer';
-import Logo from '../../assets/images/b_square.png';
-import {profileAndResume, applyingForARole, otherQuestions} from './FAQContent';
+import QuestionAnswer from './faqComponents/QuestionAnswer';
+import Logo from '../../../assets/images/b_square.png';
+import {profileAndResume, applyingForARole, otherQuestions} from './faqComponents/FAQContent';
 const FAQPage = ({classes}) => {
   return (
     <Paper className={classes.paper}>

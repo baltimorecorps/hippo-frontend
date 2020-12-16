@@ -8,7 +8,7 @@ import {
   getDynamicInstructions,
 } from 'state/contacts/contacts.actions';
 
-import ProfilePage from './ProfilePage';
+import UserProfilePage from './userProfilePage';
 
 // The props to this container specify which particular contact we want to
 // display on the page, and we pull that contact's info out of the state
@@ -47,9 +47,9 @@ export const mapDispatchToProps = dispatch => ({
     addContactSkill(contactId, skill)(dispatch),
 });
 
-const ProfileContainer = connect(
+const UserProfileContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProfilePage);
+)(UserProfilePage);
 
-export default ProfileContainer;
+export default UserProfileContainer;

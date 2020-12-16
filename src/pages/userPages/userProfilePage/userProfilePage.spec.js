@@ -7,10 +7,10 @@ import {configureStore} from 'redux-starter-kit';
 import rootReducer from 'state';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {ThemeProvider} from '@material-ui/core/styles';
-import theme from '../../styles/theme';
-import ProfilePage from './ProfilePage';
-import {blankProfile} from '../AboutMe/others/defaultData';
-import {blankInstructions} from '../DynamicInstructions/defaultValues';
+import theme from '../../../styles/theme';
+import UserProfilePage from './userProfilePage';
+import {blankProfile} from '../../../components/AboutMe/others/defaultData';
+import {blankInstructions} from '../../../components/DynamicInstructions/defaultValues';
 
 describe('ProfilePage', () => {
   const contactInfo = {
@@ -94,7 +94,7 @@ describe('ProfilePage', () => {
     const {queryByText} = render(
       <Provider store={store}>
         <Router>
-          <ProfilePage
+          <UserProfilePage
             contactId={contactInfo.contactId}
             contactInfo={contactInfo}
             refreshDynamicInstructions={jest.fn()}
@@ -193,7 +193,7 @@ describe('ProfilePage', () => {
     const {queryByText} = render(
       <Provider store={store}>
         <Router>
-          <ProfilePage
+          <UserProfilePage
             contactId={contactInfo.contactId}
             contactInfo={contactInfo}
             refreshDynamicInstructions={jest.fn()}
@@ -226,7 +226,7 @@ describe('ProfilePage', () => {
       <Provider store={store}>
         <Router>
           <ThemeProvider theme={theme}>
-            <ProfilePage
+            <UserProfilePage
               contactId={contactInfo.contactId}
               contactInfo={contactInfo}
               refreshDynamicInstructions={jest.fn()}

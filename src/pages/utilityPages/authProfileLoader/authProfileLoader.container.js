@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import {addContact} from 'state/contacts/contacts.actions';
-import Profile from './Profile';
+import AuthProfileLoader from './authProfileLoader';
 
 export const mapStateToProps = state => {
   return {
@@ -14,6 +14,6 @@ export const mapDispatchToProps = dispatch => ({
     addContact(fetchToken, contact)(dispatch),
 });
 
-const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(Profile);
+const authProfileLoaderContainer = connect(mapStateToProps, mapDispatchToProps)(AuthProfileLoader);
 
-export default ProfileContainer;
+export default authProfileLoaderContainer;
