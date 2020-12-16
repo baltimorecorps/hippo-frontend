@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 
-const store = configureMockStore();
-const mockStore = store({
+const store_ = configureMockStore();
+const mockStore = store_({
   contacts: {
     '251': {
       account_id: 'auth0|5f90a50b27f268006e56d7cd',

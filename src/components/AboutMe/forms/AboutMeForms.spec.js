@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
-import 'components/Contacts/node_modules/@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect';
 import AboutMeForms from './AboutMeForms';
 import {applicantFull} from 'mockData/applicant';
 

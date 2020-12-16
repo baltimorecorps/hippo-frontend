@@ -5,7 +5,7 @@ import {
   prettyDOM,
   waitForElement,
 } from '@testing-library/react';
-import 'components/Contacts/node_modules/@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect';
 import AddOrEditExperienceForm from './AddOrEditExperienceForm';
 
 const setupGoogleMock = () => {

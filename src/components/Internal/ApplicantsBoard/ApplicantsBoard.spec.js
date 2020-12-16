@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, cleanup, fireEvent} from '@testing-library/react';
 // import {render as render2, unmountComponentAtNode} from 'react-dom';
-import 'components/Contacts/node_modules/@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom/extend-expect';
 import ApplicantsBoard from './ApplicantsBoard';
 import {formData} from './defaultValues';
 // import {act} from 'react-dom/test-utils';
