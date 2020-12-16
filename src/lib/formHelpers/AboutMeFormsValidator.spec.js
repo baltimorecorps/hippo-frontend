@@ -1,5 +1,5 @@
 import {cleanup} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import 'components/Contacts/node_modules/@testing-library/jest-dom/extend-expect';
 import {
   contactInfoValidator,
   interestsAndGoalsValidator,
@@ -7,7 +7,7 @@ import {
   valueAlignmentValidator,
 } from './formValidator';
 
-import {blankProfile} from '../../components/AboutMe/defaultData';
+import {blankProfile} from '../../components/AboutMe/others/defaultData';
 
 afterEach(cleanup);
 

@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import AboutMeForms from 'components/AboutMe/AboutMeForms';
+import AboutMeForms from 'components/AboutMe/forms/AboutMeForms';
 
 import ExperiencesList from 'components/Experiences/ExperiencesList';
 import SkillsSection from 'components/Skills/SkillsSection';

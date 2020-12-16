@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import MainFooter from 'components/Footers/MainFooter';
-import NavBarIcons from 'components/NavigationBar/NavBarIcons';
+import NavBarIcons from 'components/navbarComponents/mainNav/mainNavComponents/NavBarIcons';
 import HomeIcon from '@material-ui/icons/Home';
 
 import ErrorBoundary from 'lib/atoms/ErrorBoundary';
@@ -20,7 +20,7 @@ import theme from 'styles/theme';
 
 import {useAuth0} from 'lib/Auth0/auth0';
 
-import Home from 'components/Home/Home';
+import Home from 'pages/userPages/homePage/Home';
 import Contacts from 'components/Contacts/Contacts.container';
 
 import CandidateOpportunitiesPage from 'components/CandidateOpportunitiesPage';
@@ -29,13 +29,15 @@ import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';
 import StaffViewApplication from 'components/Internal/StaffViewApplication/StaffViewApplication.container';
-import PartnershipsPage from 'components/Internal/PartnershipsPage/';
+import PartnershipsPage from 'pages/adminPages/adminPartnershipPage';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'components/FAQPage';
 import ApplicantsBoard from 'components/Internal/ApplicantsBoard';
 import ApplicantPage from 'components/Internal/ApplicantPage';
 import Error404Page from 'components//Error404Page';
+
+import MainNav from '../components/navbarComponents/mainNav'
 
 const App = ({
   hasSession,
@@ -141,36 +143,9 @@ const App = ({
       <MuiThemeProvider theme={theme}>
         <Router>
           <div className={classes.page}>
-            <AppBar position="fixed" className={classes.appBar}>
-              <Toolbar>
-                <Link to="/">
-                  <MenuItem>
-                    <HomeIcon className={classes.homeIcon} />
-                  </MenuItem>
-                </Link>
-
-                {(hasSession || isAuthenticated) && (
-                  <Link
-                    to="/opportunities"
-                    onClick={onClickOpportunities}
-                    className={classes.links}
-                  >
-                    <Typography>Opportunities</Typography>
-                  </Link>
-                )}
-
-                <div className={classes.grow} />
-
-                {!hasSession && !isAuthenticated && (
-                  <Button color="inherit" onClick={onClickLogInHandler}>
-                    <Typography>Log in / Sign up</Typography>
-                  </Button>
-                )}
-                {(hasSession || isAuthenticated) && (
-                  <NavBarIcons logout={onClickLogOutHandler} />
-                )}
-              </Toolbar>
-            </AppBar>
+          
+            <MainNav classes={classes} hasSession= {hasSession} isAuthenticated={isAuthenticated} onClickOpportunities={onClickOpportunities} onClickLogInHandler={onClickLogInHandler}  onClickLogOutHandler={onClickLogOutHandler}/>
+            
             <Toolbar /> {/* for automatic padding of AppBar */}
             <Switch>
               <Route exact path="/" component={Home} />

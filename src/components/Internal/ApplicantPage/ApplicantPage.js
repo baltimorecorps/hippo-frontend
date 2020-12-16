@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
-import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
+import PartnershipsNavBar from '../../navbarComponents/partnershipNav/PartnershipsNavBar';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';

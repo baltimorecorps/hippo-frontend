@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import RoleCards from '../Cards/RoleCards';
-import PartnershipsNavBar from 'components/Internal/PartnershipsPage/PartnershipsNavBar';
+import PartnershipsNavBar from 'components/navbarComponents/partnershipNav/PartnershipsNavBar';
 import {filterOpportunitiesByPrograms} from 'lib/helperFunctions/opportunitiesHelpers';
 import FilterByProgramsTabs from 'components/CandidateOpportunitiesPage/FilterByProgramsSelector';
 

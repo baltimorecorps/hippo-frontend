@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import 'components/Contacts/node_modules/@testing-library/jest-dom/extend-expect';
 import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
 import {applicantFull} from 'mockData/applicant';
 import {default_program_apps} from 'mockData/programApps';

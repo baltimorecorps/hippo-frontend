@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import 'components/Contacts/node_modules/@testing-library/jest-dom/extend-expect';
 
 import {Provider} from 'react-redux';
 import {configureStore} from 'redux-starter-kit';
@@ -9,7 +9,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {ThemeProvider} from '@material-ui/core/styles';
 import theme from '../../styles/theme';
 import ProfilePage from './ProfilePage';
-import {blankProfile} from '../AboutMe/defaultData';
+import {blankProfile} from '../AboutMe/others/defaultData';
 import {blankInstructions} from '../DynamicInstructions/defaultValues';
 
 describe('ProfilePage', () => {

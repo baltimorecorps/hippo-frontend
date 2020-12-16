@@ -6,7 +6,7 @@ import {
 } from 'state/contacts/contacts.actions';
 import {getAllProgramNames} from 'state/programs';
 import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm';
-import {defaultPrograms} from '../defaultData';
+import {defaultPrograms} from '../others/defaultData';
 
 export const mapStateToProps = state => {
   const programs = Object.values(state.programs);

@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import AddOrEditOpportunityForm from './AddOrEditOpportunityForm';
 import EachOpportunity from 'components/CandidateOpportunitiesPage/EachOpportunity';
-import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
+import PartnershipsNavBar from '../../navbarComponents/partnershipNav/PartnershipsNavBar';
 import {filterOpportunitiesByPrograms} from 'lib/helperFunctions/opportunitiesHelpers';
 import FilterByProgramsTabs from 'components/CandidateOpportunitiesPage/FilterByProgramsSelector';
 import AddIcon from '@material-ui/icons/Add';

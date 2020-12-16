@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import PartnershipsNavBar from '../PartnershipsPage/PartnershipsNavBar';
+import PartnershipsNavBar from '../../navbarComponents/partnershipNav/PartnershipsNavBar';
 import ApplicantsTable from './ApplicantsTable';
 import FilterApplicantsForm from './FilterApplicantsForm';
 

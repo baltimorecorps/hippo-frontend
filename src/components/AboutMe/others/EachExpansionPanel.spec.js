@@ -1,9 +1,9 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import 'components/Contacts/node_modules/@testing-library/jest-dom/extend-expect';
 import EachExpansionPanel from './EachExpansionPanel';
-import ValueAlignmentForm from './forms/ValueAlignmentForm';
-import ValueAlignmentDisplay from './defaultDisplays/ValueAlignmentDisplay';
+import ValueAlignmentForm from '../forms/ValueAlignmentForm';
+import ValueAlignmentDisplay from '../defaultDisplays/ValueAlignmentDisplay';
 import {applicantEmptyProfile} from 'mockData/applicant';
 
 describe('EachExpansionPanel', () => {

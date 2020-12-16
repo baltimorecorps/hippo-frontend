@@ -6,7 +6,7 @@ import {
   QuestionWithOneAnswer,
   QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
-import {roleLabels, programsCompletedLabels} from '../defaultData';
+import {roleLabels, programsCompletedLabels} from '../others/defaultData';
 
 const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
   if (!contact.profile) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import 'components/Contacts/node_modules/@testing-library/jest-dom/extend-expect';
 import ConfirmationPage from './ConfirmationPage';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';

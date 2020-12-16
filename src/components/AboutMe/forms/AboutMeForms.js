@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import _get from 'lodash.get';
-import ContactInfoDisplay from './defaultDisplays/ContactInfoDisplay';
-import ContactInfoForm from './forms/ContactInfoForm';
-import InterestsAndGoalsForm from './forms/InterestsAndGoalsForm';
-import ValueAlignmentForm from './forms/ValueAlignmentForm';
-import ValueAlignmentDisplay from './defaultDisplays/ValueAlignmentDisplay';
-import InterestsAndGoalsDisplay from './defaultDisplays/InterestsAndGoalsDisplay';
-import ProgramsAndEligibilityForm from './forms/ProgramsAndEligibilityForm.container';
-import ProgramsAndEligibilityDisplay from './defaultDisplays/ProgramsAndEligibilityDisplay';
-import EachExpansionPanel from './EachExpansionPanel';
+import ContactInfoDisplay from '../defaultDisplays/ContactInfoDisplay';
+import ContactInfoForm from './ContactInfoForm';
+import InterestsAndGoalsForm from './InterestsAndGoalsForm';
+import ValueAlignmentForm from './ValueAlignmentForm';
+import ValueAlignmentDisplay from '../defaultDisplays/ValueAlignmentDisplay';
+import InterestsAndGoalsDisplay from '../defaultDisplays/InterestsAndGoalsDisplay';
+import ProgramsAndEligibilityForm from './ProgramsAndEligibilityForm.container';
+import ProgramsAndEligibilityDisplay from '../defaultDisplays/ProgramsAndEligibilityDisplay';
+import EachExpansionPanel from '../others/EachExpansionPanel';
 
 const AboutMeForms = ({
   contact,

@@ -12,7 +12,7 @@ import {
   QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
 import {getListOfAnswers} from 'lib/helperFunctions/helpers';
-import {raceLabels, blankProfile} from '../defaultData';
+import {raceLabels, blankProfile} from '../others/defaultData';
 
 const ContactInfoDisplay = ({contact, isOnEditMode, onClickEdit, classes}) => {
   const {first_name, last_name, phone_primary, email} = contact;
