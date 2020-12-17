@@ -4,12 +4,12 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from 'react-router-dom';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
-import EachOpportunity from './EachOpportunity';
+import EachOpportunity from '../../../components/opportunitiesComponents/EachOpportunity';
 import {
   filterOpportunitiesByPrograms,
   sortByCategory,
 } from 'lib/helperFunctions/opportunitiesHelpers';
-import FilterByProgramsTabs from './FilterByProgramsSelector';
+import FilterByProgramsTabs from '../../../components/opportunitiesComponents/FilterByProgramsSelector';
 
 const CandidateOpportunitiesPage = ({
   classes,

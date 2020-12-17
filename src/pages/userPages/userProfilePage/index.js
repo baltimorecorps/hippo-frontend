@@ -1,4 +1,4 @@
-import UserProfile from './userProfilePage.container';
+import UserProfileContainer from './userProfilePage.container';
 
 
-export default UserProfile;
+export default UserProfileContainer;

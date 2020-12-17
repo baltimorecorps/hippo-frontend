@@ -126,7 +126,7 @@ describe('Opportunities Page', () => {
           opportunities={opportunityArray}
           getAllOpportunities={mockFunction}
           getAllApplications={mockFunction}
-          submittedIds={submittedIds}
+          submittedIds={submittedIds} 
           contact={contact}
         />
       </Router>

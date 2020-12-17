@@ -23,7 +23,7 @@ import {useAuth0} from 'lib/Auth0/auth0';
 import Home from 'pages/utilityPages/homePage/Home';
 import Contacts from 'components/Contacts/Contacts.container';
 
-import CandidateOpportunitiesPage from 'components/CandidateOpportunitiesPage';
+import CandidateOpportunitiesPage from 'pages/userPages/userOpportunitiesPage';
 import InternalOpportunitiesPage from 'components/Internal/AddOrEditOpportunitiesPage';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';

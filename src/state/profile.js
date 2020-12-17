@@ -3,7 +3,7 @@ import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
 import {fetchActionTypes} from 'redux-fetch-wrapper';
 import {createReducer} from 'redux-starter-kit';
 
-import {getContactCapabilities} from './contacts';
+import {getContactCapabilities} from './contacts/contacts.actions.js';
 
 // Rules for action creators:
 //
