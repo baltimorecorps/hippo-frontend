@@ -52,11 +52,14 @@ const ConfirmationPage = ({classes}) => {
         className={classes.content}
         data-testid="content"
       >
-        Thank you for submitting your expression of interest for this position.
+        {/* Thank you for submitting your expression of interest for this position.
         We will be reviewing your submission and will be in touch soon with the
         status of this application. In the meantime feel free to reach out to us
         with any questions at
-        <span className={classes.email}> partnerships@baltimorecorps.org</span>
+        <span className={classes.email}> partnerships@baltimorecorps.org</span> */}
+
+Happy Holidays! Thank you for submitting your expression of interest for this position. Baltimore Corps will be closed until January 4th, 2021. Once we are back online we will be reviewing your submission and will be in touch with the status of this application. In the meantime feel free to reach out Karon McFarlane, VP of Programs and Administration at <span className={classes.email}>karon@Baltimorecorps.org</span> if you have any questions.
+
       </Typography>
       <div className={classes.buttonContainer}>
         <Button
