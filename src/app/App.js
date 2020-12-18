@@ -7,7 +7,7 @@ import {MuiThemeProvider} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import MainFooter from 'components/Footers/MainFooter';
+import MainFooter from 'components/footerComponents/MainFooter';
 
 
 import ErrorBoundary from 'lib/atoms/ErrorBoundary';
@@ -21,10 +21,10 @@ import theme from 'styles/theme';
 import {useAuth0} from 'lib/Auth0/auth0';
 
 import Home from 'pages/utilityPages/homePage/Home';
-import Contacts from 'components/Contacts/Contacts.container';
+import Contacts from 'pages/adminPages/adminContactsPage/Contacts.container';
 
 import CandidateOpportunitiesPage from 'pages/userPages/userOpportunitiesPage';
-import InternalOpportunitiesPage from 'components/Internal/AddOrEditOpportunitiesPage';
+import InternalOpportunitiesPage from 'pages/adminPages/adminAddOrEditOpportunitiesPage';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
 import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';

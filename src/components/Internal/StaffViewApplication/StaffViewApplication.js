@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
-import DecisionsFooter from 'components/Footers/DecisionsFooter';
+import DecisionsFooter from 'components/footerComponents/DecisionsFooter';
 import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
 import ViewFullApplication from 'components/ViewFullApplication';
 

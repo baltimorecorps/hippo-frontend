@@ -5,7 +5,7 @@ import {createALink} from 'lib/helperFunctions/helpers';
 import terms from '../../../assets/pdf/services-terms.pdf';
 import Typography from '@material-ui/core/Typography';
 import {useRouteMatch} from 'react-router-dom';
-import Logo from './img/logo_square.png';
+import Logo from '../../../assets/images/logoSquare.png';
 
 const MainFooter = ({classes, page}) => {
   const termsLink = createALink('Terms', terms, classes.link);

@@ -7,7 +7,7 @@ import {
   createExternalLink,
   createClickTracking,
 } from 'lib/helperFunctions/helpers';
-import DecisionsFooter from '../Footers/DecisionsFooter';
+import DecisionsFooter from '../footerComponents/DecisionsFooter';
 import {ResumeViewer} from 'components/ResumeCreator';
 
 const AddResume = ({

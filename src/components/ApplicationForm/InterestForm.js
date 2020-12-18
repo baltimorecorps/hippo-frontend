@@ -11,7 +11,7 @@ import {
 import Grid from '@material-ui/core/Grid';
 import {interestValidator} from 'lib/formHelpers/formValidator';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import DecisionsFooter from '../Footers/DecisionsFooter';
+import DecisionsFooter from '../footerComponents/DecisionsFooter';
 
 const InterestForm = ({
   classes,

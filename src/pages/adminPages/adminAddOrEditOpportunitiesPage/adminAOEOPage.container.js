@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import AddOrEditOpportunitiesPage from './AddOrEditOpportunitiesPage';
+import AddOrEditOpportunitiesPage from './adminAOEOPage';
 import {
   getAllOpportunities,
   addOpportunity,

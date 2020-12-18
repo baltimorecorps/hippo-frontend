@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, cleanup, fireEvent, waitFor} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import AddOrEditOpportunitiesPage from './AddOrEditOpportunitiesPage';
+import AddOrEditOpportunitiesPage from './adminAOEOPage';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 
