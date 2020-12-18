@@ -53,10 +53,19 @@ const NavBarIcons = ({logout, classes}) => {
     </p>
   );
 
+  const holidayMessage = (
+    <p className={classes.betaMessage}>
+      <span>
+      Happy Holidays! <br/>Baltimore Corps will be closed until January 4th 2021.<br/> If you happen to have any questions or concerns, feel free to reach out Karon McFarlane, VP of Programs and Administration at karon@Baltimorecorps.org.
+      </span>
+      <br />
+    </p>
+  );
+
   const dropdownMenuInfo = {
     notifications: {
       menuHeader: 'Notifications',
-      menuItems: [{name: BetaMessage}],
+      menuItems: [{name:holidayMessage},{name: BetaMessage}],
     },
 
     user: {
