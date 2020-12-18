@@ -11,12 +11,6 @@ import {
   addContact,
   UPDATE_CONTACT,
   UPDATE_CONTACT_API,
-  GET_SESSION_API,
-  getSession,
-  CREATE_SESSION_API,
-  createSession,
-  DELETE_SESSION_API,
-  deleteSession,
   GET_CONTACT_CAPABILITIES_API,
   updateContactSkills,
   UPDATE_CONTACT_SKILL,
@@ -31,9 +25,15 @@ import {
   addSkillSuggestion,
   DELETE_SKILL_SUGGESTION_API,
   deleteSkillSuggestion,
-  contactsReducer,
-  accountsReducer,
-} from './contacts';
+} from './contacts.actions';
+
+import { contactsReducer } from './contacts.reducer'
+
+import { GET_SESSION_API, CREATE_SESSION_API, DELETE_SESSION_API, getSession,
+  createSession,
+  deleteSession,} from '../auth/auth.actions'
+
+import { authReducer } from '../auth/auth.reducer'
 
 afterEach(() => {
   fetchMock.restore();
@@ -421,7 +421,7 @@ describe('Contacts state', () => {
 
   test('Get session', () => {
     const contact = {info: 'me'};
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: GET_SESSION_API.RESOLVE,
       body: {
         status: 'success',
@@ -436,7 +436,7 @@ describe('Contacts state', () => {
     });
   });
   test('Get session reject', () => {
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: GET_SESSION_API.REJECT,
       body: {status: 'success', data: {}},
     });
@@ -899,12 +899,12 @@ describe('Contacts state', () => {
 describe('accounts state', () => {
   const initialState = {};
   test('inital state', () => {
-    const newState = accountsReducer(undefined, {});
+    const newState = authReducer(undefined, {});
     expect(newState).toEqual(initialState);
   });
   test('Get session', () => {
     const contact = {info: 'me'};
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: GET_SESSION_API.RESOLVE,
       body: {
         status: 'success',
@@ -919,7 +919,7 @@ describe('accounts state', () => {
     });
   });
   test('Get session reject', () => {
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: GET_SESSION_API.REJECT,
       body: {status: 'success', data: {}},
     });
@@ -930,7 +930,7 @@ describe('accounts state', () => {
   });
   test('Delete session', () => {
     const contact = {id: 123, account_id: 'auth|myid'};
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: DELETE_SESSION_API.RESOLVE,
       body: {status: 'success'},
     });
@@ -942,7 +942,7 @@ describe('accounts state', () => {
 
   test('Create session', () => {
     const contact = {info: 'me'};
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: CREATE_SESSION_API.RESOLVE,
       body: {
         status: 'success',
@@ -958,7 +958,7 @@ describe('accounts state', () => {
   });
   test('Add contact', () => {
     const contact = {id: 123, account_id: 'auth|123'};
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: ADD_CONTACT_API.RESOLVE,
       body: {status: 'success', data: contact},
     });
@@ -975,7 +975,7 @@ describe('accounts state', () => {
       {id: 3, account_id: 'auth|3'},
       {id: 4},
     ];
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: GET_ALL_CONTACTS_API.RESOLVE,
       body: {status: 'success', data: contacts},
     });
@@ -985,7 +985,7 @@ describe('accounts state', () => {
   });
   test('Get my contact', () => {
     const contact = {id: 123, account_id: 'auth|myid'};
-    const newState = accountsReducer(undefined, {
+    const newState = authReducer(undefined, {
       type: GET_MY_CONTACT_API.RESOLVE,
       body: {status: 'success', data: contact},
     });
