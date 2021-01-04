@@ -2,9 +2,9 @@ import React, {useEffect, useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, useHistory, useRouteMatch} from 'react-router-dom';
 
-import InterestForm from './InterestForm';
-import Review from './Review';
-import AddResume from './AddResume';
+import InterestForm from '../../../components/applicationProcessComponents/InterestForm';
+import Review from '../../../components/applicationProcessComponents/Review';
+import AddResume from '../../../components/applicationProcessComponents/AddResume';
 
 const ApplicationForm = ({
   contact,

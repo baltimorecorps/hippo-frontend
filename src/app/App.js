@@ -25,13 +25,13 @@ import Contacts from 'pages/adminPages/adminContactsPage/Contacts.container';
 
 import CandidateOpportunitiesPage from 'pages/userPages/userOpportunitiesPage';
 import InternalOpportunitiesPage from 'pages/adminPages/adminAddOrEditOpportunitiesPage';
-import ApplicationForm from 'components/ApplicationForm';
-import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
+import ApplicationForm from 'pages/userPages/userApplicationProcessPage';
+import ConfirmationPage from 'components/applicationProcessComponents/ConfirmationPage';
 import InternalOpportunitiesBoard from 'pages/adminPages/adminOpportunitiesBoardPage';
 import StaffViewApplication from 'pages/adminPages/adminViewApplicationPage/StaffViewApplication.container';
 import PartnershipsPage from 'pages/adminPages/adminPartnershipPage';
-import EmployerPage from 'components/Employer/EmployerPage';
-import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
+import EmployerPage from 'pages/employerPages/employerPage';
+import EmployerViewApplication from 'pages/employerPages/employerViewApplicationPage';
 import FAQPage from 'pages/utilityPages/faqPage';
 import ApplicantsBoard from 'pages/adminPages/adminApplicantsBoardPage';
 import ApplicantPage from 'pages/adminPages/adminApplicantPage';
