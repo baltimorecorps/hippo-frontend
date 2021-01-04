@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-import SkillSelect from '../../Skills/SkillSelect';
+import SkillSelect from '../Skills/SkillSelect';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);

@@ -181,7 +181,7 @@ describe('AddOrEditExperienceForm', () => {
     fireEvent.click(getByText(/save/i));
 
     expect(submit.mock.calls.length).toBe(1);
-    expect(submit.mock.calls[0][0]).toHaveProperty('end_year');
+    expect(submit.mock.calls[0][0]).toHaveProperty('end_year'); 
     expect(submit.mock.calls[0][0].end_year).toBe(2019);
   });
 

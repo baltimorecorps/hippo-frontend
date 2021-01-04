@@ -2,15 +2,15 @@ import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
-import PartnershipsNavBar from '../../navbarComponents/partnershipNav/PartnershipsNavBar';
+import PartnershipsNavBar from '../../../components/navbarComponents/partnershipNav/PartnershipsNavBar';
 import Button from '@material-ui/core/Button';
 import {useHistory} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import ApplicationsCard from '../Cards/ApplicationsCard';
+import ApplicationsCard from '../../../components/adminCardComponents/ApplicationsCard';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ApplicantDetails from './ApplicantDetails';
+import ApplicantDetails from '../../../components/adminApplicantComponents/ApplicantDetails';
 import DescriptionIcon from '@material-ui/icons/Description';
-import ApplicantValueAlignment from './ApplicantValueAlignment';
+import ApplicantValueAlignment from '../../../components/adminApplicantComponents/ApplicantValueAlignment';
 
 const ApplicantPage = ({
   classes,

@@ -27,14 +27,14 @@ import CandidateOpportunitiesPage from 'pages/userPages/userOpportunitiesPage';
 import InternalOpportunitiesPage from 'pages/adminPages/adminAddOrEditOpportunitiesPage';
 import ApplicationForm from 'components/ApplicationForm';
 import ConfirmationPage from 'components/ApplicationForm/ConfirmationPage';
-import InternalOpportunitiesBoard from 'components/Internal/OpportunitiesBoard';
-import StaffViewApplication from 'components/Internal/StaffViewApplication/StaffViewApplication.container';
+import InternalOpportunitiesBoard from 'pages/adminPages/adminOpportunitiesBoardPage';
+import StaffViewApplication from 'pages/adminPages/adminViewApplicationPage/StaffViewApplication.container';
 import PartnershipsPage from 'pages/adminPages/adminPartnershipPage';
 import EmployerPage from 'components/Employer/EmployerPage';
 import EmployerViewApplication from 'components/Employer/EmployerViewApplication/';
 import FAQPage from 'pages/utilityPages/faqPage';
-import ApplicantsBoard from 'components/Internal/ApplicantsBoard';
-import ApplicantPage from 'components/Internal/ApplicantPage';
+import ApplicantsBoard from 'pages/adminPages/adminApplicantsBoardPage';
+import ApplicantPage from 'pages/adminPages/adminApplicantPage';
 import Error404Page from 'pages/utilityPages/error404Page';
 
 import MainNav from '../components/navbarComponents/mainNav'

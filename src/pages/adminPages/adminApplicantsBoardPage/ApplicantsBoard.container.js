@@ -7,7 +7,7 @@ import {
   getAllFilteredContacts,
   resetFilterCount,
 } from 'state/contacts/contacts.actions';
-import {formData} from './defaultValues';
+import {formData} from '../../../components/adminApplicantsBoardComponents/defaultValues';
 
 const mapStateToProps = state => {
   const submittedApplicants = state.contacts['filtered_submitted'] || [];
