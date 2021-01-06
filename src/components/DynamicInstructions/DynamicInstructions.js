@@ -3,8 +3,8 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-import SubmitProfileExpansion from './SubmitProfileExpansion';
-import ApplyOpportunitiesExpansion from './ApplyOpportunitiesExpansion';
+import SubmitProfileExpansion from './dynamicInstructionComponents/SubmitProfileExpansion';
+import ApplyOpportunitiesExpansion from './dynamicInstructionComponents/ApplyOpportunitiesExpansion';
 
 const DynamicInstructions = ({
   getDynamicInstructions,

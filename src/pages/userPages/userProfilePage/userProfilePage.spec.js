@@ -10,7 +10,7 @@ import {ThemeProvider} from '@material-ui/core/styles';
 import theme from '../../../styles/theme';
 import UserProfilePage from './userProfilePage';
 import {blankProfile} from '../../../components/AboutMe/others/defaultData';
-import {blankInstructions} from '../../../components/DynamicInstructions/defaultValues';
+import {blankInstructions} from '../../../components/dynamicInstructions/dynamicInstructionComponents/defaultValues';
 
 describe('ProfilePage', () => {
   const contactInfo = {
