@@ -1,3 +1,3 @@
-import EmployerViewApplication from './EmployerViewApplication.container';
+import EmployerViewApplication from './employerViewApplicationContainer';
 
 export default EmployerViewApplication;

@@ -8,7 +8,7 @@ import {
   createClickTracking,
 } from 'lib/helperFunctions/helpers';
 import DecisionsFooter from '../footerComponents/DecisionsFooter';
-import {ResumeViewer} from 'components/ResumeCreator';
+import {ResumeViewer} from 'components/resumeComponents';
 
 const AddResume = ({
   classes,

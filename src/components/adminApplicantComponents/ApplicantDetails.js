@@ -8,7 +8,7 @@ import {
   raceLabels,
   roleLabels,
   programsCompletedLabels,
-} from '../AboutMe/others/defaultData';
+} from '../aboutMeComponents/others/defaultData';
 import {getListOfAnswers} from 'lib/helperFunctions/helpers';
 
 const ApplicantDetails = ({classes, applicant}) => {

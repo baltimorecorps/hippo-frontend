@@ -1,26 +1,26 @@
+//libraries
 import React from 'react';
 import {useState, useEffect, useCallback, useRef} from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
 
+//stlyes
+import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
-import AboutMeForms from 'components/AboutMe/forms/AboutMeForms';
-
-import ExperiencesList from 'components/Experiences/ExperiencesList';
-import SkillsSection from 'components/Skills/SkillsSection';
-import CapabilityScores from 'components/CapabilityScores';
-import DynamicInstructions from '../../../components/dynamicInstructions';
-
-import HelpDrawer from 'components/SideBarDrawer/HelpDrawer';
-
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import {ResumeViewer} from 'components/ResumeCreator';
-import {blankInstructions} from '../../../components/dynamicInstructions/dynamicInstructionComponents/defaultValues';
 
+//files
+import AboutMeForms from 'components/aboutMeComponents/forms/AboutMeForms';
+import ExperiencesList from 'components/Experiences/ExperiencesList';
+import SkillsSection from 'components/userProfileComponents/skillComponents/SkillsSection';
+import CapabilityScores from 'components/userProfileComponents/capabilityScores';
+import DynamicInstructions from '../../../components/dynamicInstructions';
+import HelpDrawer from 'components/userProfileComponents/drawerComponents/experienceHelperDrawer';
+import {ResumeViewer} from 'components/resumeComponents';
+import {blankInstructions} from '../../../components/dynamicInstructions/dynamicInstructionComponents/defaultValues';
 import CAPABILITIES from '../../../assets/yml/capabilities.yml';
 
 const UserProfilePage = ({

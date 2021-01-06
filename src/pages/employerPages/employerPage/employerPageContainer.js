@@ -1,5 +1,8 @@
+//libraries
 import {connect} from 'react-redux';
-import EmployerPage from './EmployerPage';
+
+//files
+import EmployerPage from './employerPage';
 import {getOrgOpportunity} from 'state/opportunity';
 
 const mapStateToProps = (state, props) => {

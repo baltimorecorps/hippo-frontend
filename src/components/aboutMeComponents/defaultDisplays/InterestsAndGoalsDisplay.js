@@ -1,5 +1,10 @@
+//libraries
 import React from 'react';
 import PropTypes from 'prop-types';
+
+//styles
+
+//files
 import {getListOfAnswers} from '../../../lib/helperFunctions/helpers';
 import {
   Header,

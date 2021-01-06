@@ -1,27 +1,32 @@
+//libraries
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
+import {useHistory} from 'react-router-dom';
+import DateFnsUtils from '@date-io/date-fns';
+
+//styles
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import {useHistory} from 'react-router-dom';
-import DecisionsFooter from 'components/footerComponents/DecisionsFooter';
 import IconButton from '@material-ui/core/IconButton';
-import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
-import ViewFullApplication from 'components/ViewFullApplication';
-import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
-import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-import CloseIcon from '@material-ui/icons/Close';
-import {interviewScheduledValidator} from 'lib/formHelpers/formValidator';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import CloseIcon from '@material-ui/icons/Close';
+import Grid from '@material-ui/core/Grid';
+
+//files
+import DecisionsFooter from 'components/footerComponents/DecisionsFooter';
+import {createClickTracking, createAButton} from 'lib/helperFunctions/helpers';
+import ViewFullApplication from 'components/ViewFullApplication';
+import useFormUpdate from 'lib/formHelpers/useFormUpdate';
+import {interviewScheduledValidator} from 'lib/formHelpers/formValidator';
 
 const EmployerViewApplication = ({
   classes,

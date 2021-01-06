@@ -56,6 +56,6 @@ export const mapDispatchToProps = (dispatch, props) => {
   };
 };
 
-const Container = connect(mapStateToProps, mapDispatchToProps)(ResumeCreator);
+const ResumeViewer = connect(mapStateToProps, mapDispatchToProps)(ResumeCreator);
 
-export default Container;
+export default ResumeViewer;

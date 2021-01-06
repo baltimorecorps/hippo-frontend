@@ -9,7 +9,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {ThemeProvider} from '@material-ui/core/styles';
 import theme from '../../../styles/theme';
 import UserProfilePage from './userProfilePage';
-import {blankProfile} from '../../../components/AboutMe/others/defaultData';
+import {blankProfile} from '../../../components/aboutMeComponents/others/defaultData';
 import {blankInstructions} from '../../../components/dynamicInstructions/dynamicInstructionComponents/defaultValues';
 
 describe('ProfilePage', () => {

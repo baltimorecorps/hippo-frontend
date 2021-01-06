@@ -1,5 +1,8 @@
+//libraries
 import React from 'react';
 import PropTypes from 'prop-types';
+
+//styles
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,8 +11,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import SkillInfoDrawer from './SkillInfoDrawer';
-import SkillLink from './SkillLink';
+
+//files
+import SkillInfoDrawer from './skillsDrawer';
+import SkillLink from './skillLink';
 
 const HelpDrawer = ({
   helpText,

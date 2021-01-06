@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import AddIcon from '@material-ui/icons/Add';
-import SkillSelect from 'components/Skills/SkillSelect';
+import SkillSelect from 'components/userProfileComponents/skillComponents/SkillSelect';
 
 const styles = ({breakpoints, palette, spacing}) => ({
   paper: {

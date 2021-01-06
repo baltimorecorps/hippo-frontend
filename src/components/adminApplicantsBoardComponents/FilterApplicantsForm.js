@@ -1,4 +1,7 @@
+//libraries
 import React from 'react';
+
+//styles
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -11,8 +14,10 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+
+//files
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
-import SkillSelect from '../Skills/SkillSelect';
+import SkillSelect from '../userProfileComponents/skillComponents/SkillSelect';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import EmployerViewApplication from './EmployerViewApplication';
+import EmployerViewApplication from './employerViewApplication';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {

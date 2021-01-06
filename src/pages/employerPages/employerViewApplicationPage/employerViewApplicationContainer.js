@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import EmployerViewApplication from './EmployerViewApplication';
+import EmployerViewApplication from './employerViewApplication';
 import {
   getAllSubmittedApplications,
   getAllOpportunities,

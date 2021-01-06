@@ -1,3 +1,3 @@
-import EmployerPage from './EmployerPage.container';
+import EmployerPage from './employerPageContainer';
 
 export default EmployerPage;

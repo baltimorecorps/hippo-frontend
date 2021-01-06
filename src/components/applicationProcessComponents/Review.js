@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import {useHistory} from 'react-router-dom';
 import DecisionsFooter from '../footerComponents/DecisionsFooter';
-import {ResumeViewer} from 'components/ResumeCreator';
+import {ResumeViewer} from 'components/resumeComponents';
 import {
   createExternalLink,
   createClickTracking,

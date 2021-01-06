@@ -1,10 +1,14 @@
+//libraries
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
+
+//styles
 import withStyles from '@material-ui/core/styles/withStyles';
 import {useParams} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
+//files
 import RoleCards from 'components/adminCardComponents/RoleCards';
 
 const EmployerPage = ({classes, opportunity, getOrgOpportunity}) => {

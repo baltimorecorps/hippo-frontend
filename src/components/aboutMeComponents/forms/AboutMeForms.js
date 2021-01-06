@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import _get from 'lodash.get';
-import ContactInfoDisplay from '../defaultDisplays/ContactInfoDisplay';
+import ContactInfoDisplay from '../defaultDisplays/contactInfoDisplay';
 import ContactInfoForm from './ContactInfoForm';
 import InterestsAndGoalsForm from './InterestsAndGoalsForm';
 import ValueAlignmentForm from './ValueAlignmentForm';

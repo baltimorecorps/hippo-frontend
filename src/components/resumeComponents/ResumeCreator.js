@@ -6,12 +6,12 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import {DragDropContext} from 'react-beautiful-dnd';
-import ResumeSection from './ResumeSection';
-import ExperienceItem from './ExperienceItem';
-import CapabilityItem from './CapabilityItem';
-import EducationItem from './EducationItem';
-import PortfolioItem from './PortfolioItem';
-import SelectDrawer from './SelectDrawer';
+import ResumeSection from './resumeCreatorComponents/ResumeSection';
+import ExperienceItem from './resumeCreatorComponents/ExperienceItem';
+import CapabilityItem from './resumeCreatorComponents/CapabilityItem';
+import EducationItem from './resumeCreatorComponents/EducationItem';
+import PortfolioItem from './resumeCreatorComponents/PortfolioItem';
+import SelectDrawer from './resumeCreatorComponents/SelectDrawer';
 import ReactToPrint from 'react-to-print';
 
 import {sortExperiences} from '../Experiences/ExperiencesList/helpers';

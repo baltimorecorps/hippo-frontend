@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import ContactInfoDisplay from './ContactInfoDisplay';
+import ContactInfoDisplay from './contactInfoDisplay';
 import {applicantFull} from 'mockData/applicant';
 
 describe('ContactInfoDisplay', () => {
