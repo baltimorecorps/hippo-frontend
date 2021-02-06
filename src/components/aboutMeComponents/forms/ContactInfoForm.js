@@ -10,7 +10,7 @@ import MuiPhoneNumber from 'material-ui-phone-number';
 import {contactInfoValidator} from 'lib/formHelpers/formValidator';
 import useFormUpdate from 'lib/formHelpers/useFormUpdate';
 
-import {states, countryList} from '../others/defaultData';
+import {states, countryList} from '../../../lib/formHelpers/defaultData';
 import {getCheckboxOptions} from '../../../lib/helperFunctions/helpers';
 
 import {
@@ -19,7 +19,7 @@ import {
   raceLabels,
   hearAboutUsOptions,
   blankProfile,
-} from '../others/defaultData';
+} from '../../../lib/formHelpers/defaultData';
 
 import get from 'lodash.get';
 

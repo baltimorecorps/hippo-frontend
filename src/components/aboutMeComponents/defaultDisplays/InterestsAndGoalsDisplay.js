@@ -11,7 +11,9 @@ import {
   QuestionWithOneAnswer,
   QuestionWithMultipleAnswers,
 } from './QuestionAnswerDisplayTemplates.js';
-import {roleLabels, programsCompletedLabels} from '../others/defaultData';
+import {roleLabels, programsCompletedLabels} from '../../../lib/formHelpers/defaultData';
+
+
 
 const InterestsAndGoalsDisplay = ({contact, onClickEdit, classes}) => {
   if (!contact.profile) {

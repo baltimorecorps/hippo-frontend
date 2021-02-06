@@ -1,4 +1,4 @@
-import {monthFullNames} from 'lib/formHelpers/staticData.js';
+import {monthFullNames} from 'lib/formHelpers/defaultData.js';
 
 // Validate add new experience form (Work/Education/Accomplishment)
 const experienceValidator = values => {

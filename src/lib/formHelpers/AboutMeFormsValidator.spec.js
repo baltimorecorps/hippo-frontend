@@ -7,7 +7,7 @@ import {
   valueAlignmentValidator,
 } from './formValidator';
 
-import {blankProfile} from '../../components/aboutMeComponents/others/defaultData';
+import {blankProfile} from './defaultData';
 
 afterEach(cleanup);
 

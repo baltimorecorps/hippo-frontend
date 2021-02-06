@@ -13,7 +13,7 @@ import {
   yearsOfExperience,
   roleLabels,
   programsCompletedLabels,
-} from '../others/defaultData';
+} from '../../../lib/formHelpers/defaultData';
 
 import {
   FormHeader,
