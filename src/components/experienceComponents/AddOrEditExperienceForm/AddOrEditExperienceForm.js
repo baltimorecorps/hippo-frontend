@@ -16,7 +16,7 @@ import SelectorForm from './SelectorForm';
 import DegreeDropdown from './DegreeDropdown';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import {experienceValidator} from 'lib/formHelpers/formValidator';
-import {configureForm} from 'components/Experiences/ExperiencesList/helpers';
+import {configureForm} from 'components/experienceComponents/ExperiencesList/helpers';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -27,7 +27,7 @@ import SkillSelect from 'components/userProfileComponents/skillComponents/SkillS
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 
-import DeleteExperience from 'components/Experiences/ExperiencesList/DeleteExperience';
+import DeleteExperience from 'components/experienceComponents/ExperiencesList/DeleteExperience';
 
 const useForm = (initialValues, onSubmit) => {
   const [update, values] = useFormUpdate(initialValues);

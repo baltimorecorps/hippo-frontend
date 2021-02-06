@@ -10,7 +10,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import AddIcon from '@material-ui/icons/Add';
 
-import AddOrEditExperienceForm from 'components/Experiences/AddOrEditExperienceForm';
+import AddOrEditExperienceForm from '../AddOrEditExperienceForm';
 import ExperiencesListItem from './ExperiencesListItem';
 
 import Link from '@material-ui/core/Link';

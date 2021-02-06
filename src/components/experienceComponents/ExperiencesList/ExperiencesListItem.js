@@ -7,9 +7,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import AchievementsList from 'components/Experiences/Achievements/AchievementsList';
+import AchievementsList from 'components/experienceComponents/AchievementsList';
 import SkillsList from 'components/userProfileComponents/skillComponents/SkillsList';
-import AddOrEditExperienceForm from 'components/Experiences/AddOrEditExperienceForm';
+import AddOrEditExperienceForm from '../AddOrEditExperienceForm';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Button from '@material-ui/core/Button';
@@ -131,6 +131,7 @@ export const DisplayExperience = ({
               onSelect={onSelectAchievement}
               selected={selectedAchievements}
             />
+           
           )
         : null}
 

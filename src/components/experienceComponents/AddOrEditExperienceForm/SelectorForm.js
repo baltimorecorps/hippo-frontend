@@ -9,7 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-import {monthFullNames, years, USAStates} from './staticData';
+import {monthFullNames, years, USAStates} from '../../../lib/formHelpers/staticData.js';
 
 const SelectorForm = ({
   label,

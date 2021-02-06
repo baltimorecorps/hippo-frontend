@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import {DisplayExperience} from 'components/Experiences/ExperiencesList/ExperiencesListItem';
+import {DisplayExperience} from 'components/experienceComponents/ExperiencesList/ExperiencesListItem';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 
 const drawerWidth = 400;

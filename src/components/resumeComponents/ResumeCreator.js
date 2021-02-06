@@ -14,7 +14,7 @@ import PortfolioItem from './resumeCreatorComponents/PortfolioItem';
 import SelectDrawer from './resumeCreatorComponents/SelectDrawer';
 import ReactToPrint from 'react-to-print';
 
-import {sortExperiences} from '../Experiences/ExperiencesList/helpers';
+import {sortExperiences} from '../experienceComponents/ExperiencesList/helpers';
 
 const drawerWidth = 400;
 const headerHeight = 100;

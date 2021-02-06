@@ -14,7 +14,7 @@ import Switch from '@material-ui/core/Switch';
 
 //files
 import AboutMeForms from 'components/aboutMeComponents/forms/AboutMeForms';
-import ExperiencesList from 'components/Experiences/ExperiencesList';
+import ExperiencesList from 'components/experienceComponents/ExperiencesList';
 import SkillsSection from 'components/userProfileComponents/skillComponents/SkillsSection';
 import CapabilityScores from 'components/userProfileComponents/capabilityScores';
 import DynamicInstructions from '../../../components/dynamicInstructions';
