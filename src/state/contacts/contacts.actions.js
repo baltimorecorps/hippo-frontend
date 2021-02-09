@@ -2,7 +2,7 @@ import {fetchActionTypes} from 'redux-fetch-wrapper';
 
 import {makeApiFetchActions} from 'lib/helperFunctions/helpers';
 import {makeAuthFetchActions} from 'lib/Auth0/auth0';
-import {formData} from '../../components/Internal/ApplicantsBoard/defaultValues';
+import {formData} from '../../components/adminApplicantsBoardComponents/defaultValues';
 import {API_URL} from 'app/constants';
 
 

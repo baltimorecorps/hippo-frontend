@@ -19,7 +19,7 @@ import {
   refreshExperienceType,
 } from './profile';
 
-import {GET_CONTACT_CAPABILITIES_API} from './contacts';
+import {GET_CONTACT_CAPABILITIES_API} from './contacts/contacts.actions';
 
 afterEach(() => {
   fetchMock.restore();
