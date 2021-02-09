@@ -53,6 +53,8 @@ const NavBarIcons = ({logout, classes}) => {
     </p>
   );
 
+  
+
   const dropdownMenuInfo = {
     notifications: {
       menuHeader: 'Notifications',

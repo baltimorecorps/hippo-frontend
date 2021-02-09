@@ -58,7 +58,7 @@ export const makeApiFetchActions = (
     )(dispatch);
 
     // 404 500 503 => Alert the error
-    if (result.statusCode >= 400) {
+    if (result.statusCode >= 405) {
       console.error('Fetch Error', result);
       const {type, statusCode, error} = result;
       if (type !== 'GET_SESSION_REJECT') {
