@@ -17,10 +17,10 @@ import AboutMeForms from 'components/aboutMeComponents/forms/AboutMeForms';
 import ExperiencesList from 'components/experienceComponents/ExperiencesList';
 import SkillsSection from 'components/userProfileComponents/skillComponents/SkillsSection';
 import CapabilityScores from 'components/userProfileComponents/capabilityScores';
-import DynamicInstructions from '../../../components/dynamicInstructions';
+import DynamicInstructions from '../../../components/DynamicInstructions';
 import HelpDrawer from 'components/userProfileComponents/drawerComponents/experienceHelperDrawer';
 import {ResumeViewer} from 'components/resumeComponents';
-import {blankInstructions} from '../../../components/dynamicInstructions/dynamicInstructionComponents/defaultValues';
+import {blankInstructions} from '../../../components/DynamicInstructions/dynamicInstructionComponents/defaultValues';
 import CAPABILITIES from '../../../assets/yml/capabilities.yml';
 
 const UserProfilePage = ({
