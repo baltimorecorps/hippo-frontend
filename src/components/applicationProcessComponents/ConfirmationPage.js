@@ -57,6 +57,9 @@ const ConfirmationPage = ({classes}) => {
         status of this application. In the meantime feel free to reach out to us
         with any questions at
         <span className={classes.email}> partnerships@baltimorecorps.org</span>
+
+
+
       </Typography>
       <div className={classes.buttonContainer}>
         <Button

@@ -17,7 +17,7 @@
     "@material-ui/lab": "^4.0.0-alpha.49",
     "@material-ui/pickers": "^3.2.10",
     "airbnb-prop-types": "^2.15.0",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel-plugin-rewire": "^1.2.0",
     "cypress": "^3.8.3",
     "date-fns": "^2.14.0",
@@ -109,7 +109,7 @@
     "eslint-plugin-react": "^7.20.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "prettier": "^1.19.1",
     "react-app-rewire-yaml": "^1.1.0",
     "react-app-rewired": "^2.1.6"

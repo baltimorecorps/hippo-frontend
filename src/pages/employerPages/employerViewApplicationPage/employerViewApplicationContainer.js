@@ -7,7 +7,7 @@ import {
   employerInterviewApplication,
   employerNotAFitApplication,
   employerFinalistsApplication,
-} from 'state/opportunity';
+} from 'state/opportunity'; 
 
 const mapStateToProps = (state, props) => {
   let {opportunityId, contactId} = props.match.params;
