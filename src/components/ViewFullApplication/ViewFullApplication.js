@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import {ResumeViewer} from 'components/ResumeCreator';
+import {ResumeViewer} from 'components/resumeComponents';
 import {createExternalLink} from 'lib/helperFunctions/helpers';
 
 const ViewFullApplication = ({

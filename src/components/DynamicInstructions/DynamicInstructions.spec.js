@@ -1,7 +1,7 @@
 import React from 'react';
 import {render, cleanup, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import {blankInstructions} from './defaultValues';
+import {blankInstructions} from './dynamicInstructionComponents/defaultValues';
 import DynamicInstructions from './DynamicInstructions';
 
 beforeEach(() => {
