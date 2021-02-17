@@ -36,11 +36,16 @@ const NavBarIcons = ({logout, classes}) => {
     'https://www.tfaforms.com/4602493',
     classes.helpLink
   );
+  const scheduleConsultation = createExternalLink(
+    'Schedule Consultation',
+    'https://calendly.com/bc-partnership2/candidate-consultation-place-for-purpose',
+    classes.helpLink
+  );
 
   const BetaMessage = (
     <p className={classes.betaMessage}>
       <span>
-        ** This website is currently in beta. There will be updates to the look
+        ** This website is currently in beta. <br/>For optimized performance, please use the Google Chrome Browser.<br/> There will be updates to the look
         and feel and you may experience some bugs as we introduce new
         features.**
       </span>
@@ -77,6 +82,7 @@ const NavBarIcons = ({logout, classes}) => {
           function: toFAQPage,
         },
         {name: askQuestionLink},
+        {name: scheduleConsultation},
       ],
     },
   };
