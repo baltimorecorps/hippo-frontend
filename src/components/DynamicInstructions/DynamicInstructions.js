@@ -45,7 +45,9 @@ const DynamicInstructions = ({
         expandPanel={expandPanel}
         setExpandPanel={setExpandPanel}
       />
-      <ApplyOpportunitiesExpansion
+      <ApplyOpportunitiesExpansion 
+        status={status}
+        className={classes.applyExpansion}
         isExpanded={status !== undefined ? status === 'approved' : false}
       />
     </Paper>
