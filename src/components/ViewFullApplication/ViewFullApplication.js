@@ -105,7 +105,7 @@ const ViewFullApplication = ({
         />
       )}
     </React.Fragment>
-  );
+  ); 
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({

@@ -81,7 +81,7 @@ const ApplyOpportunitiesExpansion = ({isExpanded, classes,status}) => {
           video before applying.
         </Typography>
         <div className={classes.videoWrapper}>
-        <iframe className={classes.video} src="https://www.youtube.com/embed/Fh5A5ksXk5Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe title="Place for Purpose How to Apply for Jobs" className={classes.video} src="https://www.youtube.com/embed/Fh5A5ksXk5Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
        
 
