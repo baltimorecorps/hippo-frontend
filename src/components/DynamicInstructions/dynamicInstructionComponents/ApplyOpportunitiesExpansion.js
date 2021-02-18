@@ -10,8 +10,16 @@ import CallSharpIcon from '@material-ui/icons/CallSharp';
 import TodaySharpIcon from '@material-ui/icons/TodaySharp';
 import AssistantPhotoSharpIcon from '@material-ui/icons/AssistantPhotoSharp';
 import YouTubeIcon from '@material-ui/icons/YouTube';
+import Button from '@material-ui/core/Button';
+import {useHistory} from 'react-router-dom';
 
-const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
+
+const ApplyOpportunitiesExpansion = ({isExpanded, classes,status}) => {
+  let history = useHistory();
+
+  const applyForRoles = () => {
+    history.push(`/opportunities/`);
+  };
   return (
     <ExpansionPanel
       defaultExpanded={isExpanded}
@@ -38,7 +46,7 @@ const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
           component="p"
           className={classes.stepDetails}
         >
-          As a member of Place for Purpose, you will be given a free-15-minute
+          As a member of Place for Purpose, you will be given a free
           job consultation with our Talent Consultant. This is an invaluable
           opportunity for our team to learn more about your interest and
           experiences to provide targeted job and program recommendations and
@@ -48,11 +56,20 @@ const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
           jobs in the portal prior to the consultation as long as you view the
           required Place for Purpose “How to Apply” Video.
         </Typography>
+        <Button
+            variant="contained"
+            href={"https://calendly.com/bc-partnership2/candidate-consultation-place-for-purpose"}
+            target="_blank"
+            className={classes.submitButton2}
+          >
+            Schedule your Consultation
+          </Button>
+
         <Typography variant="body1" component="h4" className={classes.steps}>
           <YouTubeIcon className={classes.stepIcon} />
           Place for Purpose “How to Apply” Video
         </Typography>
-        <Typography
+         <Typography
           variant="body1"
           component="p"
           className={classes.stepDetails}
@@ -63,6 +80,10 @@ const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
           the portal. All members of Place for Purpose will need to watch this
           video before applying.
         </Typography>
+        <div className={classes.videoWrapper}>
+        <iframe title="Place for Purpose How to Apply for Jobs" className={classes.video} src="https://www.youtube.com/embed/Fh5A5ksXk5Y" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+       
 
         <Typography variant="body1" component="h4" className={classes.steps}>
           <WorkSharpIcon className={classes.stepIcon} /> Apply for Opportunities
@@ -78,6 +99,15 @@ const ApplyOpportunitiesExpansion = ({isExpanded, classes}) => {
           sure you have added all experience and skills to make your application
           competitive.
         </Typography>
+        {status === 'approved' ? (
+          <Button
+            variant="contained"
+            onClick={applyForRoles}
+            className={classes.submitButton2}
+            data-testid="apply-roles-button-2"
+          >
+            Start applying for roles
+          </Button>) : ("") }
 
         <Typography variant="body1" component="h4" className={classes.steps}>
           <TodaySharpIcon className={classes.stepIcon} /> Employer Schedule an
@@ -191,6 +221,31 @@ const styles = ({breakpoints, palette, spacing}) => ({
   submitButton: {
     alignSelf: 'center',
   },
+  videoWrapper:{
+    position: 'relative',
+    paddingBottom: '56.25%', /* 16:9 */
+    height: '0',
+    marginBottom:'17px'
+
+  },
+  video: {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: '100%',
+    height: '100%'
+  },
+  submitButton2: {
+    marginTop: '8px',
+    marginBottom:'17px',
+    fontSize: '16px',
+    alignSelf: 'center',
+    padding: '7px 20px',
+    backgroundColor: '#2858eb',
+    color: '#ffffff',
+    '&:hover': {
+      backgroundColor: '#1846d9',
+    },}
 });
 
 export default withStyles(styles)(ApplyOpportunitiesExpansion);
