@@ -36,6 +36,7 @@ import FAQPage from 'pages/utilityPages/faqPage';
 import ApplicantsBoard from 'pages/adminPages/adminApplicantsBoardPage';
 import ApplicantPage from 'pages/adminPages/adminApplicantPage';
 import Error404Page from 'pages/utilityPages/error404Page';
+import LandingPage from 'pages/utilityPages/homePage/landingPage';
 
 import MainNav from '../components/navbarComponents/mainNav'
 
@@ -217,7 +218,9 @@ const App = ({
                 path="/org/opportunity/:opportunityId/"
                 component={EmployerPage}
               />
+              <Route path="/landing" component={LandingPage} />
               <Route path="*" component={Error404Page} />
+              
             </Switch>
             <MainFooter />
           </div>
