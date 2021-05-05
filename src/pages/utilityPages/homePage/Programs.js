@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import ProgramCard from './ProgramCard'
 
 function Programs() {
     return (
@@ -13,21 +14,13 @@ function Programs() {
 
             <Grid container justify="center">
                 <Grid item xs={9} md={3}>
-                    <Typography color="inherit" align="center" gutterbottom>
-                        1
-                    </Typography>
+                    <ProgramCard />
                 </Grid>
-
                 <Grid item xs={9} md={3}>
-                    <Typography color="inherit" align="center" gutterbottom>
-                        2
-                    </Typography>
+                    <ProgramCard />
                 </Grid>
-
                 <Grid item xs={9} md={3}>
-                    <Typography color="inherit" align="center" gutterbottom>
-                        3
-                    </Typography>
+                    <ProgramCard />
                 </Grid>
             </Grid>
         </Box>
