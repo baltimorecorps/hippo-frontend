@@ -60,6 +60,7 @@ const LandingPage = ({hasSession, classes}) => {
                 /> */}
 
                 <CardContent className={classes.cardContent}>
+                  {/* <h2>PLACE FOR PURPOSE</h2> */}
                   {/* PLACE FOR PURPOSE */}
                   <Typography
                     gutterBottom
@@ -84,9 +85,10 @@ const LandingPage = ({hasSession, classes}) => {
                   {/* DESCRIPTION */}
                   <Typography
                     gutterBottom
-                    variant="body1"
+                    variant="body2"
                     component="p"
                     align="left"
+                    color='textSecondary'
                   >
                     {description}
                   </Typography>
@@ -142,6 +144,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
     },
   },
   cardContainer: {
+    // display: 'flex',
+    // alignItems: 'center',
+    // outline: '5px solid red',
+
     [breakpoints.down('xs')]: {
       padding: '0px',
     },
