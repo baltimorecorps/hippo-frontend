@@ -20,7 +20,7 @@ function Hero() {
                     Create an account or log in to create a Baltimore Corps community profile. Get access to job opportunities and development opportunities in the Baltimore Corps network.
                 </Typography>
 
-                <Box align="center">
+                <Box align="center" mt={2}>
                     <Button
                         variant="contained"
                         color="primary"
