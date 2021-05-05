@@ -6,18 +6,18 @@ import Box from '@material-ui/core/Box'
 
 function Hero() {
     return (
-        <Grid container>
-            <Grid item>
-                <Typography color="inherit" align="center" variant="h2">
+        <Grid container justify="center">
+            <Grid item xs={10} sm={10} md={8} lg={6} xl={4}>
+                <Typography color="inherit" align="center" gutterBottom variant="h2" component="h2">
                     PLACE FOR PURPOSE
                 </Typography>
 
-                <Typography color="inherit" align="center" variant="h5">
+                <Typography color="inherit" align="center" gutterBottom variant="body1" component="p">
                     is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
                 </Typography>
 
-                <Typography color="inherit" align="center" variant="h5">
-                Create an account or log in to create a Baltimore Corps community profile. Get access to job opportunities and development opportunities in the Baltimore Corps network.
+                <Typography color="inherit" align="center" gutterBottom variant="body2" component="p">
+                    Create an account or log in to create a Baltimore Corps community profile. Get access to job opportunities and development opportunities in the Baltimore Corps network.
                 </Typography>
 
                 <Box align="center">
