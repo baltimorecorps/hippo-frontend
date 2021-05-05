@@ -2,6 +2,7 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
 
 function Hero() {
     return (
@@ -19,14 +20,16 @@ function Hero() {
                 Create an account or log in to create a Baltimore Corps community profile. Get access to job opportunities and development opportunities in the Baltimore Corps network.
                 </Typography>
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    // onClick={onClickLogInHandler}
-                    >
-                    Log in / Sign up
-                </Button>
+                <Box align="center">
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        // onClick={onClickLogInHandler}
+                        >
+                        Log in / Sign up
+                    </Button>
+                </Box>
             </Grid>
         </Grid>
     )
