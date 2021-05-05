@@ -34,14 +34,14 @@ const LandingPage = ({hasSession, classes}) => {
   return (
     <Grid container justify="center">
       <Grid item xs={12} align="center">
-        <Typography
+        {/* <Typography
           gutterBottom
           variant="h5"
           component="h1"
           className={classes.pageHeader}
         >
           Baltimore Corps Talent Matching
-        </Typography>
+        </Typography> */}
 
         <Grid
           container
@@ -50,14 +50,17 @@ const LandingPage = ({hasSession, classes}) => {
           className={classes.cardContainer}
         >
           {LandingPage.cardDetails.map(({header, description, service, imageName, url}) => (
-            <Grid item key={header} xs={12} sm={8} md={5}>
+            // xs=0 sm=600 ms=960
+            <Grid item key={header} xs={12} sm={10} md={9}>
               <Card className={classes.card}>
                 {/* <CardMedia
                   component="img"
                   height="140"
                   image={`/logos/temp_long.png`}
                 /> */}
+
                 <CardContent className={classes.cardContent}>
+                  {/* PLACE FOR PURPOSE */}
                   <Typography
                     gutterBottom
                     variant="h1"
@@ -67,6 +70,7 @@ const LandingPage = ({hasSession, classes}) => {
                     {header}
                   </Typography>
 
+                  {/* SERVICE */}
                   <Typography
                     gutterBottom
                     variant="body1"
@@ -76,6 +80,7 @@ const LandingPage = ({hasSession, classes}) => {
                     {service}
                   </Typography>
 
+                  {/* DESCRIPTION */}
                   <Typography
                     gutterBottom
                     variant="body1"
@@ -87,6 +92,7 @@ const LandingPage = ({hasSession, classes}) => {
                 </CardContent>
 
                 <CardActions className={classes.cardActions}>
+                  {/* BUTTON */}
                   <Button
                     variant="contained"
                     color="primary"
