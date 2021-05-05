@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
+// import {Redirect} from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import Grid from '@material-ui/core/Grid';
@@ -42,29 +42,40 @@ const LandingPage = ({hasSession, classes}) => {
         >
           Baltimore Corps Talent Matching
         </Typography>
+
         <Grid
           container
           justify="center"
           // spacing={2}
           className={classes.cardContainer}
         >
-          {LandingPage.cardDetails.map(({header, description, imageName, url}) => (
+          {LandingPage.cardDetails.map(({header, description, service, imageName, url}) => (
             <Grid item key={header} xs={12} sm={8} md={5}>
               <Card className={classes.card}>
-                <CardMedia
+                {/* <CardMedia
                   component="img"
                   height="140"
                   image={`/logos/temp_long.png`}
-                />
+                /> */}
                 <CardContent className={classes.cardContent}>
                   <Typography
                     gutterBottom
-                    variant="h6"
+                    variant="h1"
                     component="h2"
                     className={classes.cardContentHeader}
                   >
                     {header}
                   </Typography>
+
+                  <Typography
+                    gutterBottom
+                    variant="body1"
+                    component="p"
+                    align="left"
+                  >
+                    {service}
+                  </Typography>
+
                   <Typography
                     gutterBottom
                     variant="body1"
@@ -74,6 +85,7 @@ const LandingPage = ({hasSession, classes}) => {
                     {description}
                   </Typography>
                 </CardContent>
+
                 <CardActions className={classes.cardActions}>
                   <Button
                     variant="contained"
@@ -87,6 +99,7 @@ const LandingPage = ({hasSession, classes}) => {
             </Grid>
           ))}
         </Grid>
+        
       </Grid>
     </Grid>
   );
@@ -94,9 +107,10 @@ const LandingPage = ({hasSession, classes}) => {
 
 LandingPage.cardDetails = [
   {
-    header: 'Sign Up or Log In',
+    header: 'PLACE FOR PURPOSE',
     description:
       'Create an account or log in to create a Baltimore Corps community profile.\nGet access to job opportunities and development opportunities in the Baltimore Corps network',
+    service: 'is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.',
     imageName: 'talent',
   },
 ];
@@ -139,7 +153,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: '0px 10px',
   },
   cardContentHeader: {
-    fontSize: '23px',
+    fontSize: 'calc(1.5rem + 1vw)',
     margin: '10px',
 
     [breakpoints.down('xs')]: {
