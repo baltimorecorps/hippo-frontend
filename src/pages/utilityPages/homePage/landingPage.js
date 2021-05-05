@@ -8,6 +8,7 @@ import LandingHero from './LandingHero'
 import Hero from './Hero'
 import Applying from './Applying'
 import Programs from './Programs'
+import Offerings from './Offerings'
 
 // import Grid from '@material-ui/core/Grid';
 // import Card from '@material-ui/core/Card';
@@ -41,6 +42,7 @@ const LandingPage = ({hasSession, classes}) => {
       <Hero />
       <Applying />
       <Programs />
+      <Offerings />
     </>
     // <LandingHero />
 
