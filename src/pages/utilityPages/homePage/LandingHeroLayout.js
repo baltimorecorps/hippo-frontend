@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 // import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -49,21 +49,22 @@ const styles = (theme) => ({
   },
 });
 
-function ProductHeroLayout(props) {
+function LandingHeroLayout(props) {
   const { backgroundClassName, children, classes } = props;
 
   return (
     <section className={classes.root}>
       <Container className={classes.container}>
         <img
-          src="/static/themes/onepirate/productHeroWonder.png"
+        src='https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80'
+        //   src="/static/themes/onepirate/productHeroWonder.png"
           alt="wonder"
           width="147"
           height="80"
         />
         {children}
         <div className={classes.backdrop} />
-        <div className={classes.background, backgroundClassName} />
+        <div className={classes.background && backgroundClassName} />
         <img
           className={classes.arrowDown}
           src="/static/themes/onepirate/productHeroArrowDown.png"
@@ -76,10 +77,10 @@ function ProductHeroLayout(props) {
   );
 }
 
-ProductHeroLayout.propTypes = {
-  backgroundClassName: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  classes: PropTypes.object.isRequired,
-};
+// ProductHeroLayout.propTypes = {
+//   backgroundClassName: PropTypes.string.isRequired,
+//   children: PropTypes.node.isRequired,
+//   classes: PropTypes.object.isRequired,
+// };
 
-export default withStyles(styles)(ProductHeroLayout);
+export default withStyles(styles)(LandingHeroLayout);

@@ -1,12 +1,15 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '../components/Button';
-import Typography from '../components/Typography';
+// import Button from '../components/Button';
+import Button from '@material-ui/core/Button'
+// import Typography from '../components/Typography';
+import Typography from '@material-ui/core/Typography'
 import LandingHeroLayout from './LandingHeroLayout';
+import backgroundImage from '../../../assets/images/pool.jpg'
 
-const backgroundImage =
-  'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
+// const backgroundImage =
+//   'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
 
 const styles = (theme) => ({
   background: {
@@ -29,7 +32,7 @@ const styles = (theme) => ({
   },
 });
 
-function ProductHero(props) {
+function LandingHero(props) {
   const { classes } = props;
 
   return (
@@ -63,4 +66,4 @@ function ProductHero(props) {
 //   classes: PropTypes.object.isRequired,
 // };
 
-export default withStyles(styles)(ProductHero);
+export default withStyles(styles)(LandingHero);

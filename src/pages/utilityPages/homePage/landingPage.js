@@ -4,6 +4,9 @@ import {connect} from 'react-redux';
 // import {Redirect} from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 
+import LandingHero from './LandingHero'
+import Hero from './Hero'
+
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -32,85 +35,88 @@ const LandingPage = ({hasSession, classes}) => {
   };
 
   return (
-    <Grid container justify="center">
-      <Grid item xs={12} align="center">
-        {/* <Typography
-          gutterBottom
-          variant="h5"
-          component="h1"
-          className={classes.pageHeader}
-        >
-          Baltimore Corps Talent Matching
-        </Typography> */}
+    <Hero />
+    // <LandingHero />
 
-        <Grid
-          container
-          justify="center"
-          // spacing={2}
-          className={classes.cardContainer}
-        >
-          {LandingPage.cardDetails.map(({header, description, service, imageName, url}) => (
-            // xs=0 sm=600 ms=960
-            <Grid item key={header} xs={12} sm={10} md={9}>
-              <Card className={classes.card}>
-                {/* <CardMedia
-                  component="img"
-                  height="140"
-                  image={`/logos/temp_long.png`}
-                /> */}
+    // <Grid container justify="center">
+    //   <Grid item xs={12} align="center">
+    //     {/* <Typography
+    //       gutterBottom
+    //       variant="h5"
+    //       component="h1"
+    //       className={classes.pageHeader}
+    //     >
+    //       Baltimore Corps Talent Matching
+    //     </Typography> */}
 
-                <CardContent className={classes.cardContent}>
-                  {/* <h2>PLACE FOR PURPOSE</h2> */}
-                  {/* PLACE FOR PURPOSE */}
-                  <Typography
-                    gutterBottom
-                    variant="h1"
-                    component="h2"
-                    className={classes.cardContentHeader}
-                    // className={classes.pageHeader}
-                  >
-                    {header}
-                  </Typography>
+    //     <Grid
+    //       container
+    //       justify="center"
+    //       // spacing={2}
+    //       className={classes.cardContainer}
+    //     >
+    //       {LandingPage.cardDetails.map(({header, description, service, imageName, url}) => (
+    //         // xs=0 sm=600 ms=960
+    //         <Grid item key={header} xs={12} sm={10} md={9}>
+    //           <Card className={classes.card}>
+    //             {/* <CardMedia
+    //               component="img"
+    //               height="140"
+    //               image={`/logos/temp_long.png`}
+    //             /> */}
 
-                  {/* SERVICE */}
-                  <Typography
-                    gutterBottom
-                    variant="body1"
-                    component="p"
-                    align="left"
-                  >
-                    {service}
-                  </Typography>
+    //             <CardContent className={classes.cardContent}>
+    //               {/* <h2>PLACE FOR PURPOSE</h2> */}
+    //               {/* PLACE FOR PURPOSE */}
+    //               <Typography
+    //                 gutterBottom
+    //                 variant="h1"
+    //                 component="h2"
+    //                 className={classes.cardContentHeader}
+    //                 // className={classes.pageHeader}
+    //               >
+    //                 {header}
+    //               </Typography>
 
-                  {/* DESCRIPTION */}
-                  <Typography
-                    gutterBottom
-                    variant="body2"
-                    component="p"
-                    align="left"
-                    color='textSecondary'
-                  >
-                    {description}
-                  </Typography>
-                </CardContent>
+    //               {/* SERVICE */}
+    //               <Typography
+    //                 gutterBottom
+    //                 variant="body1"
+    //                 component="p"
+    //                 align="left"
+    //               >
+    //                 {service}
+    //               </Typography>
 
-                <CardActions className={classes.cardActions}>
-                  {/* BUTTON */}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={onClickLogInHandler}
-                  >
-                    Log in / Sign up
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+    //               {/* DESCRIPTION */}
+    //               <Typography
+    //                 gutterBottom
+    //                 variant="body2"
+    //                 component="p"
+    //                 align="left"
+    //                 color='textSecondary'
+    //               >
+    //                 {description}
+    //               </Typography>
+    //             </CardContent>
+
+    //             <CardActions className={classes.cardActions}>
+    //               {/* BUTTON */}
+    //               <Button
+    //                 variant="contained"
+    //                 color="primary"
+    //                 onClick={onClickLogInHandler}
+    //               >
+    //                 Log in / Sign up
+    //               </Button>
+    //             </CardActions>
+    //           </Card>
+    //         </Grid>
+    //       ))}
+    //     </Grid>
         
-      </Grid>
-    </Grid>
+    //   </Grid>
+    // </Grid>
   );
 };
 
