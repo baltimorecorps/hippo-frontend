@@ -3,7 +3,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
-import ProductHeroLayout from './ProductHeroLayout';
+import LandingHeroLayout from './LandingHeroLayout';
 
 const backgroundImage =
   'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
@@ -33,7 +33,7 @@ function ProductHero(props) {
   const { classes } = props;
 
   return (
-    <ProductHeroLayout backgroundClassName={classes.background}>
+    <LandingHeroLayout backgroundClassName={classes.background}>
       {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
       <Typography color="inherit" align="center" variant="h2" marked="center">
@@ -55,7 +55,7 @@ function ProductHero(props) {
       <Typography variant="body2" color="inherit" className={classes.more}>
         Discover the experience
       </Typography>
-    </ProductHeroLayout>
+    </LandingHeroLayout>
   );
 }
 
