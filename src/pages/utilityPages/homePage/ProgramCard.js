@@ -25,7 +25,7 @@ export default function ProgramCard() {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="https://i.stack.imgur.com/dnWAb.png"
+          image="/images/programs/fellowship.jpg"
           title="Contemplative Reptile"
         />
         <CardContent>

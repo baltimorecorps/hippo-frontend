@@ -18,31 +18,27 @@ import Offerings from './Offerings'
 // import Button from '@material-ui/core/Button';
 // import Typography from '@material-ui/core/Typography';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
+import Grid from '@material-ui/core/Grid';
 
-import {useAuth0} from 'lib/Auth0/auth0';
+import ProcessCarousel from 'components/homeComponents/processCarousel.js';
+import ProgramDescriptions from 'components/homeComponents/programDescriptions';
+
+
+
+
 
 const LandingPage = ({hasSession, classes}) => {
-  const {isAuthenticated, loginWithRedirect} = useAuth0();
-
-//   if (hasSession || isAuthenticated) {
-//     return <Redirect to="/profile" />;
-//   }
-
-  const onClickLogInHandler = () => {
-    createClickTracking(
-      'Home Page, Log In/Sign Up Box',
-      'Click Log In/Sign Up',
-      'Click Log In/Sign Up Button'
-    );
-    loginWithRedirect({});
-  };
-
   return (
     <>
       <Hero />
       <Applying />
       <Programs />
       <Offerings />
+
+      <Grid container justify="center" align="center">
+        <ProcessCarousel/>
+        <ProgramDescriptions/>
+      </Grid>
     </>
     // <LandingHero />
 
@@ -137,10 +133,18 @@ LandingPage.cardDetails = [
     imageName: 'talent',
   },
 ];
+//     <Grid container justify="center" align="center">
+//       <ProcessCarousel/>
+//       <ProgramDescriptions/>
+//     </Grid>
+//   )
+// };
+
+
 
 LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  hasSession: PropTypes.bool.isRequired,
+  // hasSession: PropTypes.bool.isRequired,
 };
 
 const styles = ({breakpoints, palette, spacing}) => ({
@@ -169,6 +173,10 @@ const styles = ({breakpoints, palette, spacing}) => ({
   card: {
     padding: '20px 16px',
     fontSize: '25px',
+    maxWidth: '345',
+    minHeight: '450',
+    // height: '30vh',
+    
 
     [breakpoints.down('xs')]: {
       margin: '10px',
@@ -178,6 +186,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
   },
   cardContent: {
     padding: '0px 10px',
+    height:'350px'
   },
   cardContentHeader: {
     // fontSize: 'calc(1.5rem + 1vw)',
@@ -193,6 +202,11 @@ const styles = ({breakpoints, palette, spacing}) => ({
       fontSize: '35px',
     },
   },
+  cardContentMedia:{
+    width:'40%',
+    height:'30%',
+    minHeight:'150px'
+  },
   cardActions: {
     display: 'flex',
     justifyContent: 'center',
@@ -201,7 +215,7 @@ const styles = ({breakpoints, palette, spacing}) => ({
 
 export const mapStateToProps = state => {
   return {
-    hasSession: state.auth.has_session || false,
+    // hasSession: state.auth.has_session || false,
   };
 };
 
