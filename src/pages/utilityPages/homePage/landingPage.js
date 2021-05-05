@@ -66,6 +66,7 @@ const LandingPage = ({hasSession, classes}) => {
                     variant="h1"
                     component="h2"
                     className={classes.cardContentHeader}
+                    // className={classes.pageHeader}
                   >
                     {header}
                   </Typography>
@@ -159,12 +160,17 @@ const styles = ({breakpoints, palette, spacing}) => ({
     padding: '0px 10px',
   },
   cardContentHeader: {
-    fontSize: 'calc(1.5rem + 1vw)',
+    // fontSize: 'calc(1.5rem + 1vw)',
+    fontSize: '55px',
     margin: '10px',
 
+    [breakpoints.down('sm')]: {
+      margin: '5px',
+      fontSize: '40px',
+    },
     [breakpoints.down('xs')]: {
       margin: '5px',
-      fontSize: '20px',
+      fontSize: '35px',
     },
   },
   cardActions: {
