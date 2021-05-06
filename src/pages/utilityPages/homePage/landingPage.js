@@ -6,8 +6,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 // import LandingHero from './LandingHero'
 import Hero from './Hero'
-// import Applying from './Applying'
-// import Programs from './Programs'
 // import Offerings from './Offerings'
 
 import Grid from '@material-ui/core/Grid';
@@ -29,14 +27,12 @@ import ProgramDescriptions from 'components/homeComponents/programDescriptions';
 const LandingPage = ({hasSession, classes}) => {
   return (
     <>
-      {/* <Applying /> */}
-      {/* <Programs /> */}
       {/* <Offerings /> */}
 
       <Grid container justify="center" align="center">
         <Hero />
-        {/* <ProcessCarousel/> */}
-        {/* <ProgramDescriptions/> */}
+        <ProcessCarousel/>
+        <ProgramDescriptions/>
       </Grid>
     </>
     // <LandingHero />
