@@ -11,13 +11,15 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    borderRadius: "0 1rem 0 0"
   },
   media: {
-    height: 140,
-  },
+    height: 200,
+    borderRadius: "0 1rem 0 0"
+  }
 });
 
-export default function ProgramCard(props) {
+export default function OfferingCard(props) {
   const classes = useStyles();
 
   return (

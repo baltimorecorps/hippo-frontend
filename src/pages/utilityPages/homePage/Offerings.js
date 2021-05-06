@@ -2,11 +2,18 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import ProgramCard from './ProgramCard'
+import ProgramCard from './OfferingCard'
+
+const styles = {
+    main: {
+        marginTop: 0,
+        padding: "1rem 0 2rem 0"
+    }
+}
 
 function Offerings() {
     return (
-        <Box width={"100%"} mt={3}>
+        <Box width={"100%"} mt={3} bgcolor="primary.main" style={styles.main}>
             <Typography color="inherit" align="center" gutterBottom variant="h5" component="h2">
                 Place for Purpose Offers
             </Typography>
