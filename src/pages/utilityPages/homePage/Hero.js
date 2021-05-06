@@ -10,14 +10,30 @@ const styles = {
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "100vh"
+        position: "relative",
+        height: "100vh",
+    },
+    opaque: {
+        content: "",
+        position: "absolute",
+        top: "0px",
+        right: "0px",
+        bottom: "0px",
+        left: "0px",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        border: "5px solid red"
+    },
+    contents: {
+        background: "#fafafa",
+        opacity: "0.7"
     }
 }
 
 function Hero() {
     return (
         <Box style={styles.box}>
-            <Grid container justify="center">
+            <Box style={styles.opaque}></Box>
+            <Grid container justify="center" style={styles.contents}>
                 <Grid item xs={10} sm={10} md={8} lg={6} xl={4}>
                     <Typography color="inherit" align="center" gutterBottom variant="h2" component="h2">
                         PLACE FOR PURPOSE
