@@ -6,7 +6,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 // import LandingHero from './LandingHero'
 import Hero from './Hero'
-// import Offerings from './Offerings'
+import Offerings from './Offerings'
+// import ProcessCarousel from 'components/homeComponents/processCarousel.js';
+// import ProgramDescriptions from 'components/homeComponents/programDescriptions';
 
 import Grid from '@material-ui/core/Grid';
 // import Card from '@material-ui/core/Card';
@@ -17,22 +19,15 @@ import Grid from '@material-ui/core/Grid';
 // import Typography from '@material-ui/core/Typography';
 // import {createClickTracking} from 'lib/helperFunctions/helpers';
 
-import ProcessCarousel from 'components/homeComponents/processCarousel.js';
-import ProgramDescriptions from 'components/homeComponents/programDescriptions';
-
-
-
-
-
 const LandingPage = ({hasSession, classes}) => {
   return (
     <>
-      {/* <Offerings /> */}
 
       <Grid container justify="center" align="center">
         <Hero />
-        <ProcessCarousel/>
-        <ProgramDescriptions/>
+        {/* <ProcessCarousel/> */}
+        {/* <ProgramDescriptions/> */}
+        <Offerings />
       </Grid>
     </>
     // <LandingHero />

@@ -1,36 +1,44 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import ProgramCard from './ProgramCard'
 
 function Offerings() {
     return (
         <Box width={"100%"} mt={3}>
-            <Grid container justify="center">
-                <Grid item xs={10} sm={10} md={8} lg={6} xl={4}>
-                    <Typography color="inherit" align="center" gutterBottom variant="h3" component="h3">
-                        WHAT WE OFFER
-                    </Typography>
+            <Typography color="inherit" align="center" gutterBottom variant="h5" component="h2">
+                Place for Purpose Offers
+            </Typography>
 
-                    {/* <Typography color="inherit" align="center" gutterBottom variant="body1" component="p">
-                        is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
-                    </Typography>
-
-                    <Typography color="inherit" align="center" gutterBottom variant="body2" component="p">
-                        Create an account or log in to create a Baltimore Corps community profile. Get access to job opportunities and development opportunities in the Baltimore Corps network.
-                    </Typography>
-
-                    <Box align="center" mt={2}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            // onClick={onClickLogInHandler}
-                            >
-                            Log in / Sign up
-                        </Button>
-                    </Box> */}
+            <Grid container justify="center" spacing={3}>
+                <Grid item xs={12} sm={6} md={3}>
+                    <ProgramCard 
+                        image='/images/offerings/offering-1.jpg' 
+                        title='Meaningful Opportunities' 
+                        text='We curate meaningful, mission-driven positions within the social sector!' 
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <ProgramCard 
+                        image='/images/offerings/offering-2.jpg' 
+                        title='A Hiring Partner' 
+                        text='We commit to working closely with our partners - we’re on your team!' 
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <ProgramCard 
+                        image='/images/offerings/offering-3.jpg' 
+                        title='Equity Collaborator' 
+                        text='Equity and inclusion are at the heart of what we do!' 
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6} md={3}>
+                    <ProgramCard 
+                        image='/images/offerings/offering-4.jpg' 
+                        title='Value of Time' 
+                        text='Our team runs effective and equitable searches every 90 days!' 
+                    />
                 </Grid>
             </Grid>
         </Box>

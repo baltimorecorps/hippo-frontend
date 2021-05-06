@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ProgramCard() {
+export default function ProgramCard(props) {
   const classes = useStyles();
 
   return (
@@ -25,19 +25,19 @@ export default function ProgramCard() {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="/images/programs/fellowship.jpg"
+          image={props.image}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            {props.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+            {props.text}
           </Typography>
         </CardContent>
       </CardActionArea>
+      
       <CardActions>
         <Button size="small" color="primary">
           Share
