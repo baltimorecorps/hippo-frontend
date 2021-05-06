@@ -4,21 +4,20 @@ import {connect} from 'react-redux';
 // import {Redirect} from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-import LandingHero from './LandingHero'
+// import LandingHero from './LandingHero'
 import Hero from './Hero'
-import Applying from './Applying'
-import Programs from './Programs'
-import Offerings from './Offerings'
+// import Applying from './Applying'
+// import Programs from './Programs'
+// import Offerings from './Offerings'
 
-// import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid';
 // import Card from '@material-ui/core/Card';
 // import CardActions from '@material-ui/core/CardActions';
 // import CardContent from '@material-ui/core/CardContent';
 // import CardMedia from '@material-ui/core/CardMedia';
 // import Button from '@material-ui/core/Button';
 // import Typography from '@material-ui/core/Typography';
-import {createClickTracking} from 'lib/helperFunctions/helpers';
-import Grid from '@material-ui/core/Grid';
+// import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import ProcessCarousel from 'components/homeComponents/processCarousel.js';
 import ProgramDescriptions from 'components/homeComponents/programDescriptions';
@@ -30,14 +29,14 @@ import ProgramDescriptions from 'components/homeComponents/programDescriptions';
 const LandingPage = ({hasSession, classes}) => {
   return (
     <>
-      <Hero />
-      <Applying />
-      <Programs />
-      <Offerings />
+      {/* <Applying /> */}
+      {/* <Programs /> */}
+      {/* <Offerings /> */}
 
       <Grid container justify="center" align="center">
-        <ProcessCarousel/>
-        <ProgramDescriptions/>
+        <Hero />
+        {/* <ProcessCarousel/> */}
+        {/* <ProgramDescriptions/> */}
       </Grid>
     </>
     // <LandingHero />
