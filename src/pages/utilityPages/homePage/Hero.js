@@ -27,13 +27,17 @@ const styles = {
     },
     contents: {
         background: "#fafafa",
-        opacity: "0.8"
+        opacity: "0.8",
+        padding: "1rem 0"
+    },
+    instructions: {
+        marginTop: "1rem"
     }
 }
 
 function Hero() {
     return (
-        <Box style={styles.box}>
+        <Box style={styles.box} mt={-2}>
             <Box style={styles.opaque}></Box>
             <Grid container justify="center" style={styles.contents}>
                 <Grid item xs={10} sm={10} md={8} lg={6} xl={4}>
@@ -45,7 +49,7 @@ function Hero() {
                         is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
                     </Typography>
 
-                    <Typography color="inherit" align="center" gutterBottom variant="body2" component="p">
+                    <Typography color="inherit" align="center" gutterBottom variant="body2" component="p" style={styles.instructions}>
                         Create an account or log in to create a Baltimore Corps community profile. Get access to job opportunities and development opportunities in the Baltimore Corps network.
                     </Typography>
 
