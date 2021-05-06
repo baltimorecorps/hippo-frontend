@@ -3,18 +3,32 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import ProgramCard from './OfferingCard'
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = {
+const useStyles = makeStyles({
     main: {
         marginTop: 0,
-        padding: "1rem 0 2rem 0"
+        padding: "1rem 1rem 2rem 1rem"
+    },
+    title: {
+        fontSize: "20px",
+        margin: "5px",
+        '@media only screen and (min-width: 600px)': {
+            fontSize: "30px",
+            margin: "18px"
+        },
+        '@media only screen and (min-width: 960px)': {
+            fontSize: "35px",
+            margin: "20px"
+        },
     }
-}
+})
 
 function Offerings() {
+    const styles = useStyles()
     return (
-        <Box width={"100%"} mt={3} bgcolor="primary.main" style={styles.main}>
-            <Typography color="inherit" align="center" gutterBottom variant="h5" component="h2">
+        <Box width={"100%"} mt={3} bgcolor="primary.main" className={styles.main}>
+            <Typography color="inherit" align="center" gutterBottom variant="h5" component="h2" className={styles.title}>
                 Place for Purpose Offers
             </Typography>
 
