@@ -34,16 +34,16 @@ export default function OfferingCard(props) {
           <Typography gutterBottom variant="h6" component="h2">
             {props.title}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="p" align="left">
             {props.text}
           </Typography>
         </CardContent>
       </CardActionArea>
       
       <CardActions>
-        <Button size="small" color="primary">
+        {/* <Button size="small" color="primary">
           Share
-        </Button>
+        </Button> */}
         <Button size="small" color="primary">
           Learn More
         </Button>

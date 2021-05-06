@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // import LandingHero from './LandingHero'
-import Hero from './Hero'
-import Offerings from './Offerings'
+import Hero from 'components/homeComponents/Hero'
+import Offerings from '../../../components/homeComponents/Offerings'
 import ProcessCarousel from 'components/homeComponents/processCarousel.js';
 import ProgramDescriptions from 'components/homeComponents/programDescriptions';
 
