@@ -12,6 +12,9 @@ const styles = {
         backgroundPosition: "center",
         position: "relative",
         height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
     opaque: {
         content: "",
@@ -20,12 +23,11 @@ const styles = {
         right: "0px",
         bottom: "0px",
         left: "0px",
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
-        border: "5px solid red"
+        background: "rgba(87, 95, 103, .7)"
     },
     contents: {
         background: "#fafafa",
-        opacity: "0.7"
+        opacity: "0.8"
     }
 }
 
