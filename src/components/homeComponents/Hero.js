@@ -23,7 +23,10 @@ const styles = {
         right: "0px",
         bottom: "0px",
         left: "0px",
-        background: "rgba(87, 95, 103, .7)"
+        background: 'rgb(223,232,227)',
+        background: 'linear-gradient(177deg, rgba(223,232,227,0.42620798319327735) 0%, rgba(219,233,248,1) 100%)'
+
+
     },
     contents: {
         background: "#fafafa",
@@ -38,7 +41,7 @@ const styles = {
 function Hero() {
     return (
         <Box style={styles.box} mt={-2}>
-            <Box style={styles.opaque}></Box>
+            <Box style={styles.opaque}> </Box>
             <Grid container justify="center" style={styles.contents}>
                 <Grid item xs={10} sm={10} md={8} lg={6} xl={4}>
                     <Typography color="inherit" align="center" gutterBottom variant="h2" component="h2">

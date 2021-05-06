@@ -29,7 +29,7 @@ function Offerings() {
     return (
         <Box width={"100%"} mt={3} bgcolor="primary.main" className={styles.main}>
             <Typography color="inherit" align="center" gutterBottom variant="h5" component="h2" className={styles.title}>
-                Place for Purpose Offers
+                Testimonials 
             </Typography>
 
             <Grid container justify="center" spacing={3}>

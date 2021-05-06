@@ -5,9 +5,12 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+
 
 import Carousel from 'react-material-ui-carousel';
 import process1 from '../../assets/images/process1.png'
@@ -23,7 +26,6 @@ const ProcessStep = (props) => {
 //    const classes = useStyles();
 
     return (
-  
       <Grid container spacing={3} direction={'row'} xs={10} > 
         {steps.map(({header,description,imageName},classes, key={header}) => (
           <Grid item xs>
@@ -69,19 +71,19 @@ const ProcessStep = (props) => {
   )}
 
 
-const ProcessCarousel = ({classes})=>{
+const ProcessCarousel = ({classes,onClickLogInHandler})=>{
     console.log(ProcessCarousel.classes)
     return(
-        
-            <Grid item xs={12} align="center">
-                        
+        <section style={{width:'100%', height:'90vh'}}>
+            <Grid item xs={12} align="center" style={{margin:'1% auto', height:'auto', background:'#dbe9f7'}}>
+                    {/* <div style={{background: '#dbe9f8', margin:'0 auto'}}>   */}
                     <Typography
                     gutterBottom
                     variant="h5"
                     component="h1"
                     className={classes.pageHeader}
                     >
-                    The Place for Purpose Process        
+                    The Process        
                     </Typography>
                     <Carousel 
                     animation={'slide'} 
@@ -95,7 +97,18 @@ const ProcessCarousel = ({classes})=>{
 
                     ))}
                     </Carousel>
+                    {/* </div>   */}<br/><br/>
+                    <CardActions className={classes.cardActions}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={onClickLogInHandler}
+                  >
+                    Start the Process Today! 
+                   </Button>
+                </CardActions>
             </Grid>
+            </section>
     )
 }
 
