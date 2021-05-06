@@ -28,10 +28,10 @@ export default function OfferingCard(props) {
         <CardMedia
           className={classes.media}
           image={props.image}
-          title="Contemplative Reptile"
+          title={props.title}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h6" component="h2">
             {props.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">

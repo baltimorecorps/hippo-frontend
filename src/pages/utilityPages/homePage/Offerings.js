@@ -19,28 +19,28 @@ function Offerings() {
             </Typography>
 
             <Grid container justify="center" spacing={3}>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} lg={3}>
                     <ProgramCard 
                         image='/images/offerings/offering-1.jpg' 
                         title='Meaningful Opportunities' 
                         text='We curate meaningful, mission-driven positions within the social sector!' 
                     />
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} lg={3}>
                     <ProgramCard 
                         image='/images/offerings/offering-2.jpg' 
                         title='A Hiring Partner' 
                         text='We commit to working closely with our partners - we’re on your team!' 
                     />
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} lg={3}>
                     <ProgramCard 
                         image='/images/offerings/offering-3.jpg' 
                         title='Equity Collaborator' 
-                        text='Equity and inclusion are at the heart of what we do!' 
+                        text='Equity and inclusion are at the heart of everything we do!' 
                     />
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} lg={3}>
                     <ProgramCard 
                         image='/images/offerings/offering-4.jpg' 
                         title='Value of Time' 
