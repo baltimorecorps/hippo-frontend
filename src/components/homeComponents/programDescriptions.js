@@ -6,10 +6,13 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Container from '@material-ui/core/Container';
+
 
 
 
 import Box from '@material-ui/core/Box';
+import { AutoComplete } from 'material-ui';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -58,7 +61,15 @@ const useStyles = makeStyles({
   bcCopy:{
     textAlign:'justify',
     margin: '0 auto'
-  }
+  },
+  videoContainer: { position: 'relative', paddingBottom: '56.25%', paddingTop: '30px', height: 0, overflow: 'hidden', margin:'5% auto' },
+  video: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', margin: '0 auto' }
+  
+  
+  
+  
+
+  
 });
 
 const ProgramDescriptions =()=>{
@@ -88,8 +99,12 @@ const ProgramDescriptions =()=>{
       >                    
        Baltimore Corps hosts initiatives that intentionally seek to build socioeconomic equity throughout Baltimore, via social impact careers, leadership training, community engagement, social entrepreneurship, and small business support programs. Place for Purpose is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
       </Typography>
-
-      <iframe width="80%" height="auto" src="https://www.youtube.com/embed/VZG7UbftkWQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      
+      <Container maxWidth="sm">
+      <div className={classes.videoContainer}>
+      <iframe src="https://www.youtube.com/embed/VZG7UbftkWQ"  className={classes.video} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      </Container>
 
       <Tabs
         value={value}

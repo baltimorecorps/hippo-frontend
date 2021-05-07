@@ -7,6 +7,8 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid';
+import CardActions from '@material-ui/core/CardActions';
 
 import process1 from '../../assets/images/process1.png'
 import process2 from '../../assets/images/process2.png'
@@ -18,7 +20,7 @@ import process6 from '../../assets/images/process6.png'
 const styles = {
   pageHeader: {
     fontSize: '35px',
-    margin: '20px ',
+    margin: '1% auto ',
 
     // [breakpoints.down('sm')]: {
     //   fontSize: '30px',
@@ -119,6 +121,7 @@ function P4PCarousel({props, onClickLogInHandler}) {
 
     function ProcessCard(props) {
       return (
+        <Grid item xs key={props.header}>
         <Card  
           className={styles.card}
           style={{ display: 'block',
@@ -155,19 +158,34 @@ function P4PCarousel({props, onClickLogInHandler}) {
           </CardContent>
 
         </Card>
+        </Grid>
+       
       )
     }
 
     return (
-      <div style={{width: "100vw"}}>
+      <section 
+      style={{width:'98vw', height:'auto', boxSizing:'border-box'}}
+      >
+      <Grid container
+      xs={12} 
+      alignItems="center" 
+      justify="center"
+      direction={'column'} 
+      style={{margin:'10vh auto', height:'auto'}}
+      >
         <Typography
           gutterBottom
           variant="h5"
           component="h1"
           style={styles.pageHeader}
+          item 
+          xs={6}
         >
           The Process        
         </Typography>
+      <Grid item spacing={1} flex='column' align='center' direction={'row'} xs={12} style={{margin:'0 auto'}}> 
+
 
         <Carousel
           swipeable={false}
@@ -175,7 +193,7 @@ function P4PCarousel({props, onClickLogInHandler}) {
           showDots={true}
           responsive={responsive}
           ssr={true} // means to render carousel on server-side.
-          infinite={true}
+          infinite={false}
           // autoPlay={props.deviceType !== "mobile" ? true : false}
           // autoPlaySpeed={1000}
           keyBoardControl={true}
@@ -187,19 +205,30 @@ function P4PCarousel({props, onClickLogInHandler}) {
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px"
         >
-          {data.map((item) => (<ProcessCard header={item.header} description={item.description} imageName={item.imageName} />))}
+            {data.map((item) => (        
+                    <ProcessCard header={item.header} description={item.description} imageName={item.imageName} key={item.header}/>
+                   ))} 
+              
         </Carousel>
+                    
 
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={onClickLogInHandler}
-          style={styles.P4PButton}
-        >
-          Start the Process Today! 
-        </Button>
-      </div>
-    )
+        <CardActions >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={onClickLogInHandler}
+                    item
+                    style={{margin:'1% auto'}}
+                  
+                  >
+                    Start the Process Today! 
+                   </Button>
+        </CardActions>
+        </Grid>
+        </Grid>
+        </section>
+                )
 }
 
 export default P4PCarousel
