@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import Hero from 'components/homeComponents/Hero';
 import Offerings from 'components/homeComponents/Offerings';
-import ProcessCarousel from 'components/homeComponents/processCarousel.js';
+// import ProcessCarousel from 'components/homeComponents/processCarousel.js';
 import ProgramDescriptions from 'components/homeComponents/programDescriptions';
 import P4PCarousel from 'components/homeComponents/P4PCarousel'
 
