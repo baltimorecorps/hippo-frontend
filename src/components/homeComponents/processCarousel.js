@@ -22,56 +22,56 @@ import process6 from '../../assets/images/process6.png'
 
 const ProcessStep = (props) => {
   
-   let steps = props.content 
+  let steps = props.content
 //    const classes = useStyles();
 
-    return (
+  return (
       <Grid container spacing={3} direction={'row'} xs={10} > 
-        {steps.map(({header,description,imageName},classes, key={header}) => (
-          <Grid item xs>
+        {steps.map(({header, description, imageName}, classes) => (
+          <Grid item xs key={header}>
             <Card  
-            className={classes.card}
-            style={{ display: 'block',
-            width: '350px',
-            transitionDuration: '0.3s',
-            height: '450px'}}
+              className={classes.card}
+              style={{ display: 'block',
+              width: '350px',
+              transitionDuration: '0.3s',
+              height: '450px'}}
             >
-           
-            <CardContent className={classes.cardContent}>
-            <Typography
-            gutterBottom
-            variant="h6"
-            component="h2"
-            className={classes.cardContentHeader}
-            >
-            {header}
-            </Typography><br/>
-             <CardMedia
-            component="img"
-            src={imageName}
-            className={classes.cardContentMedia}
-            title={header}
-            style={{width: '10vw', margin:"2% 0", width:'40%'}}
-            /><br/>
-            <Typography
-            gutterTop
-            gutterBottom
-            variant="body1"
-            component="p"
-            align="justify"
-            >
-            {description}
-            </Typography>
-            </CardContent>
-  
-          </Card>
+
+              <CardContent className={classes.cardContent}>
+                <Typography
+                  gutterBottom
+                  variant="h6"
+                  component="h2"
+                  className={classes.cardContentHeader}
+                >
+                  {header}
+                </Typography><br/>
+                <CardMedia
+                  component="img"
+                  src={imageName}
+                  className={classes.cardContentMedia}
+                  title={header}
+                  style={{width: '10vw', margin:"2% 0", width:'40%'}}
+                /><br/>
+                <Typography
+                  gutterTop
+                  gutterBottom
+                  variant="body1"
+                  component="p"
+                  align="justify"
+                >
+                  {description}
+                </Typography>
+              </CardContent>
+
+            </Card>
           </Grid>
         ))}  
       </Grid>   
   )}
 
 
-const ProcessCarousel = ({classes,onClickLogInHandler})=>{
+const ProcessCarousel = ({classes, onClickLogInHandler})=>{
     console.log(ProcessCarousel.classes)
     return(
         <section style={{width:'100%', height:'90vh'}}>
@@ -93,7 +93,7 @@ const ProcessCarousel = ({classes,onClickLogInHandler})=>{
 
                     {ProcessCarousel.pfpProcess.map((props) => (
 
-                    <ProcessStep classes={props.classes} content={props.content}   />
+                    <ProcessStep classes={props.classes} content={props.content} key={props.content}  />
 
                     ))}
                     </Carousel>

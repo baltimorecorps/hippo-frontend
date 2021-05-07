@@ -2,19 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 // import {Redirect} from 'react-router-dom';
-import withStyles from '@material-ui/core/styles/withStyles';
+// import withStyles from '@material-ui/core/styles/withStyles';
 
-import Hero from 'components/homeComponents/Hero'
-import Offerings from 'components/homeComponents/Offerings'
+import Hero from 'components/homeComponents/Hero';
+import Offerings from 'components/homeComponents/Offerings';
 import ProcessCarousel from 'components/homeComponents/processCarousel.js';
 import ProgramDescriptions from 'components/homeComponents/programDescriptions';
+import P4PCarousel from 'components/homeComponents/P4PCarousel'
 
 import Grid from '@material-ui/core/Grid';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 
 import {useAuth0} from 'lib/Auth0/auth0';
 
-import Container from '@material-ui/core/Container';
+// import Container from '@material-ui/core/Container';
 
 
 const LandingPage = ({hasSession, classes}) => {
@@ -34,14 +35,14 @@ const LandingPage = ({hasSession, classes}) => {
   };
 
   return (
-    <div style={{ background: '#dbe9f8'}}>
+    <div style={{background: '#dbe9f8'}}>
       <Grid container justify="center" align="center" xs={12}>
-      <Hero />
-      <ProgramDescriptions/>
-      <ProcessCarousel onclick={onClickLogInHandler}/>
-     
-      <Offerings />
-    </Grid>
+        <Hero />
+        <ProgramDescriptions/>
+        <P4PCarousel onclick={onClickLogInHandler} />
+        <ProcessCarousel onclick={onClickLogInHandler}/>
+        <Offerings />
+      </Grid>
     </div>
   );
 };
