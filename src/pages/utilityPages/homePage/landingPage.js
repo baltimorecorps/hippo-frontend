@@ -41,7 +41,7 @@ const LandingPage = ({hasSession, classes}) => {
         <ProgramDescriptions/>
         <P4PCarousel onclick={onClickLogInHandler} />
         {/* <ProcessCarousel onclick={onClickLogInHandler}/> */}
-        <Offerings />
+        <Offerings onclick={onClickLogInHandler} />
       </Grid>
     </div>
   );

@@ -1,9 +1,11 @@
 import React from 'react'
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import CardActions from '@material-ui/core/CardActions'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
-import OfferingCard from './OfferingCard'
 import { makeStyles } from '@material-ui/core/styles';
+import OfferingCard from './OfferingCard'
 
 const useStyles = makeStyles({
     main: {
@@ -24,7 +26,7 @@ const useStyles = makeStyles({
     }
 })
 
-function Offerings() {
+function Offerings(onClickLogInHandler) {
     const styles = useStyles()
     return (
         <Box width={"100%"} mt={3} bgcolor="primary.main" className={styles.main}>
@@ -62,6 +64,19 @@ function Offerings() {
                     />
                 </Grid>
             </Grid>
+
+            <CardActions >
+            <Button
+                variant="contained"
+                color="secondary"
+                size="large"
+                onClick={onClickLogInHandler}
+                style={{margin:'1% auto'}}
+            
+            >
+                Log In / Sign Up
+            </Button>
+        </CardActions>
         </Box>
     )
 }

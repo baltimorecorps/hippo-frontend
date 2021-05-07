@@ -55,8 +55,6 @@ function Hero() {
                         is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
                     </Typography>
 
-                 
-
                     <Box align="center" mt={2}>
                         <Button
                             variant="contained"
