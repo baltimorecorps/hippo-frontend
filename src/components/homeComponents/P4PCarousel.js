@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
+import Button from '@material-ui/core/Button'
 
 import process1 from '../../assets/images/process1.png'
 import process2 from '../../assets/images/process2.png'
@@ -59,6 +60,9 @@ const styles = {
     height:'30%',
     minHeight:'150px'
   },
+  P4PButton: {
+    marginTop: '3rem'
+  }
 }
 
 const data = [
@@ -94,8 +98,7 @@ const data = [
   }
 ]
 
-
-function P4PCarousel(props) {
+function P4PCarousel({props, onClickLogInHandler}) {
     const responsive = {
         desktop: {
           breakpoint: { max: 3000, min: 1024 },
@@ -155,8 +158,6 @@ function P4PCarousel(props) {
       )
     }
 
-    console.log('data:', data)
-
     return (
       <div style={{width: "100vw"}}>
         <Typography
@@ -182,18 +183,21 @@ function P4PCarousel(props) {
           transitionDuration={500}
           containerClass="carousel-container"
           removeArrowOnDeviceType={["tablet", "mobile"]}
-          deviceType={props.deviceType}
+          // deviceType={props.deviceType}
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px"
         >
-          {/* <div style={{width: "30%"}}><img style={{width: "100%"}} src={process1} alt='' /></div>
-          <div style={{width: "30%"}}><img style={{width: "100%"}} src={process2} alt='' /></div>
-          <div style={{width: "30%"}}><img style={{width: "100%"}} src={process3} alt='' /></div>
-          <div style={{width: "30%"}}><img style={{width: "100%"}} src={process4} alt='' /></div>
-          <div style={{width: "30%"}}><img style={{width: "100%"}} src={process5} alt='' /></div>
-          <div style={{width: "30%"}}><img style={{width: "100%"}} src={process6} alt='' /></div> */}
           {data.map((item) => (<ProcessCard header={item.header} description={item.description} imageName={item.imageName} />))}
         </Carousel>
+
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={onClickLogInHandler}
+          style={styles.P4PButton}
+        >
+          Start the Process Today! 
+        </Button>
       </div>
     )
 }

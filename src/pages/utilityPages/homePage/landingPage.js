@@ -39,7 +39,7 @@ const LandingPage = ({hasSession, classes}) => {
       <Grid container justify="center" align="center" xs={12}>
         <Hero />
         <ProgramDescriptions/>
-        <P4PCarousel />
+        <P4PCarousel onclick={onClickLogInHandler} />
         <ProcessCarousel onclick={onClickLogInHandler}/>
         <Offerings />
       </Grid>
