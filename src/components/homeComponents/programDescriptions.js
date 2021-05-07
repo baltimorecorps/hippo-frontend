@@ -89,8 +89,8 @@ const ProgramDescriptions =()=>{
        Baltimore Corps hosts initiatives that intentionally seek to build socioeconomic equity throughout Baltimore, via social impact careers, leadership training, community engagement, social entrepreneurship, and small business support programs. Place for Purpose is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
       </Typography>
 
-      <Skeleton width="60%" height='30vh' />
-      
+      <iframe width="80%" height="auto" src="https://www.youtube.com/embed/VZG7UbftkWQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
       <Tabs
         value={value}
         onChange={handleChange}

@@ -34,8 +34,7 @@ const LandingPage = ({hasSession, classes}) => {
   };
 
   return (
-    <div style={{background: 'rgb(223,232,227)',
-    background: '#dbe9f8'}}>
+    <div style={{ background: '#dbe9f8'}}>
       <Grid container justify="center" align="center" xs={12}>
       <Hero />
       <ProgramDescriptions/>
