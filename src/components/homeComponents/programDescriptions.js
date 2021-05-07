@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Skeleton from '@material-ui/lab/Skeleton';
+// import Skeleton from '@material-ui/lab/Skeleton';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import { AutoComplete } from 'material-ui';
+// import { AutoComplete } from 'material-ui';
+import ProgramDescriptionCard from './programDescriptionCard';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -141,23 +142,9 @@ const ProgramDescriptions =()=>{
       </TabPanel>
 
       <Box className={classes.programBox}>
-        <Typography
-          gutterBottom
-          variant="h4"
-          component="h1"
-          className={classes.pageHeader}
-        >                    
-          {programData[0].title}
-        </Typography>
-        <Typography
-          gutterBottom
-          className={classes.bcCopy}
-          variant="body1"
-          component="p"
-          style={{ maxWidth:'80%'}}
-        >                    
-          {programData[0].description}
-        </Typography>
+        <ProgramDescriptionCard title={programData[0].title} description={programData[0].description} />
+        <ProgramDescriptionCard title={programData[1].title} description={programData[1].description} />
+        <ProgramDescriptionCard title={programData[2].title} description={programData[2].description} />
       </Box>
     </Paper>
   );
