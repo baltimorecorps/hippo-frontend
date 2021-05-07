@@ -63,19 +63,19 @@ const styles = {
 
 const data = [
   {
-      header: 'Create an Account',
-      description: 'The first step is Creating An Account in Place for Purpose. This involves completing a brief questionnaire to help us understand who you are, what your interests and goals are, and how your values align with Baltimore Corps. Once you submit your questionnaire, your application will be reviewed based on Values Alignment with Baltimore Corps.',
-      imageName: process1,
+    header: 'Create an Account',
+    description: 'The first step is Creating An Account in Place for Purpose. This involves completing a brief questionnaire to help us understand who you are, what your interests and goals are, and how your values align with Baltimore Corps. Once you submit your questionnaire, your application will be reviewed based on Values Alignment with Baltimore Corps.',
+    imageName: process1,
   },
   {
-      header: 'Build a Profile',
-      description: 'Your Profile captures your skills, capabilities and experiences and we use it along with your Interest Statements to assess your qualifications for specific roles. Think of it as a more holistic resume to help us get a complete picture of your background and experience. ',
-      imageName: process2,
+    header: 'Build a Profile',
+    description: 'Your Profile captures your skills, capabilities and experiences and we use it along with your Interest Statements to assess your qualifications for specific roles. Think of it as a more holistic resume to help us get a complete picture of your background and experience. ',
+    imageName: process2,
   },
   {
-      header: 'Schedule a Consultation',
-      description: 'The Consultation is our opportunity to learn more about your interests and goals, to orient you to applying for roles in Place for Purpose, to learn how we can support you with your Profile, and to answer any questions about the system or process. Your profile does not need to be finished to schedule a Consultation.',
-      imageName: process3,
+    header: 'Schedule a Consultation',
+    description: 'The Consultation is our opportunity to learn more about your interests and goals, to orient you to applying for roles in Place for Purpose, to learn how we can support you with your Profile, and to answer any questions about the system or process. Your profile does not need to be finished to schedule a Consultation.',
+    imageName: process3,
   },
   {
     header: 'Apply for Opportunities',
@@ -155,6 +155,8 @@ function P4PCarousel(props) {
       )
     }
 
+    console.log('data:', data)
+
     return (
       <div style={{width: "100vw"}}>
         <Typography
@@ -184,13 +186,13 @@ function P4PCarousel(props) {
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px"
         >
-          <div style={{width: "30%"}}><img style={{width: "100%"}} src={process1} alt='' /></div>
+          {/* <div style={{width: "30%"}}><img style={{width: "100%"}} src={process1} alt='' /></div>
           <div style={{width: "30%"}}><img style={{width: "100%"}} src={process2} alt='' /></div>
           <div style={{width: "30%"}}><img style={{width: "100%"}} src={process3} alt='' /></div>
           <div style={{width: "30%"}}><img style={{width: "100%"}} src={process4} alt='' /></div>
           <div style={{width: "30%"}}><img style={{width: "100%"}} src={process5} alt='' /></div>
-          <div style={{width: "30%"}}><img style={{width: "100%"}} src={process6} alt='' /></div>
-
+          <div style={{width: "30%"}}><img style={{width: "100%"}} src={process6} alt='' /></div> */}
+          {data.map((item) => (<ProcessCard header={item.header} description={item.description} imageName={item.imageName} />))}
         </Carousel>
       </div>
     )
