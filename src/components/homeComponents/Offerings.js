@@ -2,7 +2,7 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import ProgramCard from './OfferingCard'
+import OfferingCard from './OfferingCard'
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -34,28 +34,28 @@ function Offerings() {
 
             <Grid container justify="center" spacing={3}>
                 <Grid item xs={12} sm={6} lg={3}>
-                    <ProgramCard 
+                    <OfferingCard 
                         image='/images/offerings/offering-1.jpg' 
                         title='Meaningful Opportunities' 
                         text='We curate meaningful, mission-driven positions within the social sector!' 
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} lg={3}>
-                    <ProgramCard 
+                    <OfferingCard 
                         image='/images/offerings/offering-2.jpg' 
                         title='A Hiring Partner' 
                         text='We commit to working closely with our partners - we’re on your team!' 
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} lg={3}>
-                    <ProgramCard 
+                    <OfferingCard 
                         image='/images/offerings/offering-3.jpg' 
                         title='Equity Collaborator' 
                         text='Equity and inclusion are at the heart of everything we do!' 
                     />
                 </Grid>
                 <Grid item xs={12} sm={6} lg={3}>
-                    <ProgramCard 
+                    <OfferingCard 
                         image='/images/offerings/offering-4.jpg' 
                         title='Value of Time' 
                         text='Our team runs effective and equitable searches every 90 days!' 
