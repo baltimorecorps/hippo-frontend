@@ -67,7 +67,7 @@ const useStyles = makeStyles({
     },
   },
   programBox: {
-    '@media only screen and (min-width: 960px)': {
+    '@media only screen and (min-width: 961px)': {
       display: "none"
     },
   }
