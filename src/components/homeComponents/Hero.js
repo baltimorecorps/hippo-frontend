@@ -23,7 +23,7 @@ const styles = {
         right: "0px",
         bottom: "0px",
         left: "0px",
-        background: 'rgb(223,232,227)',
+        // background: 'rgb(223,232,227)',
         background: 'linear-gradient(177deg, rgba(223,232,227,0.42620798319327735) 0%, rgba(219,233,248,1) 100%)'
 
 
