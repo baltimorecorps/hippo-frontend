@@ -124,8 +124,6 @@ const ProgramDescriptions =()=>{
         indicatorColor="primary"
         textColor="primary"
         centered
-        variant="scrollable"
-        scrollButtons="on"
         className={classes.programTabs}
       >
         <Tab label="Mayoral Fellowship Opportunities" {...a11yProps(0)} />
