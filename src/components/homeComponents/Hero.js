@@ -12,6 +12,7 @@ const styles = {
         backgroundPosition: "center",
         position: "relative",
         height: "100vh",
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
