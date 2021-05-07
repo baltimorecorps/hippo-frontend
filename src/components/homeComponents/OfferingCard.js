@@ -22,7 +22,7 @@ export default function OfferingCard(props) {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea disableRipple>
         <CardMedia
           className={classes.media}
           image={props.image}
