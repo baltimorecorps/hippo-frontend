@@ -127,18 +127,18 @@ const ProgramDescriptions =()=>{
         centered
         className={classes.programTabs}
       >
-        <Tab label="Mayoral Fellowship Opportunities" {...a11yProps(0)} />
-        <Tab label="Place for Purpose Opportunities" {...a11yProps(1)} />
-        <Tab label="Baltimore Corps Fellowship Opportunities" {...a11yProps(2)} />
+        <Tab label={programData[0].title} {...a11yProps(0)} />
+        <Tab label={programData[1].title} {...a11yProps(1)} />
+        <Tab label={programData[2].title} {...a11yProps(2)} />
       </Tabs>
       <TabPanel className={classes.programTabs} value={value} index={0}>
-      The Mayoral Fellowship is an opportunity that provides a 10-week, full-time, placement in a mayoral office or Baltimore City agency. Placements are based on the Fellow’s background and interests, coupled with the needs of city agencies and departments. 
+        {programData[0].description}
       </TabPanel>
       <TabPanel className={classes.programTabs} value={value}  index={1}>
-      Place for Purpose connects professionals to meaningful employment within the social sector. What separates Place for Purpose from other job sites is the human interaction from our team throughout the process. Consultations provide an additional layer of support for candidates in their job search. In understanding your professional goals, we are able to encourage you to apply for positions that are the best fit for your skills, experience, and values.
+        {programData[1].description}
       </TabPanel>
       <TabPanel className={classes.programTabs} value={value}  index={2}>
-      The Baltimore Corps Fellowship is our flagship program. Our Fellowship places candidates in social impact careers, alongside an intensive year-long, cohort based program designed to provide professional development, networking, collaboration, and equity and racial justice training.  
+        {programData[2].description}
       </TabPanel>
 
       <Box className={classes.programBox}>
