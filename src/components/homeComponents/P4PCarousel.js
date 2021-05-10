@@ -144,7 +144,7 @@ function P4PCarousel({props, onClickLogInHandler}) {
               src={props.imageName}
               className={styles.cardContentMedia}
               title={props.header}
-              style={{width: '10vw', margin:"2% 0", width:'40%'}}
+              style={{margin:"2% 0", width:'40%'}}
             /><br/>
             <Typography
               gutterTop
