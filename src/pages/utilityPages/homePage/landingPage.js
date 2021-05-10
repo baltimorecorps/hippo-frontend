@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import Hero from 'components/homeComponents/Hero';
 import Offerings from 'components/homeComponents/Offerings';
 import ProcessCarousel from 'components/homeComponents/processCarousel.js';
+import OpportunitiesPeak from 'components/homeComponents/opportunitiesPeak.js';
 import ProgramDescriptions from 'components/homeComponents/programDescriptions';
 import P4PCarousel from 'components/homeComponents/P4PCarousel'
 
@@ -40,7 +41,7 @@ const LandingPage = ({hasSession, classes}) => {
         <Hero />
         <ProgramDescriptions/>
         <P4PCarousel onclick={onClickLogInHandler} />
-        {/* <ProcessCarousel onclick={onClickLogInHandler}/> */}
+        <OpportunitiesPeak/>
         <Offerings onclick={onClickLogInHandler} />
       </Grid>
     </div>
