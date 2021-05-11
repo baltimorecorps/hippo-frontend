@@ -54,7 +54,7 @@ const ProcessStep = (props) => {
                   style={{width: '10vw', margin:"2% 0", width:'40%'}}
                 /><br/>
                 <Typography
-                  gutterTop
+                  
                   gutterBottom
                   variant="body1"
                   component="p"

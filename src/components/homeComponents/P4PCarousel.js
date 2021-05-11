@@ -6,9 +6,8 @@ import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
-import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import CardActions from '@material-ui/core/CardActions'
+import LoginAction from './logIn'
 
 import process1 from '../../assets/images/process1.png'
 import process2 from '../../assets/images/process2.png'
@@ -58,7 +57,6 @@ const styles = {
     // },
   },
   cardContentMedia:{
-    width:'40%',
     height:'30%',
     minHeight:'150px'
   },
@@ -101,6 +99,8 @@ const data = [
 ]
 
 function P4PCarousel({props, onClickLogInHandler}) {
+
+  
     const responsive = {
         desktop: {
           breakpoint: { max: 3000, min: 1151 },
@@ -144,10 +144,10 @@ function P4PCarousel({props, onClickLogInHandler}) {
               src={props.imageName}
               className={styles.cardContentMedia}
               title={props.header}
-              style={{margin:"2% 0", width:'40%'}}
+              style={{margin:"2% 0", width:'50%'}}
             /><br/>
             <Typography
-              gutterTop
+              
               gutterBottom
               variant="body1"
               component="p"
@@ -188,8 +188,8 @@ function P4PCarousel({props, onClickLogInHandler}) {
 
 
         <Carousel
-          swipeable={false}
-          draggable={false}
+          swipeable={true}
+          draggable={true}
           showDots={true}
           responsive={responsive}
           ssr={true} // means to render carousel on server-side.
@@ -211,7 +211,7 @@ function P4PCarousel({props, onClickLogInHandler}) {
               
         </Carousel>
 
-        <CardActions >
+        {/* <CardActions >
             <Button
               variant="contained"
               color="primary"
@@ -223,7 +223,8 @@ function P4PCarousel({props, onClickLogInHandler}) {
             >
               Start the Process Today! 
             </Button>
-        </CardActions>
+        </CardActions> */}
+        <LoginAction text={'Start the Process Today!'}/>
         </Grid>
         </Grid>
         </section>

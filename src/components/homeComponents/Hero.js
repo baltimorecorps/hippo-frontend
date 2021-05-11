@@ -3,10 +3,13 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
+import pfpHero from '../../assets/images/pfphero.jpg'
+import LoginAction from './logIn'
+
 
 const styles = {
     box: {
-        backgroundImage: "url(/images/unity.jpg)",
+        backgroundImage: `url(${pfpHero})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -15,30 +18,27 @@ const styles = {
         width: "100%",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     opaque: {
-        content: "",
         position: "absolute",
         top: "0px",
         right: "0px",
         bottom: "0px",
         left: "0px",
-        // background: 'rgb(223,232,227)',
         background: 'linear-gradient(177deg, rgba(223,232,227,0.42620798319327735) 0%, rgba(219,233,248,1) 100%)'
 
 
     },
     contents: {
         background: "#fafafa",
-        opacity: "0.8",
+        opacity: "0.85",
         padding: "2rem 0",
-        height:'40vh',
-        margin: '5% auto'
-    },
-    instructions: {
-        marginTop: "1rem"
+        height:'auto',
+        margin: '5% auto',
+        // border:'solid yellow'
     }
+  
 }
 
 function Hero() {
@@ -51,19 +51,12 @@ function Hero() {
                         PLACE FOR PURPOSE
                     </Typography>
 
-                    <Typography color="inherit" align="center" gutterBottom variant="body1" component="p">
-                        is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
+                    <Typography color="inherit" align="center" gutterBottom variant="body1" component="p" style={{width:'80%'}}>
+                        connects talented community members interested in employment in the social impact sector with organizations committed to equity and racial justice.
                     </Typography>
 
                     <Box align="center" mt={2}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            // onClick={onClickLogInHandler}
-                            >
-                            Log in / Sign up
-                        </Button>
+                        <LoginAction text={'Log in / Sign up'}/>
                     </Box>
                 </Grid>
             </Grid>
