@@ -147,7 +147,7 @@ const FilterApplicantsForm = ({
           </IconButton>
         </Typography>
       </DialogTitle>
-      <DialogContent className={classes.dialogContent} dividers={true}>
+      <DialogContent className={classes.dialogContent} dividers>
         <div className={classes.checkboxContainer}>
           <div className={classes.checkboxesHalf}>
             {values.checkboxes.left.map((form, index) => (

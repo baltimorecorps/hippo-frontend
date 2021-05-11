@@ -236,7 +236,7 @@ describe('ProfilePage', () => {
               showResumeDialog={false}
               showResumeSpinner={false}
               inSelectMode={false}
-              haveExperience={true}
+              haveExperience
               experiences={contactInfo.experiences}
               getContactProfile={jest.fn()}
             />

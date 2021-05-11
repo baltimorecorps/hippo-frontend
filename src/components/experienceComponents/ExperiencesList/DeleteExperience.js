@@ -38,7 +38,7 @@ const DeleteExperience = ({
   };
 
   return (
-    <Dialog open={true}>
+    <Dialog open>
       <DialogContent className={classes.dialogContent}>
         <Typography align="center" data-testid="confirm_delete_message">
           Are you sure you want to delete {experienceName}?

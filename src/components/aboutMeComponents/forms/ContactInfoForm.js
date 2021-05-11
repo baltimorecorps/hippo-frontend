@@ -179,8 +179,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
         <form noValidate autoComplete="off">
           <Grid container justify="space-between">
             <FormTextField
-              isRequired={true}
-              isLabelInside={true}
+              isRequired
+              isLabelInside
               value={values.first_name}
               name="first_name"
               label="First Name"
@@ -188,8 +188,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               error={errors.firstName_error}
             />
             <FormTextField
-              isRequired={true}
-              isLabelInside={true}
+              isRequired
+              isLabelInside
               value={values.last_name}
               name="last_name"
               label="Last Name"
@@ -198,8 +198,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
             />
 
             <FormTextField
-              isRequired={true}
-              isLabelInside={true}
+              isRequired
+              isLabelInside
               value={values.email}
               name="email"
               label="Email"
@@ -215,7 +215,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 InputLabelProps={inputLabelProps}
                 inputProps={phoneInputProps}
                 inputClass={classes.formControl}
-                disableAreaCodes={true}
+                disableAreaCodes
               />
               <FormHelperText className={classes.formHelperText}>
                 {errors.phonePrimary_error || null}
@@ -224,8 +224,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
             <Grid container align="center" justify="space-between">
               <FormTextField
-                isRequired={true}
-                isLabelInside={true}
+                isRequired
+                isLabelInside
                 value={values.profile.address_primary.street1}
                 name="street1"
                 label="Address 1"
@@ -234,7 +234,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               />
               <FormTextField
                 isRequired={false}
-                isLabelInside={true}
+                isLabelInside
                 value={values.profile.address_primary.street2}
                 name="street2"
                 label="Address 2"
@@ -245,8 +245,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
             <Grid container align="center" justify="space-between">
               <FormTextField
-                isRequired={true}
-                isLabelInside={true}
+                isRequired
+                isLabelInside
                 value={values.profile.address_primary.city}
                 name="city"
                 label="City"
@@ -255,7 +255,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
               />
 
               <FormDropDownSelector
-                isLabelInside={true}
+                isLabelInside
                 question="State *"
                 value={values.profile.address_primary.state}
                 name="state"
@@ -266,8 +266,8 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
               <Grid container align="center" justify="space-between">
                 <FormTextField
-                  isRequired={true}
-                  isLabelInside={true}
+                  isRequired
+                  isLabelInside
                   value={values.profile.address_primary.zip_code}
                   name="zip_code"
                   label="Zip Code"
@@ -276,7 +276,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 />
 
                 <FormDropDownSelector
-                  isLabelInside={true}
+                  isLabelInside
                   question="Country *"
                   value={values.profile.address_primary.country}
                   name="country"
@@ -305,7 +305,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
                 {values.profile.race.not_listed ? (
                   <div className={classes.otherRace}>
                     <FormTextField
-                      isRequired={true}
+                      isRequired
                       value={values.profile.race.race_other}
                       name="race_other"
                       label="We understand that the options listed above are not exhaustive. If your identity is not listed above, please let us know how you identify:"
@@ -330,7 +330,7 @@ const BasicInfoForm = ({contact, onSubmit, onCloseForm, classes}) => {
 
                   {values.profile.gender === 'Not Listed' ? (
                     <FormTextField
-                      isRequired={true}
+                      isRequired
                       value={values.profile.gender_other}
                       name="gender_other"
                       label=" We understand that the options provided above are limited. If your gender identity is not listed above, please let us know how you identify:"

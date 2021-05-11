@@ -200,7 +200,7 @@ const AddContact = ({
           InputLabelProps={inputLabelProps}
           inputProps={inputProps}
           className={classes.textField}
-          disableAreaCodes={true}
+          disableAreaCodes
         />
         <FormHelperText className={classes.formHelperText}>
           {errors.phonePrimary_error || null}

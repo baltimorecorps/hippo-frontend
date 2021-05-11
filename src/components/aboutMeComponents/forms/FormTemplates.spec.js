@@ -107,7 +107,7 @@ describe('FormTemplates', () => {
 
     const {getByTestId} = render(
       <FormDropDownSelector
-        isLabelInside={true}
+        isLabelInside
         question="Question 1?"
         value={null}
         options={['option 1', 'option 2', 'option 3']}
@@ -161,8 +161,8 @@ describe('FormTemplates', () => {
 
     const {getByTestId} = render(
       <FormTextField
-        isRequired={true}
-        isLabelInside={true}
+        isRequired
+        isLabelInside
         value="Current value"
         name="name_example"
         label="Label 1"
@@ -186,7 +186,7 @@ describe('FormTemplates', () => {
 
     const {getByTestId} = render(
       <FormTextField
-        isRequired={true}
+        isRequired
         isLabelInside={false}
         value="Current value"
         name="name_example"

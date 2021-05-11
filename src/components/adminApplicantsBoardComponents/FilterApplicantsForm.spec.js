@@ -18,7 +18,7 @@ describe('Filter Applicants Form', () => {
     const addContactsFilters = jest.fn();
     const {getByTestId} = render(
       <FilterApplicantsForm
-        isOpen={true}
+        isOpen
         handleClose={handleClose}
         addContactsFilters={addContactsFilters}
         filterFormData={formData}
@@ -82,7 +82,7 @@ describe('Filter Applicants Form', () => {
     const addContactsFilters = jest.fn();
     const {getByTestId, getAllByTestId, getByLabelText} = render(
       <FilterApplicantsForm
-        isOpen={true}
+        isOpen
         handleClose={handleClose}
         addContactsFilters={addContactsFilters}
         filterFormData={formData}
@@ -118,7 +118,7 @@ describe('Filter Applicants Form', () => {
     const addContactsFilters = jest.fn();
     const {getByTestId, getAllByTestId, getByLabelText} = render(
       <FilterApplicantsForm
-        isOpen={true}
+        isOpen
         handleClose={handleClose}
         addContactsFilters={addContactsFilters}
         filterFormData={formData}
@@ -184,7 +184,7 @@ describe('Filter Applicants Form', () => {
     const addContactsFilters = jest.fn();
     const {getByTestId} = render(
       <FilterApplicantsForm
-        isOpen={true}
+        isOpen
         handleClose={handleClose}
         addContactsFilters={addContactsFilters}
         filterFormData={formData}

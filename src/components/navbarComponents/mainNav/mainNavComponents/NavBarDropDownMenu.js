@@ -26,7 +26,7 @@ const NavBarDropdownMenu = ({
       anchorEl={anchorEl}
       placement="bottom-end"
       transition
-      disablePortal={true}
+      disablePortal
     >
       {({TransitionProps}) => (
         <ClickAwayListener onClickAway={onClickAway}>

@@ -76,7 +76,7 @@ const CapabilitySelect = withStyles(selectStyles)(
     return (
       <FormControl key={capability.id}>
         <Select
-          displayEmpty={true}
+          displayEmpty
           classes={{
             root: classes.select,
             icon: classes.iconHidden,

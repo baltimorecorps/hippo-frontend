@@ -32,7 +32,7 @@ describe('ExperiencesListItem', () => {
         onUpdate={updateFn}
         onDelete={deleteFn}
         experience={experience}
-        selectable={true}
+        selectable
       />
     );
 
@@ -68,7 +68,7 @@ describe('ExperiencesListItem', () => {
         onDelete={jest.fn()}
         onSelect={selectFn}
         experience={experience}
-        selectable={true}
+        selectable
       />
     );
 

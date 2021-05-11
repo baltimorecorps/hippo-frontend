@@ -99,7 +99,7 @@ const ViewFullApplication = ({
           contactId={application && application.contact.id}
           resume={resume}
           setResume={setResume}
-          viewOnly={true}
+          viewOnly
           page="staff"
           setResume={() => {}}
         />

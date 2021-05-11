@@ -132,7 +132,7 @@ const CheckboxesWithToolTips = ({listOfOptions}) => {
           <ContentWithHelpTextToolTips
             key={index}
             option={subOption}
-            isSubContent={true}
+            isSubContent
             isCompleted={option.checked}
           />
         ))}

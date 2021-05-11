@@ -49,7 +49,7 @@ describe('Approve New Applicants Form', () => {
         submittedApplicants={submittedApplicants}
         getFilteredContactsSubmitted={() => jest.fn()}
         approveNewContactsStatus={approveNewContactsStatus}
-        showApproveForm={true}
+        showApproveForm
         setShowApproveForm={() => jest.fn()}
         setPresentApplicants={() => jest.fn()}
         resetFilterCount={() => jest.fn()}

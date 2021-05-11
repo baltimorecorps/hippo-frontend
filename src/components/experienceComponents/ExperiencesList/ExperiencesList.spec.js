@@ -40,7 +40,7 @@ describe('ExperiencesList', () => {
         selectExperience={selectFn}
         deselectExperience={deselectFn}
         updateEditScore={jest.fn()}
-        inSelectMode={true}
+        inSelectMode
       />
     );
 
@@ -71,7 +71,7 @@ describe('ExperiencesList', () => {
         selectExperience={selectFn}
         deselectExperience={deselectFn}
         updateEditScore={jest.fn()}
-        inSelectMode={true}
+        inSelectMode
       />
     );
 

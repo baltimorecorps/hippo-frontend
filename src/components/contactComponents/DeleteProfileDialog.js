@@ -16,7 +16,7 @@ const DeleteProfileDialog = ({classes, contact, onDelete, handleCancel}) => {
     </strong>
   );
   return (
-    <Dialog open={true} data-testid="confirm-delete-dialog">
+    <Dialog open data-testid="confirm-delete-dialog">
       <DialogContent className={classes.dialogContent}>
         <Typography align="center">
           Are you sure you want to delete <br />

@@ -104,7 +104,7 @@ const Review = ({
         contactId={contactId}
         resume={application.resume}
         setResume={setResume}
-        viewOnly={true}
+        viewOnly
       />
 
       <DecisionsFooter

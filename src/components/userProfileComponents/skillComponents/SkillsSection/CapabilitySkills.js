@@ -121,7 +121,7 @@ const CapabilitySkills = ({
           {additionalSkills.map(skill => (
             <Grid item key={skill.id} className={classes.skill}>
               <SkillCheckbox
-                selected={true}
+                selected
                 skill={skill}
                 onClick={() => {}}
                 onDelete={deleteSkill}

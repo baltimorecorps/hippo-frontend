@@ -62,7 +62,7 @@ describe('EachExpansionPanel', () => {
       <EachExpansionPanel
         PanelTextHeader="Value Alignment"
         name="value_alignment"
-        isOnEditMode={true}
+        isOnEditMode
         expandPanel={false}
         setExpandPanel={setExpandPanel}
         neededAnswer={false}

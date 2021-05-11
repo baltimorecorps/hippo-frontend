@@ -224,7 +224,7 @@ const UserProfilePage = ({
                         contactId={contactId}
                         resume={resume}
                         setResume={setResume}
-                        viewOnly={true}
+                        viewOnly
                         selected={null}
                         page="profile"
                       />
