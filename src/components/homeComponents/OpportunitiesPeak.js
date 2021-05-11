@@ -7,7 +7,6 @@ import LoginAction from './logIn'
 const OpportunitiesPeak = ({opportunities, getAllOpportunities}, props) => {
 
   // getAllOpportunities()
-    console.log(opportunities)
 
   
   return(
@@ -36,10 +35,6 @@ const OpportunitiesPeak = ({opportunities, getAllOpportunities}, props) => {
     </Grid>
     )
 }
-
-
-
-
   
 export default OpportunitiesPeak;
   

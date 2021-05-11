@@ -14,7 +14,7 @@ import {useAuth0} from 'lib/Auth0/auth0';
 
 const LandingPage = ({hasSession}) => {
   const {isAuthenticated, loginWithRedirect} = useAuth0();
-
+  
   
   return (
     <div style={{background: '#dbe9f8'}}>

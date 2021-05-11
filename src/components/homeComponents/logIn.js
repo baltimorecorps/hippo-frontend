@@ -11,6 +11,8 @@ import {useAuth0} from 'lib/Auth0/auth0';
 const LogInAction = ({hasSession, text}) => {
   const {isAuthenticated, loginWithRedirect} = useAuth0();
 
+
+
   const onClickLogInHandler = () => {
     createClickTracking(
       'Home Page, Log In/Sign Up Box',
@@ -32,7 +34,7 @@ const LogInAction = ({hasSession, text}) => {
         size="large"
         onClick={onClickLogInHandler}
         item
-        style={{margin:'1% auto'}}
+        style={{ margin: '4% auto 0'}}
         >
         {text}
         </Button>

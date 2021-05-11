@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import PersonIcon from '@material-ui/icons/Person';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import NavBarDropDownMenu from './NavBarDropDownMenu';
+import HelpIcon from '@material-ui/icons/Help';
 
 const Icon = ({
   name,
@@ -29,7 +30,7 @@ const Icon = ({
     notifications: (
       <NotificationsIcon className={openIcon ? iconOpened : iconClosed} />
     ),
-    faq: <div className={openIcon ? textOpened : textClosed}>FAQs</div>,
+    faq: <HelpIcon className={openIcon ? iconOpened : iconClosed}/>
   };
 
   return (
