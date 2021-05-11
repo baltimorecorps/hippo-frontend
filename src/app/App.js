@@ -149,7 +149,7 @@ const App = ({
             
             <Toolbar /> {/* for automatic padding of AppBar */}
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={LandingPage} />
 
               <Route exact path="/contacts" component={Contacts} />
               <Route exact path="/profile/" component={ProfileAuth} />
@@ -218,7 +218,6 @@ const App = ({
                 path="/org/opportunity/:opportunityId/"
                 component={EmployerPage}
               />
-              <Route path="/landing" component={LandingPage} />
               <Route path="*" component={Error404Page} />
               
             </Switch>
