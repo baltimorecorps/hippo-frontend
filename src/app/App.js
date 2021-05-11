@@ -20,7 +20,6 @@ import theme from 'styles/theme';
 
 import {useAuth0} from 'lib/Auth0/auth0';
 
-import Home from 'pages/utilityPages/homePage/Home';
 import Contacts from 'pages/adminPages/adminContactsPage/Contacts.container';
 
 import CandidateOpportunitiesPage from 'pages/userPages/userOpportunitiesPage';
@@ -36,6 +35,7 @@ import FAQPage from 'pages/utilityPages/faqPage';
 import ApplicantsBoard from 'pages/adminPages/adminApplicantsBoardPage';
 import ApplicantPage from 'pages/adminPages/adminApplicantPage';
 import Error404Page from 'pages/utilityPages/error404Page';
+import LandingPage from 'pages/utilityPages/homePage/landingPage';
 
 import MainNav from '../components/navbarComponents/mainNav'
 
@@ -148,7 +148,7 @@ const App = ({
             
             <Toolbar /> {/* for automatic padding of AppBar */}
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={LandingPage} />
 
               <Route exact path="/contacts" component={Contacts} />
               <Route exact path="/profile/" component={ProfileAuth} />
@@ -218,6 +218,7 @@ const App = ({
                 component={EmployerPage}
               />
               <Route path="*" component={Error404Page} />
+              
             </Switch>
             <MainFooter />
           </div>

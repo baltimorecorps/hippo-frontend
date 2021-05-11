@@ -1,6 +1,5 @@
 {
   "name": "webapp",
-  "type": "module",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -24,8 +23,8 @@
     "fetch-mock": "^7.7.3",
     "html2canvas": "^1.0.0-rc.5",
     "immutability-helper": "^3.1.1",
-    "isomorphic-fetch": "^2.2.1",
-    "jspdf": "^1.5.3",
+    "isomorphic-fetch": "^3.0.0",
+    "jspdf": ">=2.3.1",
     "lodash.get": "^4.4.2",
     "material-ui": "^0.20.2",
     "material-ui-phone-number": "2.0.1",
@@ -35,6 +34,9 @@
     "react-beautiful-dnd": "^12.2.0",
     "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",
+    "react-mailchimp-form": "^1.0.2",
+    "react-material-ui-carousel": "^2.2.4",
+    "react-multi-carousel": "^2.6.2",
     "react-places-autocomplete": "^7.2.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
