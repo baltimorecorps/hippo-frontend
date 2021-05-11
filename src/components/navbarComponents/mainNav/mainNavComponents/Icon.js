@@ -20,8 +20,6 @@ const Icon = ({
 }) => {
   const iconOpened = `${classes.icons} ${classes.offWhiteColor}`;
   const iconClosed = `${classes.icons}`;
-  const textOpened = `${classes.textOpened}`;
-  const textClosed = `${classes.textClosed}`;
   const buttonOpened = `${classes.buttons} ${classes.darkGrayBG}`;
   const buttonClosed = `${classes.buttons}`;
 

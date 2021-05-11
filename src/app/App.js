@@ -20,7 +20,6 @@ import theme from 'styles/theme';
 
 import {useAuth0} from 'lib/Auth0/auth0';
 
-import Home from 'pages/utilityPages/homePage/Home';
 import Contacts from 'pages/adminPages/adminContactsPage/Contacts.container';
 
 import CandidateOpportunitiesPage from 'pages/userPages/userOpportunitiesPage';
