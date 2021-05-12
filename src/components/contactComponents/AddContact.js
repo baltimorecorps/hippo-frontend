@@ -103,7 +103,7 @@ const AddContact = ({
   const termsLink = createALink('Terms of Use', terms, classes.link);
   const policyLink = createALink(
     'Privacy Policy',
-    'https://www.baltimorecorps.org/privacy-policy',
+    '/images/BCPP.pdf',
     classes.link
   );
 

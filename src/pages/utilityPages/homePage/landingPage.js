@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect } from 'react-redux';
 import Hero from 'components/homeComponents/Hero';
-import Offerings from 'components/homeComponents/testimonials';
+import Testimonials from 'components/homeComponents/testimonials';
 
 import ProgramDescriptions from 'components/homeComponents/programDescriptions';
 import P4PCarousel from 'components/homeComponents/P4PCarousel'
 
 import Grid from '@material-ui/core/Grid';
+import Fade from '@material-ui/core/Fade';
 
 
 
@@ -19,7 +20,7 @@ const LandingPage = ({hasSession}) => {
         <Hero />
         <ProgramDescriptions  />
         <P4PCarousel  />
-        <Offerings  />
+        <Testimonials  />
       </Grid>
     </div>
   );

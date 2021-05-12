@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import {createALink} from 'lib/helperFunctions/helpers';
 import terms from '../../../assets/pdf/services-terms.pdf';
+import privacyPolicy from '../../../assets/pdf/BCPP.pdf';
 import Typography from '@material-ui/core/Typography';
 import {useRouteMatch} from 'react-router-dom';
 import Logo from '../../../assets/images/logoSquare.png';
@@ -11,7 +12,7 @@ const MainFooter = ({classes, page}) => {
   const termsLink = createALink('Terms', terms, classes.link);
   const policyLink = createALink(
     'Privacy',
-    'https://www.baltimorecorps.org/privacy-policy',
+    privacyPolicy,
     classes.link
   );
 

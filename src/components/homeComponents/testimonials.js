@@ -36,31 +36,35 @@ const testimonials = [
     {
         image:`${testimoniala}`,
         quote:'Quote Here',
-        author:'author'
+        author:'author',
+        id: 1
 
     },
     {
         image:`${testimonialb}`,
         quote:'Quote Here',
-        author:'author'
+        author:'author',
+        id: 2
 
     },
     {
         image:`${testimoniald}`,
         quote:'Quote Here',
-        author:'author'
+        author:'author',
+        id: 3
 
     },
     {
         image:`${testimonialc}`,
         quote:'Quote Here',
-        author:'author'
+        author:'author',
+        id: 4
 
     }
  
 ]
 
-function Testimonials(onClickLogInHandler) {
+function Testimonials() {
     const styles = useStyles()
     return (
         <Box width={"100%"} mt={3} bgcolor="primary.offWhite" className={styles.main}>
@@ -70,7 +74,7 @@ function Testimonials(onClickLogInHandler) {
 
             <Grid container justify="center" spacing={3}>
                 {testimonials.map((testimonial) => (
-                <Grid item key={testimonial.image} xs={12} sm={6} lg={3}>
+                <Grid item key={testimonial.id} xs={12} sm={6} lg={3}>
                     <TestimonialCard 
                         image={testimonial.image}
                         quote={testimonial.quote}
