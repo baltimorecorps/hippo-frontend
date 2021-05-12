@@ -88,12 +88,12 @@ const data = [
   },
   {
     header: 'Review & Recommendation',
-    description: 'Baltimore Corps staff will review all submitted applications to roles (Profiles/Interest Statements) to recommend candidates for the position. Recommended candidates will be sent to the organization’s hiring manager to review. The hiring managers will reach out directly to schedule interviews with their top candidates.',
+    description: 'Baltimore Corps staff will review all submitted applications to roles (Profiles & Interest Statements) to recommend candidates for the position. Recommended candidates will be sent to the organization’s hiring manager to review. The hiring managers will reach out directly to schedule interviews with their top candidates.',
     imageName: process5,
   },
   {
     header: 'Interview & Selection',
-    description: 'There may be multiple interviews depending on the organization’s hiring practices. Once interviews are complete, Baltimore Corps will notify you of the status of your application. If you are selected as the top candidate, an offer will be made by the organization. The Baltimore Corps team is available to help answer questions, support with developing your Profile, and assist with interviewing.',
+    description: 'There may be multiple interviews depending on the organization’s hiring practices. Once interviews are complete, Baltimore Corps will notify you of the status of your application. If you are selected as the top candidate, an offer will be made by the organization.',
     imageName: process6,
   }
 ]
@@ -144,10 +144,10 @@ function P4PCarousel({props, onClickLogInHandler}) {
               src={props.imageName}
               className={styles.cardContentMedia}
               title={props.header}
-              style={{margin:"2% 0", width:'50%'}}
+              style={{margin:"2% 0", width:'40%'}}
             /><br/>
             <Typography
-              
+              style={{padding: '1%'}}
               gutterBottom
               variant="body1"
               component="p"
