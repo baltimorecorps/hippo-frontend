@@ -211,19 +211,6 @@ function P4PCarousel({props, onClickLogInHandler}) {
               
         </Carousel>
 
-        {/* <CardActions >
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
-              onClick={onClickLogInHandler}
-              item
-              style={{margin:'1% auto'}}
-            
-            >
-              Start the Process Today! 
-            </Button>
-        </CardActions> */}
         <LoginAction text={'Start the Process Today!'}/>
         </Grid>
         </Grid>

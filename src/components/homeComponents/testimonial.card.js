@@ -25,8 +25,9 @@ export default function TestimonialCard(props) {
     
     <Card className={classes.root}>
         <CardMedia
+          component="img"
           className={classes.media}
-          image={props.image}
+          src={props.image}
           title={props.quote}
         />
         <CardContent style={{backgroundColor: "#ffcc33"}}>
