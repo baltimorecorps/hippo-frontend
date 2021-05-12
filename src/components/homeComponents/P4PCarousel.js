@@ -144,7 +144,7 @@ function P4PCarousel({props, onClickLogInHandler}) {
               src={props.imageName}
               className={styles.cardContentMedia}
               title={props.header}
-              style={{margin:"2% 0", width:'50%'}}
+              style={{margin:"2% 0", width:'30%'}}
             /><br/>
             <Typography
               
