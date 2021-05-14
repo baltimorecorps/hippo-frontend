@@ -2,13 +2,12 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import pfpHero from '../../assets/images/pfphero.jpg'
 import LoginAction from './logIn'
 
 
 const styles = {
     box: {
-        backgroundImage: `url(${pfpHero})`,
+        backgroundImage: 'url(/images/pfphero.jpg)',
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
