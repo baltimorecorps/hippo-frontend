@@ -1,6 +1,8 @@
 import React from 'react'
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
+import { withStyles } from '@material-ui/core/styles';
+
 
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
@@ -8,6 +10,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Grid from '@material-ui/core/Grid'
 import LoginAction from './logIn'
+
 
 
 
@@ -213,4 +216,4 @@ function P4PCarousel({props, onClickLogInHandler}) {
                 )
 }
 
-export default P4PCarousel
+export default withStyles(styles)(P4PCarousel);

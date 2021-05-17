@@ -33,7 +33,6 @@ const LogInAction = ({hasSession, text}) => {
         color="primary"
         size="large"
         onClick={onClickLogInHandler}
-        item
         style={{ margin: '4% auto 0'}}
         >
         {text}
