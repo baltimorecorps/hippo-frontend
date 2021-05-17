@@ -10,6 +10,8 @@ import {
   sortByCategory,
 } from 'lib/helperFunctions/opportunitiesHelpers';
 import FilterByProgramsTabs from '../../../components/opportunitiesComponents/FilterByProgramsSelector';
+import FellowshipModal from '../../../components/opportunitiesComponents/fellowshipModal.js'
+import OpportunitiesNav from '../../../components/opportunitiesComponents/opportunitiesNav'
 
 const CandidateOpportunitiesPage = ({
   classes,
@@ -67,6 +69,7 @@ const CandidateOpportunitiesPage = ({
 
   const [value, setValue] = React.useState('All Programs');
   const programs = ['All Programs', 'Place for Purpose', 'Fellowship'];
+  // const [ fellowshipModal, setFellowshipModal ] = React.useState(false)
 
   renderedOpportunities = filterOpportunitiesByPrograms(
     opportunities,
@@ -80,6 +83,13 @@ const CandidateOpportunitiesPage = ({
       opp => opp.program_name === 'Mayoral Fellowship'
     );
     renderedOpportunities = sortByCategory(MF_opportunities, 'title');
+  }
+  if (page === 'Fellowship') {
+    header = page;
+    const F_opportunities = opportunities.filter(
+      opp => opp.program_name === 'Fellowship'
+    );
+    renderedOpportunities = sortByCategory(F_opportunities, 'title');
   }
 
   const handleChangeFilter = event => {
@@ -103,7 +113,7 @@ const CandidateOpportunitiesPage = ({
           {`${header} Opportunities`}
         </Typography>
       </Paper>
-      {page !== 'Mayoral Fellowship' && (
+      {/* {page !== 'Mayoral Fellowship' && (
         <React.Fragment>
           <FilterByProgramsTabs
             handleChangeFilter={handleChangeFilter}
@@ -112,7 +122,9 @@ const CandidateOpportunitiesPage = ({
           />
           <br className={classes.spacer} />
         </React.Fragment>
-      )}
+      )} */}
+      <OpportunitiesNav program={page}/>
+      {page === 'Fellowship' ? <FellowshipModal/> :""}
       {renderedOpportunities.map(
         (opportunity, index) =>
           opportunity.is_active === true && (
