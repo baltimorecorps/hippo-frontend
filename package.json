@@ -29,6 +29,7 @@
     "lodash.get": "^4.4.2",
     "material-ui": "^0.20.2",
     "material-ui-phone-number": "2.0.1",
+    "moment": "^2.29.1",
     "npm-install-peers": "^1.2.1",
     "pdfmake": "^0.1.65",
     "react": "^16.13.1",

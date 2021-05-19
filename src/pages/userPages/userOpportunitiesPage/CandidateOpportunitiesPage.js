@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+
 import {useHistory} from 'react-router-dom';
 import {createClickTracking} from 'lib/helperFunctions/helpers';
 import EachOpportunity from '../../../components/opportunitiesComponents/EachOpportunity';
@@ -9,9 +8,9 @@ import {
   filterOpportunitiesByPrograms,
   sortByCategory,
 } from 'lib/helperFunctions/opportunitiesHelpers';
-import FilterByProgramsTabs from '../../../components/opportunitiesComponents/FilterByProgramsSelector';
-import FellowshipModal from '../../../components/opportunitiesComponents/fellowshipModal.js'
-import OpportunitiesNav from '../../../components/opportunitiesComponents/opportunitiesNav'
+
+import FellowshipModal from '../../../components/opportunitiesComponents/fellowshipModal.js';
+import OpportunitiesNav from '../../../components/opportunitiesComponents/opportunitiesNav';
 
 const CandidateOpportunitiesPage = ({
   classes,
@@ -83,13 +82,18 @@ const CandidateOpportunitiesPage = ({
       opp => opp.program_name === 'Mayoral Fellowship'
     );
     renderedOpportunities = sortByCategory(MF_opportunities, 'title');
-  }
-  if (page === 'Fellowship') {
+  } else if (page === 'Fellowship') {
     header = page;
     const F_opportunities = opportunities.filter(
       opp => opp.program_name === 'Fellowship'
     );
     renderedOpportunities = sortByCategory(F_opportunities, 'title');
+  } else {
+    header = page;
+    const PFP_opportunities = opportunities.filter(
+      opp => opp.program_name === 'Place for Purpose'
+    );
+    renderedOpportunities = sortByCategory(PFP_opportunities, 'title');
   }
 
   const handleChangeFilter = event => {
@@ -102,29 +106,10 @@ const CandidateOpportunitiesPage = ({
 
   return (
     <div className={classes.container}>
-      <Paper className={classes.headerPaper}>
-        <Typography
-          component="h1"
-          variant="h5"
-          align="left"
-          className={classes.header}
-          data-testid="page-header"
-        >
-          {`${header} Opportunities`}
-        </Typography>
-      </Paper>
-      {/* {page !== 'Mayoral Fellowship' && (
-        <React.Fragment>
-          <FilterByProgramsTabs
-            handleChangeFilter={handleChangeFilter}
-            value={value}
-            programs={programs}
-          />
-          <br className={classes.spacer} />
-        </React.Fragment>
-      )} */}
-      <OpportunitiesNav program={page}/>
-      {page === 'Fellowship' ? <FellowshipModal/> :""}
+     
+      <OpportunitiesNav program={page} />
+
+      {page === 'main' ? '' : <FellowshipModal program={page} />}
       {renderedOpportunities.map(
         (opportunity, index) =>
           opportunity.is_active === true && (
