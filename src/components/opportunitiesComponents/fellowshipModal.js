@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {
   Typography,
   Paper,
@@ -10,6 +11,7 @@ import {
   Modal,
   Link,
 } from '@material-ui/core';
+import {Link as RouterLink} from 'react-router-dom';
 import MayoralAuth from './mayoralAuth';
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +52,7 @@ export default function FellowshipModal({program}) {
     default:
       program_name = 'Baltimore Corps Fellowship';
       description =
-        'The jobs listed here are full time roles with the additional commitment to our 10-month Baltimore Corps Fellowship program. Fellowship programming includes race & equity workshops, online-learning assignments including a Change Recommendation capstone project and presentation, as well as professional development and networking opportunities. Fellows can expect to engage in programming and online-learning for approximately 6 to 8 hours per month.';
+        'The jobs listed here are full time roles with the additional commitment to our 10-month Baltimore Corps Fellowship program. Fellowship programming includes race & equity workshops, online-learning assignments including a Change Recommendation capstone project and presentation, as well as professional development and networking opportunities. Fellows can expect to engage in programming and online-learning for approximately 4 to 6 hours per month.';
       link = 'https://www.baltimorecorps.org/fellowship';
 
       break;
@@ -58,7 +60,7 @@ export default function FellowshipModal({program}) {
     case 'Mayoral Fellowship':
       program_name = 'Mayoral Fellowship';
       description =
-        'The Mayoral Fellowship is an opportunity that provides a 10-week, full-time, placement in a Mayoral office or Baltimore City agency. Placements are based on the Fellow’s background and interests, coupled with the needs of city agencies and departments. To access these roles users must be approved.';
+        'The Mayoral Fellowship is an opportunity that provides a 10-week, full-time, placement in a Mayoral office or Baltimore City agency. Placements are based on the Fellow’s background and interests, coupled with the needs of city agencies and departments. To access these roles you must indicate interest in the program on your Place for Purpose profile and reach out to members of our Partnerships Department. Users must be approved before applying to these roles.';
       link = 'https://www.baltimorecorps.org/mayoral';
   }
 
@@ -135,6 +137,16 @@ export default function FellowshipModal({program}) {
                   <MayoralAuth handleClose={handleClose} />
                 </>
               )}
+
+              <Button
+                color="secondary"
+                startIcon={<ArrowBackIcon />}
+                to={'/opportunities'}
+                component={RouterLink}
+                size="small"
+              >
+                Back to Place for Purpose Opportunities
+              </Button>
             </Container>
           </Paper>
         </Fade>

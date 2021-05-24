@@ -29,28 +29,28 @@ const useStyles = makeStyles({
 
 const testimonials = [
     {
-        image:'/images/testimoniala.jpg',
+        image:'/images/testimoniala-min.jpg',
         quote:'Quote Here',
         author:'author',
         id: 1
 
     },
     {
-        image:'/images/testimonialb.jpg',
+        image:'/images/testimonialb-min.jpg',
         quote:'Quote Here',
         author:'author',
         id: 2
 
     },
     {
-        image: '/images/testimonialc.jpg',
+        image: '/images/testimonialc-min.jpg',
         quote:'Quote Here',
         author:'author',
         id: 3
 
     },
     {
-        image:'/images/testimoniald.jpg',
+        image:'/images/testimoniald-min.jpg',
         quote:'Quote Here',
         author:'author',
         id: 4

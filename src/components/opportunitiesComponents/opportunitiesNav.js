@@ -38,7 +38,7 @@ const useStyles = makeStyles(({breakpoints, palette, spacing}) => ({
 
 const OpportunitiesNav =({program})=>{
     const classes = useStyles()
-    let name, description,link_left,link_left_name,link_right,link_right_name;
+    let name, description,link_left,link_left_name,link_right,link_right_name, email;
 
     switch (program) {
         default:
@@ -51,11 +51,12 @@ const OpportunitiesNav =({program})=>{
           break;
         case 'Fellowship':
             name='Baltimore Corps Fellowship'
-            description='The jobs listed here are full time roles with the additional commitment to our 10-month Baltimore Corps Fellowship program. Fellowship programming includes race & equity workshops, online-learning assignments including a Change Recommendation capstone project and presentation, as well as professional development and networking opportunities. Fellows can expect to engage in programming and online-learning for approximately 6 to 8 hours per month.'
+            description='The jobs listed here are full time roles with the additional commitment to our 10-month Baltimore Corps Fellowship program. Fellowship programming includes race & equity workshops, online-learning assignments including a Change Recommendation capstone project and presentation, as well as professional development and networking opportunities. Fellows can expect to engage in programming and online-learning for approximately 4 to 6 hours per month.'
             link_left='/opportunities/mayoral-fellowship'
             link_right='/opportunities'
             link_left_name='Mayoral Fellowship'
             link_right_name='Place for Purpose'
+            email='fellowship@baltimorecorps.org'
             break;
             
         case 'Mayoral Fellowship':
@@ -65,6 +66,7 @@ const OpportunitiesNav =({program})=>{
             link_right='/opportunities/fellowship'
             link_left_name='Place for Purpose'
             link_right_name='Baltimore Corps Fellowship'
+            email=''
         
            }
 
