@@ -38,6 +38,7 @@ import Error404Page from 'pages/utilityPages/error404Page';
 import LandingPage from 'pages/utilityPages/homePage/landingPage';
 
 import MainNav from '../components/navbarComponents/mainNav'
+import CrelateTransition from 'components/opportunitiesComponents/crelateTransition';
 
 const App = ({
   hasSession,
@@ -153,12 +154,12 @@ const App = ({
               <Route exact path="/contacts" component={Contacts} />
               <Route exact path="/profile/" component={ProfileAuth} />
 
-              <Route
+              {/* <Route
                 exact
                 path="/opportunities/"
                 component={() => <CandidateOpportunitiesPage page="main" />}
-              />
-              <Route
+              /> 
+               <Route
                 exact
                 path="/opportunities/mayoral-fellowship"
                 component={() => (
@@ -171,8 +172,14 @@ const App = ({
                 component={() => (
                   <CandidateOpportunitiesPage page="Fellowship" />
                 )}
+              /> */}
+              <Route
+                exact
+                path="/opportunities"
+                component={() => (
+                  <CrelateTransition/>
+                )}
               />
-              
               <Route
                 path="/application/:opportunityId"
                 component={ApplicationForm}

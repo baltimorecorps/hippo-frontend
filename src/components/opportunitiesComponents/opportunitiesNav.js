@@ -88,7 +88,7 @@ const OpportunitiesNav =({program})=>{
               component="p"
               align="justify"
             >{description}</Typography>
-            <Typography
+            {/* <Typography
             gutterBottom
             variant="h6"
             component="h1"
@@ -96,13 +96,27 @@ const OpportunitiesNav =({program})=>{
             color="primary"
             >   
             View other opportunities:
-            </Typography>
+            </Typography> */}
             <Box display='flex' justifyContent='space-evenly' width='80%' margin='0 auto' >
-            <ButtonGroup variant="text" color="secondary"         orientation="vertical"
+            <Button
+                  // href='www.google.com'
+                  // onClick={() => onClickViewAppButton(opportunity.id)}
+                  rel="noopener noreferrer" 
+                  href='https://jobs.crelate.com/portal/baltimorecorps'
+                  target="_blank"
+                  variant="contained"
+                  color="primary"
+                  data-testid="view-app-btn"
+                >
+                  View Opportunities on Crelate                
+            </Button>
+
+
+            {/* <ButtonGroup variant="text" color="secondary"         orientation="vertical"
 >
             <Button  component={Link} to={link_left}>{link_left_name}</Button>
             <Button  component={Link} to={link_right}>{link_right_name}</Button>
-            </ButtonGroup>
+            </ButtonGroup> */}
             </Box>
 
         </Card>

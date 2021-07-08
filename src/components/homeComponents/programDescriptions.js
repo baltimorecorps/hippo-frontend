@@ -123,14 +123,30 @@ const ProgramDescriptions =()=>{
         component="p"
         style={{ maxWidth:'80%'}}
       >                    
-       Baltimore Corps hosts initiatives that intentionally seek to build socioeconomic equity throughout Baltimore, via social impact careers, leadership training, community engagement, social entrepreneurship, and small business support programs. Place for Purpose is a service that connects talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
+       Baltimore Corps hosts initiatives that intentionally seek to build socioeconomic equity throughout Baltimore, via social impact careers, leadership training, community engagement, social entrepreneurship, and small business support programs. Place for Purpose is the system we use to connect talented community members facing challenges finding employment in the social impact sector with organizations that have taken an internal and external commitment to equity and racial justice.
       </Typography>
+      
       
       <Container maxWidth="sm">
       <div className={classes.videoContainer}>
       <iframe src="https://www.youtube.com/embed/VZG7UbftkWQ"  className={classes.video} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
       </div>
       </Container>
+      {/* <Typography
+        gutterBottom
+        className={classes.bcCopy}
+        variant="body1"
+        component="p"
+        style={{ maxWidth:'70%'}}
+      >                    
+        <Typography
+        gutterBottom
+        className={classes.bcCopy}
+        variant="span"
+        component="span"
+        style={{ color:'red'}}
+      > WebApp Update: </Typography>Over the last year, we've experienced tremendous glows and grows through use of our bespoke web application. Though 
+      </Typography> */}
       <Divider variant="inset" light={true} style={{margin:'5% auto', width:'60%'}} />
 
       <Tabs
