@@ -1,5 +1,5 @@
 import React  from 'react'
-import Grid from '@material-ui/core/Grid';
+import {Grid,Button} from '@material-ui/core';
 import LoginAction from './logIn'
 
 
@@ -30,8 +30,19 @@ const OpportunitiesPeak = ({opportunities, getAllOpportunities}, props) => {
           <Skeleton variant="rect" width={210} height={118}>Current Randomized Potential Role</Skeleton>
         </Grid> */}
         <Grid item xs={12}>    
-        <LoginAction text={'Log in to learn more about these roles!'}/>
-        </Grid>
+        <Button
+                  // href='www.google.com'
+                  // onClick={() => onClickViewAppButton(opportunity.id)}
+                  rel="noopener noreferrer" 
+                  href='https://jobs.crelate.com/portal/baltimorecorps'
+                  target="_blank"
+                  variant="contained"
+                  color="primary"
+                  data-testid="view-app-btn"
+                >
+                  View Our Job Board              
+            </Button>        
+            </Grid>
     </Grid>
     )
 }

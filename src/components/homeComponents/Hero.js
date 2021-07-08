@@ -54,7 +54,7 @@ function Hero() {
                     </Typography>
 
                     <Box align="center" mt={2}>
-                        <LoginAction text={'Log in / Sign up'}/>
+                        {/* <LoginAction text={'Log in / Sign up'}/> */}
                     </Box>
                 </Grid>
             </Grid>
