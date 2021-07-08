@@ -106,8 +106,8 @@ const CandidateOpportunitiesPage = ({
 
   return (
     <div className={classes.container}>
-     
       <OpportunitiesNav program={page} />
+      
 
       {page === 'main' ? '' : <FellowshipModal program={page} />}
       {renderedOpportunities.map(

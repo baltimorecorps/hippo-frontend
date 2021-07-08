@@ -19,8 +19,8 @@ const LandingPage = ({hasSession}) => {
       <Grid container justify="center" align="center" >
         <Hero />
         <ProgramDescriptions  />
-        <P4PCarousel  />
-        <Testimonials  />
+        {/* <P4PCarousel  /> */}
+        {/* <Testimonials  /> */}
       </Grid>
     </div>
   );
