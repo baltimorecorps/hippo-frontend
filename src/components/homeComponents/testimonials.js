@@ -6,11 +6,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TestimonialCard from './testimonial.card'
 import LoginAction from './logIn'
 
-import testimoniala from '../../assets/images/testimoniala.jpg'
-import testimonialb from '../../assets/images/testimonialb.jpg'
-import testimonialc from '../../assets/images/testimonialc.jpg'
-import testimoniald from '../../assets/images/testimoniald.jpg'
-
 
 
 const useStyles = makeStyles({
@@ -34,28 +29,28 @@ const useStyles = makeStyles({
 
 const testimonials = [
     {
-        image:`${testimoniala}`,
+        image:'/images/testimoniala-min.jpg',
         quote:'Quote Here',
         author:'author',
         id: 1
 
     },
     {
-        image:`${testimonialb}`,
+        image:'/images/testimonialb-min.jpg',
         quote:'Quote Here',
         author:'author',
         id: 2
 
     },
     {
-        image:`${testimoniald}`,
+        image: '/images/testimonialc-min.jpg',
         quote:'Quote Here',
         author:'author',
         id: 3
 
     },
     {
-        image:`${testimonialc}`,
+        image:'/images/testimoniald-min.jpg',
         quote:'Quote Here',
         author:'author',
         id: 4

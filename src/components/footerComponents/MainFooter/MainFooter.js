@@ -52,7 +52,7 @@ const MainFooter = ({classes, page}) => {
               className={classes.logo}
               alt="Baltimore Corps Logo"
             />
-            &#169; 2020 Baltimore Corps
+            &#169; 2021 Baltimore Corps
           </span>
           <span className={classes.termsAndPolicy}>
             {termsLink} {policyLink}

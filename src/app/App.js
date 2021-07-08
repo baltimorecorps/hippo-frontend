@@ -166,6 +166,14 @@ const App = ({
                 )}
               />
               <Route
+                exact
+                path="/opportunities/fellowship"
+                component={() => (
+                  <CandidateOpportunitiesPage page="Fellowship" />
+                )}
+              />
+              
+              <Route
                 path="/application/:opportunityId"
                 component={ApplicationForm}
               />

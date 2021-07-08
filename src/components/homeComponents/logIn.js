@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
+import {Link} from 'react-router-dom'
 
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
@@ -26,14 +27,24 @@ const LogInAction = ({hasSession, text}) => {
 
   return(
       <>
-    { hasSession ? '':
+    { hasSession ? <CardActions>
+        <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        component={Link}
+        to='/profile'
+        style={{ margin: '4% auto 0'}}
+        >
+        View My Profile
+        </Button>
+        </CardActions>:
         <CardActions>
         <Button
         variant="contained"
         color="primary"
         size="large"
         onClick={onClickLogInHandler}
-        item
         style={{ margin: '4% auto 0'}}
         >
         {text}

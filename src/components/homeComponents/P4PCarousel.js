@@ -2,6 +2,8 @@ import React from 'react'
 import Carousel from "react-multi-carousel"
 import "react-multi-carousel/lib/styles.css"
 
+import withStyles from '@material-ui/core/styles/withStyles';
+
 import Typography from '@material-ui/core/Typography'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -9,12 +11,8 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Grid from '@material-ui/core/Grid'
 import LoginAction from './logIn'
 
-import process1 from '../../assets/images/process1.png'
-import process2 from '../../assets/images/process2.png'
-import process3 from '../../assets/images/process3.png'
-import process4 from '../../assets/images/process4.png'
-import process5 from '../../assets/images/process5.png'
-import process6 from '../../assets/images/process6.png'
+
+
 
 const styles = {
   pageHeader: {
@@ -69,32 +67,32 @@ const data = [
   {
     header: 'Create an Account',
     description: 'The first step is Creating An Account in Place for Purpose. This involves completing a brief questionnaire to help us understand who you are, what your interests and goals are, and how your values align with Baltimore Corps. Once you submit your questionnaire, your application will be reviewed based on Values Alignment with Baltimore Corps.',
-    imageName: process1,
+    imageName: '/images/process1.png',
   },
   {
     header: 'Build a Profile',
     description: 'Your Profile captures your skills, capabilities and experiences and we use it along with your Interest Statements to assess your qualifications for specific roles. Think of it as a more holistic resume to help us get a complete picture of your background and experience. ',
-    imageName: process2,
+    imageName: '/images/process2.png',
   },
   {
     header: 'Schedule a Consultation',
     description: 'The Consultation is our opportunity to learn more about your interests and goals, to orient you to applying for roles in Place for Purpose, to learn how we can support you with your Profile, and to answer any questions about the system or process. Your profile does not need to be finished to schedule a Consultation.',
-    imageName: process3,
+    imageName: '/images/process3.png',
   },
   {
     header: 'Apply for Opportunities',
     description: 'Once approved for the Place for Purpose Job Portal, login and apply for roles that peak your interest. You will have the ability to customize your resume for each position and add an interest statement explaining why you are the best candidate for the job.',
-    imageName: process4,
+    imageName: '/images/process4.png' ,
   },
   {
     header: 'Review & Recommendation',
     description: 'Baltimore Corps staff will review all submitted applications to roles (Profiles & Interest Statements) to recommend candidates for the position. Recommended candidates will be sent to the organization’s hiring manager to review. The hiring managers will reach out directly to schedule interviews with their top candidates.',
-    imageName: process5,
+    imageName: '/images/process5.png',
   },
   {
     header: 'Interview & Selection',
     description: 'There may be multiple interviews depending on the organization’s hiring practices. Once interviews are complete, Baltimore Corps will notify you of the status of your application. If you are selected as the top candidate, an offer will be made by the organization.',
-    imageName: process6,
+    imageName: '/images/process6.png',
   }
 ]
 
@@ -218,4 +216,4 @@ function P4PCarousel({props, onClickLogInHandler}) {
                 )
 }
 
-export default P4PCarousel
+export default withStyles(styles)(P4PCarousel);

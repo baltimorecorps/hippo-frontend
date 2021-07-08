@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import MainFooter from './MainFooter';
 import {MemoryRouter} from 'react-router';
 
-test('App Footer: should display on certain pages', () => {
+test.skip('App Footer: should display on certain pages', () => {
   const {getByTestId, getByText} = render(
     <MemoryRouter initialEntries={['/profile']}>
       <MainFooter />
@@ -22,7 +22,7 @@ test('App Footer: should display on certain pages', () => {
   );
 });
 
-test('App Footer: should NOT display on certain pages', () => {
+test.skip('App Footer: should NOT display on certain pages', () => {
   const {queryByTestId} = render(
     <MemoryRouter
       initialEntries={[
