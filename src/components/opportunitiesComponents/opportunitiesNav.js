@@ -93,12 +93,13 @@ const OpportunitiesNav =({program})=>{
             variant="h6"
             component="h1"
             className={classes.title2}
-            color="secondary"
+            color="primary"
             >   
             View other opportunities:
             </Typography>
             <Box display='flex' justifyContent='space-evenly' width='80%' margin='0 auto' >
-            <ButtonGroup variant="contained" color="secondary">
+            <ButtonGroup variant="text" color="secondary"         orientation="vertical"
+>
             <Button  component={Link} to={link_left}>{link_left_name}</Button>
             <Button  component={Link} to={link_right}>{link_right_name}</Button>
             </ButtonGroup>
