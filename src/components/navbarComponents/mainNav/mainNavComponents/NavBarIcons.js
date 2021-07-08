@@ -20,17 +20,17 @@ const NavBarIcons = ({logout, classes}) => {
     history.push('/faq');
     setOpenIcon(0);
   };
+  const toProfilePage = () => {
+    history.push('/profile');
+    setOpenIcon(0);
+  };
 
   const contactSupportLink = createExternalLink(
     'Contact Support Page',
     'https://www.tfaforms.com/4602493',
     classes.contactSupportLink
   );
-  const helpLink = createExternalLink(
-    'Help',
-    'https://www.tfaforms.com/4602493',
-    classes.helpLink
-  );
+
   const askQuestionLink = createExternalLink(
     'Ask Questions or Request Helps',
     'https://www.tfaforms.com/4602493',
@@ -69,7 +69,11 @@ const NavBarIcons = ({logout, classes}) => {
     user: {
       menuHeader: 'Account',
       menuItems: [
-        {name: helpLink},
+        {
+          name: 'My Profile',
+          url: '/profile',
+          function: toProfilePage,
+        },
         {name: 'Logout', url: '#', function: logout},
       ],
     },

@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import PersonIcon from '@material-ui/icons/Person';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import NavBarDropDownMenu from './NavBarDropDownMenu';
+import HelpIcon from '@material-ui/icons/Help';
 
 const Icon = ({
   name,
@@ -19,8 +20,6 @@ const Icon = ({
 }) => {
   const iconOpened = `${classes.icons} ${classes.offWhiteColor}`;
   const iconClosed = `${classes.icons}`;
-  const textOpened = `${classes.textOpened}`;
-  const textClosed = `${classes.textClosed}`;
   const buttonOpened = `${classes.buttons} ${classes.darkGrayBG}`;
   const buttonClosed = `${classes.buttons}`;
 
@@ -29,7 +28,7 @@ const Icon = ({
     notifications: (
       <NotificationsIcon className={openIcon ? iconOpened : iconClosed} />
     ),
-    faq: <div className={openIcon ? textOpened : textClosed}>FAQs</div>,
+    faq: <HelpIcon className={openIcon ? iconOpened : iconClosed}/>
   };
 
   return (

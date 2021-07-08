@@ -179,7 +179,7 @@ const EachOpportunity = ({
         </div>
         {audience === 'candidates' ? (
           <div className={classes.applyButton}>
-            {contact && contact.status === 'approved' ? (
+            {/* {contact && contact.status === 'approved' ? (
               submittedIds.includes(opportunity.id) ? (
                 <Button
                   onClick={() => onClickViewAppButton(opportunity.id)}
@@ -199,7 +199,19 @@ const EachOpportunity = ({
                   Apply
                 </Button>
               )
-            ) : null}
+            ) : null} */}
+               <Button
+                  // href='www.google.com'
+                  // onClick={() => onClickViewAppButton(opportunity.id)}
+                  rel="noopener noreferrer" 
+                  href={opportunity.url}
+                  target="_blank"
+                  variant="contained"
+                  color="primary"
+                  data-testid="view-app-btn"
+                >
+                  Apply                
+               </Button>
           </div>
         ) : (
           // audience === "internal"

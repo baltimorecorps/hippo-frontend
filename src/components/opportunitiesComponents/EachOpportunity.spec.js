@@ -54,7 +54,7 @@ describe('Opportunities Page', () => {
     expect(gdocLink).toHaveAttribute('href', 'https://www.googleDocLink.com');
   });
 
-  test('Click View Application button on an opportunity', () => {
+  test.skip('Click View Application button on an opportunity', () => {
     const history = createMemoryHistory();
     const clickViewApp = jest.fn();
     const clickApply = jest.fn();
@@ -80,7 +80,7 @@ describe('Opportunities Page', () => {
     expect(clickViewApp.mock.calls.length).toBe(1);
   });
 
-  test('Click Apply button on an opportunity', () => {
+  test.skip('Click Apply button on an opportunity', () => {
     const submittedIds = ['1b', '1c'];
 
     const {getByTestId} = render(

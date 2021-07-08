@@ -12,7 +12,6 @@ import {API_URL} from 'app/constants';
 import * as serviceWorker from 'app/serviceWorker';
 
 
-
 // A function that routes the user to the right place
 // after login
 //

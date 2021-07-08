@@ -20,7 +20,6 @@ import theme from 'styles/theme';
 
 import {useAuth0} from 'lib/Auth0/auth0';
 
-import Home from 'pages/utilityPages/homePage/Home';
 import Contacts from 'pages/adminPages/adminContactsPage/Contacts.container';
 
 import CandidateOpportunitiesPage from 'pages/userPages/userOpportunitiesPage';
@@ -36,8 +35,10 @@ import FAQPage from 'pages/utilityPages/faqPage';
 import ApplicantsBoard from 'pages/adminPages/adminApplicantsBoardPage';
 import ApplicantPage from 'pages/adminPages/adminApplicantPage';
 import Error404Page from 'pages/utilityPages/error404Page';
+import LandingPage from 'pages/utilityPages/homePage/landingPage';
 
 import MainNav from '../components/navbarComponents/mainNav'
+import CrelateTransition from 'components/opportunitiesComponents/crelateTransition';
 
 const App = ({
   hasSession,
@@ -148,21 +149,35 @@ const App = ({
             
             <Toolbar /> {/* for automatic padding of AppBar */}
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={LandingPage} />
 
               <Route exact path="/contacts" component={Contacts} />
               <Route exact path="/profile/" component={ProfileAuth} />
 
-              <Route
+              {/* <Route
                 exact
                 path="/opportunities/"
                 component={() => <CandidateOpportunitiesPage page="main" />}
-              />
-              <Route
+              /> 
+               <Route
                 exact
                 path="/opportunities/mayoral-fellowship"
                 component={() => (
                   <CandidateOpportunitiesPage page="Mayoral Fellowship" />
+                )}
+              />
+              <Route
+                exact
+                path="/opportunities/fellowship"
+                component={() => (
+                  <CandidateOpportunitiesPage page="Fellowship" />
+                )}
+              /> */}
+              <Route
+                exact
+                path="/opportunities"
+                component={() => (
+                  <CrelateTransition/>
                 )}
               />
               <Route
@@ -218,6 +233,7 @@ const App = ({
                 component={EmployerPage}
               />
               <Route path="*" component={Error404Page} />
+              
             </Switch>
             <MainFooter />
           </div>
