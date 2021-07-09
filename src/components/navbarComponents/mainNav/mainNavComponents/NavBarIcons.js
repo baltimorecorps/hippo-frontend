@@ -24,6 +24,10 @@ const NavBarIcons = ({logout, classes}) => {
     history.push('/profile');
     setOpenIcon(0);
   };
+  const toInternalPage = () => {
+    history.push('/internal/partnerships');
+    setOpenIcon(0);
+  };
 
   const contactSupportLink = createExternalLink(
     'Contact Support Page',
@@ -69,12 +73,16 @@ const NavBarIcons = ({logout, classes}) => {
     user: {
       menuHeader: 'Account',
       menuItems: [
+        { name: 'Internal', 
+        url:'/internal/partnerships', 
+        function: toInternalPage },
         {
           name: 'My Profile',
           url: '/profile',
           function: toProfilePage,
         },
-        {name: 'Logout', url: '#', function: logout},
+        {name: 'Logout', url: '#', function: logout}
+       
       ],
     },
     faq: {
