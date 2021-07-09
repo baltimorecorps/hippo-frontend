@@ -39,6 +39,7 @@ import LandingPage from 'pages/utilityPages/homePage/landingPage';
 
 import MainNav from '../components/navbarComponents/mainNav'
 import CrelateTransition from 'components/opportunitiesComponents/crelateTransition';
+import PrivateRoute from './PrivateRoute';
 
 const App = ({
   hasSession,
@@ -176,9 +177,7 @@ const App = ({
               <Route
                 exact
                 path="/opportunities"
-                component={() => (
-                  <CrelateTransition/>
-                )}
+                component={CrelateTransition}
               />
               <Route
                 path="/application/:opportunityId"
@@ -188,6 +187,7 @@ const App = ({
               <Route path="/faq" component={FAQPage} />
 
               {/* Internal Pages */}
+              {/* <PrivateRoute */}
               <Route
                 path="/internal/partnerships"
                 component={PartnershipsPage}
