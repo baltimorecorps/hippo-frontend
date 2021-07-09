@@ -176,9 +176,7 @@ const App = ({
               <Route
                 exact
                 path="/opportunities"
-                component={() => (
-                  <CrelateTransition/>
-                )}
+                component={CrelateTransition}
               />
               <Route
                 path="/application/:opportunityId"
