@@ -73,9 +73,9 @@ const NavBarIcons = ({logout, classes}) => {
     user: {
       menuHeader: 'Account',
       menuItems: [
-        { name: 'Internal', 
-        url:'/internal/partnerships', 
-        function: toInternalPage },
+        // { name: 'Internal', 
+        // url:'/internal/partnerships', 
+        // function: toInternalPage },
         {
           name: 'My Profile',
           url: '/profile',
